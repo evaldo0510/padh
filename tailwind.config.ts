@@ -40,6 +40,12 @@ export default {
           indigo: "hsl(var(--spiritual-indigo))",
           violet: "hsl(var(--spiritual-violet))",
           rose: "hsl(var(--spiritual-rose))",
+          cyan: "hsl(var(--spiritual-cyan))",
+          emerald: "hsl(var(--spiritual-emerald))",
+        },
+        neon: {
+          cyan: "hsl(var(--accent-neon))",
+          gold: "hsl(var(--accent-gold))",
         },
         destructive: {
           DEFAULT: "hsl(var(--destructive))",
