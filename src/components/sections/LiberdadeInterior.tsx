@@ -1,0 +1,302 @@
+import React, { useState, useRef } from 'react';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
+import { Badge } from '@/components/ui/badge';
+import { Textarea } from '@/components/ui/textarea';
+import { Play, Pause, Heart, Shield, Search, Lightbulb, MessageSquare, Volume2, VolumeX } from 'lucide-react';
+
+interface Chapter {
+  id: string;
+  title: string;
+  subtitle: string;
+  poem: string;
+  problem: string;
+  cause: string;
+  hypothesis: string;
+  exercise: string;
+}
+
+const chapters: Chapter[] = [
+  {
+    id: 'capitulo1',
+    title: 'Capítulo 1',
+    subtitle: 'A cela invisível',
+    poem: `Me disseram que eu era livre,
+mas meus passos não sabiam pra onde ir.
+Me disseram que eu podia sonhar,
+mas eu só sabia dormir.
+Carrego chaves, mas não sei das portas.
+Talvez porque o que me prende
+é aquilo que eu nunca ousei sentir.`,
+    problem: 'Existe uma prisão que não tem tranca nem carcereiro. Mas ela te impede de sorrir com verdade, de viver com leveza e de amar sem medo. Essa prisão se chama: autoabandono.',
+    cause: 'A cela foi sendo moldada desde cedo. Sem tijolos. Sem cimento. Apenas com a dor de não ser visto, ouvido ou amado do jeito que era.',
+    hypothesis: 'Não se sai da cela lutando contra ela. Se sai da cela abrindo os olhos para o que se tornou invisível. É preciso sentir o que você tem evitado.',
+    exercise: 'Pause agora e se pergunte: Em que momento eu me deixei? Quando foi que eu parei de sonhar? O que em mim ainda espera ser resgatado?'
+  },
+  {
+    id: 'capitulo2',
+    title: 'Capítulo 2',
+    subtitle: 'A memória que prende',
+    poem: `Tem cicatrizes que não aparecem na pele,
+mas cortam a alma todo dia.
+Tem palavras que ficaram presas na garganta
+desde a infância.
+E tem uma criança dentro de mim
+que ainda espera por um abraço
+que nunca chegou.`,
+    problem: 'As memórias dolorosas não são apenas lembranças - elas se tornam grades invisíveis que limitam nossa capacidade de viver plenamente no presente.',
+    cause: 'Quando criança, você não tinha ferramentas para processar certas dores. Então seu coração as guardou, esperando um dia ter coragem de senti-las.',
+    hypothesis: 'A cura não está em esquecer o passado, mas em resgatar a criança ferida dentro de você com o amor que ela sempre mereceu.',
+    exercise: 'Escreva uma carta para sua criança interior. Diga a ela tudo que sempre precisou ouvir. Seja o adulto que ela precisava ao seu lado.'
+  },
+  {
+    id: 'capitulo3',
+    title: 'Capítulo 3',
+    subtitle: 'A origem do vazio',
+    poem: `Procuro Deus em todas as coisas,
+mas me esqueci de procurá-Lo em mim.
+Como se eu fosse o único lugar
+onde Ele não pudesse estar.
+Talvez o vazio que eu sinto
+seja só o espaço que sobrou
+quando parei de me amar.`,
+    problem: 'O vazio existencial não é falta de propósito - é o resultado de nos desconectarmos da nossa própria essência divina.',
+    cause: 'Fomos ensinados que somos pequenos, limitados, separados do sagrado. Esquecemos que somos feitos da mesma essência criadora.',
+    hypothesis: 'O vazio se preenche quando reconhecemos que já somos completos. Que já carregamos em nós tudo que buscamos lá fora.',
+    exercise: 'Hoje, antes de buscar validação externa, pare e reconheça uma qualidade sagrada em você. Celebre essa centelha divina que habita seu ser.'
+  }
+];
+
+export const LiberdadeInterior = () => {
+  const [selectedChapter, setSelectedChapter] = useState<Chapter>(chapters[0]);
+  const [isPlaying, setIsPlaying] = useState(false);
+  const [activeSection, setActiveSection] = useState<'poem' | 'problem' | 'cause' | 'hypothesis' | 'exercise'>('poem');
+  const [reflectionText, setReflectionText] = useState('');
+  const audioRef = useRef<HTMLAudioElement>(null);
+
+  const handlePlayAudio = () => {
+    if (isPlaying) {
+      setIsPlaying(false);
+      // In a real implementation, you would pause actual audio
+    } else {
+      setIsPlaying(true);
+      // In a real implementation, you would play text-to-speech or audio file
+    }
+  };
+
+  return (
+    <div className="space-y-8">
+      {/* Header */}
+      <Card className="gradient-primary text-white border-0 shadow-strong">
+        <CardHeader className="text-center pb-8">
+          <div className="flex justify-center mb-4">
+            <Heart className="h-12 w-12 animate-gentle-bounce" />
+          </div>
+          <CardTitle className="text-4xl md:text-5xl font-heading font-bold mb-4">
+            Liberdade Interior
+          </CardTitle>
+          <p className="text-xl opacity-90 max-w-2xl mx-auto">
+            Uma jornada de 12 capítulos para quebrar as correntes invisíveis que limitam sua alma
+          </p>
+        </CardHeader>
+      </Card>
+
+      <div className="grid lg:grid-cols-4 gap-8">
+        {/* Chapters Navigation */}
+        <Card className="lg:col-span-1 glass-morphism border-primary/20">
+          <CardHeader>
+            <CardTitle className="text-xl font-heading flex items-center gap-2">
+              <Shield className="h-5 w-5 text-primary" />
+              Capítulos
+            </CardTitle>
+          </CardHeader>
+          <CardContent className="space-y-2">
+            {chapters.map((chapter) => (
+              <Button
+                key={chapter.id}
+                variant={selectedChapter.id === chapter.id ? 'default' : 'ghost'}
+                className="w-full justify-start text-left h-auto py-3 px-4"
+                onClick={() => setSelectedChapter(chapter)}
+              >
+                <div>
+                  <div className="font-semibold text-sm">{chapter.title}</div>
+                  <div className="text-xs opacity-80 mt-1">{chapter.subtitle}</div>
+                </div>
+              </Button>
+            ))}
+            <div className="mt-6 p-4 rounded-lg bg-muted/50 text-sm text-muted-foreground text-center">
+              <p>Mais 9 capítulos disponíveis na versão completa</p>
+            </div>
+          </CardContent>
+        </Card>
+
+        {/* Main Content */}
+        <div className="lg:col-span-3 space-y-6">
+          {/* Chapter Header */}
+          <Card className="shadow-medium">
+            <CardHeader>
+              <div className="flex items-center justify-between flex-wrap gap-4">
+                <div>
+                  <CardTitle className="text-3xl font-heading text-primary">
+                    {selectedChapter.title}
+                  </CardTitle>
+                  <p className="text-xl text-muted-foreground mt-1">
+                    {selectedChapter.subtitle}
+                  </p>
+                </div>
+                <Button
+                  onClick={handlePlayAudio}
+                  className="flex items-center gap-2 gradient-secondary text-secondary-foreground shadow-soft"
+                >
+                  {isPlaying ? (
+                    <>
+                      <Pause className="h-5 w-5" />
+                      Pausar Áudio
+                    </>
+                  ) : (
+                    <>
+                      <Play className="h-5 w-5" />
+                      Ouvir Capítulo
+                    </>
+                  )}
+                </Button>
+              </div>
+            </CardHeader>
+          </Card>
+
+          {/* Section Navigation */}
+          <Card className="shadow-soft">
+            <CardContent className="p-6">
+              <div className="grid grid-cols-2 md:grid-cols-5 gap-2">
+                <Button
+                  variant={activeSection === 'poem' ? 'default' : 'outline'}
+                  size="sm"
+                  onClick={() => setActiveSection('poem')}
+                  className="flex items-center gap-2"
+                >
+                  <Heart className="h-4 w-4" />
+                  <span className="hidden sm:inline">Poema</span>
+                </Button>
+                <Button
+                  variant={activeSection === 'problem' ? 'default' : 'outline'}
+                  size="sm"
+                  onClick={() => setActiveSection('problem')}
+                  className="flex items-center gap-2"
+                >
+                  <Shield className="h-4 w-4" />
+                  <span className="hidden sm:inline">Problema</span>
+                </Button>
+                <Button
+                  variant={activeSection === 'cause' ? 'default' : 'outline'}
+                  size="sm"
+                  onClick={() => setActiveSection('cause')}
+                  className="flex items-center gap-2"
+                >
+                  <Search className="h-4 w-4" />
+                  <span className="hidden sm:inline">Causa</span>
+                </Button>
+                <Button
+                  variant={activeSection === 'hypothesis' ? 'default' : 'outline'}
+                  size="sm"
+                  onClick={() => setActiveSection('hypothesis')}
+                  className="flex items-center gap-2"
+                >
+                  <Lightbulb className="h-4 w-4" />
+                  <span className="hidden sm:inline">Hipótese</span>
+                </Button>
+                <Button
+                  variant={activeSection === 'exercise' ? 'default' : 'outline'}
+                  size="sm"
+                  onClick={() => setActiveSection('exercise')}
+                  className="flex items-center gap-2"
+                >
+                  <MessageSquare className="h-4 w-4" />
+                  <span className="hidden sm:inline">Exercício</span>
+                </Button>
+              </div>
+            </CardContent>
+          </Card>
+
+          {/* Content Display */}
+          <Card className="shadow-medium">
+            <CardContent className="p-8">
+              {activeSection === 'poem' && (
+                <div className="space-y-6">
+                  <div className="flex items-center gap-2 mb-4">
+                    <Heart className="h-6 w-6 text-primary" />
+                    <h3 className="text-2xl font-heading font-bold text-primary">Reflexão Poética</h3>
+                  </div>
+                  <div className="bg-gradient-to-br from-primary/5 to-spiritual-violet/5 border-l-4 border-primary rounded-lg p-6">
+                    <blockquote className="poem-text text-foreground">
+                      {selectedChapter.poem}
+                    </blockquote>
+                  </div>
+                </div>
+              )}
+
+              {activeSection === 'problem' && (
+                <div className="space-y-6">
+                  <div className="flex items-center gap-2 mb-4">
+                    <Shield className="h-6 w-6 text-destructive" />
+                    <h3 className="text-2xl font-heading font-bold text-destructive">P - O Problema</h3>
+                  </div>
+                  <div className="bg-gradient-to-br from-destructive/5 to-destructive/10 border-l-4 border-destructive rounded-lg p-6">
+                    <p className="text-lg leading-relaxed">{selectedChapter.problem}</p>
+                  </div>
+                </div>
+              )}
+
+              {activeSection === 'cause' && (
+                <div className="space-y-6">
+                  <div className="flex items-center gap-2 mb-4">
+                    <Search className="h-6 w-6 text-spiritual-blue" />
+                    <h3 className="text-2xl font-heading font-bold text-spiritual-blue">C - A Causa</h3>
+                  </div>
+                  <div className="bg-gradient-to-br from-spiritual-blue/5 to-spiritual-blue/10 border-l-4 border-spiritual-blue rounded-lg p-6">
+                    <p className="text-lg leading-relaxed">{selectedChapter.cause}</p>
+                  </div>
+                </div>
+              )}
+
+              {activeSection === 'hypothesis' && (
+                <div className="space-y-6">
+                  <div className="flex items-center gap-2 mb-4">
+                    <Lightbulb className="h-6 w-6 text-secondary" />
+                    <h3 className="text-2xl font-heading font-bold text-secondary">H - A Hipótese</h3>
+                  </div>
+                  <div className="bg-gradient-to-br from-secondary/5 to-secondary/10 border-l-4 border-secondary rounded-lg p-6">
+                    <p className="text-lg leading-relaxed">{selectedChapter.hypothesis}</p>
+                  </div>
+                </div>
+              )}
+
+              {activeSection === 'exercise' && (
+                <div className="space-y-6">
+                  <div className="flex items-center gap-2 mb-4">
+                    <MessageSquare className="h-6 w-6 text-spiritual-violet" />
+                    <h3 className="text-2xl font-heading font-bold text-spiritual-violet">Exercício Reflexivo</h3>
+                  </div>
+                  <div className="bg-gradient-to-br from-spiritual-violet/5 to-spiritual-violet/10 border-l-4 border-spiritual-violet rounded-lg p-6 space-y-4">
+                    <p className="text-lg leading-relaxed">{selectedChapter.exercise}</p>
+                    <div className="mt-6">
+                      <label className="block text-sm font-medium mb-2">Suas reflexões:</label>
+                      <Textarea
+                        value={reflectionText}
+                        onChange={(e) => setReflectionText(e.target.value)}
+                        placeholder="Escreva aqui suas reflexões e insights sobre este capítulo..."
+                        className="min-h-[120px] resize-none"
+                      />
+                      <Button className="mt-4" size="sm">
+                        Salvar Reflexão
+                      </Button>
+                    </div>
+                  </div>
+                </div>
+              )}
+            </CardContent>
+          </Card>
+        </div>
+      </div>
+    </div>
+  );
+};

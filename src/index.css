@@ -1,0 +1,251 @@
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,700;1,400&family=Inter:wght@400;500;600;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Plataforma Espiritual & Poética - Sistema de Design Unificado */
+
+@layer base {
+  :root {
+    /* Core Colors - Paleta Espiritual */
+    --background: 258 100% 99%;
+    --foreground: 258 15% 15%;
+
+    --card: 0 0% 100%;
+    --card-foreground: 258 15% 15%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 258 15% 15%;
+
+    /* Primary - Roxo Místico */
+    --primary: 258 85% 66%;
+    --primary-foreground: 0 0% 100%;
+    --primary-light: 258 70% 85%;
+    --primary-dark: 258 90% 45%;
+
+    /* Secondary - Dourado Sagrado */
+    --secondary: 43 96% 56%;
+    --secondary-foreground: 25 25% 15%;
+    --secondary-light: 43 85% 75%;
+    --secondary-dark: 43 100% 35%;
+
+    /* Spiritual Palette */
+    --spiritual-blue: 217 91% 60%;
+    --spiritual-indigo: 234 89% 74%;
+    --spiritual-violet: 270 95% 75%;
+    --spiritual-rose: 330 81% 60%;
+    
+    /* Neutral Tones */
+    --muted: 258 20% 96%;
+    --muted-foreground: 258 10% 45%;
+
+    --accent: 258 30% 93%;
+    --accent-foreground: 258 15% 25%;
+
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 100%;
+
+    --border: 258 20% 88%;
+    --input: 258 20% 88%;
+    --ring: 258 85% 66%;
+
+    --radius: 0.75rem;
+
+    /* Gradientes Místicos */
+    --gradient-primary: linear-gradient(135deg, hsl(var(--primary)), hsl(var(--spiritual-violet)));
+    --gradient-secondary: linear-gradient(135deg, hsl(var(--secondary)), hsl(var(--secondary-light)));
+    --gradient-spiritual: linear-gradient(135deg, hsl(var(--spiritual-blue)), hsl(var(--spiritual-indigo)), hsl(var(--spiritual-violet)));
+    --gradient-sunset: linear-gradient(135deg, hsl(var(--secondary)), hsl(var(--spiritual-rose)));
+    
+    /* Sombras Elegantes */
+    --shadow-soft: 0 4px 20px -4px hsl(var(--primary) / 0.15);
+    --shadow-medium: 0 8px 30px -6px hsl(var(--primary) / 0.25);
+    --shadow-strong: 0 16px 40px -8px hsl(var(--primary) / 0.35);
+    --shadow-glow: 0 0 40px hsl(var(--primary) / 0.4);
+
+    /* Transições Suaves */
+    --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    --transition-gentle: all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  }
+
+  .dark {
+    --background: 258 35% 8%;
+    --foreground: 258 20% 92%;
+
+    --card: 258 30% 12%;
+    --card-foreground: 258 20% 92%;
+
+    --popover: 258 30% 12%;
+    --popover-foreground: 258 20% 92%;
+
+    --primary: 258 85% 70%;
+    --primary-foreground: 258 35% 8%;
+    --primary-light: 258 70% 80%;
+    --primary-dark: 258 90% 55%;
+
+    --secondary: 43 90% 65%;
+    --secondary-foreground: 25 25% 15%;
+    --secondary-light: 43 80% 78%;
+    --secondary-dark: 43 95% 45%;
+
+    --spiritual-blue: 217 85% 70%;
+    --spiritual-indigo: 234 80% 80%;
+    --spiritual-violet: 270 85% 80%;
+    --spiritual-rose: 330 75% 70%;
+
+    --muted: 258 25% 15%;
+    --muted-foreground: 258 15% 65%;
+
+    --accent: 258 25% 18%;
+    --accent-foreground: 258 20% 85%;
+
+    --destructive: 0 75% 65%;
+    --destructive-foreground: 0 0% 100%;
+
+    --border: 258 25% 22%;
+    --input: 258 25% 22%;
+    --ring: 258 85% 70%;
+
+    --shadow-soft: 0 4px 20px -4px hsl(0 0% 0% / 0.3);
+    --shadow-medium: 0 8px 30px -6px hsl(0 0% 0% / 0.4);
+    --shadow-strong: 0 16px 40px -8px hsl(0 0% 0% / 0.5);
+    --shadow-glow: 0 0 40px hsl(var(--primary) / 0.6);
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground font-body;
+    font-feature-settings: 'kern' 1, 'liga' 1;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-heading;
+    font-feature-settings: 'kern' 1, 'liga' 1, 'swsh' 1;
+  }
+
+  .poem-text {
+    @apply font-heading text-lg leading-relaxed;
+    font-style: italic;
+    white-space: pre-wrap;
+  }
+
+  /* Scrollbar personalizada */
+  ::-webkit-scrollbar {
+    @apply w-2;
+  }
+
+  ::-webkit-scrollbar-track {
+    @apply bg-muted;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    @apply bg-primary/30 rounded-full;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    @apply bg-primary/50;
+  }
+
+  /* Animações customizadas */
+  @keyframes gentle-bounce {
+    0%, 100% {
+      transform: translateY(0);
+    }
+    50% {
+      transform: translateY(-4px);
+    }
+  }
+
+  @keyframes fade-in-up {
+    0% {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    100% {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes glow-pulse {
+    0%, 100% {
+      box-shadow: 0 0 20px hsl(var(--primary) / 0.3);
+    }
+    50% {
+      box-shadow: 0 0 40px hsl(var(--primary) / 0.6);
+    }
+  }
+
+  .animate-gentle-bounce {
+    animation: gentle-bounce 2s ease-in-out infinite;
+  }
+
+  .animate-fade-in-up {
+    animation: fade-in-up 0.6s ease-out;
+  }
+
+  .animate-glow-pulse {
+    animation: glow-pulse 3s ease-in-out infinite;
+  }
+
+  /* Utilitários customizados */
+  .gradient-primary {
+    background: var(--gradient-primary);
+  }
+
+  .gradient-secondary {
+    background: var(--gradient-secondary);
+  }
+
+  .gradient-spiritual {
+    background: var(--gradient-spiritual);
+  }
+
+  .gradient-sunset {
+    background: var(--gradient-sunset);
+  }
+
+  .shadow-soft {
+    box-shadow: var(--shadow-soft);
+  }
+
+  .shadow-medium {
+    box-shadow: var(--shadow-medium);
+  }
+
+  .shadow-strong {
+    box-shadow: var(--shadow-strong);
+  }
+
+  .shadow-glow {
+    box-shadow: var(--shadow-glow);
+  }
+
+  .transition-smooth {
+    transition: var(--transition-smooth);
+  }
+
+  .transition-gentle {
+    transition: var(--transition-gentle);
+  }
+
+  .glass-morphism {
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+  }
+
+  .dark .glass-morphism {
+    background: rgba(0, 0, 0, 0.3);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+  }
+}
