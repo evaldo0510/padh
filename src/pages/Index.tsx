@@ -2,14 +2,22 @@ import React from 'react';
 import { Lightbulb, Star } from 'lucide-react';
 import { FerramentasPADH } from '@/components/sections/FerramentasPADH';
 import Header from '@/components/layout/Header';
+import { FloatingParticles } from '@/components/effects/FloatingParticles';
+import { CustomCursor } from '@/components/effects/CustomCursor';
+import { useScrollAnimation } from '@/hooks/useScrollAnimation';
 
 const Index = () => {
+  const toolsSection = useScrollAnimation(0.2);
+  const footerSection = useScrollAnimation(0.1);
+
   return (
     <div className="min-h-screen bg-background">
+      <CustomCursor />
       <Header />
       {/* Hero Section */}
       <section className="relative overflow-hidden min-h-[90vh] flex items-center">
         {/* Background Effects */}
+        <FloatingParticles />
         <div className="absolute inset-0 gradient-mesh opacity-50" />
         <div className="absolute inset-0 gradient-glow" />
         
@@ -85,13 +93,29 @@ const Index = () => {
       {/* Main Content */}
       <section className="relative container mx-auto px-6 py-24">
         <div className="absolute inset-0 gradient-glow opacity-30 -z-10" />
-        <FerramentasPADH />
+        <div
+          ref={toolsSection.ref}
+          className={`transition-all duration-1000 ${
+            toolsSection.isVisible
+              ? 'opacity-100 translate-y-0'
+              : 'opacity-0 translate-y-20'
+          }`}
+        >
+          <FerramentasPADH />
+        </div>
       </section>
 
       {/* Footer */}
       <footer className="relative mt-32 border-t border-border/50 overflow-hidden">
         <div className="absolute inset-0 gradient-mesh opacity-30" />
-        <div className="relative container mx-auto px-6 py-16 text-center">
+        <div
+          ref={footerSection.ref}
+          className={`relative container mx-auto px-6 py-16 text-center transition-all duration-1000 ${
+            footerSection.isVisible
+              ? 'opacity-100 translate-y-0'
+              : 'opacity-0 translate-y-20'
+          }`}
+        >
           <div className="space-y-8">
             <div className="flex justify-center items-center gap-3 mb-6">
               <div className="relative">
