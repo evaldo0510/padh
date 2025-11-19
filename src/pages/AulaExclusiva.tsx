@@ -3,6 +3,8 @@ import { Play, Users, Clock, Target, BookOpen, Brain } from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
+import Header from '@/components/layout/Header';
+import PageHeader from '@/components/layout/PageHeader';
 
 const AulaExclusiva = () => {
   const objetivos = [
@@ -74,6 +76,9 @@ const AulaExclusiva = () => {
 
   return (
     <div className="min-h-screen bg-background">
+      <Header />
+      <PageHeader currentPage="Aula Exclusiva" />
+      
       {/* Hero Section */}
       <section className="relative overflow-hidden">
         <div className="absolute inset-0 gradient-spiritual opacity-20" />

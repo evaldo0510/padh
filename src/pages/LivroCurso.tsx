@@ -1,29 +1,16 @@
 import React from 'react';
-import { BookOpen, Play, Pause, Volume2, ArrowLeft } from 'lucide-react';
+import { BookOpen, Volume2 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Separator } from '@/components/ui/separator';
-import { useNavigate } from 'react-router-dom';
 import Header from '@/components/layout/Header';
+import PageHeader from '@/components/layout/PageHeader';
 
 const LivroCurso = () => {
-  const navigate = useNavigate();
-
   return (
     <div className="min-h-screen bg-background">
       <Header />
-      
-      {/* Back Button */}
-      <div className="container mx-auto px-6 pt-6">
-        <Button
-          variant="ghost"
-          onClick={() => navigate(-1)}
-          className="group"
-        >
-          <ArrowLeft className="mr-2 h-4 w-4 transition-transform group-hover:-translate-x-1" />
-          Voltar
-        </Button>
-      </div>
+      <PageHeader currentPage="Livro-Curso" />
 
       {/* Hero Section */}
       <section className="relative overflow-hidden">

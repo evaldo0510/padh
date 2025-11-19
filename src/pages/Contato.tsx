@@ -5,6 +5,8 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { Label } from '@/components/ui/label';
+import Header from '@/components/layout/Header';
+import PageHeader from '@/components/layout/PageHeader';
 
 const Contato = () => {
   const [formData, setFormData] = useState({
@@ -31,6 +33,9 @@ const Contato = () => {
 
   return (
     <div className="min-h-screen bg-background">
+      <Header />
+      <PageHeader currentPage="Contato" />
+      
       {/* Hero Section */}
       <section className="relative overflow-hidden">
         <div className="absolute inset-0 gradient-spiritual opacity-20" />
