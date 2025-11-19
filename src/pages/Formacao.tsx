@@ -3,6 +3,8 @@ import { GraduationCap, Clock, Users, BookOpen, Brain, Target } from 'lucide-rea
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
+import Header from '@/components/layout/Header';
+import PageHeader from '@/components/layout/PageHeader';
 
 const Formacao = () => {
   const modulos = [
@@ -93,6 +95,9 @@ const Formacao = () => {
 
   return (
     <div className="min-h-screen bg-background">
+      <Header />
+      <PageHeader currentPage="Formação em PCH" />
+      
       {/* Hero Section */}
       <section className="relative overflow-hidden">
         <div className="absolute inset-0 gradient-spiritual opacity-20" />

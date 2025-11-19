@@ -3,6 +3,8 @@ import { Brain, Eye, Heart, Lightbulb, Zap, Target } from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Separator } from '@/components/ui/separator';
+import Header from '@/components/layout/Header';
+import PageHeader from '@/components/layout/PageHeader';
 
 const MapaCerebral = () => {
   const areasCerebrais = [
@@ -73,6 +75,9 @@ const MapaCerebral = () => {
 
   return (
     <div className="min-h-screen bg-background">
+      <Header />
+      <PageHeader currentPage="Mapa Cerebral" />
+      
       {/* Hero Section */}
       <section className="relative overflow-hidden">
         <div className="absolute inset-0 gradient-spiritual opacity-20" />
