@@ -5,8 +5,12 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Separator } from '@/components/ui/separator';
 import Header from '@/components/layout/Header';
 import PageHeader from '@/components/layout/PageHeader';
+import { usePageLoading } from '@/hooks/usePageLoading';
+import { PageSkeleton } from '@/components/ui/page-skeleton';
 
 const LivroCurso = () => {
+  const isLoading = usePageLoading(600);
+  if (isLoading) return <PageSkeleton />;
   return (
     <div className="min-h-screen bg-background">
       <Header />

@@ -5,8 +5,12 @@ import { Badge } from '@/components/ui/badge';
 import { Separator } from '@/components/ui/separator';
 import Header from '@/components/layout/Header';
 import PageHeader from '@/components/layout/PageHeader';
+import { usePageLoading } from '@/hooks/usePageLoading';
+import { PageSkeleton } from '@/components/ui/page-skeleton';
 
 const MapaCerebral = () => {
+  const isLoading = usePageLoading(600);
+  if (isLoading) return <PageSkeleton />;
   const areasCerebrais = [
     {
       nome: "Área de Broca e Wernicke",

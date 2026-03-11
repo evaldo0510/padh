@@ -5,8 +5,12 @@ import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import Header from '@/components/layout/Header';
 import PageHeader from '@/components/layout/PageHeader';
+import { usePageLoading } from '@/hooks/usePageLoading';
+import { PageSkeleton } from '@/components/ui/page-skeleton';
 
 const AulaExclusiva = () => {
+  const isLoading = usePageLoading(600);
+  if (isLoading) return <PageSkeleton />;
   const objetivos = [
     "Compreender as principais áreas cerebrais ativadas pela leitura poética",
     "Relacionar essas áreas com os efeitos terapêuticos da Poesia Cognitiva Hipnótica (PCH)",
