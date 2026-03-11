@@ -94,7 +94,7 @@ export const FloatingParticles = () => {
         // Desenhar partícula
         ctx.beginPath();
         ctx.arc(particle.x, particle.y, particle.size, 0, Math.PI * 2);
-        ctx.fillStyle = `rgba(139, 92, 246, ${particle.opacity})`;
+        ctx.fillStyle = `rgba(200, 160, 60, ${particle.opacity * 0.6})`;
         ctx.fill();
 
         // Conectar partículas próximas
@@ -107,7 +107,7 @@ export const FloatingParticles = () => {
             ctx.beginPath();
             ctx.moveTo(particle.x, particle.y);
             ctx.lineTo(otherParticle.x, otherParticle.y);
-            ctx.strokeStyle = `rgba(139, 92, 246, ${0.1 * (1 - distance / 100)})`;
+            ctx.strokeStyle = `rgba(200, 160, 60, ${0.06 * (1 - distance / 100)})`;
             ctx.lineWidth = 0.5;
             ctx.stroke();
           }

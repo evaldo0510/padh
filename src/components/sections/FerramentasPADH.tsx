@@ -58,7 +58,7 @@ para o que ainda não nasceu."`,
     variations: 'Versos para ansiedade ("Respiro calma, solto a pressa"). Versos para autoestima ("Sou completo em minha imperfeição"). Versos para coragem ("O medo é apenas amor disfarçado"). Versos visuais associados a imagens mentais específicas.',
     exercise: 'Identifique um padrão emocional limitante que se repete em sua vida. Crie um verso-gatilho de 2 linhas que contradiga esse padrão. Repita 5 vezes ao acordar e 5 vezes antes de dormir por uma semana. Documente mudanças percebidas.',
     icon: <Zap className="h-6 w-6" />,
-    color: 'text-spiritual-blue'
+    color: 'text-spiritual-indigo'
   },
   {
     id: 'poemadiagnostico',
@@ -205,7 +205,7 @@ const methodology = [
     description: 'Monitoramento da evolução entre sessões, ajustes na abordagem e reforço das transformações iniciadas.',
     details: 'Revisar práticas realizadas. Avaliar mudanças comportamentais e emocionais. Refinar ferramentas conforme feedback. Celebrar progressos alcançados. Adaptar estratégias futuras.',
     icon: <BookOpen className="h-8 w-8" />,
-    color: 'bg-spiritual-blue/10 text-spiritual-blue'
+    color: 'bg-spiritual-indigo/10 text-spiritual-indigo'
   }
 ];
 
@@ -253,7 +253,7 @@ export const FerramentasPADH = () => {
               </p>
             </div>
             <div className="space-y-2">
-              <h4 className="font-semibold text-lg text-spiritual-blue">Terapia Narrativa</h4>
+              <h4 className="font-semibold text-lg text-spiritual-indigo">Terapia Narrativa</h4>
               <p className="text-sm text-muted-foreground">
                 Resgata o poder das histórias pessoais, transformando relatos em poesia curativa.
               </p>
@@ -350,11 +350,11 @@ export const FerramentasPADH = () => {
 
               {/* Fundamentação */}
               <div className="space-y-3">
-                <h4 className="text-lg font-semibold text-spiritual-blue flex items-center gap-2">
+                <h4 className="text-lg font-semibold text-spiritual-indigo flex items-center gap-2">
                   <Brain className="h-5 w-5" />
                   Fundamentação
                 </h4>
-                <p className="text-muted-foreground bg-spiritual-blue/5 p-4 rounded-lg border-l-4 border-spiritual-blue">
+                <p className="text-muted-foreground bg-spiritual-indigo/5 p-4 rounded-lg border-l-4 border-spiritual-indigo">
                   {selectedTool.foundation}
                 </p>
               </div>

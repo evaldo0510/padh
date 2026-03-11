@@ -1,168 +1,363 @@
 import React from 'react';
-import { Lightbulb, Star } from 'lucide-react';
-import { FerramentasPADH } from '@/components/sections/FerramentasPADH';
+import { ArrowRight, BookOpen, Brain, Sparkles, Star, Heart, Users, GraduationCap, Feather } from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { Card, CardContent } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
 import Header from '@/components/layout/Header';
 import { FloatingParticles } from '@/components/effects/FloatingParticles';
-import { CustomCursor } from '@/components/effects/CustomCursor';
 import { useScrollAnimation } from '@/hooks/useScrollAnimation';
 import { usePageLoading } from '@/hooks/usePageLoading';
 import { PageSkeleton } from '@/components/ui/page-skeleton';
 
 const Index = () => {
-  const toolsSection = useScrollAnimation(0.2);
+  const aboutSection = useScrollAnimation(0.15);
+  const toolsSection = useScrollAnimation(0.15);
+  const pchSection = useScrollAnimation(0.15);
+  const journeySection = useScrollAnimation(0.15);
   const footerSection = useScrollAnimation(0.1);
-  const isLoading = usePageLoading(800);
+  const isLoading = usePageLoading(600);
 
   if (isLoading) return <PageSkeleton />;
 
+  const ferramentas = [
+    {
+      icon: <BookOpen className="h-5 w-5" />,
+      title: 'Livro-Curso',
+      desc: 'Mergulhe na teoria e prática da PCH com exercícios guiados que transformam a leitura em experiência terapêutica.',
+      link: '/livro-curso',
+    },
+    {
+      icon: <GraduationCap className="h-5 w-5" />,
+      title: 'Formação em PCH',
+      desc: 'Capacitação completa para terapeutas, psicólogos e educadores que desejam usar poesia como ferramenta clínica.',
+      link: '/formacao',
+    },
+    {
+      icon: <Brain className="h-5 w-5" />,
+      title: 'Mapa Cerebral',
+      desc: 'Descubra como cada verso ativa áreas específicas do cérebro — da amígdala ao córtex pré-frontal.',
+      link: '/mapa-cerebral',
+    },
+    {
+      icon: <Star className="h-5 w-5" />,
+      title: 'Aula Exclusiva',
+      desc: 'Uma aula teórico-vivencial sobre a neurociência da leitura terapêutica e o mapa cerebral do leitor poético.',
+      link: '/aula-exclusiva',
+    },
+  ];
+
   return (
     <div className="min-h-screen bg-background">
-      <CustomCursor />
       <Header />
+
       {/* Hero Section */}
-      <section className="relative overflow-hidden min-h-[90vh] flex items-center">
-        {/* Background Effects */}
+      <section className="relative overflow-hidden min-h-[85vh] flex items-center">
         <FloatingParticles />
-        <div className="absolute inset-0 gradient-mesh opacity-50" />
+        <div className="absolute inset-0 gradient-hero" />
         <div className="absolute inset-0 gradient-glow" />
         
-        {/* Floating Orbs */}
-        <div className="absolute top-20 left-10 w-72 h-72 bg-primary/20 rounded-full blur-3xl animate-float" />
-        <div className="absolute bottom-20 right-10 w-96 h-96 bg-secondary/20 rounded-full blur-3xl animate-float" style={{ animationDelay: '2s' }} />
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-spiritual-violet/10 rounded-full blur-3xl" />
+        {/* Subtle orbs */}
+        <div className="absolute top-1/4 left-[10%] w-64 h-64 bg-primary/5 rounded-full blur-3xl animate-float" />
+        <div className="absolute bottom-1/4 right-[10%] w-80 h-80 bg-secondary/5 rounded-full blur-3xl animate-float" style={{ animationDelay: '3s' }} />
         
-        <div className="relative container mx-auto px-6 py-32 text-center z-10">
-          <div className="animate-fade-in-up space-y-8">
-            {/* Badge */}
-            <div className="flex justify-center mb-6">
-              <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full glass-morphism border-glow">
-                <Lightbulb className="h-4 w-4 text-primary animate-glow-pulse" />
-                <span className="text-sm font-medium text-foreground/90">Transformação & Autoconhecimento</span>
-              </div>
+        <div className="relative container mx-auto px-6 py-24 z-10">
+          <div className="max-w-4xl mx-auto text-center animate-fade-in-up space-y-8">
+            {/* Tagline */}
+            <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-primary/20 bg-primary/5 text-primary text-sm font-medium">
+              <Feather className="h-3.5 w-3.5" />
+              Poesia como ciência da transformação
             </div>
             
             {/* Title */}
-            <h1 className="text-7xl md:text-9xl font-heading font-bold mb-6 leading-tight">
-              <span className="inline-block glow-text bg-gradient-to-r from-primary via-spiritual-violet to-secondary bg-clip-text text-transparent animate-gradient">
-                Ferramentas P.A.D.H.
-              </span>
+            <h1 className="text-5xl sm:text-6xl md:text-8xl font-heading font-bold leading-[0.95] tracking-tight">
+              <span className="text-foreground">Protocolo Avançado de</span>
+              <br />
+              <span className="text-primary italic">Desenvolvimento Humano</span>
             </h1>
             
             {/* Subtitle */}
-            <p className="text-xl md:text-3xl text-foreground/80 mb-12 max-w-4xl mx-auto leading-relaxed font-light">
-              <span className="font-semibold text-primary">Protocolo Avançado de Desenvolvimento Humano</span>
-              <br />
-              <span className="text-lg md:text-xl text-muted-foreground mt-2 block">
-                Técnicas integradas para transformação pessoal através da consciência expandida
-              </span>
+            <p className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto leading-relaxed">
+              A <strong className="text-foreground">Poesia Cognitiva Hipnótica</strong> une neurociência, 
+              hipnose ericksoniana e linguagem simbólica para criar intervenções terapêuticas 
+              que transformam o inconsciente através da beleza da palavra.
             </p>
             
-            {/* CTA Buttons */}
-            <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
-              <button className="group relative px-8 py-4 rounded-full bg-primary hover:bg-primary/90 text-primary-foreground font-semibold text-lg transition-all duration-300 shadow-glow hover:shadow-strong hover:scale-105">
-                <span className="relative z-10">Explorar Ferramentas</span>
-                <div className="absolute inset-0 rounded-full bg-gradient-to-r from-primary to-secondary opacity-0 group-hover:opacity-100 transition-opacity blur" />
-              </button>
-              
-              <button className="px-8 py-4 rounded-full glass-card border-glow text-foreground font-semibold text-lg hover:bg-white/5 transition-all duration-300">
-                Saiba Mais
-              </button>
+            {/* CTA */}
+            <div className="flex flex-col sm:flex-row gap-3 justify-center pt-4">
+              <Link to="/livro-curso">
+                <Button size="lg" className="w-full sm:w-auto bg-primary text-primary-foreground hover:bg-primary-dark text-base px-8">
+                  Iniciar Jornada
+                  <ArrowRight className="ml-2 h-4 w-4" />
+                </Button>
+              </Link>
+              <Link to="/formacao">
+                <Button variant="outline" size="lg" className="w-full sm:w-auto border-primary/30 text-foreground hover:bg-primary/5 text-base px-8">
+                  Conhecer a Formação
+                </Button>
+              </Link>
             </div>
-            
-            {/* Stats */}
-            <div className="grid grid-cols-3 gap-8 max-w-3xl mx-auto mt-16">
-              <div className="text-center">
-                <div className="text-4xl font-bold text-primary mb-2">7+</div>
-                <div className="text-sm text-muted-foreground">Ferramentas</div>
-              </div>
-              <div className="text-center">
-                <div className="text-4xl font-bold text-secondary mb-2">100%</div>
-                <div className="text-sm text-muted-foreground">Científico</div>
-              </div>
-              <div className="text-center">
-                <div className="text-4xl font-bold text-spiritual-violet mb-2">∞</div>
-                <div className="text-sm text-muted-foreground">Potencial</div>
-              </div>
+
+            {/* Poem quote */}
+            <div className="pt-8 max-w-lg mx-auto">
+              <blockquote className="poem-block">
+                <p className="poem-text text-base text-muted-foreground">
+                  A poesia toca onde a fala falha.<br />
+                  A hipnose abre o portão dos porões.<br />
+                  A cognição redesenha o mapa interno.
+                </p>
+                <cite className="text-sm text-primary/70 mt-2 block not-italic">— Evaldo PCH Master</cite>
+              </blockquote>
             </div>
-          </div>
-        </div>
-        
-        {/* Scroll Indicator */}
-        <div className="absolute bottom-8 left-1/2 -translate-x-1/2 animate-gentle-bounce">
-          <div className="w-6 h-10 rounded-full border-2 border-primary/30 flex items-start justify-center p-2">
-            <div className="w-1.5 h-3 rounded-full bg-primary animate-pulse" />
           </div>
         </div>
       </section>
 
-      {/* Main Content */}
-      <section className="relative container mx-auto px-6 py-24">
-        <div className="absolute inset-0 gradient-glow opacity-30 -z-10" />
+      {/* O que é a P.A.D.H. */}
+      <section className="relative py-24 overflow-hidden">
+        <div className="absolute inset-0 gradient-warm" />
         <div
-          ref={toolsSection.ref}
-          className={`transition-all duration-1000 ${
-            toolsSection.isVisible
-              ? 'opacity-100 translate-y-0'
-              : 'opacity-0 translate-y-20'
+          ref={aboutSection.ref}
+          className={`relative container mx-auto px-6 transition-all duration-1000 ${
+            aboutSection.isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-12'
           }`}
         >
-          <FerramentasPADH />
+          <div className="max-w-5xl mx-auto">
+            <div className="text-center mb-16">
+              <p className="text-sm uppercase tracking-[0.2em] text-primary mb-3 font-medium">Sobre a Metodologia</p>
+              <h2 className="text-3xl md:text-5xl font-heading font-bold text-foreground mb-6">
+                O que é a Poesia Cognitiva Hipnótica?
+              </h2>
+              <div className="w-16 h-px bg-primary/40 mx-auto" />
+            </div>
+
+            <div className="grid md:grid-cols-2 gap-12 items-start">
+              <div className="space-y-6">
+                <p className="text-lg text-muted-foreground leading-relaxed">
+                  A <strong className="text-foreground">PCH</strong> é uma abordagem inovadora criada por Evaldo PCH Master 
+                  que utiliza a poesia como instrumento terapêutico — não apenas como expressão artística, 
+                  mas como <em>intervenção neurológica precisa</em>.
+                </p>
+                <p className="text-muted-foreground leading-relaxed">
+                  Ao combinar os ritmos e metáforas da poesia com princípios da hipnose ericksoniana 
+                  e da neurociência cognitiva, a PCH cria um caminho de acesso ao inconsciente 
+                  que contorna as defesas racionais e permite transformações profundas.
+                </p>
+                <p className="text-muted-foreground leading-relaxed">
+                  O protocolo <strong className="text-foreground">P.A.D.H.</strong> (Preparação – Aplicação – 
+                  Desenvolvimento – Hibridização) estrutura esse processo em etapas claras, 
+                  oferecendo ao terapeuta-poeta um mapa preciso de atuação.
+                </p>
+              </div>
+
+              <div className="space-y-4">
+                {[
+                  { icon: <Heart className="h-5 w-5 text-spiritual-rose" />, title: 'Poesia Terapêutica', text: 'Ressignifica sentidos através da beleza e do poder simbólico das palavras.' },
+                  { icon: <Brain className="h-5 w-5 text-spiritual-indigo" />, title: 'Neurociência Aplicada', text: 'Cada verso ativa redes neurais específicas — da amígdala ao córtex pré-frontal.' },
+                  { icon: <Sparkles className="h-5 w-5 text-primary" />, title: 'Hipnose Ericksoniana', text: 'Linguagem indireta e metafórica que convida o inconsciente a cocriar soluções.' },
+                ].map((item, i) => (
+                  <Card key={i} className="border-border/50 bg-card/50">
+                    <CardContent className="flex gap-4 p-5">
+                      <div className="mt-0.5">{item.icon}</div>
+                      <div>
+                        <h4 className="font-heading font-semibold text-foreground mb-1">{item.title}</h4>
+                        <p className="text-sm text-muted-foreground">{item.text}</p>
+                      </div>
+                    </CardContent>
+                  </Card>
+                ))}
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Ferramentas */}
+      <section className="py-24 border-t border-border/30">
+        <div
+          ref={toolsSection.ref}
+          className={`container mx-auto px-6 transition-all duration-1000 ${
+            toolsSection.isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-12'
+          }`}
+        >
+          <div className="max-w-5xl mx-auto">
+            <div className="text-center mb-16">
+              <p className="text-sm uppercase tracking-[0.2em] text-primary mb-3 font-medium">Explore</p>
+              <h2 className="text-3xl md:text-5xl font-heading font-bold text-foreground mb-6">
+                Ferramentas P.A.D.H.
+              </h2>
+              <p className="text-muted-foreground max-w-2xl mx-auto">
+                Cada ferramenta é um caminho diferente de acesso ao interior — da introspecção guiada 
+                à neurociência da leitura poética.
+              </p>
+            </div>
+
+            <div className="grid sm:grid-cols-2 gap-6">
+              {ferramentas.map((tool, i) => (
+                <Link key={i} to={tool.link} className="group">
+                  <Card className="h-full border-border/50 hover:border-primary/30 transition-all duration-300 hover:shadow-medium bg-card/50">
+                    <CardContent className="p-6 space-y-3">
+                      <div className="flex items-center gap-3">
+                        <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center text-primary group-hover:bg-primary/15 transition-colors">
+                          {tool.icon}
+                        </div>
+                        <h3 className="text-lg font-heading font-semibold text-foreground group-hover:text-primary transition-colors">
+                          {tool.title}
+                        </h3>
+                      </div>
+                      <p className="text-sm text-muted-foreground leading-relaxed">{tool.desc}</p>
+                      <div className="flex items-center text-sm text-primary/70 group-hover:text-primary transition-colors pt-1">
+                        Explorar <ArrowRight className="ml-1 h-3.5 w-3.5 group-hover:translate-x-1 transition-transform" />
+                      </div>
+                    </CardContent>
+                  </Card>
+                </Link>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* A Ciência por Trás */}
+      <section className="py-24 border-t border-border/30 relative overflow-hidden">
+        <div className="absolute inset-0 gradient-mesh" />
+        <div
+          ref={pchSection.ref}
+          className={`relative container mx-auto px-6 transition-all duration-1000 ${
+            pchSection.isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-12'
+          }`}
+        >
+          <div className="max-w-4xl mx-auto text-center">
+            <p className="text-sm uppercase tracking-[0.2em] text-primary mb-3 font-medium">Fundamentos</p>
+            <h2 className="text-3xl md:text-5xl font-heading font-bold text-foreground mb-12">
+              Onde a Ciência Encontra a Poesia
+            </h2>
+
+            <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6 text-left">
+              {[
+                { title: 'Neurociência', desc: 'Leitura poética estimula córtex pré-frontal, amígdala e hipocampo — favorecendo regulação emocional e neuroplasticidade.', color: 'text-spiritual-indigo' },
+                { title: 'Hipnose Ericksoniana', desc: 'Abordagem indireta e metafórica: terreno fértil para transformação inconsciente e cocriação de soluções.', color: 'text-spiritual-violet' },
+                { title: 'Terapia Narrativa', desc: 'O poder das histórias pessoais — transformar relatos de vida em poesia curativa que ressignifica identidade.', color: 'text-spiritual-sage' },
+                { title: 'Linguística Cognitiva', desc: 'Metáforas como estruturas cognitivas fundamentais — Lakoff, Johnson e o poder dos signos e símbolos.', color: 'text-primary' },
+              ].map((item, i) => (
+                <div key={i} className="glass-card p-5 rounded-xl space-y-3">
+                  <h4 className={`font-heading font-semibold ${item.color}`}>{item.title}</h4>
+                  <p className="text-sm text-muted-foreground leading-relaxed">{item.desc}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Jornada de Transformação */}
+      <section className="py-24 border-t border-border/30">
+        <div
+          ref={journeySection.ref}
+          className={`container mx-auto px-6 transition-all duration-1000 ${
+            journeySection.isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-12'
+          }`}
+        >
+          <div className="max-w-3xl mx-auto text-center">
+            <p className="text-sm uppercase tracking-[0.2em] text-primary mb-3 font-medium">Metodologia</p>
+            <h2 className="text-3xl md:text-5xl font-heading font-bold text-foreground mb-6">
+              As 4 Fases do P.A.D.H.
+            </h2>
+            <p className="text-muted-foreground mb-12 max-w-xl mx-auto">
+              O protocolo estrutura a intervenção poético-terapêutica em quatro fases claras e progressivas.
+            </p>
+
+            <div className="grid sm:grid-cols-2 gap-6 text-left">
+              {[
+                { letter: 'P', name: 'Preparação', desc: 'Criar ambiente seguro, estabelecer rapport e definir intenções claras para a sessão. Avaliar estado emocional e configurar o espaço para a experiência.' },
+                { letter: 'A', name: 'Aplicação', desc: 'Uso ativo das ferramentas P.A.D.H. com timing adequado, atenção às respostas verbais e não-verbais, e flexibilidade responsiva.' },
+                { letter: 'D', name: 'Desenvolvimento', desc: 'Aprofundamento da experiência, registro de insights, ancoragem dos estados emocionais alcançados e criação de novos significados.' },
+                { letter: 'H', name: 'Hibridização', desc: 'Integração com outras abordagens terapêuticas, criação de rituais de continuidade e estabelecimento de práticas para o cotidiano.' },
+              ].map((phase, i) => (
+                <div key={i} className="flex gap-4 p-5 rounded-xl border border-border/50 bg-card/30">
+                  <div className="w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center text-primary font-heading text-2xl font-bold flex-shrink-0">
+                    {phase.letter}
+                  </div>
+                  <div>
+                    <h4 className="font-heading font-semibold text-foreground mb-1">{phase.name}</h4>
+                    <p className="text-sm text-muted-foreground leading-relaxed">{phase.desc}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Poem CTA */}
+      <section className="py-24 border-t border-border/30 relative overflow-hidden">
+        <div className="absolute inset-0 gradient-glow" />
+        <div className="relative container mx-auto px-6 text-center">
+          <div className="max-w-2xl mx-auto space-y-8">
+            <Feather className="h-8 w-8 text-primary mx-auto opacity-60" />
+            <blockquote className="text-2xl md:text-3xl font-heading italic text-foreground/90 leading-relaxed">
+              "Ler poesia não é ler palavras.<br />
+              É ler a si mesmo num espelho<br />
+              feito de símbolos."
+            </blockquote>
+            <cite className="text-sm text-primary/70 block not-italic">— Evaldo PCH Master</cite>
+            <div className="pt-4">
+              <Link to="/contato">
+                <Button size="lg" className="bg-primary text-primary-foreground hover:bg-primary-dark px-8">
+                  Comece sua Jornada
+                  <ArrowRight className="ml-2 h-4 w-4" />
+                </Button>
+              </Link>
+            </div>
+          </div>
         </div>
       </section>
 
       {/* Footer */}
-      <footer className="relative mt-32 border-t border-border/50 overflow-hidden">
-        <div className="absolute inset-0 gradient-mesh opacity-30" />
+      <footer className="border-t border-border/30">
         <div
           ref={footerSection.ref}
-          className={`relative container mx-auto px-6 py-16 text-center transition-all duration-1000 ${
-            footerSection.isVisible
-              ? 'opacity-100 translate-y-0'
-              : 'opacity-0 translate-y-20'
+          className={`container mx-auto px-6 py-16 transition-all duration-1000 ${
+            footerSection.isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-12'
           }`}
         >
-          <div className="space-y-8">
-            <div className="flex justify-center items-center gap-3 mb-6">
-              <div className="relative">
-                <Star className="h-8 w-8 text-primary animate-gentle-bounce" />
-                <div className="absolute inset-0 h-8 w-8 text-primary animate-glow-pulse opacity-50" />
+          <div className="max-w-5xl mx-auto">
+            <div className="grid md:grid-cols-3 gap-12 mb-12">
+              <div>
+                <h4 className="font-heading font-bold text-lg text-foreground mb-4">P.A.D.H.</h4>
+                <p className="text-sm text-muted-foreground leading-relaxed">
+                  Protocolo Avançado de Desenvolvimento Humano — uma metodologia científica que utiliza 
+                  a poesia como agente neuroplástico para transformação interior.
+                </p>
               </div>
-              <h3 className="text-4xl font-heading font-bold bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">
-                P.A.D.H.
-              </h3>
-              <div className="relative">
-                <Star className="h-8 w-8 text-secondary animate-gentle-bounce" style={{ animationDelay: '1s' }} />
-                <div className="absolute inset-0 h-8 w-8 text-secondary animate-glow-pulse opacity-50" />
+              <div>
+                <h4 className="font-heading font-bold text-lg text-foreground mb-4">Navegação</h4>
+                <nav className="space-y-2">
+                  {[
+                    { name: 'Livro-Curso', path: '/livro-curso' },
+                    { name: 'Formação em PCH', path: '/formacao' },
+                    { name: 'Mapa Cerebral', path: '/mapa-cerebral' },
+                    { name: 'Aula Exclusiva', path: '/aula-exclusiva' },
+                    { name: 'Contato', path: '/contato' },
+                  ].map((item) => (
+                    <Link key={item.path} to={item.path} className="block text-sm text-muted-foreground hover:text-primary transition-colors">
+                      {item.name}
+                    </Link>
+                  ))}
+                </nav>
               </div>
-            </div>
-            
-            <p className="text-foreground/70 mb-8 max-w-2xl mx-auto text-lg leading-relaxed">
-              Protocolo Avançado de Desenvolvimento Humano - Uma metodologia integrada para o crescimento pessoal 
-              e desenvolvimento da consciência através de técnicas científicas e práticas transformadoras.
-            </p>
-            
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-6 max-w-4xl mx-auto">
-              <div className="glass-card p-4 rounded-xl hover:scale-105 transition-transform">
-                <div className="text-3xl mb-2">🧠</div>
-                <div className="text-sm font-medium text-foreground/80">Neuroplasticidade</div>
-              </div>
-              <div className="glass-card p-4 rounded-xl hover:scale-105 transition-transform">
-                <div className="text-3xl mb-2">🌟</div>
-                <div className="text-sm font-medium text-foreground/80">Consciência Expandida</div>
-              </div>
-              <div className="glass-card p-4 rounded-xl hover:scale-105 transition-transform">
-                <div className="text-3xl mb-2">📖</div>
-                <div className="text-sm font-medium text-foreground/80">Crescimento Pessoal</div>
-              </div>
-              <div className="glass-card p-4 rounded-xl hover:scale-105 transition-transform">
-                <div className="text-3xl mb-2">💜</div>
-                <div className="text-sm font-medium text-foreground/80">Transformação Interior</div>
+              <div>
+                <h4 className="font-heading font-bold text-lg text-foreground mb-4">Sobre o Criador</h4>
+                <p className="text-sm text-muted-foreground leading-relaxed">
+                  <strong className="text-foreground">Evaldo PCH Master</strong> — criador da metodologia P.A.D.H. 
+                  e especialista em Poesia Cognitiva Hipnótica. Anos de experiência integrando poesia, 
+                  psicologia e neurociência para transformação pessoal.
+                </p>
               </div>
             </div>
             
-            <div className="pt-8 mt-8 border-t border-border/30">
+            <div className="pt-8 border-t border-border/30 text-center">
               <p className="text-sm text-muted-foreground">
-                © 2024 P.A.D.H. - Todos os direitos reservados
+                © {new Date().getFullYear()} P.A.D.H. — Evaldo PCH Master. Todos os direitos reservados.
               </p>
             </div>
           </div>
