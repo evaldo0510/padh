@@ -350,11 +350,11 @@ export const FerramentasPADH = () => {
 
               {/* Fundamentação */}
               <div className="space-y-3">
-                <h4 className="text-lg font-semibold text-spiritual-blue flex items-center gap-2">
+                <h4 className="text-lg font-semibold text-spiritual-indigo flex items-center gap-2">
                   <Brain className="h-5 w-5" />
                   Fundamentação
                 </h4>
-                <p className="text-muted-foreground bg-spiritual-blue/5 p-4 rounded-lg border-l-4 border-spiritual-blue">
+                <p className="text-muted-foreground bg-spiritual-indigo/5 p-4 rounded-lg border-l-4 border-spiritual-indigo">
                   {selectedTool.foundation}
                 </p>
               </div>
