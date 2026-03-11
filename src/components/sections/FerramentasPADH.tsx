@@ -58,7 +58,7 @@ para o que ainda não nasceu."`,
     variations: 'Versos para ansiedade ("Respiro calma, solto a pressa"). Versos para autoestima ("Sou completo em minha imperfeição"). Versos para coragem ("O medo é apenas amor disfarçado"). Versos visuais associados a imagens mentais específicas.',
     exercise: 'Identifique um padrão emocional limitante que se repete em sua vida. Crie um verso-gatilho de 2 linhas que contradiga esse padrão. Repita 5 vezes ao acordar e 5 vezes antes de dormir por uma semana. Documente mudanças percebidas.',
     icon: <Zap className="h-6 w-6" />,
-    color: 'text-spiritual-blue'
+    color: 'text-spiritual-indigo'
   },
   {
     id: 'poemadiagnostico',
