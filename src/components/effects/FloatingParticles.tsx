@@ -94,7 +94,7 @@ export const FloatingParticles = () => {
         // Desenhar partícula
         ctx.beginPath();
         ctx.arc(particle.x, particle.y, particle.size, 0, Math.PI * 2);
-        ctx.fillStyle = `rgba(139, 92, 246, ${particle.opacity})`;
+        ctx.fillStyle = `rgba(200, 160, 60, ${particle.opacity * 0.6})`;
         ctx.fill();
 
         // Conectar partículas próximas
