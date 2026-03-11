@@ -253,7 +253,7 @@ export const FerramentasPADH = () => {
               </p>
             </div>
             <div className="space-y-2">
-              <h4 className="font-semibold text-lg text-spiritual-blue">Terapia Narrativa</h4>
+              <h4 className="font-semibold text-lg text-spiritual-indigo">Terapia Narrativa</h4>
               <p className="text-sm text-muted-foreground">
                 Resgata o poder das histórias pessoais, transformando relatos em poesia curativa.
               </p>
