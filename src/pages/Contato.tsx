@@ -11,13 +11,13 @@ import { usePageLoading } from '@/hooks/usePageLoading';
 import { PageSkeleton } from '@/components/ui/page-skeleton';
 
 const Contato = () => {
-  const isLoading = usePageLoading(600);
-  if (isLoading) return <PageSkeleton />;
   const [formData, setFormData] = useState({
     nome: '',
     email: '',
     mensagem: ''
   });
+  const isLoading = usePageLoading(600);
+  if (isLoading) return <PageSkeleton />;
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
