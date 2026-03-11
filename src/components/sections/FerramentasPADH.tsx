@@ -205,7 +205,7 @@ const methodology = [
     description: 'Monitoramento da evolução entre sessões, ajustes na abordagem e reforço das transformações iniciadas.',
     details: 'Revisar práticas realizadas. Avaliar mudanças comportamentais e emocionais. Refinar ferramentas conforme feedback. Celebrar progressos alcançados. Adaptar estratégias futuras.',
     icon: <BookOpen className="h-8 w-8" />,
-    color: 'bg-spiritual-blue/10 text-spiritual-blue'
+    color: 'bg-spiritual-indigo/10 text-spiritual-indigo'
   }
 ];
 
