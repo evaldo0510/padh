@@ -7,8 +7,12 @@ import { Textarea } from '@/components/ui/textarea';
 import { Label } from '@/components/ui/label';
 import Header from '@/components/layout/Header';
 import PageHeader from '@/components/layout/PageHeader';
+import { usePageLoading } from '@/hooks/usePageLoading';
+import { PageSkeleton } from '@/components/ui/page-skeleton';
 
 const Contato = () => {
+  const isLoading = usePageLoading(600);
+  if (isLoading) return <PageSkeleton />;
   const [formData, setFormData] = useState({
     nome: '',
     email: '',

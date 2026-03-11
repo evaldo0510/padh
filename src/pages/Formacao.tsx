@@ -5,8 +5,12 @@ import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import Header from '@/components/layout/Header';
 import PageHeader from '@/components/layout/PageHeader';
+import { usePageLoading } from '@/hooks/usePageLoading';
+import { PageSkeleton } from '@/components/ui/page-skeleton';
 
 const Formacao = () => {
+  const isLoading = usePageLoading(600);
+  if (isLoading) return <PageSkeleton />;
   const modulos = [
     {
       numero: 1,

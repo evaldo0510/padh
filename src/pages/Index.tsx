@@ -5,10 +5,15 @@ import Header from '@/components/layout/Header';
 import { FloatingParticles } from '@/components/effects/FloatingParticles';
 import { CustomCursor } from '@/components/effects/CustomCursor';
 import { useScrollAnimation } from '@/hooks/useScrollAnimation';
+import { usePageLoading } from '@/hooks/usePageLoading';
+import { PageSkeleton } from '@/components/ui/page-skeleton';
 
 const Index = () => {
   const toolsSection = useScrollAnimation(0.2);
   const footerSection = useScrollAnimation(0.1);
+  const isLoading = usePageLoading(800);
+
+  if (isLoading) return <PageSkeleton />;
 
   return (
     <div className="min-h-screen bg-background">
