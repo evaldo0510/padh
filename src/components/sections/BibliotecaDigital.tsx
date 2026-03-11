@@ -68,7 +68,7 @@ const typeColors = {
   chapter: 'bg-primary/10 text-primary border-primary/20',
   tool: 'bg-spiritual-violet/10 text-spiritual-violet border-spiritual-violet/20',
   poem: 'bg-secondary/10 text-secondary border-secondary/20',
-  reflection: 'bg-spiritual-blue/10 text-spiritual-blue border-spiritual-blue/20'
+  reflection: 'bg-spiritual-indigo/10 text-spiritual-indigo border-spiritual-indigo/20'
 };
 
 const typeNames = {

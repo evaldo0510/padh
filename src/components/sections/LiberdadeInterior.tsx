@@ -249,10 +249,10 @@ export const LiberdadeInterior = () => {
               {activeSection === 'cause' && (
                 <div className="space-y-6">
                   <div className="flex items-center gap-2 mb-4">
-                    <Search className="h-6 w-6 text-spiritual-blue" />
-                    <h3 className="text-2xl font-heading font-bold text-spiritual-blue">C - A Causa</h3>
+                    <Search className="h-6 w-6 text-spiritual-indigo" />
+                    <h3 className="text-2xl font-heading font-bold text-spiritual-indigo">C - A Causa</h3>
                   </div>
-                  <div className="bg-gradient-to-br from-spiritual-blue/5 to-spiritual-blue/10 border-l-4 border-spiritual-blue rounded-lg p-6">
+                  <div className="bg-gradient-to-br from-spiritual-indigo/5 to-spiritual-indigo/10 border-l-4 border-spiritual-indigo rounded-lg p-6">
                     <p className="text-lg leading-relaxed">{selectedChapter.cause}</p>
                   </div>
                 </div>
