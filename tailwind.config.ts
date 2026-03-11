@@ -14,8 +14,8 @@ export default {
     },
     extend: {
       fontFamily: {
-        heading: ['Cormorant Garamond', 'serif'],
-        body: ['Inter', 'sans-serif'],
+        heading: ['Playfair Display', 'serif'],
+        body: ['Source Sans 3', 'sans-serif'],
       },
       colors: {
         border: "hsl(var(--border))",
@@ -36,17 +36,15 @@ export default {
           dark: "hsl(var(--secondary-dark))",
         },
         spiritual: {
-          blue: "hsl(var(--spiritual-blue))",
+          gold: "hsl(var(--spiritual-gold))",
           indigo: "hsl(var(--spiritual-indigo))",
           violet: "hsl(var(--spiritual-violet))",
           rose: "hsl(var(--spiritual-rose))",
-          cyan: "hsl(var(--spiritual-cyan))",
-          emerald: "hsl(var(--spiritual-emerald))",
+          sage: "hsl(var(--spiritual-sage))",
+          amber: "hsl(var(--spiritual-amber))",
         },
-        neon: {
-          cyan: "hsl(var(--accent-neon))",
-          gold: "hsl(var(--accent-gold))",
-        },
+        warm: "hsl(var(--accent-warm))",
+        sage: "hsl(var(--accent-sage))",
         destructive: {
           DEFAULT: "hsl(var(--destructive))",
           foreground: "hsl(var(--destructive-foreground))",
@@ -75,20 +73,12 @@ export default {
       },
       keyframes: {
         "accordion-down": {
-          from: {
-            height: "0",
-          },
-          to: {
-            height: "var(--radix-accordion-content-height)",
-          },
+          from: { height: "0" },
+          to: { height: "var(--radix-accordion-content-height)" },
         },
         "accordion-up": {
-          from: {
-            height: "var(--radix-accordion-content-height)",
-          },
-          to: {
-            height: "0",
-          },
+          from: { height: "var(--radix-accordion-content-height)" },
+          to: { height: "0" },
         },
       },
       animation: {
