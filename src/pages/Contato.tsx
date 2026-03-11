@@ -11,25 +11,17 @@ import { usePageLoading } from '@/hooks/usePageLoading';
 import { PageSkeleton } from '@/components/ui/page-skeleton';
 
 const Contato = () => {
-  const [formData, setFormData] = useState({
-    nome: '',
-    email: '',
-    mensagem: ''
-  });
-  const isLoading = usePageLoading(600);
+  const [formData, setFormData] = useState({ nome: '', email: '', mensagem: '' });
+  const isLoading = usePageLoading(500);
   if (isLoading) return <PageSkeleton />;
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
-    setFormData(prev => ({
-      ...prev,
-      [name]: value
-    }));
+    setFormData(prev => ({ ...prev, [name]: value }));
   };
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    // Aqui você implementaria o envio do formulário
     console.log('Formulário enviado:', formData);
     alert('Mensagem enviada com sucesso!');
     setFormData({ nome: '', email: '', mensagem: '' });
@@ -40,189 +32,129 @@ const Contato = () => {
       <Header />
       <PageHeader currentPage="Contato" />
       
-      {/* Hero Section */}
+      {/* Hero */}
       <section className="relative overflow-hidden">
-        <div className="absolute inset-0 gradient-spiritual opacity-20" />
+        <div className="absolute inset-0 gradient-glow" />
         <div className="relative container mx-auto px-6 py-20 text-center">
-          <div className="animate-fade-in-up">
-            <Mail className="h-16 w-16 text-primary mx-auto mb-6" />
-            <h1 className="text-5xl md:text-7xl font-heading font-bold mb-6 bg-gradient-to-r from-primary via-spiritual-violet to-secondary bg-clip-text text-transparent">
-              Entre em Contato
+          <div className="animate-fade-in-up max-w-3xl mx-auto">
+            <p className="text-sm uppercase tracking-[0.2em] text-primary mb-4 font-medium">Conecte-se</p>
+            <h1 className="text-4xl md:text-6xl font-heading font-bold mb-4 text-foreground">
+              Entre em <span className="text-primary italic">Contato</span>
             </h1>
-            <p className="text-xl md:text-2xl text-muted-foreground mb-8 max-w-3xl mx-auto leading-relaxed">
-              Conecte-se conosco e explore mais sobre a P.A.D.H.
-            </p>
-            <p className="text-lg text-muted-foreground mb-8 max-w-2xl mx-auto">
-              Interessado em saber mais sobre a P.A.D.H. ou agendar uma sessão? Para se conectar com <strong>Evaldo PCH Master</strong> e explorar mais sobre essa abordagem, você pode nos encontrar nas redes sociais abaixo, ou enviar uma mensagem direta!
+            <p className="text-lg text-muted-foreground leading-relaxed max-w-2xl mx-auto">
+              Interessado em saber mais sobre a P.A.D.H. ou agendar uma sessão? 
+              Conecte-se com <strong className="text-foreground">Evaldo PCH Master</strong> e 
+              explore as possibilidades da Poesia Cognitiva Hipnótica.
             </p>
           </div>
         </div>
       </section>
 
-      {/* Conteúdo Principal */}
+      {/* Conteúdo */}
       <section className="container mx-auto px-6 py-12">
-        <div className="max-w-6xl mx-auto">
-          <div className="grid lg:grid-cols-2 gap-12">
+        <div className="max-w-5xl mx-auto">
+          <div className="grid lg:grid-cols-5 gap-8">
             
-            {/* Formulário de Contato */}
-            <Card>
-              <CardHeader>
-                <CardTitle className="text-2xl font-heading flex items-center gap-2">
-                  <Send className="h-6 w-6" />
-                  Envie sua Mensagem
-                </CardTitle>
-              </CardHeader>
-              <CardContent>
-                <form onSubmit={handleSubmit} className="space-y-6">
-                  <div className="space-y-2">
-                    <Label htmlFor="nome">Nome:</Label>
-                    <Input
-                      id="nome"
-                      name="nome"
-                      type="text"
-                      placeholder="Seu nome"
-                      value={formData.nome}
-                      onChange={handleInputChange}
-                      required
-                      className="w-full"
-                    />
-                  </div>
-                  
-                  <div className="space-y-2">
-                    <Label htmlFor="email">Email:</Label>
-                    <Input
-                      id="email"
-                      name="email"
-                      type="email"
-                      placeholder="seu@email.com"
-                      value={formData.email}
-                      onChange={handleInputChange}
-                      required
-                      className="w-full"
-                    />
-                  </div>
-                  
-                  <div className="space-y-2">
-                    <Label htmlFor="mensagem">Mensagem:</Label>
-                    <Textarea
-                      id="mensagem"
-                      name="mensagem"
-                      placeholder="Sua mensagem..."
-                      value={formData.mensagem}
-                      onChange={handleInputChange}
-                      required
-                      rows={6}
-                      className="w-full resize-none"
-                    />
-                  </div>
-                  
-                  <Button 
-                    type="submit" 
-                    size="lg" 
-                    className="w-full bg-spiritual-violet hover:bg-spiritual-violet/90"
-                  >
-                    <Send className="mr-2 h-5 w-5" />
-                    Enviar Mensagem
-                  </Button>
-                </form>
-              </CardContent>
-            </Card>
-
-            {/* Informações de Contato */}
-            <div className="space-y-6">
-              
-              {/* Informações Gerais */}
-              <Card>
+            {/* Formulário */}
+            <div className="lg:col-span-3">
+              <Card className="border-border/50">
                 <CardHeader>
-                  <CardTitle className="text-2xl font-heading">
-                    Informações de Contato
+                  <CardTitle className="text-xl font-heading flex items-center gap-2">
+                    <Send className="h-5 w-5 text-primary" />
+                    Envie sua Mensagem
                   </CardTitle>
                 </CardHeader>
-                <CardContent className="space-y-4">
-                  <div className="flex items-center gap-3">
-                    <Mail className="h-5 w-5 text-primary" />
-                    <span>contato@padh.com.br</span>
-                  </div>
-                  <div className="flex items-center gap-3">
-                    <Phone className="h-5 w-5 text-primary" />
-                    <span>(11) 99999-9999</span>
-                  </div>
-                  <div className="flex items-center gap-3">
-                    <MapPin className="h-5 w-5 text-primary" />
-                    <span>São Paulo, SP - Brasil</span>
+                <CardContent>
+                  <form onSubmit={handleSubmit} className="space-y-5">
+                    <div className="space-y-1.5">
+                      <Label htmlFor="nome" className="text-sm">Nome</Label>
+                      <Input id="nome" name="nome" placeholder="Seu nome" value={formData.nome} onChange={handleInputChange} required />
+                    </div>
+                    <div className="space-y-1.5">
+                      <Label htmlFor="email" className="text-sm">Email</Label>
+                      <Input id="email" name="email" type="email" placeholder="seu@email.com" value={formData.email} onChange={handleInputChange} required />
+                    </div>
+                    <div className="space-y-1.5">
+                      <Label htmlFor="mensagem" className="text-sm">Mensagem</Label>
+                      <Textarea id="mensagem" name="mensagem" placeholder="Conte-nos sobre seu interesse na P.A.D.H..." value={formData.mensagem} onChange={handleInputChange} required rows={5} className="resize-none" />
+                    </div>
+                    <Button type="submit" className="w-full bg-primary text-primary-foreground hover:bg-primary-dark">
+                      <Send className="mr-2 h-4 w-4" />
+                      Enviar Mensagem
+                    </Button>
+                  </form>
+                </CardContent>
+              </Card>
+            </div>
+
+            {/* Info lateral */}
+            <div className="lg:col-span-2 space-y-5">
+              <Card className="border-border/50">
+                <CardHeader className="pb-3">
+                  <CardTitle className="text-lg font-heading">Informações</CardTitle>
+                </CardHeader>
+                <CardContent className="space-y-3">
+                  {[
+                    { icon: <Mail className="h-4 w-4 text-primary" />, text: 'contato@padh.com.br' },
+                    { icon: <Phone className="h-4 w-4 text-primary" />, text: '(11) 99999-9999' },
+                    { icon: <MapPin className="h-4 w-4 text-primary" />, text: 'São Paulo, SP — Brasil' },
+                  ].map((item, i) => (
+                    <div key={i} className="flex items-center gap-2.5 text-sm text-muted-foreground">
+                      {item.icon}
+                      {item.text}
+                    </div>
+                  ))}
+                </CardContent>
+              </Card>
+
+              <Card className="border-border/50">
+                <CardHeader className="pb-3">
+                  <CardTitle className="text-lg font-heading">Redes Sociais</CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <p className="text-sm text-muted-foreground mb-3">
+                    Acompanhe conteúdos exclusivos sobre PCH e desenvolvimento humano:
+                  </p>
+                  <div className="grid grid-cols-3 gap-2">
+                    {[
+                      { icon: <Facebook className="h-4 w-4" />, name: 'Facebook' },
+                      { icon: <Instagram className="h-4 w-4" />, name: 'Instagram' },
+                      { icon: <Linkedin className="h-4 w-4" />, name: 'LinkedIn' },
+                    ].map((social, i) => (
+                      <Button key={i} variant="outline" size="sm" className="border-primary/20 hover:bg-primary/5 text-xs">
+                        {social.icon}
+                        <span className="ml-1.5">{social.name}</span>
+                      </Button>
+                    ))}
                   </div>
                 </CardContent>
               </Card>
 
-              {/* Redes Sociais */}
-              <Card>
-                <CardHeader>
-                  <CardTitle className="text-2xl font-heading">
-                    Redes Sociais
-                  </CardTitle>
+              <Card className="border-primary/20 bg-primary/[0.02]">
+                <CardHeader className="pb-3">
+                  <CardTitle className="text-lg font-heading text-primary">Evaldo PCH Master</CardTitle>
                 </CardHeader>
                 <CardContent>
-                  <p className="text-muted-foreground mb-4">
-                    Siga-nos nas redes sociais para acompanhar conteúdos exclusivos sobre P.A.D.H. e Poesia Cognitiva Hipnótica:
-                  </p>
-                  <div className="flex gap-4">
-                    <Button variant="outline" size="lg" className="flex-1">
-                      <Facebook className="mr-2 h-5 w-5" />
-                      Facebook
-                    </Button>
-                    <Button variant="outline" size="lg" className="flex-1">
-                      <Instagram className="mr-2 h-5 w-5" />
-                      Instagram
-                    </Button>
-                    <Button variant="outline" size="lg" className="flex-1">
-                      <Linkedin className="mr-2 h-5 w-5" />
-                      LinkedIn
-                    </Button>
-                  </div>
-                </CardContent>
-              </Card>
-
-              {/* Sobre Evaldo PCH Master */}
-              <Card className="border-spiritual-violet/50">
-                <CardHeader>
-                  <CardTitle className="text-2xl font-heading text-spiritual-violet">
-                    Evaldo PCH Master
-                  </CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <p className="text-muted-foreground mb-4">
-                    Criador da metodologia P.A.D.H. (Protocolo Avançado de Desenvolvimento Humano) e especialista em Poesia Cognitiva Hipnótica.
-                  </p>
-                  <p className="text-muted-foreground">
-                    Com anos de experiência integrando poesia, psicologia e neurociência, Evaldo desenvolve técnicas inovadoras para transformação pessoal e autoconhecimento através do poder terapêutico da palavra.
+                  <p className="text-sm text-muted-foreground leading-relaxed">
+                    Criador da metodologia P.A.D.H. e especialista em Poesia Cognitiva Hipnótica. 
+                    Integra poesia, psicologia e neurociência em técnicas inovadoras 
+                    para transformação pessoal.
                   </p>
                 </CardContent>
               </Card>
 
-              {/* Horários de Atendimento */}
-              <Card>
-                <CardHeader>
-                  <CardTitle className="text-2xl font-heading">
-                    Horários de Atendimento
-                  </CardTitle>
+              <Card className="border-border/50">
+                <CardHeader className="pb-3">
+                  <CardTitle className="text-lg font-heading">Atendimento</CardTitle>
                 </CardHeader>
                 <CardContent>
-                  <div className="space-y-2 text-muted-foreground">
-                    <div className="flex justify-between">
-                      <span>Segunda a Sexta:</span>
-                      <span>09:00 - 18:00</span>
-                    </div>
-                    <div className="flex justify-between">
-                      <span>Sábado:</span>
-                      <span>09:00 - 14:00</span>
-                    </div>
-                    <div className="flex justify-between">
-                      <span>Domingo:</span>
-                      <span>Fechado</span>
-                    </div>
+                  <div className="space-y-1.5 text-sm text-muted-foreground">
+                    <div className="flex justify-between"><span>Seg — Sex</span><span>09:00 — 18:00</span></div>
+                    <div className="flex justify-between"><span>Sábado</span><span>09:00 — 14:00</span></div>
+                    <div className="flex justify-between"><span>Domingo</span><span>Fechado</span></div>
                   </div>
-                  <p className="text-sm text-muted-foreground mt-4">
-                    * Atendimentos também disponíveis online via videoconferência
+                  <p className="text-xs text-muted-foreground mt-3">
+                    * Também disponível online via videoconferência
                   </p>
                 </CardContent>
               </Card>
