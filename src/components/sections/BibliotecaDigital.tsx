@@ -212,7 +212,7 @@ export const BibliotecaDigital = () => {
         <Card className="lg:col-span-1 glass-morphism border-primary/20">
           <CardHeader>
             <CardTitle className="text-xl font-heading flex items-center gap-2">
-              <BookOpen className="h-5 w-5 text-spiritual-blue" />
+              <BookOpen className="h-5 w-5 text-spiritual-indigo" />
               Conteúdos ({filteredItems.length})
             </CardTitle>
           </CardHeader>
