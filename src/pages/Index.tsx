@@ -5,6 +5,7 @@ import heroImage from '@/assets/hero-padh.png';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import Header from '@/components/layout/Header';
+import Footer from '@/components/layout/Footer';
 import { FloatingParticles } from '@/components/effects/FloatingParticles';
 import { useScrollAnimation } from '@/hooks/useScrollAnimation';
 import { usePageLoading } from '@/hooks/usePageLoading';
