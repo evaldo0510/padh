@@ -12,6 +12,7 @@ import Formacao from "./pages/Formacao";
 import MapaCerebral from "./pages/MapaCerebral";
 import AulaExclusiva from "./pages/AulaExclusiva";
 import Contato from "./pages/Contato";
+import Sobre from "./pages/Sobre";
 
 const queryClient = new QueryClient();
 
