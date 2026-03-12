@@ -17,7 +17,6 @@ const Index = () => {
   const pchSection = useScrollAnimation(0.15);
   const journeySection = useScrollAnimation(0.15);
   const testimonialsSection = useScrollAnimation(0.15);
-  const footerSection = useScrollAnimation(0.1);
   const isLoading = usePageLoading(600);
 
   if (isLoading) return <PageSkeleton />;
