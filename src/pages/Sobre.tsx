@@ -42,8 +42,8 @@ const Sobre = () => {
             </h1>
 
             <p className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto leading-relaxed">
-              Criador da <strong className="text-foreground">Poesia Cognitiva Hipnótica</strong> e do 
-              Protocolo Avançado de Desenvolvimento Humano — uma ponte entre ciência, 
+              Criador da <strong className="text-foreground">Poesia Cognitiva Hipnótica</strong> e da 
+              Poesia Aplicada ao Desenvolvimento Humano — uma ponte entre ciência, 
               espiritualidade e a arte ancestral da palavra.
             </p>
           </div>
@@ -152,8 +152,8 @@ const Sobre = () => {
                 },
                 {
                   icon: <Award className="h-5 w-5" />,
-                  title: 'Criação do Protocolo P.A.D.H.',
-                  desc: 'Desenvolvimento do Protocolo Avançado de Desenvolvimento Humano em suas 4 fases: Preparação, Aplicação, Desenvolvimento e Hibridização.',
+                  title: 'Criação do P.A.D.H.',
+                  desc: 'Desenvolvimento da Poesia Aplicada ao Desenvolvimento Humano em suas 4 fases: Preparação, Aplicação, Desenvolvimento e Hibridização.',
                 },
                 {
                   icon: <Users className="h-5 w-5" />,
