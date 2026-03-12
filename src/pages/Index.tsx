@@ -76,7 +76,7 @@ const Index = () => {
             
             {/* Title */}
             <h1 className="text-5xl sm:text-6xl md:text-8xl font-heading font-bold leading-[0.95] tracking-tight">
-              <span className="text-foreground">Protocolo Avançado de</span>
+              <span className="text-foreground">Poesia Aplicada ao</span>
               <br />
               <span className="text-primary italic">Desenvolvimento Humano</span>
             </h1>
