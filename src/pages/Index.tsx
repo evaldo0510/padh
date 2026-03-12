@@ -64,6 +64,10 @@ const Index = () => {
         
         <div className="relative container mx-auto px-6 py-24 z-10">
           <div className="max-w-4xl mx-auto text-center animate-fade-in-up space-y-8">
+            {/* Hero Image */}
+            <div className="mx-auto w-32 h-32 md:w-40 md:h-40 mb-4">
+              <img src={heroImage} alt="P.A.D.H. — Pena dourada transformando-se em conexões neurais" className="w-full h-full object-contain drop-shadow-lg" />
+            </div>
             {/* Tagline */}
             <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-primary/20 bg-primary/5 text-primary text-sm font-medium">
               <Feather className="h-3.5 w-3.5" />
