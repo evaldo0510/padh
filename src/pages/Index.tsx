@@ -1,6 +1,7 @@
 import React from 'react';
-import { ArrowRight, BookOpen, Brain, Sparkles, Star, Heart, Users, GraduationCap, Feather } from 'lucide-react';
+import { ArrowRight, BookOpen, Brain, Sparkles, Star, Heart, Users, GraduationCap, Feather, Quote } from 'lucide-react';
 import { Link } from 'react-router-dom';
+import heroImage from '@/assets/hero-padh.png';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import Header from '@/components/layout/Header';
@@ -14,6 +15,7 @@ const Index = () => {
   const toolsSection = useScrollAnimation(0.15);
   const pchSection = useScrollAnimation(0.15);
   const journeySection = useScrollAnimation(0.15);
+  const testimonialsSection = useScrollAnimation(0.15);
   const footerSection = useScrollAnimation(0.1);
   const isLoading = usePageLoading(600);
 
@@ -62,6 +64,10 @@ const Index = () => {
         
         <div className="relative container mx-auto px-6 py-24 z-10">
           <div className="max-w-4xl mx-auto text-center animate-fade-in-up space-y-8">
+            {/* Hero Image */}
+            <div className="mx-auto w-32 h-32 md:w-40 md:h-40 mb-4">
+              <img src={heroImage} alt="P.A.D.H. — Pena dourada transformando-se em conexões neurais" className="w-full h-full object-contain drop-shadow-lg" />
+            </div>
             {/* Tagline */}
             <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-primary/20 bg-primary/5 text-primary text-sm font-medium">
               <Feather className="h-3.5 w-3.5" />
@@ -282,6 +288,75 @@ const Index = () => {
                     <p className="text-sm text-muted-foreground leading-relaxed">{phase.desc}</p>
                   </div>
                 </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Depoimentos */}
+      <section className="py-24 border-t border-border/30 relative overflow-hidden">
+        <div className="absolute inset-0 gradient-warm" />
+        <div
+          ref={testimonialsSection.ref}
+          className={`relative container mx-auto px-6 transition-all duration-1000 ${
+            testimonialsSection.isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-12'
+          }`}
+        >
+          <div className="max-w-5xl mx-auto">
+            <div className="text-center mb-16">
+              <p className="text-sm uppercase tracking-[0.2em] text-primary mb-3 font-medium">Testemunhos</p>
+              <h2 className="text-3xl md:text-5xl font-heading font-bold text-foreground mb-6">
+                Vozes Transformadas
+              </h2>
+              <p className="text-muted-foreground max-w-xl mx-auto">
+                Quem experimenta a Poesia Cognitiva Hipnótica carrega consigo uma marca silenciosa de mudança.
+              </p>
+            </div>
+
+            <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+              {[
+                {
+                  text: 'Depois de uma sessão com PCH, eu senti que algo dentro de mim se reorganizou. Não foi uma terapia comum — foi como se a poesia tivesse conversado diretamente com a parte de mim que eu escondia.',
+                  name: 'Marina S.',
+                  role: 'Psicóloga clínica',
+                },
+                {
+                  text: 'A formação em PCH mudou minha forma de atender. Hoje uso poesia nos meus atendimentos e os resultados são incomparáveis. Os pacientes se abrem de maneira que eu nunca vi antes.',
+                  name: 'Dr. Rafael M.',
+                  role: 'Terapeuta e formando em PCH',
+                },
+                {
+                  text: 'Li o livro-curso numa fase muito difícil da minha vida. Cada capítulo parecia escrito para mim. A poesia chegou onde anos de terapia convencional não conseguiram chegar.',
+                  name: 'Carla T.',
+                  role: 'Leitora e praticante',
+                },
+                {
+                  text: 'O Mapa Cerebral foi uma revelação. Entender como cada verso ativa áreas do meu cérebro me deu uma nova perspectiva sobre o que significa "ler com o corpo inteiro".',
+                  name: 'Prof. Luciana B.',
+                  role: 'Educadora e pesquisadora',
+                },
+                {
+                  text: 'Participei da aula exclusiva e foi transformador. A experiência vivencial da PCH transcende qualquer explicação teórica — você precisa sentir para compreender.',
+                  name: 'André K.',
+                  role: 'Estudante de psicologia',
+                },
+                {
+                  text: 'A hibridização da PCH com a minha prática de meditação criou uma sinergia que eu não esperava. Meus alunos relatam experiências mais profundas e duradouras.',
+                  name: 'Mestra Helena R.',
+                  role: 'Instrutora de meditação',
+                },
+              ].map((t, i) => (
+                <Card key={i} className="border-border/50 bg-card/50 hover:border-primary/20 transition-all duration-300">
+                  <CardContent className="p-6 space-y-4">
+                    <Quote className="h-5 w-5 text-primary/40" />
+                    <p className="text-sm text-muted-foreground leading-relaxed italic">"{t.text}"</p>
+                    <div className="pt-2 border-t border-border/30">
+                      <p className="text-sm font-medium text-foreground">{t.name}</p>
+                      <p className="text-xs text-muted-foreground">{t.role}</p>
+                    </div>
+                  </CardContent>
+                </Card>
               ))}
             </div>
           </div>

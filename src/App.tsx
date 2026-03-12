@@ -12,6 +12,7 @@ import Formacao from "./pages/Formacao";
 import MapaCerebral from "./pages/MapaCerebral";
 import AulaExclusiva from "./pages/AulaExclusiva";
 import Contato from "./pages/Contato";
+import Sobre from "./pages/Sobre";
 
 const queryClient = new QueryClient();
 
@@ -26,6 +27,7 @@ const AnimatedRoutes = () => {
         <Route path="/formacao" element={<PageTransition><Formacao /></PageTransition>} />
         <Route path="/mapa-cerebral" element={<PageTransition><MapaCerebral /></PageTransition>} />
         <Route path="/aula-exclusiva" element={<PageTransition><AulaExclusiva /></PageTransition>} />
+        <Route path="/sobre" element={<PageTransition><Sobre /></PageTransition>} />
         <Route path="/contato" element={<PageTransition><Contato /></PageTransition>} />
         <Route path="*" element={<PageTransition><NotFound /></PageTransition>} />
       </Routes>
