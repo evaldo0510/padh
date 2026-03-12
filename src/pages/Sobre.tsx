@@ -42,8 +42,8 @@ const Sobre = () => {
             </h1>
 
             <p className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto leading-relaxed">
-              Criador da <strong className="text-foreground">Poesia Cognitiva Hipnótica</strong> e do 
-              Protocolo Avançado de Desenvolvimento Humano — uma ponte entre ciência, 
+              Criador da <strong className="text-foreground">Poesia Cognitiva Hipnótica</strong> e da 
+              Poesia Aplicada ao Desenvolvimento Humano — uma ponte entre ciência, 
               espiritualidade e a arte ancestral da palavra.
             </p>
           </div>
