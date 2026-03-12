@@ -27,6 +27,7 @@ const AnimatedRoutes = () => {
         <Route path="/formacao" element={<PageTransition><Formacao /></PageTransition>} />
         <Route path="/mapa-cerebral" element={<PageTransition><MapaCerebral /></PageTransition>} />
         <Route path="/aula-exclusiva" element={<PageTransition><AulaExclusiva /></PageTransition>} />
+        <Route path="/sobre" element={<PageTransition><Sobre /></PageTransition>} />
         <Route path="/contato" element={<PageTransition><Contato /></PageTransition>} />
         <Route path="*" element={<PageTransition><NotFound /></PageTransition>} />
       </Routes>
