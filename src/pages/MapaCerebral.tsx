@@ -216,6 +216,7 @@ const MapaCerebral = () => {
           </div>
         </div>
       </section>
+      <Footer />
     </div>
   );
 };

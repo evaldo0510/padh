@@ -212,6 +212,7 @@ const Formacao = () => {
           </div>
         </div>
       </section>
+      <Footer />
     </div>
   );
 };

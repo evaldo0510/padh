@@ -290,14 +290,7 @@ const Sobre = () => {
         </div>
       </section>
 
-      {/* Footer */}
-      <footer className="border-t border-border/30">
-        <div className="container mx-auto px-6 py-12 text-center">
-          <p className="text-sm text-muted-foreground">
-            © {new Date().getFullYear()} P.A.D.H. — Evaldo PCH Master. Todos os direitos reservados.
-          </p>
-        </div>
-      </footer>
+      <Footer />
     </div>
   );
 };
