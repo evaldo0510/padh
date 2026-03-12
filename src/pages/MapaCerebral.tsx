@@ -2,6 +2,7 @@ import React from 'react';
 import { Brain, Eye, Heart, Lightbulb, Zap, Target } from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import Header from '@/components/layout/Header';
+import Footer from '@/components/layout/Footer';
 import PageHeader from '@/components/layout/PageHeader';
 import { usePageLoading } from '@/hooks/usePageLoading';
 import { PageSkeleton } from '@/components/ui/page-skeleton';
@@ -216,6 +217,7 @@ const MapaCerebral = () => {
           </div>
         </div>
       </section>
+      <Footer />
     </div>
   );
 };

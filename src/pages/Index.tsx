@@ -5,6 +5,7 @@ import heroImage from '@/assets/hero-padh.png';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import Header from '@/components/layout/Header';
+import Footer from '@/components/layout/Footer';
 import { FloatingParticles } from '@/components/effects/FloatingParticles';
 import { useScrollAnimation } from '@/hooks/useScrollAnimation';
 import { usePageLoading } from '@/hooks/usePageLoading';
@@ -16,7 +17,6 @@ const Index = () => {
   const pchSection = useScrollAnimation(0.15);
   const journeySection = useScrollAnimation(0.15);
   const testimonialsSection = useScrollAnimation(0.15);
-  const footerSection = useScrollAnimation(0.1);
   const isLoading = usePageLoading(600);
 
   if (isLoading) return <PageSkeleton />;
@@ -387,57 +387,7 @@ const Index = () => {
         </div>
       </section>
 
-      {/* Footer */}
-      <footer className="border-t border-border/30">
-        <div
-          ref={footerSection.ref}
-          className={`container mx-auto px-6 py-16 transition-all duration-1000 ${
-            footerSection.isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-12'
-          }`}
-        >
-          <div className="max-w-5xl mx-auto">
-            <div className="grid md:grid-cols-3 gap-12 mb-12">
-              <div>
-                <h4 className="font-heading font-bold text-lg text-foreground mb-4">P.A.D.H.</h4>
-                <p className="text-sm text-muted-foreground leading-relaxed">
-                   Poesia Aplicada ao Desenvolvimento Humano — uma metodologia científica que utiliza 
-                  a poesia como agente neuroplástico para transformação interior.
-                </p>
-              </div>
-              <div>
-                <h4 className="font-heading font-bold text-lg text-foreground mb-4">Navegação</h4>
-                <nav className="space-y-2">
-                  {[
-                    { name: 'Livro-Curso', path: '/livro-curso' },
-                    { name: 'Formação em PCH', path: '/formacao' },
-                    { name: 'Mapa Cerebral', path: '/mapa-cerebral' },
-                    { name: 'Aula Exclusiva', path: '/aula-exclusiva' },
-                    { name: 'Contato', path: '/contato' },
-                  ].map((item) => (
-                    <Link key={item.path} to={item.path} className="block text-sm text-muted-foreground hover:text-primary transition-colors">
-                      {item.name}
-                    </Link>
-                  ))}
-                </nav>
-              </div>
-              <div>
-                <h4 className="font-heading font-bold text-lg text-foreground mb-4">Sobre o Criador</h4>
-                <p className="text-sm text-muted-foreground leading-relaxed">
-                  <strong className="text-foreground">Evaldo PCH Master</strong> — criador da metodologia P.A.D.H. 
-                  e especialista em Poesia Cognitiva Hipnótica. Anos de experiência integrando poesia, 
-                  psicologia e neurociência para transformação pessoal.
-                </p>
-              </div>
-            </div>
-            
-            <div className="pt-8 border-t border-border/30 text-center">
-              <p className="text-sm text-muted-foreground">
-                © {new Date().getFullYear()} P.A.D.H. — Evaldo PCH Master. Todos os direitos reservados.
-              </p>
-            </div>
-          </div>
-        </div>
-      </footer>
+      <Footer />
     </div>
   );
 };

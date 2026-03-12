@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import Header from '@/components/layout/Header';
+import Footer from '@/components/layout/Footer';
 import PageHeader from '@/components/layout/PageHeader';
 import { useScrollAnimation } from '@/hooks/useScrollAnimation';
 import { usePageLoading } from '@/hooks/usePageLoading';
@@ -289,14 +290,7 @@ const Sobre = () => {
         </div>
       </section>
 
-      {/* Footer */}
-      <footer className="border-t border-border/30">
-        <div className="container mx-auto px-6 py-12 text-center">
-          <p className="text-sm text-muted-foreground">
-            © {new Date().getFullYear()} P.A.D.H. — Evaldo PCH Master. Todos os direitos reservados.
-          </p>
-        </div>
-      </footer>
+      <Footer />
     </div>
   );
 };
