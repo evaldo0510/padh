@@ -400,7 +400,7 @@ const Index = () => {
               <div>
                 <h4 className="font-heading font-bold text-lg text-foreground mb-4">P.A.D.H.</h4>
                 <p className="text-sm text-muted-foreground leading-relaxed">
-                  Protocolo Avançado de Desenvolvimento Humano — uma metodologia científica que utiliza 
+                   Poesia Aplicada ao Desenvolvimento Humano — uma metodologia científica que utiliza 
                   a poesia como agente neuroplástico para transformação interior.
                 </p>
               </div>
