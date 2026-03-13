@@ -35,6 +35,12 @@ const Index = () => {
       link: '/formacao',
     },
     {
+      icon: <Feather className="h-5 w-5" />,
+      title: '7 Ferramentas P.A.D.H.',
+      desc: 'Do Poema-Funil ao Ritual do Silêncio Poético — 7 instrumentos vivos para transformação interior através da poesia.',
+      link: '/ferramentas',
+    },
+    {
       icon: <Brain className="h-5 w-5" />,
       title: 'Mapa Cerebral',
       desc: 'Descubra como cada verso ativa áreas específicas do cérebro — da amígdala ao córtex pré-frontal.',
