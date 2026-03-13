@@ -11,6 +11,7 @@ const Footer = () => {
     { name: 'Sobre', path: '/sobre' },
     { name: 'Livro-Curso', path: '/livro-curso' },
     { name: 'Formação PCH', path: '/formacao' },
+    { name: 'Ferramentas P.A.D.H.', path: '/ferramentas' },
   ];
 
   const toolLinks = [

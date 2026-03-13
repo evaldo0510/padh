@@ -1,0 +1,197 @@
+import React from 'react';
+import { Drama, Brain, BookOpen, MessageSquare } from 'lucide-react';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import Header from '@/components/layout/Header';
+import Footer from '@/components/layout/Footer';
+import PageHeader from '@/components/layout/PageHeader';
+import { useScrollAnimation } from '@/hooks/useScrollAnimation';
+import { usePageLoading } from '@/hooks/usePageLoading';
+import { PageSkeleton } from '@/components/ui/page-skeleton';
+
+const EncenacaoPoetica = () => {
+  const isLoading = usePageLoading(500);
+  const contentAnim = useScrollAnimation(0.15);
+  const examplesAnim = useScrollAnimation(0.15);
+  const theoryAnim = useScrollAnimation(0.15);
+
+  if (isLoading) return <PageSkeleton />;
+
+  return (
+    <div className="min-h-screen bg-background">
+      <Header />
+      <PageHeader currentPage="Encenação Poética" />
+
+      {/* Hero */}
+      <section className="relative overflow-hidden">
+        <div className="absolute inset-0 gradient-glow" />
+        <div className="relative container mx-auto px-6 py-20 text-center">
+          <div className="animate-fade-in-up max-w-3xl mx-auto">
+            <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-primary/20 bg-primary/5 text-primary text-sm font-medium mb-6">
+              <Drama className="h-3.5 w-3.5" />
+              Ferramenta 5 — P.A.D.H.
+            </div>
+            <h1 className="text-4xl md:text-6xl font-heading font-bold mb-4 text-foreground">
+              Encenação <span className="text-primary italic">Poética Interna</span>
+            </h1>
+            <p className="text-xl text-muted-foreground mb-2 font-medium">O Teatro dos Eus</p>
+            <p className="text-lg text-muted-foreground leading-relaxed max-w-2xl mx-auto">
+              Quando o Eu vira uma conversa entre eus — dar forma, voz e argumento às subpersonalidades internas, 
+              promovendo consciência e diálogo entre partes conflitantes.
+            </p>
+            <div className="poem-block max-w-sm mx-auto mt-8">
+              <p className="poem-text text-foreground/80">
+                — Eu quero sair.<br />
+                — E se for pior lá fora?<br />
+                — E se for melhor e eu nunca souber?
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Objetivo e Modo de Uso */}
+      <section className="py-20 border-t border-border/30">
+        <div ref={contentAnim.ref} className={`container mx-auto px-6 transition-all duration-1000 ${contentAnim.isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-12'}`}>
+          <div className="max-w-4xl mx-auto">
+            <Card className="border-border/50 mb-8">
+              <CardHeader>
+                <CardTitle className="text-2xl font-heading flex items-center gap-3">
+                  <Brain className="h-6 w-6 text-primary" />
+                  Objetivo Terapêutico
+                </CardTitle>
+              </CardHeader>
+              <CardContent className="space-y-4 text-muted-foreground leading-relaxed">
+                <p>
+                  Permitir ao cliente <strong className="text-foreground">dar forma, voz e argumento às suas subpersonalidades internas</strong>, 
+                  promovendo consciência e diálogo entre suas partes conflitantes.
+                </p>
+                <p>
+                  É o encontro entre o <strong className="text-foreground">drama interno e a linguagem simbólica</strong>, 
+                  onde o cliente se escuta em voz alta escrevendo o que antes apenas sentia em silêncio.
+                </p>
+              </CardContent>
+            </Card>
+
+            <Card className="border-border/50 mb-8">
+              <CardHeader>
+                <CardTitle className="text-2xl font-heading flex items-center gap-3">
+                  <BookOpen className="h-6 w-6 text-primary" />
+                  Como Funciona
+                </CardTitle>
+              </CardHeader>
+              <CardContent className="space-y-6">
+                <div>
+                  <h4 className="font-heading font-semibold text-foreground mb-2">1. Escolha de Partes Internas</h4>
+                  <p className="text-sm text-muted-foreground mb-3">O terapeuta ajuda o cliente a identificar partes em conflito:</p>
+                  <div className="grid sm:grid-cols-2 gap-2">
+                    {[
+                      'O que quer ir × o que tem medo',
+                      'O que perdoa × o que guarda mágoa',
+                      'O que age × o que procrastina',
+                      'O que grita × o que silencia',
+                      'O que cuida dos outros × o que nunca foi cuidado',
+                    ].map((item, i) => (
+                      <div key={i} className="flex items-center gap-2 text-sm text-muted-foreground p-2 rounded bg-card/50 border border-border/30">
+                        <MessageSquare className="h-3.5 w-3.5 text-primary flex-shrink-0" />
+                        {item}
+                      </div>
+                    ))}
+                  </div>
+                </div>
+                <div>
+                  <h4 className="font-heading font-semibold text-foreground mb-2">2. Recursos Dramáticos</h4>
+                  <ul className="space-y-2 text-sm text-muted-foreground">
+                    <li className="flex items-start gap-2"><span className="text-primary mt-1">•</span>Cada "voz" pode ter um <strong className="text-foreground">nome simbólico</strong> (ex: "A controladora", "A que chora escondido")</li>
+                    <li className="flex items-start gap-2"><span className="text-primary mt-1">•</span>Sugira uma <strong className="text-foreground">cor, lugar ou metáfora</strong> para cada voz (ex: "A vermelha vive no peito. A azul mora no silêncio da nuca.")</li>
+                  </ul>
+                </div>
+                <div>
+                  <h4 className="font-heading font-semibold text-foreground mb-2">3. Acordo Poético</h4>
+                  <p className="text-sm text-muted-foreground mb-3">Peça para concluir com um verso de integração:</p>
+                  <div className="poem-block">
+                    <p className="poem-text text-sm text-foreground/80 italic">
+                      "Mesmo sem saber tudo, seguimos juntos — um passo cada um."<br />
+                      "Decidi levar todas comigo — até as que não cabem."
+                    </p>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+          </div>
+        </div>
+      </section>
+
+      {/* Exemplo */}
+      <section className="py-20 border-t border-border/30 relative overflow-hidden">
+        <div className="absolute inset-0 gradient-warm" />
+        <div ref={examplesAnim.ref} className={`relative container mx-auto px-6 transition-all duration-1000 ${examplesAnim.isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-12'}`}>
+          <div className="max-w-4xl mx-auto">
+            <div className="text-center mb-12">
+              <p className="text-sm uppercase tracking-[0.2em] text-primary mb-3 font-medium">Exemplo</p>
+              <h2 className="text-3xl font-heading font-bold text-foreground">Encenação Compacta</h2>
+            </div>
+
+            <Card className="border-primary/20 bg-primary/[0.02] mb-8">
+              <CardContent className="p-6">
+                <div className="poem-block">
+                  <p className="poem-text text-foreground/80">
+                    — Eu sou a que sonha.<br /><br />
+                    — E eu a que diz 'deixa pra lá'.<br /><br />
+                    — Mas eu, que ninguém escuta, sou a que carrega as chaves.
+                  </p>
+                </div>
+              </CardContent>
+            </Card>
+
+            <Card className="border-border/50">
+              <CardContent className="p-6">
+                <h4 className="font-heading font-semibold text-foreground mb-3">Exemplo Expandido</h4>
+                <div className="poem-block">
+                  <p className="poem-text text-sm text-foreground/80">
+                    — Eu que tenho medo de tentar<br />
+                    — E eu que quero tudo de uma vez<br />
+                    — Se vocês pararem de brigar, talvez eu consiga andar<br />
+                    — Mas e se der errado?<br />
+                    — Mas e se eu nunca tentar?<br />
+                    — Vamos dar um passo só — juntas. Só um.
+                  </p>
+                </div>
+              </CardContent>
+            </Card>
+          </div>
+        </div>
+      </section>
+
+      {/* Fundamentos */}
+      <section className="py-20 border-t border-border/30">
+        <div ref={theoryAnim.ref} className={`container mx-auto px-6 transition-all duration-1000 ${theoryAnim.isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-12'}`}>
+          <div className="max-w-4xl mx-auto">
+            <Card className="border-border/50 mb-8">
+              <CardHeader>
+                <CardTitle className="text-xl font-heading">Fundamentos Teóricos</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <ul className="space-y-2 text-sm text-muted-foreground">
+                  <li className="flex items-start gap-2"><span className="text-primary mt-1">•</span>Inspirado nos <strong className="text-foreground">Estados do Ego</strong> (Análise Transacional), <strong className="text-foreground">IFS</strong> (Internal Family Systems) e <strong className="text-foreground">Psicodrama Poético</strong> (Moreno).</li>
+                  <li className="flex items-start gap-2"><span className="text-primary mt-1">•</span>Trabalha a <strong className="text-foreground">autonomia emocional</strong> e o respeito interno: cada parte tem sua verdade.</li>
+                  <li className="flex items-start gap-2"><span className="text-primary mt-1">•</span>Reduz a <strong className="text-foreground">autocrítica paralisante</strong>, permitindo que a dúvida dialogue com o desejo.</li>
+                </ul>
+              </CardContent>
+            </Card>
+
+            <div className="poem-block text-center">
+              <p className="poem-text text-foreground/80">
+                "Talvez, no fundo, você não esteja em conflito...<br />
+                — está apenas em assembleia."
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <Footer />
+    </div>
+  );
+};
+
+export default EncenacaoPoetica;
