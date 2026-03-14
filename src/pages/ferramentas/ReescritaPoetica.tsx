@@ -39,6 +39,9 @@ const ReescritaPoetica = () => {
               Transformar o que doeu em algo que dança na página — reconfigurar memórias difíceis 
               através da linguagem simbólica e ressignificadora.
             </p>
+            <div className="mx-auto w-full max-w-md mt-6">
+              <img src={toolImage} alt="Reescrita Poética — alquimia de narrativas" className="w-full rounded-xl shadow-lg opacity-80" />
+            </div>
           </div>
         </div>
       </section>

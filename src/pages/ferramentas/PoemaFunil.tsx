@@ -39,7 +39,10 @@ const PoemaFunil = () => {
               O convite poético para o mergulho interior — induzir o cliente a abandonar a superfície 
               e descer pelas camadas internas do ser.
             </p>
-            <div className="poem-block max-w-sm mx-auto mt-8">
+            <div className="mx-auto w-full max-w-md mt-6 mb-4">
+              <img src={toolImage} alt="Poema-Funil — espiral descendente de palavras" className="w-full rounded-xl shadow-lg opacity-80" />
+            </div>
+            <div className="poem-block max-w-sm mx-auto mt-4">
               <p className="poem-text text-foreground/80">
                 Comece com os olhos:<br />
                 veja o chão, o corpo, o mundo.<br /><br />

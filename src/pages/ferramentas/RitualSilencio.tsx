@@ -39,7 +39,10 @@ const RitualSilencio = () => {
               Onde a poesia vira altar e o silêncio vira resposta — encerrar sessões com sacralidade, 
               criando uma impressão emocional duradoura.
             </p>
-            <div className="poem-block max-w-sm mx-auto mt-8">
+            <div className="mx-auto w-full max-w-md mt-6 mb-4">
+              <img src={toolImage} alt="Ritual do Silêncio — vela na caverna" className="w-full rounded-xl shadow-lg opacity-80" />
+            </div>
+            <div className="poem-block max-w-sm mx-auto mt-4">
               <p className="poem-text text-foreground/80">
                 "Se uma só palavra tua pudesse morar em mim,<br />
                 qual você deixaria?"

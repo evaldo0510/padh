@@ -47,6 +47,9 @@ const CadernoVozInterna = () => {
               Transformar o cliente em autor de sua própria escuta — a escrita como oráculo 
               e ferramenta de autoconhecimento profundo.
             </p>
+            <div className="mx-auto w-full max-w-md mt-6">
+              <img src={toolImage} alt="Caderno de Voz Interna — diário poético" className="w-full rounded-xl shadow-lg opacity-80" />
+            </div>
           </div>
         </div>
       </section>
