@@ -7,6 +7,7 @@ import PageHeader from '@/components/layout/PageHeader';
 import { useScrollAnimation } from '@/hooks/useScrollAnimation';
 import { usePageLoading } from '@/hooks/usePageLoading';
 import { PageSkeleton } from '@/components/ui/page-skeleton';
+import toolImage from '@/assets/tool-poema-funil.jpg';
 
 const PoemaFunil = () => {
   const isLoading = usePageLoading(500);
