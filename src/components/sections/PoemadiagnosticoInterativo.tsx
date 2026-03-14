@@ -1,9 +1,9 @@
-import React, { useState } from 'react';
-import { Eye, ArrowRight, RotateCcw } from 'lucide-react';
+import React, { useState, useMemo } from 'react';
+import { Eye, ArrowRight, RotateCcw, Shuffle } from 'lucide-react';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 
-const poemas = [
+const todosPoemas = [
   {
     id: 'medo',
     tema: 'Medo',
@@ -28,17 +28,53 @@ const poemas = [
     cor: 'from-emerald-500/20 to-teal-500/10',
     borda: 'border-emerald-400/30',
   },
+  {
+    id: 'solidao',
+    tema: 'Solidão',
+    verso: 'Tenho gente ao redor\ne um deserto por dentro.\nMinha solidão não é falta de alguém —\né sobra de mim sem destino.',
+    diagnostico: 'Você sente um vazio que não se preenche com presença alheia. Sua solidão é existencial — um chamado para se encontrar consigo mesmo antes de se entregar ao outro.',
+    cor: 'from-slate-500/20 to-zinc-500/10',
+    borda: 'border-slate-400/30',
+  },
+  {
+    id: 'gratidao',
+    tema: 'Gratidão',
+    verso: 'Hoje acordei e o sol\nnão pediu licença para entrar.\nEntendi que a vida\ntambém chega sem convite — e fica.',
+    diagnostico: 'Você está num momento de abertura e reconhecimento. Há uma parte sua que já começou a acolher o que é, sem exigir que fosse diferente. A gratidão é seu portal de presença.',
+    cor: 'from-amber-500/20 to-yellow-500/10',
+    borda: 'border-amber-400/30',
+  },
+  {
+    id: 'renascimento',
+    tema: 'Renascimento',
+    verso: 'Morri tantas vezes por dentro\nque já perdi a conta das cinzas.\nMas hoje acordei com sementes\nonde antes só havia ferida.',
+    diagnostico: 'Você está emergindo de um ciclo de dor. Algo novo começa a brotar — não apesar da ferida, mas a partir dela. Seu inconsciente reconhece que transformação nasce do que dói.',
+    cor: 'from-violet-500/20 to-purple-500/10',
+    borda: 'border-violet-400/30',
+  },
 ];
+
+function embaralhar<T>(arr: T[]): T[] {
+  const copy = [...arr];
+  for (let i = copy.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [copy[i], copy[j]] = [copy[j], copy[i]];
+  }
+  return copy;
+}
 
 const PoemadiagnosticoInterativo = () => {
   const [selecionado, setSelecionado] = useState<string | null>(null);
   const [revelado, setRevelado] = useState(false);
+  const [seed, setSeed] = useState(0);
 
+  const poemas = useMemo(() => embaralhar(todosPoemas).slice(0, 3), [seed]);
   const poemaEscolhido = poemas.find(p => p.id === selecionado);
 
   const resetar = () => {
     setSelecionado(null);
     setRevelado(false);
+    setSeed(s => s + 1);
   };
 
   return (
@@ -114,8 +150,8 @@ const PoemadiagnosticoInterativo = () => {
                     </p>
                   </div>
                   <Button variant="outline" onClick={resetar} className="mt-4 border-primary/30 text-foreground hover:bg-primary/5">
-                    <RotateCcw className="mr-2 h-4 w-4" />
-                    Experimentar novamente
+                    <Shuffle className="mr-2 h-4 w-4" />
+                    Novos poemas
                   </Button>
                 </CardContent>
               </Card>
