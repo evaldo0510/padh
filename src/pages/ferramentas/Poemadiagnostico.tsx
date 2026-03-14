@@ -206,6 +206,8 @@ const Poemadiagnostico = () => {
         </div>
       </section>
 
+      <PoemadiagnosticoInterativo />
+
       <Footer />
     </div>
   );
