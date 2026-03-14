@@ -7,6 +7,7 @@ import PageHeader from '@/components/layout/PageHeader';
 import { useScrollAnimation } from '@/hooks/useScrollAnimation';
 import { usePageLoading } from '@/hooks/usePageLoading';
 import { PageSkeleton } from '@/components/ui/page-skeleton';
+import toolImage from '@/assets/tool-encenacao.jpg';
 
 const EncenacaoPoetica = () => {
   const isLoading = usePageLoading(500);
@@ -38,7 +39,10 @@ const EncenacaoPoetica = () => {
               Quando o Eu vira uma conversa entre eus — dar forma, voz e argumento às subpersonalidades internas, 
               promovendo consciência e diálogo entre partes conflitantes.
             </p>
-            <div className="poem-block max-w-sm mx-auto mt-8">
+            <div className="mx-auto w-full max-w-md mt-6 mb-4">
+              <img src={toolImage} alt="Encenação Poética — teatro dos eus" className="w-full rounded-xl shadow-lg opacity-80" />
+            </div>
+            <div className="poem-block max-w-sm mx-auto mt-4">
               <p className="poem-text text-foreground/80">
                 — Eu quero sair.<br />
                 — E se for pior lá fora?<br />

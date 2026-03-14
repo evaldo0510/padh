@@ -7,6 +7,8 @@ import PageHeader from '@/components/layout/PageHeader';
 import { useScrollAnimation } from '@/hooks/useScrollAnimation';
 import { usePageLoading } from '@/hooks/usePageLoading';
 import { PageSkeleton } from '@/components/ui/page-skeleton';
+import PoemadiagnosticoInterativo from '@/components/sections/PoemadiagnosticoInterativo';
+import toolImage from '@/assets/tool-poemadiagnostico.jpg';
 
 const Poemadiagnostico = () => {
   const isLoading = usePageLoading(500);
@@ -38,7 +40,10 @@ const Poemadiagnostico = () => {
               A imagem emocional que escolhe por ele — permitindo que o inconsciente fale 
               por preferências poéticas, revelando estados internos que a razão ainda nega.
             </p>
-            <div className="poem-block max-w-sm mx-auto mt-8">
+            <div className="mx-auto w-full max-w-md mt-6 mb-4">
+              <img src={toolImage} alt="Poemadiagnóstico — espelho emocional através da poesia" className="w-full rounded-xl shadow-lg opacity-80" />
+            </div>
+            <div className="poem-block max-w-sm mx-auto mt-4">
               <p className="poem-text text-foreground/80 italic">
                 "Qual desses poemas te escolhe hoje?"
               </p>
@@ -203,6 +208,8 @@ const Poemadiagnostico = () => {
           </div>
         </div>
       </section>
+
+      <PoemadiagnosticoInterativo />
 
       <Footer />
     </div>

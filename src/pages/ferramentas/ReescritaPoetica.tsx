@@ -7,6 +7,7 @@ import PageHeader from '@/components/layout/PageHeader';
 import { useScrollAnimation } from '@/hooks/useScrollAnimation';
 import { usePageLoading } from '@/hooks/usePageLoading';
 import { PageSkeleton } from '@/components/ui/page-skeleton';
+import toolImage from '@/assets/tool-reescrita.jpg';
 
 const ReescritaPoetica = () => {
   const isLoading = usePageLoading(500);
@@ -38,6 +39,9 @@ const ReescritaPoetica = () => {
               Transformar o que doeu em algo que dança na página — reconfigurar memórias difíceis 
               através da linguagem simbólica e ressignificadora.
             </p>
+            <div className="mx-auto w-full max-w-md mt-6">
+              <img src={toolImage} alt="Reescrita Poética — alquimia de narrativas" className="w-full rounded-xl shadow-lg opacity-80" />
+            </div>
           </div>
         </div>
       </section>

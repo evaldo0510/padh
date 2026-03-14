@@ -7,6 +7,7 @@ import PageHeader from '@/components/layout/PageHeader';
 import { useScrollAnimation } from '@/hooks/useScrollAnimation';
 import { usePageLoading } from '@/hooks/usePageLoading';
 import { PageSkeleton } from '@/components/ui/page-skeleton';
+import toolImage from '@/assets/tool-verso-gatilho.jpg';
 
 const VersoGatilho = () => {
   const isLoading = usePageLoading(500);
@@ -45,7 +46,10 @@ const VersoGatilho = () => {
               Uma âncora emocional rápida — um verso curto e memorável que funciona como um 
               botão de emergência emocional, um microtransplante de consciência.
             </p>
-            <div className="poem-block max-w-sm mx-auto mt-8">
+            <div className="mx-auto w-full max-w-md mt-6 mb-4">
+              <img src={toolImage} alt="Verso-Gatilho — âncora emocional poética" className="w-full rounded-xl shadow-lg opacity-80" />
+            </div>
+            <div className="poem-block max-w-sm mx-auto mt-4">
               <p className="poem-text text-foreground/80">
                 "Eu não sou o que me prende,<br />
                 sou o que se solta depois."

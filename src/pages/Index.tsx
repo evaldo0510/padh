@@ -1,5 +1,6 @@
 import React from 'react';
 import { ArrowRight, BookOpen, Brain, Sparkles, Star, Heart, Users, GraduationCap, Feather, Quote } from 'lucide-react';
+import PoemadiagnosticoInterativo from '@/components/sections/PoemadiagnosticoInterativo';
 import { Link } from 'react-router-dom';
 import heroImage from '@/assets/hero-padh.png';
 import { Card, CardContent } from '@/components/ui/card';
@@ -368,6 +369,8 @@ const Index = () => {
           </div>
         </div>
       </section>
+
+      <PoemadiagnosticoInterativo />
 
       {/* Poem CTA */}
       <section className="py-24 border-t border-border/30 relative overflow-hidden">
