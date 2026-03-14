@@ -370,6 +370,8 @@ const Index = () => {
         </div>
       </section>
 
+      <PoemadiagnosticoInterativo />
+
       {/* Poem CTA */}
       <section className="py-24 border-t border-border/30 relative overflow-hidden">
         <div className="absolute inset-0 gradient-glow" />
