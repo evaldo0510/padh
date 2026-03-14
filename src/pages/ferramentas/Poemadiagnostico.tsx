@@ -7,6 +7,8 @@ import PageHeader from '@/components/layout/PageHeader';
 import { useScrollAnimation } from '@/hooks/useScrollAnimation';
 import { usePageLoading } from '@/hooks/usePageLoading';
 import { PageSkeleton } from '@/components/ui/page-skeleton';
+import PoemadiagnosticoInterativo from '@/components/sections/PoemadiagnosticoInterativo';
+import toolImage from '@/assets/tool-poemadiagnostico.jpg';
 
 const Poemadiagnostico = () => {
   const isLoading = usePageLoading(500);
