@@ -52,6 +52,30 @@ const todosPoemas = [
     cor: 'from-violet-500/20 to-purple-500/10',
     borda: 'border-violet-400/30',
   },
+  {
+    id: 'luto',
+    tema: 'Luto',
+    verso: 'Carrego um nome que não posso chamar\nsem que o peito se parta ao meio.\nA saudade não diminui —\napenas aprende a respirar baixo.',
+    diagnostico: 'Você está processando uma perda que ainda pulsa. O luto não acabou — ele apenas mudou de forma. Seu inconsciente pede espaço para honrar o que foi, sem pressa de seguir em frente.',
+    cor: 'from-gray-500/20 to-stone-500/10',
+    borda: 'border-gray-400/30',
+  },
+  {
+    id: 'coragem',
+    tema: 'Coragem',
+    verso: 'Não é que o medo tenha ido embora —\né que aprendi a tremer de pé.\nCoragem não é ausência de abismo.\nÉ saltar sabendo que o chão é incerto.',
+    diagnostico: 'Você está num momento de enfrentamento. Algo dentro de você já decidiu avançar, mesmo sem garantias. Sua coragem não nega o medo — ela o atravessa.',
+    cor: 'from-orange-500/20 to-red-500/10',
+    borda: 'border-orange-400/30',
+  },
+  {
+    id: 'perdao',
+    tema: 'Perdão',
+    verso: 'Devolvi a pedra que guardava\npara atirar em quem me feriu.\nMinhas mãos, agora vazias,\nfinalmente podem abraçar.',
+    diagnostico: 'Você está num processo de soltar o peso da mágoa. O perdão que emerge não é esquecimento — é a decisão de não carregar mais o que o outro deixou. Suas mãos querem ser livres.',
+    cor: 'from-rose-500/20 to-pink-500/10',
+    borda: 'border-rose-400/30',
+  },
 ];
 
 function embaralhar<T>(arr: T[]): T[] {
