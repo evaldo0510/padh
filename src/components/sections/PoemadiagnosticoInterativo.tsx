@@ -106,6 +106,7 @@ const PoemadiagnosticoInterativo = () => {
   return (
     <section className="py-20 border-t border-border/30 relative overflow-hidden">
       <div className="absolute inset-0 gradient-warm" />
+      <FloatingParticles />
       <div className="relative container mx-auto px-6">
         <div className="max-w-4xl mx-auto">
           <div className="text-center mb-10">
