@@ -11,6 +11,8 @@ import { FloatingParticles } from '@/components/effects/FloatingParticles';
 import { useScrollAnimation } from '@/hooks/useScrollAnimation';
 import { usePageLoading } from '@/hooks/usePageLoading';
 import { PageSkeleton } from '@/components/ui/page-skeleton';
+import SEOHead from '@/components/seo/SEOHead';
+import { pagesSEO } from '@/lib/seo-config';
 
 const Index = () => {
   const aboutSection = useScrollAnimation(0.15);
