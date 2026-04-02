@@ -21,6 +21,7 @@ import CadernoVozInterna from "./pages/ferramentas/CadernoVozInterna";
 import EncenacaoPoetica from "./pages/ferramentas/EncenacaoPoetica";
 import ReescritaPoetica from "./pages/ferramentas/ReescritaPoetica";
 import RitualSilencio from "./pages/ferramentas/RitualSilencio";
+import PoesiaHipnotica from "./pages/ferramentas/PoesiaHipnotica";
 
 const queryClient = new QueryClient();
 
