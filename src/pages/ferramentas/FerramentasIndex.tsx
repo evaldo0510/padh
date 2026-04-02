@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { ArrowRight, Feather, Anchor, Eye, PenTool, Drama, RefreshCw, Flame } from 'lucide-react';
+import { ArrowRight, Feather, Anchor, Eye, PenTool, Drama, RefreshCw, Flame, Sparkles } from 'lucide-react';
 import { Card, CardContent } from '@/components/ui/card';
 import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
