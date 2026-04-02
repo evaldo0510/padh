@@ -79,6 +79,15 @@ const FerramentasIndex = () => {
       verso: '"Se uma só palavra tua pudesse morar em mim, qual você deixaria?"',
       link: '/ferramentas/ritual-silencio',
     },
+    {
+      numero: 8,
+      icon: <Sparkles className="h-5 w-5" />,
+      titulo: 'Poesia Hipnótica',
+      subtitulo: 'O Poder das Palavras',
+      descricao: 'A PCH combina linguagem sugestiva, metáforas e afirmações para reformular padrões mentais limitantes e estimular mudanças emocionais positivas.',
+      verso: '"Combinando a palavra com intenção e ritmo, criamos um espaço para o florescimento de novas possibilidades."',
+      link: '/ferramentas/poesia-hipnotica',
+    },
   ];
 
   return (
