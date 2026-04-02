@@ -22,6 +22,7 @@ const Poemadiagnostico = () => {
 
   return (
     <div className="min-h-screen bg-background">
+      <SEOHead title={pagesSEO.poemadiagnostico.title} description={pagesSEO.poemadiagnostico.description} path={pagesSEO.poemadiagnostico.path} />
       <Header />
       <PageHeader currentPage="Poemadiagnóstico" />
 

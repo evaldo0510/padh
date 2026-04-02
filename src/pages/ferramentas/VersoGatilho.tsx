@@ -28,6 +28,7 @@ const VersoGatilho = () => {
 
   return (
     <div className="min-h-screen bg-background">
+      <SEOHead title={pagesSEO.versoGatilho.title} description={pagesSEO.versoGatilho.description} path={pagesSEO.versoGatilho.path} />
       <Header />
       <PageHeader currentPage="Verso-Gatilho" />
 

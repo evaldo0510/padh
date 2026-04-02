@@ -21,6 +21,7 @@ const RitualSilencio = () => {
 
   return (
     <div className="min-h-screen bg-background">
+      <SEOHead title={pagesSEO.ritualSilencio.title} description={pagesSEO.ritualSilencio.description} path={pagesSEO.ritualSilencio.path} />
       <Header />
       <PageHeader currentPage="Ritual do Silêncio" />
 

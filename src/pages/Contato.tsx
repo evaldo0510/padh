@@ -32,6 +32,7 @@ const Contato = () => {
 
   return (
     <div className="min-h-screen bg-background">
+      <SEOHead title={pagesSEO.contato.title} description={pagesSEO.contato.description} path={pagesSEO.contato.path} />
       <Header />
       <PageHeader currentPage="Contato" />
       

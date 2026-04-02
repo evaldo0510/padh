@@ -23,6 +23,7 @@ const Sobre = () => {
 
   return (
     <div className="min-h-screen bg-background">
+      <SEOHead title={pagesSEO.sobre.title} description={pagesSEO.sobre.description} path={pagesSEO.sobre.path} />
       <Header />
       <PageHeader currentPage="Sobre" />
 

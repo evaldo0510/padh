@@ -29,6 +29,7 @@ const CadernoVozInterna = () => {
 
   return (
     <div className="min-h-screen bg-background">
+      <SEOHead title={pagesSEO.cadernoVozInterna.title} description={pagesSEO.cadernoVozInterna.description} path={pagesSEO.cadernoVozInterna.path} />
       <Header />
       <PageHeader currentPage="Caderno de Voz Interna" />
 

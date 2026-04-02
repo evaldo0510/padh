@@ -17,6 +17,7 @@ const LivroCurso = () => {
 
   return (
     <div className="min-h-screen bg-background">
+      <SEOHead title={pagesSEO.livroCurso.title} description={pagesSEO.livroCurso.description} path={pagesSEO.livroCurso.path} />
       <Header />
       <PageHeader currentPage="Livro-Curso" />
 

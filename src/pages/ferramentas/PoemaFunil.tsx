@@ -21,6 +21,7 @@ const PoemaFunil = () => {
 
   return (
     <div className="min-h-screen bg-background">
+      <SEOHead title={pagesSEO.poemaFunil.title} description={pagesSEO.poemaFunil.description} path={pagesSEO.poemaFunil.path} />
       <Header />
       <PageHeader currentPage="Poema-Funil" />
 
