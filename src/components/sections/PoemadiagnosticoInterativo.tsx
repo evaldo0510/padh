@@ -175,7 +175,7 @@ const PoemadiagnosticoInterativo = () => {
                 Revelar meu espelho emocional
                 <ArrowRight className="ml-2 h-4 w-4" />
               </Button>
-            </div>
+            </motion.div>
           )}
 
           {revelado && poemaEscolhido && (
