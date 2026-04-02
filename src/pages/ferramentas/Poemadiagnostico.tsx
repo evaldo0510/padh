@@ -9,6 +9,8 @@ import { usePageLoading } from '@/hooks/usePageLoading';
 import { PageSkeleton } from '@/components/ui/page-skeleton';
 import PoemadiagnosticoInterativo from '@/components/sections/PoemadiagnosticoInterativo';
 import toolImage from '@/assets/tool-poemadiagnostico.jpg';
+import SEOHead from '@/components/seo/SEOHead';
+import { pagesSEO } from '@/lib/seo-config';
 
 const Poemadiagnostico = () => {
   const isLoading = usePageLoading(500);
@@ -20,6 +22,7 @@ const Poemadiagnostico = () => {
 
   return (
     <div className="min-h-screen bg-background">
+      <SEOHead title={pagesSEO.poemadiagnostico.title} description={pagesSEO.poemadiagnostico.description} path={pagesSEO.poemadiagnostico.path} />
       <Header />
       <PageHeader currentPage="Poemadiagnóstico" />
 

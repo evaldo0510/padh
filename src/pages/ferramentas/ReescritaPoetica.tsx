@@ -8,6 +8,8 @@ import { useScrollAnimation } from '@/hooks/useScrollAnimation';
 import { usePageLoading } from '@/hooks/usePageLoading';
 import { PageSkeleton } from '@/components/ui/page-skeleton';
 import toolImage from '@/assets/tool-reescrita.jpg';
+import SEOHead from '@/components/seo/SEOHead';
+import { pagesSEO } from '@/lib/seo-config';
 
 const ReescritaPoetica = () => {
   const isLoading = usePageLoading(500);
@@ -19,6 +21,7 @@ const ReescritaPoetica = () => {
 
   return (
     <div className="min-h-screen bg-background">
+      <SEOHead title={pagesSEO.reescritaPoetica.title} description={pagesSEO.reescritaPoetica.description} path={pagesSEO.reescritaPoetica.path} />
       <Header />
       <PageHeader currentPage="Reescrita Poética" />
 

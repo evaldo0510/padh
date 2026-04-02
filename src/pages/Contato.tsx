@@ -10,6 +10,8 @@ import Footer from '@/components/layout/Footer';
 import PageHeader from '@/components/layout/PageHeader';
 import { usePageLoading } from '@/hooks/usePageLoading';
 import { PageSkeleton } from '@/components/ui/page-skeleton';
+import SEOHead from '@/components/seo/SEOHead';
+import { pagesSEO } from '@/lib/seo-config';
 
 const Contato = () => {
   const [formData, setFormData] = useState({ nome: '', email: '', mensagem: '' });
@@ -30,6 +32,7 @@ const Contato = () => {
 
   return (
     <div className="min-h-screen bg-background">
+      <SEOHead title={pagesSEO.contato.title} description={pagesSEO.contato.description} path={pagesSEO.contato.path} />
       <Header />
       <PageHeader currentPage="Contato" />
       

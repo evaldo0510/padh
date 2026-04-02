@@ -8,6 +8,8 @@ import { useScrollAnimation } from '@/hooks/useScrollAnimation';
 import { usePageLoading } from '@/hooks/usePageLoading';
 import { PageSkeleton } from '@/components/ui/page-skeleton';
 import toolImage from '@/assets/tool-poema-funil.jpg';
+import SEOHead from '@/components/seo/SEOHead';
+import { pagesSEO } from '@/lib/seo-config';
 
 const PoemaFunil = () => {
   const isLoading = usePageLoading(500);
@@ -19,6 +21,7 @@ const PoemaFunil = () => {
 
   return (
     <div className="min-h-screen bg-background">
+      <SEOHead title={pagesSEO.poemaFunil.title} description={pagesSEO.poemaFunil.description} path={pagesSEO.poemaFunil.path} />
       <Header />
       <PageHeader currentPage="Poema-Funil" />
 

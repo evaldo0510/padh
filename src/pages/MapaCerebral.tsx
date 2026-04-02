@@ -6,6 +6,8 @@ import Footer from '@/components/layout/Footer';
 import PageHeader from '@/components/layout/PageHeader';
 import { usePageLoading } from '@/hooks/usePageLoading';
 import { PageSkeleton } from '@/components/ui/page-skeleton';
+import SEOHead from '@/components/seo/SEOHead';
+import { pagesSEO } from '@/lib/seo-config';
 
 const MapaCerebral = () => {
   const isLoading = usePageLoading(500);
@@ -58,6 +60,7 @@ const MapaCerebral = () => {
 
   return (
     <div className="min-h-screen bg-background">
+      <SEOHead title={pagesSEO.mapaCerebral.title} description={pagesSEO.mapaCerebral.description} path={pagesSEO.mapaCerebral.path} />
       <Header />
       <PageHeader currentPage="Mapa Cerebral" />
       

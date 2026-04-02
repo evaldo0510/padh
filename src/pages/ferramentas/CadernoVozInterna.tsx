@@ -8,6 +8,8 @@ import { useScrollAnimation } from '@/hooks/useScrollAnimation';
 import { usePageLoading } from '@/hooks/usePageLoading';
 import { PageSkeleton } from '@/components/ui/page-skeleton';
 import toolImage from '@/assets/tool-caderno-voz.jpg';
+import SEOHead from '@/components/seo/SEOHead';
+import { pagesSEO } from '@/lib/seo-config';
 
 const CadernoVozInterna = () => {
   const isLoading = usePageLoading(500);
@@ -27,6 +29,7 @@ const CadernoVozInterna = () => {
 
   return (
     <div className="min-h-screen bg-background">
+      <SEOHead title={pagesSEO.cadernoVozInterna.title} description={pagesSEO.cadernoVozInterna.description} path={pagesSEO.cadernoVozInterna.path} />
       <Header />
       <PageHeader currentPage="Caderno de Voz Interna" />
 

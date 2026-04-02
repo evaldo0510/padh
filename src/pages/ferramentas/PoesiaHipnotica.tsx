@@ -8,6 +8,8 @@ import PageHeader from '@/components/layout/PageHeader';
 import { useScrollAnimation } from '@/hooks/useScrollAnimation';
 import { usePageLoading } from '@/hooks/usePageLoading';
 import { PageSkeleton } from '@/components/ui/page-skeleton';
+import SEOHead from '@/components/seo/SEOHead';
+import { pagesSEO } from '@/lib/seo-config';
 
 const PoesiaHipnotica = () => {
   const isLoading = usePageLoading(500);
@@ -23,6 +25,7 @@ const PoesiaHipnotica = () => {
 
   return (
     <div className="min-h-screen bg-background">
+      <SEOHead title={pagesSEO.poesiaHipnotica.title} description={pagesSEO.poesiaHipnotica.description} path={pagesSEO.poesiaHipnotica.path} />
       <Header />
       <PageHeader currentPage="Poesia Hipnótica" />
 

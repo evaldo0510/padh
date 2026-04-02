@@ -8,6 +8,8 @@ import Footer from '@/components/layout/Footer';
 import PageHeader from '@/components/layout/PageHeader';
 import { usePageLoading } from '@/hooks/usePageLoading';
 import { PageSkeleton } from '@/components/ui/page-skeleton';
+import SEOHead from '@/components/seo/SEOHead';
+import { pagesSEO } from '@/lib/seo-config';
 
 const Formacao = () => {
   const isLoading = usePageLoading(500);
@@ -60,6 +62,7 @@ const Formacao = () => {
 
   return (
     <div className="min-h-screen bg-background">
+      <SEOHead title={pagesSEO.formacao.title} description={pagesSEO.formacao.description} path={pagesSEO.formacao.path} />
       <Header />
       <PageHeader currentPage="Formação em PCH" />
       

@@ -8,6 +8,8 @@ import Footer from '@/components/layout/Footer';
 import PageHeader from '@/components/layout/PageHeader';
 import { usePageLoading } from '@/hooks/usePageLoading';
 import { PageSkeleton } from '@/components/ui/page-skeleton';
+import SEOHead from '@/components/seo/SEOHead';
+import { pagesSEO } from '@/lib/seo-config';
 
 const LivroCurso = () => {
   const isLoading = usePageLoading(500);
@@ -15,6 +17,7 @@ const LivroCurso = () => {
 
   return (
     <div className="min-h-screen bg-background">
+      <SEOHead title={pagesSEO.livroCurso.title} description={pagesSEO.livroCurso.description} path={pagesSEO.livroCurso.path} />
       <Header />
       <PageHeader currentPage="Livro-Curso" />
 

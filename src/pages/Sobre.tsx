@@ -9,6 +9,8 @@ import PageHeader from '@/components/layout/PageHeader';
 import { useScrollAnimation } from '@/hooks/useScrollAnimation';
 import { usePageLoading } from '@/hooks/usePageLoading';
 import { PageSkeleton } from '@/components/ui/page-skeleton';
+import SEOHead from '@/components/seo/SEOHead';
+import { pagesSEO } from '@/lib/seo-config';
 
 const Sobre = () => {
   const originSection = useScrollAnimation(0.15);
@@ -21,6 +23,7 @@ const Sobre = () => {
 
   return (
     <div className="min-h-screen bg-background">
+      <SEOHead title={pagesSEO.sobre.title} description={pagesSEO.sobre.description} path={pagesSEO.sobre.path} />
       <Header />
       <PageHeader currentPage="Sobre" />
 
