@@ -121,30 +121,47 @@ const PoemadiagnosticoInterativo = () => {
           </div>
 
           {/* Poemas */}
-          <div className="grid sm:grid-cols-3 gap-4 mb-8">
-            {poemas.map((poema) => (
-              <button
-                key={poema.id}
-                onClick={() => { setSelecionado(poema.id); setRevelado(false); }}
-                className="text-left w-full"
-              >
-                <Card className={`h-full transition-all duration-500 cursor-pointer ${
-                  selecionado === poema.id 
-                    ? `${poema.borda} ring-2 ring-primary/30 scale-[1.02]` 
-                    : 'border-border/50 hover:border-primary/20'
-                } ${selecionado && selecionado !== poema.id ? 'opacity-40' : ''}`}>
-                  <CardContent className="p-5">
-                    <span className="text-xs uppercase tracking-widest text-primary font-medium">{poema.tema}</span>
-                    <div className="mt-3 poem-block">
-                      <p className="poem-text text-sm text-foreground/80 whitespace-pre-line leading-relaxed">
-                        {poema.verso}
-                      </p>
-                    </div>
-                  </CardContent>
-                </Card>
-              </button>
-            ))}
-          </div>
+          <AnimatePresence mode="wait">
+            <motion.div
+              key={seed}
+              className="grid sm:grid-cols-3 gap-4 mb-8"
+              initial="hidden"
+              animate="visible"
+              variants={{
+                hidden: {},
+                visible: { transition: { staggerChildren: 0.15 } },
+              }}
+            >
+              {poemas.map((poema) => (
+                <motion.button
+                  key={poema.id}
+                  onClick={() => { setSelecionado(poema.id); setRevelado(false); }}
+                  className="text-left w-full"
+                  variants={{
+                    hidden: { opacity: 0, y: 24, scale: 0.95 },
+                    visible: { opacity: 1, y: 0, scale: 1, transition: { duration: 0.5, ease: [0.22, 1, 0.36, 1] } },
+                  }}
+                  whileHover={{ scale: 1.03, transition: { duration: 0.2 } }}
+                  whileTap={{ scale: 0.98 }}
+                >
+                  <Card className={`h-full transition-all duration-500 cursor-pointer ${
+                    selecionado === poema.id 
+                      ? `${poema.borda} ring-2 ring-primary/30` 
+                      : 'border-border/50 hover:border-primary/20'
+                  } ${selecionado && selecionado !== poema.id ? 'opacity-40' : ''}`}>
+                    <CardContent className="p-5">
+                      <span className="text-xs uppercase tracking-widest text-primary font-medium">{poema.tema}</span>
+                      <div className="mt-3 poem-block">
+                        <p className="poem-text text-sm text-foreground/80 whitespace-pre-line leading-relaxed">
+                          {poema.verso}
+                        </p>
+                      </div>
+                    </CardContent>
+                  </Card>
+                </motion.button>
+              ))}
+            </motion.div>
+          </AnimatePresence>
 
           {/* Resultado */}
           {selecionado && !revelado && (
