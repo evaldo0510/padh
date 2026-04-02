@@ -59,6 +59,7 @@ const Index = () => {
 
   return (
     <div className="min-h-screen bg-background">
+      <SEOHead title={pagesSEO.home.title || undefined} description={pagesSEO.home.description} path={pagesSEO.home.path} />
       <Header />
 
       {/* Hero Section */}

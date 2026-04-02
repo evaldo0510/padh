@@ -8,6 +8,8 @@ import { useScrollAnimation } from '@/hooks/useScrollAnimation';
 import { usePageLoading } from '@/hooks/usePageLoading';
 import { PageSkeleton } from '@/components/ui/page-skeleton';
 import toolImage from '@/assets/tool-ritual-silencio.jpg';
+import SEOHead from '@/components/seo/SEOHead';
+import { pagesSEO } from '@/lib/seo-config';
 
 const RitualSilencio = () => {
   const isLoading = usePageLoading(500);
