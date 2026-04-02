@@ -100,7 +100,7 @@ const FerramentasIndex = () => {
         <div className="absolute inset-0 gradient-glow" />
         <div className="relative container mx-auto px-6 py-20 text-center">
           <div className="animate-fade-in-up max-w-3xl mx-auto">
-            <p className="text-sm uppercase tracking-[0.2em] text-primary mb-4 font-medium">7 Instrumentos Vivos</p>
+            <p className="text-sm uppercase tracking-[0.2em] text-primary mb-4 font-medium">8 Instrumentos Vivos</p>
             <h1 className="text-4xl md:text-6xl font-heading font-bold mb-4 text-foreground">
               Ferramentas <span className="text-primary italic">P.A.D.H.</span>
             </h1>
