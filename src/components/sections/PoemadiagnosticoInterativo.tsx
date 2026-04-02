@@ -1,5 +1,6 @@
 import React, { useState, useMemo } from 'react';
-import { Eye, ArrowRight, RotateCcw, Shuffle } from 'lucide-react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { Eye, ArrowRight, Shuffle } from 'lucide-react';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 
@@ -120,43 +121,65 @@ const PoemadiagnosticoInterativo = () => {
           </div>
 
           {/* Poemas */}
-          <div className="grid sm:grid-cols-3 gap-4 mb-8">
-            {poemas.map((poema) => (
-              <button
-                key={poema.id}
-                onClick={() => { setSelecionado(poema.id); setRevelado(false); }}
-                className="text-left w-full"
-              >
-                <Card className={`h-full transition-all duration-500 cursor-pointer ${
-                  selecionado === poema.id 
-                    ? `${poema.borda} ring-2 ring-primary/30 scale-[1.02]` 
-                    : 'border-border/50 hover:border-primary/20'
-                } ${selecionado && selecionado !== poema.id ? 'opacity-40' : ''}`}>
-                  <CardContent className="p-5">
-                    <span className="text-xs uppercase tracking-widest text-primary font-medium">{poema.tema}</span>
-                    <div className="mt-3 poem-block">
-                      <p className="poem-text text-sm text-foreground/80 whitespace-pre-line leading-relaxed">
-                        {poema.verso}
-                      </p>
-                    </div>
-                  </CardContent>
-                </Card>
-              </button>
-            ))}
-          </div>
+          <AnimatePresence mode="wait">
+            <motion.div
+              key={seed}
+              className="grid sm:grid-cols-3 gap-4 mb-8"
+              initial="hidden"
+              animate="visible"
+              variants={{
+                hidden: {},
+                visible: { transition: { staggerChildren: 0.15 } },
+              }}
+            >
+              {poemas.map((poema) => (
+                <motion.button
+                  key={poema.id}
+                  onClick={() => { setSelecionado(poema.id); setRevelado(false); }}
+                  className="text-left w-full"
+                  variants={{
+                    hidden: { opacity: 0, y: 24, scale: 0.95 },
+                    visible: { opacity: 1, y: 0, scale: 1, transition: { duration: 0.5, ease: [0.22, 1, 0.36, 1] } },
+                  }}
+                  whileHover={{ scale: 1.03, transition: { duration: 0.2 } }}
+                  whileTap={{ scale: 0.98 }}
+                >
+                  <Card className={`h-full transition-all duration-500 cursor-pointer ${
+                    selecionado === poema.id 
+                      ? `${poema.borda} ring-2 ring-primary/30` 
+                      : 'border-border/50 hover:border-primary/20'
+                  } ${selecionado && selecionado !== poema.id ? 'opacity-40' : ''}`}>
+                    <CardContent className="p-5">
+                      <span className="text-xs uppercase tracking-widest text-primary font-medium">{poema.tema}</span>
+                      <div className="mt-3 poem-block">
+                        <p className="poem-text text-sm text-foreground/80 whitespace-pre-line leading-relaxed">
+                          {poema.verso}
+                        </p>
+                      </div>
+                    </CardContent>
+                  </Card>
+                </motion.button>
+              ))}
+            </motion.div>
+          </AnimatePresence>
 
           {/* Resultado */}
           {selecionado && !revelado && (
-            <div className="text-center animate-fade-in-up">
+            <motion.div
+              className="text-center"
+              initial={{ opacity: 0, y: 12 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.4 }}
+            >
               <Button onClick={() => setRevelado(true)} size="lg" className="bg-primary text-primary-foreground hover:bg-primary-dark">
                 Revelar meu espelho emocional
                 <ArrowRight className="ml-2 h-4 w-4" />
               </Button>
-            </div>
+            </motion.div>
           )}
 
           {revelado && poemaEscolhido && (
-            <div className="animate-fade-in-up">
+            <motion.div initial={{ opacity: 0, y: 20, scale: 0.97 }} animate={{ opacity: 1, y: 0, scale: 1 }} transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}>
               <Card className={`${poemaEscolhido.borda} bg-gradient-to-br ${poemaEscolhido.cor} backdrop-blur-sm`}>
                 <CardContent className="p-8 text-center space-y-4">
                   <p className="text-sm uppercase tracking-widest text-primary font-medium">
@@ -179,7 +202,7 @@ const PoemadiagnosticoInterativo = () => {
                   </Button>
                 </CardContent>
               </Card>
-            </div>
+            </motion.div>
           )}
         </div>
       </div>
