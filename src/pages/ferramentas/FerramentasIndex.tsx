@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { ArrowRight, Feather, Anchor, Eye, PenTool, Drama, RefreshCw, Flame } from 'lucide-react';
+import { ArrowRight, Feather, Anchor, Eye, PenTool, Drama, RefreshCw, Flame, Sparkles } from 'lucide-react';
 import { Card, CardContent } from '@/components/ui/card';
 import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
@@ -79,6 +79,15 @@ const FerramentasIndex = () => {
       verso: '"Se uma só palavra tua pudesse morar em mim, qual você deixaria?"',
       link: '/ferramentas/ritual-silencio',
     },
+    {
+      numero: 8,
+      icon: <Sparkles className="h-5 w-5" />,
+      titulo: 'Poesia Hipnótica',
+      subtitulo: 'O Poder das Palavras',
+      descricao: 'A PCH combina linguagem sugestiva, metáforas e afirmações para reformular padrões mentais limitantes e estimular mudanças emocionais positivas.',
+      verso: '"Combinando a palavra com intenção e ritmo, criamos um espaço para o florescimento de novas possibilidades."',
+      link: '/ferramentas/poesia-hipnotica',
+    },
   ];
 
   return (
@@ -91,7 +100,7 @@ const FerramentasIndex = () => {
         <div className="absolute inset-0 gradient-glow" />
         <div className="relative container mx-auto px-6 py-20 text-center">
           <div className="animate-fade-in-up max-w-3xl mx-auto">
-            <p className="text-sm uppercase tracking-[0.2em] text-primary mb-4 font-medium">7 Instrumentos Vivos</p>
+            <p className="text-sm uppercase tracking-[0.2em] text-primary mb-4 font-medium">8 Instrumentos Vivos</p>
             <h1 className="text-4xl md:text-6xl font-heading font-bold mb-4 text-foreground">
               Ferramentas <span className="text-primary italic">P.A.D.H.</span>
             </h1>
