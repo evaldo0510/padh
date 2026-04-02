@@ -165,7 +165,12 @@ const PoemadiagnosticoInterativo = () => {
 
           {/* Resultado */}
           {selecionado && !revelado && (
-            <div className="text-center animate-fade-in-up">
+            <motion.div
+              className="text-center"
+              initial={{ opacity: 0, y: 12 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.4 }}
+            >
               <Button onClick={() => setRevelado(true)} size="lg" className="bg-primary text-primary-foreground hover:bg-primary-dark">
                 Revelar meu espelho emocional
                 <ArrowRight className="ml-2 h-4 w-4" />
