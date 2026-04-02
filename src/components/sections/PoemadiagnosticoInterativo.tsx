@@ -202,7 +202,7 @@ const PoemadiagnosticoInterativo = () => {
                   </Button>
                 </CardContent>
               </Card>
-            </div>
+            </motion.div>
           )}
         </div>
       </div>
