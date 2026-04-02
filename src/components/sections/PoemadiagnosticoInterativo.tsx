@@ -179,7 +179,7 @@ const PoemadiagnosticoInterativo = () => {
           )}
 
           {revelado && poemaEscolhido && (
-            <div className="animate-fade-in-up">
+            <motion.div initial={{ opacity: 0, y: 20, scale: 0.97 }} animate={{ opacity: 1, y: 0, scale: 1 }} transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}>
               <Card className={`${poemaEscolhido.borda} bg-gradient-to-br ${poemaEscolhido.cor} backdrop-blur-sm`}>
                 <CardContent className="p-8 text-center space-y-4">
                   <p className="text-sm uppercase tracking-widest text-primary font-medium">
