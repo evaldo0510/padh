@@ -1,5 +1,6 @@
 import React, { useState, useMemo } from 'react';
-import { Eye, ArrowRight, RotateCcw, Shuffle } from 'lucide-react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { Eye, ArrowRight, Shuffle } from 'lucide-react';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 
