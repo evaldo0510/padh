@@ -46,6 +46,7 @@ const AnimatedRoutes = () => {
         <Route path="/ferramentas/encenacao-poetica" element={<PageTransition><EncenacaoPoetica /></PageTransition>} />
         <Route path="/ferramentas/reescrita-poetica" element={<PageTransition><ReescritaPoetica /></PageTransition>} />
         <Route path="/ferramentas/ritual-silencio" element={<PageTransition><RitualSilencio /></PageTransition>} />
+        <Route path="/ferramentas/poesia-hipnotica" element={<PageTransition><PoesiaHipnotica /></PageTransition>} />
         <Route path="*" element={<PageTransition><NotFound /></PageTransition>} />
       </Routes>
     </AnimatePresence>
