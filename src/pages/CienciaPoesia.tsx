@@ -5,6 +5,7 @@ import { Button } from '@/components/ui/button';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import PageLayout from '@/components/layout/PageLayout';
 import { StudyCard } from '@/components/sections/ScientificValidation';
+import heroImage from '@/assets/hero-ciencia-poesia.jpg';
 import {
   scientificStudies,
   getAllCategories,
@@ -66,6 +67,9 @@ const CienciaPoesia = () => {
               {scientificStudies.length} estudos publicados em revistas internacionais como <em>Science</em>, <em>WHO</em> e <em>NeuroImage</em> fundamentam 
               o uso terapêutico da poesia — e validam cada ferramenta P.A.D.H.
             </p>
+            <div className="mx-auto w-full max-w-lg mt-6">
+              <img src={heroImage} alt="Ciência da Poesia — neurociência e linguagem poética" className="w-full rounded-xl shadow-lg opacity-90" width={1920} height={768} />
+            </div>
           </div>
         </div>
       </section>

@@ -5,6 +5,7 @@ import PageLayout from '@/components/layout/PageLayout';
 import { useScrollAnimation } from '@/hooks/useScrollAnimation';
 import toolImage from '@/assets/tool-poema-funil.jpg';
 import { pagesSEO } from '@/lib/seo-config';
+import ScientificValidation from '@/components/sections/ScientificValidation';
 
 const PoemaFunil = () => {
   const contentAnim = useScrollAnimation(0.15);
@@ -336,6 +337,7 @@ const PoemaFunil = () => {
         </div>
       </section>
 
+      <ScientificValidation tool="poema-funil" />
     </PageLayout>
   );
 };

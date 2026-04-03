@@ -5,6 +5,7 @@ import PageLayout from '@/components/layout/PageLayout';
 import { useScrollAnimation } from '@/hooks/useScrollAnimation';
 import toolImage from '@/assets/tool-caderno-voz.jpg';
 import { pagesSEO } from '@/lib/seo-config';
+import ScientificValidation from '@/components/sections/ScientificValidation';
 
 const CadernoVozInterna = () => {
   const contentAnim = useScrollAnimation(0.15);
@@ -264,6 +265,7 @@ const CadernoVozInterna = () => {
         </div>
       </section>
 
+      <ScientificValidation tool="caderno-voz-interna" />
     </PageLayout>
   );
 };

@@ -5,6 +5,7 @@ import PageLayout from '@/components/layout/PageLayout';
 import { useScrollAnimation } from '@/hooks/useScrollAnimation';
 import toolImage from '@/assets/tool-encenacao.jpg';
 import { pagesSEO } from '@/lib/seo-config';
+import ScientificValidation from '@/components/sections/ScientificValidation';
 
 const EncenacaoPoetica = () => {
   const contentAnim = useScrollAnimation(0.15);
@@ -310,6 +311,7 @@ const EncenacaoPoetica = () => {
         </div>
       </section>
 
+      <ScientificValidation tool="encenacao-poetica" />
     </PageLayout>
   );
 };
