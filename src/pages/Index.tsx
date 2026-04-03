@@ -13,6 +13,7 @@ import { usePageLoading } from '@/hooks/usePageLoading';
 import { PageSkeleton } from '@/components/ui/page-skeleton';
 import SEOHead from '@/components/seo/SEOHead';
 import { pagesSEO } from '@/lib/seo-config';
+import TextReader from '@/components/ui/text-reader';
 
 const Index = () => {
   const aboutSection = useScrollAnimation(0.15);
