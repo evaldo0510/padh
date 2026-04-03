@@ -3,6 +3,7 @@ import { Mail, Instagram, Youtube, Heart, Feather } from 'lucide-react';
 import { useScrollAnimation } from '@/hooks/useScrollAnimation';
 import PrefetchLink from './PrefetchLink';
 import logoPadh from '@/assets/logo-padh.png';
+import logoPadhLight from '@/assets/logo-padh-light.png';
 
 const Footer = () => {
   const footerAnim = useScrollAnimation(0.1);

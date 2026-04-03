@@ -5,6 +5,7 @@ import { Button } from '@/components/ui/button';
 import { ThemeToggle } from '@/components/ui/theme-toggle';
 import PrefetchLink from './PrefetchLink';
 import logoPadh from '@/assets/logo-padh.png';
+import logoPadhLight from '@/assets/logo-padh-light.png';
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
