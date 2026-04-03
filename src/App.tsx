@@ -27,6 +27,14 @@ const EncenacaoPoetica = lazy(() => import("./pages/ferramentas/EncenacaoPoetica
 const ReescritaPoetica = lazy(() => import("./pages/ferramentas/ReescritaPoetica"));
 const RitualSilencio = lazy(() => import("./pages/ferramentas/RitualSilencio"));
 const PoesiaHipnotica = lazy(() => import("./pages/ferramentas/PoesiaHipnotica"));
+const VendaPoemaFunil = lazy(() => import("./pages/venda/VendaPoemaFunil"));
+const VendaVersoGatilho = lazy(() => import("./pages/venda/VendaVersoGatilho"));
+const VendaPoemadiagnostico = lazy(() => import("./pages/venda/VendaPoemadiagnostico"));
+const VendaCadernoVozInterna = lazy(() => import("./pages/venda/VendaCadernoVozInterna"));
+const VendaEncenacaoPoetica = lazy(() => import("./pages/venda/VendaEncenacaoPoetica"));
+const VendaReescritaPoetica = lazy(() => import("./pages/venda/VendaReescritaPoetica"));
+const VendaRitualSilencio = lazy(() => import("./pages/venda/VendaRitualSilencio"));
+const VendaPoesiaHipnotica = lazy(() => import("./pages/venda/VendaPoesiaHipnotica"));
 
 const queryClient = new QueryClient();
 
