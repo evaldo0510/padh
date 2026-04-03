@@ -44,6 +44,7 @@ const AnimatedRoutes = () => {
           <Route path="/aula-exclusiva" element={<PageTransition><AulaExclusiva /></PageTransition>} />
           <Route path="/sobre" element={<PageTransition><Sobre /></PageTransition>} />
           <Route path="/contato" element={<PageTransition><Contato /></PageTransition>} />
+          <Route path="/curso-pch" element={<PageTransition><CursoPCH /></PageTransition>} />
           <Route path="/ferramentas" element={<PageTransition><FerramentasIndex /></PageTransition>} />
           <Route path="/ferramentas/poema-funil" element={<PageTransition><PoemaFunil /></PageTransition>} />
           <Route path="/ferramentas/verso-gatilho" element={<PageTransition><VersoGatilho /></PageTransition>} />
