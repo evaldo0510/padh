@@ -3,6 +3,21 @@ import PageLayout from '@/components/layout/PageLayout';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
 import { BookOpen, Brain, Sparkles, Lightbulb, Heart, Flame, Music, PenTool, Eye, Target, Feather } from 'lucide-react';
 
+import modulo1Img from '@/assets/curso-pch/modulo1-palavras.jpg';
+import modulo2Img from '@/assets/curso-pch/modulo2-reestruturacao.jpg';
+import modulo3Img from '@/assets/curso-pch/modulo3-linguagem.jpg';
+import modulo4Img from '@/assets/curso-pch/modulo4-poemas.jpg';
+import modulo5Img from '@/assets/curso-pch/modulo5-avancadas.jpg';
+import modulo6Img from '@/assets/curso-pch/modulo6-terapeutica.jpg';
+import modulo7Img from '@/assets/curso-pch/modulo7-sessao.jpg';
+import modulo8Img from '@/assets/curso-pch/modulo8-exercicios.jpg';
+
+const ModuleImage = ({ src, alt }: { src: string; alt: string }) => (
+  <div className="rounded-xl overflow-hidden mb-6">
+    <img src={src} alt={alt} loading="lazy" width={768} height={512} className="w-full h-48 md:h-56 object-cover" />
+  </div>
+);
+
 /* ─────────────────────── helpers ─────────────────────── */
 const Poem = ({ children, title }: { children: React.ReactNode; title?: string }) => (
   <div className="poem-block my-6">
@@ -78,6 +93,7 @@ const CursoPCH = () => {
                 </div>
               </AccordionTrigger>
               <AccordionContent className="pb-8">
+                <ModuleImage src={modulo1Img} alt="O Poder das Palavras — livro aberto com luz cósmica" />
                 <div className="space-y-6 text-muted-foreground leading-relaxed">
                   <p>A palavra tem um impacto profundo na psique humana, sendo a principal ferramenta da terapia. Quando usada com propósito e poesia, ela pode reestruturar pensamentos e emoções, proporcionando novas percepções e caminhos para a transformação interior.</p>
                   <p>A palavra bem utilizada influencia emoções, crenças e até reconfigura padrões mentais. Seja na hipnoterapia, na PNL, na psicologia ou na meditação guiada, a forma como nos expressamos pode gerar profundas mudanças internas.</p>
@@ -161,6 +177,7 @@ meu próprio rumo, que hoje encontrei.`}</Poem>
                 </div>
               </AccordionTrigger>
               <AccordionContent className="pb-8">
+                <ModuleImage src={modulo2Img} alt="Reestruturação de Crenças — borboleta emergindo de casulo" />
                 <div className="space-y-6 text-muted-foreground leading-relaxed">
                   <h3 className="text-lg font-heading font-semibold text-foreground">🔹 Exercício 1: Identificação e Ressignificação</h3>
                   <p>🎯 <strong className="text-foreground">Objetivo:</strong> Tornar consciente uma crença negativa e iniciar o processo de mudança.</p>
@@ -246,6 +263,7 @@ mas ressoa fundo.`}</Poem>
                 </div>
               </AccordionTrigger>
               <AccordionContent className="pb-8">
+                <ModuleImage src={modulo3Img} alt="Linguagem Hipnótica — cérebro feito de luz e palavras" />
                 <div className="space-y-6 text-muted-foreground leading-relaxed">
 
                   <SectionCard>
@@ -322,6 +340,7 @@ e tudo simplesmente… acontece…`}</Poem>
                 </div>
               </AccordionTrigger>
               <AccordionContent className="pb-8">
+                <ModuleImage src={modulo4Img} alt="Modelos de Poemas — pessoa no topo da montanha ao nascer do sol" />
                 <div className="space-y-6 text-muted-foreground leading-relaxed">
                   <Poem title="🌊 Superação — Fluir e Crescer">{`As marés já mudaram tantas vezes…
 e cada onda soube aonde chegar.
@@ -374,6 +393,7 @@ porque é a sua essência.`}</Poem>
                 </div>
               </AccordionTrigger>
               <AccordionContent className="pb-8">
+                <ModuleImage src={modulo5Img} alt="Técnicas Avançadas — ondas do oceano com notas musicais" />
                 <div className="space-y-6 text-muted-foreground leading-relaxed">
 
                   <SectionCard>
@@ -462,6 +482,7 @@ Está cada vez mais próximo de alcançar a sua essência.`}</Poem>
                 </div>
               </AccordionTrigger>
               <AccordionContent className="pb-8">
+                <ModuleImage src={modulo6Img} alt="Poesia Terapêutica — flor de lótus em luz dourada" />
                 <div className="space-y-6 text-muted-foreground leading-relaxed">
 
                   <SectionCard>
@@ -534,6 +555,7 @@ E quando percebo, já estou mais longe do que imaginei."`}</Poem>
                 </div>
               </AccordionTrigger>
               <AccordionContent className="pb-8">
+                <ModuleImage src={modulo7Img} alt="Sessão em 4 Fases — círculos de luz interconectados" />
                 <div className="space-y-6 text-muted-foreground leading-relaxed">
 
                   <SectionCard className="border-l-4 border-l-primary/40">
@@ -628,6 +650,7 @@ Mas porque sempre esteve dentro de você."`}</Poem>
                 </div>
               </AccordionTrigger>
               <AccordionContent className="pb-8">
+                <ModuleImage src={modulo8Img} alt="Exercícios Práticos — mão escrevendo poesia à luz de vela" />
                 <div className="space-y-6 text-muted-foreground leading-relaxed">
                   <p>Os seguintes exercícios foram desenvolvidos para ajudar você a acessar suas emoções, ressignificar desafios e criar uma nova narrativa para sua vida. Pegue um caderno, encontre um espaço tranquilo e mergulhe na experiência.</p>
 
