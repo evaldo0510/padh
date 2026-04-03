@@ -156,8 +156,7 @@ const Contato = () => {
           </div>
         </div>
       </section>
-      <Footer />
-    </div>
+    </PageLayout>
   );
 };
 
