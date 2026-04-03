@@ -3,17 +3,10 @@ import { GraduationCap, Clock, Users, BookOpen, Brain, Target } from 'lucide-rea
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
-import Header from '@/components/layout/Header';
-import Footer from '@/components/layout/Footer';
-import PageHeader from '@/components/layout/PageHeader';
-import { usePageLoading } from '@/hooks/usePageLoading';
-import { PageSkeleton } from '@/components/ui/page-skeleton';
-import SEOHead from '@/components/seo/SEOHead';
+import PageLayout from '@/components/layout/PageLayout';
 import { pagesSEO } from '@/lib/seo-config';
 
 const Formacao = () => {
-  const isLoading = usePageLoading(500);
-  if (isLoading) return <PageSkeleton />;
 
   const modulos = [
     {
