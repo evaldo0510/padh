@@ -18,6 +18,8 @@ const PoesiaHipnotica = () => {
   const exercicioFocoAnim = useScrollAnimation(0.15);
   const fluxoAnim = useScrollAnimation(0.15);
   const mareAnim = useScrollAnimation(0.15);
+  const metaforasAnim = useScrollAnimation(0.15);
+  const pacingAnim = useScrollAnimation(0.15);
 
 
   return (
@@ -1171,6 +1173,352 @@ const PoesiaHipnotica = () => {
                         não como obrigação… mas como o mar a abraçar a areia.<br />
                         Suave… constante… sem precisar explicar,<br />
                         apenas sentir… que a vida é boa… e é inteira.
+                      </p>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Uso de Metáforas */}
+      <section className="py-20 border-t border-border/30 relative overflow-hidden">
+        <div className="absolute inset-0 gradient-warm" />
+        <div
+          ref={metaforasAnim.ref}
+          className={`relative container mx-auto px-6 transition-all duration-1000 ${
+            metaforasAnim.isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-12'
+          }`}
+        >
+          <div className="max-w-4xl mx-auto">
+            <div className="text-center mb-10">
+              <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-primary/20 bg-primary/5 text-primary text-sm font-medium mb-4">
+                <BookOpen className="h-3.5 w-3.5" />
+                Metáforas
+              </div>
+              <h2 className="text-3xl font-heading font-bold text-foreground mb-4">
+                2️⃣ Uso de Metáforas — <span className="text-primary italic">Criando Imagens Mentais Poderosas</span>
+              </h2>
+            </div>
+
+            <Card className="border-primary/20 bg-card/80">
+              <CardHeader>
+                <CardTitle className="font-heading text-primary">📜 Exercício de Metáforas</CardTitle>
+              </CardHeader>
+              <CardContent className="space-y-4">
+                <div className="space-y-3">
+                  <div className="p-4 rounded-lg border border-border/50 bg-card/50">
+                    <p className="text-xs uppercase tracking-widest text-muted-foreground font-medium mb-2">1️⃣ Escolha um desafio pessoal</p>
+                    <p className="text-sm text-foreground/80">
+                      Algo que você enfrenta no momento, como medo de mudanças, falta de confiança, 
+                      ou dificuldades em seguir em frente.
+                    </p>
+                  </div>
+                  <div className="p-4 rounded-lg border border-border/50 bg-card/50">
+                    <p className="text-xs uppercase tracking-widest text-muted-foreground font-medium mb-2">2️⃣ Crie uma metáfora para esse desafio</p>
+                    <p className="text-sm text-foreground/80">
+                      Pense em um elemento da natureza, um objeto ou uma situação que simbolize o que você sente.
+                    </p>
+                  </div>
+                  <div className="p-4 rounded-lg border border-primary/20 bg-primary/5">
+                    <p className="text-xs uppercase tracking-widest text-primary font-medium mb-2">3️⃣ Transforme em história de crescimento</p>
+                    <p className="text-sm text-foreground/80">
+                      Mostre como esse elemento supera obstáculos e encontra um caminho para se fortalecer.
+                    </p>
+                  </div>
+                </div>
+
+                <div className="pt-4">
+                  <h4 className="font-heading font-semibold text-foreground mb-2">💡 Exemplo — Desafio: Falta de confiança</h4>
+                  <div className="poem-block mb-4">
+                    <p className="poem-text text-sm text-primary italic">
+                      "A pequena semente teme crescer, mas quando se abre à luz, ela se transforma em uma árvore forte."
+                    </p>
+                  </div>
+
+                  <Accordion type="single" collapsible className="w-full">
+                    <AccordionItem value="historia-crescimento" className="border border-border/50 rounded-xl px-4 bg-card/50">
+                      <AccordionTrigger className="text-foreground font-heading font-medium">
+                        📖 História de Crescimento Aprofundada
+                      </AccordionTrigger>
+                      <AccordionContent>
+                        <div className="space-y-4 text-sm text-foreground/80 leading-relaxed">
+                          <p>
+                            No início, a semente repousava em silêncio na terra, sentindo-se segura na escuridão. 
+                            A segurança da terra fria e úmida a fazia questionar: <em>Será que sou capaz de crescer 
+                            além disso?</em> O medo de não ser forte o suficiente para enfrentar a vastidão do mundo 
+                            a paralisava. Ela não sabia o que a luz do sol poderia trazer, mas sentia a pressão do 
+                            crescimento como algo inevitável.
+                          </p>
+                          <p>
+                            Um dia, a terra começou a ceder levemente, e uma pequena fissura apareceu na casca da semente. 
+                            A luz do sol, suave e constante, tocou a parte mais sensível dela. Um tremor de receio a percorreu. 
+                            <em>E se eu me quebrar?</em> pensou a semente. Mas, sem escolha, ela se abriu, expondo-se à 
+                            imensidão do desconhecido.
+                          </p>
+                          <p>
+                            A princípio, o medo a acompanhou. Cada pequena mudança era uma luta. A semente percebeu que, 
+                            à medida que se desafiava a sair mais, um novo tipo de força começava a emergir. Suas raízes, 
+                            que antes estavam aprisionadas no chão, começaram a se esticar, explorando o espaço, em busca 
+                            de mais nutrientes, mais energia. Elas perceberam que a escuridão que as envolvia não era algo 
+                            a temer, mas algo a ser superado. Quanto mais profundas suas raízes ficavam, mais sua confiança 
+                            aumentava.
+                          </p>
+                          <p>
+                            O tronco, inicialmente frágil, começou a se fortalecer. A cada ventania que o fazia balançar, 
+                            ele aprendeu a se curvar sem quebrar, a ser flexível diante dos desafios. O medo ainda estava 
+                            lá, mas agora ele não era mais o inimigo, mas algo que fazia parte do processo de crescimento. 
+                            À medida que os galhos se estendiam, eles se desafiavam a alcançar o céu, a crescer ainda mais, 
+                            a se expandir para além do que era confortável.
+                          </p>
+                          <p>
+                            E, com o tempo, o que antes parecia um simples broto tornou-se uma árvore imponente. Suas folhas 
+                            agora ofereciam sombra, e suas raízes, que haviam superado o medo e o desconhecido, se estendiam 
+                            em busca de ainda mais conexão com a terra. A árvore, agora forte e confiante, sabia que todo o 
+                            processo de superação havia sido fundamental para alcançar sua grandeza. Ela aprendeu que a 
+                            confiança não estava em ser imune ao medo, mas em saber que, ao enfrentá-lo, poderia crescer 
+                            ainda mais.
+                          </p>
+                        </div>
+                        <div className="poem-block mt-4">
+                          <p className="poem-text text-sm text-primary/80 italic">
+                            Reflexão: Assim como a árvore, você pode se permitir crescer, sabendo que cada passo, 
+                            por menor que pareça, é uma vitória. Não há necessidade de se preocupar com o tamanho 
+                            do seu medo, mas de se concentrar no fato de que, ao enfrentá-lo, você encontrará a 
+                            força para alcançar novos horizontes.
+                          </p>
+                        </div>
+                      </AccordionContent>
+                    </AccordionItem>
+                  </Accordion>
+                </div>
+              </CardContent>
+            </Card>
+          </div>
+        </div>
+      </section>
+
+      {/* Pacing e Leading */}
+      <section className="py-20 border-t border-border/30">
+        <div
+          ref={pacingAnim.ref}
+          className={`container mx-auto px-6 transition-all duration-1000 ${
+            pacingAnim.isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-12'
+          }`}
+        >
+          <div className="max-w-4xl mx-auto">
+            <div className="text-center mb-10">
+              <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-primary/20 bg-primary/5 text-primary text-sm font-medium mb-4">
+                <MessageCircle className="h-3.5 w-3.5" />
+                Pacing &amp; Leading
+              </div>
+              <h2 className="text-3xl font-heading font-bold text-foreground mb-4">
+                3️⃣ Pacing e Leading — <span className="text-primary italic">Validando e Conduzindo</span>
+              </h2>
+            </div>
+
+            <div className="space-y-8">
+              {/* Exercício de Relaxamento */}
+              <Card className="border-indigo-400/20 bg-indigo-500/5">
+                <CardHeader>
+                  <CardTitle className="font-heading text-primary">🧘 Exercício de Relaxamento</CardTitle>
+                </CardHeader>
+                <CardContent className="space-y-4">
+                  <div className="space-y-3">
+                    <div className="p-4 rounded-lg border border-border/50 bg-card/50">
+                      <p className="text-xs uppercase tracking-widest text-muted-foreground font-medium mb-2">1️⃣ Estado Atual Comum</p>
+                      <p className="text-sm text-foreground/80 italic">
+                        "Você está sentado ou deitado agora, talvez em um lugar confortável, com seus pés apoiados 
+                        no chão e sua respiração fluindo naturalmente."
+                      </p>
+                    </div>
+                    <div className="p-4 rounded-lg border border-border/50 bg-card/50">
+                      <p className="text-xs uppercase tracking-widest text-muted-foreground font-medium mb-2">2️⃣ Descrição Neutra</p>
+                      <p className="text-sm text-foreground/80 italic">
+                        "Enquanto você respira, talvez perceba o movimento suave de sua barriga subindo e descendo, 
+                        sentindo o peso do seu corpo se entregando ao apoio que o sustenta."
+                      </p>
+                    </div>
+                    <div className="p-4 rounded-lg border border-primary/20 bg-primary/5">
+                      <p className="text-xs uppercase tracking-widest text-primary font-medium mb-2">3️⃣ Estado Desejado — Relaxamento</p>
+                      <p className="text-sm text-foreground/80 italic">
+                        "E talvez, à medida que sua respiração se aprofunda, você comece a perceber uma sensação 
+                        de leveza, se espalhando por seu corpo, relaxando os músculos, suavemente, a cada expiração... 
+                        de modo tranquilo e confortável."
+                      </p>
+                    </div>
+                  </div>
+
+                  <div className="pt-4">
+                    <h4 className="font-heading font-semibold text-foreground mb-3">Poesia do Relaxamento</h4>
+                    <div className="poem-block">
+                      <p className="poem-text text-sm text-foreground/80 leading-relaxed">
+                        Agora, sente o apoio sob seus pés,<br />
+                        O toque suave do ambiente ao redor,<br />
+                        A respiração que flui, calmamente,<br />
+                        Sem pressa, como um suave sopro de vento.<br /><br />
+                        Cada inspiração, uma onda serena,<br />
+                        Cada expiração, um alívio que chega,<br />
+                        E, enquanto o corpo se entrega ao descanso,<br />
+                        As tensões se dissolvem, suavemente,<br />
+                        Como a areia sendo levada pelo mar.<br /><br />
+                        Os músculos relaxam, um por um,<br />
+                        Como se o tempo desacelerasse,<br />
+                        E em cada parte de você, uma paz sutil,<br />
+                        Como um rio tranquilo, fluindo sem fim.<br /><br />
+                        Permita-se ser envolvido por essa calma,<br />
+                        Onde o peso do mundo já não existe,<br />
+                        E no seu coração, um suspiro de alívio,<br />
+                        Como se cada respiração fosse a chave<br />
+                        Para um estado profundo de serenidade.
+                      </p>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+
+              {/* Exercício de Foco e Criatividade */}
+              <Card className="border-emerald-400/20 bg-emerald-500/5">
+                <CardHeader>
+                  <CardTitle className="font-heading text-primary">✨ Exercício de Foco e Criatividade</CardTitle>
+                </CardHeader>
+                <CardContent className="space-y-4">
+                  <div className="space-y-3">
+                    <div className="p-4 rounded-lg border border-border/50 bg-card/50">
+                      <p className="text-xs uppercase tracking-widest text-muted-foreground font-medium mb-2">1️⃣ Estado Atual Comum</p>
+                      <p className="text-sm text-foreground/80 italic">
+                        "Enquanto você lê estas palavras, sua mente vai naturalmente processando as ideias 
+                        que estão sendo apresentadas."
+                      </p>
+                    </div>
+                    <div className="p-4 rounded-lg border border-border/50 bg-card/50">
+                      <p className="text-xs uppercase tracking-widest text-muted-foreground font-medium mb-2">2️⃣ Descrição Neutra</p>
+                      <p className="text-sm text-foreground/80 italic">
+                        "Cada frase se encaixa em seu ritmo de leitura, talvez sua atenção se focando agora 
+                        em uma ideia ou em uma sensação de curiosidade que surge."
+                      </p>
+                    </div>
+                    <div className="p-4 rounded-lg border border-primary/20 bg-primary/5">
+                      <p className="text-xs uppercase tracking-widest text-primary font-medium mb-2">3️⃣ Estado Desejado — Foco e Criatividade</p>
+                      <p className="text-sm text-foreground/80 italic">
+                        "E, enquanto você segue, talvez perceba como novas ideias começam a se formar de maneira clara, 
+                        inspirando uma sensação de fluidez e criatividade em seu pensamento."
+                      </p>
+                    </div>
+                  </div>
+
+                  <div className="pt-4">
+                    <h4 className="font-heading font-semibold text-foreground mb-3">Poesia do Foco e Criatividade</h4>
+                    <div className="poem-block">
+                      <p className="poem-text text-sm text-foreground/80 leading-relaxed">
+                        Enquanto você lê estas palavras,<br />
+                        Sua mente começa a absorver, de maneira natural,<br />
+                        Cada ideia que se apresenta,<br />
+                        Fazendo-se parte de um todo que começa a se formar.<br /><br />
+                        Cada frase flui suavemente,<br />
+                        Como um rio que segue seu curso sem pressa,<br />
+                        E talvez, no ritmo dessa leitura,<br />
+                        Uma sensação de curiosidade desperte,<br />
+                        Guiando sua atenção para novos horizontes.<br /><br />
+                        E à medida que você avança,<br />
+                        Novas ideias começam a surgir,<br />
+                        Como sementes que germinam em um solo fértil,<br />
+                        E, com cada pensamento, sua mente se expande,<br />
+                        Inspirando uma nova onda de criatividade,<br />
+                        Fluindo com facilidade, como se nunca tivesse parado.
+                      </p>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+
+              {/* Exercício de Confiança */}
+              <Card className="border-amber-400/20 bg-amber-500/5">
+                <CardHeader>
+                  <CardTitle className="font-heading text-primary">💪 Exercício de Confiança</CardTitle>
+                </CardHeader>
+                <CardContent className="space-y-4">
+                  <div className="space-y-3">
+                    <div className="p-4 rounded-lg border border-border/50 bg-card/50">
+                      <p className="text-xs uppercase tracking-widest text-muted-foreground font-medium mb-2">1️⃣ Estado Atual Comum</p>
+                      <p className="text-sm text-foreground/80 italic">
+                        "Você já enfrentou muitos momentos desafiadores ao longo da vida, superando situações 
+                        que pediram de você coragem e determinação."
+                      </p>
+                    </div>
+                    <div className="p-4 rounded-lg border border-border/50 bg-card/50">
+                      <p className="text-xs uppercase tracking-widest text-muted-foreground font-medium mb-2">2️⃣ Descrição Neutra</p>
+                      <p className="text-sm text-foreground/80 italic">
+                        "Esses desafios, cada um de sua maneira, ajudaram a moldar a pessoa forte que você é hoje. 
+                        E, ao olhar para trás, talvez perceba o quanto você cresceu e aprendeu com cada um desses momentos."
+                      </p>
+                    </div>
+                    <div className="p-4 rounded-lg border border-primary/20 bg-primary/5">
+                      <p className="text-xs uppercase tracking-widest text-primary font-medium mb-2">3️⃣ Estado Desejado — Confiança</p>
+                      <p className="text-sm text-foreground/80 italic">
+                        "E agora, ao olhar para o futuro, talvez comece a sentir uma confiança tranquila, sabendo que, 
+                        com cada passo que você der, está cada vez mais preparado para seguir em frente, sempre mais forte 
+                        e mais confiante."
+                      </p>
+                    </div>
+                  </div>
+
+                  <div className="pt-4">
+                    <h4 className="font-heading font-semibold text-foreground mb-3">Poesia da Confiança</h4>
+                    <div className="poem-block">
+                      <p className="poem-text text-sm text-foreground/80 leading-relaxed">
+                        Você já enfrentou muitos desafios,<br />
+                        Momentos que pediram coragem e força,<br />
+                        E, cada vez que a vida testou sua resistência,<br />
+                        Você se levantou, com mais determinação.<br /><br />
+                        Esses momentos, com suas dificuldades,<br />
+                        Moldaram a pessoa forte que você é hoje,<br />
+                        Cada experiência, cada luta,<br />
+                        Fez você crescer, aprender e se reinventar.<br /><br />
+                        Agora, ao olhar para o futuro,<br />
+                        Talvez uma sensação de confiança comece a crescer,<br />
+                        Tranquila e silenciosa, dentro de você,<br />
+                        Sabendo que, com cada passo, você se torna mais forte,<br />
+                        Mais preparado para o que está por vir.<br /><br />
+                        O caminho à frente se abre,<br />
+                        E você segue, não com medo, mas com fé,<br />
+                        Com a certeza de que, a cada passo dado,<br />
+                        Está cada vez mais próximo de alcançar a sua essência.
+                      </p>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+
+              {/* Exercício de Relaxamento 2 */}
+              <Card className="border-sky-400/20 bg-sky-500/5">
+                <CardHeader>
+                  <CardTitle className="font-heading text-primary">🌊 Exercício de Relaxamento Profundo</CardTitle>
+                </CardHeader>
+                <CardContent className="space-y-4">
+                  <div className="space-y-3">
+                    <div className="p-4 rounded-lg border border-border/50 bg-card/50">
+                      <p className="text-xs uppercase tracking-widest text-muted-foreground font-medium mb-2">1️⃣ Estado Atual Comum</p>
+                      <p className="text-sm text-foreground/80 italic">
+                        "Agora, você pode estar sentado confortavelmente, com os pés firmemente apoiados no chão, 
+                        talvez sentindo o toque do ambiente ao seu redor."
+                      </p>
+                    </div>
+                    <div className="p-4 rounded-lg border border-border/50 bg-card/50">
+                      <p className="text-xs uppercase tracking-widest text-muted-foreground font-medium mb-2">2️⃣ Descrição Neutra</p>
+                      <p className="text-sm text-foreground/80 italic">
+                        "Enquanto respira naturalmente, você pode notar a sensação da sua respiração fluindo, 
+                        o ritmo suave que vai e vem, calmamente, sem pressa."
+                      </p>
+                    </div>
+                    <div className="p-4 rounded-lg border border-primary/20 bg-primary/5">
+                      <p className="text-xs uppercase tracking-widest text-primary font-medium mb-2">3️⃣ Estado Desejado — Relaxamento</p>
+                      <p className="text-sm text-foreground/80 italic">
+                        "E, à medida que você continua respirando, talvez sinta como, a cada expiração, seu corpo vai 
+                        ficando mais relaxado, mais solto, como se cada parte de você estivesse se entregando ao conforto 
+                        e à paz que o envolve."
                       </p>
                     </div>
                   </div>
