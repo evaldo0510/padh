@@ -209,6 +209,102 @@ const RitualSilencio = () => {
         </div>
       </section>
 
+      {/* Exercício Prático */}
+      <section className="py-20 border-t border-border/30 relative overflow-hidden">
+        <div className="absolute inset-0 gradient-mesh" />
+        <div className="relative container mx-auto px-6">
+          <div className="max-w-4xl mx-auto">
+            <div className="text-center mb-12">
+              <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-primary/20 bg-primary/5 text-primary text-sm font-medium mb-4">
+                <Volume2 className="h-3.5 w-3.5" />
+                Pratique Agora
+              </div>
+              <h2 className="text-3xl font-heading font-bold text-foreground">Exercício: Seu Ritual Pessoal de Silêncio</h2>
+              <p className="text-muted-foreground mt-3 max-w-xl mx-auto">Crie um fechamento poético para qualquer momento de transição — sessão, dia, ciclo ou despedida.</p>
+            </div>
+
+            <div className="space-y-6">
+              <Card className="border-border/50">
+                <CardContent className="p-6">
+                  <div className="flex items-start gap-4">
+                    <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center text-primary font-heading font-bold shrink-0">1</div>
+                    <div>
+                      <h4 className="font-heading font-semibold text-foreground mb-2">Escolha o Verso-Relicário</h4>
+                      <p className="text-sm text-muted-foreground leading-relaxed">Pense no que você viveu hoje — ou na semana. Qual foi o momento mais significativo? Condense-o num único verso que você gostaria de guardar como lembrança.</p>
+                      <div className="bg-primary/5 border border-primary/10 p-3 rounded-lg mt-3">
+                        <p className="text-xs text-muted-foreground italic">Exemplo: "Hoje descobri que chorar é regar." / "O abraço que dei em mim mesmo bastou." / "Silêncio também é resposta — e às vezes a melhor."</p>
+                      </div>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+
+              <Card className="border-border/50">
+                <CardContent className="p-6">
+                  <div className="flex items-start gap-4">
+                    <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center text-primary font-heading font-bold shrink-0">2</div>
+                    <div>
+                      <h4 className="font-heading font-semibold text-foreground mb-2">A Pergunta-Eco</h4>
+                      <p className="text-sm text-muted-foreground leading-relaxed mb-3">Faça a si mesmo uma das perguntas abaixo e <strong className="text-foreground">não responda imediatamente</strong> — apenas deixe a pergunta ecoar:</p>
+                      <div className="space-y-2">
+                        {[
+                          '"Qual palavra me acompanhou hoje?"',
+                          '"O que meu silêncio disse que minha boca não conseguiu?"',
+                          '"Se eu pudesse guardar um único instante de hoje, qual seria?"',
+                          '"Que verso nasceria do que senti agora?"',
+                        ].map((p, i) => (
+                          <div key={i} className="bg-primary/5 border border-primary/10 p-3 rounded-lg">
+                            <p className="poem-text text-sm text-muted-foreground italic">{p}</p>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+
+              <Card className="border-border/50">
+                <CardContent className="p-6">
+                  <div className="flex items-start gap-4">
+                    <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center text-primary font-heading font-bold shrink-0">3</div>
+                    <div>
+                      <h4 className="font-heading font-semibold text-foreground mb-2">O Minuto Sagrado</h4>
+                      <p className="text-sm text-muted-foreground leading-relaxed mb-3">Feche os olhos. Respire fundo 3 vezes. Recite o verso escolhido mentalmente. Depois, fique em silêncio por 60 segundos — sem pressa, sem objetivo. Apenas <strong className="text-foreground">esteja presente com o que ficou</strong>.</p>
+                      <div className="poem-block">
+                        <p className="poem-text text-sm text-foreground/80">
+                          O silêncio não é vazio —<br />
+                          é o espaço onde o verso continua crescendo<br />
+                          mesmo depois de ser dito.
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+            </div>
+
+            <Card className="border-primary/20 bg-primary/[0.02] mt-8">
+              <CardContent className="p-6">
+                <h4 className="font-heading font-semibold text-foreground mb-3">🕯️ Formatos de Ritual para Terapeutas</h4>
+                <div className="grid sm:grid-cols-2 gap-3">
+                  {[
+                    { nome: 'Ritual da Vela', desc: 'Acenda uma vela no início da sessão. No encerramento, leia o verso e apague a vela — o verso "fica aceso" no interno.' },
+                    { nome: 'Ritual do Papel Dobrado', desc: 'O verso é escrito num papel que o cliente dobra e leva consigo — um relicário portátil de significado.' },
+                    { nome: 'Ritual do Eco', desc: 'Terapeuta e cliente leem o verso juntos, alternando frases. O último verso é dito em uníssono, depois silêncio.' },
+                    { nome: 'Ritual da Última Palavra', desc: 'O terapeuta pergunta: "Qual é a última palavra que você quer levar desta sessão?" — e ela se torna o verso-semente da próxima.' },
+                  ].map((item, i) => (
+                    <div key={i} className="p-4 rounded-lg border border-border/30 bg-card/50">
+                      <h5 className="font-heading font-semibold text-foreground text-sm mb-1">{item.nome}</h5>
+                      <p className="text-xs text-muted-foreground leading-relaxed">{item.desc}</p>
+                    </div>
+                  ))}
+                </div>
+              </CardContent>
+            </Card>
+          </div>
+        </div>
+      </section>
+
     </PageLayout>
   );
 };

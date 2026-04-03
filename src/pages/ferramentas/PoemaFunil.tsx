@@ -227,6 +227,115 @@ const PoemaFunil = () => {
         </div>
       </section>
 
+      {/* Exercício Prático Guiado */}
+      <section className="py-20 border-t border-border/30 relative overflow-hidden">
+        <div className="absolute inset-0 gradient-mesh" />
+        <div className="relative container mx-auto px-6">
+          <div className="max-w-4xl mx-auto">
+            <div className="text-center mb-12">
+              <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-primary/20 bg-primary/5 text-primary text-sm font-medium mb-4">
+                <Lightbulb className="h-3.5 w-3.5" />
+                Pratique Agora
+              </div>
+              <h2 className="text-3xl font-heading font-bold text-foreground">Exercício Guiado: Crie seu Poema-Funil</h2>
+              <p className="text-muted-foreground mt-3 max-w-xl mx-auto">Siga os passos abaixo para criar seu próprio poema-funil e vivenciar a espiral de descida interior.</p>
+            </div>
+
+            <div className="space-y-6">
+              <Card className="border-border/50">
+                <CardContent className="p-6">
+                  <div className="flex items-start gap-4">
+                    <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center text-primary font-heading font-bold shrink-0">1</div>
+                    <div>
+                      <h4 className="font-heading font-semibold text-foreground mb-2">Preparação do Ambiente</h4>
+                      <p className="text-sm text-muted-foreground leading-relaxed">Encontre um lugar silencioso. Sente-se confortavelmente, feche os olhos por 30 segundos e respire profundamente três vezes. Permita que o ambiente externo se dissolva gradualmente.</p>
+                      <div className="bg-primary/5 border border-primary/10 p-3 rounded-lg mt-3">
+                        <p className="text-xs text-muted-foreground italic">💡 Dica: Se possível, coloque uma música instrumental suave ao fundo — piano, violoncelo ou sons da natureza funcionam bem.</p>
+                      </div>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+
+              <Card className="border-border/50">
+                <CardContent className="p-6">
+                  <div className="flex items-start gap-4">
+                    <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center text-primary font-heading font-bold shrink-0">2</div>
+                    <div>
+                      <h4 className="font-heading font-semibold text-foreground mb-2">Camada 1 — O Mundo Externo (Visão)</h4>
+                      <p className="text-sm text-muted-foreground leading-relaxed mb-3">Abra os olhos e observe seu entorno. Escolha um elemento concreto que você vê — uma folha, uma sombra, uma luz. Escreva 2 versos começando com <strong className="text-foreground">"Vejo..."</strong></p>
+                      <div className="poem-block">
+                        <p className="poem-text text-sm text-foreground/60 italic">
+                          Exemplo: "Vejo a luz que entra pela janela / como uma mão estendida que não pede nada."
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+
+              <Card className="border-border/50">
+                <CardContent className="p-6">
+                  <div className="flex items-start gap-4">
+                    <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center text-primary font-heading font-bold shrink-0">3</div>
+                    <div>
+                      <h4 className="font-heading font-semibold text-foreground mb-2">Camada 2 — O Mundo Interno (Sentir)</h4>
+                      <p className="text-sm text-muted-foreground leading-relaxed mb-3">Feche os olhos novamente. Escaneie seu corpo: onde há tensão? Onde há calor? Que emoção habita ali? Escreva 2 versos começando com <strong className="text-foreground">"Sinto..."</strong></p>
+                      <div className="poem-block">
+                        <p className="poem-text text-sm text-foreground/60 italic">
+                          Exemplo: "Sinto meu peito como porta entreaberta / esperando alguém que talvez já entrou."
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+
+              <Card className="border-border/50">
+                <CardContent className="p-6">
+                  <div className="flex items-start gap-4">
+                    <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center text-primary font-heading font-bold shrink-0">4</div>
+                    <div>
+                      <h4 className="font-heading font-semibold text-foreground mb-2">Camada 3 — O Símbolo Oculto (Ser)</h4>
+                      <p className="text-sm text-muted-foreground leading-relaxed mb-3">Sem pensar, complete: <strong className="text-foreground">"No fundo, eu sou..."</strong> ou <strong className="text-foreground">"Ali onde mora..."</strong> — deixe o inconsciente falar. Não edite.</p>
+                      <div className="poem-block">
+                        <p className="poem-text text-sm text-foreground/60 italic">
+                          Exemplo: "Ali onde mora o que não tem nome / encontro a coragem de ser inteiro."
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+
+              <Card className="border-border/50">
+                <CardContent className="p-6">
+                  <div className="flex items-start gap-4">
+                    <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center text-primary font-heading font-bold shrink-0">5</div>
+                    <div>
+                      <h4 className="font-heading font-semibold text-foreground mb-2">Integração — Leitura em Voz Alta</h4>
+                      <p className="text-sm text-muted-foreground leading-relaxed">Leia seu poema completo em voz alta, lentamente, com pausas entre cada camada. Observe: como o corpo reage? Que parte do poema provoca mais ressonância? Essa é a sua porta de entrada para o trabalho terapêutico.</p>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+            </div>
+
+            <Card className="border-primary/20 bg-primary/[0.02] mt-8">
+              <CardContent className="p-6">
+                <h4 className="font-heading font-semibold text-foreground mb-3">📝 Variações para o Terapeuta</h4>
+                <ul className="space-y-2 text-sm text-muted-foreground">
+                  <li className="flex items-start gap-2"><span className="text-primary mt-1">•</span><strong className="text-foreground">Com casais:</strong> Cada um escreve seu poema-funil e depois leem um para o outro — revelando paisagens internas compartilhadas.</li>
+                  <li className="flex items-start gap-2"><span className="text-primary mt-1">•</span><strong className="text-foreground">Com adolescentes:</strong> Use imagens (fotos, ilustrações) como ponto de partida para a Camada 1 — facilita a entrada.</li>
+                  <li className="flex items-start gap-2"><span className="text-primary mt-1">•</span><strong className="text-foreground">Em grupo:</strong> Faça uma "descida coletiva" — cada participante contribui com um verso para cada camada, criando um poema-funil colaborativo.</li>
+                  <li className="flex items-start gap-2"><span className="text-primary mt-1">•</span><strong className="text-foreground">Versão rápida (3 min):</strong> Um verso por camada. Ideal para aberturas de sessão quando o tempo é curto.</li>
+                </ul>
+              </CardContent>
+            </Card>
+          </div>
+        </div>
+      </section>
+
     </PageLayout>
   );
 };

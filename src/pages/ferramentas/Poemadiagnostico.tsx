@@ -204,6 +204,79 @@ const Poemadiagnostico = () => {
 
       <PoemadiagnosticoInterativo />
 
+      {/* Guia de Interpretação */}
+      <section className="py-20 border-t border-border/30 relative overflow-hidden">
+        <div className="absolute inset-0 gradient-mesh" />
+        <div className="relative container mx-auto px-6">
+          <div className="max-w-4xl mx-auto">
+            <div className="text-center mb-12">
+              <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-primary/20 bg-primary/5 text-primary text-sm font-medium mb-4">
+                <Eye className="h-3.5 w-3.5" />
+                Aprofundamento
+              </div>
+              <h2 className="text-3xl font-heading font-bold text-foreground">Guia de Interpretação Terapêutica</h2>
+              <p className="text-muted-foreground mt-3 max-w-xl mx-auto">Como ler as escolhas do cliente e transformá-las em insights para a sessão.</p>
+            </div>
+
+            <div className="space-y-4">
+              {[
+                {
+                  escolha: 'Cliente escolhe poemas sobre solidão/vazio',
+                  leitura: 'Possível estado de desconexão emocional — pode estar se sentindo invisível ou não pertencente. Explore: "De que tipo de presença você sente falta?"',
+                  caminho: 'Trabalho com pertencimento, vínculo e autovalidação.'
+                },
+                {
+                  escolha: 'Cliente escolhe poemas sobre raiva/fogo',
+                  leitura: 'Energia reprimida que precisa de expressão. A raiva muitas vezes esconde mágoa não processada. Explore: "O que essa raiva está protegendo?"',
+                  caminho: 'Encenação Poética (Ferramenta 5) para dar voz à raiva de forma segura.'
+                },
+                {
+                  escolha: 'Cliente escolhe poemas sobre natureza/renascimento',
+                  leitura: 'Momento de transição ou desejo de mudança. O cliente já sente o impulso mas talvez não confie nele. Explore: "Que parte sua já está brotando?"',
+                  caminho: 'Reescrita Poética (Ferramenta 6) para narrativas de transformação.'
+                },
+                {
+                  escolha: 'Cliente diz "nenhum me escolheu"',
+                  leitura: 'Pode indicar resistência, desconfiança do processo, ou estado de anestesia emocional — todos são dados valiosos. Explore: "Que tipo de poema você escreveria para si mesmo agora?"',
+                  caminho: 'Caderno de Voz Interna (Ferramenta 4) para desbloqueio gradual.'
+                },
+              ].map((item, i) => (
+                <Card key={i} className="border-border/50">
+                  <CardContent className="p-6 space-y-3">
+                    <h4 className="font-heading font-semibold text-foreground text-sm">{item.escolha}</h4>
+                    <p className="text-sm text-muted-foreground leading-relaxed">{item.leitura}</p>
+                    <div className="bg-primary/5 border border-primary/10 p-3 rounded-lg">
+                      <p className="text-xs text-primary font-medium">Próximo passo: <span className="text-muted-foreground font-normal">{item.caminho}</span></p>
+                    </div>
+                  </CardContent>
+                </Card>
+              ))}
+            </div>
+
+            <Card className="border-primary/20 bg-primary/[0.02] mt-8">
+              <CardContent className="p-6">
+                <h4 className="font-heading font-semibold text-foreground mb-3">🎴 Kit Expandido: Mais Poemas-Diagnósticos</h4>
+                <div className="grid sm:grid-cols-2 gap-4">
+                  {[
+                    { tema: 'Culpa', verso: '"Carrego uma mala\ncom roupas de quem não sou mais.\nMas não consigo largar."' },
+                    { tema: 'Pertencimento', verso: '"Tenho um lugar à mesa\nmas ninguém me serviu o prato.\nComo de pé, no corredor."' },
+                    { tema: 'Liberdade', verso: '"A porta estava aberta o tempo todo.\nMas meus pés aprenderam a ficar."' },
+                    { tema: 'Amor-próprio', verso: '"Me olhei no espelho\ne pela primeira vez\nnão pedi desculpa."' },
+                    { tema: 'Cansaço existencial', verso: '"Estou tão cansado\nque até meu silêncio faz barulho."' },
+                    { tema: 'Esperança cautelosa', verso: '"Acendo a vela\ncom a mão que já se queimou.\nMas acendo."' },
+                  ].map((item, i) => (
+                    <div key={i} className="p-3 rounded-lg border border-border/30 bg-card/50">
+                      <span className="text-xs uppercase tracking-widest text-primary font-medium">{item.tema}</span>
+                      <p className="poem-text text-sm text-foreground/80 mt-2 whitespace-pre-line">{item.verso}</p>
+                    </div>
+                  ))}
+                </div>
+              </CardContent>
+            </Card>
+          </div>
+        </div>
+      </section>
+
     </PageLayout>
   );
 };

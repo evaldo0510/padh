@@ -186,6 +186,123 @@ const ReescritaPoetica = () => {
         </div>
       </section>
 
+      {/* Exercício Prático Guiado */}
+      <section className="py-20 border-t border-border/30 relative overflow-hidden">
+        <div className="absolute inset-0 gradient-mesh" />
+        <div className="relative container mx-auto px-6">
+          <div className="max-w-4xl mx-auto">
+            <div className="text-center mb-12">
+              <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-primary/20 bg-primary/5 text-primary text-sm font-medium mb-4">
+                <Sparkles className="h-3.5 w-3.5" />
+                Pratique Agora
+              </div>
+              <h2 className="text-3xl font-heading font-bold text-foreground">Exercício: Reescreva sua História</h2>
+              <p className="text-muted-foreground mt-3 max-w-xl mx-auto">Transforme uma memória dolorosa em poesia curativa — passo a passo.</p>
+            </div>
+
+            <div className="space-y-6">
+              <Card className="border-border/50">
+                <CardContent className="p-6">
+                  <div className="flex items-start gap-4">
+                    <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center text-primary font-heading font-bold shrink-0">1</div>
+                    <div>
+                      <h4 className="font-heading font-semibold text-foreground mb-2">Escolha a Memória</h4>
+                      <p className="text-sm text-muted-foreground leading-relaxed">Pense numa experiência que ainda ecoa dentro de você — algo que te marcou, que te trava ou que reaparece em momentos inesperados. Escreva-a em 3-5 frases simples, como se contasse a um amigo.</p>
+                      <div className="bg-primary/5 border border-primary/10 p-3 rounded-lg mt-3">
+                        <p className="text-xs text-muted-foreground italic">💡 Não precisa ser um trauma grande. Pode ser um gesto, uma frase ouvida na infância, uma ausência que doeu.</p>
+                      </div>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+
+              <Card className="border-border/50">
+                <CardContent className="p-6">
+                  <div className="flex items-start gap-4">
+                    <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center text-primary font-heading font-bold shrink-0">2</div>
+                    <div>
+                      <h4 className="font-heading font-semibold text-foreground mb-2">Extraia as Metáforas Ocultas</h4>
+                      <p className="text-sm text-muted-foreground leading-relaxed mb-3">Releia o que escreveu e responda:</p>
+                      <ul className="space-y-2 text-sm text-muted-foreground">
+                        <li className="flex items-start gap-2"><span className="text-primary mt-1">→</span>"Se essa dor fosse um <strong className="text-foreground">lugar</strong>, como seria?" (ex: um quarto trancado, um deserto, uma tempestade)</li>
+                        <li className="flex items-start gap-2"><span className="text-primary mt-1">→</span>"Se ela fosse um <strong className="text-foreground">objeto</strong>, qual seria?" (ex: uma corrente, um espelho quebrado, um relógio parado)</li>
+                        <li className="flex items-start gap-2"><span className="text-primary mt-1">→</span>"Se ela pudesse <strong className="text-foreground">falar</strong>, o que diria?" (ex: "Ninguém vem", "Você não merecia", "Cuidado")</li>
+                      </ul>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+
+              <Card className="border-border/50">
+                <CardContent className="p-6">
+                  <div className="flex items-start gap-4">
+                    <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center text-primary font-heading font-bold shrink-0">3</div>
+                    <div>
+                      <h4 className="font-heading font-semibold text-foreground mb-2">Reescreva como Poema</h4>
+                      <p className="text-sm text-muted-foreground leading-relaxed mb-3">Agora, conte essa mesma história <strong className="text-foreground">não como aconteceu, mas como sua alma gostaria de contá-la</strong>. Use as metáforas que descobriu. Mude o desfecho. Dê poder ao protagonista (você).</p>
+                      <div className="grid md:grid-cols-2 gap-4">
+                        <div className="p-4 rounded-lg border border-border/50">
+                          <p className="text-xs uppercase tracking-widest text-muted-foreground font-medium mb-2">Memória original</p>
+                          <p className="text-sm text-foreground/70 italic">"Minha professora disse na frente de todos que eu nunca ia conseguir nada."</p>
+                        </div>
+                        <div className="p-4 rounded-lg border border-primary/20 bg-primary/[0.02]">
+                          <p className="text-xs uppercase tracking-widest text-primary font-medium mb-2">Reescrita poética</p>
+                          <div className="poem-block">
+                            <p className="poem-text text-sm text-foreground/80">
+                              Plantaram uma pedra onde deveria haver semente.<br />
+                              Mas eu cresci mesmo assim —<br />
+                              raiz torta, flor teimosa,<br />
+                              jardim que ninguém planejou<br />
+                              mas que o mundo precisava ver.
+                            </p>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+
+              <Card className="border-border/50">
+                <CardContent className="p-6">
+                  <div className="flex items-start gap-4">
+                    <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center text-primary font-heading font-bold shrink-0">4</div>
+                    <div>
+                      <h4 className="font-heading font-semibold text-foreground mb-2">Leitura Ritual</h4>
+                      <p className="text-sm text-muted-foreground leading-relaxed">Leia seu poema em voz alta. Se possível, grave. Depois ouça como se fosse outra pessoa te contando essa história. Note: <strong className="text-foreground">a dor ainda está lá, mas agora ela tem beleza. E a beleza muda tudo.</strong></p>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+            </div>
+
+            <Card className="border-primary/20 bg-primary/[0.02] mt-8">
+              <CardContent className="p-6">
+                <h4 className="font-heading font-semibold text-foreground mb-3">📚 Mais Exemplos de Reescrita</h4>
+                <div className="space-y-4">
+                  {[
+                    { antes: '"Meu ex me humilhou em público."', depois: '"Fui exposto como ferida aberta —\nmas a cicatriz virou mapa.\nHoje sei exatamente onde\nnão quero voltar."' },
+                    { antes: '"Perdi meu emprego e me senti um fracasso."', depois: '"A porta fechou com tanto barulho\nque por um momento esqueci:\neu tenho mãos que abrem janelas\ne asas que não precisam de chão."' },
+                    { antes: '"Nunca recebi um \'eu te amo\' dos meus pais."', depois: '"Cresci no silêncio —\ne do silêncio fiz linguagem.\nHoje digo \'eu te amo\' em voz alta,\nporque sei o peso de quem nunca ouviu."' },
+                  ].map((item, i) => (
+                    <div key={i} className="grid sm:grid-cols-2 gap-3">
+                      <div className="p-3 rounded-lg border border-border/30 bg-card/50">
+                        <p className="text-xs text-muted-foreground mb-1">Antes:</p>
+                        <p className="text-sm text-foreground/70 italic">{item.antes}</p>
+                      </div>
+                      <div className="p-3 rounded-lg border border-primary/20 bg-primary/[0.02]">
+                        <p className="text-xs text-primary mb-1">Reescrita:</p>
+                        <p className="poem-text text-sm text-foreground/80 whitespace-pre-line">{item.depois}</p>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </CardContent>
+            </Card>
+          </div>
+        </div>
+      </section>
+
     </PageLayout>
   );
 };
