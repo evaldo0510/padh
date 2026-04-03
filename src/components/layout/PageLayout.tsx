@@ -8,7 +8,7 @@ import SEOHead from '@/components/seo/SEOHead';
 
 interface PageLayoutProps {
   children: React.ReactNode;
-  seo: { title?: string; description: string; path: string };
+  seo: { title?: string; description: string; path: string; jsonLd?: Record<string, unknown> };
   currentPage?: string;
   showBackButton?: boolean;
   loadingDelay?: number;
