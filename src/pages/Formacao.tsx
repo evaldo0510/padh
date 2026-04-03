@@ -53,11 +53,7 @@ const Formacao = () => {
     }
   ];
 
-  return (
-    <div className="min-h-screen bg-background">
-      <SEOHead title={pagesSEO.formacao.title} description={pagesSEO.formacao.description} path={pagesSEO.formacao.path} />
-      <Header />
-      <PageHeader currentPage="Formação em PCH" />
+    <PageLayout seo={pagesSEO.formacao} currentPage="Formação em PCH">
       
       {/* Hero */}
       <section className="relative overflow-hidden">
