@@ -35,6 +35,7 @@ interface ToolSalesLandingProps {
   ctaText: string;
   ctaLink: string;
   guarantee?: string;
+  scientificTool?: ToolTag;
 }
 
 const ToolSalesLanding: React.FC<ToolSalesLandingProps> = ({
