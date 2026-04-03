@@ -324,6 +324,7 @@ const VersoGatilho = () => {
         </div>
       </section>
 
+      <ScientificValidation tool="verso-gatilho" />
     </PageLayout>
   );
 };

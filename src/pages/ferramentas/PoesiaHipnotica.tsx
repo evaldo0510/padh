@@ -1614,6 +1614,7 @@ const PoesiaHipnotica = () => {
         </div>
       </section>
 
+      <ScientificValidation tool="poesia-hipnotica" />
     </PageLayout>
   );
 };

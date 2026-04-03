@@ -337,6 +337,7 @@ const PoemaFunil = () => {
         </div>
       </section>
 
+      <ScientificValidation tool="poema-funil" />
     </PageLayout>
   );
 };

@@ -265,6 +265,7 @@ const CadernoVozInterna = () => {
         </div>
       </section>
 
+      <ScientificValidation tool="caderno-voz-interna" />
     </PageLayout>
   );
 };

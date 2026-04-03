@@ -278,6 +278,7 @@ const Poemadiagnostico = () => {
         </div>
       </section>
 
+      <ScientificValidation tool="poemadiagnostico" />
     </PageLayout>
   );
 };

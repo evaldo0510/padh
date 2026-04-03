@@ -311,6 +311,7 @@ const EncenacaoPoetica = () => {
         </div>
       </section>
 
+      <ScientificValidation tool="encenacao-poetica" />
     </PageLayout>
   );
 };

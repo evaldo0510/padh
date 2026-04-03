@@ -306,6 +306,7 @@ const RitualSilencio = () => {
         </div>
       </section>
 
+      <ScientificValidation tool="ritual-silencio" />
     </PageLayout>
   );
 };
