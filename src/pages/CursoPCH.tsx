@@ -393,6 +393,7 @@ porque é a sua essência.`}</Poem>
                 </div>
               </AccordionTrigger>
               <AccordionContent className="pb-8">
+                <ModuleImage src={modulo5Img} alt="Técnicas Avançadas — ondas do oceano com notas musicais" />
                 <div className="space-y-6 text-muted-foreground leading-relaxed">
 
                   <SectionCard>
