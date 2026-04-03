@@ -282,8 +282,7 @@ const Sobre = () => {
         </div>
       </section>
 
-      <Footer />
-    </div>
+    </PageLayout>
   );
 };
 
