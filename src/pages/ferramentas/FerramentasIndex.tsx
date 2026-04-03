@@ -176,8 +176,7 @@ const FerramentasIndex = () => {
         </div>
       </section>
 
-      <Footer />
-    </div>
+    </PageLayout>
   );
 };
 
