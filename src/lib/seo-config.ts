@@ -8,7 +8,7 @@ export interface PageSEO {
 
 export const pagesSEO: Record<string, PageSEO> = {
   home: {
-    title: '',
+    title: 'Poesia Aplicada ao Desenvolvimento Humano',
     description: 'Descubra a Poesia Cognitiva Hipnótica (PCH) — metodologia que une neurociência, hipnose ericksoniana e linguagem poética para transformação interior.',
     path: '/',
   },
@@ -86,5 +86,10 @@ export const pagesSEO: Record<string, PageSEO> = {
     title: 'Poesia Hipnótica — O Poder das Palavras',
     description: 'A Poesia Cognitiva Hipnótica usa a palavra com propósito para reestruturar pensamentos e emoções, criando caminhos de transformação.',
     path: '/ferramentas/poesia-hipnotica',
+  },
+  cursoPCH: {
+    title: 'Curso PCH — Poesia Cognitiva Hipnótica',
+    description: 'Curso completo de Poesia Cognitiva Hipnótica com módulos práticos para transformação interior através da palavra.',
+    path: '/curso-pch',
   },
 };

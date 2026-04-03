@@ -13,6 +13,7 @@ const Footer = () => {
     { name: 'Formação PCH', path: '/formacao' },
     { name: 'Ferramentas P.A.D.H.', path: '/ferramentas' },
     { name: 'Mapa Cerebral', path: '/mapa-cerebral' },
+    { name: 'Curso PCH', path: '/curso-pch' },
     { name: 'Aula Exclusiva', path: '/aula-exclusiva' },
     { name: 'Contato', path: '/contato' },
   ];
