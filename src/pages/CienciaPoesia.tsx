@@ -75,6 +75,8 @@ const CienciaPoesia = () => {
         </div>
       </section>
 
+      <ScienceStats />
+
       {/* Filters + Content */}
       <section className="py-16">
         <div className="container mx-auto px-6 max-w-5xl">
