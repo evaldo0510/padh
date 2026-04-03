@@ -3,13 +3,8 @@ import { BookOpen, Brain, Heart, Sparkles, Star, Award, Users, Feather, ArrowRig
 import { Link } from 'react-router-dom';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import Header from '@/components/layout/Header';
-import Footer from '@/components/layout/Footer';
-import PageHeader from '@/components/layout/PageHeader';
+import PageLayout from '@/components/layout/PageLayout';
 import { useScrollAnimation } from '@/hooks/useScrollAnimation';
-import { usePageLoading } from '@/hooks/usePageLoading';
-import { PageSkeleton } from '@/components/ui/page-skeleton';
-import SEOHead from '@/components/seo/SEOHead';
 import { pagesSEO } from '@/lib/seo-config';
 
 const Sobre = () => {
@@ -17,15 +12,9 @@ const Sobre = () => {
   const journeySection = useScrollAnimation(0.15);
   const pillarsSection = useScrollAnimation(0.15);
   const missionSection = useScrollAnimation(0.15);
-  const isLoading = usePageLoading(600);
-
-  if (isLoading) return <PageSkeleton />;
 
   return (
-    <div className="min-h-screen bg-background">
-      <SEOHead title={pagesSEO.sobre.title} description={pagesSEO.sobre.description} path={pagesSEO.sobre.path} />
-      <Header />
-      <PageHeader currentPage="Sobre" />
+    <PageLayout seo={pagesSEO.sobre} currentPage="Sobre">
 
       {/* Hero — Evaldo PCH Master */}
       <section className="relative py-20 overflow-hidden">
