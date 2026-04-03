@@ -6,6 +6,7 @@ import { useScrollAnimation } from '@/hooks/useScrollAnimation';
 import PoemadiagnosticoInterativo from '@/components/sections/PoemadiagnosticoInterativo';
 import toolImage from '@/assets/tool-poemadiagnostico.jpg';
 import { pagesSEO } from '@/lib/seo-config';
+import ScientificValidation from '@/components/sections/ScientificValidation';
 
 const Poemadiagnostico = () => {
   const contentAnim = useScrollAnimation(0.15);
