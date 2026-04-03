@@ -77,7 +77,7 @@ const CienciaPoesia = () => {
       {/* Filters + Content */}
       <section className="py-16">
         <div className="container mx-auto px-6 max-w-5xl">
-          <Tabs defaultValue="category" className="space-y-8">
+          <Tabs defaultValue="category" className="space-y-8" onValueChange={() => clearFilters()}>
             <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
               <TabsList className="bg-card border border-border/50">
                 <TabsTrigger value="category" className="gap-1.5 text-xs">
