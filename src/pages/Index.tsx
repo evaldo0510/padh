@@ -18,6 +18,7 @@ const Index = () => {
   const aboutSection = useScrollAnimation(0.15);
   const toolsSection = useScrollAnimation(0.15);
   const pchSection = useScrollAnimation(0.15);
+  const scienceSection = useScrollAnimation(0.15);
   const journeySection = useScrollAnimation(0.15);
   const testimonialsSection = useScrollAnimation(0.15);
   const isLoading = usePageLoading(600);
