@@ -231,6 +231,9 @@ const ToolSalesLanding: React.FC<ToolSalesLandingProps> = ({
         </div>
       </section>
 
+      {/* Scientific Validation */}
+      {scientificTool && <ScientificValidation tool={scientificTool} maxStudies={3} />}
+
       {/* Pricing CTA */}
       <section className="py-20">
         <div className="container mx-auto px-6">
