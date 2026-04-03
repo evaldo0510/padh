@@ -1003,6 +1003,179 @@ const PoesiaHipnotica = () => {
                   </div>
                 </CardContent>
               </Card>
+              {/* Relaxamento e Paz Interior */}
+              <Card className="border-indigo-400/20 bg-indigo-500/5">
+                <CardHeader>
+                  <CardTitle className="font-heading text-primary">🧘 Exercício de Relaxamento e Paz Interior</CardTitle>
+                </CardHeader>
+                <CardContent className="space-y-4">
+                  <div className="space-y-3">
+                    <div className="p-4 rounded-lg border border-border/50 bg-card/50">
+                      <p className="text-xs uppercase tracking-widest text-muted-foreground font-medium mb-2">1️⃣ Estado Atual Comum</p>
+                      <p className="text-sm text-foreground/80 italic">
+                        "Neste momento, enquanto você lê estas palavras, pode notar que seu corpo ainda carrega 
+                        tensões do dia, talvez nos ombros, no peito ou na mente — pequenas marcas do ritmo acelerado."
+                      </p>
+                    </div>
+                    <div className="p-4 rounded-lg border border-border/50 bg-card/50">
+                      <p className="text-xs uppercase tracking-widest text-muted-foreground font-medium mb-2">2️⃣ Descrição Neutra</p>
+                      <p className="text-sm text-foreground/80 italic">
+                        "E, conforme os olhos percorrem cada linha, talvez perceba que a respiração já começa 
+                        a desacelerar, como se o corpo soubesse, por instinto, que este é um momento de pausa."
+                      </p>
+                    </div>
+                    <div className="p-4 rounded-lg border border-primary/20 bg-primary/5">
+                      <p className="text-xs uppercase tracking-widest text-primary font-medium mb-2">3️⃣ Estado Desejado — Relaxamento e Paz</p>
+                      <p className="text-sm text-foreground/80 italic">
+                        "E, sem precisar fazer nada, talvez note como uma onda suave de tranquilidade começa 
+                        a se espalhar pelo corpo, dissolvendo tensões, trazendo uma paz profunda que já existia 
+                        dentro de você, apenas esperando ser redescoberta."
+                      </p>
+                    </div>
+                  </div>
+
+                  <div className="pt-4">
+                    <h4 className="font-heading font-semibold text-foreground mb-3">Poesia do Relaxamento e Paz Interior</h4>
+                    <div className="poem-block">
+                      <p className="poem-text text-sm text-foreground/80 leading-relaxed">
+                        Enquanto você lê… devagar… sem pressa,<br />
+                        algo dentro de ti… suavemente começa.<br />
+                        Uma onda macia… que desce e aquece,<br />
+                        dissolvendo o que pesa… tudo que endurece.<br /><br />
+                        Os ombros se soltam… a mandíbula relaxa,<br />
+                        o peito se abre… como flor que se encaixa.<br />
+                        Cada respiração… mais lenta… mais plena,<br />
+                        como o mar que retorna… à areia serena.<br /><br />
+                        E nesse silêncio… tão suave… tão seu,<br />
+                        a paz se revela… no espaço que nasceu.<br />
+                        Não há nada a fazer… nada a resolver,<br />
+                        apenas estar… apenas ser… e florescer.<br /><br />
+                        E talvez perceba… com olhos fechados ou não,<br />
+                        que a tranquilidade sempre morou no coração.<br />
+                        Esperando… paciente… como estrela no céu,<br />
+                        pronta a brilhar… no instante que é seu.
+                      </p>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+
+              {/* Autoestima e Amor-Próprio */}
+              <Card className="border-rose-400/20 bg-rose-500/5">
+                <CardHeader>
+                  <CardTitle className="font-heading text-primary">❤️ Exercício de Autoestima e Amor-Próprio</CardTitle>
+                </CardHeader>
+                <CardContent className="space-y-4">
+                  <div className="space-y-3">
+                    <div className="p-4 rounded-lg border border-border/50 bg-card/50">
+                      <p className="text-xs uppercase tracking-widest text-muted-foreground font-medium mb-2">1️⃣ Estado Atual Comum</p>
+                      <p className="text-sm text-foreground/80 italic">
+                        "Quantas vezes você já olhou para si mesmo e viu apenas o que faltava? 
+                        Quantas vezes a voz interior repetiu que você não era suficiente?"
+                      </p>
+                    </div>
+                    <div className="p-4 rounded-lg border border-border/50 bg-card/50">
+                      <p className="text-xs uppercase tracking-widest text-muted-foreground font-medium mb-2">2️⃣ Descrição Neutra</p>
+                      <p className="text-sm text-foreground/80 italic">
+                        "Mas talvez, ao refletir com mais calma, você perceba que há uma história mais ampla — 
+                        feita de pequenas vitórias, de momentos de coragem silenciosa, de vezes em que você 
+                        seguiu em frente mesmo sem aplausos."
+                      </p>
+                    </div>
+                    <div className="p-4 rounded-lg border border-primary/20 bg-primary/5">
+                      <p className="text-xs uppercase tracking-widest text-primary font-medium mb-2">3️⃣ Estado Desejado — Autoestima</p>
+                      <p className="text-sm text-foreground/80 italic">
+                        "E, enquanto essas memórias emergem, talvez sinta um calor gentil se espalhando pelo peito — 
+                        um reconhecimento profundo de que você é digno de amor, começando pelo seu próprio, 
+                        como uma semente que finalmente encontra a luz."
+                      </p>
+                    </div>
+                  </div>
+
+                  <div className="pt-4">
+                    <h4 className="font-heading font-semibold text-foreground mb-3">Poesia da Autoestima e Amor-Próprio</h4>
+                    <div className="poem-block">
+                      <p className="poem-text text-sm text-foreground/80 leading-relaxed">
+                        Por tempo demais… você buscou lá fora,<br />
+                        o que sempre morou… bem dentro, agora.<br />
+                        Uma luz que brilha… mesmo escondida,<br />
+                        esperando ser vista… sendo sua vida.<br /><br />
+                        Cada cicatriz… conta uma história,<br />
+                        de quem não desistiu… mesmo sem glória.<br />
+                        Cada passo dado… mesmo vacilante,<br />
+                        foi prova de força… firme e constante.<br /><br />
+                        Então olhe-se agora… com olhos de ternura,<br />
+                        como quem abraça… a própria criatura.<br />
+                        Você não precisa ser perfeito para merecer,<br />
+                        basta ser quem é… basta existir… basta ser.<br /><br />
+                        E nesse abraço interno… suave e profundo,<br />
+                        nasce o amor-próprio… que transforma o mundo.<br />
+                        Não o amor que grita… mas o que sussurra,<br />
+                        "Você é suficiente"… e a alma murmura.
+                      </p>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+
+              {/* Gratidão e Presença */}
+              <Card className="border-teal-400/20 bg-teal-500/5">
+                <CardHeader>
+                  <CardTitle className="font-heading text-primary">🙏 Exercício de Gratidão e Presença</CardTitle>
+                </CardHeader>
+                <CardContent className="space-y-4">
+                  <div className="space-y-3">
+                    <div className="p-4 rounded-lg border border-border/50 bg-card/50">
+                      <p className="text-xs uppercase tracking-widest text-muted-foreground font-medium mb-2">1️⃣ Estado Atual Comum</p>
+                      <p className="text-sm text-foreground/80 italic">
+                        "No ritmo acelerado dos dias, é fácil esquecer o que já se tem. 
+                        A mente corre para o próximo problema, para a próxima tarefa, 
+                        e o presente se torna apenas passagem."
+                      </p>
+                    </div>
+                    <div className="p-4 rounded-lg border border-border/50 bg-card/50">
+                      <p className="text-xs uppercase tracking-widest text-muted-foreground font-medium mb-2">2️⃣ Descrição Neutra</p>
+                      <p className="text-sm text-foreground/80 italic">
+                        "Mas neste instante, algo curioso acontece: ao parar para ler estas palavras, 
+                        você já está praticando presença. Já está aqui, inteiro, 
+                        mesmo que não tenha percebido."
+                      </p>
+                    </div>
+                    <div className="p-4 rounded-lg border border-primary/20 bg-primary/5">
+                      <p className="text-xs uppercase tracking-widest text-primary font-medium mb-2">3️⃣ Estado Desejado — Gratidão e Presença</p>
+                      <p className="text-sm text-foreground/80 italic">
+                        "E, ao perceber que está presente, talvez sinta uma gratidão silenciosa nascer — 
+                        pela respiração que acontece sem esforço, pelo corpo que sustenta, 
+                        pela vida que insiste em florescer, mesmo nos dias mais cinzentos."
+                      </p>
+                    </div>
+                  </div>
+
+                  <div className="pt-4">
+                    <h4 className="font-heading font-semibold text-foreground mb-3">Poesia da Gratidão e Presença</h4>
+                    <div className="poem-block">
+                      <p className="poem-text text-sm text-foreground/80 leading-relaxed">
+                        Pare… apenas um instante… e perceba,<br />
+                        o milagre silencioso… que nunca se encerra.<br />
+                        O ar que entra… sem que você peça,<br />
+                        o coração que bate… mesmo quando a mente tropeça.<br /><br />
+                        Há tanto a agradecer… que passa despercebido,<br />
+                        como o chão que sustenta… cada passo vivido.<br />
+                        A luz que nasce… mesmo após a tempestade,<br />
+                        a mão que ampara… na escuridão da saudade.<br /><br />
+                        E aqui… agora… neste exato momento,<br />
+                        você é presença… é vida… é alento.<br />
+                        Não ontem… não amanhã… mas agora, aqui,<br />
+                        inteiro… presente… como nunca se sentiu.<br /><br />
+                        Então respire fundo… e deixe a gratidão chegar,<br />
+                        não como obrigação… mas como o mar a abraçar a areia.<br />
+                        Suave… constante… sem precisar explicar,<br />
+                        apenas sentir… que a vida é boa… e é inteira.
+                      </p>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
             </div>
           </div>
         </div>
