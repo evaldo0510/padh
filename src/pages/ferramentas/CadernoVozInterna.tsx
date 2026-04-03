@@ -208,6 +208,62 @@ const CadernoVozInterna = () => {
         </div>
       </section>
 
+      {/* Exercício Prático */}
+      <section className="py-20 border-t border-border/30 relative overflow-hidden">
+        <div className="absolute inset-0 gradient-mesh" />
+        <div className="relative container mx-auto px-6">
+          <div className="max-w-4xl mx-auto">
+            <div className="text-center mb-12">
+              <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-primary/20 bg-primary/5 text-primary text-sm font-medium mb-4">
+                <PenTool className="h-3.5 w-3.5" />
+                Pratique Agora
+              </div>
+              <h2 className="text-3xl font-heading font-bold text-foreground">Exercício: 7 Dias de Voz Interna</h2>
+              <p className="text-muted-foreground mt-3 max-w-xl mx-auto">Um roteiro semanal de estímulos poéticos para criar o hábito da escuta interior.</p>
+            </div>
+
+            <div className="space-y-4">
+              {[
+                { dia: 'Dia 1 — Escuta', estimulo: '"Hoje minha voz interna diz..."', instrucao: 'Escreva por 5 minutos sem parar. O que vier, veio.' },
+                { dia: 'Dia 2 — Contradição', estimulo: '"Fingi que estava bem, mas por dentro..."', instrucao: 'Explore a distância entre o que mostra e o que sente.' },
+                { dia: 'Dia 3 — Desejo', estimulo: '"Se eu pudesse pedir uma coisa ao silêncio..."', instrucao: 'O que você pediria se ninguém ouvisse?' },
+                { dia: 'Dia 4 — Gratidão Honesta', estimulo: '"Sou grato até pelo que doeu, porque..."', instrucao: 'Agradeça algo difícil. Veja o que muda na escrita.' },
+                { dia: 'Dia 5 — Carta', estimulo: '"Querida versão de mim que sofreu..."', instrucao: 'Escreva uma carta poética para seu eu do passado.' },
+                { dia: 'Dia 6 — Futuro', estimulo: '"Daqui a um ano, quero poder dizer..."', instrucao: 'Projete um verso-promessa. Guarde-o.' },
+                { dia: 'Dia 7 — Integração', estimulo: '"Releia tudo que escreveu esta semana."', instrucao: 'Escolha 1 verso de cada dia e monte um poema completo — seu autorretrato poético semanal.' },
+              ].map((item, i) => (
+                <Card key={i} className="border-border/50">
+                  <CardContent className="p-5">
+                    <div className="flex items-start gap-4">
+                      <div className="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center text-primary font-heading text-sm font-bold shrink-0">{i + 1}</div>
+                      <div className="flex-1">
+                        <h4 className="font-heading font-semibold text-foreground text-sm mb-1">{item.dia}</h4>
+                        <div className="poem-block my-2">
+                          <p className="poem-text text-sm text-foreground/80 italic">{item.estimulo}</p>
+                        </div>
+                        <p className="text-xs text-muted-foreground">{item.instrucao}</p>
+                      </div>
+                    </div>
+                  </CardContent>
+                </Card>
+              ))}
+            </div>
+
+            <Card className="border-primary/20 bg-primary/[0.02] mt-8">
+              <CardContent className="p-6">
+                <h4 className="font-heading font-semibold text-foreground mb-3">📖 Como Usar com Clientes</h4>
+                <ul className="space-y-2 text-sm text-muted-foreground">
+                  <li className="flex items-start gap-2"><span className="text-primary mt-1">•</span><strong className="text-foreground">Tarefa entre sessões:</strong> Envie 1 estímulo por dia via WhatsApp. Na sessão seguinte, o cliente traz o caderno para compartilhar.</li>
+                  <li className="flex items-start gap-2"><span className="text-primary mt-1">•</span><strong className="text-foreground">Caderno físico:</strong> Incentive o uso de um caderno bonito, dedicado apenas à voz interna — o gesto de abrir o caderno vira ritual.</li>
+                  <li className="flex items-start gap-2"><span className="text-primary mt-1">•</span><strong className="text-foreground">Sem revisão:</strong> A regra de ouro: nunca reler para corrigir. Reler apenas para se escutar.</li>
+                  <li className="flex items-start gap-2"><span className="text-primary mt-1">•</span><strong className="text-foreground">Anonimato opcional:</strong> Se o cliente resistir, sugira escrever em terceira pessoa — "Ela sentia que..." — até estar pronto para usar "eu".</li>
+                </ul>
+              </CardContent>
+            </Card>
+          </div>
+        </div>
+      </section>
+
     </PageLayout>
   );
 };
