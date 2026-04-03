@@ -87,4 +87,9 @@ export const pagesSEO: Record<string, PageSEO> = {
     description: 'A Poesia Cognitiva Hipnótica usa a palavra com propósito para reestruturar pensamentos e emoções, criando caminhos de transformação.',
     path: '/ferramentas/poesia-hipnotica',
   },
+  cursoPCH: {
+    title: 'Curso PCH — Poesia Cognitiva Hipnótica',
+    description: 'Curso completo de Poesia Cognitiva Hipnótica com módulos práticos para transformação interior através da palavra.',
+    path: '/curso-pch',
+  },
 };
