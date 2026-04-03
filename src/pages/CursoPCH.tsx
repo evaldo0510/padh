@@ -555,6 +555,7 @@ E quando percebo, já estou mais longe do que imaginei."`}</Poem>
                 </div>
               </AccordionTrigger>
               <AccordionContent className="pb-8">
+                <ModuleImage src={modulo7Img} alt="Sessão em 4 Fases — círculos de luz interconectados" />
                 <div className="space-y-6 text-muted-foreground leading-relaxed">
 
                   <SectionCard className="border-l-4 border-l-primary/40">
