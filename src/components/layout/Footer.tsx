@@ -15,6 +15,7 @@ const Footer = () => {
     { name: 'Mapa Cerebral', path: '/mapa-cerebral' },
     { name: 'Curso PCH', path: '/curso-pch' },
     { name: 'Aula Exclusiva', path: '/aula-exclusiva' },
+    { name: 'Ciência da Poesia', path: '/ciencia-da-poesia' },
     { name: 'Contato', path: '/contato' },
   ];
 
