@@ -482,6 +482,7 @@ Está cada vez mais próximo de alcançar a sua essência.`}</Poem>
                 </div>
               </AccordionTrigger>
               <AccordionContent className="pb-8">
+                <ModuleImage src={modulo6Img} alt="Poesia Terapêutica — flor de lótus em luz dourada" />
                 <div className="space-y-6 text-muted-foreground leading-relaxed">
 
                   <SectionCard>
