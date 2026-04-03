@@ -42,6 +42,7 @@ const VendaCadernoVozInterna = () => (
     originalPrice="R$ 127"
     ctaText="Quero acessar o Caderno de Voz Interna"
     ctaLink="https://wa.me/5500000000000?text=Quero%20acessar%20o%20Caderno%20de%20Voz%20Interna"
+    scientificTool="caderno-voz-interna"
   />
 );
 

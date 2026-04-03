@@ -45,6 +45,7 @@ const VendaPoesiaHipnotica = () => (
     originalPrice="R$ 397"
     ctaText="Quero acessar a Poesia Cognitiva Hipnótica"
     ctaLink="https://wa.me/5500000000000?text=Quero%20acessar%20a%20Poesia%20Cognitiva%20Hipnótica"
+    scientificTool="poesia-hipnotica"
   />
 );
 
