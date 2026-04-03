@@ -1,0 +1,48 @@
+import { RefreshCw } from 'lucide-react';
+import ToolSalesLanding from '@/components/sales/ToolSalesLanding';
+
+const VendaReescritaPoetica = () => (
+  <ToolSalesLanding
+    seo={{ title: 'Reescrita Poética — Acesse Agora', description: 'Transforme narrativas internas limitantes em versos de empoderamento com a técnica de Reescrita Poética da PCH.', path: '/venda/reescrita-poetica' }}
+    icon={<RefreshCw className="h-5 w-5" />}
+    toolNumber={6}
+    toolName="Reescrita Poética"
+    tagline="A Narrativa que Se Liberta"
+    heroDescription="Reescreva as histórias que te limitam. A Reescrita Poética transforma crenças paralisantes em versos de poder — porque a história que você conta sobre si mesmo é a história que você vive."
+    heroVerse={'\u201CEu não era fraco. Eu estava descansando minha força.\u201D'}
+    problemTitle="Essas frases te perseguem?"
+    problems={[
+      '"Eu não consigo", "Eu não mereço", "Sempre foi assim" — crenças que se repetem',
+      'Clientes presos em narrativas de vitimização que não avançam',
+      'Técnicas de reestruturação cognitiva que soam mecânicas e artificiais',
+      'Dificuldade em transformar insight intelectual em mudança emocional real',
+    ]}
+    solutionTitle="Reescreva o verso, reescreva a vida"
+    solutionDescription="A Reescrita Poética pega a frase limitante e a transforma poeticamente — mantendo a essência emocional mas invertendo o significado. O resultado é uma nova narrativa que ressoa no corpo, não apenas na mente."
+    benefits={[
+      'Transforme crenças limitantes em versos de empoderamento',
+      'Domine a técnica de inversão poética de narrativas',
+      'Crie protocolos de reestruturação cognitivo-poética',
+      'Trabalhe com traumas narrativos de forma suave',
+      'Ensine seus clientes a reescrever suas próprias histórias',
+      'Integre com TCC, ACT e outras abordagens cognitivas',
+    ]}
+    howItWorks={[
+      { step: 'Identifique a frase-prisão', description: 'Descubra a narrativa central limitante — a frase que o paciente mais repete sobre si.' },
+      { step: 'Aplique a inversão poética', description: 'Use a fórmula PCH para transformar a frase, mantendo a carga emocional mas invertendo o significado.' },
+      { step: 'Ancore a nova narrativa', description: 'Repita, escreva e encene o novo verso até que ele substitua o antigo padrão.' },
+    ]}
+    testimonials={[
+      { name: 'Dra. Cristina B.', role: 'Psicóloga TCC', text: 'A reestruturação poética é muito mais eficaz que a cognitiva tradicional. Os pacientes aderem melhor e os resultados são mais rápidos.' },
+      { name: 'Felipe G.', role: 'Coach de Carreira', text: 'Usei com um executivo preso no "eu não sou bom o suficiente". Em 3 sessões, ele tinha uma nova narrativa de vida.' },
+      { name: 'Marina L.', role: 'Terapeuta de Casais', text: 'Uso a reescrita poética para transformar narrativas de culpa em narrativas de responsabilidade amorosa. Funciona.' },
+    ]}
+    bonuses={['50 exemplos de reescrita poética por tema', 'Protocolo de 5 sessões completo', 'Banco de frases-prisão mais comuns']}
+    price="R$ 67"
+    originalPrice="R$ 127"
+    ctaText="Quero acessar a Reescrita Poética"
+    ctaLink="https://wa.me/5500000000000?text=Quero%20acessar%20a%20Reescrita%20Poética"
+  />
+);
+
+export default VendaReescritaPoetica;

@@ -27,6 +27,14 @@ const EncenacaoPoetica = lazy(() => import("./pages/ferramentas/EncenacaoPoetica
 const ReescritaPoetica = lazy(() => import("./pages/ferramentas/ReescritaPoetica"));
 const RitualSilencio = lazy(() => import("./pages/ferramentas/RitualSilencio"));
 const PoesiaHipnotica = lazy(() => import("./pages/ferramentas/PoesiaHipnotica"));
+const VendaPoemaFunil = lazy(() => import("./pages/venda/VendaPoemaFunil"));
+const VendaVersoGatilho = lazy(() => import("./pages/venda/VendaVersoGatilho"));
+const VendaPoemadiagnostico = lazy(() => import("./pages/venda/VendaPoemadiagnostico"));
+const VendaCadernoVozInterna = lazy(() => import("./pages/venda/VendaCadernoVozInterna"));
+const VendaEncenacaoPoetica = lazy(() => import("./pages/venda/VendaEncenacaoPoetica"));
+const VendaReescritaPoetica = lazy(() => import("./pages/venda/VendaReescritaPoetica"));
+const VendaRitualSilencio = lazy(() => import("./pages/venda/VendaRitualSilencio"));
+const VendaPoesiaHipnotica = lazy(() => import("./pages/venda/VendaPoesiaHipnotica"));
 
 const queryClient = new QueryClient();
 
@@ -54,6 +62,14 @@ const AnimatedRoutes = () => {
           <Route path="/ferramentas/reescrita-poetica" element={<PageTransition><ReescritaPoetica /></PageTransition>} />
           <Route path="/ferramentas/ritual-silencio" element={<PageTransition><RitualSilencio /></PageTransition>} />
           <Route path="/ferramentas/poesia-hipnotica" element={<PageTransition><PoesiaHipnotica /></PageTransition>} />
+          <Route path="/venda/poema-funil" element={<PageTransition><VendaPoemaFunil /></PageTransition>} />
+          <Route path="/venda/verso-gatilho" element={<PageTransition><VendaVersoGatilho /></PageTransition>} />
+          <Route path="/venda/poemadiagnostico" element={<PageTransition><VendaPoemadiagnostico /></PageTransition>} />
+          <Route path="/venda/caderno-voz-interna" element={<PageTransition><VendaCadernoVozInterna /></PageTransition>} />
+          <Route path="/venda/encenacao-poetica" element={<PageTransition><VendaEncenacaoPoetica /></PageTransition>} />
+          <Route path="/venda/reescrita-poetica" element={<PageTransition><VendaReescritaPoetica /></PageTransition>} />
+          <Route path="/venda/ritual-silencio" element={<PageTransition><VendaRitualSilencio /></PageTransition>} />
+          <Route path="/venda/poesia-hipnotica" element={<PageTransition><VendaPoesiaHipnotica /></PageTransition>} />
           <Route path="*" element={<PageTransition><NotFound /></PageTransition>} />
         </Routes>
       </AnimatePresence>
