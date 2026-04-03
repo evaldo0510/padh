@@ -36,10 +36,10 @@ const LivroCurso = () => {
                 <BookOpen className="mr-2 h-5 w-5" />
                 Explore o Livro-Curso
               </Button>
-              <Button variant="outline" size="lg" className="border-primary/30 hover:bg-primary/5">
-                <Volume2 className="mr-2 h-5 w-5" />
-                Ouvir Narração
-              </Button>
+              <TextReader
+                text="Ferramentas para a Poesia Cognitiva Hipnótica. O fio dourado que tece a jornada de autoconhecimento e transformação através do poder da palavra poética aplicada à terapia. Já te disse, a liberdade interior não é um lugar, é um estado onde a mente encontra a poesia que a liberta."
+                label="Ouvir Narração"
+              />
             </div>
           </div>
         </div>

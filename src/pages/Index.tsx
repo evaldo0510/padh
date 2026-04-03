@@ -125,6 +125,11 @@ const Index = () => {
                 </p>
                 <cite className="text-sm text-primary/70 mt-2 block not-italic">— Evaldo PCH Master</cite>
               </blockquote>
+              <TextReader
+                text="A poesia toca onde a fala falha. A hipnose abre o portão dos porões. A cognição redesenha o mapa interno."
+                label="Ouvir Poema"
+                className="mt-3"
+              />
             </div>
           </div>
         </div>
