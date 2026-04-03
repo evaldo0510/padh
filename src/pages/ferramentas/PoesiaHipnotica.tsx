@@ -2,17 +2,11 @@ import React from 'react';
 import { Sparkles, Brain, BookOpen, PenTool, MessageCircle, Waves, Eye, CheckCircle } from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
-import Header from '@/components/layout/Header';
-import Footer from '@/components/layout/Footer';
-import PageHeader from '@/components/layout/PageHeader';
+import PageLayout from '@/components/layout/PageLayout';
 import { useScrollAnimation } from '@/hooks/useScrollAnimation';
-import { usePageLoading } from '@/hooks/usePageLoading';
-import { PageSkeleton } from '@/components/ui/page-skeleton';
-import SEOHead from '@/components/seo/SEOHead';
 import { pagesSEO } from '@/lib/seo-config';
 
 const PoesiaHipnotica = () => {
-  const isLoading = usePageLoading(500);
   const baseAnim = useScrollAnimation(0.15);
   const areasAnim = useScrollAnimation(0.15);
   const pchAnim = useScrollAnimation(0.15);
@@ -21,7 +15,6 @@ const PoesiaHipnotica = () => {
   const poemasAnim = useScrollAnimation(0.15);
   const mareAnim = useScrollAnimation(0.15);
 
-  if (isLoading) return <PageSkeleton />;
 
   return (
     <div className="min-h-screen bg-background">
