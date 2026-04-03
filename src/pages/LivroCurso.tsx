@@ -5,6 +5,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Separator } from '@/components/ui/separator';
 import PageLayout from '@/components/layout/PageLayout';
 import { pagesSEO } from '@/lib/seo-config';
+import TextReader from '@/components/ui/text-reader';
 
 const LivroCurso = () => {
   return (
