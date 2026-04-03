@@ -578,6 +578,341 @@ const PoesiaHipnotica = () => {
         </div>
       </section>
 
+      {/* Linguagem Indireta e Sugestões Implícitas */}
+      <section className="py-20 border-t border-border/30">
+        <div
+          ref={linguagemAnim.ref}
+          className={`container mx-auto px-6 transition-all duration-1000 ${
+            linguagemAnim.isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-12'
+          }`}
+        >
+          <div className="max-w-4xl mx-auto">
+            <div className="text-center mb-10">
+              <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-primary/20 bg-primary/5 text-primary text-sm font-medium mb-4">
+                <Waves className="h-3.5 w-3.5" />
+                Linguagem Indireta
+              </div>
+              <h2 className="text-3xl font-heading font-bold text-foreground mb-4">
+                Linguagem Indireta e <span className="text-primary italic">Sugestões Implícitas</span>
+              </h2>
+              <p className="text-muted-foreground leading-relaxed max-w-2xl mx-auto">
+                Poemas construídos com padrões de linguagem indireta que ativam o inconsciente 
+                através de sugestões implícitas, ritmo e metáforas sensoriais.
+              </p>
+            </div>
+
+            <div className="space-y-6">
+              {/* 1 - Durma */}
+              <Card className="border-indigo-400/20 bg-indigo-500/5">
+                <CardContent className="p-6">
+                  <h4 className="font-heading font-semibold text-primary mb-1">1️⃣ "Durma profundamente."</h4>
+                  <div className="poem-block mt-3">
+                    <p className="poem-text text-sm text-foreground/80 leading-relaxed">
+                      Talvez agora… sem perceber,<br />
+                      o corpo relaxe… sem nada querer.<br />
+                      Um suspiro leve… um ritmo sereno,<br />
+                      o sono chegando… macio… supremo.<br /><br />
+                      Sem esforço… sem pressa… sem medo,<br />
+                      apenas se entregue… ao doce enredo.<br />
+                      Como a noite abraça o mar,<br />
+                      o descanso vem… pra te embalar.<br /><br />
+                      Os pensamentos… vão se afastando,<br />
+                      como folhas ao vento… flutuando…<br />
+                      e, num instante… sem notar,<br />
+                      você já dorme… a sonhar.
+                    </p>
+                  </div>
+                </CardContent>
+              </Card>
+
+              {/* 2 - Preocupar */}
+              <Card className="border-sky-400/20 bg-sky-500/5">
+                <CardContent className="p-6">
+                  <h4 className="font-heading font-semibold text-primary mb-1">2️⃣ "Pare de se preocupar."</h4>
+                  <div className="poem-block mt-3">
+                    <p className="poem-text text-sm text-foreground/80 leading-relaxed">
+                      Pode ser interessante… apenas notar,<br />
+                      como a mente aprende… a se acalmar.<br />
+                      Pouco a pouco… sem precisar correr,<br />
+                      as preocupações… começam a ceder.<br /><br />
+                      Como folhas soltas… que o vento carrega,<br />
+                      os medos se vão… sem deixar entrega.<br />
+                      Apenas o agora… tranquilo… presente,<br />
+                      envolve seu ser… suavemente.<br /><br />
+                      Respire… sinta… deixe fluir,<br />
+                      a paz já existe… dentro de ti.<br />
+                      E, enquanto tudo se aquieta no ar,<br />
+                      a calma te abraça… sem precisar chamar.
+                    </p>
+                  </div>
+                </CardContent>
+              </Card>
+
+              {/* 3 - Confiante */}
+              <Card className="border-amber-400/20 bg-amber-500/5">
+                <CardContent className="p-6">
+                  <h4 className="font-heading font-semibold text-primary mb-1">3️⃣ "Sinta-se confiante agora."</h4>
+                  <div className="poem-block mt-3">
+                    <p className="poem-text text-sm text-foreground/80 leading-relaxed">
+                      E à medida que o ar… entra e sai,<br />
+                      algo em você… cresce e se refaz.<br />
+                      Uma força serena… que se expande,<br />
+                      como fogo que aquece… e nunca se apaga.<br /><br />
+                      Talvez já sinta… talvez apenas note,<br />
+                      mas a confiança… brilha… e sobe.<br />
+                      Segura… firme… presente em ti,<br />
+                      como um sol que nasce… e não tem fim.<br /><br />
+                      A cada instante… ela se fortalece,<br />
+                      a dúvida some… a certeza aparece.<br />
+                      E agora… com passos seguros no chão,<br />
+                      você avança… guiado pelo coração.
+                    </p>
+                  </div>
+                </CardContent>
+              </Card>
+
+              {/* 4 - Problemas */}
+              <Card className="border-teal-400/20 bg-teal-500/5">
+                <CardContent className="p-6">
+                  <h4 className="font-heading font-semibold text-primary mb-1">4️⃣ "Esqueça os problemas por um momento."</h4>
+                  <div className="poem-block mt-3">
+                    <p className="poem-text text-sm text-foreground/80 leading-relaxed">
+                      É curioso… como sem esforço algum,<br />
+                      a mente flutua… suave… comum.<br />
+                      Como nuvens que seguem… sem rumo, sem pressa,<br />
+                      deixando o céu… mais claro… sem pressa.<br /><br />
+                      Os problemas… tão distantes agora,<br />
+                      perdem o peso… se vão… lá fora.<br />
+                      E nesse instante… só o presente existe,<br />
+                      leve… tranquilo… tão simples… tão livre.<br /><br />
+                      Respire… sinta… deixe passar,<br />
+                      como ondas no mar… sem precisar segurar.<br />
+                      Pois a paz já habita… bem dentro de ti,<br />
+                      e sempre que quiser… pode voltar aqui.
+                    </p>
+                  </div>
+                </CardContent>
+              </Card>
+
+              {/* 5 - Futuro */}
+              <Card className="border-violet-400/20 bg-violet-500/5">
+                <CardContent className="p-6">
+                  <h4 className="font-heading font-semibold text-primary mb-1">5️⃣ "Visualize um futuro positivo."</h4>
+                  <div className="poem-block mt-3">
+                    <p className="poem-text text-sm text-foreground/80 leading-relaxed">
+                      E, enquanto sua mente se abre para sonhar,<br />
+                      você percebe… um futuro a se desenhar.<br />
+                      Inspiração flui… como uma luz crescente,<br />
+                      tornando o amanhã… mais claro… mais presente.<br /><br />
+                      As possibilidades surgem… tão vivas, tão reais,<br />
+                      como um quadro pintado… em cores especiais.<br />
+                      Cada passo seu… é mais firme, mais certo,<br />
+                      e o futuro se forma… de um jeito mais perto.<br /><br />
+                      Com confiança, você vê… tudo acontecer,<br />
+                      um caminho brilhante… para seguir e crescer.<br />
+                      E à medida que a imagem ganha vida em ti,<br />
+                      o futuro inspirador já mora aqui.
+                    </p>
+                  </div>
+                </CardContent>
+              </Card>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Exemplos de Respostas */}
+      <section className="py-20 border-t border-border/30 relative overflow-hidden">
+        <div className="absolute inset-0 gradient-warm" />
+        <div
+          ref={respostasAnim.ref}
+          className={`relative container mx-auto px-6 transition-all duration-1000 ${
+            respostasAnim.isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-12'
+          }`}
+        >
+          <div className="max-w-4xl mx-auto">
+            <div className="text-center mb-10">
+              <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-primary/20 bg-primary/5 text-primary text-sm font-medium mb-4">
+                <Eye className="h-3.5 w-3.5" />
+                Exemplos
+              </div>
+              <h2 className="text-3xl font-heading font-bold text-foreground mb-4">
+                💡 Exemplos de Respostas
+              </h2>
+              <p className="text-muted-foreground max-w-2xl mx-auto">
+                Variações poéticas das mesmas sugestões, demonstrando a flexibilidade da linguagem indireta.
+              </p>
+            </div>
+
+            <Accordion type="single" collapsible className="w-full space-y-3">
+              <AccordionItem value="resp1" className="border border-border/50 rounded-xl px-4 bg-card/50">
+                <AccordionTrigger className="text-foreground font-heading font-medium">
+                  1️⃣ Durma profundamente — Variação
+                </AccordionTrigger>
+                <AccordionContent>
+                  <div className="poem-block">
+                    <p className="poem-text text-sm text-foreground/80 leading-relaxed">
+                      Pode ser interessante perceber como, pouco a pouco,<br />
+                      seus olhos ficam mais pesados…<br />
+                      e o sono chega naturalmente,<br />
+                      como uma brisa suave… sem pressa, sem rastro.<br /><br />
+                      A cada respiração… mais leve… mais tranquilo,<br />
+                      o corpo se solta… num ritmo sereno e divino.<br />
+                      E o mundo ao redor… vai se tornando distante,<br />
+                      enquanto você se entrega… ao descanso constante.<br /><br />
+                      Com cada batida do coração… mais profundo,<br />
+                      o sono vem… levando você ao fundo.<br />
+                      E no silêncio suave… tudo se acalma,<br />
+                      você está em paz… no abraço da alma.
+                    </p>
+                  </div>
+                </AccordionContent>
+              </AccordionItem>
+
+              <AccordionItem value="resp2" className="border border-border/50 rounded-xl px-4 bg-card/50">
+                <AccordionTrigger className="text-foreground font-heading font-medium">
+                  2️⃣ Pare de se preocupar — Variação
+                </AccordionTrigger>
+                <AccordionContent>
+                  <div className="poem-block">
+                    <p className="poem-text text-sm text-foreground/80 leading-relaxed">
+                      Talvez você note que algumas preocupações<br />
+                      já começam a se dissolver,<br />
+                      quase sem esforço… como névoa ao amanhecer,<br />
+                      desaparecendo, deixando espaço para a paz.<br /><br />
+                      O peso se esvai… e tudo fica mais leve,<br />
+                      como se o vento levasse embora o que não serve.<br />
+                      Cada pensamento que se solta… mais tranquilo,<br />
+                      deixa um vazio preenchido por um sereno brilho.<br /><br />
+                      E, à medida que tudo se afasta,<br />
+                      você percebe como a paz se instala…<br />
+                      suave, silenciosa, preenchendo o espaço,<br />
+                      até que a mente se acalme, sem nenhum embaraço.
+                    </p>
+                  </div>
+                </AccordionContent>
+              </AccordionItem>
+
+              <AccordionItem value="resp3" className="border border-border/50 rounded-xl px-4 bg-card/50">
+                <AccordionTrigger className="text-foreground font-heading font-medium">
+                  3️⃣ Sinta-se confiante agora — Variação
+                </AccordionTrigger>
+                <AccordionContent>
+                  <div className="poem-block">
+                    <p className="poem-text text-sm text-foreground/80 leading-relaxed">
+                      À medida que respira fundo,<br />
+                      pode sentir uma confiança crescendo suavemente<br />
+                      dentro de você…<br />
+                      como uma chama que se acende, forte e constante.<br /><br />
+                      A cada inspiração… ela cresce,<br />
+                      se espalha pelo corpo… e se fortalece.<br />
+                      E, no exalar… você sente mais firme,<br />
+                      como raízes profundas… que jamais se calam.<br /><br />
+                      Essa confiança… iluminando o caminho,<br />
+                      como farol na neblina… suave, mas certeiro.<br />
+                      Dentro de você… ela é imensa e segura,<br />
+                      pronta para guiar… cada passo com ternura.
+                    </p>
+                  </div>
+                </AccordionContent>
+              </AccordionItem>
+
+              <AccordionItem value="resp4" className="border border-border/50 rounded-xl px-4 bg-card/50">
+                <AccordionTrigger className="text-foreground font-heading font-medium">
+                  4️⃣ Esqueça os problemas — Variação
+                </AccordionTrigger>
+                <AccordionContent>
+                  <div className="poem-block">
+                    <p className="poem-text text-sm text-foreground/80 leading-relaxed">
+                      De alguma forma, sua mente já está encontrando<br />
+                      um espaço de tranquilidade…<br />
+                      onde os problemas parecem menores,<br />
+                      como sombras que se afastam com a luz do dia.<br /><br />
+                      A calma se espalha… serena e vasta,<br />
+                      e o peso dos pensamentos… aos poucos, se esvai.<br />
+                      No silêncio interno… tudo se organiza,<br />
+                      e o que antes parecia pesado… agora se suaviza.<br /><br />
+                      A luz que cresce… dissipa o que incomoda,<br />
+                      trazendo clareza, levando a escuridão.<br />
+                      E nesse espaço de paz… você encontra o equilíbrio,<br />
+                      onde os problemas não têm mais poder… apenas espaço para a solução.
+                    </p>
+                  </div>
+                </AccordionContent>
+              </AccordionItem>
+
+              <AccordionItem value="resp5" className="border border-border/50 rounded-xl px-4 bg-card/50">
+                <AccordionTrigger className="text-foreground font-heading font-medium">
+                  5️⃣ Visualize um futuro positivo — Variação
+                </AccordionTrigger>
+                <AccordionContent>
+                  <div className="poem-block">
+                    <p className="poem-text text-sm text-foreground/80 leading-relaxed">
+                      E, conforme se permite imaginar possibilidades,<br />
+                      talvez um cenário positivo já esteja se formando em sua mente…<br />
+                      pleno de esperança… claro e inspirador,<br />
+                      como uma jornada nova… pronta para ser vivida.<br /><br />
+                      A cada visão, o caminho se abre,<br />
+                      cheio de luz, de oportunidades e de calma.<br />
+                      Cada passo dado na mente… é um passo no futuro,<br />
+                      um futuro brilhante, cheio de aventura e de cura.<br /><br />
+                      E ao ver esse cenário, tão pleno e vasto,<br />
+                      você se sente renovado… com o coração mais alto.<br />
+                      Como um novo começo, que se revela com suavidade,<br />
+                      pronto para ser vivido, com confiança e liberdade.
+                    </p>
+                  </div>
+                </AccordionContent>
+              </AccordionItem>
+            </Accordion>
+          </div>
+        </div>
+      </section>
+
+      {/* No Fluxo do Agora */}
+      <section className="py-20 border-t border-border/30">
+        <div
+          ref={fluxoAnim.ref}
+          className={`container mx-auto px-6 transition-all duration-1000 ${
+            fluxoAnim.isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-12'
+          }`}
+        >
+          <div className="max-w-3xl mx-auto text-center">
+            <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-primary/20 bg-primary/5 text-primary text-sm font-medium mb-6">
+              <Sparkles className="h-3.5 w-3.5" />
+              Experiência Imersiva
+            </div>
+            <h2 className="text-3xl font-heading font-bold text-foreground mb-6">
+              No Fluxo do Agora
+            </h2>
+            <Card className="border-primary/20 bg-gradient-to-br from-primary/5 to-secondary/5">
+              <CardContent className="p-8">
+                <div className="poem-block">
+                  <p className="poem-text text-foreground/80 leading-loose">
+                    E enquanto lê estas palavras...<br />
+                    talvez perceba como cada som, cada pausa...<br />
+                    vai criando um espaço dentro de você...<br /><br />
+                    Um espaço onde o tempo desacelera...<br />
+                    e tudo que parecia distante se torna acessível...<br />
+                    como um rio que flui suavemente para o mar...<br /><br />
+                    E pode ser interessante notar...<br />
+                    como sua respiração se torna mais leve...<br />
+                    e seu corpo encontra um jeito natural de relaxar...<br /><br />
+                    Porque a mudança acontece...<br />
+                    não quando se força...<br />
+                    mas quando se permite fluir...<br /><br />
+                    E quem sabe...<br />
+                    agora, ou em breve...<br />
+                    você já esteja sentindo essa transformação...<br />
+                    crescendo silenciosamente dentro de você...
+                  </p>
+                </div>
+              </CardContent>
+            </Card>
+          </div>
+        </div>
+      </section>
+
       {/* Maré da Transformação */}
       <section className="py-20 border-t border-border/30">
         <div
