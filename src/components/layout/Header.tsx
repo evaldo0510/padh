@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
 import { useLocation } from 'react-router-dom';
-import { Menu, X, BookOpen, ChevronDown } from 'lucide-react';
+import { Menu, X, ChevronDown } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { ThemeToggle } from '@/components/ui/theme-toggle';
 import PrefetchLink from './PrefetchLink';
+import logoPadh from '@/assets/logo-padh.png';
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
