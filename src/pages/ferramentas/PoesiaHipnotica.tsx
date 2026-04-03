@@ -15,6 +15,7 @@ const PoesiaHipnotica = () => {
   const poemasAnim = useScrollAnimation(0.15);
   const linguagemAnim = useScrollAnimation(0.15);
   const respostasAnim = useScrollAnimation(0.15);
+  const exercicioFocoAnim = useScrollAnimation(0.15);
   const fluxoAnim = useScrollAnimation(0.15);
   const mareAnim = useScrollAnimation(0.15);
 
@@ -865,6 +866,144 @@ const PoesiaHipnotica = () => {
                 </AccordionContent>
               </AccordionItem>
             </Accordion>
+          </div>
+        </div>
+      </section>
+
+      {/* Exercícios de Foco, Criatividade, Confiança e Superação */}
+      <section className="py-20 border-t border-border/30">
+        <div
+          ref={exercicioFocoAnim.ref}
+          className={`container mx-auto px-6 transition-all duration-1000 ${
+            exercicioFocoAnim.isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-12'
+          }`}
+        >
+          <div className="max-w-4xl mx-auto">
+            <div className="text-center mb-10">
+              <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-primary/20 bg-primary/5 text-primary text-sm font-medium mb-4">
+                <Brain className="h-3.5 w-3.5" />
+                Exercícios Práticos
+              </div>
+              <h2 className="text-3xl font-heading font-bold text-foreground mb-4">
+                Exercícios de <span className="text-primary italic">Indução Poética</span>
+              </h2>
+              <p className="text-muted-foreground max-w-2xl mx-auto">
+                Estruturas de 3 etapas — do estado atual ao estado desejado — seguidas de poemas completos de indução.
+              </p>
+            </div>
+
+            <div className="space-y-8">
+              {/* Foco e Criatividade */}
+              <Card className="border-emerald-400/20 bg-emerald-500/5">
+                <CardHeader>
+                  <CardTitle className="font-heading text-primary">🎯 Exercício de Foco e Criatividade</CardTitle>
+                </CardHeader>
+                <CardContent className="space-y-4">
+                  <div className="space-y-3">
+                    <div className="p-4 rounded-lg border border-border/50 bg-card/50">
+                      <p className="text-xs uppercase tracking-widest text-muted-foreground font-medium mb-2">1️⃣ Estado Atual Comum</p>
+                      <p className="text-sm text-foreground/80 italic">
+                        "Enquanto você lê, pode estar absorvendo as palavras que surgem à sua frente, 
+                        percebendo cada detalhe das frases que se formam."
+                      </p>
+                    </div>
+                    <div className="p-4 rounded-lg border border-border/50 bg-card/50">
+                      <p className="text-xs uppercase tracking-widest text-muted-foreground font-medium mb-2">2️⃣ Descrição Neutra</p>
+                      <p className="text-sm text-foreground/80 italic">
+                        "Sua mente pode estar fluindo junto com as ideias, talvez um pequeno pensamento 
+                        passando por sua mente aqui e ali, enquanto você segue no seu próprio ritmo."
+                      </p>
+                    </div>
+                    <div className="p-4 rounded-lg border border-primary/20 bg-primary/5">
+                      <p className="text-xs uppercase tracking-widest text-primary font-medium mb-2">3️⃣ Estado Desejado — Foco e Criatividade</p>
+                      <p className="text-sm text-foreground/80 italic">
+                        "E, enquanto segue explorando essas palavras, talvez note como sua mente começa a se expandir, 
+                        trazendo novas ideias, novas conexões, como se sua criatividade estivesse florescendo, 
+                        de forma simples e natural."
+                      </p>
+                    </div>
+                  </div>
+
+                  <div className="pt-4">
+                    <h4 className="font-heading font-semibold text-foreground mb-3">Poesia do Foco e Criatividade</h4>
+                    <div className="poem-block">
+                      <p className="poem-text text-sm text-foreground/80 leading-relaxed">
+                        Enquanto você lê,<br />
+                        Percebe cada palavra que se desenha à sua frente,<br />
+                        Absorvendo, com calma, os detalhes que formam o sentido,<br />
+                        Como se cada frase fosse uma porta a ser aberta.<br /><br />
+                        Sua mente flui suavemente,<br />
+                        Pensamentos surgem e passam,<br />
+                        Como nuvens que se movem no céu,<br />
+                        E, sem pressa, você segue o ritmo do seu próprio tempo.<br /><br />
+                        E, à medida que explora essas palavras,<br />
+                        Talvez sinta sua mente se expandir,<br />
+                        Novas ideias começando a se formar,<br />
+                        Novas conexões se entrelaçando,<br />
+                        Como florescendo naturalmente,<br />
+                        A criatividade se abre como uma flor ao sol,<br />
+                        De forma simples e fluida, sem esforço.
+                      </p>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+
+              {/* Confiança e Superação */}
+              <Card className="border-amber-400/20 bg-amber-500/5">
+                <CardHeader>
+                  <CardTitle className="font-heading text-primary">💪 Exercício de Confiança e Superação</CardTitle>
+                </CardHeader>
+                <CardContent className="space-y-4">
+                  <div className="space-y-3">
+                    <div className="p-4 rounded-lg border border-border/50 bg-card/50">
+                      <p className="text-xs uppercase tracking-widest text-muted-foreground font-medium mb-2">1️⃣ Estado Atual Comum</p>
+                      <p className="text-sm text-foreground/80 italic">
+                        "Você já percorreu um longo caminho, superando momentos que exigiram força, 
+                        superando desafios que pareciam intransponíveis."
+                      </p>
+                    </div>
+                    <div className="p-4 rounded-lg border border-border/50 bg-card/50">
+                      <p className="text-xs uppercase tracking-widest text-muted-foreground font-medium mb-2">2️⃣ Descrição Neutra</p>
+                      <p className="text-sm text-foreground/80 italic">
+                        "Cada passo que você deu te trouxe até aqui, e talvez, ao olhar para trás, 
+                        você perceba o quanto se fortaleceu com cada experiência que viveu."
+                      </p>
+                    </div>
+                    <div className="p-4 rounded-lg border border-primary/20 bg-primary/5">
+                      <p className="text-xs uppercase tracking-widest text-primary font-medium mb-2">3️⃣ Estado Desejado — Confiança</p>
+                      <p className="text-sm text-foreground/80 italic">
+                        "E, ao olhar para o que está à frente, talvez sinta uma sensação crescente de confiança, 
+                        sabendo que, com cada novo desafio, você tem as ferramentas e a força para superá-lo, 
+                        com mais sabedoria e preparação do que nunca."
+                      </p>
+                    </div>
+                  </div>
+
+                  <div className="pt-4">
+                    <h4 className="font-heading font-semibold text-foreground mb-3">Poesia da Confiança e Superação</h4>
+                    <div className="poem-block">
+                      <p className="poem-text text-sm text-foreground/80 leading-relaxed">
+                        Você já percorreu um longo caminho,<br />
+                        Superando os momentos que exigiram toda a sua força,<br />
+                        Superando desafios que, a princípio, pareciam intransponíveis,<br />
+                        E, mesmo quando o peso parecia demais, você seguiu em frente.<br /><br />
+                        Cada passo que você deu te trouxe até aqui,<br />
+                        E, ao olhar para trás, talvez perceba a quantidade de forças que despertaram em você,<br />
+                        Como se cada experiência fosse uma escada,<br />
+                        Te levando a um novo patamar, mais forte, mais preparado.<br /><br />
+                        Agora, ao olhar para o futuro,<br />
+                        Talvez sinta uma confiança crescente dentro de si,<br />
+                        Sabendo que, com cada novo desafio,<br />
+                        Você tem todas as ferramentas e toda a força para superá-lo,<br />
+                        Com mais sabedoria, mais leveza, mais coragem,<br />
+                        Mais preparado do que jamais imaginou ser.
+                      </p>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+            </div>
           </div>
         </div>
       </section>
