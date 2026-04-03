@@ -22,7 +22,7 @@ const SEOHead = ({
   const fullTitle = title
     ? `${title} | P.A.D.H. — Evaldo PCH Master`
     : 'P.A.D.H. — Poesia Aplicada ao Desenvolvimento Humano | Evaldo PCH Master';
-  const url = `${SITE_URL}${path}`;
+  const url = path === '/' ? SITE_URL : `${SITE_URL}${path}`;
 
   const defaultJsonLd = {
     '@context': 'https://schema.org',
