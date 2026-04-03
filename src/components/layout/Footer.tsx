@@ -3,6 +3,7 @@ import { Mail, Instagram, Youtube, Heart, Feather } from 'lucide-react';
 import { useScrollAnimation } from '@/hooks/useScrollAnimation';
 import PrefetchLink from './PrefetchLink';
 import logoPadh from '@/assets/logo-padh.png';
+import logoPadhLight from '@/assets/logo-padh-light.png';
 
 const Footer = () => {
   const footerAnim = useScrollAnimation(0.1);
@@ -51,7 +52,8 @@ const Footer = () => {
             {/* Brand */}
             <div className="sm:col-span-2 lg:col-span-1">
               <div className="flex items-center gap-2.5 mb-4">
-                <img src={logoPadh} alt="P.A.D.H. Logo" className="w-10 h-10 object-contain" loading="lazy" width={512} height={512} />
+                <img src={logoPadh} alt="P.A.D.H. Logo" className="w-10 h-10 object-contain hidden dark:block" loading="lazy" width={512} height={512} />
+                <img src={logoPadhLight} alt="P.A.D.H. Logo" className="w-10 h-10 object-contain block dark:hidden" loading="lazy" width={512} height={512} />
                 <span className="font-heading font-bold text-foreground text-lg tracking-wide">P.A.D.H.</span>
               </div>
               <p className="text-sm text-muted-foreground leading-relaxed mb-5">
