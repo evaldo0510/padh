@@ -16,6 +16,14 @@ const routeImports: Record<string, () => Promise<unknown>> = {
   '/ferramentas/reescrita-poetica': () => import('@/pages/ferramentas/ReescritaPoetica'),
   '/ferramentas/ritual-silencio': () => import('@/pages/ferramentas/RitualSilencio'),
   '/ferramentas/poesia-hipnotica': () => import('@/pages/ferramentas/PoesiaHipnotica'),
+  '/venda/poema-funil': () => import('@/pages/venda/VendaPoemaFunil'),
+  '/venda/verso-gatilho': () => import('@/pages/venda/VendaVersoGatilho'),
+  '/venda/poemadiagnostico': () => import('@/pages/venda/VendaPoemadiagnostico'),
+  '/venda/caderno-voz-interna': () => import('@/pages/venda/VendaCadernoVozInterna'),
+  '/venda/encenacao-poetica': () => import('@/pages/venda/VendaEncenacaoPoetica'),
+  '/venda/reescrita-poetica': () => import('@/pages/venda/VendaReescritaPoetica'),
+  '/venda/ritual-silencio': () => import('@/pages/venda/VendaRitualSilencio'),
+  '/venda/poesia-hipnotica': () => import('@/pages/venda/VendaPoesiaHipnotica'),
 };
 
 const prefetched = new Set<string>();

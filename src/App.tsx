@@ -62,6 +62,14 @@ const AnimatedRoutes = () => {
           <Route path="/ferramentas/reescrita-poetica" element={<PageTransition><ReescritaPoetica /></PageTransition>} />
           <Route path="/ferramentas/ritual-silencio" element={<PageTransition><RitualSilencio /></PageTransition>} />
           <Route path="/ferramentas/poesia-hipnotica" element={<PageTransition><PoesiaHipnotica /></PageTransition>} />
+          <Route path="/venda/poema-funil" element={<PageTransition><VendaPoemaFunil /></PageTransition>} />
+          <Route path="/venda/verso-gatilho" element={<PageTransition><VendaVersoGatilho /></PageTransition>} />
+          <Route path="/venda/poemadiagnostico" element={<PageTransition><VendaPoemadiagnostico /></PageTransition>} />
+          <Route path="/venda/caderno-voz-interna" element={<PageTransition><VendaCadernoVozInterna /></PageTransition>} />
+          <Route path="/venda/encenacao-poetica" element={<PageTransition><VendaEncenacaoPoetica /></PageTransition>} />
+          <Route path="/venda/reescrita-poetica" element={<PageTransition><VendaReescritaPoetica /></PageTransition>} />
+          <Route path="/venda/ritual-silencio" element={<PageTransition><VendaRitualSilencio /></PageTransition>} />
+          <Route path="/venda/poesia-hipnotica" element={<PageTransition><VendaPoesiaHipnotica /></PageTransition>} />
           <Route path="*" element={<PageTransition><NotFound /></PageTransition>} />
         </Routes>
       </AnimatePresence>
