@@ -4,6 +4,62 @@ const SITE_URL = 'https://padhpoesia.lovable.app';
 const SITE_NAME = 'P.A.D.H. — Poesia Aplicada ao Desenvolvimento Humano';
 const DEFAULT_IMAGE = `${SITE_URL}/og-image.png`;
 
+const breadcrumbLabels: Record<string, string> = {
+  '/': 'Início',
+  '/livro-curso': 'Livro-Curso PCH',
+  '/formacao': 'Formação em PCH',
+  '/mapa-cerebral': 'Mapa Cerebral',
+  '/aula-exclusiva': 'Aula Exclusiva',
+  '/sobre': 'Sobre',
+  '/contato': 'Contato',
+  '/curso-pch': 'Curso PCH',
+  '/ferramentas': 'Ferramentas P.A.D.H.',
+  '/ferramentas/poema-funil': 'Poema-Funil',
+  '/ferramentas/verso-gatilho': 'Verso-Gatilho',
+  '/ferramentas/poemadiagnostico': 'Poemadiagnóstico',
+  '/ferramentas/caderno-voz-interna': 'Caderno da Voz Interna',
+  '/ferramentas/encenacao-poetica': 'Encenação Poética',
+  '/ferramentas/reescrita-poetica': 'Reescrita Poética',
+  '/ferramentas/ritual-silencio': 'Ritual do Silêncio',
+  '/ferramentas/poesia-hipnotica': 'Poesia Hipnótica',
+  '/venda/poema-funil': 'Poema-Funil',
+  '/venda/verso-gatilho': 'Verso-Gatilho',
+  '/venda/poemadiagnostico': 'Poemadiagnóstico',
+  '/venda/caderno-voz-interna': 'Caderno da Voz Interna',
+  '/venda/encenacao-poetica': 'Encenação Poética',
+  '/venda/reescrita-poetica': 'Reescrita Poética',
+  '/venda/ritual-silencio': 'Ritual do Silêncio',
+  '/venda/poesia-hipnotica': 'Poesia Hipnótica',
+  '/ciencia-da-poesia': 'Ciência da Poesia',
+};
+
+function buildBreadcrumbJsonLd(path: string) {
+  if (path === '/') return null;
+
+  const segments = path.split('/').filter(Boolean);
+  const items = [
+    { '@type': 'ListItem', position: 1, name: 'Início', item: SITE_URL },
+  ];
+
+  let accumulated = '';
+  for (let i = 0; i < segments.length; i++) {
+    accumulated += '/' + segments[i];
+    const label = breadcrumbLabels[accumulated] || segments[i];
+    items.push({
+      '@type': 'ListItem',
+      position: i + 2,
+      name: label,
+      item: `${SITE_URL}${accumulated}`,
+    });
+  }
+
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: items,
+  };
+}
+
 interface SEOHeadProps {
   title?: string;
   description?: string;
@@ -40,6 +96,8 @@ const SEOHead = ({
     },
   };
 
+  const breadcrumbJsonLd = buildBreadcrumbJsonLd(path);
+
   return (
     <Helmet>
       <title>{fullTitle}</title>
@@ -66,6 +124,13 @@ const SEOHead = ({
       <script type="application/ld+json">
         {JSON.stringify(jsonLd || defaultJsonLd)}
       </script>
+
+      {/* Breadcrumb JSON-LD */}
+      {breadcrumbJsonLd && (
+        <script type="application/ld+json">
+          {JSON.stringify(breadcrumbJsonLd)}
+        </script>
+      )}
     </Helmet>
   );
 };
