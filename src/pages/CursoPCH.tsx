@@ -263,6 +263,7 @@ mas ressoa fundo.`}</Poem>
                 </div>
               </AccordionTrigger>
               <AccordionContent className="pb-8">
+                <ModuleImage src={modulo3Img} alt="Linguagem Hipnótica — cérebro feito de luz e palavras" />
                 <div className="space-y-6 text-muted-foreground leading-relaxed">
 
                   <SectionCard>
