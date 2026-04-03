@@ -177,6 +177,7 @@ meu próprio rumo, que hoje encontrei.`}</Poem>
                 </div>
               </AccordionTrigger>
               <AccordionContent className="pb-8">
+                <ModuleImage src={modulo2Img} alt="Reestruturação de Crenças — borboleta emergindo de casulo" />
                 <div className="space-y-6 text-muted-foreground leading-relaxed">
                   <h3 className="text-lg font-heading font-semibold text-foreground">🔹 Exercício 1: Identificação e Ressignificação</h3>
                   <p>🎯 <strong className="text-foreground">Objetivo:</strong> Tornar consciente uma crença negativa e iniciar o processo de mudança.</p>
