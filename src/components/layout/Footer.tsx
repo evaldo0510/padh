@@ -126,8 +126,8 @@ const Footer = () => {
             <p className="text-xs text-muted-foreground">
               © {new Date().getFullYear()} P.A.D.H. — Evaldo PCH Master. Todos os direitos reservados.
             </p>
-            <p className="text-xs text-muted-foreground flex items-center gap-1">
-              Feito com <Heart className="h-3 w-3 text-spiritual-rose" /> e poesia
+            <p className="text-xs text-muted-foreground">
+              Criado por <span className="text-foreground font-medium">Evaldo.os</span>
             </p>
           </div>
         </div>
