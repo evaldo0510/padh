@@ -340,6 +340,7 @@ e tudo simplesmente… acontece…`}</Poem>
                 </div>
               </AccordionTrigger>
               <AccordionContent className="pb-8">
+                <ModuleImage src={modulo4Img} alt="Modelos de Poemas — pessoa no topo da montanha ao nascer do sol" />
                 <div className="space-y-6 text-muted-foreground leading-relaxed">
                   <Poem title="🌊 Superação — Fluir e Crescer">{`As marés já mudaram tantas vezes…
 e cada onda soube aonde chegar.
