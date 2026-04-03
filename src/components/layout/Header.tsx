@@ -15,6 +15,7 @@ const Header = () => {
     { name: 'Sobre', path: '/sobre' },
     { name: 'Livro-Curso', path: '/livro-curso' },
     { name: 'Formação PCH', path: '/formacao' },
+    { name: 'Curso PCH', path: '/curso-pch' },
     { name: 'Ferramentas', path: '/ferramentas', hasDropdown: true },
     { name: 'Mapa Cerebral', path: '/mapa-cerebral' },
     { name: 'Aula Exclusiva', path: '/aula-exclusiva' },

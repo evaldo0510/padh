@@ -17,6 +17,7 @@ const MapaCerebral = lazy(() => import("./pages/MapaCerebral"));
 const AulaExclusiva = lazy(() => import("./pages/AulaExclusiva"));
 const Contato = lazy(() => import("./pages/Contato"));
 const Sobre = lazy(() => import("./pages/Sobre"));
+const CursoPCH = lazy(() => import("./pages/CursoPCH"));
 const FerramentasIndex = lazy(() => import("./pages/ferramentas/FerramentasIndex"));
 const PoemaFunil = lazy(() => import("./pages/ferramentas/PoemaFunil"));
 const VersoGatilho = lazy(() => import("./pages/ferramentas/VersoGatilho"));
@@ -43,6 +44,7 @@ const AnimatedRoutes = () => {
           <Route path="/aula-exclusiva" element={<PageTransition><AulaExclusiva /></PageTransition>} />
           <Route path="/sobre" element={<PageTransition><Sobre /></PageTransition>} />
           <Route path="/contato" element={<PageTransition><Contato /></PageTransition>} />
+          <Route path="/curso-pch" element={<PageTransition><CursoPCH /></PageTransition>} />
           <Route path="/ferramentas" element={<PageTransition><FerramentasIndex /></PageTransition>} />
           <Route path="/ferramentas/poema-funil" element={<PageTransition><PoemaFunil /></PageTransition>} />
           <Route path="/ferramentas/verso-gatilho" element={<PageTransition><VersoGatilho /></PageTransition>} />
