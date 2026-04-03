@@ -42,6 +42,7 @@ const VendaEncenacaoPoetica = () => (
     originalPrice="R$ 127"
     ctaText="Quero acessar a Encenação Poética"
     ctaLink="https://wa.me/5500000000000?text=Quero%20acessar%20a%20Encenação%20Poética"
+    scientificTool="encenacao-poetica"
   />
 );
 

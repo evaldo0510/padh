@@ -42,6 +42,7 @@ const VendaRitualSilencio = () => (
     originalPrice="R$ 127"
     ctaText="Quero acessar o Ritual do Silêncio"
     ctaLink="https://wa.me/5500000000000?text=Quero%20acessar%20o%20Ritual%20do%20Silêncio"
+    scientificTool="ritual-silencio"
   />
 );
 

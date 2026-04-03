@@ -92,4 +92,9 @@ export const pagesSEO: Record<string, PageSEO> = {
     description: 'Curso completo de Poesia Cognitiva Hipnótica com módulos práticos para transformação interior através da palavra.',
     path: '/curso-pch',
   },
+  cienciaPoesia: {
+    title: 'Ciência da Poesia — Estudos Científicos',
+    description: 'Mais de 11 estudos publicados em revistas como Science, WHO e NeuroImage validam o uso terapêutico da poesia e fundamentam o P.A.D.H.',
+    path: '/ciencia-da-poesia',
+  },
 };

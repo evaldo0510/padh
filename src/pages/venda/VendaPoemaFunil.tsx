@@ -42,6 +42,7 @@ const VendaPoemaFunil = () => (
     originalPrice="R$ 127"
     ctaText="Quero acessar o Poema-Funil"
     ctaLink="https://wa.me/5500000000000?text=Quero%20acessar%20o%20Poema-Funil"
+    scientificTool="poema-funil"
   />
 );
 

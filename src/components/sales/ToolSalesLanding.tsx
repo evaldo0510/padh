@@ -5,6 +5,8 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import PageLayout from '@/components/layout/PageLayout';
 import { useScrollAnimation } from '@/hooks/useScrollAnimation';
+import ScientificValidation from '@/components/sections/ScientificValidation';
+import type { ToolTag } from '@/lib/scientific-studies';
 
 interface Testimonial {
   name: string;
@@ -33,6 +35,7 @@ interface ToolSalesLandingProps {
   ctaText: string;
   ctaLink: string;
   guarantee?: string;
+  scientificTool?: ToolTag;
 }
 
 const ToolSalesLanding: React.FC<ToolSalesLandingProps> = ({
@@ -56,6 +59,7 @@ const ToolSalesLanding: React.FC<ToolSalesLandingProps> = ({
   ctaText,
   ctaLink,
   guarantee = '7 dias de garantia incondicional',
+  scientificTool,
 }) => {
   const benefitsAnim = useScrollAnimation(0.1);
   const stepsAnim = useScrollAnimation(0.1);
@@ -226,6 +230,9 @@ const ToolSalesLanding: React.FC<ToolSalesLandingProps> = ({
           </div>
         </div>
       </section>
+
+      {/* Scientific Validation */}
+      {scientificTool && <ScientificValidation tool={scientificTool} maxStudies={3} />}
 
       {/* Pricing CTA */}
       <section className="py-20">
