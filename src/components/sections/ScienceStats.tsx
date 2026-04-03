@@ -1,0 +1,88 @@
+import React, { useEffect, useRef, useState } from 'react';
+import { FlaskConical } from 'lucide-react';
+
+interface AnimatedCounterProps {
+  end: number;
+  duration?: number;
+  suffix?: string;
+  prefix?: string;
+}
+
+const AnimatedCounter: React.FC<AnimatedCounterProps> = ({ end, duration = 2000, suffix = '', prefix = '' }) => {
+  const [count, setCount] = useState(0);
+  const [hasAnimated, setHasAnimated] = useState(false);
+  const ref = useRef<HTMLSpanElement>(null);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting && !hasAnimated) {
+          setHasAnimated(true);
+          const startTime = performance.now();
+          const animate = (currentTime: number) => {
+            const elapsed = currentTime - startTime;
+            const progress = Math.min(elapsed / duration, 1);
+            const eased = 1 - Math.pow(1 - progress, 3); // ease-out cubic
+            setCount(Math.floor(eased * end));
+            if (progress < 1) requestAnimationFrame(animate);
+          };
+          requestAnimationFrame(animate);
+        }
+      },
+      { threshold: 0.5 }
+    );
+
+    if (ref.current) observer.observe(ref.current);
+    return () => observer.disconnect();
+  }, [end, duration, hasAnimated]);
+
+  return (
+    <span ref={ref} className="text-4xl md:text-5xl font-heading font-bold text-primary tabular-nums">
+      {prefix}{count}{suffix}
+    </span>
+  );
+};
+
+interface StatItem {
+  value: number;
+  suffix?: string;
+  prefix?: string;
+  label: string;
+  sub: string;
+}
+
+interface ScienceStatsProps {
+  stats?: StatItem[];
+}
+
+const ScienceStats: React.FC<ScienceStatsProps> = ({ stats }) => {
+  const defaultStats: StatItem[] = stats ?? [
+    { value: 11, label: 'Estudos Publicados', sub: 'em revistas internacionais' },
+    { value: 8, label: 'Categorias Científicas', sub: 'de neurociência a resiliência' },
+    { value: 15, suffix: ' anos', label: 'De Evidências', sub: '2005 – 2020' },
+  ];
+
+  return (
+    <section className="py-16 border-t border-border/30">
+      <div className="container mx-auto px-6 max-w-4xl">
+        <div className="text-center mb-10">
+          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-primary/20 bg-primary/5 text-primary text-sm font-medium mb-4">
+            <FlaskConical className="h-3.5 w-3.5" />
+            Impacto Científico
+          </div>
+        </div>
+        <div className="grid sm:grid-cols-3 gap-8">
+          {defaultStats.map((stat, i) => (
+            <div key={i} className="text-center space-y-2">
+              <AnimatedCounter end={stat.value} suffix={stat.suffix} prefix={stat.prefix} />
+              <p className="text-sm font-medium text-foreground">{stat.label}</p>
+              <p className="text-xs text-muted-foreground">{stat.sub}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+};
+
+export default ScienceStats;

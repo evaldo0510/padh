@@ -1,5 +1,5 @@
 import React from 'react';
-import { ArrowRight, BookOpen, Brain, Sparkles, Star, Heart, Users, GraduationCap, Feather, Quote } from 'lucide-react';
+import { ArrowRight, BookOpen, Brain, Sparkles, Star, Heart, Users, GraduationCap, Feather, Quote, FlaskConical } from 'lucide-react';
 import PoemadiagnosticoInterativo from '@/components/sections/PoemadiagnosticoInterativo';
 import { Link } from 'react-router-dom';
 import heroImage from '@/assets/hero-padh.png';
@@ -18,6 +18,7 @@ const Index = () => {
   const aboutSection = useScrollAnimation(0.15);
   const toolsSection = useScrollAnimation(0.15);
   const pchSection = useScrollAnimation(0.15);
+  const scienceSection = useScrollAnimation(0.15);
   const journeySection = useScrollAnimation(0.15);
   const testimonialsSection = useScrollAnimation(0.15);
   const isLoading = usePageLoading(600);
@@ -261,6 +262,52 @@ const Index = () => {
                 </div>
               ))}
             </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Base Científica — Destaque */}
+      <section className="py-24 border-t border-border/30 relative overflow-hidden">
+        <div className="absolute inset-0 bg-gradient-to-b from-primary/[0.03] via-transparent to-transparent" />
+        <div
+          ref={scienceSection.ref}
+          className={`relative container mx-auto px-6 transition-all duration-1000 ${
+            scienceSection.isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-12'
+          }`}
+        >
+          <div className="max-w-4xl mx-auto text-center">
+            <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-primary/20 bg-primary/5 text-primary text-sm font-medium mb-6">
+              <FlaskConical className="h-3.5 w-3.5" />
+              Base Científica
+            </div>
+            <h2 className="text-3xl md:text-5xl font-heading font-bold text-foreground mb-6">
+              Poesia que a <span className="text-primary italic">Ciência</span> Comprova
+            </h2>
+            <p className="text-lg text-muted-foreground max-w-2xl mx-auto mb-12 leading-relaxed">
+              11 estudos publicados em revistas como <em>Science</em>, <em>WHO</em> e <em>NeuroImage</em> validam 
+              o poder terapêutico da poesia — e fundamentam cada ferramenta P.A.D.H.
+            </p>
+
+            <div className="grid sm:grid-cols-3 gap-6 mb-10">
+              {[
+                { value: '11', label: 'Estudos Publicados', sub: 'em revistas internacionais' },
+                { value: '8', label: 'Categorias Científicas', sub: 'de neurociência a resiliência' },
+                { value: '2005–2020', label: 'Período de Pesquisa', sub: '15 anos de evidências' },
+              ].map((stat, i) => (
+                <div key={i} className="glass-card p-6 rounded-xl text-center space-y-2">
+                  <p className="text-3xl md:text-4xl font-heading font-bold text-primary">{stat.value}</p>
+                  <p className="text-sm font-medium text-foreground">{stat.label}</p>
+                  <p className="text-xs text-muted-foreground">{stat.sub}</p>
+                </div>
+              ))}
+            </div>
+
+            <Link to="/ciencia-da-poesia">
+              <Button size="lg" variant="outline" className="border-primary/30 text-foreground hover:bg-primary/5 px-8">
+                Explorar os Estudos Científicos
+                <ArrowRight className="ml-2 h-4 w-4" />
+              </Button>
+            </Link>
           </div>
         </div>
       </section>
