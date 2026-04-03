@@ -2,20 +2,12 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { ArrowRight, Feather, Anchor, Eye, PenTool, Drama, RefreshCw, Flame, Sparkles } from 'lucide-react';
 import { Card, CardContent } from '@/components/ui/card';
-import Header from '@/components/layout/Header';
-import Footer from '@/components/layout/Footer';
-import PageHeader from '@/components/layout/PageHeader';
+import PageLayout from '@/components/layout/PageLayout';
 import { useScrollAnimation } from '@/hooks/useScrollAnimation';
-import { usePageLoading } from '@/hooks/usePageLoading';
-import { PageSkeleton } from '@/components/ui/page-skeleton';
-import SEOHead from '@/components/seo/SEOHead';
 import { pagesSEO } from '@/lib/seo-config';
 
 const FerramentasIndex = () => {
-  const isLoading = usePageLoading(500);
   const toolsAnim = useScrollAnimation(0.15);
-
-  if (isLoading) return <PageSkeleton />;
 
   const ferramentas = [
     {
