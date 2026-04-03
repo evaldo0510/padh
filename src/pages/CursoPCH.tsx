@@ -93,6 +93,7 @@ const CursoPCH = () => {
                 </div>
               </AccordionTrigger>
               <AccordionContent className="pb-8">
+                <ModuleImage src={modulo1Img} alt="O Poder das Palavras — livro aberto com luz cósmica" />
                 <div className="space-y-6 text-muted-foreground leading-relaxed">
                   <p>A palavra tem um impacto profundo na psique humana, sendo a principal ferramenta da terapia. Quando usada com propósito e poesia, ela pode reestruturar pensamentos e emoções, proporcionando novas percepções e caminhos para a transformação interior.</p>
                   <p>A palavra bem utilizada influencia emoções, crenças e até reconfigura padrões mentais. Seja na hipnoterapia, na PNL, na psicologia ou na meditação guiada, a forma como nos expressamos pode gerar profundas mudanças internas.</p>
