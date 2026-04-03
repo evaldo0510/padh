@@ -5,6 +5,7 @@ import PageLayout from '@/components/layout/PageLayout';
 import { useScrollAnimation } from '@/hooks/useScrollAnimation';
 import toolImage from '@/assets/tool-ritual-silencio.jpg';
 import { pagesSEO } from '@/lib/seo-config';
+import ScientificValidation from '@/components/sections/ScientificValidation';
 
 const RitualSilencio = () => {
   const contentAnim = useScrollAnimation(0.15);
