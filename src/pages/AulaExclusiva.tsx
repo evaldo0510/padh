@@ -196,8 +196,7 @@ const AulaExclusiva = () => {
           </div>
         </div>
       </section>
-      <Footer />
-    </div>
+    </PageLayout>
   );
 };
 
