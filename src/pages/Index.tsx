@@ -21,7 +21,7 @@ const Index = () => {
   const scienceSection = useScrollAnimation(0.15);
   const journeySection = useScrollAnimation(0.15);
   const testimonialsSection = useScrollAnimation(0.15);
-  const isLoading = usePageLoading(600);
+  const isLoading = usePageLoading(150);
 
   if (isLoading) return <PageSkeleton />;
 
