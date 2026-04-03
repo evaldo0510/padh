@@ -5,18 +5,11 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { Label } from '@/components/ui/label';
-import Header from '@/components/layout/Header';
-import Footer from '@/components/layout/Footer';
-import PageHeader from '@/components/layout/PageHeader';
-import { usePageLoading } from '@/hooks/usePageLoading';
-import { PageSkeleton } from '@/components/ui/page-skeleton';
-import SEOHead from '@/components/seo/SEOHead';
+import PageLayout from '@/components/layout/PageLayout';
 import { pagesSEO } from '@/lib/seo-config';
 
 const Contato = () => {
   const [formData, setFormData] = useState({ nome: '', email: '', mensagem: '' });
-  const isLoading = usePageLoading(500);
-  if (isLoading) return <PageSkeleton />;
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
@@ -31,10 +24,7 @@ const Contato = () => {
   };
 
   return (
-    <div className="min-h-screen bg-background">
-      <SEOHead title={pagesSEO.contato.title} description={pagesSEO.contato.description} path={pagesSEO.contato.path} />
-      <Header />
-      <PageHeader currentPage="Contato" />
+    <PageLayout seo={pagesSEO.contato} currentPage="Contato">
       
       {/* Hero */}
       <section className="relative overflow-hidden">

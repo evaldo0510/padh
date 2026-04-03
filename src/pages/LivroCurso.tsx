@@ -230,8 +230,7 @@ const LivroCurso = () => {
           </Card>
         </div>
       </section>
-      <Footer />
-    </div>
+    </PageLayout>
   );
 };
 
