@@ -1,20 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url><loc>https://padhpoesia.lovable.app/</loc><changefreq>weekly</changefreq><priority>1.0</priority></url>
-  <url><loc>https://padhpoesia.lovable.app/livro-curso</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
-  <url><loc>https://padhpoesia.lovable.app/formacao</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
-  <url><loc>https://padhpoesia.lovable.app/curso-pch</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
-  <url><loc>https://padhpoesia.lovable.app/mapa-cerebral</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
-  <url><loc>https://padhpoesia.lovable.app/aula-exclusiva</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
-  <url><loc>https://padhpoesia.lovable.app/sobre</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
-  <url><loc>https://padhpoesia.lovable.app/contato</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
-  <url><loc>https://padhpoesia.lovable.app/ferramentas</loc><changefreq>weekly</changefreq><priority>0.9</priority></url>
-  <url><loc>https://padhpoesia.lovable.app/ferramentas/poema-funil</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
-  <url><loc>https://padhpoesia.lovable.app/ferramentas/verso-gatilho</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
-  <url><loc>https://padhpoesia.lovable.app/ferramentas/poemadiagnostico</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
-  <url><loc>https://padhpoesia.lovable.app/ferramentas/caderno-voz-interna</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
-  <url><loc>https://padhpoesia.lovable.app/ferramentas/encenacao-poetica</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
-  <url><loc>https://padhpoesia.lovable.app/ferramentas/reescrita-poetica</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
-  <url><loc>https://padhpoesia.lovable.app/ferramentas/ritual-silencio</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
-  <url><loc>https://padhpoesia.lovable.app/ferramentas/poesia-hipnotica</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://padhpoesia.lovable.app/</loc><lastmod>2026-04-03</lastmod><changefreq>weekly</changefreq><priority>1.0</priority></url>
+  <url><loc>https://padhpoesia.lovable.app/livro-curso</loc><lastmod>2026-04-03</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://padhpoesia.lovable.app/formacao</loc><lastmod>2026-04-03</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://padhpoesia.lovable.app/curso-pch</loc><lastmod>2026-04-03</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://padhpoesia.lovable.app/mapa-cerebral</loc><lastmod>2026-04-03</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://padhpoesia.lovable.app/aula-exclusiva</loc><lastmod>2026-04-03</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://padhpoesia.lovable.app/sobre</loc><lastmod>2026-04-03</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://padhpoesia.lovable.app/contato</loc><lastmod>2026-04-03</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://padhpoesia.lovable.app/ferramentas</loc><lastmod>2026-04-03</lastmod><changefreq>weekly</changefreq><priority>0.9</priority></url>
+  <url><loc>https://padhpoesia.lovable.app/ferramentas/poema-funil</loc><lastmod>2026-04-03</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://padhpoesia.lovable.app/ferramentas/verso-gatilho</loc><lastmod>2026-04-03</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://padhpoesia.lovable.app/ferramentas/poemadiagnostico</loc><lastmod>2026-04-03</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://padhpoesia.lovable.app/ferramentas/caderno-voz-interna</loc><lastmod>2026-04-03</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://padhpoesia.lovable.app/ferramentas/encenacao-poetica</loc><lastmod>2026-04-03</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://padhpoesia.lovable.app/ferramentas/reescrita-poetica</loc><lastmod>2026-04-03</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://padhpoesia.lovable.app/ferramentas/ritual-silencio</loc><lastmod>2026-04-03</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://padhpoesia.lovable.app/ferramentas/poesia-hipnotica</loc><lastmod>2026-04-03</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
 </urlset>
