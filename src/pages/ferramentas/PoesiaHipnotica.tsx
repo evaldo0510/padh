@@ -18,6 +18,8 @@ const PoesiaHipnotica = () => {
   const exercicioFocoAnim = useScrollAnimation(0.15);
   const fluxoAnim = useScrollAnimation(0.15);
   const mareAnim = useScrollAnimation(0.15);
+  const metaforasAnim = useScrollAnimation(0.15);
+  const pacingAnim = useScrollAnimation(0.15);
 
 
   return (
