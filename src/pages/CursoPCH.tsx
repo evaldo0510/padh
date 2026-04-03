@@ -375,6 +375,36 @@ porque é a sua essência.`}</Poem>
                       <li>Leia em voz alta, sentindo o ritmo e o impacto das palavras.</li>
                     </ol>
                   </SectionCard>
+
+                  <Poem title="💧 Perdão — A Chuva que Lava">{`Carreguei essa pedra por tanto tempo
+que esqueci como era andar sem peso.
+Mas hoje, olho pra ela e percebo…
+não era minha. Nunca foi.
+
+Solto o que não me pertence.
+Deixo a chuva lavar o que ficou.
+E quando o chão secar,
+plantarei algo que cresça com raízes minhas.`}</Poem>
+
+                  <Poem title="🌙 Autocompaixão — O Abraço Noturno">{`Quando a noite chega e o barulho cessa,
+eu me encontro comigo sem plateia.
+E ali, sem máscara, sem pressa,
+me abraço como quem cuida de uma vela.
+
+Frágil, sim. Mas ainda acesa.
+E isso já é o suficiente
+para iluminar o próximo passo.`}</Poem>
+
+                  <SectionCard>
+                    <h3 className="text-lg font-heading font-semibold text-foreground mb-3">🔑 Dicas para Poemas Sugestivos Eficazes</h3>
+                    <ul className="space-y-2 text-sm">
+                      <li>• <strong className="text-foreground">Use "você" ou "eu" de forma alternada</strong> — "você" cria distanciamento seguro; "eu" cria identificação direta.</li>
+                      <li>• <strong className="text-foreground">Inclua comandos embutidos</strong> — frases como "perceba como", "sinta agora", "permita-se" ativam o inconsciente.</li>
+                      <li>• <strong className="text-foreground">Termine com expansão</strong> — o último verso deve abrir, não fechar. Deixe espaço para o leitor respirar.</li>
+                      <li>• <strong className="text-foreground">Respeite o ritmo</strong> — versos curtos criam tensão; versos longos criam acolhimento. Alterne conforme o efeito desejado.</li>
+                      <li>• <strong className="text-foreground">Teste em voz alta</strong> — se tropeçar na leitura, simplifique. O poema terapêutico deve fluir como respiração.</li>
+                    </ul>
+                  </SectionCard>
                 </div>
               </AccordionContent>
             </AccordionItem>
