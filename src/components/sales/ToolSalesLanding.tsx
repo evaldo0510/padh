@@ -59,6 +59,7 @@ const ToolSalesLanding: React.FC<ToolSalesLandingProps> = ({
   ctaText,
   ctaLink,
   guarantee = '7 dias de garantia incondicional',
+  scientificTool,
 }) => {
   const benefitsAnim = useScrollAnimation(0.1);
   const stepsAnim = useScrollAnimation(0.1);
