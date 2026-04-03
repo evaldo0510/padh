@@ -43,12 +43,40 @@ const CienciaPoesia = () => {
 
   const hasFilters = activeCategory !== 'all' || activeTool !== 'all' || activeYear !== 'all';
 
+  const jsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'CollectionPage',
+    name: 'Ciência da Poesia — Estudos Científicos',
+    description: `Mais de ${scientificStudies.length} estudos publicados em revistas internacionais validam o uso terapêutico da poesia e fundamentam o P.A.D.H.`,
+    url: 'https://padhpoesia.lovable.app/ciencia-da-poesia',
+    mainEntity: {
+      '@type': 'ItemList',
+      numberOfItems: scientificStudies.length,
+      itemListElement: scientificStudies.map((study, i) => ({
+        '@type': 'ListItem',
+        position: i + 1,
+        item: {
+          '@type': 'ScholarlyArticle',
+          name: study.title,
+          author: study.authors,
+          datePublished: String(study.year),
+          publisher: study.journal,
+          description: study.summary,
+          ...(study.link ? { url: study.link } : {}),
+        },
+      })),
+    },
+    author: { '@type': 'Person', name: 'Evaldo PCH Master' },
+    publisher: { '@type': 'Organization', name: 'P.A.D.H.' },
+  };
+
   return (
     <PageLayout
       seo={{
         title: 'Ciência da Poesia — Estudos Científicos',
         description: 'Mais de 11 estudos publicados em revistas como Science, WHO e NeuroImage validam o uso terapêutico da poesia. Conheça a base científica do P.A.D.H.',
         path: '/ciencia-da-poesia',
+        jsonLd,
       }}
       currentPage="Ciência da Poesia"
     >
