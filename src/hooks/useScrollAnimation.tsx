@@ -38,7 +38,9 @@ export const useScrollAnimation = (threshold = 0.1) => {
       return;
     }
 
-    if (!('IntersectionObserver' in window)) {
+    const supportsIntersectionObserver = typeof IntersectionObserver !== 'undefined';
+
+    if (!supportsIntersectionObserver) {
       const handleFallbackReveal = () => {
         if (revealIfNearViewport()) {
           window.removeEventListener('scroll', handleFallbackReveal);
