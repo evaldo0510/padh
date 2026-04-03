@@ -5,6 +5,8 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import PageLayout from '@/components/layout/PageLayout';
 import { useScrollAnimation } from '@/hooks/useScrollAnimation';
+import ScientificValidation from '@/components/sections/ScientificValidation';
+import type { ToolTag } from '@/lib/scientific-studies';
 
 interface Testimonial {
   name: string;
