@@ -13,10 +13,7 @@ const ReescritaPoetica = () => {
 
 
   return (
-    <div className="min-h-screen bg-background">
-      <SEOHead title={pagesSEO.reescritaPoetica.title} description={pagesSEO.reescritaPoetica.description} path={pagesSEO.reescritaPoetica.path} />
-      <Header />
-      <PageHeader currentPage="Reescrita Poética" />
+    <PageLayout seo={pagesSEO.reescritaPoetica} currentPage="Reescrita Poética">
 
       {/* Hero */}
       <section className="relative overflow-hidden">
@@ -189,8 +186,7 @@ const ReescritaPoetica = () => {
         </div>
       </section>
 
-      <Footer />
-    </div>
+    </PageLayout>
   );
 };
 

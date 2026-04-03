@@ -14,10 +14,7 @@ const Poemadiagnostico = () => {
 
 
   return (
-    <div className="min-h-screen bg-background">
-      <SEOHead title={pagesSEO.poemadiagnostico.title} description={pagesSEO.poemadiagnostico.description} path={pagesSEO.poemadiagnostico.path} />
-      <Header />
-      <PageHeader currentPage="Poemadiagnóstico" />
+    <PageLayout seo={pagesSEO.poemadiagnostico} currentPage="Poemadiagnóstico">
 
       {/* Hero */}
       <section className="relative overflow-hidden">
@@ -207,8 +204,7 @@ const Poemadiagnostico = () => {
 
       <PoemadiagnosticoInterativo />
 
-      <Footer />
-    </div>
+    </PageLayout>
   );
 };
 

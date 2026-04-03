@@ -13,10 +13,7 @@ const EncenacaoPoetica = () => {
 
 
   return (
-    <div className="min-h-screen bg-background">
-      <SEOHead title={pagesSEO.encenacaoPoetica.title} description={pagesSEO.encenacaoPoetica.description} path={pagesSEO.encenacaoPoetica.path} />
-      <Header />
-      <PageHeader currentPage="Encenação Poética" />
+    <PageLayout seo={pagesSEO.encenacaoPoetica} currentPage="Encenação Poética">
 
       {/* Hero */}
       <section className="relative overflow-hidden">
@@ -189,8 +186,7 @@ const EncenacaoPoetica = () => {
         </div>
       </section>
 
-      <Footer />
-    </div>
+    </PageLayout>
   );
 };
 

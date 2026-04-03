@@ -17,10 +17,7 @@ const PoesiaHipnotica = () => {
 
 
   return (
-    <div className="min-h-screen bg-background">
-      <SEOHead title={pagesSEO.poesiaHipnotica.title} description={pagesSEO.poesiaHipnotica.description} path={pagesSEO.poesiaHipnotica.path} />
-      <Header />
-      <PageHeader currentPage="Poesia Hipnótica" />
+    <PageLayout seo={pagesSEO.poesiaHipnotica} currentPage="Poesia Hipnótica">
 
       {/* Hero */}
       <section className="relative overflow-hidden">
@@ -618,8 +615,7 @@ const PoesiaHipnotica = () => {
         </div>
       </section>
 
-      <Footer />
-    </div>
+    </PageLayout>
   );
 };
 

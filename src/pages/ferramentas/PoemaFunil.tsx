@@ -13,10 +13,7 @@ const PoemaFunil = () => {
 
 
   return (
-    <div className="min-h-screen bg-background">
-      <SEOHead title={pagesSEO.poemaFunil.title} description={pagesSEO.poemaFunil.description} path={pagesSEO.poemaFunil.path} />
-      <Header />
-      <PageHeader currentPage="Poema-Funil" />
+    <PageLayout seo={pagesSEO.poemaFunil} currentPage="Poema-Funil">
 
       {/* Hero */}
       <section className="relative overflow-hidden">
@@ -230,8 +227,7 @@ const PoemaFunil = () => {
         </div>
       </section>
 
-      <Footer />
-    </div>
+    </PageLayout>
   );
 };
 

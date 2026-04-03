@@ -20,10 +20,7 @@ const VersoGatilho = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-background">
-      <SEOHead title={pagesSEO.versoGatilho.title} description={pagesSEO.versoGatilho.description} path={pagesSEO.versoGatilho.path} />
-      <Header />
-      <PageHeader currentPage="Verso-Gatilho" />
+    <PageLayout seo={pagesSEO.versoGatilho} currentPage="Verso-Gatilho">
 
       {/* Hero */}
       <section className="relative overflow-hidden">
@@ -219,8 +216,7 @@ const VersoGatilho = () => {
         </div>
       </section>
 
-      <Footer />
-    </div>
+    </PageLayout>
   );
 };
 

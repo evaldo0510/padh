@@ -13,10 +13,7 @@ const RitualSilencio = () => {
 
 
   return (
-    <div className="min-h-screen bg-background">
-      <SEOHead title={pagesSEO.ritualSilencio.title} description={pagesSEO.ritualSilencio.description} path={pagesSEO.ritualSilencio.path} />
-      <Header />
-      <PageHeader currentPage="Ritual do Silêncio" />
+    <PageLayout seo={pagesSEO.ritualSilencio} currentPage="Ritual do Silêncio">
 
       {/* Hero */}
       <section className="relative overflow-hidden">
@@ -212,8 +209,7 @@ const RitualSilencio = () => {
         </div>
       </section>
 
-      <Footer />
-    </div>
+    </PageLayout>
   );
 };
 
