@@ -85,10 +85,7 @@ const FerramentasIndex = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-background">
-      <SEOHead title={pagesSEO.ferramentas.title} description={pagesSEO.ferramentas.description} path={pagesSEO.ferramentas.path} />
-      <Header />
-      <PageHeader currentPage="Ferramentas P.A.D.H." />
+    <PageLayout seo={pagesSEO.ferramentas} currentPage="Ferramentas P.A.D.H.">
 
       {/* Hero */}
       <section className="relative overflow-hidden">
