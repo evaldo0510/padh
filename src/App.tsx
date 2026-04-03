@@ -35,6 +35,7 @@ const VendaEncenacaoPoetica = lazy(() => import("./pages/venda/VendaEncenacaoPoe
 const VendaReescritaPoetica = lazy(() => import("./pages/venda/VendaReescritaPoetica"));
 const VendaRitualSilencio = lazy(() => import("./pages/venda/VendaRitualSilencio"));
 const VendaPoesiaHipnotica = lazy(() => import("./pages/venda/VendaPoesiaHipnotica"));
+const CienciaPoesia = lazy(() => import("./pages/CienciaPoesia"));
 
 const queryClient = new QueryClient();
 
