@@ -5,6 +5,7 @@ import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/
 import PageLayout from '@/components/layout/PageLayout';
 import { useScrollAnimation } from '@/hooks/useScrollAnimation';
 import { pagesSEO } from '@/lib/seo-config';
+import ScientificValidation from '@/components/sections/ScientificValidation';
 
 const PoesiaHipnotica = () => {
   const baseAnim = useScrollAnimation(0.15);
