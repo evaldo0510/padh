@@ -8,7 +8,7 @@ export interface PageSEO {
 
 export const pagesSEO: Record<string, PageSEO> = {
   home: {
-    title: '',
+    title: 'Poesia Aplicada ao Desenvolvimento Humano',
     description: 'Descubra a Poesia Cognitiva Hipnótica (PCH) — metodologia que une neurociência, hipnose ericksoniana e linguagem poética para transformação interior.',
     path: '/',
   },
