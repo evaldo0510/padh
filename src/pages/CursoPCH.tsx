@@ -3,6 +3,21 @@ import PageLayout from '@/components/layout/PageLayout';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
 import { BookOpen, Brain, Sparkles, Lightbulb, Heart, Flame, Music, PenTool, Eye, Target, Feather } from 'lucide-react';
 
+import modulo1Img from '@/assets/curso-pch/modulo1-palavras.jpg';
+import modulo2Img from '@/assets/curso-pch/modulo2-reestruturacao.jpg';
+import modulo3Img from '@/assets/curso-pch/modulo3-linguagem.jpg';
+import modulo4Img from '@/assets/curso-pch/modulo4-poemas.jpg';
+import modulo5Img from '@/assets/curso-pch/modulo5-avancadas.jpg';
+import modulo6Img from '@/assets/curso-pch/modulo6-terapeutica.jpg';
+import modulo7Img from '@/assets/curso-pch/modulo7-sessao.jpg';
+import modulo8Img from '@/assets/curso-pch/modulo8-exercicios.jpg';
+
+const ModuleImage = ({ src, alt }: { src: string; alt: string }) => (
+  <div className="rounded-xl overflow-hidden mb-6">
+    <img src={src} alt={alt} loading="lazy" width={768} height={512} className="w-full h-48 md:h-56 object-cover" />
+  </div>
+);
+
 /* ─────────────────────── helpers ─────────────────────── */
 const Poem = ({ children, title }: { children: React.ReactNode; title?: string }) => (
   <div className="poem-block my-6">
