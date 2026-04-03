@@ -12,12 +12,20 @@ const Footer = () => {
     { name: 'Livro-Curso', path: '/livro-curso' },
     { name: 'Formação PCH', path: '/formacao' },
     { name: 'Ferramentas P.A.D.H.', path: '/ferramentas' },
-  ];
-
-  const toolLinks = [
     { name: 'Mapa Cerebral', path: '/mapa-cerebral' },
     { name: 'Aula Exclusiva', path: '/aula-exclusiva' },
     { name: 'Contato', path: '/contato' },
+  ];
+
+  const toolLinks = [
+    { name: 'Poema-Funil', path: '/ferramentas/poema-funil' },
+    { name: 'Verso-Gatilho', path: '/ferramentas/verso-gatilho' },
+    { name: 'Poemadiagnóstico', path: '/ferramentas/poemadiagnostico' },
+    { name: 'Caderno de Voz Interna', path: '/ferramentas/caderno-voz-interna' },
+    { name: 'Encenação Poética', path: '/ferramentas/encenacao-poetica' },
+    { name: 'Reescrita Poética', path: '/ferramentas/reescrita-poetica' },
+    { name: 'Ritual do Silêncio', path: '/ferramentas/ritual-silencio' },
+    { name: 'Poesia Hipnótica', path: '/ferramentas/poesia-hipnotica' },
   ];
 
   const socials = [
