@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 import { Menu, X, BookOpen, ChevronDown } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { ThemeToggle } from '@/components/ui/theme-toggle';
+import PrefetchLink from './PrefetchLink';
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -38,7 +39,7 @@ const Header = () => {
       <div className="container mx-auto px-6">
         <div className="flex items-center justify-between h-16">
           {/* Logo */}
-          <Link to="/" className="flex items-center gap-2.5 group">
+          <PrefetchLink to="/" className="flex items-center gap-2.5 group">
             <div className="w-8 h-8 rounded-lg bg-primary/10 border border-primary/20 flex items-center justify-center group-hover:bg-primary/20 transition-colors">
               <BookOpen className="h-4 w-4 text-primary" />
             </div>
@@ -50,7 +51,7 @@ const Header = () => {
                 Evaldo PCH Master
               </span>
             </div>
-          </Link>
+          </PrefetchLink>
 
           {/* Desktop Navigation */}
           <div className="hidden lg:flex items-center gap-1">
@@ -60,7 +61,7 @@ const Header = () => {
                   onMouseEnter={() => item.hasDropdown && setIsToolsOpen(true)}
                   onMouseLeave={() => item.hasDropdown && setIsToolsOpen(false)}
                 >
-                  <Link
+                  <PrefetchLink
                     to={item.path}
                     className={`relative px-3 py-1.5 text-sm transition-all duration-300 rounded-md inline-flex items-center gap-1 ${
                       (item.hasDropdown ? isToolsActive : isActive(item.path))
@@ -73,21 +74,21 @@ const Header = () => {
                     {(item.hasDropdown ? isToolsActive : isActive(item.path)) && (
                       <span className="absolute bottom-0 left-3 right-3 h-px bg-primary" />
                     )}
-                  </Link>
+                  </PrefetchLink>
 
                   {/* Dropdown */}
                   {item.hasDropdown && isToolsOpen && (
                     <div className="absolute top-full left-0 pt-1 z-50">
                       <div className="bg-card border border-border/50 rounded-lg shadow-lg py-2 min-w-[220px]">
-                        <Link
+                        <PrefetchLink
                           to="/ferramentas"
                           className="block px-4 py-2 text-sm text-muted-foreground hover:text-primary hover:bg-primary/5 transition-colors font-medium"
                         >
                           Todas as Ferramentas
-                        </Link>
+                        </PrefetchLink>
                         <div className="h-px bg-border/30 my-1" />
                         {toolLinks.map((tool) => (
-                          <Link
+                          <PrefetchLink
                             key={tool.path}
                             to={tool.path}
                             className={`block px-4 py-1.5 text-sm transition-colors ${
@@ -97,7 +98,7 @@ const Header = () => {
                             }`}
                           >
                             {tool.name}
-                          </Link>
+                          </PrefetchLink>
                         ))}
                       </div>
                     </div>
@@ -130,7 +131,7 @@ const Header = () => {
             <nav className="flex flex-col gap-1">
               {navItems.map((item) => (
                 <React.Fragment key={item.path}>
-                  <Link
+                  <PrefetchLink
                     to={item.path}
                     className={`text-sm py-2 px-3 rounded-md transition-colors ${
                       (item.hasDropdown ? isToolsActive : isActive(item.path))
@@ -140,11 +141,11 @@ const Header = () => {
                     onClick={() => !item.hasDropdown && setIsMenuOpen(false)}
                   >
                     {item.name}
-                  </Link>
+                  </PrefetchLink>
                   {item.hasDropdown && (
                     <div className="pl-4 space-y-0.5">
                       {toolLinks.map((tool) => (
-                        <Link
+                        <PrefetchLink
                           key={tool.path}
                           to={tool.path}
                           className={`block text-xs py-1.5 px-3 rounded-md transition-colors ${
@@ -155,7 +156,7 @@ const Header = () => {
                           onClick={() => setIsMenuOpen(false)}
                         >
                           {tool.name}
-                        </Link>
+                        </PrefetchLink>
                       ))}
                     </div>
                   )}

@@ -30,8 +30,9 @@ export const FloatingParticles = () => {
     resizeCanvas();
     window.addEventListener('resize', resizeCanvas);
 
-    // Inicializar partículas
-    const particleCount = 50;
+    // Inicializar partículas - menos no mobile para performance
+    const isMobile = window.innerWidth < 768;
+    const particleCount = isMobile ? 20 : 50;
     particlesRef.current = Array.from({ length: particleCount }, () => ({
       x: Math.random() * canvas.width,
       y: Math.random() * canvas.height,
