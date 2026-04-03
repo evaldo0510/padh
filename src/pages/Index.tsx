@@ -269,6 +269,10 @@ const Index = () => {
       {/* Base Científica — Destaque */}
       <section className="py-24 border-t border-border/30 relative overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-b from-primary/[0.03] via-transparent to-transparent" />
+        {/* Floating science particles */}
+        <div className="absolute top-1/3 left-[5%] w-48 h-48 bg-primary/5 rounded-full blur-3xl animate-float" />
+        <div className="absolute bottom-1/4 right-[8%] w-64 h-64 bg-secondary/5 rounded-full blur-3xl animate-float" style={{ animationDelay: '2s' }} />
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 w-96 h-96 bg-primary/[0.02] rounded-full blur-3xl animate-float" style={{ animationDelay: '4s' }} />
         <div
           ref={scienceSection.ref}
           className={`relative container mx-auto px-6 transition-all duration-1000 ${
