@@ -1,7 +1,7 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
 import { BookOpen, Mail, Instagram, Youtube, Heart, Feather } from 'lucide-react';
 import { useScrollAnimation } from '@/hooks/useScrollAnimation';
+import PrefetchLink from './PrefetchLink';
 
 const Footer = () => {
   const footerAnim = useScrollAnimation(0.1);

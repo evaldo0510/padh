@@ -29,6 +29,7 @@ const Header = () => {
     { name: '5. Encenação Poética', path: '/ferramentas/encenacao-poetica' },
     { name: '6. Reescrita Poética', path: '/ferramentas/reescrita-poetica' },
     { name: '7. Ritual do Silêncio', path: '/ferramentas/ritual-silencio' },
+    { name: '8. Poesia Hipnótica', path: '/ferramentas/poesia-hipnotica' },
   ];
 
   const isActive = (path: string) => location.pathname === path;
