@@ -733,6 +733,34 @@ Mas porque sempre esteve dentro de você."`}</Poem>
                     <ExerciseStep step="2️⃣" title="Descreva os Desafios">
                       <p>Quais obstáculos surgiram nessa jornada? Como você os enfrentou ou está enfrentando?</p>
                     </ExerciseStep>
+                    <ExerciseStep step="3️⃣" title="Reescreva o Desfecho">
+                      <p>Como a jornada continua a partir de agora? Que paisagem surge após os obstáculos? Escreva como se já estivesse vivendo essa nova fase.</p>
+                    </ExerciseStep>
+                    <ExerciseStep step="4️⃣" title="Transforme em Poema">
+                      <p>Pegue os 3 momentos (imagem, desafio, desfecho) e transforme em um poema de 6 a 10 versos. Use metáforas visuais e sensoriais.</p>
+                    </ExerciseStep>
+                  </SectionCard>
+
+                  <SectionCard>
+                    <h3 className="text-lg font-heading font-semibold text-foreground mb-3">Exercício 3: Diálogo com o Futuro Eu</h3>
+                    <p className="mb-3">Imagine-se daqui a 5 anos, após ter trabalhado profundamente com a PCH. Escreva uma carta do seu Eu Futuro para o seu Eu Presente.</p>
+                    <ExerciseStep step="1️⃣" title="O Eu Futuro se apresenta">
+                      <p>Como ele se sente? O que conquistou? Que medos superou? Escreva como se fosse uma voz amorosa e sábia.</p>
+                    </ExerciseStep>
+                    <ExerciseStep step="2️⃣" title="Conselhos poéticos">
+                      <p>Que conselho ele daria ao Eu Presente? Transforme em 3 versos-gatilho que resumam essa sabedoria.</p>
+                    </ExerciseStep>
+                    <ExerciseStep step="3️⃣" title="O Verso-Promessa">
+                      <p>Termine com um único verso que funcione como uma promessa sagrada entre o seu presente e o seu futuro.</p>
+                    </ExerciseStep>
+                    <Poem title="Exemplo: Carta do Futuro">{`Querido eu que ainda duvida:
+o caminho não era reto, nem precisava ser.
+Cada curva me trouxe aqui — inteiro,
+não perfeito, mas verdadeiro.
+
+Guarda este verso como semente:
+"A flor que vai nascer já está em mim —
+só precisa de tempo, terra e coragem para abrir."`}</Poem>
                   </SectionCard>
 
                   <Quote>Este exercício não termina no papel. É um processo contínuo de transformação. Cada vez que o medo se apresentar, lembre-se da sua carta de sabedoria e se conecte com a visão mais elevada que você já criou.</Quote>
