@@ -650,6 +650,7 @@ Mas porque sempre esteve dentro de você."`}</Poem>
                 </div>
               </AccordionTrigger>
               <AccordionContent className="pb-8">
+                <ModuleImage src={modulo8Img} alt="Exercícios Práticos — mão escrevendo poesia à luz de vela" />
                 <div className="space-y-6 text-muted-foreground leading-relaxed">
                   <p>Os seguintes exercícios foram desenvolvidos para ajudar você a acessar suas emoções, ressignificar desafios e criar uma nova narrativa para sua vida. Pegue um caderno, encontre um espaço tranquilo e mergulhe na experiência.</p>
 
