@@ -1,7 +1,7 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
 import { BookOpen, Mail, Instagram, Youtube, Heart, Feather } from 'lucide-react';
 import { useScrollAnimation } from '@/hooks/useScrollAnimation';
+import PrefetchLink from './PrefetchLink';
 
 const Footer = () => {
   const footerAnim = useScrollAnimation(0.1);
@@ -12,12 +12,20 @@ const Footer = () => {
     { name: 'Livro-Curso', path: '/livro-curso' },
     { name: 'Formação PCH', path: '/formacao' },
     { name: 'Ferramentas P.A.D.H.', path: '/ferramentas' },
-  ];
-
-  const toolLinks = [
     { name: 'Mapa Cerebral', path: '/mapa-cerebral' },
     { name: 'Aula Exclusiva', path: '/aula-exclusiva' },
     { name: 'Contato', path: '/contato' },
+  ];
+
+  const toolLinks = [
+    { name: 'Poema-Funil', path: '/ferramentas/poema-funil' },
+    { name: 'Verso-Gatilho', path: '/ferramentas/verso-gatilho' },
+    { name: 'Poemadiagnóstico', path: '/ferramentas/poemadiagnostico' },
+    { name: 'Caderno de Voz Interna', path: '/ferramentas/caderno-voz-interna' },
+    { name: 'Encenação Poética', path: '/ferramentas/encenacao-poetica' },
+    { name: 'Reescrita Poética', path: '/ferramentas/reescrita-poetica' },
+    { name: 'Ritual do Silêncio', path: '/ferramentas/ritual-silencio' },
+    { name: 'Poesia Hipnótica', path: '/ferramentas/poesia-hipnotica' },
   ];
 
   const socials = [
@@ -68,13 +76,13 @@ const Footer = () => {
               <h4 className="font-heading font-semibold text-foreground mb-4 text-sm uppercase tracking-widest">Navegação</h4>
               <nav className="space-y-2.5">
                 {navLinks.map((item) => (
-                  <Link
+                  <PrefetchLink
                     key={item.path}
                     to={item.path}
                     className="block text-sm text-muted-foreground hover:text-primary transition-colors"
                   >
                     {item.name}
-                  </Link>
+                  </PrefetchLink>
                 ))}
               </nav>
             </div>
@@ -84,13 +92,13 @@ const Footer = () => {
               <h4 className="font-heading font-semibold text-foreground mb-4 text-sm uppercase tracking-widest">Ferramentas</h4>
               <nav className="space-y-2.5">
                 {toolLinks.map((item) => (
-                  <Link
+                  <PrefetchLink
                     key={item.path}
                     to={item.path}
                     className="block text-sm text-muted-foreground hover:text-primary transition-colors"
                   >
                     {item.name}
-                  </Link>
+                  </PrefetchLink>
                 ))}
               </nav>
             </div>
@@ -101,13 +109,13 @@ const Footer = () => {
               <p className="text-sm text-muted-foreground leading-relaxed">
                 <strong className="text-foreground">Evaldo PCH Master</strong> — especialista em Poesia Cognitiva Hipnótica, integrando poesia, psicologia e neurociência.
               </p>
-              <Link
+              <PrefetchLink
                 to="/sobre"
                 className="inline-flex items-center gap-1 text-sm text-primary/70 hover:text-primary mt-3 transition-colors"
               >
                 <Feather className="h-3.5 w-3.5" />
                 Conheça a história
-              </Link>
+              </PrefetchLink>
             </div>
           </div>
 

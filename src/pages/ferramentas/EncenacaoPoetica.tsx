@@ -1,29 +1,19 @@
 import React from 'react';
 import { Drama, Brain, BookOpen, MessageSquare } from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import Header from '@/components/layout/Header';
-import Footer from '@/components/layout/Footer';
-import PageHeader from '@/components/layout/PageHeader';
+import PageLayout from '@/components/layout/PageLayout';
 import { useScrollAnimation } from '@/hooks/useScrollAnimation';
-import { usePageLoading } from '@/hooks/usePageLoading';
-import { PageSkeleton } from '@/components/ui/page-skeleton';
 import toolImage from '@/assets/tool-encenacao.jpg';
-import SEOHead from '@/components/seo/SEOHead';
 import { pagesSEO } from '@/lib/seo-config';
 
 const EncenacaoPoetica = () => {
-  const isLoading = usePageLoading(500);
   const contentAnim = useScrollAnimation(0.15);
   const examplesAnim = useScrollAnimation(0.15);
   const theoryAnim = useScrollAnimation(0.15);
 
-  if (isLoading) return <PageSkeleton />;
 
   return (
-    <div className="min-h-screen bg-background">
-      <SEOHead title={pagesSEO.encenacaoPoetica.title} description={pagesSEO.encenacaoPoetica.description} path={pagesSEO.encenacaoPoetica.path} />
-      <Header />
-      <PageHeader currentPage="Encenação Poética" />
+    <PageLayout seo={pagesSEO.encenacaoPoetica} currentPage="Encenação Poética">
 
       {/* Hero */}
       <section className="relative overflow-hidden">
@@ -196,8 +186,7 @@ const EncenacaoPoetica = () => {
         </div>
       </section>
 
-      <Footer />
-    </div>
+    </PageLayout>
   );
 };
 

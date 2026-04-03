@@ -1,29 +1,19 @@
 import React from 'react';
 import { Flame, Brain, BookOpen, Volume2 } from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import Header from '@/components/layout/Header';
-import Footer from '@/components/layout/Footer';
-import PageHeader from '@/components/layout/PageHeader';
+import PageLayout from '@/components/layout/PageLayout';
 import { useScrollAnimation } from '@/hooks/useScrollAnimation';
-import { usePageLoading } from '@/hooks/usePageLoading';
-import { PageSkeleton } from '@/components/ui/page-skeleton';
 import toolImage from '@/assets/tool-ritual-silencio.jpg';
-import SEOHead from '@/components/seo/SEOHead';
 import { pagesSEO } from '@/lib/seo-config';
 
 const RitualSilencio = () => {
-  const isLoading = usePageLoading(500);
   const contentAnim = useScrollAnimation(0.15);
   const examplesAnim = useScrollAnimation(0.15);
   const theoryAnim = useScrollAnimation(0.15);
 
-  if (isLoading) return <PageSkeleton />;
 
   return (
-    <div className="min-h-screen bg-background">
-      <SEOHead title={pagesSEO.ritualSilencio.title} description={pagesSEO.ritualSilencio.description} path={pagesSEO.ritualSilencio.path} />
-      <Header />
-      <PageHeader currentPage="Ritual do Silêncio" />
+    <PageLayout seo={pagesSEO.ritualSilencio} currentPage="Ritual do Silêncio">
 
       {/* Hero */}
       <section className="relative overflow-hidden">
@@ -219,8 +209,7 @@ const RitualSilencio = () => {
         </div>
       </section>
 
-      <Footer />
-    </div>
+    </PageLayout>
   );
 };
 

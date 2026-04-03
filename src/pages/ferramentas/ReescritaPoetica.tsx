@@ -1,29 +1,19 @@
 import React from 'react';
 import { RefreshCw, Brain, BookOpen, Sparkles } from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import Header from '@/components/layout/Header';
-import Footer from '@/components/layout/Footer';
-import PageHeader from '@/components/layout/PageHeader';
+import PageLayout from '@/components/layout/PageLayout';
 import { useScrollAnimation } from '@/hooks/useScrollAnimation';
-import { usePageLoading } from '@/hooks/usePageLoading';
-import { PageSkeleton } from '@/components/ui/page-skeleton';
 import toolImage from '@/assets/tool-reescrita.jpg';
-import SEOHead from '@/components/seo/SEOHead';
 import { pagesSEO } from '@/lib/seo-config';
 
 const ReescritaPoetica = () => {
-  const isLoading = usePageLoading(500);
   const contentAnim = useScrollAnimation(0.15);
   const examplesAnim = useScrollAnimation(0.15);
   const theoryAnim = useScrollAnimation(0.15);
 
-  if (isLoading) return <PageSkeleton />;
 
   return (
-    <div className="min-h-screen bg-background">
-      <SEOHead title={pagesSEO.reescritaPoetica.title} description={pagesSEO.reescritaPoetica.description} path={pagesSEO.reescritaPoetica.path} />
-      <Header />
-      <PageHeader currentPage="Reescrita Poética" />
+    <PageLayout seo={pagesSEO.reescritaPoetica} currentPage="Reescrita Poética">
 
       {/* Hero */}
       <section className="relative overflow-hidden">
@@ -196,8 +186,7 @@ const ReescritaPoetica = () => {
         </div>
       </section>
 
-      <Footer />
-    </div>
+    </PageLayout>
   );
 };
 
