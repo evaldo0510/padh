@@ -42,10 +42,7 @@ const AulaExclusiva = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-background">
-      <SEOHead title={pagesSEO.aulaExclusiva.title} description={pagesSEO.aulaExclusiva.description} path={pagesSEO.aulaExclusiva.path} />
-      <Header />
-      <PageHeader currentPage="Aula Exclusiva" />
+    <PageLayout seo={pagesSEO.aulaExclusiva} currentPage="Aula Exclusiva">
       
       {/* Hero */}
       <section className="relative overflow-hidden">
