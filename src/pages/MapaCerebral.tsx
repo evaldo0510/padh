@@ -52,10 +52,7 @@ const MapaCerebral = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-background">
-      <SEOHead title={pagesSEO.mapaCerebral.title} description={pagesSEO.mapaCerebral.description} path={pagesSEO.mapaCerebral.path} />
-      <Header />
-      <PageHeader currentPage="Mapa Cerebral" />
+    <PageLayout seo={pagesSEO.mapaCerebral} currentPage="Mapa Cerebral">
       
       {/* Hero */}
       <section className="relative overflow-hidden">
