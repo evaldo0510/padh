@@ -53,6 +53,7 @@ const Formacao = () => {
     }
   ];
 
+  return (
     <PageLayout seo={pagesSEO.formacao} currentPage="Formação em PCH">
       
       {/* Hero */}
