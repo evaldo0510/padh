@@ -1,7 +1,8 @@
 import React from 'react';
-import { BookOpen, Mail, Instagram, Youtube, Heart, Feather } from 'lucide-react';
+import { Mail, Instagram, Youtube, Heart, Feather } from 'lucide-react';
 import { useScrollAnimation } from '@/hooks/useScrollAnimation';
 import PrefetchLink from './PrefetchLink';
+import logoPadh from '@/assets/logo-padh.png';
 
 const Footer = () => {
   const footerAnim = useScrollAnimation(0.1);
@@ -49,10 +50,8 @@ const Footer = () => {
           <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-10 mb-12">
             {/* Brand */}
             <div className="sm:col-span-2 lg:col-span-1">
-              <div className="flex items-center gap-2 mb-4">
-                <div className="w-8 h-8 rounded-lg bg-primary/10 border border-primary/20 flex items-center justify-center">
-                  <BookOpen className="h-4 w-4 text-primary" />
-                </div>
+              <div className="flex items-center gap-2.5 mb-4">
+                <img src={logoPadh} alt="P.A.D.H. Logo" className="w-10 h-10 object-contain" loading="lazy" width={512} height={512} />
                 <span className="font-heading font-bold text-foreground text-lg tracking-wide">P.A.D.H.</span>
               </div>
               <p className="text-sm text-muted-foreground leading-relaxed mb-5">
