@@ -17,6 +17,7 @@ const MapaCerebral = lazy(() => import("./pages/MapaCerebral"));
 const AulaExclusiva = lazy(() => import("./pages/AulaExclusiva"));
 const Contato = lazy(() => import("./pages/Contato"));
 const Sobre = lazy(() => import("./pages/Sobre"));
+const CursoPCH = lazy(() => import("./pages/CursoPCH"));
 const FerramentasIndex = lazy(() => import("./pages/ferramentas/FerramentasIndex"));
 const PoemaFunil = lazy(() => import("./pages/ferramentas/PoemaFunil"));
 const VersoGatilho = lazy(() => import("./pages/ferramentas/VersoGatilho"));
