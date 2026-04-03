@@ -9,7 +9,7 @@ const VendaPoemadiagnostico = () => (
     toolName="Poemadiagnóstico"
     tagline="O Espelho Emocional"
     heroDescription="Uma ferramenta de avaliação emocional sutil e não invasiva que usa a escolha espontânea de poemas para revelar o estado interior — sem questionários, sem resistência."
-    heroVerse=""Qual desses poemas te escolhe hoje?""
+    heroVerse={'\u201CQual desses poemas te escolhe hoje?\u201D'}
     problemTitle="Já passou por isso?"
     problems={[
       'Clientes que não conseguem verbalizar o que sentem',

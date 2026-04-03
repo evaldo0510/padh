@@ -9,7 +9,7 @@ const VendaPoesiaHipnotica = () => (
     toolName="Poesia Cognitiva Hipnótica"
     tagline="O Poder das Palavras que Transformam"
     heroDescription="A ferramenta-mestre da metodologia P.A.D.H. — onde neurociência, hipnose ericksoniana e linguagem poética se encontram para criar transformação profunda e duradoura."
-    heroVerse=""A palavra certa no momento certo muda o cérebro para sempre.""
+    heroVerse={'\u201CA palavra certa no momento certo muda o cérebro para sempre.\u201D'}
     problemTitle="Você sente que falta algo?"
     problems={[
       'Conhece várias técnicas mas sente que nenhuma integra mente, emoção e linguagem',

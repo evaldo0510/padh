@@ -9,7 +9,7 @@ const VendaVersoGatilho = () => (
     toolName="Verso-Gatilho"
     tagline="A Palavra-Chave que Liberta"
     heroDescription="Aprenda a criar versos-âncora que funcionam como botões emocionais instantâneos — palavras que acalmam, fortalecem e reconectam em segundos."
-    heroVerse=""Eu não sou o que me prende, sou o que se solta depois.""
+    heroVerse={'\u201CEu não sou o que me prende, sou o que se solta depois.\u201D'}
     problemTitle="Reconhece alguma dessas situações?"
     problems={[
       'Crises emocionais em que você não consegue acessar seus recursos internos',

@@ -9,7 +9,7 @@ const VendaReescritaPoetica = () => (
     toolName="Reescrita Poética"
     tagline="A Narrativa que Se Liberta"
     heroDescription="Reescreva as histórias que te limitam. A Reescrita Poética transforma crenças paralisantes em versos de poder — porque a história que você conta sobre si mesmo é a história que você vive."
-    heroVerse=""Eu não era fraco. Eu estava descansando minha força.""
+    heroVerse={'\u201CEu não era fraco. Eu estava descansando minha força.\u201D'}
     problemTitle="Essas frases te perseguem?"
     problems={[
       '"Eu não consigo", "Eu não mereço", "Sempre foi assim" — crenças que se repetem',

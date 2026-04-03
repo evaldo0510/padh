@@ -9,7 +9,7 @@ const VendaPoemaFunil = () => (
     toolName="Poema-Funil"
     tagline="A Espiral da Palavra que Desce"
     heroDescription="Aprenda a construir poemas que conduzem o leitor — ou paciente — do pensamento racional para o sentir profundo. Uma ferramenta de pré-transe poético que ativa o hemisfério direito do cérebro."
-    heroVerse=""Começo com o que se vê. Sigo com o que se sente. Termino com o que não se diz.""
+    heroVerse={'\u201CComeço com o que se vê. Sigo com o que se sente. Termino com o que não se diz.\u201D'}
     problemTitle="Você já se sentiu assim?"
     problems={[
       'Sessões terapêuticas que ficam na superfície, sem acessar emoções reais',

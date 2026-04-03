@@ -9,7 +9,7 @@ const VendaCadernoVozInterna = () => (
     toolName="Caderno de Voz Interna"
     tagline="O Diário do Oráculo"
     heroDescription="Use a escrita poética diária como ferramenta de autoconhecimento e revelação de padrões emocionais. Seu inconsciente fala — você aprende a ouvir."
-    heroVerse=""O que você escreveu hoje é o que seu silêncio gritou por anos?""
+    heroVerse={'\u201CO que você escreveu hoje é o que seu silêncio gritou por anos?\u201D'}
     problemTitle="Isso soa familiar?"
     problems={[
       'Pensamentos repetitivos que nunca se resolvem apenas pensando',

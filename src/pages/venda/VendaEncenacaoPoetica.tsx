@@ -9,7 +9,7 @@ const VendaEncenacaoPoetica = () => (
     toolName="Encenação Poética"
     tagline="O Corpo que Fala em Versos"
     heroDescription="Transforme poemas em experiência corporal. A Encenação Poética usa a performance como ponte entre o sentir e o expressar — desbloqueando emoções presas no corpo."
-    heroVerse=""Não leia o poema. Seja o poema.""
+    heroVerse={'\u201CNão leia o poema. Seja o poema.\u201D'}
     problemTitle="Reconhece esses bloqueios?"
     problems={[
       'Emoções travadas que a fala sozinha não consegue liberar',

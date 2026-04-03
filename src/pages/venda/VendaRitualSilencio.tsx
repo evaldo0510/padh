@@ -9,7 +9,7 @@ const VendaRitualSilencio = () => (
     toolName="Ritual do Silêncio Poético"
     tagline="A Pausa que Cura"
     heroDescription="O silêncio entre dois versos é onde a transformação acontece. Aprenda a usar a pausa como ferramenta terapêutica — o não-dito que diz tudo."
-    heroVerse=""Entre um verso e outro, mora o infinito.""
+    heroVerse={'\u201CEntre um verso e outro, mora o infinito.\u201D'}
     problemTitle="Você reconhece esses padrões?"
     problems={[
       'Sessões preenchidas com palavras demais, sem espaço para integração',
