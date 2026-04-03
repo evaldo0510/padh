@@ -42,6 +42,7 @@ const VendaReescritaPoetica = () => (
     originalPrice="R$ 127"
     ctaText="Quero acessar a Reescrita Poética"
     ctaLink="https://wa.me/5500000000000?text=Quero%20acessar%20a%20Reescrita%20Poética"
+    scientificTool="reescrita-poetica"
   />
 );
 

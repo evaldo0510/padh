@@ -303,6 +303,8 @@ const ReescritaPoetica = () => {
           </div>
         </div>
       </section>
+      {/* Validação Científica */}
+      <ScientificValidation tool="reescrita-poetica" />
 
     </PageLayout>
   );
