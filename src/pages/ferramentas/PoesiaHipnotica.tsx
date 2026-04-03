@@ -13,6 +13,9 @@ const PoesiaHipnotica = () => {
   const exercicioAnim = useScrollAnimation(0.15);
   const hipnoseAnim = useScrollAnimation(0.15);
   const poemasAnim = useScrollAnimation(0.15);
+  const linguagemAnim = useScrollAnimation(0.15);
+  const respostasAnim = useScrollAnimation(0.15);
+  const fluxoAnim = useScrollAnimation(0.15);
   const mareAnim = useScrollAnimation(0.15);
 
 
