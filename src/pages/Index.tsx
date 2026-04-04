@@ -1,5 +1,5 @@
 import React from 'react';
-import { ArrowRight, BookOpen, Brain, Sparkles, Star, Heart, Users, GraduationCap, Feather, Quote, FlaskConical } from 'lucide-react';
+import { ArrowRight, BookOpen, Brain, Sparkles, Star, Heart, Users, GraduationCap, Feather, Quote, FlaskConical, Target } from 'lucide-react';
 import PoemadiagnosticoInterativo from '@/components/sections/PoemadiagnosticoInterativo';
 import { Link } from 'react-router-dom';
 import heroImage from '@/assets/hero-padh.png';
