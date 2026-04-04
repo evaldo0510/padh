@@ -271,7 +271,7 @@ const Index = () => {
                 { title: 'Terapia Narrativa', desc: 'O poder das histórias pessoais — transformar relatos de vida em poesia curativa que ressignifica identidade.', color: 'text-spiritual-sage' },
                 { title: 'Linguística Cognitiva', desc: 'Metáforas como estruturas cognitivas fundamentais — Lakoff, Johnson e o poder dos signos e símbolos.', color: 'text-primary' },
               ].map((item, i) => (
-                <div key={i} className="glass-card p-5 rounded-xl space-y-3">
+                <div key={i} className="glass-card p-6 space-y-3">
                   <h4 className={`font-heading font-semibold ${item.color}`}>{item.title}</h4>
                   <p className="text-sm text-muted-foreground leading-relaxed">{item.desc}</p>
                 </div>
