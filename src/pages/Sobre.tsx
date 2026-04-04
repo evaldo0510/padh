@@ -63,9 +63,37 @@ const Sobre = () => {
             <div className="space-y-8 text-muted-foreground leading-relaxed">
               <p className="text-lg">
                 A Poesia Cognitiva Hipnótica não nasceu numa universidade, nem numa clínica convencional. 
-                Nasceu no <strong className="text-foreground">encontro entre a dor e a beleza</strong> — 
-                no momento em que Evaldo percebeu que os versos que escrevia para lidar com suas próprias 
-                sombras produziam efeitos semelhantes aos descritos pela neurociência e pela hipnose clínica.
+                Nasceu nas páginas de um livro chamado <strong className="text-foreground italic">Prisão Interior</strong> — 
+                o primeiro livro de Evaldo, escrito como um grito silencioso de quem precisava 
+                nomear o que não cabia em palavras comuns.
+              </p>
+
+              <p>
+                Foi ali, entre versos que brotavam da própria dor, que uma pergunta começou a pulsar 
+                com insistência: <em className="text-foreground">"Quando se olha no espelho, o que é que você vê?"</em> 
+                Essa pergunta — aparentemente simples — tornou-se o fio condutor de toda a metodologia. 
+                Porque Evaldo percebeu que a maioria das pessoas não se vê de verdade. Vê máscaras, 
+                expectativas, feridas, rótulos. E foi na poesia que ele encontrou o espelho capaz de 
+                devolver ao leitor uma imagem mais profunda — a imagem que mora por trás da prisão interior.
+              </p>
+
+              <blockquote className="poem-block my-8">
+                <p className="poem-text text-foreground/80">
+                  Quando se olha no espelho,<br />
+                  o que é que você vê?<br />
+                  Eu vi grades onde havia janelas,<br />
+                  vi muros onde havia caminhos.<br />
+                  Até que um verso abriu a porta<br />
+                  que eu mesmo havia trancado por dentro.
+                </p>
+                <cite className="text-sm text-primary/70 mt-3 block not-italic">— Evaldo de Jesus Santana, Prisão Interior</cite>
+              </blockquote>
+
+              <p>
+                O livro <strong className="text-foreground">Prisão Interior</strong> revelou algo que Evaldo ainda não 
+                tinha nome para descrever: os versos que ele escrevia para se libertar produziam 
+                efeitos semelhantes aos descritos pela neurociência e pela hipnose clínica. 
+                As palavras não apenas expressavam — elas <em>transformavam</em>.
               </p>
 
               <p>
@@ -75,18 +103,6 @@ const Sobre = () => {
                 "Senti como se alguém falasse diretamente com meu inconsciente", "As palavras entraram 
                 onde minha resistência não deixava ninguém passar."
               </p>
-
-              <blockquote className="poem-block my-8">
-                <p className="poem-text text-foreground/80">
-                  Eu não escolhi a poesia.<br />
-                  Ela me encontrou numa noite escura,<br />
-                  sentada entre os escombros<br />
-                  do que eu achava que era minha verdade.<br />
-                  E quando falou, falou sem palavras —<br />
-                  apenas com o silêncio entre os versos.
-                </p>
-                <cite className="text-sm text-primary/70 mt-3 block not-italic">— Evaldo de Jesus Santana</cite>
-              </blockquote>
 
               <p>
                 Foi então que começou o trabalho de sistematização. Evaldo mergulhou na 
