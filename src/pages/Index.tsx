@@ -1,4 +1,5 @@
 import React from 'react';
+import { scientificStudies, getAllCategories, getAllYears } from '@/lib/scientific-studies';
 import { ArrowRight, BookOpen, Brain, Sparkles, Star, Heart, Users, GraduationCap, Feather, Quote, FlaskConical, Target } from 'lucide-react';
 import PoemadiagnosticoInterativo from '@/components/sections/PoemadiagnosticoInterativo';
 import { Link } from 'react-router-dom';
@@ -301,15 +302,15 @@ const Index = () => {
               Poesia que a <span className="text-primary italic">Ciência</span> Comprova
             </h2>
             <p className="text-lg text-muted-foreground max-w-2xl mx-auto mb-12 leading-relaxed">
-              14 estudos publicados em revistas como <em>Science</em>, <em>WHO</em> e <em>NeuroImage</em> validam 
+              {scientificStudies.length}+ estudos publicados em revistas como <em>Science</em>, <em>WHO</em> e <em>NeuroImage</em> validam 
               o poder terapêutico da poesia — e fundamentam cada ferramenta P.A.D.H.
             </p>
 
             <div className="grid sm:grid-cols-3 gap-6 mb-10">
               {[
-                { value: '14', label: 'Estudos Publicados', sub: 'em revistas internacionais' },
-                { value: '8', label: 'Categorias Científicas', sub: 'de neurociência a resiliência' },
-                { value: '2005–2025', label: 'Período de Pesquisa', sub: '20 anos de evidências' },
+                { value: `${scientificStudies.length}+`, label: 'Estudos Publicados', sub: 'em revistas internacionais' },
+                { value: `${getAllCategories().length}`, label: 'Categorias Científicas', sub: 'de neurociência a resiliência' },
+                { value: `${Math.min(...getAllYears())}–${Math.max(...getAllYears())}`, label: 'Período de Pesquisa', sub: `${Math.max(...getAllYears()) - Math.min(...getAllYears())} anos de evidências` },
               ].map((stat, i) => (
                 <div key={i} className="glass-card p-6 rounded-xl text-center space-y-2">
                   <p className="text-3xl md:text-4xl font-heading font-bold text-primary">{stat.value}</p>

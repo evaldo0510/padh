@@ -1,6 +1,7 @@
 import React, { useState, useMemo } from 'react';
-import { FlaskConical, Calendar, Tag, Wrench, Filter } from 'lucide-react';
+import { FlaskConical, Calendar, Tag, Wrench, Filter, Search } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
+import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import PageLayout from '@/components/layout/PageLayout';
@@ -21,27 +22,37 @@ const CienciaPoesia = () => {
   const [activeCategory, setActiveCategory] = useState<StudyCategory | 'all'>('all');
   const [activeTool, setActiveTool] = useState<ToolTag | 'all'>('all');
   const [activeYear, setActiveYear] = useState<number | 'all'>('all');
+  const [searchQuery, setSearchQuery] = useState('');
 
   const categories = getAllCategories();
   const years = getAllYears();
   const tools = Object.keys(toolLabels) as ToolTag[];
 
   const filteredStudies = useMemo(() => {
+    const query = searchQuery.toLowerCase().trim();
     return scientificStudies.filter((s) => {
       if (activeCategory !== 'all' && !s.categories.includes(activeCategory)) return false;
       if (activeTool !== 'all' && !s.tools.includes(activeTool)) return false;
       if (activeYear !== 'all' && s.year !== activeYear) return false;
+      if (query && !(
+        s.title.toLowerCase().includes(query) ||
+        s.authors.toLowerCase().includes(query) ||
+        s.journal.toLowerCase().includes(query) ||
+        s.summary.toLowerCase().includes(query) ||
+        s.results.toLowerCase().includes(query)
+      )) return false;
       return true;
     });
-  }, [activeCategory, activeTool, activeYear]);
+  }, [activeCategory, activeTool, activeYear, searchQuery]);
 
   const clearFilters = () => {
     setActiveCategory('all');
     setActiveTool('all');
     setActiveYear('all');
+    setSearchQuery('');
   };
 
-  const hasFilters = activeCategory !== 'all' || activeTool !== 'all' || activeYear !== 'all';
+  const hasFilters = activeCategory !== 'all' || activeTool !== 'all' || activeYear !== 'all' || searchQuery.trim() !== '';
 
   const jsonLd = {
     '@context': 'https://schema.org',
@@ -105,10 +116,22 @@ const CienciaPoesia = () => {
 
       <ScienceStats />
 
-      {/* Filters + Content */}
+      {/* Search + Filters + Content */}
       <section className="py-16">
         <div className="container mx-auto px-6 max-w-5xl">
-          <Tabs defaultValue="category" className="space-y-8" onValueChange={() => clearFilters()}>
+          {/* Search */}
+          <div className="relative mb-8">
+            <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+            <Input
+              type="text"
+              placeholder="Buscar por título, autor, revista ou tema..."
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              className="pl-10 bg-card border-border/50"
+            />
+          </div>
+
+          <Tabs defaultValue="category" className="space-y-8" onValueChange={() => { setActiveCategory('all'); setActiveTool('all'); setActiveYear('all'); }}>
             <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
               <TabsList className="bg-card border border-border/50">
                 <TabsTrigger value="category" className="gap-1.5 text-xs">
