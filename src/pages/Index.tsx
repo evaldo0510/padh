@@ -413,7 +413,7 @@ const Index = () => {
               <p className="text-sm text-muted-foreground max-w-2xl mx-auto">
                 Para não perder nada, muitos alunos optam pelo <strong className="text-foreground">Combo P.A.D.H.</strong> onde iniciam pela vivência do Livro-Curso, 
                 estudam a técnica no Curso PCH e finalizam com a certificação na Formação.{' '}
-                <Link to="/contato" className="text-primary hover:underline font-medium">Consulte condições especiais para o pacote completo.</Link>
+                <Link to="/combo-padh" className="text-primary hover:underline font-medium">Conheça o Combo P.A.D.H. →</Link>
               </p>
             </div>
           </div>
