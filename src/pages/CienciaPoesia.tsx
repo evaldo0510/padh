@@ -218,6 +218,38 @@ const CienciaPoesia = () => {
           </div>
         </div>
       </section>
+
+      {/* Referências e Organizações */}
+      <section className="py-24 border-t border-border/30 bg-primary/[0.01]">
+        <div className="container mx-auto px-6 max-w-4xl">
+          <div className="text-center mb-12">
+            <h2 className="text-3xl font-heading font-bold text-foreground mb-4">Referências e Organizações</h2>
+            <p className="text-muted-foreground">Instituições de renome que fundamentam e promovem a terapia poética em nível global.</p>
+          </div>
+          
+          <div className="glass-card p-8 rounded-2xl border-primary/10">
+            <div className="flex flex-col md:flex-row gap-8 items-center md:items-start">
+              <div className="w-20 h-20 rounded-2xl bg-primary/10 flex items-center justify-center shrink-0">
+                <span className="text-primary font-heading font-bold text-xl">NAPT</span>
+              </div>
+              <div className="space-y-4">
+                <h3 className="text-xl font-heading font-semibold text-foreground">NAPT — National Association for Poetry Therapy</h3>
+                <p className="text-muted-foreground leading-relaxed">
+                  Criada em 1980 nos Estados Unidos, a NAPT é uma organização sem fins lucrativos dedicada a promover o uso da poesia e da escrita como ferramentas de cura e crescimento pessoal. É a principal referência mundial na formação e certificação de terapeutas poéticos.
+                </p>
+                <a 
+                  href="https://poetrytherapy.org/" 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-2 text-primary hover:text-primary-dark font-medium transition-colors"
+                >
+                  Visitar site oficial <Tag className="h-4 w-4" />
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
     </PageLayout>
   );
 };
