@@ -34,6 +34,7 @@ const Footer = () => {
 
   const resourceLinks = [
     { name: 'NAPT (Poetry Therapy)', href: 'https://poetrytherapy.org/', external: true },
+    { name: 'Journal of Poetry Therapy', href: 'https://www.tandfonline.com/journals/tjpt20', external: true },
   ];
 
   const socials = [
