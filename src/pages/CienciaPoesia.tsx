@@ -74,7 +74,7 @@ const CienciaPoesia = () => {
     <PageLayout
       seo={{
         title: 'Ciência da Poesia — Estudos Científicos',
-        description: 'Mais de 14 estudos publicados em revistas como Science, WHO e NeuroImage validam o uso terapêutico da poesia. Conheça a base científica do P.A.D.H.',
+        description: `Mais de ${scientificStudies.length} estudos publicados em revistas como Science, WHO e NeuroImage validam o uso terapêutico da poesia. Conheça a base científica do P.A.D.H.`,
         path: '/ciencia-da-poesia',
         jsonLd,
       }}
