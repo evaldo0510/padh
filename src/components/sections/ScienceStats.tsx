@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { FlaskConical } from 'lucide-react';
+import { scientificStudies, getAllCategories, getAllYears } from '@/lib/scientific-studies';
 
 interface AnimatedCounterProps {
   end: number;
