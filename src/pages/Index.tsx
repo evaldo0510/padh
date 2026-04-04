@@ -223,7 +223,7 @@ const Index = () => {
               </p>
             </div>
 
-            <div className="grid sm:grid-cols-2 gap-6">
+            <div className="grid sm:grid-cols-2 gap-5 lg:gap-6">
               {ferramentas.map((tool, i) => (
                 <Link key={i} to={tool.link} className="group">
                   <Card className="h-full border-border/50 hover:border-primary/30 transition-all duration-300 hover:shadow-medium bg-card/50">
