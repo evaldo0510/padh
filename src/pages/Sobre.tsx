@@ -127,16 +127,16 @@ const Sobre = () => {
       </section>
 
       {/* Livro Prisão Interior */}
-      <section className="py-24 border-t border-border/30 relative overflow-hidden">
+      <section className="section-padding border-t border-border/20 relative overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-b from-primary/[0.02] via-transparent to-transparent" />
-        <div className="relative container mx-auto px-6">
+        <div className="relative container mx-auto px-6 md:px-8">
           <div className="max-w-5xl mx-auto">
-            <div className="text-center mb-16">
-              <p className="text-sm uppercase tracking-[0.2em] text-primary mb-3 font-medium">Onde Tudo Começou</p>
-              <h2 className="text-3xl md:text-5xl font-heading font-bold text-foreground mb-6">
+            <div className="section-header">
+              <p className="section-label">Onde Tudo Começou</p>
+              <h2 className="section-title">
                 Prisão Interior
               </h2>
-              <div className="w-16 h-px bg-primary/40 mx-auto" />
+              <div className="section-divider" />
             </div>
 
             <div className="grid md:grid-cols-2 gap-12 items-center">
