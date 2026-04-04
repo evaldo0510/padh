@@ -3,7 +3,7 @@ import PageLayout from '@/components/layout/PageLayout';
 
 const Admin = () => {
   return (
-    <PageLayout currentPage="Admin">
+    <PageLayout seo={{ title: 'Admin', description: 'Painel administrativo P.A.D.H.', path: '/admin' }} currentPage="Admin">
       <section className="py-20">
         <div className="container mx-auto px-6 max-w-4xl">
           <h1 className="text-3xl font-heading font-bold text-foreground mb-8">
