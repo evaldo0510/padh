@@ -126,6 +126,87 @@ const Sobre = () => {
         </div>
       </section>
 
+      {/* Livro Prisão Interior */}
+      <section className="py-24 border-t border-border/30 relative overflow-hidden">
+        <div className="absolute inset-0 bg-gradient-to-b from-primary/[0.02] via-transparent to-transparent" />
+        <div className="relative container mx-auto px-6">
+          <div className="max-w-5xl mx-auto">
+            <div className="text-center mb-16">
+              <p className="text-sm uppercase tracking-[0.2em] text-primary mb-3 font-medium">Onde Tudo Começou</p>
+              <h2 className="text-3xl md:text-5xl font-heading font-bold text-foreground mb-6">
+                Prisão Interior
+              </h2>
+              <div className="w-16 h-px bg-primary/40 mx-auto" />
+            </div>
+
+            <div className="grid md:grid-cols-2 gap-12 items-center">
+              {/* Book Cover */}
+              <div className="flex justify-center">
+                <div className="relative group">
+                  <div className="absolute -inset-4 bg-primary/10 rounded-2xl blur-2xl group-hover:bg-primary/15 transition-all duration-500" />
+                  <img 
+                    src={capaPrisaoInterior} 
+                    alt="Capa do livro Prisão Interior por Evaldo de Jesus Santana" 
+                    className="relative w-64 md:w-72 rounded-lg shadow-2xl group-hover:scale-[1.02] transition-transform duration-500"
+                    loading="lazy"
+                    width={640}
+                    height={960}
+                  />
+                </div>
+              </div>
+
+              {/* Synopsis */}
+              <div className="space-y-6">
+                <h3 className="text-2xl font-heading font-semibold text-foreground">
+                  O livro que deu origem à Poesia Cognitiva Hipnótica
+                </h3>
+                <p className="text-muted-foreground leading-relaxed">
+                  <strong className="text-foreground italic">Prisão Interior</strong> é o primeiro livro de 
+                  Evaldo de Jesus Santana — um mergulho corajoso nas grades invisíveis que construímos 
+                  dentro de nós mesmos. Escrito como um ato de libertação pessoal, cada poema é uma 
+                  chave que abre uma porta diferente do labirinto interior.
+                </p>
+                <p className="text-muted-foreground leading-relaxed">
+                  Foi nestas páginas que nasceu a pergunta que mudaria tudo: 
+                  <em className="text-foreground"> "Quando se olha no espelho, o que é que você vê?"</em> — 
+                  a semente que germinaria na metodologia P.A.D.H. e em toda a Poesia Cognitiva Hipnótica.
+                </p>
+                <p className="text-muted-foreground leading-relaxed">
+                  O livro explora temas como autoengano, medo, liberdade, identidade e o poder 
+                  transformador da palavra poética — revelando que a maior prisão não tem muros: 
+                  mora nos pensamentos que repetimos sem questionar.
+                </p>
+
+                <blockquote className="poem-block">
+                  <p className="poem-text text-foreground/80">
+                    Não são os muros que nos prendem,<br />
+                    são os espelhos que nos mentem.<br />
+                    Quando a poesia limpa o vidro,<br />
+                    o reflexo finalmente nos reconhece.
+                  </p>
+                  <cite className="text-sm text-primary/70 mt-3 block not-italic">— Prisão Interior</cite>
+                </blockquote>
+
+                <div className="flex flex-wrap gap-3 pt-2">
+                  <a href="https://www.amazon.com.br" target="_blank" rel="noopener noreferrer">
+                    <Button size="lg" className="bg-primary text-primary-foreground hover:bg-primary-dark">
+                      <ShoppingCart className="mr-2 h-4 w-4" />
+                      Adquirir o Livro
+                    </Button>
+                  </a>
+                  <Link to="/livro-curso">
+                    <Button size="lg" variant="outline" className="border-primary/30 text-foreground hover:bg-primary/5">
+                      Conhecer o Livro-Curso PCH
+                      <ArrowRight className="ml-2 h-4 w-4" />
+                    </Button>
+                  </Link>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* Jornada Cronológica */}
       <section className="py-24 border-t border-border/30 relative overflow-hidden">
         <div className="absolute inset-0 gradient-mesh" />
