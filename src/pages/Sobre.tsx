@@ -358,6 +358,7 @@ const Sobre = () => {
         </div>
       </section>
 
+    </PageLayout>
   );
 };
 
