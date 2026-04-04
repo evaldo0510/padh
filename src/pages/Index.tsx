@@ -127,14 +127,15 @@ const Index = () => {
             <div className="pt-8 max-w-lg mx-auto">
               <blockquote className="poem-block">
                 <p className="poem-text text-base text-muted-foreground">
-                  A poesia toca onde a fala falha.<br />
-                  A hipnose abre o portão dos porões.<br />
-                  A cognição redesenha o mapa interno.
+                  Quando se olha no espelho,<br />
+                  o que é que você vê?<br />
+                  Eu vi a poesia esperando<br />
+                  do outro lado de mim.
                 </p>
-                <cite className="text-sm text-primary/70 mt-2 block not-italic">— Evaldo de Jesus Santana</cite>
+                <cite className="text-sm text-primary/70 mt-2 block not-italic">— Evaldo de Jesus Santana, Prisão Interior</cite>
               </blockquote>
               <TextReader
-                text="A poesia toca onde a fala falha. A hipnose abre o portão dos porões. A cognição redesenha o mapa interno."
+                text="Quando se olha no espelho, o que é que você vê? Eu vi a poesia esperando do outro lado de mim."
                 label="Ouvir Poema"
                 className="mt-3"
               />
@@ -539,11 +540,12 @@ const Index = () => {
           <div className="max-w-2xl mx-auto space-y-8">
             <Feather className="h-8 w-8 text-primary mx-auto opacity-60" />
             <blockquote className="text-2xl md:text-3xl font-heading italic text-foreground/90 leading-relaxed">
-              "Ler poesia não é ler palavras.<br />
-              É ler a si mesmo num espelho<br />
-              feito de símbolos."
+              "Não são os muros que nos prendem,<br />
+              são os espelhos que nos mentem.<br />
+              Quando a poesia limpa o vidro,<br />
+              o reflexo finalmente nos reconhece."
             </blockquote>
-            <cite className="text-sm text-primary/70 block not-italic">— Evaldo de Jesus Santana</cite>
+            <cite className="text-sm text-primary/70 block not-italic">— Evaldo de Jesus Santana, Prisão Interior</cite>
             <div className="pt-4">
               <Link to="/contato">
                 <Button size="lg" className="bg-primary text-primary-foreground hover:bg-primary-dark px-8">
