@@ -73,7 +73,7 @@ const Index = () => {
       <Header />
 
       {/* Hero Section */}
-      <section className="relative overflow-hidden min-h-[85vh] flex items-center">
+      <section className="relative overflow-hidden min-h-[90vh] flex items-center">
         <FloatingParticles />
         <div className="absolute inset-0 gradient-hero" />
         <div className="absolute inset-0 gradient-glow" />
