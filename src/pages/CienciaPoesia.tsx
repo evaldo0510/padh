@@ -1,6 +1,7 @@
 import React, { useState, useMemo } from 'react';
-import { FlaskConical, Calendar, Tag, Wrench, Filter } from 'lucide-react';
+import { FlaskConical, Calendar, Tag, Wrench, Filter, Search } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
+import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import PageLayout from '@/components/layout/PageLayout';
