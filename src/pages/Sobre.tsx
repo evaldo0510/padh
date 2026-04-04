@@ -225,7 +225,7 @@ const Sobre = () => {
               <div className="section-divider" />
             </div>
 
-            <div className="space-y-6">
+            <div className="space-y-5">
               {[
                 {
                   icon: <Feather className="h-5 w-5" />,
