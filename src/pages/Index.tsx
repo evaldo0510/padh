@@ -531,9 +531,9 @@ const Index = () => {
       <PoemadiagnosticoInterativo />
 
       {/* Poem CTA */}
-      <section className="py-24 border-t border-border/30 relative overflow-hidden">
+      <section className="section-padding border-t border-border/20 relative overflow-hidden">
         <div className="absolute inset-0 gradient-glow" />
-        <div className="relative container mx-auto px-6 text-center">
+        <div className="relative container mx-auto px-6 md:px-8 text-center">
           <div className="max-w-2xl mx-auto space-y-8">
             <Feather className="h-8 w-8 text-primary mx-auto opacity-60" />
             <blockquote className="text-2xl md:text-3xl font-heading italic text-foreground/90 leading-relaxed">
