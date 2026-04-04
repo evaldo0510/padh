@@ -421,10 +421,10 @@ const Index = () => {
       </section>
 
       {/* Jornada de Transformação (Original) */}
-      <section className="py-24 border-t border-border/30">
+      <section className="section-padding border-t border-border/20">
         <div
           ref={journeySection.ref}
-          className={`container mx-auto px-6 transition-all duration-1000 ${
+          className={`container mx-auto px-6 md:px-8 transition-all duration-1000 ${
             journeySection.isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-12'
           }`}
         >
