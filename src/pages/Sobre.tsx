@@ -269,15 +269,15 @@ const Sobre = () => {
       </section>
 
       {/* O Método P.A.D.H. */}
-      <section className="py-24 border-t border-border/30 bg-primary/[0.01]">
-        <div className="container mx-auto px-6">
+      <section className="section-padding border-t border-border/20 bg-primary/[0.01]">
+        <div className="container mx-auto px-6 md:px-8">
           <div className="max-w-4xl mx-auto">
-            <div className="text-center mb-16">
-              <p className="text-sm uppercase tracking-[0.2em] text-primary mb-3 font-medium">Metodologia</p>
-              <h2 className="text-3xl md:text-5xl font-heading font-bold text-foreground mb-6">
+            <div className="section-header">
+              <p className="section-label">Metodologia</p>
+              <h2 className="section-title">
                 O Protocolo P.A.D.H.
               </h2>
-              <p className="text-muted-foreground max-w-2xl mx-auto italic">
+              <p className="section-subtitle italic">
                 "Poesia Aplicada ao Desenvolvimento Humano" — uma jornada estruturada em quatro pilares fundamentais para a transformação inconsciente.
               </p>
             </div>
