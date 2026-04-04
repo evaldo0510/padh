@@ -435,8 +435,8 @@ const Sobre = () => {
       </section>
 
       {/* Valores e Ética */}
-      <section className="py-24 border-t border-border/30 bg-secondary/[0.02]">
-        <div className="container mx-auto px-6">
+      <section className="section-padding border-t border-border/20 bg-secondary/[0.02]">
+        <div className="container mx-auto px-6 md:px-8">
           <div className="max-w-4xl mx-auto text-center">
             <h3 className="text-2xl md:text-3xl font-heading font-bold text-foreground mb-12">Compromisso com o Rigor e a Sensibilidade</h3>
             <div className="grid sm:grid-cols-3 gap-8 text-left">

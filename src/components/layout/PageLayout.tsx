@@ -26,11 +26,13 @@ const PageLayout: React.FC<PageLayoutProps> = ({
   if (isLoading) return <PageSkeleton />;
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-background flex flex-col">
       <SEOHead title={seo.title} description={seo.description} path={seo.path} jsonLd={seo.jsonLd} />
       <Header />
       {currentPage && <PageHeader currentPage={currentPage} showBackButton={showBackButton} />}
-      {children}
+      <main className="flex-1">
+        {children}
+      </main>
       <Footer />
     </div>
   );
