@@ -32,6 +32,10 @@ const Footer = () => {
     { name: 'Poesia Hipnótica', path: '/ferramentas/poesia-hipnotica' },
   ];
 
+  const resourceLinks = [
+    { name: 'NAPT (Poetry Therapy)', href: 'https://poetrytherapy.org/', external: true },
+  ];
+
   const socials = [
     { icon: <Instagram className="h-4 w-4" />, label: 'Instagram', href: '#' },
     { icon: <Youtube className="h-4 w-4" />, label: 'YouTube', href: '#' },
