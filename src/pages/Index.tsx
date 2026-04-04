@@ -131,7 +131,7 @@ const Index = () => {
                   A hipnose abre o portão dos porões.<br />
                   A cognição redesenha o mapa interno.
                 </p>
-                <cite className="text-sm text-primary/70 mt-2 block not-italic">— Evaldo PCH Master</cite>
+                <cite className="text-sm text-primary/70 mt-2 block not-italic">— Evaldo de Jesus Santana</cite>
               </blockquote>
               <TextReader
                 text="A poesia toca onde a fala falha. A hipnose abre o portão dos porões. A cognição redesenha o mapa interno."
@@ -164,7 +164,7 @@ const Index = () => {
             <div className="grid md:grid-cols-2 gap-12 items-start">
               <div className="space-y-6">
                 <p className="text-lg text-muted-foreground leading-relaxed">
-                  A <strong className="text-foreground">PCH</strong> é uma abordagem inovadora criada por Evaldo PCH Master 
+                  A <strong className="text-foreground">PCH</strong> é uma abordagem inovadora criada por Evaldo de Jesus Santana 
                   que utiliza a poesia como instrumento terapêutico — não apenas como expressão artística, 
                   mas como <em>intervenção neurológica precisa</em>.
                 </p>
@@ -543,7 +543,7 @@ const Index = () => {
               É ler a si mesmo num espelho<br />
               feito de símbolos."
             </blockquote>
-            <cite className="text-sm text-primary/70 block not-italic">— Evaldo PCH Master</cite>
+            <cite className="text-sm text-primary/70 block not-italic">— Evaldo de Jesus Santana</cite>
             <div className="pt-4">
               <Link to="/contato">
                 <Button size="lg" className="bg-primary text-primary-foreground hover:bg-primary-dark px-8">

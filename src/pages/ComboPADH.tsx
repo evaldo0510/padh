@@ -64,7 +64,7 @@ const ComboPADH = () => {
       title: 'Formação PCH',
       subtitle: 'Fase 3 — Certificação Profissional',
       desc: 'Capacitação completa para aplicar a PCH com clientes. Supervisão, protocolos de atendimento e selo profissional.',
-      features: ['Certificado de Terapeuta PCH', 'Supervisão com Evaldo PCH Master', 'Protocolos clínicos completos', 'Comunidade de terapeutas'],
+      features: ['Certificado de Terapeuta PCH', 'Supervisão com Evaldo de Jesus Santana', 'Protocolos clínicos completos', 'Comunidade de terapeutas'],
     },
   ];
 
@@ -94,7 +94,7 @@ const ComboPADH = () => {
             <blockquote className="mt-8 border-l-2 border-primary/40 pl-4 text-muted-foreground italic max-w-lg mx-auto text-sm">
               "Quem percorre os três caminhos não apenas aprende —&nbsp;
               <span className="text-foreground font-medium">se transforma e transforma.</span>"
-              <span className="block mt-1 text-primary not-italic text-xs">— Evaldo PCH Master</span>
+              <span className="block mt-1 text-primary not-italic text-xs">— Evaldo de Jesus Santana</span>
             </blockquote>
           </div>
         </div>

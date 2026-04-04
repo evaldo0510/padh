@@ -37,7 +37,7 @@ const Contato = () => {
             </h1>
             <p className="text-lg text-muted-foreground leading-relaxed max-w-2xl mx-auto">
               Interessado em saber mais sobre a P.A.D.H. ou agendar uma sessão? 
-              Conecte-se com <strong className="text-foreground">Evaldo PCH Master</strong> e 
+              Conecte-se com <strong className="text-foreground">Evaldo de Jesus Santana</strong> e 
               explore as possibilidades da Poesia Cognitiva Hipnótica.
             </p>
           </div>
@@ -126,7 +126,7 @@ const Contato = () => {
 
               <Card className="border-primary/20 bg-primary/[0.02]">
                 <CardHeader className="pb-3">
-                  <CardTitle className="text-lg font-heading text-primary">Evaldo PCH Master</CardTitle>
+                  <CardTitle className="text-lg font-heading text-primary">Evaldo de Jesus Santana</CardTitle>
                 </CardHeader>
                 <CardContent>
                   <p className="text-sm text-muted-foreground leading-relaxed">
