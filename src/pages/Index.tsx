@@ -1,5 +1,5 @@
 import React from 'react';
-import { ArrowRight, BookOpen, Brain, Sparkles, Star, Heart, Users, GraduationCap, Feather, Quote, FlaskConical } from 'lucide-react';
+import { ArrowRight, BookOpen, Brain, Sparkles, Star, Heart, Users, GraduationCap, Feather, Quote, FlaskConical, Target } from 'lucide-react';
 import PoemadiagnosticoInterativo from '@/components/sections/PoemadiagnosticoInterativo';
 import { Link } from 'react-router-dom';
 import heroImage from '@/assets/hero-padh.png';
@@ -27,37 +27,44 @@ const Index = () => {
   if (isLoading) return <PageSkeleton />;
 
   const ferramentas = [
-    {
-      icon: <BookOpen className="h-5 w-5" />,
-      title: 'Livro-Curso',
-      desc: 'Mergulhe na teoria e prática da PCH com exercícios guiados que transformam a leitura em experiência terapêutica.',
-      link: '/livro-curso',
-    },
-    {
-      icon: <GraduationCap className="h-5 w-5" />,
-      title: 'Formação em PCH',
-      desc: 'Capacitação completa para terapeutas, psicólogos e educadores que desejam usar poesia como ferramenta clínica.',
-      link: '/formacao',
-    },
-    {
-      icon: <Feather className="h-5 w-5" />,
-      title: '7 Ferramentas P.A.D.H.',
-      desc: 'Do Poema-Funil ao Ritual do Silêncio Poético — 7 instrumentos vivos para transformação interior através da poesia.',
-      link: '/ferramentas',
-    },
-    {
-      icon: <Brain className="h-5 w-5" />,
-      title: 'Mapa Cerebral',
-      desc: 'Descubra como cada verso ativa áreas específicas do cérebro — da amígdala ao córtex pré-frontal.',
-      link: '/mapa-cerebral',
-    },
-    {
-      icon: <Star className="h-5 w-5" />,
-      title: 'Aula Exclusiva',
-      desc: 'Uma aula teórico-vivencial sobre a neurociência da leitura terapêutica e o mapa cerebral do leitor poético.',
-      link: '/aula-exclusiva',
-    },
-  ];
+      {
+        icon: <BookOpen className="h-5 w-5" />,
+        title: 'Livro-Curso',
+        desc: 'Mergulhe na teoria e prática da PCH com exercícios guiados que transformam a leitura em experiência terapêutica.',
+        link: '/livro-curso',
+      },
+      {
+        icon: <GraduationCap className="h-5 w-5" />,
+        title: 'Formação em PCH',
+        desc: 'Capacitação completa para terapeutas e educadores que desejam usar poesia como ferramenta clínica.',
+        link: '/formacao',
+      },
+      {
+        icon: <Target className="h-5 w-5" />,
+        title: 'Curso PCH (Técnica)',
+        desc: 'O manual técnico completo da metodologia: base teórica, neurociência e protocolos passo a passo.',
+        link: '/curso-pch',
+      },
+      {
+        icon: <Feather className="h-5 w-5" />,
+        title: '7 Ferramentas P.A.D.H.',
+        desc: 'Do Poema-Funil ao Ritual do Silêncio Poético — 7 instrumentos vivos para transformação interior.',
+        link: '/ferramentas',
+      },
+      {
+        icon: <Brain className="h-5 w-5" />,
+        title: 'Mapa Cerebral',
+        desc: 'Descubra como cada verso ativa áreas específicas do cérebro — da amígdala ao córtex pré-frontal.',
+        link: '/mapa-cerebral',
+      },
+      {
+        icon: <Star className="h-5 w-5" />,
+        title: 'Aula Exclusiva',
+        desc: 'Uma aula teórico-vivencial sobre a neurociência da leitura terapêutica e o mapa cerebral.',
+        link: '/aula-exclusiva',
+      },
+    ];
+
 
   return (
     <div className="min-h-screen bg-background">
@@ -322,7 +329,98 @@ const Index = () => {
         </div>
       </section>
 
-      {/* Jornada de Transformação */}
+      {/* Qual o seu caminho? - Comparativo */}
+      <section className="py-24 border-t border-border/30 bg-muted/30">
+        <div className="container mx-auto px-6">
+          <div className="max-w-5xl mx-auto">
+            <div className="text-center mb-16">
+              <p className="text-sm uppercase tracking-[0.2em] text-primary mb-3 font-medium">Guia de Jornada</p>
+              <h2 className="text-3xl md:text-5xl font-heading font-bold text-foreground mb-6">
+                Qual o seu <span className="text-primary italic">Caminho</span> na PCH?
+              </h2>
+              <p className="text-muted-foreground max-w-2xl mx-auto">
+                Embora compartilhem a mesma essência, cada formato oferece uma profundidade diferente. 
+                Descubra qual deles melhor atende ao seu momento atual.
+              </p>
+            </div>
+
+            <div className="grid md:grid-cols-3 gap-8">
+              {[
+                {
+                  title: "Livro-Curso",
+                  subtitle: "A Experiência Pessoal",
+                  desc: "Ideal para quem busca autotransformação. Um guia prático de exercícios para vivenciar a PCH na própria pele.",
+                  features: ["Exercícios Guiados", "Poemas Terapêuticos", "Foco em Autoconhecimento"],
+                  link: "/livro-curso",
+                  cta: "Começar Vivência",
+                  color: "border-spiritual-sage/30"
+                },
+                {
+                  title: "Curso PCH",
+                  subtitle: "O Manual Técnico",
+                  desc: "O repositório completo da metodologia. Base teórica profunda, neurociência e o 'como fazer' detalhado.",
+                  features: ["Base Teórica Completa", "Neurociência Aplicada", "Técnicas de Linguagem"],
+                  link: "/curso-pch",
+                  cta: "Explorar Técnica",
+                  color: "border-primary/30",
+                  highlight: true
+                },
+                {
+                  title: "Formação PCH",
+                  subtitle: "O Nível Profissional",
+                  desc: "Capacitação para terapeutas e educadores. Inclui certificação, supervisão e prática clínica avançada.",
+                  features: ["Certificação Profissional", "Supervisão e Prática", "Protocolos de Atendimento"],
+                  link: "/formacao",
+                  cta: "Tornar-se Terapeuta",
+                  color: "border-spiritual-indigo/30"
+                }
+              ].map((item, i) => (
+                <Card key={i} className={`relative h-full flex flex-col border-2 transition-all duration-300 hover:shadow-xl ${item.color} ${item.highlight ? 'bg-card shadow-lg scale-105 z-10' : 'bg-card/50'}`}>
+                  {item.highlight && (
+                    <div className="absolute -top-4 left-1/2 -translate-x-1/2 bg-primary text-primary-foreground text-[10px] uppercase tracking-widest font-bold py-1 px-3 rounded-full">
+                      Mais Completo
+                    </div>
+                  )}
+                  <CardContent className="p-8 flex-1 flex flex-col">
+                    <div className="mb-6">
+                      <h3 className="text-2xl font-heading font-bold text-foreground">{item.title}</h3>
+                      <p className="text-primary text-sm font-medium">{item.subtitle}</p>
+                    </div>
+                    <p className="text-sm text-muted-foreground mb-8 leading-relaxed flex-1">
+                      {item.desc}
+                    </p>
+                    <ul className="space-y-3 mb-8">
+                      {item.features.map((feature, j) => (
+                        <li key={j} className="flex items-center gap-2 text-xs text-foreground/80">
+                          <Sparkles className="h-3 w-3 text-primary shrink-0" />
+                          {feature}
+                        </li>
+                      ))}
+                    </ul>
+                    <Link to={item.link} className="block mt-auto">
+                      <Button className={`w-full ${item.highlight ? 'bg-primary hover:bg-primary-dark' : 'variant-outline border-primary/20 hover:bg-primary/5'}`} variant={item.highlight ? 'default' : 'outline'}>
+                        {item.cta}
+                        <ArrowRight className="ml-2 h-4 w-4" />
+                      </Button>
+                    </Link>
+                  </CardContent>
+                </Card>
+              ))}
+            </div>
+
+            <div className="mt-16 p-8 rounded-2xl bg-primary/5 border border-primary/10 text-center">
+              <h4 className="font-heading font-semibold text-foreground mb-2">💡 Dica de Mestre: A Jornada Integrada</h4>
+              <p className="text-sm text-muted-foreground max-w-2xl mx-auto">
+                Para não perder nada, muitos alunos optam pelo **Combo P.A.D.H.** onde iniciam pela vivência do Livro-Curso, 
+                estudam a técnica no Curso PCH e finalizam com a certificação na Formação. 
+                <Link to="/contato" className="text-primary hover:underline font-medium ml-1">Consulte condições especiais para o pacote completo.</Link>
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Jornada de Transformação (Original) */}
       <section className="py-24 border-t border-border/30">
         <div
           ref={journeySection.ref}
@@ -336,6 +434,7 @@ const Index = () => {
               As 4 Fases do P.A.D.H.
             </h2>
             <p className="text-muted-foreground mb-12 max-w-xl mx-auto">
+
               O protocolo estrutura a intervenção poético-terapêutica em quatro fases claras e progressivas.
             </p>
 
