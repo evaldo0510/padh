@@ -55,7 +55,7 @@ const Header = () => {
                 Poesia Aplicada ao Desenvolvimento Humano
               </span>
               <span className="text-[10px] text-muted-foreground leading-none tracking-widest uppercase mt-0.5">
-                Evaldo PCH Master
+                Evaldo de Jesus Santana
               </span>
             </div>
           </PrefetchLink>

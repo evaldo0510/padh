@@ -130,7 +130,7 @@ const Footer = () => {
               <div className="mt-8 pt-6 border-t border-border/10">
                 <h4 className="font-heading font-semibold text-foreground mb-4 text-sm uppercase tracking-widest">Criador</h4>
                 <p className="text-sm text-muted-foreground leading-relaxed">
-                  <strong className="text-foreground">Evaldo PCH Master</strong> — especialista em Poesia Cognitiva Hipnótica.
+                  <strong className="text-foreground">Evaldo de Jesus Santana</strong> — especialista em Poesia Cognitiva Hipnótica.
                 </p>
                 <PrefetchLink
                   to="/sobre"
@@ -146,7 +146,7 @@ const Footer = () => {
           {/* Bottom */}
           <div className="pt-8 border-t border-border/30 flex flex-col sm:flex-row items-center justify-between gap-4">
             <p className="text-xs text-muted-foreground">
-              © {new Date().getFullYear()} P.A.D.H. — Evaldo PCH Master. Todos os direitos reservados.
+              © {new Date().getFullYear()} P.A.D.H. — Evaldo de Jesus Santana. Todos os direitos reservados.
             </p>
             <p className="text-xs text-muted-foreground">
               Criado por <span className="text-foreground font-medium">Evaldo.os</span>

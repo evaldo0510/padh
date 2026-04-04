@@ -77,7 +77,7 @@ const CienciaPoesia = () => {
         },
       })),
     },
-    author: { '@type': 'Person', name: 'Evaldo PCH Master' },
+    author: { '@type': 'Person', name: 'Evaldo de Jesus Santana' },
     publisher: { '@type': 'Organization', name: 'P.A.D.H.' },
   };
 

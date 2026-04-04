@@ -33,13 +33,13 @@ export const pagesSEO: Record<string, PageSEO> = {
     path: '/aula-exclusiva',
   },
   sobre: {
-    title: 'Sobre Evaldo PCH Master',
-    description: 'Conheça Evaldo PCH Master, criador da metodologia P.A.D.H. — Poesia Aplicada ao Desenvolvimento Humano.',
+    title: 'Sobre Evaldo de Jesus Santana',
+    description: 'Conheça Evaldo de Jesus Santana, criador da metodologia P.A.D.H. — Poesia Aplicada ao Desenvolvimento Humano.',
     path: '/sobre',
   },
   contato: {
     title: 'Contato',
-    description: 'Entre em contato com Evaldo PCH Master para formações, palestras e atendimentos com Poesia Cognitiva Hipnótica.',
+    description: 'Entre em contato com Evaldo de Jesus Santana para formações, palestras e atendimentos com Poesia Cognitiva Hipnótica.',
     path: '/contato',
   },
   ferramentas: {

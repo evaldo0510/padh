@@ -16,7 +16,7 @@ const Sobre = () => {
   return (
     <PageLayout seo={pagesSEO.sobre} currentPage="Sobre">
 
-      {/* Hero — Evaldo PCH Master */}
+      {/* Hero — Evaldo de Jesus Santana */}
       <section className="relative py-20 overflow-hidden">
         <div className="absolute inset-0 gradient-hero" />
         <div className="absolute inset-0 gradient-glow" />
@@ -85,7 +85,7 @@ const Sobre = () => {
                   E quando falou, falou sem palavras —<br />
                   apenas com o silêncio entre os versos.
                 </p>
-                <cite className="text-sm text-primary/70 mt-3 block not-italic">— Evaldo PCH Master</cite>
+                <cite className="text-sm text-primary/70 mt-3 block not-italic">— Evaldo de Jesus Santana</cite>
               </blockquote>
 
               <p>
@@ -316,7 +316,7 @@ const Sobre = () => {
                 Escrevo para que algo dentro de quem lê<br />
                 se lembre de que já sabia voar.
               </p>
-              <cite className="text-sm text-primary/70 mt-3 block not-italic">— Evaldo PCH Master</cite>
+              <cite className="text-sm text-primary/70 mt-3 block not-italic">— Evaldo de Jesus Santana</cite>
             </blockquote>
 
             <div className="pt-4 flex flex-col sm:flex-row gap-3 justify-center">

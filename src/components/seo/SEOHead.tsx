@@ -70,14 +70,14 @@ interface SEOHeadProps {
 
 const SEOHead = ({
   title,
-  description = 'Descubra a Poesia Cognitiva Hipnótica (PCH) — metodologia que une neurociência, hipnose ericksoniana e linguagem poética para transformação interior. Por Evaldo PCH Master.',
+  description = 'Descubra a Poesia Cognitiva Hipnótica (PCH) — metodologia que une neurociência, hipnose ericksoniana e linguagem poética para transformação interior. Por Evaldo de Jesus Santana.',
   path = '/',
   type = 'website',
   jsonLd,
 }: SEOHeadProps) => {
   const fullTitle = title
-    ? `${title} | P.A.D.H. — Evaldo PCH Master`
-    : 'P.A.D.H. — Poesia Aplicada ao Desenvolvimento Humano | Evaldo PCH Master';
+    ? `${title} | P.A.D.H. — Evaldo de Jesus Santana`
+    : 'P.A.D.H. — Poesia Aplicada ao Desenvolvimento Humano | Evaldo de Jesus Santana';
   const url = path === '/' ? SITE_URL : `${SITE_URL}${path}`;
 
   const defaultJsonLd = {
@@ -88,7 +88,7 @@ const SEOHead = ({
     description,
     author: {
       '@type': 'Person',
-      name: 'Evaldo PCH Master',
+      name: 'Evaldo de Jesus Santana',
     },
     publisher: {
       '@type': 'Organization',
@@ -102,7 +102,7 @@ const SEOHead = ({
     <Helmet>
       <title>{fullTitle}</title>
       <meta name="description" content={description} />
-      <meta name="author" content="Evaldo PCH Master" />
+      <meta name="author" content="Evaldo de Jesus Santana" />
       <link rel="canonical" href={url} />
 
       {/* Open Graph */}
