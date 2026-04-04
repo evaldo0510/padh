@@ -27,37 +27,44 @@ const Index = () => {
   if (isLoading) return <PageSkeleton />;
 
   const ferramentas = [
-    {
-      icon: <BookOpen className="h-5 w-5" />,
-      title: 'Livro-Curso',
-      desc: 'Mergulhe na teoria e prática da PCH com exercícios guiados que transformam a leitura em experiência terapêutica.',
-      link: '/livro-curso',
-    },
-    {
-      icon: <GraduationCap className="h-5 w-5" />,
-      title: 'Formação em PCH',
-      desc: 'Capacitação completa para terapeutas, psicólogos e educadores que desejam usar poesia como ferramenta clínica.',
-      link: '/formacao',
-    },
-    {
-      icon: <Feather className="h-5 w-5" />,
-      title: '7 Ferramentas P.A.D.H.',
-      desc: 'Do Poema-Funil ao Ritual do Silêncio Poético — 7 instrumentos vivos para transformação interior através da poesia.',
-      link: '/ferramentas',
-    },
-    {
-      icon: <Brain className="h-5 w-5" />,
-      title: 'Mapa Cerebral',
-      desc: 'Descubra como cada verso ativa áreas específicas do cérebro — da amígdala ao córtex pré-frontal.',
-      link: '/mapa-cerebral',
-    },
-    {
-      icon: <Star className="h-5 w-5" />,
-      title: 'Aula Exclusiva',
-      desc: 'Uma aula teórico-vivencial sobre a neurociência da leitura terapêutica e o mapa cerebral do leitor poético.',
-      link: '/aula-exclusiva',
-    },
-  ];
+      {
+        icon: <BookOpen className="h-5 w-5" />,
+        title: 'Livro-Curso',
+        desc: 'Mergulhe na teoria e prática da PCH com exercícios guiados que transformam a leitura em experiência terapêutica.',
+        link: '/livro-curso',
+      },
+      {
+        icon: <GraduationCap className="h-5 w-5" />,
+        title: 'Formação em PCH',
+        desc: 'Capacitação completa para terapeutas e educadores que desejam usar poesia como ferramenta clínica.',
+        link: '/formacao',
+      },
+      {
+        icon: <Target className="h-5 w-5" />,
+        title: 'Curso PCH (Técnica)',
+        desc: 'O manual técnico completo da metodologia: base teórica, neurociência e protocolos passo a passo.',
+        link: '/curso-pch',
+      },
+      {
+        icon: <Feather className="h-5 w-5" />,
+        title: '7 Ferramentas P.A.D.H.',
+        desc: 'Do Poema-Funil ao Ritual do Silêncio Poético — 7 instrumentos vivos para transformação interior.',
+        link: '/ferramentas',
+      },
+      {
+        icon: <Brain className="h-5 w-5" />,
+        title: 'Mapa Cerebral',
+        desc: 'Descubra como cada verso ativa áreas específicas do cérebro — da amígdala ao córtex pré-frontal.',
+        link: '/mapa-cerebral',
+      },
+      {
+        icon: <Star className="h-5 w-5" />,
+        title: 'Aula Exclusiva',
+        desc: 'Uma aula teórico-vivencial sobre a neurociência da leitura terapêutica e o mapa cerebral.',
+        link: '/aula-exclusiva',
+      },
+    ];
+
 
   return (
     <div className="min-h-screen bg-background">
