@@ -1,4 +1,5 @@
 import React from 'react';
+import { scientificStudies, getAllCategories, getAllYears } from '@/lib/scientific-studies';
 import { ArrowRight, BookOpen, Brain, Sparkles, Star, Heart, Users, GraduationCap, Feather, Quote, FlaskConical, Target } from 'lucide-react';
 import PoemadiagnosticoInterativo from '@/components/sections/PoemadiagnosticoInterativo';
 import { Link } from 'react-router-dom';
