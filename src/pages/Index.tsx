@@ -330,8 +330,8 @@ const Index = () => {
       </section>
 
       {/* Qual o seu caminho? - Comparativo */}
-      <section className="py-24 border-t border-border/30 bg-muted/30">
-        <div className="container mx-auto px-6">
+      <section className="section-padding border-t border-border/20 bg-muted/20">
+        <div className="container mx-auto px-6 md:px-8">
           <div className="max-w-5xl mx-auto">
             <div className="text-center mb-16">
               <p className="text-sm uppercase tracking-[0.2em] text-primary mb-3 font-medium">Guia de Jornada</p>
