@@ -1,5 +1,6 @@
 import React from 'react';
-import { BookOpen, Brain, Heart, Sparkles, Star, Award, Users, Feather, ArrowRight } from 'lucide-react';
+import { BookOpen, Brain, Heart, Sparkles, Star, Award, Users, Feather, ArrowRight, ShoppingCart } from 'lucide-react';
+import capaPrisaoInterior from '@/assets/capa-prisao-interior.jpg';
 import { Link } from 'react-router-dom';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
