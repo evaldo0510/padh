@@ -45,8 +45,8 @@ const Header = () => {
         <div className="flex items-center justify-between h-16">
           {/* Logo */}
           <PrefetchLink to="/" className="flex items-center gap-2.5 group">
-            <img src={logoPadh} alt="P.A.D.H. Logo" className="w-10 h-10 object-contain hidden dark:block" />
-            <img src={logoPadhLight} alt="P.A.D.H. Logo" className="w-10 h-10 object-contain block dark:hidden" />
+            <img src={logoPadhLight} alt="P.A.D.H. Logo" className="w-10 h-10 object-contain hidden dark:block" />
+            <img src={logoPadh} alt="P.A.D.H. Logo" className="w-10 h-10 object-contain block dark:hidden" />
             <div className="flex flex-col">
               <span className="text-lg font-heading font-bold text-foreground leading-none tracking-wide">
                 P.A.D.H.
