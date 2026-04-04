@@ -250,21 +250,21 @@ const Index = () => {
       </section>
 
       {/* A Ciência por Trás */}
-      <section className="py-24 border-t border-border/30 relative overflow-hidden">
+      <section className="section-padding border-t border-border/20 relative overflow-hidden">
         <div className="absolute inset-0 gradient-mesh" />
         <div
           ref={pchSection.ref}
-          className={`relative container mx-auto px-6 transition-all duration-1000 ${
+          className={`relative container mx-auto px-6 md:px-8 transition-all duration-1000 ${
             pchSection.isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-12'
           }`}
         >
           <div className="max-w-4xl mx-auto text-center">
-            <p className="text-sm uppercase tracking-[0.2em] text-primary mb-3 font-medium">Fundamentos</p>
-            <h2 className="text-3xl md:text-5xl font-heading font-bold text-foreground mb-12">
+            <p className="section-label">Fundamentos</p>
+            <h2 className="section-title">
               Onde a Ciência Encontra a Poesia
             </h2>
 
-            <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6 text-left">
+            <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-5 text-left mt-14">
               {[
                 { title: 'Neurociência', desc: 'Leitura poética estimula córtex pré-frontal, amígdala e hipocampo — favorecendo regulação emocional e neuroplasticidade.', color: 'text-spiritual-indigo' },
                 { title: 'Hipnose Ericksoniana', desc: 'Abordagem indireta e metafórica: terreno fértil para transformação inconsciente e cocriação de soluções.', color: 'text-spiritual-violet' },
