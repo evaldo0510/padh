@@ -139,7 +139,7 @@ const Sobre = () => {
               <div className="section-divider" />
             </div>
 
-            <div className="grid md:grid-cols-2 gap-12 items-center">
+            <div className="grid md:grid-cols-2 gap-10 lg:gap-14 items-center">
               {/* Book Cover */}
               <div className="flex justify-center">
                 <div className="relative group">
