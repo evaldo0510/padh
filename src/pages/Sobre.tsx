@@ -208,21 +208,21 @@ const Sobre = () => {
       </section>
 
       {/* Jornada Cronológica */}
-      <section className="py-24 border-t border-border/30 relative overflow-hidden">
+      <section className="section-padding border-t border-border/20 relative overflow-hidden">
         <div className="absolute inset-0 gradient-mesh" />
         <div
           ref={journeySection.ref}
-          className={`relative container mx-auto px-6 transition-all duration-1000 ${
+          className={`relative container mx-auto px-6 md:px-8 transition-all duration-1000 ${
             journeySection.isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-12'
           }`}
         >
           <div className="max-w-4xl mx-auto">
-            <div className="text-center mb-16">
-              <p className="text-sm uppercase tracking-[0.2em] text-primary mb-3 font-medium">Trajetória</p>
-              <h2 className="text-3xl md:text-5xl font-heading font-bold text-foreground mb-6">
+            <div className="section-header">
+              <p className="section-label">Trajetória</p>
+              <h2 className="section-title">
                 Uma jornada de dedicação
               </h2>
-              <div className="w-16 h-px bg-primary/40 mx-auto" />
+              <div className="section-divider" />
             </div>
 
             <div className="space-y-6">
