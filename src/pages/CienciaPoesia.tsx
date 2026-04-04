@@ -116,10 +116,22 @@ const CienciaPoesia = () => {
 
       <ScienceStats />
 
-      {/* Filters + Content */}
+      {/* Search + Filters + Content */}
       <section className="py-16">
         <div className="container mx-auto px-6 max-w-5xl">
-          <Tabs defaultValue="category" className="space-y-8" onValueChange={() => clearFilters()}>
+          {/* Search */}
+          <div className="relative mb-8">
+            <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+            <Input
+              type="text"
+              placeholder="Buscar por título, autor, revista ou tema..."
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              className="pl-10 bg-card border-border/50"
+            />
+          </div>
+
+          <Tabs defaultValue="category" className="space-y-8" onValueChange={() => { setActiveCategory('all'); setActiveTool('all'); setActiveYear('all'); }}>
             <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
               <TabsList className="bg-card border border-border/50">
                 <TabsTrigger value="category" className="gap-1.5 text-xs">
