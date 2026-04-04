@@ -32,6 +32,10 @@ const Footer = () => {
     { name: 'Poesia Hipnótica', path: '/ferramentas/poesia-hipnotica' },
   ];
 
+  const resourceLinks = [
+    { name: 'NAPT (Poetry Therapy)', href: 'https://poetrytherapy.org/', external: true },
+  ];
+
   const socials = [
     { icon: <Instagram className="h-4 w-4" />, label: 'Instagram', href: '#' },
     { icon: <Youtube className="h-4 w-4" />, label: 'YouTube', href: '#' },
@@ -106,19 +110,35 @@ const Footer = () => {
               </nav>
             </div>
 
-            {/* Contact / Creator */}
+            {/* Resources / NAPT */}
             <div>
-              <h4 className="font-heading font-semibold text-foreground mb-4 text-sm uppercase tracking-widest">Criador</h4>
-              <p className="text-sm text-muted-foreground leading-relaxed">
-                <strong className="text-foreground">Evaldo PCH Master</strong> — especialista em Poesia Cognitiva Hipnótica, integrando poesia, psicologia e neurociência.
-              </p>
-              <PrefetchLink
-                to="/sobre"
-                className="inline-flex items-center gap-1 text-sm text-primary/70 hover:text-primary mt-3 transition-colors"
-              >
-                <Feather className="h-3.5 w-3.5" />
-                Conheça a história
-              </PrefetchLink>
+              <h4 className="font-heading font-semibold text-foreground mb-4 text-sm uppercase tracking-widest">Recursos</h4>
+              <nav className="space-y-2.5">
+                {resourceLinks.map((item) => (
+                  <a
+                    key={item.name}
+                    href={item.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="block text-sm text-muted-foreground hover:text-primary transition-colors"
+                  >
+                    {item.name}
+                  </a>
+                ))}
+              </nav>
+              <div className="mt-8 pt-6 border-t border-border/10">
+                <h4 className="font-heading font-semibold text-foreground mb-4 text-sm uppercase tracking-widest">Criador</h4>
+                <p className="text-sm text-muted-foreground leading-relaxed">
+                  <strong className="text-foreground">Evaldo PCH Master</strong> — especialista em Poesia Cognitiva Hipnótica.
+                </p>
+                <PrefetchLink
+                  to="/sobre"
+                  className="inline-flex items-center gap-1 text-sm text-primary/70 hover:text-primary mt-3 transition-colors"
+                >
+                  <Feather className="h-3.5 w-3.5" />
+                  Conheça a história
+                </PrefetchLink>
+              </div>
             </div>
           </div>
 

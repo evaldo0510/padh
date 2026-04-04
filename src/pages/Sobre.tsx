@@ -91,13 +91,14 @@ const Sobre = () => {
               <p>
                 Foi então que começou o trabalho de sistematização. Evaldo mergulhou na 
                 <strong className="text-foreground"> neurociência da linguagem</strong>, estudou os mecanismos 
-                da hipnose ericksoniana, investigou como metáforas ativam redes neurais específicas, 
-                e descobriu que a poesia — quando construída com intencionalidade terapêutica — 
-                age como um <strong className="text-foreground">agente neuroplástico</strong>.
+                da hipnose ericksoniana e investigou as raízes da terapia poética moderna — 
+                reconhecendo o legado de organizações pioneiras como a <strong className="text-foreground">NAPT (National Association for Poetry Therapy)</strong>, 
+                fundada em 1980 nos EUA, que formalizou o uso da poesia como instrumento de cura.
               </p>
 
               <p>
-                A leitura poética estimula simultaneamente o <strong className="text-foreground">córtex pré-frontal</strong> 
+                A PCH, no entanto, vai além ao integrar a <strong className="text-foreground"> neuroplasticidade</strong> e a 
+                cognição profunda. A leitura poética estimula simultaneamente o <strong className="text-foreground">córtex pré-frontal</strong> 
                 (pensamento reflexivo), a <strong className="text-foreground">amígdala</strong> (processamento emocional), 
                 o <strong className="text-foreground">hipocampo</strong> (memória e reconsolidação) e o 
                 <strong className="text-foreground"> córtex insular</strong> (consciência interoceptiva). 
