@@ -282,15 +282,13 @@ const Index = () => {
       </section>
 
       {/* Base Científica — Destaque */}
-      <section className="py-24 border-t border-border/30 relative overflow-hidden">
+      <section className="section-padding border-t border-border/20 relative overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-b from-primary/[0.03] via-transparent to-transparent" />
-        {/* Floating science particles */}
         <div className="absolute top-1/3 left-[5%] w-48 h-48 bg-primary/5 rounded-full blur-3xl animate-float" />
         <div className="absolute bottom-1/4 right-[8%] w-64 h-64 bg-secondary/5 rounded-full blur-3xl animate-float" style={{ animationDelay: '2s' }} />
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 w-96 h-96 bg-primary/[0.02] rounded-full blur-3xl animate-float" style={{ animationDelay: '4s' }} />
         <div
           ref={scienceSection.ref}
-          className={`relative container mx-auto px-6 transition-all duration-1000 ${
+          className={`relative container mx-auto px-6 md:px-8 transition-all duration-1000 ${
             scienceSection.isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-12'
           }`}
         >
@@ -299,7 +297,7 @@ const Index = () => {
               <FlaskConical className="h-3.5 w-3.5" />
               Base Científica
             </div>
-            <h2 className="text-3xl md:text-5xl font-heading font-bold text-foreground mb-6">
+            <h2 className="section-title">
               Poesia que a <span className="text-primary italic">Ciência</span> Comprova
             </h2>
             <p className="text-lg text-muted-foreground max-w-2xl mx-auto mb-12 leading-relaxed">
