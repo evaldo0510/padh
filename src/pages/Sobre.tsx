@@ -282,7 +282,7 @@ const Sobre = () => {
               </p>
             </div>
 
-            <div className="grid md:grid-cols-2 gap-8">
+            <div className="grid md:grid-cols-2 gap-6">
               {[
                 {
                   phase: "Fase 1: Preparação",
