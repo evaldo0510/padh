@@ -204,20 +204,20 @@ const Index = () => {
       </section>
 
       {/* Ferramentas */}
-      <section className="py-24 border-t border-border/30">
+      <section className="section-padding border-t border-border/20">
         <div
           ref={toolsSection.ref}
-          className={`container mx-auto px-6 transition-all duration-1000 ${
+          className={`container mx-auto px-6 md:px-8 transition-all duration-1000 ${
             toolsSection.isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-12'
           }`}
         >
           <div className="max-w-5xl mx-auto">
-            <div className="text-center mb-16">
-              <p className="text-sm uppercase tracking-[0.2em] text-primary mb-3 font-medium">Explore</p>
-              <h2 className="text-3xl md:text-5xl font-heading font-bold text-foreground mb-6">
+            <div className="section-header">
+              <p className="section-label">Explore</p>
+              <h2 className="section-title">
                 Ferramentas P.A.D.H.
               </h2>
-              <p className="text-muted-foreground max-w-2xl mx-auto">
+              <p className="section-subtitle">
                 Cada ferramenta é um caminho diferente de acesso ao interior — da introspecção guiada 
                 à neurociência da leitura poética.
               </p>
