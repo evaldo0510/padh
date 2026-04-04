@@ -111,10 +111,10 @@ const FerramentasIndex = () => {
       </section>
 
       {/* Lista de Ferramentas */}
-      <section className="py-20 border-t border-border/30">
+      <section className="section-padding border-t border-border/20">
         <div
           ref={toolsAnim.ref}
-          className={`container mx-auto px-6 transition-all duration-1000 ${
+          className={`container mx-auto px-6 md:px-8 transition-all duration-1000 ${
             toolsAnim.isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-12'
           }`}
         >
@@ -153,9 +153,9 @@ const FerramentasIndex = () => {
       </section>
 
       {/* Como Usar */}
-      <section className="py-20 border-t border-border/30 relative overflow-hidden">
+      <section className="section-padding border-t border-border/20 relative overflow-hidden">
         <div className="absolute inset-0 gradient-warm" />
-        <div className="relative container mx-auto px-6">
+        <div className="relative container mx-auto px-6 md:px-8">
           <div className="max-w-3xl mx-auto text-center">
             <p className="text-sm uppercase tracking-[0.2em] text-primary mb-3 font-medium">Aplicação</p>
             <h2 className="text-3xl font-heading font-bold text-foreground mb-8">Como Usar as Ferramentas?</h2>

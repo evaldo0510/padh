@@ -73,7 +73,7 @@ const Index = () => {
       <Header />
 
       {/* Hero Section */}
-      <section className="relative overflow-hidden min-h-[85vh] flex items-center">
+      <section className="relative overflow-hidden min-h-[90vh] flex items-center">
         <FloatingParticles />
         <div className="absolute inset-0 gradient-hero" />
         <div className="absolute inset-0 gradient-glow" />
@@ -82,8 +82,8 @@ const Index = () => {
         <div className="absolute top-1/4 left-[10%] w-64 h-64 bg-primary/5 rounded-full blur-3xl animate-float" />
         <div className="absolute bottom-1/4 right-[10%] w-80 h-80 bg-secondary/5 rounded-full blur-3xl animate-float" style={{ animationDelay: '3s' }} />
         
-        <div className="relative container mx-auto px-6 py-24 z-10">
-          <div className="max-w-4xl mx-auto text-center animate-fade-in-up space-y-8">
+        <div className="relative container mx-auto px-6 md:px-8 py-24 z-10">
+          <div className="max-w-4xl mx-auto text-center animate-fade-in-up space-y-10">
             {/* Hero Image */}
             <div className="mx-auto w-32 h-32 md:w-40 md:h-40 mb-4">
               <img src={heroImage} alt="P.A.D.H. — Pena dourada transformando-se em conexões neurais" className="w-full h-full object-contain drop-shadow-lg" />
@@ -145,24 +145,24 @@ const Index = () => {
       </section>
 
       {/* O que é a P.A.D.H. */}
-      <section className="relative py-24 overflow-hidden">
+      <section className="relative section-padding overflow-hidden">
         <div className="absolute inset-0 gradient-warm" />
         <div
           ref={aboutSection.ref}
-          className={`relative container mx-auto px-6 transition-all duration-1000 ${
+          className={`relative container mx-auto px-6 md:px-8 transition-all duration-1000 ${
             aboutSection.isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-12'
           }`}
         >
           <div className="max-w-5xl mx-auto">
-            <div className="text-center mb-16">
-              <p className="text-sm uppercase tracking-[0.2em] text-primary mb-3 font-medium">Sobre a Metodologia</p>
-              <h2 className="text-3xl md:text-5xl font-heading font-bold text-foreground mb-6">
+            <div className="section-header">
+              <p className="section-label">Sobre a Metodologia</p>
+              <h2 className="section-title">
                 O que é a Poesia Cognitiva Hipnótica?
               </h2>
-              <div className="w-16 h-px bg-primary/40 mx-auto" />
+              <div className="section-divider" />
             </div>
 
-            <div className="grid md:grid-cols-2 gap-12 items-start">
+            <div className="grid md:grid-cols-2 gap-10 lg:gap-16 items-start">
               <div className="space-y-6">
                 <p className="text-lg text-muted-foreground leading-relaxed">
                   A <strong className="text-foreground">PCH</strong> é uma abordagem inovadora criada por Evaldo de Jesus Santana 
@@ -204,26 +204,26 @@ const Index = () => {
       </section>
 
       {/* Ferramentas */}
-      <section className="py-24 border-t border-border/30">
+      <section className="section-padding border-t border-border/20">
         <div
           ref={toolsSection.ref}
-          className={`container mx-auto px-6 transition-all duration-1000 ${
+          className={`container mx-auto px-6 md:px-8 transition-all duration-1000 ${
             toolsSection.isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-12'
           }`}
         >
           <div className="max-w-5xl mx-auto">
-            <div className="text-center mb-16">
-              <p className="text-sm uppercase tracking-[0.2em] text-primary mb-3 font-medium">Explore</p>
-              <h2 className="text-3xl md:text-5xl font-heading font-bold text-foreground mb-6">
+            <div className="section-header">
+              <p className="section-label">Explore</p>
+              <h2 className="section-title">
                 Ferramentas P.A.D.H.
               </h2>
-              <p className="text-muted-foreground max-w-2xl mx-auto">
+              <p className="section-subtitle">
                 Cada ferramenta é um caminho diferente de acesso ao interior — da introspecção guiada 
                 à neurociência da leitura poética.
               </p>
             </div>
 
-            <div className="grid sm:grid-cols-2 gap-6">
+            <div className="grid sm:grid-cols-2 gap-5 lg:gap-6">
               {ferramentas.map((tool, i) => (
                 <Link key={i} to={tool.link} className="group">
                   <Card className="h-full border-border/50 hover:border-primary/30 transition-all duration-300 hover:shadow-medium bg-card/50">
@@ -250,28 +250,28 @@ const Index = () => {
       </section>
 
       {/* A Ciência por Trás */}
-      <section className="py-24 border-t border-border/30 relative overflow-hidden">
+      <section className="section-padding border-t border-border/20 relative overflow-hidden">
         <div className="absolute inset-0 gradient-mesh" />
         <div
           ref={pchSection.ref}
-          className={`relative container mx-auto px-6 transition-all duration-1000 ${
+          className={`relative container mx-auto px-6 md:px-8 transition-all duration-1000 ${
             pchSection.isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-12'
           }`}
         >
           <div className="max-w-4xl mx-auto text-center">
-            <p className="text-sm uppercase tracking-[0.2em] text-primary mb-3 font-medium">Fundamentos</p>
-            <h2 className="text-3xl md:text-5xl font-heading font-bold text-foreground mb-12">
+            <p className="section-label">Fundamentos</p>
+            <h2 className="section-title">
               Onde a Ciência Encontra a Poesia
             </h2>
 
-            <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6 text-left">
+            <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-5 text-left mt-14">
               {[
                 { title: 'Neurociência', desc: 'Leitura poética estimula córtex pré-frontal, amígdala e hipocampo — favorecendo regulação emocional e neuroplasticidade.', color: 'text-spiritual-indigo' },
                 { title: 'Hipnose Ericksoniana', desc: 'Abordagem indireta e metafórica: terreno fértil para transformação inconsciente e cocriação de soluções.', color: 'text-spiritual-violet' },
                 { title: 'Terapia Narrativa', desc: 'O poder das histórias pessoais — transformar relatos de vida em poesia curativa que ressignifica identidade.', color: 'text-spiritual-sage' },
                 { title: 'Linguística Cognitiva', desc: 'Metáforas como estruturas cognitivas fundamentais — Lakoff, Johnson e o poder dos signos e símbolos.', color: 'text-primary' },
               ].map((item, i) => (
-                <div key={i} className="glass-card p-5 rounded-xl space-y-3">
+                <div key={i} className="glass-card p-6 space-y-3">
                   <h4 className={`font-heading font-semibold ${item.color}`}>{item.title}</h4>
                   <p className="text-sm text-muted-foreground leading-relaxed">{item.desc}</p>
                 </div>
@@ -282,15 +282,13 @@ const Index = () => {
       </section>
 
       {/* Base Científica — Destaque */}
-      <section className="py-24 border-t border-border/30 relative overflow-hidden">
+      <section className="section-padding border-t border-border/20 relative overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-b from-primary/[0.03] via-transparent to-transparent" />
-        {/* Floating science particles */}
         <div className="absolute top-1/3 left-[5%] w-48 h-48 bg-primary/5 rounded-full blur-3xl animate-float" />
         <div className="absolute bottom-1/4 right-[8%] w-64 h-64 bg-secondary/5 rounded-full blur-3xl animate-float" style={{ animationDelay: '2s' }} />
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 w-96 h-96 bg-primary/[0.02] rounded-full blur-3xl animate-float" style={{ animationDelay: '4s' }} />
         <div
           ref={scienceSection.ref}
-          className={`relative container mx-auto px-6 transition-all duration-1000 ${
+          className={`relative container mx-auto px-6 md:px-8 transition-all duration-1000 ${
             scienceSection.isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-12'
           }`}
         >
@@ -299,7 +297,7 @@ const Index = () => {
               <FlaskConical className="h-3.5 w-3.5" />
               Base Científica
             </div>
-            <h2 className="text-3xl md:text-5xl font-heading font-bold text-foreground mb-6">
+            <h2 className="section-title">
               Poesia que a <span className="text-primary italic">Ciência</span> Comprova
             </h2>
             <p className="text-lg text-muted-foreground max-w-2xl mx-auto mb-12 leading-relaxed">
@@ -307,7 +305,7 @@ const Index = () => {
               o poder terapêutico da poesia — e fundamentam cada ferramenta P.A.D.H.
             </p>
 
-            <div className="grid sm:grid-cols-3 gap-6 mb-10">
+            <div className="grid sm:grid-cols-3 gap-5 mb-10">
               {[
                 { value: `${scientificStudies.length}+`, label: 'Estudos Publicados', sub: 'em revistas internacionais' },
                 { value: `${getAllCategories().length}`, label: 'Categorias Científicas', sub: 'de neurociência a resiliência' },
@@ -332,21 +330,21 @@ const Index = () => {
       </section>
 
       {/* Qual o seu caminho? - Comparativo */}
-      <section className="py-24 border-t border-border/30 bg-muted/30">
-        <div className="container mx-auto px-6">
+      <section className="section-padding border-t border-border/20 bg-muted/20">
+        <div className="container mx-auto px-6 md:px-8">
           <div className="max-w-5xl mx-auto">
-            <div className="text-center mb-16">
-              <p className="text-sm uppercase tracking-[0.2em] text-primary mb-3 font-medium">Guia de Jornada</p>
-              <h2 className="text-3xl md:text-5xl font-heading font-bold text-foreground mb-6">
+            <div className="section-header">
+              <p className="section-label">Guia de Jornada</p>
+              <h2 className="section-title">
                 Qual o seu <span className="text-primary italic">Caminho</span> na PCH?
               </h2>
-              <p className="text-muted-foreground max-w-2xl mx-auto">
+              <p className="section-subtitle">
                 Embora compartilhem a mesma essência, cada formato oferece uma profundidade diferente. 
                 Descubra qual deles melhor atende ao seu momento atual.
               </p>
             </div>
 
-            <div className="grid md:grid-cols-3 gap-8">
+            <div className="grid md:grid-cols-3 gap-6 lg:gap-8">
               {[
                 {
                   title: "Livro-Curso",
@@ -377,7 +375,7 @@ const Index = () => {
                   color: "border-spiritual-indigo/30"
                 }
               ].map((item, i) => (
-                <Card key={i} className={`relative h-full flex flex-col border-2 transition-all duration-300 hover:shadow-xl ${item.color} ${item.highlight ? 'bg-card shadow-lg scale-105 z-10' : 'bg-card/50'}`}>
+                <Card key={i} className={`relative h-full flex flex-col border-2 transition-all duration-300 ${item.color} ${item.highlight ? 'bg-card shadow-lg md:scale-105 z-10' : 'bg-card/50'}`}>
                   {item.highlight && (
                     <div className="absolute -top-4 left-1/2 -translate-x-1/2 bg-primary text-primary-foreground text-[10px] uppercase tracking-widest font-bold py-1 px-3 rounded-full">
                       Mais Completo
@@ -423,24 +421,23 @@ const Index = () => {
       </section>
 
       {/* Jornada de Transformação (Original) */}
-      <section className="py-24 border-t border-border/30">
+      <section className="section-padding border-t border-border/20">
         <div
           ref={journeySection.ref}
-          className={`container mx-auto px-6 transition-all duration-1000 ${
+          className={`container mx-auto px-6 md:px-8 transition-all duration-1000 ${
             journeySection.isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-12'
           }`}
         >
           <div className="max-w-3xl mx-auto text-center">
-            <p className="text-sm uppercase tracking-[0.2em] text-primary mb-3 font-medium">Metodologia</p>
-            <h2 className="text-3xl md:text-5xl font-heading font-bold text-foreground mb-6">
+            <p className="section-label">Metodologia</p>
+            <h2 className="section-title">
               As 4 Fases do P.A.D.H.
             </h2>
-            <p className="text-muted-foreground mb-12 max-w-xl mx-auto">
-
+            <p className="section-subtitle mb-12">
               O protocolo estrutura a intervenção poético-terapêutica em quatro fases claras e progressivas.
             </p>
 
-            <div className="grid sm:grid-cols-2 gap-6 text-left">
+            <div className="grid sm:grid-cols-2 gap-5 text-left">
               {[
                 { letter: 'P', name: 'Preparação', desc: 'Criar ambiente seguro, estabelecer rapport e definir intenções claras para a sessão. Avaliar estado emocional e configurar o espaço para a experiência.' },
                 { letter: 'A', name: 'Aplicação', desc: 'Uso ativo das ferramentas P.A.D.H. com timing adequado, atenção às respostas verbais e não-verbais, e flexibilidade responsiva.' },
@@ -463,26 +460,26 @@ const Index = () => {
       </section>
 
       {/* Depoimentos */}
-      <section className="py-24 border-t border-border/30 relative overflow-hidden">
+      <section className="section-padding border-t border-border/20 relative overflow-hidden">
         <div className="absolute inset-0 gradient-warm" />
         <div
           ref={testimonialsSection.ref}
-          className={`relative container mx-auto px-6 transition-all duration-1000 ${
+          className={`relative container mx-auto px-6 md:px-8 transition-all duration-1000 ${
             testimonialsSection.isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-12'
           }`}
         >
           <div className="max-w-5xl mx-auto">
-            <div className="text-center mb-16">
-              <p className="text-sm uppercase tracking-[0.2em] text-primary mb-3 font-medium">Testemunhos</p>
-              <h2 className="text-3xl md:text-5xl font-heading font-bold text-foreground mb-6">
+            <div className="section-header">
+              <p className="section-label">Testemunhos</p>
+              <h2 className="section-title">
                 Vozes Transformadas
               </h2>
-              <p className="text-muted-foreground max-w-xl mx-auto">
+              <p className="section-subtitle">
                 Quem experimenta a Poesia Cognitiva Hipnótica carrega consigo uma marca silenciosa de mudança.
               </p>
             </div>
 
-            <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
               {[
                 {
                   text: 'Depois de uma sessão com PCH, eu senti que algo dentro de mim se reorganizou. Não foi uma terapia comum — foi como se a poesia tivesse conversado diretamente com a parte de mim que eu escondia.',
@@ -534,9 +531,9 @@ const Index = () => {
       <PoemadiagnosticoInterativo />
 
       {/* Poem CTA */}
-      <section className="py-24 border-t border-border/30 relative overflow-hidden">
+      <section className="section-padding border-t border-border/20 relative overflow-hidden">
         <div className="absolute inset-0 gradient-glow" />
-        <div className="relative container mx-auto px-6 text-center">
+        <div className="relative container mx-auto px-6 md:px-8 text-center">
           <div className="max-w-2xl mx-auto space-y-8">
             <Feather className="h-8 w-8 text-primary mx-auto opacity-60" />
             <blockquote className="text-2xl md:text-3xl font-heading italic text-foreground/90 leading-relaxed">

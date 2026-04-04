@@ -45,20 +45,20 @@ const Sobre = () => {
       </section>
 
       {/* A História */}
-      <section className="py-24 border-t border-border/30">
+      <section className="section-padding border-t border-border/20">
         <div
           ref={originSection.ref}
-          className={`container mx-auto px-6 transition-all duration-1000 ${
+          className={`container mx-auto px-6 md:px-8 transition-all duration-1000 ${
             originSection.isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-12'
           }`}
         >
           <div className="max-w-4xl mx-auto">
-            <div className="text-center mb-16">
-              <p className="text-sm uppercase tracking-[0.2em] text-primary mb-3 font-medium">A Gênese</p>
-              <h2 className="text-3xl md:text-5xl font-heading font-bold text-foreground mb-6">
+            <div className="section-header">
+              <p className="section-label">A Gênese</p>
+              <h2 className="section-title">
                 De onde nasce a PCH?
               </h2>
-              <div className="w-16 h-px bg-primary/40 mx-auto" />
+              <div className="section-divider" />
             </div>
 
             <div className="space-y-8 text-muted-foreground leading-relaxed">
@@ -127,19 +127,19 @@ const Sobre = () => {
       </section>
 
       {/* Livro Prisão Interior */}
-      <section className="py-24 border-t border-border/30 relative overflow-hidden">
+      <section className="section-padding border-t border-border/20 relative overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-b from-primary/[0.02] via-transparent to-transparent" />
-        <div className="relative container mx-auto px-6">
+        <div className="relative container mx-auto px-6 md:px-8">
           <div className="max-w-5xl mx-auto">
-            <div className="text-center mb-16">
-              <p className="text-sm uppercase tracking-[0.2em] text-primary mb-3 font-medium">Onde Tudo Começou</p>
-              <h2 className="text-3xl md:text-5xl font-heading font-bold text-foreground mb-6">
+            <div className="section-header">
+              <p className="section-label">Onde Tudo Começou</p>
+              <h2 className="section-title">
                 Prisão Interior
               </h2>
-              <div className="w-16 h-px bg-primary/40 mx-auto" />
+              <div className="section-divider" />
             </div>
 
-            <div className="grid md:grid-cols-2 gap-12 items-center">
+            <div className="grid md:grid-cols-2 gap-10 lg:gap-14 items-center">
               {/* Book Cover */}
               <div className="flex justify-center">
                 <div className="relative group">
@@ -208,24 +208,24 @@ const Sobre = () => {
       </section>
 
       {/* Jornada Cronológica */}
-      <section className="py-24 border-t border-border/30 relative overflow-hidden">
+      <section className="section-padding border-t border-border/20 relative overflow-hidden">
         <div className="absolute inset-0 gradient-mesh" />
         <div
           ref={journeySection.ref}
-          className={`relative container mx-auto px-6 transition-all duration-1000 ${
+          className={`relative container mx-auto px-6 md:px-8 transition-all duration-1000 ${
             journeySection.isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-12'
           }`}
         >
           <div className="max-w-4xl mx-auto">
-            <div className="text-center mb-16">
-              <p className="text-sm uppercase tracking-[0.2em] text-primary mb-3 font-medium">Trajetória</p>
-              <h2 className="text-3xl md:text-5xl font-heading font-bold text-foreground mb-6">
+            <div className="section-header">
+              <p className="section-label">Trajetória</p>
+              <h2 className="section-title">
                 Uma jornada de dedicação
               </h2>
-              <div className="w-16 h-px bg-primary/40 mx-auto" />
+              <div className="section-divider" />
             </div>
 
-            <div className="space-y-6">
+            <div className="space-y-5">
               {[
                 {
                   icon: <Feather className="h-5 w-5" />,
@@ -269,20 +269,20 @@ const Sobre = () => {
       </section>
 
       {/* O Método P.A.D.H. */}
-      <section className="py-24 border-t border-border/30 bg-primary/[0.01]">
-        <div className="container mx-auto px-6">
+      <section className="section-padding border-t border-border/20 bg-primary/[0.01]">
+        <div className="container mx-auto px-6 md:px-8">
           <div className="max-w-4xl mx-auto">
-            <div className="text-center mb-16">
-              <p className="text-sm uppercase tracking-[0.2em] text-primary mb-3 font-medium">Metodologia</p>
-              <h2 className="text-3xl md:text-5xl font-heading font-bold text-foreground mb-6">
+            <div className="section-header">
+              <p className="section-label">Metodologia</p>
+              <h2 className="section-title">
                 O Protocolo P.A.D.H.
               </h2>
-              <p className="text-muted-foreground max-w-2xl mx-auto italic">
+              <p className="section-subtitle italic">
                 "Poesia Aplicada ao Desenvolvimento Humano" — uma jornada estruturada em quatro pilares fundamentais para a transformação inconsciente.
               </p>
             </div>
 
-            <div className="grid md:grid-cols-2 gap-8">
+            <div className="grid md:grid-cols-2 gap-6">
               {[
                 {
                   phase: "Fase 1: Preparação",
@@ -322,23 +322,23 @@ const Sobre = () => {
         </div>
       </section>
 
-      <section className="py-24 border-t border-border/30">
+      <section className="section-padding border-t border-border/20">
         <div
           ref={pillarsSection.ref}
-          className={`container mx-auto px-6 transition-all duration-1000 ${
+          className={`container mx-auto px-6 md:px-8 transition-all duration-1000 ${
             pillarsSection.isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-12'
           }`}
         >
           <div className="max-w-5xl mx-auto">
-            <div className="text-center mb-16">
-              <p className="text-sm uppercase tracking-[0.2em] text-primary mb-3 font-medium">Filosofia</p>
-              <h2 className="text-3xl md:text-5xl font-heading font-bold text-foreground mb-6">
+            <div className="section-header">
+              <p className="section-label">Filosofia</p>
+              <h2 className="section-title">
                 Pilares da Visão de Evaldo
               </h2>
-              <div className="w-16 h-px bg-primary/40 mx-auto" />
+              <div className="section-divider" />
             </div>
 
-            <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
               {[
                 {
                   icon: <Heart className="h-6 w-6 text-spiritual-rose" />,
@@ -387,11 +387,11 @@ const Sobre = () => {
       </section>
 
       {/* Missão e Visão */}
-      <section className="py-24 border-t border-border/30 relative overflow-hidden">
+      <section className="section-padding border-t border-border/20 relative overflow-hidden">
         <div className="absolute inset-0 gradient-glow" />
         <div
           ref={missionSection.ref}
-          className={`relative container mx-auto px-6 transition-all duration-1000 ${
+          className={`relative container mx-auto px-6 md:px-8 transition-all duration-1000 ${
             missionSection.isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-12'
           }`}
         >
@@ -435,8 +435,8 @@ const Sobre = () => {
       </section>
 
       {/* Valores e Ética */}
-      <section className="py-24 border-t border-border/30 bg-secondary/[0.02]">
-        <div className="container mx-auto px-6">
+      <section className="section-padding border-t border-border/20 bg-secondary/[0.02]">
+        <div className="container mx-auto px-6 md:px-8">
           <div className="max-w-4xl mx-auto text-center">
             <h3 className="text-2xl md:text-3xl font-heading font-bold text-foreground mb-12">Compromisso com o Rigor e a Sensibilidade</h3>
             <div className="grid sm:grid-cols-3 gap-8 text-left">

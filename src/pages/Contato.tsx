@@ -45,7 +45,7 @@ const Contato = () => {
       </section>
 
       {/* Conteúdo */}
-      <section className="container mx-auto px-6 py-12">
+      <section className="container mx-auto px-6 md:px-8 py-16 md:py-20">
         <div className="max-w-5xl mx-auto">
           <div className="grid lg:grid-cols-5 gap-8">
             
