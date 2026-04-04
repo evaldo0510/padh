@@ -82,8 +82,8 @@ const Index = () => {
         <div className="absolute top-1/4 left-[10%] w-64 h-64 bg-primary/5 rounded-full blur-3xl animate-float" />
         <div className="absolute bottom-1/4 right-[10%] w-80 h-80 bg-secondary/5 rounded-full blur-3xl animate-float" style={{ animationDelay: '3s' }} />
         
-        <div className="relative container mx-auto px-6 py-24 z-10">
-          <div className="max-w-4xl mx-auto text-center animate-fade-in-up space-y-8">
+        <div className="relative container mx-auto px-6 md:px-8 py-24 z-10">
+          <div className="max-w-4xl mx-auto text-center animate-fade-in-up space-y-10">
             {/* Hero Image */}
             <div className="mx-auto w-32 h-32 md:w-40 md:h-40 mb-4">
               <img src={heroImage} alt="P.A.D.H. — Pena dourada transformando-se em conexões neurais" className="w-full h-full object-contain drop-shadow-lg" />
