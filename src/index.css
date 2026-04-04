@@ -285,6 +285,32 @@
     );
     backdrop-filter: blur(12px);
     border: 1px solid hsl(var(--foreground) / 0.06);
+    border-radius: 1rem;
+  }
+
+  /* Consistent section spacing */
+  .section-padding {
+    @apply py-20 md:py-28;
+  }
+
+  .section-header {
+    @apply text-center mb-14 md:mb-16;
+  }
+
+  .section-label {
+    @apply text-xs uppercase tracking-[0.25em] text-primary mb-3 font-semibold inline-block;
+  }
+
+  .section-title {
+    @apply text-3xl md:text-4xl lg:text-5xl font-heading font-bold text-foreground mb-4 leading-tight;
+  }
+
+  .section-subtitle {
+    @apply text-base md:text-lg text-muted-foreground max-w-2xl mx-auto leading-relaxed;
+  }
+
+  .section-divider {
+    @apply w-12 h-0.5 bg-primary/30 mx-auto mt-5 rounded-full;
   }
 
   .neon-border {
