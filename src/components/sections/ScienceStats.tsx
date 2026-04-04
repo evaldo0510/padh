@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { FlaskConical } from 'lucide-react';
+import { scientificStudies, getAllCategories, getAllYears } from '@/lib/scientific-studies';
 
 interface AnimatedCounterProps {
   end: number;
@@ -56,10 +57,15 @@ interface ScienceStatsProps {
 }
 
 const ScienceStats: React.FC<ScienceStatsProps> = ({ stats }) => {
+  const years = getAllYears();
+  const minYear = Math.min(...years);
+  const maxYear = Math.max(...years);
+  const yearSpan = maxYear - minYear;
+
   const defaultStats: StatItem[] = stats ?? [
-    { value: 11, label: 'Estudos Publicados', sub: 'em revistas internacionais' },
-    { value: 8, label: 'Categorias Científicas', sub: 'de neurociência a resiliência' },
-    { value: 15, suffix: ' anos', label: 'De Evidências', sub: '2005 – 2020' },
+    { value: scientificStudies.length, label: 'Estudos Publicados', sub: 'em revistas internacionais' },
+    { value: getAllCategories().length, label: 'Categorias Científicas', sub: 'de neurociência a resiliência' },
+    { value: yearSpan, suffix: ' anos', label: 'De Evidências', sub: `${minYear} – ${maxYear}` },
   ];
 
   return (
