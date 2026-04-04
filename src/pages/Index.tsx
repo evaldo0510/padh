@@ -469,12 +469,12 @@ const Index = () => {
           }`}
         >
           <div className="max-w-5xl mx-auto">
-            <div className="text-center mb-16">
-              <p className="text-sm uppercase tracking-[0.2em] text-primary mb-3 font-medium">Testemunhos</p>
-              <h2 className="text-3xl md:text-5xl font-heading font-bold text-foreground mb-6">
+            <div className="section-header">
+              <p className="section-label">Testemunhos</p>
+              <h2 className="section-title">
                 Vozes Transformadas
               </h2>
-              <p className="text-muted-foreground max-w-xl mx-auto">
+              <p className="section-subtitle">
                 Quem experimenta a Poesia Cognitiva Hipnótica carrega consigo uma marca silenciosa de mudança.
               </p>
             </div>
