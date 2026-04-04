@@ -336,7 +336,28 @@ const Sobre = () => {
         </div>
       </section>
 
-    </PageLayout>
+      {/* Valores e Ética */}
+      <section className="py-24 border-t border-border/30 bg-secondary/[0.02]">
+        <div className="container mx-auto px-6">
+          <div className="max-w-4xl mx-auto text-center">
+            <h3 className="text-2xl md:text-3xl font-heading font-bold text-foreground mb-12">Compromisso com o Rigor e a Sensibilidade</h3>
+            <div className="grid sm:grid-cols-3 gap-8 text-left">
+              {[
+                { title: "Rigor Científico", desc: "Baseamos nossas práticas em estudos de neurociência e linguística cognitiva para garantir eficácia e segurança." },
+                { title: "Respeito ao Inconsciente", desc: "Nossa abordagem é não-invasiva, honrando o tempo e os portais simbólicos de cada indivíduo." },
+                { title: "Beleza Ética", desc: "Acreditamos que a estética poética é um direito humano e um caminho legítimo de saúde integral." }
+              ].map((v, i) => (
+                <div key={i} className="space-y-3">
+                  <div className="w-10 h-px bg-primary/40 mb-4" />
+                  <h4 className="font-heading font-semibold text-primary">{v.title}</h4>
+                  <p className="text-sm text-muted-foreground leading-relaxed">{v.desc}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
   );
 };
 
