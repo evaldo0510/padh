@@ -333,12 +333,12 @@ const Index = () => {
       <section className="section-padding border-t border-border/20 bg-muted/20">
         <div className="container mx-auto px-6 md:px-8">
           <div className="max-w-5xl mx-auto">
-            <div className="text-center mb-16">
-              <p className="text-sm uppercase tracking-[0.2em] text-primary mb-3 font-medium">Guia de Jornada</p>
-              <h2 className="text-3xl md:text-5xl font-heading font-bold text-foreground mb-6">
+            <div className="section-header">
+              <p className="section-label">Guia de Jornada</p>
+              <h2 className="section-title">
                 Qual o seu <span className="text-primary italic">Caminho</span> na PCH?
               </h2>
-              <p className="text-muted-foreground max-w-2xl mx-auto">
+              <p className="section-subtitle">
                 Embora compartilhem a mesma essência, cada formato oferece uma profundidade diferente. 
                 Descubra qual deles melhor atende ao seu momento atual.
               </p>
