@@ -479,7 +479,7 @@ const Index = () => {
               </p>
             </div>
 
-            <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
               {[
                 {
                   text: 'Depois de uma sessão com PCH, eu senti que algo dentro de mim se reorganizou. Não foi uma terapia comum — foi como se a poesia tivesse conversado diretamente com a parte de mim que eu escondia.',
