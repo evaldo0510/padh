@@ -127,11 +127,12 @@ const Index = () => {
             <div className="pt-8 max-w-lg mx-auto">
               <blockquote className="poem-block">
                 <p className="poem-text text-base text-muted-foreground">
-                  A poesia toca onde a fala falha.<br />
-                  A hipnose abre o portão dos porões.<br />
-                  A cognição redesenha o mapa interno.
+                  Quando se olha no espelho,<br />
+                  o que é que você vê?<br />
+                  Eu vi a poesia esperando<br />
+                  do outro lado de mim.
                 </p>
-                <cite className="text-sm text-primary/70 mt-2 block not-italic">— Evaldo de Jesus Santana</cite>
+                <cite className="text-sm text-primary/70 mt-2 block not-italic">— Evaldo de Jesus Santana, Prisão Interior</cite>
               </blockquote>
               <TextReader
                 text="A poesia toca onde a fala falha. A hipnose abre o portão dos porões. A cognição redesenha o mapa interno."
