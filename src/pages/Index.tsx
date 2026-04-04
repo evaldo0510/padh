@@ -437,7 +437,7 @@ const Index = () => {
               O protocolo estrutura a intervenção poético-terapêutica em quatro fases claras e progressivas.
             </p>
 
-            <div className="grid sm:grid-cols-2 gap-6 text-left">
+            <div className="grid sm:grid-cols-2 gap-5 text-left">
               {[
                 { letter: 'P', name: 'Preparação', desc: 'Criar ambiente seguro, estabelecer rapport e definir intenções claras para a sessão. Avaliar estado emocional e configurar o espaço para a experiência.' },
                 { letter: 'A', name: 'Aplicação', desc: 'Uso ativo das ferramentas P.A.D.H. com timing adequado, atenção às respostas verbais e não-verbais, e flexibilidade responsiva.' },
