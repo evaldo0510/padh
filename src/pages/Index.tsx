@@ -429,12 +429,11 @@ const Index = () => {
           }`}
         >
           <div className="max-w-3xl mx-auto text-center">
-            <p className="text-sm uppercase tracking-[0.2em] text-primary mb-3 font-medium">Metodologia</p>
-            <h2 className="text-3xl md:text-5xl font-heading font-bold text-foreground mb-6">
+            <p className="section-label">Metodologia</p>
+            <h2 className="section-title">
               As 4 Fases do P.A.D.H.
             </h2>
-            <p className="text-muted-foreground mb-12 max-w-xl mx-auto">
-
+            <p className="section-subtitle mb-12">
               O protocolo estrutura a intervenção poético-terapêutica em quatro fases claras e progressivas.
             </p>
 
