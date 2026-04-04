@@ -149,7 +149,7 @@ const Footer = () => {
               © {new Date().getFullYear()} P.A.D.H. — Evaldo de Jesus Santana. Todos os direitos reservados.
             </p>
             <p className="text-xs text-muted-foreground">
-              Criado por <span className="text-foreground font-medium">Evaldo.os</span>
+              Criado por <PrefetchLink to="/admin" className="text-foreground font-medium hover:text-foreground no-underline" style={{ textDecoration: 'none' }}>Evaldo de Jesus Santana</PrefetchLink>
             </p>
           </div>
         </div>
