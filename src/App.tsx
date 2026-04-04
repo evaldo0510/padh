@@ -37,6 +37,7 @@ const VendaRitualSilencio = lazy(() => import("./pages/venda/VendaRitualSilencio
 const VendaPoesiaHipnotica = lazy(() => import("./pages/venda/VendaPoesiaHipnotica"));
 const CienciaPoesia = lazy(() => import("./pages/CienciaPoesia"));
 const ComboPADH = lazy(() => import("./pages/ComboPADH"));
+const Admin = lazy(() => import("./pages/Admin"));
 
 const queryClient = new QueryClient();
 
@@ -74,6 +75,7 @@ const AnimatedRoutes = () => {
           <Route path="/venda/poesia-hipnotica" element={<PageTransition><VendaPoesiaHipnotica /></PageTransition>} />
           <Route path="/ciencia-da-poesia" element={<PageTransition><CienciaPoesia /></PageTransition>} />
           <Route path="/combo-padh" element={<PageTransition><ComboPADH /></PageTransition>} />
+          <Route path="/admin" element={<PageTransition><Admin /></PageTransition>} />
           <Route path="*" element={<PageTransition><NotFound /></PageTransition>} />
         </Routes>
       </AnimatePresence>
