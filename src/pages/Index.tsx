@@ -411,9 +411,9 @@ const Index = () => {
             <div className="mt-16 p-8 rounded-2xl bg-primary/5 border border-primary/10 text-center">
               <h4 className="font-heading font-semibold text-foreground mb-2">💡 Dica de Mestre: A Jornada Integrada</h4>
               <p className="text-sm text-muted-foreground max-w-2xl mx-auto">
-                Para não perder nada, muitos alunos optam pelo **Combo P.A.D.H.** onde iniciam pela vivência do Livro-Curso, 
-                estudam a técnica no Curso PCH e finalizam com a certificação na Formação. 
-                <Link to="/contato" className="text-primary hover:underline font-medium ml-1">Consulte condições especiais para o pacote completo.</Link>
+                Para não perder nada, muitos alunos optam pelo <strong className="text-foreground">Combo P.A.D.H.</strong> onde iniciam pela vivência do Livro-Curso, 
+                estudam a técnica no Curso PCH e finalizam com a certificação na Formação.{' '}
+                <Link to="/contato" className="text-primary hover:underline font-medium">Consulte condições especiais para o pacote completo.</Link>
               </p>
             </div>
           </div>
