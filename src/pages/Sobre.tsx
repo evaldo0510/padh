@@ -387,11 +387,11 @@ const Sobre = () => {
       </section>
 
       {/* Missão e Visão */}
-      <section className="py-24 border-t border-border/30 relative overflow-hidden">
+      <section className="section-padding border-t border-border/20 relative overflow-hidden">
         <div className="absolute inset-0 gradient-glow" />
         <div
           ref={missionSection.ref}
-          className={`relative container mx-auto px-6 transition-all duration-1000 ${
+          className={`relative container mx-auto px-6 md:px-8 transition-all duration-1000 ${
             missionSection.isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-12'
           }`}
         >
