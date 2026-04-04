@@ -111,10 +111,10 @@ const FerramentasIndex = () => {
       </section>
 
       {/* Lista de Ferramentas */}
-      <section className="py-20 border-t border-border/30">
+      <section className="section-padding border-t border-border/20">
         <div
           ref={toolsAnim.ref}
-          className={`container mx-auto px-6 transition-all duration-1000 ${
+          className={`container mx-auto px-6 md:px-8 transition-all duration-1000 ${
             toolsAnim.isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-12'
           }`}
         >
