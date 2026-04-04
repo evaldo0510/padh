@@ -145,21 +145,21 @@ const Index = () => {
       </section>
 
       {/* O que é a P.A.D.H. */}
-      <section className="relative py-24 overflow-hidden">
+      <section className="relative section-padding overflow-hidden">
         <div className="absolute inset-0 gradient-warm" />
         <div
           ref={aboutSection.ref}
-          className={`relative container mx-auto px-6 transition-all duration-1000 ${
+          className={`relative container mx-auto px-6 md:px-8 transition-all duration-1000 ${
             aboutSection.isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-12'
           }`}
         >
           <div className="max-w-5xl mx-auto">
-            <div className="text-center mb-16">
-              <p className="text-sm uppercase tracking-[0.2em] text-primary mb-3 font-medium">Sobre a Metodologia</p>
-              <h2 className="text-3xl md:text-5xl font-heading font-bold text-foreground mb-6">
+            <div className="section-header">
+              <p className="section-label">Sobre a Metodologia</p>
+              <h2 className="section-title">
                 O que é a Poesia Cognitiva Hipnótica?
               </h2>
-              <div className="w-16 h-px bg-primary/40 mx-auto" />
+              <div className="section-divider" />
             </div>
 
             <div className="grid md:grid-cols-2 gap-12 items-start">
