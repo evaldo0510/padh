@@ -162,7 +162,7 @@ const Index = () => {
               <div className="section-divider" />
             </div>
 
-            <div className="grid md:grid-cols-2 gap-12 items-start">
+            <div className="grid md:grid-cols-2 gap-10 lg:gap-16 items-start">
               <div className="space-y-6">
                 <p className="text-lg text-muted-foreground leading-relaxed">
                   A <strong className="text-foreground">PCH</strong> é uma abordagem inovadora criada por Evaldo de Jesus Santana 
