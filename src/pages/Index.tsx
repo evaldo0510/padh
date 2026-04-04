@@ -375,7 +375,7 @@ const Index = () => {
                   color: "border-spiritual-indigo/30"
                 }
               ].map((item, i) => (
-                <Card key={i} className={`relative h-full flex flex-col border-2 transition-all duration-300 hover:shadow-xl ${item.color} ${item.highlight ? 'bg-card shadow-lg scale-105 z-10' : 'bg-card/50'}`}>
+                <Card key={i} className={`relative h-full flex flex-col border-2 transition-all duration-300 ${item.color} ${item.highlight ? 'bg-card shadow-lg md:scale-105 z-10' : 'bg-card/50'}`}>
                   {item.highlight && (
                     <div className="absolute -top-4 left-1/2 -translate-x-1/2 bg-primary text-primary-foreground text-[10px] uppercase tracking-widest font-bold py-1 px-3 rounded-full">
                       Mais Completo
