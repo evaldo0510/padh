@@ -135,7 +135,7 @@ const Index = () => {
                 <cite className="text-sm text-primary/70 mt-2 block not-italic">— Evaldo de Jesus Santana, Prisão Interior</cite>
               </blockquote>
               <TextReader
-                text="A poesia toca onde a fala falha. A hipnose abre o portão dos porões. A cognição redesenha o mapa interno."
+                text="Quando se olha no espelho, o que é que você vê? Eu vi a poesia esperando do outro lado de mim."
                 label="Ouvir Poema"
                 className="mt-3"
               />
