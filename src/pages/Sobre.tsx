@@ -170,7 +170,60 @@ const Sobre = () => {
         </div>
       </section>
 
-      {/* Pilares Filosóficos */}
+      {/* O Método P.A.D.H. */}
+      <section className="py-24 border-t border-border/30 bg-primary/[0.01]">
+        <div className="container mx-auto px-6">
+          <div className="max-w-4xl mx-auto">
+            <div className="text-center mb-16">
+              <p className="text-sm uppercase tracking-[0.2em] text-primary mb-3 font-medium">Metodologia</p>
+              <h2 className="text-3xl md:text-5xl font-heading font-bold text-foreground mb-6">
+                O Protocolo P.A.D.H.
+              </h2>
+              <p className="text-muted-foreground max-w-2xl mx-auto italic">
+                "Poesia Aplicada ao Desenvolvimento Humano" — uma jornada estruturada em quatro pilares fundamentais para a transformação inconsciente.
+              </p>
+            </div>
+
+            <div className="grid md:grid-cols-2 gap-8">
+              {[
+                {
+                  phase: "Fase 1: Preparação",
+                  title: "Abertura do Solo",
+                  desc: "Identificação do estado emocional presente e criação de um ambiente de segurança psicológica. Através de poemas de 'aterramento', preparamos o terreno da consciência para receber as sementes da mudança.",
+                },
+                {
+                  phase: "Fase 2: Aplicação",
+                  title: "O Encontro Poético",
+                  desc: "Uso de ferramentas como o Poema-Funil ou Verso-Gatilho. É o momento em que a poesia atua como vetor de hipnose ericksoniana, contornando defesas e comunicando-se diretamente com o simbólico.",
+                },
+                {
+                  phase: "Fase 3: Desenvolvimento",
+                  title: "Cultivo da Mudança",
+                  desc: "Acompanhamento da ressonância das palavras no sistema do cliente. Observamos como o mapa cerebral se reorganiza e como novos significados começam a brotar a partir das metáforas instaladas.",
+                },
+                {
+                  phase: "Fase 4: Hibridização",
+                  title: "Integração e Colheita",
+                  desc: "A fase final onde o cliente assume o papel de coautor. Através da reescrita ou do Ritual do Silêncio, a nova percepção é integrada à identidade, tornando-se uma ferramenta de autonomia emocional.",
+                }
+              ].map((step, i) => (
+                <div key={i} className="glass-card p-8 rounded-2xl space-y-4 border border-primary/10 hover:border-primary/30 transition-all group">
+                  <div className="inline-block px-3 py-1 rounded-full bg-primary/10 text-primary text-xs font-bold uppercase tracking-wider">
+                    {step.phase}
+                  </div>
+                  <h3 className="text-xl font-heading font-semibold text-foreground group-hover:text-primary transition-colors">
+                    {step.title}
+                  </h3>
+                  <p className="text-sm text-muted-foreground leading-relaxed">
+                    {step.desc}
+                  </p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
       <section className="py-24 border-t border-border/30">
         <div
           ref={pillarsSection.ref}
@@ -278,6 +331,28 @@ const Sobre = () => {
                   Entre em Contato
                 </Button>
               </Link>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Valores e Ética */}
+      <section className="py-24 border-t border-border/30 bg-secondary/[0.02]">
+        <div className="container mx-auto px-6">
+          <div className="max-w-4xl mx-auto text-center">
+            <h3 className="text-2xl md:text-3xl font-heading font-bold text-foreground mb-12">Compromisso com o Rigor e a Sensibilidade</h3>
+            <div className="grid sm:grid-cols-3 gap-8 text-left">
+              {[
+                { title: "Rigor Científico", desc: "Baseamos nossas práticas em estudos de neurociência e linguística cognitiva para garantir eficácia e segurança." },
+                { title: "Respeito ao Inconsciente", desc: "Nossa abordagem é não-invasiva, honrando o tempo e os portais simbólicos de cada indivíduo." },
+                { title: "Beleza Ética", desc: "Acreditamos que a estética poética é um direito humano e um caminho legítimo de saúde integral." }
+              ].map((v, i) => (
+                <div key={i} className="space-y-3">
+                  <div className="w-10 h-px bg-primary/40 mb-4" />
+                  <h4 className="font-heading font-semibold text-primary">{v.title}</h4>
+                  <p className="text-sm text-muted-foreground leading-relaxed">{v.desc}</p>
+                </div>
+              ))}
             </div>
           </div>
         </div>

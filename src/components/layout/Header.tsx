@@ -51,7 +51,10 @@ const Header = () => {
               <span className="text-lg font-heading font-bold text-foreground leading-none tracking-wide">
                 P.A.D.H.
               </span>
-              <span className="text-[10px] text-muted-foreground leading-none tracking-widest uppercase">
+              <span className="text-[10px] text-primary leading-tight font-medium max-w-[150px]">
+                Poesia Aplicada ao Desenvolvimento Humano
+              </span>
+              <span className="text-[10px] text-muted-foreground leading-none tracking-widest uppercase mt-0.5">
                 Evaldo PCH Master
               </span>
             </div>
