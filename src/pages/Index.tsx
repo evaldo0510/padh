@@ -44,7 +44,7 @@ const Index = () => {
         icon: <Target className="h-5 w-5" />,
         title: 'Curso P.A.D.H.',
         desc: 'O manual técnico completo da metodologia: base teórica, neurociência e os 4 pilares estruturais.',
-        link: '/curso-pch',
+        link: '/curso-padh',
       },
       {
         icon: <Feather className="h-5 w-5" />,
