@@ -39,7 +39,7 @@ const Formacao = () => {
     },
     {
       numero: 5,
-      titulo: "As Ferramentas da PCH — Parte 2",
+      titulo: "As Ferramentas da P.A.D.H. — Parte 2",
       duracao: "60 min",
       descricao: "Escrita terapêutica profunda e técnicas avançadas de intervenção poética.",
       topicos: ["Caderno de Voz Interna Poética", "Encenação Poética Interna", "Reescrita Poética de Narrativas", "Escrita em dupla de poema-dramatização"]
