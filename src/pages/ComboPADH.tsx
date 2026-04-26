@@ -9,6 +9,7 @@ import { Link } from 'react-router-dom';
 import PageLayout from '@/components/layout/PageLayout';
 import { useScrollAnimation } from '@/hooks/useScrollAnimation';
 import { toast } from 'sonner';
+import { pagesSEO } from '@/lib/seo-config';
 
 const ComboPADH = () => {
   const heroSection = useScrollAnimation();
