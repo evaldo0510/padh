@@ -643,8 +643,8 @@ O medo pode olhar, mas nunca guiar."`}</Poem>
 
                   <SectionCard className="border-l-4 border-l-secondary/40">
                     <div className="flex items-center gap-2 mb-3">
-                      <span className="text-secondary font-bold text-lg">Fase 4</span>
-                      <h3 className="text-lg font-heading font-semibold text-foreground">Ancoragem e Fechamento (10 min)</h3>
+                      <span className="text-secondary font-bold text-lg">H</span>
+                      <h3 className="text-lg font-heading font-semibold text-foreground">Humano: Ancoragem e Integração (10 min)</h3>
                     </div>
                     <p className="mb-3"><strong className="text-foreground">Objetivo:</strong> Criar um símbolo interno para fixar o aprendizado.</p>
                     <ul className="space-y-2 text-sm mb-4">
