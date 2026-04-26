@@ -49,8 +49,8 @@ const CursoPCH = () => {
   return (
     <PageLayout
       seo={{
-        title: 'Curso P.A.D.H. — Poesia Aplicada ao Desenvolvimento Humano',
-        description: 'Guia técnico da metodologia P.A.D.H.: base teórica, exercícios de reestruturação de crenças, técnicas de linguagem hipnótica e sessão terapêutica em 4 fases.',
+        title: 'Curso P.A.D.H. — Domínio Técnico dos 4 Pilares',
+        description: 'O manual técnico completo da metodologia P.A.D.H. (Poesia Aplicada ao Desenvolvimento Humano). Aprenda a base científica e os 4 pilares estruturais.',
         path: '/curso-padh',
       }}
       currentPage="Curso P.A.D.H."
@@ -111,11 +111,11 @@ const CursoPCH = () => {
 
                   <Quote>"Combinando a palavra com intenção e ritmo, criamos um espaço para o florescimento de novas possibilidades." 🌱</Quote>
 
-                  <h3 className="text-lg font-heading font-semibold text-foreground">✨ Poesia Cognitiva Hipnótica (PCH)</h3>
-                  <p>A PCH é uma ferramenta poderosa para ressignificar crenças e estimular mudanças emocionais positivas. Com base na Terapia Cognitivo-Comportamental (TCC), combina linguagem sugestiva, metáforas e afirmações para reformular padrões mentais limitantes.</p>
+                  <h3 className="text-lg font-heading font-semibold text-foreground">✨ Poesia Aplicada ao Desenvolvimento Humano (P.A.D.H.)</h3>
+                  <p>A P.A.D.H. é uma metodologia poderosa para ressignificar crenças e estimular mudanças emocionais positivas. Com base na neurociência e nos 4 pilares, combina linguagem sugestiva, metáforas e afirmações para reformular padrões mentais limitantes.</p>
 
                   <SectionCard>
-                    <h4 className="font-heading font-semibold text-foreground mb-3">💡 Como aplicar a PCH para transformar crenças?</h4>
+                    <h4 className="font-heading font-semibold text-foreground mb-3">💡 Como aplicar a P.A.D.H. para transformar crenças?</h4>
                     <div className="space-y-4">
                       <div>
                         <p className="text-primary font-medium text-sm mb-1">🔹 1. Identificação da Crença Limitante:</p>

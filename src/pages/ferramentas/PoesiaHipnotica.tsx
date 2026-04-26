@@ -33,7 +33,7 @@ const PoesiaHipnotica = () => {
           <div className="animate-fade-in-up max-w-3xl mx-auto">
             <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-primary/20 bg-primary/5 text-primary text-sm font-medium mb-6">
               <Sparkles className="h-3.5 w-3.5" />
-              Poesia Cognitiva Hipnótica
+              Poesia Aplicada ao Desenvolvimento Humano
             </div>
             <h1 className="text-4xl md:text-6xl font-heading font-bold mb-4 text-foreground">
               Poesia <span className="text-primary italic">Hipnótica</span>
@@ -124,13 +124,13 @@ const PoesiaHipnotica = () => {
             <div className="text-center mb-10">
               <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-primary/20 bg-primary/5 text-primary text-sm font-medium mb-4">
                 <Sparkles className="h-3.5 w-3.5" />
-                PCH
+                P.A.D.H.
               </div>
               <h2 className="text-3xl md:text-4xl font-heading font-bold text-foreground mb-4">
-                Poesia Cognitiva <span className="text-primary italic">Hipnótica</span>
+                Poesia Aplicada ao <span className="text-primary italic">Desenvolvimento Humano</span>
               </h2>
               <p className="text-muted-foreground leading-relaxed max-w-2xl mx-auto">
-                A PCH é uma ferramenta poderosa para ressignificar crenças e estimular mudanças emocionais positivas.
+                A P.A.D.H. é uma ferramenta poderosa para ressignificar crenças e estimular mudanças emocionais positivas.
                 Com base na Terapia Cognitivo-Comportamental (TCC), combina linguagem sugestiva, metáforas e afirmações
                 para reformular padrões mentais limitantes.
               </p>

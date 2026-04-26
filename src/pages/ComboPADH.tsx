@@ -9,6 +9,7 @@ import { Link } from 'react-router-dom';
 import PageLayout from '@/components/layout/PageLayout';
 import { useScrollAnimation } from '@/hooks/useScrollAnimation';
 import { toast } from 'sonner';
+import { pagesSEO } from '@/lib/seo-config';
 
 const ComboPADH = () => {
   const heroSection = useScrollAnimation();
@@ -38,11 +39,7 @@ const ComboPADH = () => {
     setFormData({ nome: '', email: '', telefone: '', interesse: '', mensagem: '' });
   };
 
-  const seo = {
-    title: 'Combo P.A.D.H. — Jornada Integrada Completa',
-    description: 'Acesse o pacote completo: Livro-Curso + Curso PCH + Formação Profissional. A jornada integrada para quem não quer perder nada da Poesia Cognitiva Hipnótica.',
-    path: '/combo-padh',
-  };
+  const seo = pagesSEO.comboPADH;
 
   const pillars = [
     {

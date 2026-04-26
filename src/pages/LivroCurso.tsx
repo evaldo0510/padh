@@ -89,7 +89,7 @@ const LivroCurso = () => {
                   é poética aplicada à escuta clínica e pedagógica, é linguagem simbólica que se infiltra pelas 
                   frestas da lógica e toca camadas esquecidas do ser.
                 </p>
-                <p className="mb-4 text-muted-foreground">A PCH une três rios fundamentais:</p>
+                <p className="mb-4 text-muted-foreground">A P.A.D.H. une três rios fundamentais:</p>
                 <div className="grid sm:grid-cols-3 gap-4">
                   {[
                     { emoji: '🌊', title: 'Poesia Terapêutica', desc: 'Ressignifica sentidos pela beleza e ritmo das palavras.' },
@@ -119,7 +119,7 @@ const LivroCurso = () => {
                   1.2 A Linguagem que Sussurra para Dentro
                 </h3>
                 <p className="text-muted-foreground mb-4 leading-relaxed">
-                  Na PCH, as palavras são sementes de metáforas férteis. Ao contrário da linguagem 
+                  Na P.A.D.H., as palavras são sementes de metáforas férteis. Ao contrário da linguagem 
                   imperativa que ordena, trabalhamos com <strong className="text-foreground">linguagem evocativa</strong> — 
                   aquela que abre espaço para o sentir, que convida ao invés de comandar.
                 </p>
@@ -156,7 +156,7 @@ const LivroCurso = () => {
                   a experiência fosse real. Quando lemos "a saudade dorme na rede do peito", nosso cérebro 
                   não apenas compreende — ele <em>sente</em> a rede, o peito, o peso da saudade. 
                   É essa capacidade de criar experiências sensoriais através de palavras que torna 
-                  a PCH uma ferramenta terapêutica tão poderosa.
+                  a P.A.D.H. uma ferramenta terapêutica tão poderosa.
                 </p>
               </div>
             </CardContent>

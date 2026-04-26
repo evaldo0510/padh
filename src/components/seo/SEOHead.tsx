@@ -6,14 +6,15 @@ const DEFAULT_IMAGE = `${SITE_URL}/og-image.png`;
 
 const breadcrumbLabels: Record<string, string> = {
   '/': 'Início',
-  '/livro-curso': 'Livro-Curso PCH',
-  '/formacao': 'Formação em PCH',
+  '/livro-curso': 'Livro-Curso P.A.D.H.',
+  '/formacao': 'Formação P.A.D.H.',
   '/mapa-cerebral': 'Mapa Cerebral',
   '/aula-exclusiva': 'Aula Exclusiva',
   '/sobre': 'Sobre',
   '/contato': 'Contato',
-  '/curso-pch': 'Curso PCH',
-  '/ferramentas': 'Ferramentas P.A.D.H.',
+  '/curso-padh': 'Curso P.A.D.H.',
+  '/combo-padh': 'Combo P.A.D.H.',
+  '/ferramentas': '8 Ferramentas P.A.D.H.',
   '/ferramentas/poema-funil': 'Poema-Funil',
   '/ferramentas/verso-gatilho': 'Verso-Gatilho',
   '/ferramentas/poemadiagnostico': 'Poemadiagnóstico',
@@ -70,13 +71,13 @@ interface SEOHeadProps {
 
 const SEOHead = ({
   title,
-  description = 'Descubra a Poesia Cognitiva Hipnótica (PCH) — metodologia que une neurociência, hipnose ericksoniana e linguagem poética para transformação interior. Por Evaldo de Jesus Santana.',
+  description = 'Metodologia P.A.D.H. (Poesia Aplicada ao Desenvolvimento Humano) — Os 4 Pilares da transformação interior através da neurociência e da linguagem poética.',
   path = '/',
   type = 'website',
   jsonLd,
 }: SEOHeadProps) => {
-  const fullTitle = title
-    ? `${title} | P.A.D.H. — Evaldo de Jesus Santana`
+  const fullTitle = title 
+    ? (title.includes('P.A.D.H.') ? title : `${title} | P.A.D.H.`)
     : 'P.A.D.H. — Poesia Aplicada ao Desenvolvimento Humano | Evaldo de Jesus Santana';
   const url = path === '/' ? SITE_URL : `${SITE_URL}${path}`;
 
