@@ -130,7 +130,7 @@ const PoesiaHipnotica = () => {
                 Poesia Aplicada ao <span className="text-primary italic">Desenvolvimento Humano</span>
               </h2>
               <p className="text-muted-foreground leading-relaxed max-w-2xl mx-auto">
-                A PCH é uma ferramenta poderosa para ressignificar crenças e estimular mudanças emocionais positivas.
+                A P.A.D.H. é uma ferramenta poderosa para ressignificar crenças e estimular mudanças emocionais positivas.
                 Com base na Terapia Cognitivo-Comportamental (TCC), combina linguagem sugestiva, metáforas e afirmações
                 para reformular padrões mentais limitantes.
               </p>
