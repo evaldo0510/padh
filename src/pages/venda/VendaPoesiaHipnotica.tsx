@@ -18,10 +18,10 @@ const VendaPoesiaHipnotica = () => (
       'Deseja se diferenciar no mercado com uma metodologia inovadora',
     ]}
     solutionTitle="A integração que você buscava"
-    solutionDescription="A Poesia Cognitiva Hipnótica é a síntese das 7 ferramentas P.A.D.H. — um sistema completo que usa a palavra como instrumento de reestruturação neurológica, emocional e comportamental."
+    solutionDescription="A Poesia Cognitiva Hipnótica é a síntese das 8 ferramentas P.A.D.H. — um sistema completo que usa a palavra como instrumento de reestruturação neurológica, emocional e comportamental."
     benefits={[
       'Domine o sistema completo de Poesia Cognitiva Hipnótica',
-      'Integre todas as 7 ferramentas P.A.D.H. num fluxo coerente',
+      'Integre todas as 8 ferramentas P.A.D.H. num fluxo coerente',
       'Compreenda a neurociência por trás de cada técnica',
       'Crie protocolos personalizados para diferentes casos',
       'Acesse a coleção completa de poemas hipnóticos',
@@ -31,7 +31,7 @@ const VendaPoesiaHipnotica = () => (
     ]}
     howItWorks={[
       { step: 'Fundamentos teóricos', description: 'Compreenda as bases neurocientíficas, a hipnose ericksoniana e a linguística cognitiva por trás da PCH.' },
-      { step: 'Prática das 7 ferramentas', description: 'Domine cada ferramenta P.A.D.H. individualmente com exercícios progressivos.' },
+      { step: 'Prática das 8 ferramentas', description: 'Domine cada ferramenta P.A.D.H. individualmente com exercícios progressivos.' },
       { step: 'Integração e criação', description: 'Aprenda a combinar ferramentas e criar protocolos personalizados para cada caso.' },
       { step: 'Supervisão e certificação', description: 'Receba feedback sobre seus casos e obtenha o certificado de praticante PCH.' },
     ]}
@@ -40,7 +40,7 @@ const VendaPoesiaHipnotica = () => (
       { name: 'Isabela K.', role: 'Psicóloga e Poetisa', text: 'Finalmente uma abordagem que honra tanto a ciência quanto a arte. Minha prática clínica nunca mais será a mesma.' },
       { name: 'Prof. Ricardo M.', role: 'Neurocientista', text: 'As bases neurológicas são consistentes. A poesia realmente ativa circuitos cerebrais de forma única e mensurável.' },
     ]}
-    bonuses={['Acesso a todas as 7 ferramentas P.A.D.H.', 'Coleção de 50 poemas hipnóticos', 'Supervisão de 3 casos clínicos', 'Certificado de Praticante PCH']}
+    bonuses={['Acesso a todas as 8 ferramentas P.A.D.H.', 'Coleção de 50 poemas hipnóticos', 'Supervisão de 3 casos clínicos', 'Certificado de Praticante PCH']}
     price="R$ 197"
     originalPrice="R$ 397"
     ctaText="Quero acessar a Poesia Cognitiva Hipnótica"

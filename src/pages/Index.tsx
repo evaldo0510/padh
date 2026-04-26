@@ -48,8 +48,8 @@ const Index = () => {
       },
       {
         icon: <Feather className="h-5 w-5" />,
-        title: '7 Ferramentas P.A.D.H.',
-        desc: 'Do Poema-Funil ao Ritual do Silêncio Poético — 7 instrumentos vivos para transformação interior.',
+        title: '8 Ferramentas P.A.D.H.',
+        desc: 'Do Poema-Funil à Poesia Hipnótica — 8 instrumentos vivos para transformação interior.',
         link: '/ferramentas',
       },
       {
