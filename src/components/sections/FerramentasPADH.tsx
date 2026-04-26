@@ -268,16 +268,16 @@ export const FerramentasPADH = () => {
         </CardContent>
       </Card>
 
-      {/* Metodologia das 3 Etapas */}
+      {/* Metodologia P.A.D.H. */}
       <Card className="shadow-medium">
         <CardHeader>
           <CardTitle className="text-2xl font-heading flex items-center gap-2">
             <Target className="h-6 w-6 text-primary" />
-            Metodologia das 3 Etapas
+            Metodologia P.A.D.H.
           </CardTitle>
         </CardHeader>
         <CardContent>
-          <div className="grid md:grid-cols-3 gap-6">
+          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
             {methodology.map((phase, index) => (
               <div key={index} className={`p-6 rounded-lg ${phase.color} text-center space-y-3`}>
                 <div className="flex justify-center">
