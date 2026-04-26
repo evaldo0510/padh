@@ -580,7 +580,7 @@ E quando percebo, já estou mais longe do que imaginei."`}</Poem>
                   </div>
                   <div>
                     <p className="text-xs text-primary font-medium uppercase tracking-wider">Módulo 7</p>
-                    <h2 className="text-xl font-heading font-semibold text-foreground">Sessão Terapêutica PCH em 4 Fases</h2>
+                    <h2 className="text-xl font-heading font-semibold text-foreground">Sessão Terapêutica em 4 Fases (P.A.D.H.)</h2>
                   </div>
                 </div>
               </AccordionTrigger>
