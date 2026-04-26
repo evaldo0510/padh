@@ -212,13 +212,13 @@ const LivroCurso = () => {
             </CardHeader>
             <CardContent>
               <p className="text-muted-foreground mb-6">
-                O Livro-Curso continua com aprofundamentos progressivos nas ferramentas e técnicas da PCH:
+                O Livro-Curso continua com aprofundamentos progressivos nas ferramentas e técnicas da P.A.D.H.:
               </p>
               <div className="space-y-3">
                 {[
-                  'Capítulo 2 — As 7 Ferramentas da PCH: Do Poema-Funil ao Haicai Terapêutico',
+                  'Capítulo 2 — As 8 Ferramentas P.A.D.H.: Do Poema-Funil ao Ritual do Silêncio',
                   'Capítulo 3 — Neurociência da Leitura Poética: O Mapa Cerebral do Leitor',
-                  'Capítulo 4 — O Protocolo P.A.D.H. na Prática Clínica',
+                  'Capítulo 4 — Os 4 Pilares da P.A.D.H. na Prática Clínica',
                   'Capítulo 5 — Construindo Sessões Terapêuticas com Poesia',
                   'Capítulo 6 — Rituais Poéticos e Cerimônias de Transformação',
                   'Capítulo 7 — Estudos de Caso e Relatos de Experiência',
