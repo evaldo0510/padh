@@ -40,7 +40,7 @@ const VendaPoesiaHipnotica = () => (
       { name: 'Isabela K.', role: 'Psicóloga e Poetisa', text: 'Finalmente uma abordagem que honra tanto a ciência quanto a arte. Minha prática clínica nunca mais será a mesma.' },
       { name: 'Prof. Ricardo M.', role: 'Neurocientista', text: 'As bases neurológicas são consistentes. A poesia realmente ativa circuitos cerebrais de forma única e mensurável.' },
     ]}
-    bonuses={['Acesso a todas as 7 ferramentas P.A.D.H.', 'Coleção de 50 poemas hipnóticos', 'Supervisão de 3 casos clínicos', 'Certificado de Praticante PCH']}
+    bonuses={['Acesso a todas as 8 ferramentas P.A.D.H.', 'Coleção de 50 poemas hipnóticos', 'Supervisão de 3 casos clínicos', 'Certificado de Praticante PCH']}
     price="R$ 197"
     originalPrice="R$ 397"
     ctaText="Quero acessar a Poesia Cognitiva Hipnótica"
