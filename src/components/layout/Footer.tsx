@@ -130,7 +130,7 @@ const Footer = () => {
               <div className="mt-8 pt-6 border-t border-border/10">
                 <h4 className="font-heading font-semibold text-foreground mb-4 text-sm uppercase tracking-widest">Criador</h4>
                 <p className="text-sm text-muted-foreground leading-relaxed">
-                  <strong className="text-foreground">Evaldo de Jesus Santana</strong> — especialista em Poesia Cognitiva Hipnótica.
+                  <strong className="text-foreground">Evaldo de Jesus Santana</strong> — especialista em Poesia Aplicada ao Desenvolvimento Humano.
                 </p>
                 <PrefetchLink
                   to="/sobre"
