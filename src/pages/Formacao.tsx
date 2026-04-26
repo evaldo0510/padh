@@ -48,7 +48,7 @@ const Formacao = () => {
       numero: 6,
       titulo: "Finalização, Ritualização e Acompanhamento",
       duracao: "60 min",
-      descricao: "Encerramentos terapêuticos, integração e continuidade do trabalho com PCH.",
+      descricao: "Encerramentos terapêuticos, integração e continuidade do trabalho com P.A.D.H.",
       topicos: ["Ritual do Silêncio Poético", "Séries de atendimento com PCH", "Adaptação para diferentes públicos", "Projeto terapêutico final e certificação"]
     }
   ];
