@@ -166,7 +166,7 @@ const LivroCurso = () => {
           <Card className="border-primary/20 bg-primary/[0.02]">
             <CardHeader>
               <CardTitle className="text-2xl font-heading text-primary">
-                Exercício Prático 1 — Descobrindo a PCH em Si
+                Exercício Prático 1 — Descobrindo a P.A.D.H. em Si
               </CardTitle>
             </CardHeader>
             <CardContent>
