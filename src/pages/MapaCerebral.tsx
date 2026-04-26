@@ -201,7 +201,7 @@ const MapaCerebral = () => {
             </h3>
             <p className="text-muted-foreground max-w-2xl mx-auto">
               Ao ler poesia, não estamos só decifrando versos — estamos reencenando 
-              vivências emocionais em teatro simbólico interno. Na PCH, o leitor não é 
+              vivências emocionais em teatro simbólico interno. Na metodologia P.A.D.H., o leitor não é 
               um "paciente", mas um <strong className="text-foreground">viajante lírico</strong>.
             </p>
             <p className="poem-text text-primary text-sm">
