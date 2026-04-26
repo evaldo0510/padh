@@ -65,8 +65,8 @@ const CursoPCH = () => {
             Guia Completo do Curso
           </div>
           <h1 className="text-4xl md:text-6xl font-heading font-bold text-foreground mb-4">
-            Poesia Cognitiva{' '}
-            <span className="text-primary italic">Hipnótica</span>
+            Poesia Aplicada ao{' '}
+            <span className="text-primary italic">Desenvolvimento Humano</span>
           </h1>
           <p className="text-muted-foreground text-lg md:text-xl max-w-2xl mx-auto">
             Um guia completo com base teórica, exercícios práticos, técnicas avançadas e um modelo de sessão terapêutica em 4 fases.
