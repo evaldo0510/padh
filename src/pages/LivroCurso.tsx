@@ -18,7 +18,7 @@ const LivroCurso = () => {
           <div className="animate-fade-in-up max-w-3xl mx-auto">
             <p className="text-sm uppercase tracking-[0.2em] text-primary mb-4 font-medium">Livro-Curso P.A.D.H.</p>
             <h1 className="text-4xl md:text-6xl font-heading font-bold mb-6 text-foreground">
-              Ferramentas para a <span className="text-primary italic">Poesia Cognitiva Hipnótica</span>
+              Poesia Aplicada ao <span className="text-primary italic">Desenvolvimento Humano</span>
             </h1>
             <p className="text-lg text-muted-foreground mb-4 leading-relaxed">
               O fio dourado que tece a jornada de autoconhecimento e transformação 
