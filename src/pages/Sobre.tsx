@@ -285,24 +285,24 @@ const Sobre = () => {
             <div className="grid md:grid-cols-2 gap-6">
               {[
                 {
-                  phase: "Fase 1: Poesia",
-                  title: "A Semente Simbólica",
-                  desc: "A base de tudo. Identificação do estado emocional presente através da palavra que cura. Através de poemas de 'aterramento', preparamos o terreno da consciência para receber a mudança.",
+                  phase: "P: Poesia",
+                  title: "O Meio Sensível",
+                  desc: "O uso da palavra como som, ritmo e imagem para acessar o sentir. Através de poemas de 'aterramento', preparamos o terreno da consciência para receber a mudança, contornando as defesas racionais.",
                 },
                 {
-                  phase: "Fase 2: Aplicada",
-                  title: "O Encontro Transformador",
-                  desc: "Uso prático das ferramentas como o Poema-Funil ou Verso-Gatilho. É o momento em que a poesia atua como vetor de mudança, contornando defesas e comunicando-se diretamente com o simbólico.",
+                  phase: "A: Aplicada",
+                  title: "A Metodologia Prática",
+                  desc: "A transição da arte pura para a ferramenta prática de intervenção. Uso das técnicas como o Poema-Funil ou Verso-Gatilho como vetores de mudança intencional no sistema emocional.",
                 },
                 {
-                  phase: "Fase 3: Desenvolvimento",
-                  title: "Cultivo da Mudança",
-                  desc: "Acompanhamento da ressonância das palavras no sistema do cliente. Observamos como o mapa cerebral se reorganiza e como novos significados começam a brotar a partir das metáforas instaladas.",
+                  phase: "D: Desenvolvimento",
+                  title: "A Evolução Contínua",
+                  desc: "O foco na expansão da consciência e na resiliência. Observamos como o mapa cerebral se reorganiza e como novos significados brotam a partir das metáforas instaladas no inconsciente.",
                 },
                 {
-                  phase: "Fase 4: Humano",
-                  title: "Integração do Ser",
-                  desc: "A fase final de humanização e autonomia. Através da reescrita ou do Ritual do Silêncio, a nova percepção é integrada à identidade, tornando-se uma ferramenta de evolução pessoal contínua.",
+                  phase: "H: Humano",
+                  title: "A Pessoa Integral",
+                  desc: "A centralidade no ser humano, na sua inteireza e singularidade. A fase final de integração onde a nova percepção é incorporada à identidade, promovendo autonomia e evolução pessoal.",
                 }
               ].map((step, i) => (
                 <div key={i} className="glass-card p-8 rounded-2xl space-y-4 border border-primary/10 hover:border-primary/30 transition-all group">
