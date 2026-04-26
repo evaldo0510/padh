@@ -89,7 +89,7 @@ const LivroCurso = () => {
                   é poética aplicada à escuta clínica e pedagógica, é linguagem simbólica que se infiltra pelas 
                   frestas da lógica e toca camadas esquecidas do ser.
                 </p>
-                <p className="mb-4 text-muted-foreground">A PCH une três rios fundamentais:</p>
+                <p className="mb-4 text-muted-foreground">A P.A.D.H. une três rios fundamentais:</p>
                 <div className="grid sm:grid-cols-3 gap-4">
                   {[
                     { emoji: '🌊', title: 'Poesia Terapêutica', desc: 'Ressignifica sentidos pela beleza e ritmo das palavras.' },
