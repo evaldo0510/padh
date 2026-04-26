@@ -15,7 +15,7 @@ export default defineConfig(({ mode }) => ({
     mode === "development" && componentTagger(),
     VitePWA({
       registerType: 'autoUpdate',
-      includeAssets: ['favicon.png', 'robots.txt', 'apple-touch-icon.png'],
+      includeAssets: ['favicon.png', 'robots.txt', 'apple-touch-icon.png', 'logo-pwa.svg'],
       manifest: {
         name: 'P.A.D.H. — Poesia Aplicada ao Desenvolvimento Humano',
         short_name: 'P.A.D.H.',
