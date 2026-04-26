@@ -18,7 +18,7 @@ const VendaPoesiaHipnotica = () => (
       'Deseja se diferenciar no mercado com uma metodologia inovadora',
     ]}
     solutionTitle="A integração que você buscava"
-    solutionDescription="A Poesia Cognitiva Hipnótica é a síntese das 7 ferramentas P.A.D.H. — um sistema completo que usa a palavra como instrumento de reestruturação neurológica, emocional e comportamental."
+    solutionDescription="A Poesia Cognitiva Hipnótica é a síntese das 8 ferramentas P.A.D.H. — um sistema completo que usa a palavra como instrumento de reestruturação neurológica, emocional e comportamental."
     benefits={[
       'Domine o sistema completo de Poesia Cognitiva Hipnótica',
       'Integre todas as 7 ferramentas P.A.D.H. num fluxo coerente',
