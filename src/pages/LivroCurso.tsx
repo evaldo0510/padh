@@ -156,7 +156,7 @@ const LivroCurso = () => {
                   a experiência fosse real. Quando lemos "a saudade dorme na rede do peito", nosso cérebro 
                   não apenas compreende — ele <em>sente</em> a rede, o peito, o peso da saudade. 
                   É essa capacidade de criar experiências sensoriais através de palavras que torna 
-                  a PCH uma ferramenta terapêutica tão poderosa.
+                  a P.A.D.H. uma ferramenta terapêutica tão poderosa.
                 </p>
               </div>
             </CardContent>
