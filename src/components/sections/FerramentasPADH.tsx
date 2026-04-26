@@ -180,30 +180,30 @@ suficiente, pleno"`,
 
 const methodology = [
   {
-    title: 'Preparação',
-    description: 'Criar ambiente seguro e propício, estabelecendo conexão, acolhimento e rapport. Avaliar estado emocional inicial e definir intenções para a sessão.',
-    details: 'Configurar espaço físico confortável. Estabelecer presença atenta. Realizar check-in emocional. Explicar processo e obter consentimento informado. Definir objetivos específicos da sessão.',
+    title: 'Poesia',
+    description: 'A base simbólica da nossa metodologia. O uso da palavra como ferramenta de acesso ao inconsciente.',
+    details: 'Uso de linguagem metafórica e rítmica para contornar defesas conscientes e estabelecer rapport profundo com o simbólico.',
     icon: <Target className="h-8 w-8" />,
     color: 'bg-primary/10 text-primary'
   },
   {
-    title: 'Aplicação',
-    description: 'Uso ativo das ferramentas P.A.D.H. com ritmo apropriado, atenção plena e flexibilidade responsiva às necessidades emergentes.',
-    details: 'Selecionar ferramenta adequada ao momento. Aplicar com timing correto. Observar respostas verbais e não-verbais. Ajustar intensidade conforme necessário. Manter espaço para emergência do inconsciente.',
+    title: 'Aplicada',
+    description: 'Uso estratégico das ferramentas P.A.D.H. com timing adequado e flexibilidade responsiva.',
+    details: 'Seleção da ferramenta ideal (como Poema-Funil ou Verso-Gatilho) para o momento específico da sessão e necessidade do cliente.',
     icon: <Wand2 className="h-8 w-8" />,
     color: 'bg-spiritual-violet/10 text-spiritual-violet'
   },
   {
-    title: 'Integração',
-    description: 'Processamento consciente da experiência, ancoragem dos insights e estabelecimento de estratégias para continuidade do trabalho.',
-    details: 'Facilitar reflexão sobre o processo vivido. Identificar insights e mudanças percebidas. Criar plano de ação prático. Estabelecer práticas para casa. Agendar acompanhamento necessário.',
+    title: 'Desenvolvimento',
+    description: 'Aprofundamento da experiência poética e ancoragem dos novos significados alcançados.',
+    details: 'Observação da ressonância das palavras e como novos mapas mentais começam a surgir a partir da experiência vivida.',
     icon: <Sparkles className="h-8 w-8" />,
     color: 'bg-secondary/10 text-secondary'
   },
   {
-    title: 'Acompanhamento',
-    description: 'Monitoramento da evolução entre sessões, ajustes na abordagem e reforço das transformações iniciadas.',
-    details: 'Revisar práticas realizadas. Avaliar mudanças comportamentais e emocionais. Refinar ferramentas conforme feedback. Celebrar progressos alcançados. Adaptar estratégias futuras.',
+    title: 'Humano',
+    description: 'Foco na evolução integral do ser e integração das mudanças à identidade e ao cotidiano.',
+    details: 'Consolidação da autonomia emocional e garantia de que as transformações se tornem parte integrante da vida do cliente.',
     icon: <BookOpen className="h-8 w-8" />,
     color: 'bg-spiritual-indigo/10 text-spiritual-indigo'
   }
