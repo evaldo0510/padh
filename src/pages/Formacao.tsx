@@ -32,7 +32,7 @@ const Formacao = () => {
     },
     {
       numero: 4,
-      titulo: "As Ferramentas da PCH — Parte 1",
+      titulo: "As Ferramentas da P.A.D.H. — Parte 1",
       duracao: "60 min",
       descricao: "Poemas como técnicas: Poema-funil, Verso-gatilho e Poemadiagnóstico.",
       topicos: ["Poema-funil (imersão gradual)", "Verso-gatilho (âncoras emocionais)", "Poemadiagnóstico (projeção e escolha)", "Roda de escuta + aplicação prática"]
