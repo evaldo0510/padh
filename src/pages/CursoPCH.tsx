@@ -621,8 +621,8 @@ e a certeza de que, agora, este momento é seu.`}</Poem>
 
                   <SectionCard className="border-l-4 border-l-primary/40">
                     <div className="flex items-center gap-2 mb-3">
-                      <span className="text-primary font-bold text-lg">Fase 3</span>
-                      <h3 className="text-lg font-heading font-semibold text-foreground">Transformação e Sugestão Positiva (15 min)</h3>
+                      <span className="text-primary font-bold text-lg">D</span>
+                      <h3 className="text-lg font-heading font-semibold text-foreground">Desenvolvimento: Transformação (15 min)</h3>
                     </div>
                     <p className="mb-3"><strong className="text-foreground">Objetivo:</strong> Substituir padrões limitantes por novas narrativas fortalecedoras.</p>
                     <ul className="space-y-2 text-sm mb-4">
