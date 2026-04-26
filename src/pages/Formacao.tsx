@@ -165,7 +165,7 @@ const Formacao = () => {
                     "Áudios guiados com leitura de indução poética",
                     "Cartas poéticas — mini baralho simbólico",
                     "Diário de Poesia Terapêutica",
-                    "Certificado de Formação em PCH"
+                    "Certificado de Formação em P.A.D.H."
                   ].map((item, i) => (
                     <li key={i} className="flex items-start gap-2 text-sm text-muted-foreground">
                       <BookOpen className="h-4 w-4 text-primary mt-0.5 flex-shrink-0" />
