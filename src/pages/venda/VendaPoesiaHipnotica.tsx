@@ -21,7 +21,7 @@ const VendaPoesiaHipnotica = () => (
     solutionDescription="A Poesia Cognitiva Hipnótica é a síntese das 8 ferramentas P.A.D.H. — um sistema completo que usa a palavra como instrumento de reestruturação neurológica, emocional e comportamental."
     benefits={[
       'Domine o sistema completo de Poesia Cognitiva Hipnótica',
-      'Integre todas as 7 ferramentas P.A.D.H. num fluxo coerente',
+      'Integre todas as 8 ferramentas P.A.D.H. num fluxo coerente',
       'Compreenda a neurociência por trás de cada técnica',
       'Crie protocolos personalizados para diferentes casos',
       'Acesse a coleção completa de poemas hipnóticos',
