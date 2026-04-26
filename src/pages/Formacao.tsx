@@ -109,7 +109,7 @@ const Formacao = () => {
                 emocional e cognitiva, unindo metáforas, técnicas de hipnose leve e práticas narrativas. 
                 Ao final, o aluno será capaz de planejar e conduzir sessões terapêuticas completas 
                 usando o protocolo P.A.D.H., criando poemas terapêuticos personalizados e aplicando 
-                as 7 ferramentas da PCH com segurança e sensibilidade.
+                as 8 ferramentas da PCH com segurança e sensibilidade.
               </p>
             </CardContent>
           </Card>
