@@ -245,7 +245,7 @@ const Sobre = () => {
                 {
                   icon: <Award className="h-5 w-5" />,
                   title: 'Criação do P.A.D.H.',
-                  desc: 'Desenvolvimento da Poesia Aplicada ao Desenvolvimento Humano em suas 4 fases: Preparação, Aplicação, Desenvolvimento e Hibridização.',
+                  desc: 'Desenvolvimento da Poesia Aplicada ao Desenvolvimento Humano em suas 4 fases fundamentais.',
                 },
                 {
                   icon: <Users className="h-5 w-5" />,
@@ -285,14 +285,14 @@ const Sobre = () => {
             <div className="grid md:grid-cols-2 gap-6">
               {[
                 {
-                  phase: "Fase 1: Preparação",
-                  title: "Abertura do Solo",
-                  desc: "Identificação do estado emocional presente e criação de um ambiente de segurança psicológica. Através de poemas de 'aterramento', preparamos o terreno da consciência para receber as sementes da mudança.",
+                  phase: "Fase 1: Poesia",
+                  title: "A Semente Simbólica",
+                  desc: "A base de tudo. Identificação do estado emocional presente através da palavra que cura. Através de poemas de 'aterramento', preparamos o terreno da consciência para receber a mudança.",
                 },
                 {
-                  phase: "Fase 2: Aplicação",
-                  title: "O Encontro Poético",
-                  desc: "Uso de ferramentas como o Poema-Funil ou Verso-Gatilho. É o momento em que a poesia atua como vetor de hipnose ericksoniana, contornando defesas e comunicando-se diretamente com o simbólico.",
+                  phase: "Fase 2: Aplicada",
+                  title: "O Encontro Transformador",
+                  desc: "Uso prático das ferramentas como o Poema-Funil ou Verso-Gatilho. É o momento em que a poesia atua como vetor de mudança, contornando defesas e comunicando-se diretamente com o simbólico.",
                 },
                 {
                   phase: "Fase 3: Desenvolvimento",
@@ -300,9 +300,9 @@ const Sobre = () => {
                   desc: "Acompanhamento da ressonância das palavras no sistema do cliente. Observamos como o mapa cerebral se reorganiza e como novos significados começam a brotar a partir das metáforas instaladas.",
                 },
                 {
-                  phase: "Fase 4: Hibridização",
-                  title: "Integração e Colheita",
-                  desc: "A fase final onde o cliente assume o papel de coautor. Através da reescrita ou do Ritual do Silêncio, a nova percepção é integrada à identidade, tornando-se uma ferramenta de autonomia emocional.",
+                  phase: "Fase 4: Humano",
+                  title: "Integração do Ser",
+                  desc: "A fase final de humanização e autonomia. Através da reescrita ou do Ritual do Silêncio, a nova percepção é integrada à identidade, tornando-se uma ferramenta de evolução pessoal contínua.",
                 }
               ].map((step, i) => (
                 <div key={i} className="glass-card p-8 rounded-2xl space-y-4 border border-primary/10 hover:border-primary/30 transition-all group">
