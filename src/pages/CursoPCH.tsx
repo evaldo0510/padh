@@ -49,11 +49,11 @@ const CursoPCH = () => {
   return (
     <PageLayout
       seo={{
-        title: 'Curso PCH — Poesia Cognitiva Hipnótica',
-        description: 'Guia completo do curso de Poesia Cognitiva Hipnótica: base teórica, exercícios de reestruturação de crenças, técnicas de linguagem hipnótica, sessão terapêutica em 4 fases e exercícios práticos.',
+        title: 'Curso P.A.D.H. — Poesia Aplicada ao Desenvolvimento Humano',
+        description: 'Guia técnico da metodologia P.A.D.H.: base teórica, exercícios de reestruturação de crenças, técnicas de linguagem hipnótica e sessão terapêutica em 4 fases.',
         path: '/curso-pch',
       }}
-      currentPage="Curso PCH"
+      currentPage="Curso P.A.D.H."
     >
       {/* Hero */}
       <section className="relative py-20 md:py-28 overflow-hidden">
