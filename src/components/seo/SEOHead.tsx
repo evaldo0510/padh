@@ -76,8 +76,8 @@ const SEOHead = ({
   type = 'website',
   jsonLd,
 }: SEOHeadProps) => {
-  const fullTitle = title
-    ? `${title} | P.A.D.H. — Poesia Aplicada ao Desenvolvimento Humano`
+  const fullTitle = title 
+    ? (title.includes('P.A.D.H.') ? title : `${title} | P.A.D.H.`)
     : 'P.A.D.H. — Poesia Aplicada ao Desenvolvimento Humano | Evaldo de Jesus Santana';
   const url = path === '/' ? SITE_URL : `${SITE_URL}${path}`;
 
