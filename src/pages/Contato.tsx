@@ -107,7 +107,7 @@ const Contato = () => {
                 </CardHeader>
                 <CardContent>
                   <p className="text-sm text-muted-foreground mb-3">
-                    Acompanhe conteúdos exclusivos sobre PCH e desenvolvimento humano:
+                    Acompanhe conteúdos exclusivos sobre P.A.D.H. e desenvolvimento humano:
                   </p>
                   <div className="grid grid-cols-3 gap-2">
                     {[
