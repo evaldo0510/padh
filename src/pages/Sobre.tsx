@@ -31,8 +31,8 @@ const Sobre = () => {
             </div>
 
             <h1 className="text-4xl sm:text-5xl md:text-7xl font-heading font-bold leading-[0.95] tracking-tight">
-              <span className="text-foreground">Evaldo</span>{' '}
-              <span className="text-primary italic">PCH Master</span>
+              <span className="text-foreground">Evaldo de Jesus</span>{' '}
+              <span className="text-primary italic">Santana</span>
             </h1>
 
             <p className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto leading-relaxed">
