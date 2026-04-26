@@ -71,13 +71,13 @@ interface SEOHeadProps {
 
 const SEOHead = ({
   title,
-  description = 'Descubra a Poesia Cognitiva Hipnótica (PCH) — metodologia que une neurociência, hipnose ericksoniana e linguagem poética para transformação interior. Por Evaldo de Jesus Santana.',
+  description = 'Metodologia P.A.D.H. (Poesia Aplicada ao Desenvolvimento Humano) — Os 4 Pilares da transformação interior através da neurociência e da linguagem poética.',
   path = '/',
   type = 'website',
   jsonLd,
 }: SEOHeadProps) => {
   const fullTitle = title
-    ? `${title} | P.A.D.H. — Evaldo de Jesus Santana`
+    ? `${title} | P.A.D.H. — Poesia Aplicada ao Desenvolvimento Humano`
     : 'P.A.D.H. — Poesia Aplicada ao Desenvolvimento Humano | Evaldo de Jesus Santana';
   const url = path === '/' ? SITE_URL : `${SITE_URL}${path}`;
 
