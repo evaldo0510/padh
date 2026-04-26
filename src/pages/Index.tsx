@@ -103,7 +103,7 @@ const Index = () => {
             
             {/* Subtitle */}
             <p className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto leading-relaxed">
-              A <strong className="text-foreground">Poesia Cognitiva Hipnótica</strong> une neurociência, 
+              A metodologia <strong className="text-foreground">P.A.D.H.</strong> une neurociência, 
               hipnose ericksoniana e linguagem simbólica para criar intervenções terapêuticas 
               que transformam o inconsciente através da beleza da palavra.
             </p>
