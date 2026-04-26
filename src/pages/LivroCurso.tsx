@@ -119,7 +119,7 @@ const LivroCurso = () => {
                   1.2 A Linguagem que Sussurra para Dentro
                 </h3>
                 <p className="text-muted-foreground mb-4 leading-relaxed">
-                  Na PCH, as palavras são sementes de metáforas férteis. Ao contrário da linguagem 
+                  Na P.A.D.H., as palavras são sementes de metáforas férteis. Ao contrário da linguagem 
                   imperativa que ordena, trabalhamos com <strong className="text-foreground">linguagem evocativa</strong> — 
                   aquela que abre espaço para o sentir, que convida ao invés de comandar.
                 </p>
