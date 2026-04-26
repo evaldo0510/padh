@@ -76,7 +76,7 @@ const LivroCurso = () => {
           <Card className="border-border/50">
             <CardHeader>
               <CardTitle className="text-2xl md:text-3xl font-heading">
-                Capítulo 1 — O que é a Poesia Cognitiva Hipnótica?
+                Capítulo 1 — O que é a Poesia Aplicada ao Desenvolvimento Humano (P.A.D.H.)?
               </CardTitle>
             </CardHeader>
             <CardContent className="space-y-8">
