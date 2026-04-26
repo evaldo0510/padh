@@ -4,8 +4,8 @@ import { Menu, X, ChevronDown } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { ThemeToggle } from '@/components/ui/theme-toggle';
 import PrefetchLink from './PrefetchLink';
-import logoPadh from '@/assets/logo-padh.png';
-import logoPadhLight from '@/assets/logo-padh-light.png';
+import logoPadh from '@/assets/logo.svg';
+import logoPadhLight from '@/assets/logo.svg';
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
