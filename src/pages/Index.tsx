@@ -175,8 +175,8 @@ const Index = () => {
                   que contorna as defesas racionais e permite transformações profundas.
                 </p>
                 <p className="text-muted-foreground leading-relaxed">
-                  O protocolo <strong className="text-foreground">P.A.D.H.</strong> (Preparação – Aplicação – 
-                  Desenvolvimento – Hibridização) estrutura esse processo em etapas claras, 
+                  O protocolo <strong className="text-foreground">P.A.D.H.</strong> (Poesia Aplicada ao 
+                  Desenvolvimento Humano) estrutura esse processo em etapas claras, 
                   oferecendo ao terapeuta-poeta um mapa preciso de atuação.
                 </p>
               </div>
