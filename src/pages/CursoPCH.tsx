@@ -115,7 +115,7 @@ const CursoPCH = () => {
                   <p>A P.A.D.H. é uma metodologia poderosa para ressignificar crenças e estimular mudanças emocionais positivas. Com base na neurociência e nos 4 pilares, combina linguagem sugestiva, metáforas e afirmações para reformular padrões mentais limitantes.</p>
 
                   <SectionCard>
-                    <h4 className="font-heading font-semibold text-foreground mb-3">💡 Como aplicar a PCH para transformar crenças?</h4>
+                    <h4 className="font-heading font-semibold text-foreground mb-3">💡 Como aplicar a P.A.D.H. para transformar crenças?</h4>
                     <div className="space-y-4">
                       <div>
                         <p className="text-primary font-medium text-sm mb-1">🔹 1. Identificação da Crença Limitante:</p>
