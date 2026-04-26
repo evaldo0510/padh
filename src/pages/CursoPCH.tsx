@@ -51,7 +51,7 @@ const CursoPCH = () => {
       seo={{
         title: 'Curso P.A.D.H. — Poesia Aplicada ao Desenvolvimento Humano',
         description: 'Guia técnico da metodologia P.A.D.H.: base teórica, exercícios de reestruturação de crenças, técnicas de linguagem hipnótica e sessão terapêutica em 4 fases.',
-        path: '/curso-pch',
+        path: '/curso-padh',
       }}
       currentPage="Curso P.A.D.H."
     >
