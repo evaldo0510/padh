@@ -54,7 +54,7 @@ const Formacao = () => {
   ];
 
   return (
-    <PageLayout seo={pagesSEO.formacao} currentPage="Formação em PCH">
+    <PageLayout seo={pagesSEO.formacao} currentPage="Formação em P.A.D.H.">
       
       {/* Hero */}
       <section className="relative overflow-hidden">
@@ -63,8 +63,9 @@ const Formacao = () => {
           <div className="animate-fade-in-up max-w-3xl mx-auto">
             <p className="text-sm uppercase tracking-[0.2em] text-primary mb-4 font-medium">Formação Profissional</p>
             <h1 className="text-4xl md:text-6xl font-heading font-bold mb-4 text-foreground">
-              Formação em <span className="text-primary italic">Poesia Cognitiva Hipnótica</span>
+              Formação em <span className="text-primary italic">P.A.D.H.</span>
             </h1>
+            <p className="text-xl text-primary font-heading font-medium mb-4 italic">Poesia Aplicada ao Desenvolvimento Humano</p>
             <p className="text-lg text-muted-foreground mb-6 leading-relaxed max-w-2xl mx-auto">
               Capacitação completa para terapeutas, psicólogos e educadores que desejam 
               utilizar a poesia como ferramenta de intervenção emocional e cognitiva.
