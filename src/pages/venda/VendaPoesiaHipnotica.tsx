@@ -31,7 +31,7 @@ const VendaPoesiaHipnotica = () => (
     ]}
     howItWorks={[
       { step: 'Fundamentos teóricos', description: 'Compreenda as bases neurocientíficas, a hipnose ericksoniana e a linguística cognitiva por trás da PCH.' },
-      { step: 'Prática das 7 ferramentas', description: 'Domine cada ferramenta P.A.D.H. individualmente com exercícios progressivos.' },
+      { step: 'Prática das 8 ferramentas', description: 'Domine cada ferramenta P.A.D.H. individualmente com exercícios progressivos.' },
       { step: 'Integração e criação', description: 'Aprenda a combinar ferramentas e criar protocolos personalizados para cada caso.' },
       { step: 'Supervisão e certificação', description: 'Receba feedback sobre seus casos e obtenha o certificado de praticante PCH.' },
     ]}
