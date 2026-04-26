@@ -85,8 +85,8 @@ const LivroCurso = () => {
                   1.1 O Encontro da Palavra com o Inconsciente
                 </h3>
                 <p className="text-muted-foreground mb-4 leading-relaxed">
-                  Aqui nasce a travessia. A Poesia Cognitiva Hipnótica (PCH) é mais que técnica: 
-                  é poética aplicada à escuta clínica, é linguagem simbólica que se infiltra pelas 
+                  Aqui nasce a travessia. A Poesia Aplicada ao Desenvolvimento Humano (P.A.D.H.) é mais que técnica: 
+                  é poética aplicada à escuta clínica e pedagógica, é linguagem simbólica que se infiltra pelas 
                   frestas da lógica e toca camadas esquecidas do ser.
                 </p>
                 <p className="mb-4 text-muted-foreground">A PCH une três rios fundamentais:</p>
