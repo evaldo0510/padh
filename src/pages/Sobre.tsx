@@ -245,7 +245,7 @@ const Sobre = () => {
                 {
                   icon: <Award className="h-5 w-5" />,
                   title: 'Criação do P.A.D.H.',
-                  desc: 'Desenvolvimento da Poesia Aplicada ao Desenvolvimento Humano em suas 4 fases: Preparação, Aplicação, Desenvolvimento e Hibridização.',
+                  desc: 'Desenvolvimento da Poesia Aplicada ao Desenvolvimento Humano em suas 4 fases fundamentais.',
                 },
                 {
                   icon: <Users className="h-5 w-5" />,
