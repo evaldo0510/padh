@@ -536,6 +536,47 @@ const Index = () => {
         </div>
       </section>
 
+      {/* FAQ Section */}
+      <section className="section-padding border-t border-border/20 bg-muted/10">
+        <div className="container mx-auto px-6 md:px-8">
+          <div className="max-w-4xl mx-auto">
+            <div className="section-header text-center">
+              <p className="section-label">Dúvidas Frequentes</p>
+              <h2 className="section-title">Perguntas sobre a P.A.D.H.</h2>
+              <div className="section-divider mx-auto" />
+            </div>
+
+            <div className="space-y-6 mt-12">
+              {[
+                {
+                  q: "O que significa cada fase da P.A.D.H.?",
+                  a: "A P.A.D.H. é dividida em 4 pilares: Poesia (o meio sensível), Aplicada (a metodologia prática), Desenvolvimento (o objetivo de evolução) e Humano (o foco na pessoa integral)."
+                },
+                {
+                  q: "Para quem é indicada a metodologia?",
+                  a: "Para terapeutas que buscam ferramentas mais profundas, educadores que desejam engajar alunos de forma emocional e qualquer pessoa em busca de autoconhecimento e cura através da palavra."
+                },
+                {
+                  q: "Como a P.A.D.H. funciona na prática?",
+                  a: "Na prática, utilizamos protocolos como o 'Poema-Funil' para induzir estados de relaxamento e o 'Verso-Gatilho' para ancorar transformações emocionais positivas, sempre com base em estudos de neurociência."
+                },
+                {
+                  q: "Preciso ser poeta para usar a P.A.D.H.?",
+                  a: "Não. A metodologia fornece as estruturas e ferramentas necessárias. O foco não é a estética literária acadêmica, mas sim a eficácia terapêutica e a conexão humana."
+                }
+              ].map((faq, i) => (
+                <div key={i} className="bg-card border border-border/50 rounded-xl p-6 hover:border-primary/20 transition-all">
+                  <h3 className="text-lg font-heading font-semibold text-foreground mb-3 flex gap-3">
+                    <span className="text-primary">?</span> {faq.q}
+                  </h3>
+                  <p className="text-muted-foreground leading-relaxed">{faq.a}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
       <PoemadiagnosticoInterativo />
 
       {/* Poem CTA */}
