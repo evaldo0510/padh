@@ -439,10 +439,10 @@ const Index = () => {
 
             <div className="grid sm:grid-cols-2 gap-5 text-left">
               {[
-                { letter: 'P', name: 'Preparação', desc: 'Criar ambiente seguro, estabelecer rapport e definir intenções claras para a sessão. Avaliar estado emocional e configurar o espaço para a experiência.' },
-                { letter: 'A', name: 'Aplicação', desc: 'Uso ativo das ferramentas P.A.D.H. com timing adequado, atenção às respostas verbais e não-verbais, e flexibilidade responsiva.' },
+                { letter: 'P', name: 'Poesia', desc: 'A base da nossa metodologia. O uso da palavra como ferramenta de acesso ao inconsciente e de ressignificação da realidade através do poder simbólico.' },
+                { letter: 'A', name: 'Aplicada', desc: 'Uso estratégico das ferramentas P.A.D.H. com timing adequado, atenção às respostas neurais e flexibilidade responsiva às necessidades.' },
                 { letter: 'D', name: 'Desenvolvimento', desc: 'Aprofundamento da experiência, registro de insights, ancoragem dos estados emocionais alcançados e criação de novos significados.' },
-                { letter: 'H', name: 'Hibridização', desc: 'Integração com outras abordagens terapêuticas, criação de rituais de continuidade e estabelecimento de práticas para o cotidiano.' },
+                { letter: 'H', name: 'Humano', desc: 'Foco na evolução integral do ser, garantindo a autonomia emocional e a integração das mudanças à identidade e ao cotidiano.' },
               ].map((phase, i) => (
                 <div key={i} className="flex gap-4 p-5 rounded-xl border border-border/50 bg-card/30">
                   <div className="w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center text-primary font-heading text-2xl font-bold flex-shrink-0">
