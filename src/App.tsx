@@ -8,6 +8,7 @@ import { AnimatePresence } from "framer-motion";
 import { lazy, Suspense } from "react";
 import PageTransition from "./components/layout/PageTransition";
 import { PageSkeleton } from "./components/ui/page-skeleton";
+import PWAPrompt from "./components/layout/PWAPrompt";
 
 const Index = lazy(() => import("./pages/Index"));
 const NotFound = lazy(() => import("./pages/NotFound"));
@@ -89,6 +90,7 @@ const App = () => (
       <TooltipProvider>
         <Toaster />
         <Sonner />
+        <PWAPrompt />
         <BrowserRouter>
           <AnimatedRoutes />
         </BrowserRouter>
