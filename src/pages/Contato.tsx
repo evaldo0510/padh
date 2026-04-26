@@ -38,7 +38,7 @@ const Contato = () => {
             <p className="text-lg text-muted-foreground leading-relaxed max-w-2xl mx-auto">
               Interessado em saber mais sobre a P.A.D.H. ou agendar uma sessão? 
               Conecte-se com <strong className="text-foreground">Evaldo de Jesus Santana</strong> e 
-              explore as possibilidades da Poesia Cognitiva Hipnótica.
+              explore as possibilidades da Poesia Aplicada ao Desenvolvimento Humano.
             </p>
           </div>
         </div>
@@ -107,7 +107,7 @@ const Contato = () => {
                 </CardHeader>
                 <CardContent>
                   <p className="text-sm text-muted-foreground mb-3">
-                    Acompanhe conteúdos exclusivos sobre PCH e desenvolvimento humano:
+                    Acompanhe conteúdos exclusivos sobre P.A.D.H. e desenvolvimento humano:
                   </p>
                   <div className="grid grid-cols-3 gap-2">
                     {[

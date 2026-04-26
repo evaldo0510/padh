@@ -31,25 +31,25 @@ const Index = () => {
       {
         icon: <BookOpen className="h-5 w-5" />,
         title: 'Livro-Curso',
-        desc: 'Mergulhe na teoria e prática da PCH com exercícios guiados que transformam a leitura em experiência terapêutica.',
+        desc: 'Mergulhe na teoria e prática da P.A.D.H. com exercícios guiados que transformam a leitura em experiência terapêutica.',
         link: '/livro-curso',
       },
       {
         icon: <GraduationCap className="h-5 w-5" />,
-        title: 'Formação em PCH',
-        desc: 'Capacitação completa para terapeutas e educadores que desejam usar poesia como ferramenta clínica.',
+        title: 'Formação P.A.D.H.',
+        desc: 'Capacitação completa para terapeutas e educadores que desejam usar a Poesia Aplicada ao Desenvolvimento Humano.',
         link: '/formacao',
       },
       {
         icon: <Target className="h-5 w-5" />,
-        title: 'Curso PCH (Técnica)',
-        desc: 'O manual técnico completo da metodologia: base teórica, neurociência e protocolos passo a passo.',
-        link: '/curso-pch',
+        title: 'Curso P.A.D.H.',
+        desc: 'O manual técnico completo da metodologia: base teórica, neurociência e os 4 pilares estruturais.',
+        link: '/curso-padh',
       },
       {
         icon: <Feather className="h-5 w-5" />,
         title: '8 Ferramentas P.A.D.H.',
-        desc: 'Do Poema-Funil à Poesia Hipnótica — 8 instrumentos vivos para transformação interior.',
+        desc: 'Do Poema-Funil à Poesia Hipnótica — 8 instrumentos vivos para transformação interior através da poesia.',
         link: '/ferramentas',
       },
       {
@@ -61,7 +61,7 @@ const Index = () => {
       {
         icon: <Star className="h-5 w-5" />,
         title: 'Aula Exclusiva',
-        desc: 'Uma aula teórico-vivencial sobre a neurociência da leitura terapêutica e o mapa cerebral.',
+        desc: 'Uma aula teórico-vivencial sobre a neurociência da leitura terapêutica e a abordagem P.A.D.H.',
         link: '/aula-exclusiva',
       },
     ];
@@ -103,7 +103,7 @@ const Index = () => {
             
             {/* Subtitle */}
             <p className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto leading-relaxed">
-              A <strong className="text-foreground">Poesia Cognitiva Hipnótica</strong> une neurociência, 
+              A metodologia <strong className="text-foreground">P.A.D.H.</strong> une neurociência, 
               hipnose ericksoniana e linguagem simbólica para criar intervenções terapêuticas 
               que transformam o inconsciente através da beleza da palavra.
             </p>
@@ -155,48 +155,56 @@ const Index = () => {
         >
           <div className="max-w-5xl mx-auto">
             <div className="section-header">
-              <p className="section-label">Sobre a Metodologia</p>
+              <p className="section-label">A Metodologia</p>
               <h2 className="section-title">
-                O que é a Poesia Cognitiva Hipnótica?
+                Os 4 Pilares da P.A.D.H.
               </h2>
+              <p className="section-subtitle">Poesia Aplicada ao Desenvolvimento Humano</p>
               <div className="section-divider" />
             </div>
 
-            <div className="grid md:grid-cols-2 gap-10 lg:gap-16 items-start">
+            <div className="grid md:grid-cols-2 gap-10 lg:gap-16 items-center">
               <div className="space-y-6">
-                <p className="text-lg text-muted-foreground leading-relaxed">
-                  A <strong className="text-foreground">PCH</strong> é uma abordagem inovadora criada por Evaldo de Jesus Santana 
-                  que utiliza a poesia como instrumento terapêutico — não apenas como expressão artística, 
-                  mas como <em>intervenção neurológica precisa</em>.
-                </p>
-                <p className="text-muted-foreground leading-relaxed">
-                  Ao combinar os ritmos e metáforas da poesia com princípios da hipnose ericksoniana 
-                  e da neurociência cognitiva, a PCH cria um caminho de acesso ao inconsciente 
-                  que contorna as defesas racionais e permite transformações profundas.
-                </p>
-                <p className="text-muted-foreground leading-relaxed">
-                  O protocolo <strong className="text-foreground">P.A.D.H.</strong> (Poesia Aplicada ao 
-                  Desenvolvimento Humano) estrutura esse processo em etapas claras, 
-                  oferecendo ao terapeuta-poeta um mapa preciso de atuação.
-                </p>
+                <div className="space-y-4">
+                  <div className="flex gap-4">
+                    <div className="flex-shrink-0 w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center text-primary font-bold">P</div>
+                    <div>
+                      <h4 className="font-heading font-semibold text-foreground">Poesia</h4>
+                      <p className="text-sm text-muted-foreground">O uso da palavra como som, ritmo e imagem para acessar o sentir e contornar as defesas racionais.</p>
+                    </div>
+                  </div>
+                  <div className="flex gap-4">
+                    <div className="flex-shrink-0 w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center text-primary font-bold">A</div>
+                    <div>
+                      <h4 className="font-heading font-semibold text-foreground">Aplicada</h4>
+                      <p className="text-sm text-muted-foreground">A transição da arte pura para a ferramenta prática de intervenção terapêutica e pedagógica.</p>
+                    </div>
+                  </div>
+                  <div className="flex gap-4">
+                    <div className="flex-shrink-0 w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center text-primary font-bold">D</div>
+                    <div>
+                      <h4 className="font-heading font-semibold text-foreground">Desenvolvimento</h4>
+                      <p className="text-sm text-muted-foreground">O foco na evolução contínua, na resiliência e na expansão da consciência individual e coletiva.</p>
+                    </div>
+                  </div>
+                  <div className="flex gap-4">
+                    <div className="flex-shrink-0 w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center text-primary font-bold">H</div>
+                    <div>
+                      <h4 className="font-heading font-semibold text-foreground">Humano</h4>
+                      <p className="text-sm text-muted-foreground">A centralidade na pessoa, na sua inteireza, singularidade e no resgate da essência através da palavra.</p>
+                    </div>
+                  </div>
+                </div>
               </div>
 
-              <div className="space-y-4">
-                {[
-                  { icon: <Heart className="h-5 w-5 text-spiritual-rose" />, title: 'Poesia Terapêutica', text: 'Ressignifica sentidos através da beleza e do poder simbólico das palavras.' },
-                  { icon: <Brain className="h-5 w-5 text-spiritual-indigo" />, title: 'Neurociência Aplicada', text: 'Cada verso ativa redes neurais específicas — da amígdala ao córtex pré-frontal.' },
-                  { icon: <Sparkles className="h-5 w-5 text-primary" />, title: 'Hipnose Ericksoniana', text: 'Linguagem indireta e metafórica que convida o inconsciente a cocriar soluções.' },
-                ].map((item, i) => (
-                  <Card key={i} className="border-border/50 bg-card/50">
-                    <CardContent className="flex gap-4 p-5">
-                      <div className="mt-0.5">{item.icon}</div>
-                      <div>
-                        <h4 className="font-heading font-semibold text-foreground mb-1">{item.title}</h4>
-                        <p className="text-sm text-muted-foreground">{item.text}</p>
-                      </div>
-                    </CardContent>
-                  </Card>
-                ))}
+              <div className="bg-primary/5 rounded-2xl p-8 border border-primary/10">
+                <p className="text-lg text-foreground font-medium mb-4 italic">
+                  "A P.A.D.H. não é apenas uma técnica, é uma forma de ver o mundo através da lente da sensibilidade científica."
+                </p>
+                <p className="text-muted-foreground leading-relaxed text-sm">
+                  Criada por Evaldo de Jesus Santana, a metodologia une neurociência, hipnose ericksoniana 
+                  e linguagem simbólica para criar intervenções precisas que transformam o inconsciente.
+                </p>
               </div>
             </div>
           </div>
@@ -522,6 +530,47 @@ const Index = () => {
                     </div>
                   </CardContent>
                 </Card>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* FAQ Section */}
+      <section className="section-padding border-t border-border/20 bg-muted/10">
+        <div className="container mx-auto px-6 md:px-8">
+          <div className="max-w-4xl mx-auto">
+            <div className="section-header text-center">
+              <p className="section-label">Dúvidas Frequentes</p>
+              <h2 className="section-title">Perguntas sobre a P.A.D.H.</h2>
+              <div className="section-divider mx-auto" />
+            </div>
+
+            <div className="space-y-6 mt-12">
+              {[
+                {
+                  q: "O que significa cada fase da P.A.D.H.?",
+                  a: "A P.A.D.H. é dividida em 4 pilares: Poesia (o meio sensível), Aplicada (a metodologia prática), Desenvolvimento (o objetivo de evolução) e Humano (o foco na pessoa integral)."
+                },
+                {
+                  q: "Para quem é indicada a metodologia?",
+                  a: "Para terapeutas que buscam ferramentas mais profundas, educadores que desejam engajar alunos de forma emocional e qualquer pessoa em busca de autoconhecimento e cura através da palavra."
+                },
+                {
+                  q: "Como a P.A.D.H. funciona na prática?",
+                  a: "Na prática, utilizamos protocolos como o 'Poema-Funil' para induzir estados de relaxamento e o 'Verso-Gatilho' para ancorar transformações emocionais positivas, sempre com base em estudos de neurociência."
+                },
+                {
+                  q: "Preciso ser poeta para usar a P.A.D.H.?",
+                  a: "Não. A metodologia fornece as estruturas e ferramentas necessárias. O foco não é a estética literária acadêmica, mas sim a eficácia terapêutica e a conexão humana."
+                }
+              ].map((faq, i) => (
+                <div key={i} className="bg-card border border-border/50 rounded-xl p-6 hover:border-primary/20 transition-all">
+                  <h3 className="text-lg font-heading font-semibold text-foreground mb-3 flex gap-3">
+                    <span className="text-primary">?</span> {faq.q}
+                  </h3>
+                  <p className="text-muted-foreground leading-relaxed">{faq.a}</p>
+                </div>
               ))}
             </div>
           </div>

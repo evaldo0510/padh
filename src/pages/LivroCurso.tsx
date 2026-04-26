@@ -18,7 +18,7 @@ const LivroCurso = () => {
           <div className="animate-fade-in-up max-w-3xl mx-auto">
             <p className="text-sm uppercase tracking-[0.2em] text-primary mb-4 font-medium">Livro-Curso P.A.D.H.</p>
             <h1 className="text-4xl md:text-6xl font-heading font-bold mb-6 text-foreground">
-              Ferramentas para a <span className="text-primary italic">Poesia Cognitiva Hipnótica</span>
+              Poesia Aplicada ao <span className="text-primary italic">Desenvolvimento Humano</span>
             </h1>
             <p className="text-lg text-muted-foreground mb-4 leading-relaxed">
               O fio dourado que tece a jornada de autoconhecimento e transformação 
@@ -76,7 +76,7 @@ const LivroCurso = () => {
           <Card className="border-border/50">
             <CardHeader>
               <CardTitle className="text-2xl md:text-3xl font-heading">
-                Capítulo 1 — O que é a Poesia Cognitiva Hipnótica?
+                Capítulo 1 — O que é a Poesia Aplicada ao Desenvolvimento Humano (P.A.D.H.)?
               </CardTitle>
             </CardHeader>
             <CardContent className="space-y-8">
@@ -85,8 +85,8 @@ const LivroCurso = () => {
                   1.1 O Encontro da Palavra com o Inconsciente
                 </h3>
                 <p className="text-muted-foreground mb-4 leading-relaxed">
-                  Aqui nasce a travessia. A Poesia Cognitiva Hipnótica (PCH) é mais que técnica: 
-                  é poética aplicada à escuta clínica, é linguagem simbólica que se infiltra pelas 
+                  Aqui nasce a travessia. A Poesia Aplicada ao Desenvolvimento Humano (P.A.D.H.) é mais que técnica: 
+                  é poética aplicada à escuta clínica e pedagógica, é linguagem simbólica que se infiltra pelas 
                   frestas da lógica e toca camadas esquecidas do ser.
                 </p>
                 <p className="mb-4 text-muted-foreground">A PCH une três rios fundamentais:</p>
@@ -166,7 +166,7 @@ const LivroCurso = () => {
           <Card className="border-primary/20 bg-primary/[0.02]">
             <CardHeader>
               <CardTitle className="text-2xl font-heading text-primary">
-                Exercício Prático 1 — Descobrindo a PCH em Si
+                Exercício Prático 1 — Descobrindo a P.A.D.H. em Si
               </CardTitle>
             </CardHeader>
             <CardContent>
@@ -212,13 +212,13 @@ const LivroCurso = () => {
             </CardHeader>
             <CardContent>
               <p className="text-muted-foreground mb-6">
-                O Livro-Curso continua com aprofundamentos progressivos nas ferramentas e técnicas da PCH:
+                O Livro-Curso continua com aprofundamentos progressivos nas ferramentas e técnicas da P.A.D.H.:
               </p>
               <div className="space-y-3">
                 {[
-                  'Capítulo 2 — As 7 Ferramentas da PCH: Do Poema-Funil ao Haicai Terapêutico',
+                  'Capítulo 2 — As 8 Ferramentas P.A.D.H.: Do Poema-Funil ao Ritual do Silêncio',
                   'Capítulo 3 — Neurociência da Leitura Poética: O Mapa Cerebral do Leitor',
-                  'Capítulo 4 — O Protocolo P.A.D.H. na Prática Clínica',
+                  'Capítulo 4 — Os 4 Pilares da P.A.D.H. na Prática Clínica',
                   'Capítulo 5 — Construindo Sessões Terapêuticas com Poesia',
                   'Capítulo 6 — Rituais Poéticos e Cerimônias de Transformação',
                   'Capítulo 7 — Estudos de Caso e Relatos de Experiência',

@@ -49,11 +49,11 @@ const CursoPCH = () => {
   return (
     <PageLayout
       seo={{
-        title: 'Curso PCH — Poesia Cognitiva Hipnótica',
-        description: 'Guia completo do curso de Poesia Cognitiva Hipnótica: base teórica, exercícios de reestruturação de crenças, técnicas de linguagem hipnótica, sessão terapêutica em 4 fases e exercícios práticos.',
-        path: '/curso-pch',
+        title: 'Curso P.A.D.H. — Poesia Aplicada ao Desenvolvimento Humano',
+        description: 'Guia técnico da metodologia P.A.D.H.: base teórica, exercícios de reestruturação de crenças, técnicas de linguagem hipnótica e sessão terapêutica em 4 fases.',
+        path: '/curso-padh',
       }}
-      currentPage="Curso PCH"
+      currentPage="Curso P.A.D.H."
     >
       {/* Hero */}
       <section className="relative py-20 md:py-28 overflow-hidden">
@@ -65,8 +65,8 @@ const CursoPCH = () => {
             Guia Completo do Curso
           </div>
           <h1 className="text-4xl md:text-6xl font-heading font-bold text-foreground mb-4">
-            Poesia Cognitiva{' '}
-            <span className="text-primary italic">Hipnótica</span>
+            Poesia Aplicada ao{' '}
+            <span className="text-primary italic">Desenvolvimento Humano</span>
           </h1>
           <p className="text-muted-foreground text-lg md:text-xl max-w-2xl mx-auto">
             Um guia completo com base teórica, exercícios práticos, técnicas avançadas e um modelo de sessão terapêutica em 4 fases.
@@ -580,7 +580,7 @@ E quando percebo, já estou mais longe do que imaginei."`}</Poem>
                   </div>
                   <div>
                     <p className="text-xs text-primary font-medium uppercase tracking-wider">Módulo 7</p>
-                    <h2 className="text-xl font-heading font-semibold text-foreground">Sessão Terapêutica PCH em 4 Fases</h2>
+                    <h2 className="text-xl font-heading font-semibold text-foreground">Sessão Terapêutica em 4 Fases (P.A.D.H.)</h2>
                   </div>
                 </div>
               </AccordionTrigger>
@@ -590,8 +590,8 @@ E quando percebo, já estou mais longe do que imaginei."`}</Poem>
 
                   <SectionCard className="border-l-4 border-l-primary/40">
                     <div className="flex items-center gap-2 mb-3">
-                      <span className="text-primary font-bold text-lg">Fase 1</span>
-                      <h3 className="text-lg font-heading font-semibold text-foreground">Acolhimento e Conexão (10 min)</h3>
+                      <span className="text-primary font-bold text-lg">P</span>
+                      <h3 className="text-lg font-heading font-semibold text-foreground">Poesia: Acolhimento e Conexão (10 min)</h3>
                     </div>
                     <p className="mb-3"><strong className="text-foreground">Objetivo:</strong> Criar espaço de confiança e presença.</p>
                     <ul className="space-y-2 text-sm">
@@ -608,8 +608,8 @@ e a certeza de que, agora, este momento é seu.`}</Poem>
 
                   <SectionCard className="border-l-4 border-l-secondary/40">
                     <div className="flex items-center gap-2 mb-3">
-                      <span className="text-secondary font-bold text-lg">Fase 2</span>
-                      <h3 className="text-lg font-heading font-semibold text-foreground">Identificação e Expressão (15 min)</h3>
+                      <span className="text-secondary font-bold text-lg">A</span>
+                      <h3 className="text-lg font-heading font-semibold text-foreground">Aplicada: Identificação e Expressão (15 min)</h3>
                     </div>
                     <p className="mb-3"><strong className="text-foreground">Objetivo:</strong> Dar voz às emoções reprimidas e torná-las conscientes.</p>
                     <ul className="space-y-2 text-sm">
@@ -621,8 +621,8 @@ e a certeza de que, agora, este momento é seu.`}</Poem>
 
                   <SectionCard className="border-l-4 border-l-primary/40">
                     <div className="flex items-center gap-2 mb-3">
-                      <span className="text-primary font-bold text-lg">Fase 3</span>
-                      <h3 className="text-lg font-heading font-semibold text-foreground">Transformação e Sugestão Positiva (15 min)</h3>
+                      <span className="text-primary font-bold text-lg">D</span>
+                      <h3 className="text-lg font-heading font-semibold text-foreground">Desenvolvimento: Transformação (15 min)</h3>
                     </div>
                     <p className="mb-3"><strong className="text-foreground">Objetivo:</strong> Substituir padrões limitantes por novas narrativas fortalecedoras.</p>
                     <ul className="space-y-2 text-sm mb-4">
@@ -643,8 +643,8 @@ O medo pode olhar, mas nunca guiar."`}</Poem>
 
                   <SectionCard className="border-l-4 border-l-secondary/40">
                     <div className="flex items-center gap-2 mb-3">
-                      <span className="text-secondary font-bold text-lg">Fase 4</span>
-                      <h3 className="text-lg font-heading font-semibold text-foreground">Ancoragem e Fechamento (10 min)</h3>
+                      <span className="text-secondary font-bold text-lg">H</span>
+                      <h3 className="text-lg font-heading font-semibold text-foreground">Humano: Ancoragem e Integração (10 min)</h3>
                     </div>
                     <p className="mb-3"><strong className="text-foreground">Objetivo:</strong> Criar um símbolo interno para fixar o aprendizado.</p>
                     <ul className="space-y-2 text-sm mb-4">

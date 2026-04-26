@@ -32,14 +32,14 @@ const Formacao = () => {
     },
     {
       numero: 4,
-      titulo: "As Ferramentas da PCH — Parte 1",
+      titulo: "As Ferramentas da P.A.D.H. — Parte 1",
       duracao: "60 min",
       descricao: "Poemas como técnicas: Poema-funil, Verso-gatilho e Poemadiagnóstico.",
       topicos: ["Poema-funil (imersão gradual)", "Verso-gatilho (âncoras emocionais)", "Poemadiagnóstico (projeção e escolha)", "Roda de escuta + aplicação prática"]
     },
     {
       numero: 5,
-      titulo: "As Ferramentas da PCH — Parte 2",
+      titulo: "As Ferramentas da P.A.D.H. — Parte 2",
       duracao: "60 min",
       descricao: "Escrita terapêutica profunda e técnicas avançadas de intervenção poética.",
       topicos: ["Caderno de Voz Interna Poética", "Encenação Poética Interna", "Reescrita Poética de Narrativas", "Escrita em dupla de poema-dramatização"]
@@ -48,13 +48,13 @@ const Formacao = () => {
       numero: 6,
       titulo: "Finalização, Ritualização e Acompanhamento",
       duracao: "60 min",
-      descricao: "Encerramentos terapêuticos, integração e continuidade do trabalho com PCH.",
+      descricao: "Encerramentos terapêuticos, integração e continuidade do trabalho com P.A.D.H.",
       topicos: ["Ritual do Silêncio Poético", "Séries de atendimento com PCH", "Adaptação para diferentes públicos", "Projeto terapêutico final e certificação"]
     }
   ];
 
   return (
-    <PageLayout seo={pagesSEO.formacao} currentPage="Formação em PCH">
+    <PageLayout seo={pagesSEO.formacao} currentPage="Formação em P.A.D.H.">
       
       {/* Hero */}
       <section className="relative overflow-hidden">
@@ -63,8 +63,9 @@ const Formacao = () => {
           <div className="animate-fade-in-up max-w-3xl mx-auto">
             <p className="text-sm uppercase tracking-[0.2em] text-primary mb-4 font-medium">Formação Profissional</p>
             <h1 className="text-4xl md:text-6xl font-heading font-bold mb-4 text-foreground">
-              Formação em <span className="text-primary italic">Poesia Cognitiva Hipnótica</span>
+              Formação em <span className="text-primary italic">P.A.D.H.</span>
             </h1>
+            <p className="text-xl text-primary font-heading font-medium mb-4 italic">Poesia Aplicada ao Desenvolvimento Humano</p>
             <p className="text-lg text-muted-foreground mb-6 leading-relaxed max-w-2xl mx-auto">
               Capacitação completa para terapeutas, psicólogos e educadores que desejam 
               utilizar a poesia como ferramenta de intervenção emocional e cognitiva.
@@ -86,7 +87,7 @@ const Formacao = () => {
             {[
               { icon: <Clock className="h-6 w-6 text-primary" />, label: 'Duração', value: '6 semanas — 30 horas' },
               { icon: <Users className="h-6 w-6 text-primary" />, label: 'Público', value: 'Terapeutas, psicólogos, artistas e cuidadores' },
-              { icon: <GraduationCap className="h-6 w-6 text-primary" />, label: 'Certificação', value: 'Formação Completa em PCH' },
+              { icon: <GraduationCap className="h-6 w-6 text-primary" />, label: 'Certificação', value: 'Formador em P.A.D.H.' },
             ].map((item, i) => (
               <Card key={i} className="border-border/50">
                 <CardContent className="p-5 text-center space-y-2">
@@ -109,7 +110,7 @@ const Formacao = () => {
                 emocional e cognitiva, unindo metáforas, técnicas de hipnose leve e práticas narrativas. 
                 Ao final, o aluno será capaz de planejar e conduzir sessões terapêuticas completas 
                 usando o protocolo P.A.D.H., criando poemas terapêuticos personalizados e aplicando 
-                as 8 ferramentas da PCH com segurança e sensibilidade.
+                as 8 ferramentas da P.A.D.H. com segurança e sensibilidade.
               </p>
             </CardContent>
           </Card>
@@ -164,7 +165,7 @@ const Formacao = () => {
                     "Áudios guiados com leitura de indução poética",
                     "Cartas poéticas — mini baralho simbólico",
                     "Diário de Poesia Terapêutica",
-                    "Certificado de Formação em PCH"
+                    "Certificado de Formação em P.A.D.H."
                   ].map((item, i) => (
                     <li key={i} className="flex items-start gap-2 text-sm text-muted-foreground">
                       <BookOpen className="h-4 w-4 text-primary mt-0.5 flex-shrink-0" />

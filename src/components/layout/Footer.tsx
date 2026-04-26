@@ -12,10 +12,10 @@ const Footer = () => {
     { name: 'Início', path: '/' },
     { name: 'Sobre', path: '/sobre' },
     { name: 'Livro-Curso', path: '/livro-curso' },
-    { name: 'Formação PCH', path: '/formacao' },
+    { name: 'Formação P.A.D.H.', path: '/formacao' },
     { name: 'Ferramentas P.A.D.H.', path: '/ferramentas' },
     { name: 'Mapa Cerebral', path: '/mapa-cerebral' },
-    { name: 'Curso PCH', path: '/curso-pch' },
+    { name: 'Curso P.A.D.H.', path: '/curso-padh' },
     { name: 'Aula Exclusiva', path: '/aula-exclusiva' },
     { name: 'Ciência da Poesia', path: '/ciencia-da-poesia' },
     { name: 'Contato', path: '/contato' },
@@ -130,7 +130,7 @@ const Footer = () => {
               <div className="mt-8 pt-6 border-t border-border/10">
                 <h4 className="font-heading font-semibold text-foreground mb-4 text-sm uppercase tracking-widest">Criador</h4>
                 <p className="text-sm text-muted-foreground leading-relaxed">
-                  <strong className="text-foreground">Evaldo de Jesus Santana</strong> — especialista em Poesia Cognitiva Hipnótica.
+                  <strong className="text-foreground">Evaldo de Jesus Santana</strong> — especialista em Poesia Aplicada ao Desenvolvimento Humano.
                 </p>
                 <PrefetchLink
                   to="/sobre"

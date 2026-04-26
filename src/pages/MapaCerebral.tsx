@@ -80,7 +80,7 @@ const MapaCerebral = () => {
             <p className="text-lg text-muted-foreground leading-relaxed">
               Imagine um cérebro em modo de leitura poética como um palco iluminado 
               onde emoção, linguagem e imagem dançam de mãos dadas. Este conceito une 
-              neurociência, psicologia cognitiva e a abordagem da Poesia Cognitiva Hipnótica.
+              neurociência, psicologia cognitiva e a metodologia P.A.D.H. (Poesia Aplicada ao Desenvolvimento Humano).
             </p>
             <div className="poem-block text-left max-w-sm mx-auto">
               <p className="poem-text text-sm text-muted-foreground">
@@ -201,7 +201,7 @@ const MapaCerebral = () => {
             </h3>
             <p className="text-muted-foreground max-w-2xl mx-auto">
               Ao ler poesia, não estamos só decifrando versos — estamos reencenando 
-              vivências emocionais em teatro simbólico interno. Na PCH, o leitor não é 
+              vivências emocionais em teatro simbólico interno. Na metodologia P.A.D.H., o leitor não é 
               um "paciente", mas um <strong className="text-foreground">viajante lírico</strong>.
             </p>
             <p className="poem-text text-primary text-sm">
