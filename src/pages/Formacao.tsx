@@ -87,7 +87,7 @@ const Formacao = () => {
             {[
               { icon: <Clock className="h-6 w-6 text-primary" />, label: 'Duração', value: '6 semanas — 30 horas' },
               { icon: <Users className="h-6 w-6 text-primary" />, label: 'Público', value: 'Terapeutas, psicólogos, artistas e cuidadores' },
-              { icon: <GraduationCap className="h-6 w-6 text-primary" />, label: 'Certificação', value: 'Formação Completa em PCH' },
+              { icon: <GraduationCap className="h-6 w-6 text-primary" />, label: 'Certificação', value: 'Formador em P.A.D.H.' },
             ].map((item, i) => (
               <Card key={i} className="border-border/50">
                 <CardContent className="p-5 text-center space-y-2">
