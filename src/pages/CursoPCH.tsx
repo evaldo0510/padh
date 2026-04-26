@@ -608,8 +608,8 @@ e a certeza de que, agora, este momento é seu.`}</Poem>
 
                   <SectionCard className="border-l-4 border-l-secondary/40">
                     <div className="flex items-center gap-2 mb-3">
-                      <span className="text-secondary font-bold text-lg">Fase 2</span>
-                      <h3 className="text-lg font-heading font-semibold text-foreground">Identificação e Expressão (15 min)</h3>
+                      <span className="text-secondary font-bold text-lg">A</span>
+                      <h3 className="text-lg font-heading font-semibold text-foreground">Aplicada: Identificação e Expressão (15 min)</h3>
                     </div>
                     <p className="mb-3"><strong className="text-foreground">Objetivo:</strong> Dar voz às emoções reprimidas e torná-las conscientes.</p>
                     <ul className="space-y-2 text-sm">
