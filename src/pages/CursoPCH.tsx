@@ -590,8 +590,8 @@ E quando percebo, já estou mais longe do que imaginei."`}</Poem>
 
                   <SectionCard className="border-l-4 border-l-primary/40">
                     <div className="flex items-center gap-2 mb-3">
-                      <span className="text-primary font-bold text-lg">Fase 1</span>
-                      <h3 className="text-lg font-heading font-semibold text-foreground">Acolhimento e Conexão (10 min)</h3>
+                      <span className="text-primary font-bold text-lg">P</span>
+                      <h3 className="text-lg font-heading font-semibold text-foreground">Poesia: Acolhimento e Conexão (10 min)</h3>
                     </div>
                     <p className="mb-3"><strong className="text-foreground">Objetivo:</strong> Criar espaço de confiança e presença.</p>
                     <ul className="space-y-2 text-sm">
