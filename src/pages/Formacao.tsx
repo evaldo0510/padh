@@ -27,8 +27,8 @@ const Formacao = () => {
       numero: 3,
       titulo: "A Estrutura P.A.D.H.",
       duracao: "60 min",
-      descricao: "O mapa da atuação terapêutica poética: Preparação – Aplicação – Desenvolvimento – Hibridização.",
-      topicos: ["Criação de ambiente interno e externo", "Aplicação sensorial (voz, ritmo, silêncio)", "Registro, eco e ancoragem dos poemas", "Integração com outras terapias", "Criação de ritual personalizado"]
+      descricao: "O mapa da atuação terapêutica poética: Poesia – Aplicada – Desenvolvimento – Humano.",
+      topicos: ["O poder da palavra e ressignificação", "Aplicação estratégica das ferramentas", "Aprofundamento e ancoragem de insights", "Foco no desenvolvimento integral do ser", "Criação de ritual personalizado"]
     },
     {
       numero: 4,
