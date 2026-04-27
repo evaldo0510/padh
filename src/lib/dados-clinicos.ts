@@ -533,6 +533,12 @@ export const MODULOS: ModuloClinico[] = [
       'Desejo de autonomia',
       'Rede de apoio externa ativa',
     ],
+    atividades: [
+      { id: 'dialogo_futuro', label: 'Diálogo com Eu Futuro' },
+      { id: 'manual_pessoal', label: 'Criação do Manual Poético' },
+      { id: 'carta_semente', label: 'Ritual da Carta-Semente' }
+    ],
+    tempoEstimado: 90,
   },
 ];
 
