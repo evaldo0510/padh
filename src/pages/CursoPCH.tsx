@@ -1241,6 +1241,12 @@ Mas porque sempre esteve dentro de você."`}</Poem>
                   />
 
                   <BotaoImprimirPDF modulo={getModulo("modulo-7")!} />
+                  <div className="mt-8 space-y-4">
+                    <h4 className="font-heading font-semibold text-sm text-foreground">Etapas de Aprendizado</h4>
+                    {getModulo("modulo-7")?.atividades.map(atv => (
+                      <ActivityTracker key={atv.id} moduleId="modulo-7" activityId={atv.id} label={atv.label} />
+                    ))}
+                  </div>
                   <ConclusionButton moduleId="modulo-7" nextModuleId="modulo-8" />
                 </div>
               </AccordionContent>
