@@ -222,6 +222,12 @@ export const MODULOS: ModuloClinico[] = [
       'Resistência consciente à mudança',
       'Bloqueio criativo',
     ],
+    atividades: [
+      { id: 'pacing', label: 'Estabelecimento de Pacing' },
+      { id: 'inducao', label: 'Indução de Transe Leve' },
+      { id: 'comandos', label: 'Uso de Comandos Embutidos' }
+    ],
+    tempoEstimado: 50,
   },
   {
     id: 'modulo-4',
