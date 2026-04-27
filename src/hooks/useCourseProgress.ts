@@ -65,17 +65,32 @@ export const useCourseProgress = () => {
     window.dispatchEvent(new Event('padh_data_change'));
     
     const syncToDB = async () => {
-      if (isOffline || !hasSupabaseConfig()) return;
+      if (isOffline || !hasSupabaseConfig()) {
+        reportSyncStatus('blocked');
+        return;
+      }
+      
       const { data: { user } } = await supabase.auth.getUser();
-      if (!user) return;
+      if (!user) {
+        reportSyncStatus('blocked');
+        return;
+      }
 
-      await supabase
+      reportSyncStatus('pending');
+      const { error } = await supabase
         .from('course_progress')
         .upsert({ 
           user_id: user.id, 
           progress_data: progress,
           updated_at: new Date().toISOString()
         });
+      
+      if (error) {
+        console.error("Sync error:", error);
+        reportSyncStatus('error');
+      } else {
+        reportSyncStatus('ok');
+      }
     };
 
     syncToDB();
