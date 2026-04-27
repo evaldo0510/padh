@@ -9,77 +9,99 @@ import { useOfflineMode } from '@/hooks/useOfflineMode';
 const SupabaseConfigBanner = () => {
   const { isOffline, toggleOffline, canConnect } = useOfflineMode();
   
-  // If configured and not forcing offline, don't show the warning banner
-  if (supabaseConfig.isConfigured && !isOffline) return null;
+  const statusColor = isOffline ? "amber" : "green";
+  const configStatus = supabaseConfig.isConfigured;
 
   return (
     <Alert 
-      variant={isOffline && supabaseConfig.isConfigured ? "default" : "destructive"} 
-      className={`mb-8 border-2 backdrop-blur-sm ${
-        isOffline && supabaseConfig.isConfigured 
-          ? "border-amber-500/20 bg-amber-50/50 dark:bg-amber-950/10" 
-          : "border-red-500/20 bg-red-50/50 dark:bg-red-950/10"
+      variant="default"
+      className={`mb-8 border-2 backdrop-blur-sm transition-all duration-300 ${
+        !configStatus 
+          ? "border-red-500/20 bg-red-50/50 dark:bg-red-950/10" 
+          : isOffline 
+            ? "border-amber-500/20 bg-amber-50/50 dark:bg-amber-950/10"
+            : "border-green-500/20 bg-green-50/50 dark:bg-green-950/10"
       }`}
     >
-      {isOffline ? <WifiOff className="h-5 w-5" /> : <ShieldAlert className="h-5 w-5" />}
-      <AlertTitle className="font-bold flex items-center gap-2">
-        {isOffline && supabaseConfig.isConfigured 
-          ? "Modo Offline Ativado Manualmente" 
-          : "Configuração do Banco de Dados Pendente"}
-      </AlertTitle>
-      <AlertDescription className="mt-2 space-y-4">
-        <p className="text-sm">
-          {isOffline 
-            ? "O sistema está operando em modo offline. O progresso será salvo apenas localmente neste navegador até que a sincronização seja reativada."
-            : "O sistema de persistência na nuvem (Supabase) não está configurado. O progresso será salvo apenas localmente neste navegador."}
-        </p>
-        
-        {!supabaseConfig.isConfigured && (
-          <div className="bg-background/50 p-3 rounded border border-red-200 dark:border-red-900/30 font-mono text-xs space-y-1">
-            <div className="flex justify-between">
-              <span>VITE_SUPABASE_URL:</span>
-              <span className={supabaseConfig.url ? "text-green-600" : "text-red-500"}>
-                {supabaseConfig.url ? "Detectada" : "AUSENTE"}
-              </span>
-            </div>
-            <div className="flex justify-between">
-              <span>VITE_SUPABASE_ANON_KEY:</span>
-              <span className={supabaseConfig.anonKey ? "text-green-600" : "text-red-500"}>
-                {supabaseConfig.anonKey ? "Detectada" : "AUSENTE"}
-              </span>
-            </div>
-          </div>
-        )}
-
-        <div className="flex flex-wrap gap-3">
-          <Button variant="outline" size="sm" asChild className="bg-background">
-            <Link to="/diagnosticos" className="flex items-center gap-2">
-              <Settings className="h-4 w-4" /> Ver Diagnósticos
-            </Link>
-          </Button>
-          
-          {canConnect && (
-            <Button 
-              variant={isOffline ? "default" : "secondary"} 
-              size="sm" 
-              onClick={toggleOffline}
-              className="flex items-center gap-2"
-            >
-              {isOffline ? (
-                <><Wifi className="h-4 w-4" /> Reativar Sincronização</>
-              ) : (
-                <><WifiOff className="h-4 w-4" /> Ativar Modo Offline</>
-              )}
-            </Button>
-          )}
-          
-          {!canConnect && (
-            <Button variant="secondary" size="sm" disabled className="flex items-center gap-2 opacity-70">
-              <WifiOff className="h-4 w-4" /> Modo Offline Obrigatório
-            </Button>
-          )}
+      <div className="flex items-start gap-4">
+        <div className={`p-2 rounded-full ${
+          !configStatus ? "bg-red-100 text-red-600" : isOffline ? "bg-amber-100 text-amber-600" : "bg-green-100 text-green-600"
+        }`}>
+          {!configStatus ? <ShieldAlert className="h-5 w-5" /> : isOffline ? <WifiOff className="h-5 w-5" /> : <Wifi className="h-5 w-5" />}
         </div>
-      </AlertDescription>
+        
+        <div className="flex-1">
+          <AlertTitle className="font-bold flex items-center justify-between flex-wrap gap-2">
+            <span className="flex items-center gap-2">
+              Status do Sistema: {isOffline ? "Modo Offline" : "Modo Online"}
+            </span>
+            <div className="flex gap-2">
+              <span className={`text-[10px] px-2 py-0.5 rounded-full border ${
+                configStatus ? "bg-green-100/50 border-green-200 text-green-700" : "bg-red-100/50 border-red-200 text-red-700"
+              }`}>
+                Config: {configStatus ? "OK" : "PENDENTE"}
+              </span>
+              <span className={`text-[10px] px-2 py-0.5 rounded-full border ${
+                isOffline ? "bg-amber-100/50 border-amber-200 text-amber-700" : "bg-green-100/50 border-green-200 text-green-700"
+              }`}>
+                Conexão: {isOffline ? "OFFLINE" : "ONLINE"}
+              </span>
+            </div>
+          </AlertTitle>
+          
+          <AlertDescription className="mt-2">
+            <p className="text-sm text-muted-foreground mb-4">
+              {isOffline 
+                ? "O sistema está operando em modo offline. O progresso será salvo apenas localmente neste navegador até que a sincronização seja reativada."
+                : "O sistema está sincronizando dados com o servidor Supabase em tempo real."}
+            </p>
+            
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 items-center">
+              <div className="bg-background/50 p-3 rounded border border-border font-mono text-xs space-y-1">
+                <div className="flex justify-between items-center">
+                  <span className="text-muted-foreground">VITE_SUPABASE_URL:</span>
+                  <span className={`font-bold ${supabaseConfig.url ? "text-green-600" : "text-red-500"}`}>
+                    {supabaseConfig.url ? "✓ PRESENTE" : "✗ AUSENTE"}
+                  </span>
+                </div>
+                <div className="flex justify-between items-center">
+                  <span className="text-muted-foreground">VITE_SUPABASE_ANON_KEY:</span>
+                  <span className={`font-bold ${supabaseConfig.anonKey ? "text-green-600" : "text-red-500"}`}>
+                    {supabaseConfig.anonKey ? "✓ PRESENTE" : "✗ AUSENTE"}
+                  </span>
+                </div>
+              </div>
+
+              <div className="flex flex-wrap gap-2 justify-end">
+                <Button variant="outline" size="sm" asChild className="bg-background h-8 text-xs">
+                  <Link to="/diagnosticos" className="flex items-center gap-1">
+                    <Settings className="h-3 w-3" /> Diagnósticos
+                  </Link>
+                </Button>
+                
+                {canConnect ? (
+                  <Button 
+                    variant={isOffline ? "default" : "secondary"} 
+                    size="sm" 
+                    onClick={toggleOffline}
+                    className="h-8 text-xs flex items-center gap-1"
+                  >
+                    {isOffline ? (
+                      <><Wifi className="h-3 w-3" /> Reativar Online</>
+                    ) : (
+                      <><WifiOff className="h-3 w-3" /> Forçar Offline</>
+                    )}
+                  </Button>
+                ) : (
+                  <Button variant="ghost" size="sm" disabled className="h-8 text-xs flex items-center gap-1 opacity-50">
+                    <Database className="h-3 w-3" /> Configuração necessária para sincronizar
+                  </Button>
+                )}
+              </div>
+            </div>
+          </AlertDescription>
+        </div>
+      </div>
     </Alert>
   );
 };
