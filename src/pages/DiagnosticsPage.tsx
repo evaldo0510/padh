@@ -11,11 +11,14 @@ import {
   Wifi, 
   WifiOff,
   Server,
-  Lock
+  Lock,
+  User,
+  Trash2
 } from 'lucide-react';
 import { supabaseConfig, supabase } from '@/integrations/supabase/client';
 import { toast } from 'sonner';
 import { useOfflineMode } from '@/hooks/useOfflineMode';
+import { useNavigate } from 'react-router-dom';
 
 const DiagnosticsPage = () => {
   const { isOffline, toggleOffline, canConnect } = useOfflineMode();
