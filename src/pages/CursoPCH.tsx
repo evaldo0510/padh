@@ -384,6 +384,37 @@ um novo espaço se abre…
 
 O velho se dissolve… o novo floresce…
 e tudo simplesmente… acontece…`}</Poem>
+
+                  <ProtocoloPCH
+                    modulo="Módulo 3 · Pilar A (Aplicada)"
+                    foco="Induzir estados de transe leve usando linguagem ericksoniana e ritmo poético para acessar o inconsciente terapêutico."
+                    sinais={[
+                      'Hipervigilância e dificuldade de relaxar — sistema nervoso simpático cronicamente ativado.',
+                      'Insônia inicial ou intermediária com pensamento acelerado.',
+                      'Dificuldade de acesso a memórias emocionais (defesa intelectual).',
+                      'Resistência consciente à mudança ("eu sei o que tenho que fazer, mas...").',
+                      'Bloqueio criativo ou sensação de "cabeça travada".',
+                    ]}
+                    aplicacao={[
+                      'Estabeleça pacing inicial: respire no ritmo do paciente por 30 segundos.',
+                      'Inicie leitura do poema em tom 20% mais lento que sua fala normal.',
+                      'Use reticências e pausas para criar espaço interno entre os versos.',
+                      'Insira comandos embutidos: "perceba como…", "permita-se sentir…".',
+                      'Após o poema, mantenha 1 minuto de silêncio antes de qualquer pergunta.',
+                      'Pergunte: "O que se moveu por dentro agora?" — registre a resposta literal.',
+                    ]}
+                    indicacoes={[
+                      'Transtornos de ansiedade com componente somático intenso.',
+                      'TEPT em fase de estabilização (após segurança estabelecida).',
+                      'Dores crônicas de origem psicossomática.',
+                      'Preparação para procedimentos médicos invasivos.',
+                    ]}
+                    cuidados={[
+                      'Contraindicado em surto psicótico ativo ou dissociação severa.',
+                      'Não usar em pacientes com história de transe involuntário sem supervisão.',
+                      'Sempre encerrar com ancoragem no presente (5-4-3-2-1 sensorial).',
+                    ]}
+                  />
                 </div>
               </AccordionContent>
             </AccordionItem>
