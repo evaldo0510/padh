@@ -39,6 +39,8 @@ const VendaPoesiaHipnotica = lazy(() => import("./pages/venda/VendaPoesiaHipnoti
 const CienciaPoesia = lazy(() => import("./pages/CienciaPoesia"));
 const ComboPADH = lazy(() => import("./pages/ComboPADH"));
 const Admin = lazy(() => import("./pages/Admin"));
+const Prontuario = lazy(() => import("./pages/Prontuario"));
+const RecursosClinicos = lazy(() => import("./pages/RecursosClinicos"));
 
 const queryClient = new QueryClient();
 
