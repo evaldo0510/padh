@@ -164,11 +164,14 @@ const Dashboard = () => {
             {MODULOS.map((modulo, index) => {
               const isCompleted = progress.completedModules.includes(modulo.id);
               const isUnlocked = isModuleUnlocked(index);
+              const activitiesCount = progress.completedActivities[modulo.id]?.length || 0;
+              const totalActivities = modulo.atividades.length;
+              const modulePercent = Math.round((activitiesCount / totalActivities) * 100);
               
               return (
                 <div 
                   key={modulo.id}
-                  className={`flex items-center gap-4 p-4 rounded-2xl border transition-all ${
+                  className={`flex flex-col md:flex-row md:items-center gap-4 p-4 md:p-6 rounded-2xl border transition-all ${
                     isCompleted 
                       ? 'bg-primary/5 border-primary/20' 
                       : isUnlocked 
@@ -176,32 +179,42 @@ const Dashboard = () => {
                         : 'bg-muted/50 border-border opacity-60'
                   }`}
                 >
-                  <div className={`w-12 h-12 rounded-full flex items-center justify-center shrink-0 ${
-                    isCompleted ? 'bg-primary text-white' : 'bg-secondary text-muted-foreground'
-                  }`}>
-                    {isCompleted ? <CheckCircle2 className="h-6 w-6" /> : index + 1}
-                  </div>
-                  
-                  <div className="flex-1">
-                    <div className="flex items-center gap-2">
-                      <h3 className={`font-semibold ${isUnlocked ? 'text-foreground' : 'text-muted-foreground'}`}>
-                        {modulo.titulo}
-                      </h3>
-                      {!isUnlocked && <Lock className="h-3 w-3 text-muted-foreground" />}
+                  <div className="flex items-center gap-4 flex-1">
+                    <div className={`w-12 h-12 rounded-full flex items-center justify-center shrink-0 ${
+                      isCompleted ? 'bg-primary text-white' : 'bg-secondary text-muted-foreground'
+                    }`}>
+                      {isCompleted ? <CheckCircle2 className="h-6 w-6" /> : index + 1}
                     </div>
-                    <p className="text-xs text-muted-foreground">Pilar {modulo.pilar} · {modulo.pilarNome}</p>
+                    
+                    <div className="flex-1 min-w-0">
+                      <div className="flex items-center gap-2">
+                        <h3 className={`font-semibold truncate ${isUnlocked ? 'text-foreground' : 'text-muted-foreground'}`}>
+                          {modulo.titulo}
+                        </h3>
+                        {!isUnlocked && <Lock className="h-3 w-3 text-muted-foreground" />}
+                      </div>
+                      <div className="flex flex-wrap items-center gap-x-4 gap-y-1 mt-1">
+                        <p className="text-[10px] text-muted-foreground uppercase tracking-wider font-bold">Pilar {modulo.pilar} · {modulo.pilarNome}</p>
+                        {isUnlocked && !isCompleted && (
+                          <p className="text-[10px] text-primary font-bold">{activitiesCount} de {totalActivities} etapas concluídas</p>
+                        )}
+                      </div>
+                      {isUnlocked && !isCompleted && (
+                        <Progress value={modulePercent} className="h-1 mt-2 max-w-[200px]" />
+                      )}
+                    </div>
                   </div>
 
-                  <div className="flex items-center gap-3">
+                  <div className="flex items-center justify-end gap-3 mt-4 md:mt-0">
                     {isUnlocked ? (
-                      <Button variant={isCompleted ? "ghost" : "outline"} size="sm" asChild>
+                      <Button variant={isCompleted ? "ghost" : "outline"} size="sm" asChild className="w-full md:w-auto">
                         <Link to="/curso-padh">
-                          {isCompleted ? "Revisar" : "Iniciar"}
+                          {isCompleted ? "Revisar" : "Continuar"}
                           <ChevronRight className="h-4 w-4 ml-1" />
                         </Link>
                       </Button>
                     ) : (
-                      <span className="text-xs font-medium text-muted-foreground px-3 py-1 bg-muted rounded-full">
+                      <span className="text-xs font-medium text-muted-foreground px-3 py-1 bg-muted rounded-full w-full md:w-auto text-center">
                         Bloqueado
                       </span>
                     )}
