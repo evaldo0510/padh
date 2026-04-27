@@ -1,13 +1,13 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import PageLayout from '@/components/layout/PageLayout';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { Feather, Sparkles, ArrowRight } from 'lucide-react';
+import { Feather, Sparkles, ArrowRight, LogIn } from 'lucide-react';
 import { useNavigate, Link } from 'react-router-dom';
 import { toast } from 'sonner';
-import { supabaseConfig } from '@/integrations/supabase/client';
+import { supabaseConfig, supabase } from '@/integrations/supabase/client';
 import { ShieldAlert } from 'lucide-react';
 
 const LoginPage = () => {
@@ -16,26 +16,69 @@ const LoginPage = () => {
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
 
-  const handleLogin = (e: React.FormEvent) => {
-    e.preventDefault();
+  useEffect(() => {
+    // Check if already logged in (simulated)
+    const simulatedUser = localStorage.getItem('padh_simulated_user');
+    if (simulatedUser) {
+      navigate('/dashboard');
+    }
     
-    if (!supabaseConfig.isConfigured) {
-      toast.warning("Modo Demonstração Ativo", {
-        description: "O banco de dados não está configurado. O acesso será simulado localmente.",
-        duration: 5000,
+    // Check real supabase auth if configured
+    if (supabaseConfig.isConfigured) {
+      supabase.auth.getSession().then(({ data: { session } }) => {
+        if (session) navigate('/dashboard');
       });
     }
+  }, [navigate]);
 
+  const handleLogin = async (e: React.FormEvent) => {
+    e.preventDefault();
     setIsLoading(true);
-    
-    // Simulating login for demo purposes
-    setTimeout(() => {
-      setIsLoading(false);
+
+    try {
+      if (!supabaseConfig.isConfigured) {
+        // Simulated Login
+        setTimeout(() => {
+          localStorage.setItem('padh_simulated_user', JSON.stringify({
+            email,
+            id: 'simulated-user-' + Date.now(),
+            name: email.split('@')[0]
+          }));
+          
+          toast.warning("Modo Demonstração Ativo", {
+            description: "O banco de dados não está configurado. O acesso será simulado localmente.",
+            duration: 5000,
+          });
+          
+          toast.success("Bem-vindo de volta!", {
+            description: "Você acessou sua conta simulada."
+          });
+          
+          setIsLoading(false);
+          navigate('/dashboard');
+        }, 1500);
+        return;
+      }
+
+      // Real Supabase Login
+      const { error } = await supabase.auth.signInWithPassword({
+        email,
+        password,
+      });
+
+      if (error) throw error;
+
       toast.success("Bem-vindo de volta!", {
         description: "Você acessou sua conta com sucesso."
       });
       navigate('/dashboard');
-    }, 1500);
+    } catch (error: any) {
+      toast.error("Erro ao entrar", {
+        description: error.message || "Verifique suas credenciais."
+      });
+    } finally {
+      if (supabaseConfig.isConfigured) setIsLoading(false);
+    }
   };
 
   return (
@@ -59,7 +102,9 @@ const LoginPage = () => {
 
           <Card className="border-primary/10 shadow-xl">
             <CardHeader>
-              <CardTitle>Entrar</CardTitle>
+              <CardTitle className="flex items-center gap-2">
+                <LogIn className="h-5 w-5" /> Entrar
+              </CardTitle>
               <CardDescription>Use seu e-mail e senha cadastrados.</CardDescription>
               {!supabaseConfig.isConfigured && (
                 <div className="mt-2 p-2 bg-amber-50 dark:bg-amber-950/20 rounded border border-amber-200 dark:border-amber-900/30 flex items-center gap-2 text-[10px] text-amber-700 dark:text-amber-400">
