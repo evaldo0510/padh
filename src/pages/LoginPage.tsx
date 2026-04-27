@@ -61,6 +61,12 @@ const LoginPage = () => {
             <CardHeader>
               <CardTitle>Entrar</CardTitle>
               <CardDescription>Use seu e-mail e senha cadastrados.</CardDescription>
+              {!supabaseConfig.isConfigured && (
+                <div className="mt-2 p-2 bg-amber-50 dark:bg-amber-950/20 rounded border border-amber-200 dark:border-amber-900/30 flex items-center gap-2 text-[10px] text-amber-700 dark:text-amber-400">
+                  <ShieldAlert className="h-3 w-3 shrink-0" />
+                  <span>Configuração de nuvem ausente. Login simulado.</span>
+                </div>
+              )}
             </CardHeader>
             <CardContent>
               <form onSubmit={handleLogin} className="space-y-4">
