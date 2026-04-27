@@ -2,8 +2,7 @@ import React from 'react';
 import { Mail, Instagram, Youtube, Heart, Feather } from 'lucide-react';
 import { useScrollAnimation } from '@/hooks/useScrollAnimation';
 import PrefetchLink from './PrefetchLink';
-import logoPadh from '@/assets/logo.svg';
-import logoPadhLight from '@/assets/logo.svg';
+import Logo from '@/components/ui/Logo';
 
 const Footer = () => {
   const footerAnim = useScrollAnimation(0.1);
@@ -56,13 +55,12 @@ const Footer = () => {
           <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-10 mb-12">
             {/* Brand */}
             <div className="sm:col-span-2 lg:col-span-1">
-              <div className="flex items-center gap-2.5 mb-4">
-                <img src={logoPadhLight} alt="P.A.D.H. Logo" className="w-10 h-10 object-contain hidden dark:block" loading="lazy" width={512} height={512} />
-                <img src={logoPadh} alt="P.A.D.H. Logo" className="w-10 h-10 object-contain block dark:hidden" loading="lazy" width={512} height={512} />
-                <span className="font-heading font-bold text-foreground text-lg tracking-wide">P.A.D.H.</span>
+              <div className="flex items-center gap-2.5 mb-4 group">
+                <Logo />
+                <span className="font-heading font-bold text-foreground text-lg tracking-wide group-hover:text-primary transition-colors">P.A.D.H.</span>
               </div>
               <p className="text-sm text-muted-foreground leading-relaxed mb-5">
-                Poesia Aplicada ao Desenvolvimento Humano — neurociência, hipnose e linguagem simbólica a serviço da transformação interior.
+                Poesia Aplicada ao Desenvolvimento Humano — neurociência, hipnose e linguagem simbólica a serviço da transformation interior.
               </p>
               {/* Socials */}
               <div className="flex gap-2">
