@@ -110,9 +110,9 @@ const ProtocoloPCH: React.FC<ProtocoloPCHProps> = ({
 
         {/* Cuidados Éticos */}
         {cuidados && cuidados.length > 0 && (
-          <div className="rounded-xl border border-amber-500/20 bg-amber-500/[0.04] p-5">
+          <div className="rounded-xl border border-spiritual-amber/25 bg-spiritual-amber/[0.05] p-5">
             <div className="flex items-center gap-2 mb-3">
-              <ShieldCheck className="h-4 w-4 text-amber-600 dark:text-amber-400" />
+              <ShieldCheck className="h-4 w-4 text-spiritual-amber" />
               <h4 className="font-heading font-semibold text-foreground">
                 Cuidados Éticos & Contraindicações
               </h4>
@@ -120,7 +120,7 @@ const ProtocoloPCH: React.FC<ProtocoloPCHProps> = ({
             <ul className="space-y-2">
               {cuidados.map((c, i) => (
                 <li key={i} className="text-sm text-muted-foreground flex gap-2 leading-relaxed">
-                  <AlertCircle className="h-3.5 w-3.5 text-amber-600 dark:text-amber-400 mt-0.5 shrink-0" />
+                  <AlertCircle className="h-3.5 w-3.5 text-spiritual-amber mt-0.5 shrink-0" />
                   <span>{c}</span>
                 </li>
               ))}
