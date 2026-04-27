@@ -346,6 +346,12 @@ export const MODULOS: ModuloClinico[] = [
       'Estabilidade emocional confirmada',
       'Mudança superficial precisa aprofundar',
     ],
+    atividades: [
+      { id: 'visualizacao_caminho', label: 'Visualização do Caminho' },
+      { id: 'instalacao_metafora', label: 'Instalação de Metáfora Curativa' },
+      { id: 'sugestao_pos_hipnotica', label: 'Sugestão Pós-Hipnótica' }
+    ],
+    tempoEstimado: 70,
   },
   {
     id: 'modulo-6',
