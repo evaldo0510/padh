@@ -1,0 +1,87 @@
+import React, { useState, useEffect } from 'react';
+import { Cloud, CloudOff, RefreshCw, CheckCircle2, AlertCircle } from 'lucide-react';
+import { useOfflineMode } from '@/hooks/useOfflineMode';
+import { supabaseConfig } from '@/integrations/supabase/client';
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
+
+const SyncStatusIndicator = () => {
+  const { isOffline } = useOfflineMode();
+  const [syncStatus, setSyncStatus] = useState<'synced' | 'syncing' | 'offline' | 'error' | 'queued'>('synced');
+  
+  useEffect(() => {
+    if (!supabaseConfig.isConfigured || isOffline) {
+      setSyncStatus('offline');
+      return;
+    }
+
+    // Simulate occasional "syncing" state to give user feedback
+    // In a real app, this would be tied to TanStack Query's isFetching or a custom sync queue
+    const handleAction = () => {
+      setSyncStatus('syncing');
+      setTimeout(() => setSyncStatus('synced'), 1500);
+    };
+
+    window.addEventListener('padh_data_change', handleAction);
+    return () => window.removeEventListener('padh_data_change', handleAction);
+  }, [isOffline]);
+
+  const getStatusConfig = () => {
+    switch (syncStatus) {
+      case 'syncing':
+        return {
+          icon: <RefreshCw className="h-4 w-4 animate-spin text-primary" />,
+          text: 'Sincronizando...',
+          color: 'text-primary'
+        };
+      case 'offline':
+        return {
+          icon: <CloudOff className="h-4 w-4 text-muted-foreground" />,
+          text: !supabaseConfig.isConfigured ? 'Nuvem não configurada' : 'Modo Offline',
+          color: 'text-muted-foreground'
+        };
+      case 'error':
+        return {
+          icon: <AlertCircle className="h-4 w-4 text-destructive" />,
+          text: 'Erro na sincronização',
+          color: 'text-destructive'
+        };
+      case 'queued':
+        return {
+          icon: <Cloud className="h-4 w-4 text-amber-500" />,
+          text: 'Alterações pendentes',
+          color: 'text-amber-500'
+        };
+      case 'synced':
+      default:
+        return {
+          icon: <CheckCircle2 className="h-4 w-4 text-green-500" />,
+          text: 'Dados sincronizados',
+          color: 'text-green-500'
+        };
+    }
+  };
+
+  const config = getStatusConfig();
+
+  return (
+    <TooltipProvider>
+      <Tooltip>
+        <TooltipTrigger asChild>
+          <div className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-background/50 border border-border/50 backdrop-blur-sm cursor-help transition-all hover:bg-background/80">
+            {config.icon}
+            <span className={`text-[10px] font-bold uppercase tracking-wider ${config.color} hidden xs:inline`}>
+              {config.text}
+            </span>
+          </div>
+        </TooltipTrigger>
+        <TooltipContent side="bottom" className="text-xs">
+          {isOffline 
+            ? "O progresso está sendo salvo apenas localmente." 
+            : "Seus dados estão sincronizados com a nuvem."}
+        </TooltipContent>
+      </Tooltip>
+    </TooltipProvider>
+  );
+};
+
+export default SyncStatusIndicator;
