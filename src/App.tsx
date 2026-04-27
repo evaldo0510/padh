@@ -92,6 +92,7 @@ const AnimatedRoutes = () => {
           <Route path="/jornada/:phaseId/:sessionId" element={<PageTransition><SessaoView /></PageTransition>} />
           <Route path="/diagnostico-jornada" element={<PageTransition><DiagnosticoJornada /></PageTransition>} />
           <Route path="/biblioteca-exercicios" element={<PageTransition><BibliotecaExercicios /></PageTransition>} />
+          <Route path="/login" element={<PageTransition><LoginPage /></PageTransition>} />
           <Route path="/dashboard" element={<PageTransition><Dashboard /></PageTransition>} />
           <Route path="/diagnostico" element={<PageTransition><Diagnostico /></PageTransition>} />
           <Route path="*" element={<PageTransition><NotFound /></PageTransition>} />
