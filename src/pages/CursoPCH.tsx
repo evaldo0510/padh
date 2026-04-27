@@ -1,7 +1,7 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import PageLayout from '@/components/layout/PageLayout';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
-import { BookOpen, Brain, Sparkles, Lightbulb, Heart, Flame, Music, PenTool, Eye, Target, Feather } from 'lucide-react';
+import { BookOpen, Brain, Sparkles, Lightbulb, Heart, Flame, Music, PenTool, Eye, Target, Feather, Lock, CheckCircle2 } from 'lucide-react';
 import ProtocoloPCH from '@/components/sections/ProtocoloPCH';
 import ChecklistClinico from '@/components/clinical/ChecklistClinico';
 import FundamentacaoTeorica from '@/components/clinical/FundamentacaoTeorica';
@@ -14,6 +14,8 @@ import { MODULOS, getModulo } from '@/lib/dados-clinicos';
 import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { FileText, GitBranch as GitBranchIcon } from 'lucide-react';
+import { useCourseProgress } from '@/hooks/useCourseProgress';
+import { toast } from 'sonner';
 
 import modulo1Img from '@/assets/curso-pch/modulo1-palavras.jpg';
 import modulo2Img from '@/assets/curso-pch/modulo2-reestruturacao.jpg';
@@ -58,6 +60,39 @@ const ExerciseStep = ({ step, title, children }: { step: string; title: string; 
 
 /* ─────────────────────── page ─────────────────────── */
 const CursoPCH = () => {
+  const { progress, completeModule, isModuleUnlocked, setLastAccessed } = useCourseProgress();
+
+  const handleComplete = (moduleId: string, nextModuleId?: string) => {
+    completeModule(moduleId);
+    toast.success("Módulo concluído!", {
+      description: nextModuleId ? "O próximo módulo foi desbloqueado." : "Parabéns por concluir o curso!",
+    });
+  };
+
+  const ConclusionButton = ({ moduleId, nextModuleId }: { moduleId: string, nextModuleId?: string }) => {
+    const isCompleted = progress.completedModules.includes(moduleId);
+    
+    return (
+      <div className="mt-12 p-6 rounded-2xl border border-primary/20 bg-primary/5 flex flex-col items-center text-center">
+        <h4 className="font-heading font-semibold text-foreground mb-2">
+          {isCompleted ? "Módulo Concluído" : "Fim deste Módulo"}
+        </h4>
+        <p className="text-sm text-muted-foreground mb-6">
+          {isCompleted 
+            ? "Você já concluiu esta etapa. Pode revisar o conteúdo sempre que desejar." 
+            : "Marque como concluído para desbloquear o próximo conteúdo da sua trilha."}
+        </p>
+        <Button 
+          onClick={() => handleComplete(moduleId, nextModuleId)}
+          disabled={isCompleted}
+          className="gap-2"
+        >
+          {isCompleted ? <CheckCircle2 className="h-4 w-4 text-white" /> : <Sparkles className="h-4 w-4" />}
+          {isCompleted ? "Módulo Concluído" : "Concluir e Desbloquear"}
+        </Button>
+      </div>
+    );
+  };
   return (
     <PageLayout
       seo={{
