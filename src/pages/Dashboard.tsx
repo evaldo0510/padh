@@ -68,13 +68,35 @@ const Dashboard = () => {
               )}
             </p>
           </div>
-          <div className="flex gap-4">
+          <div className="flex gap-4 items-center">
+            <NotificationCenter />
             <Button asChild variant="outline" className="gap-2">
               <Link to="/recursos-clinicos"><Library className="h-4 w-4" /> Biblioteca</Link>
             </Button>
             <Button asChild className="gap-2">
               <Link to="/curso-padh"><PlayCircle className="h-4 w-4" /> Continuar</Link>
             </Button>
+          </div>
+        </div>
+
+        {/* Export and Schedule Row */}
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-12">
+          <div className="lg:col-span-2 space-y-8">
+            <Card className="border-primary/10 bg-primary/[0.02]">
+              <CardContent className="p-6 flex flex-col md:flex-row justify-between items-center gap-6">
+                <div className="text-center md:text-left">
+                  <h3 className="text-lg font-heading font-bold mb-1">Exportar Evolução</h3>
+                  <p className="text-sm text-muted-foreground">Gere um relatório detalhado da sua jornada P.A.D.H. em PDF.</p>
+                </div>
+                <ProgressReportExport />
+              </CardContent>
+            </Card>
+            
+            <ReviewSection />
+          </div>
+          
+          <div>
+            <WeeklySchedule />
           </div>
         </div>
 
