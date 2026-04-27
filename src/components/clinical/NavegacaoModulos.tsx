@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { MODULOS } from '@/lib/dados-clinicos';
-import { ChevronUp, ChevronDown, List } from 'lucide-react';
+import { ChevronUp, ChevronDown, List, Lock, CheckCircle2 } from 'lucide-react';
+import { useCourseProgress } from '@/hooks/useCourseProgress';
 
 /**
  * Navegação flutuante por módulo:
@@ -12,6 +13,7 @@ import { ChevronUp, ChevronDown, List } from 'lucide-react';
 const NavegacaoModulos: React.FC = () => {
   const [active, setActive] = useState<string>('modulo-1');
   const [openMobile, setOpenMobile] = useState(false);
+  const { progress: courseProgress, isModuleUnlocked } = useCourseProgress();
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -51,13 +53,16 @@ const NavegacaoModulos: React.FC = () => {
         className="hidden lg:flex fixed left-4 top-1/2 -translate-y-1/2 z-30 print:hidden"
       >
         <ul className="flex flex-col gap-2 p-2 rounded-2xl glass-morphism shadow-medium">
-          {MODULOS.map((m) => {
+          {MODULOS.map((m, idx) => {
             const isActive = active === m.id;
+            const isUnlocked = isModuleUnlocked(idx);
+            const isCompleted = courseProgress.completedModules.includes(m.id);
             return (
               <li key={m.id} data-module={m.numero} className="module-themed">
                 <button
                   type="button"
-                  onClick={() => goTo(m.id)}
+                  onClick={() => isUnlocked && goTo(m.id)}
+                  disabled={!isUnlocked}
                   aria-label={`Ir para Módulo ${m.numero} — ${m.titulo} (${m.corNome})`}
                   aria-current={isActive ? 'true' : undefined}
                   className={`group relative flex items-center gap-3 rounded-xl transition-all duration-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-module focus-visible:ring-offset-2 focus-visible:ring-offset-background ${
@@ -71,10 +76,18 @@ const NavegacaoModulos: React.FC = () => {
                     className={`shrink-0 rounded-lg flex items-center justify-center font-heading font-bold transition-all ${
                       isActive
                         ? 'w-9 h-9 bg-module text-background ring-2 ring-module/40'
-                        : 'w-8 h-8 bg-module/15 text-module border border-module/40 group-hover:bg-module/25'
+                        : isUnlocked 
+                          ? 'w-8 h-8 bg-module/15 text-module border border-module/40 group-hover:bg-module/25'
+                          : 'w-8 h-8 bg-muted text-muted-foreground border border-border'
                     }`}
                   >
-                    {m.numero}
+                    {!isUnlocked ? (
+                      <Lock className="h-3 w-3" />
+                    ) : isCompleted ? (
+                      <CheckCircle2 className="h-4 w-4" />
+                    ) : (
+                      m.numero
+                    )}
                   </span>
                   <span
                     className={`text-xs font-medium whitespace-nowrap overflow-hidden transition-all ${
