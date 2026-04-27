@@ -2,6 +2,7 @@ import React from 'react';
 import PageLayout from '@/components/layout/PageLayout';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
+import { Alert, AlertDescription } from '@/components/ui/alert';
 import { CheckCircle2, Copy, ExternalLink, Info, Code } from 'lucide-react';
 import { toast } from 'sonner';
 
