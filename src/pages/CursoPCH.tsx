@@ -1404,6 +1404,12 @@ só precisa de tempo, terra e coragem para abrir."`}</Poem>
                   />
 
                   <BotaoImprimirPDF modulo={getModulo("modulo-8")!} />
+                  <div className="mt-8 space-y-4">
+                    <h4 className="font-heading font-semibold text-sm text-foreground">Etapas de Aprendizado</h4>
+                    {getModulo("modulo-8")?.atividades.map(atv => (
+                      <ActivityTracker key={atv.id} moduleId="modulo-8" activityId={atv.id} label={atv.label} />
+                    ))}
+                  </div>
                   <ConclusionButton moduleId="modulo-8" />
                 </div>
               </AccordionContent>
