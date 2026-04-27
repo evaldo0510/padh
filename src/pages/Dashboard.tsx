@@ -90,12 +90,16 @@ const Dashboard = () => {
             </p>
           </div>
           <div className="flex gap-4 items-center">
+            <SyncStatusIndicator />
             <NotificationCenter />
             <Button asChild variant="outline" className="gap-2">
               <Link to="/recursos-clinicos"><Library className="h-4 w-4" /> Biblioteca</Link>
             </Button>
-            <Button asChild className="gap-2">
-              <Link to="/curso-padh"><PlayCircle className="h-4 w-4" /> Continuar</Link>
+            <Button variant="ghost" className="gap-2 text-muted-foreground hover:text-destructive transition-colors hidden md:flex" onClick={handleLogout}>
+              <LogOut className="h-4 w-4" /> Sair
+            </Button>
+            <Button asChild className="gap-2 shadow-glow">
+              <Link to="/jornada"><PlayCircle className="h-4 w-4" /> Continuar</Link>
             </Button>
           </div>
         </div>
