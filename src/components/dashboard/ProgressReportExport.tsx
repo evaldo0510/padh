@@ -9,10 +9,11 @@ import { toast } from 'sonner';
 
 const ProgressReportExport = () => {
   const { progress } = useCourseProgress();
+  const { jornada } = useJornada();
 
   const handleExport = () => {
     try {
-      gerarRelatorioProgresso(progress, MODULOS);
+      gerarRelatorioProgresso(progress, MODULOS, jornada);
       toast.success("Relatório gerado com sucesso!", {
         description: "O download do seu progresso em PDF foi iniciado."
       });
