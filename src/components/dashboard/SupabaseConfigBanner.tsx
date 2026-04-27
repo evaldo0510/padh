@@ -55,15 +55,15 @@ const SupabaseConfigBanner = () => {
       variant="default"
       className={`mb-8 border-2 backdrop-blur-sm transition-all duration-300 shadow-sm ${
         !configStatus 
-          ? "border-red-500/20 bg-red-50/50 dark:bg-red-950/10" 
+          ? "border-destructive/20 bg-destructive/5" 
           : isOffline 
-            ? "border-amber-500/20 bg-amber-50/50 dark:bg-amber-950/10"
-            : "border-green-500/20 bg-green-50/50 dark:bg-green-950/10"
+            ? "border-primary/20 bg-primary/5"
+            : "border-primary/20 bg-primary/5"
       }`}
     >
       <div className="flex items-start gap-4">
         <div className={`p-2.5 rounded-xl shadow-inner ${
-          !configStatus ? "bg-red-100 text-red-600" : isOffline ? "bg-amber-100 text-amber-600" : "bg-green-100 text-green-600"
+          !configStatus ? "bg-destructive/10 text-destructive" : isOffline ? "bg-primary/10 text-primary" : "bg-primary/10 text-primary"
         }`}>
           {!configStatus ? <ShieldAlert className="h-6 w-6" /> : isOffline ? <WifiOff className="h-6 w-6" /> : <Wifi className="h-6 w-6" />}
         </div>
@@ -78,7 +78,7 @@ const SupabaseConfigBanner = () => {
                 {syncBadge.icon} {syncBadge.label}
               </span>
               <span className={`text-[10px] font-bold px-2 py-0.5 rounded-full border ${
-                configStatus ? "bg-green-100 text-green-700 border-green-200" : "bg-red-100 text-red-700 border-red-200"
+                configStatus ? "bg-primary/10 text-primary border-primary/20" : "bg-destructive/10 text-destructive border-destructive/20"
               }`}>
                 Config: {configStatus ? "OK" : "PENDENTE"}
               </span>
