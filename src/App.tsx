@@ -87,6 +87,10 @@ const AnimatedRoutes = () => {
           <Route path="/admin" element={<PageTransition><Admin /></PageTransition>} />
           <Route path="/prontuario-pch" element={<PageTransition><Prontuario /></PageTransition>} />
           <Route path="/recursos-clinicos" element={<PageTransition><RecursosClinicos /></PageTransition>} />
+          <Route path="/jornada" element={<PageTransition><JornadaHome /></PageTransition>} />
+          <Route path="/jornada/:phaseId/:sessionId" element={<PageTransition><SessaoView /></PageTransition>} />
+          <Route path="/diagnostico-jornada" element={<PageTransition><DiagnosticoJornada /></PageTransition>} />
+          <Route path="/biblioteca-exercicios" element={<PageTransition><BibliotecaExercicios /></PageTransition>} />
           <Route path="/dashboard" element={<PageTransition><Dashboard /></PageTransition>} />
           <Route path="/diagnostico" element={<PageTransition><Diagnostico /></PageTransition>} />
           <Route path="*" element={<PageTransition><NotFound /></PageTransition>} />
