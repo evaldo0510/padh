@@ -977,6 +977,36 @@ só precisa de tempo, terra e coragem para abrir."`}</Poem>
                   </SectionCard>
 
                   <Quote>Este exercício não termina no papel. É um processo contínuo de transformação. Cada vez que o medo se apresentar, lembre-se da sua carta de sabedoria e se conecte com a visão mais elevada que você já criou.</Quote>
+
+                  <ProtocoloPCH
+                    modulo="Módulo 8 · Pilar H (Humano)"
+                    foco="Sustentar a transformação por meio de prática contínua de auto-escrita poética como ferramenta de autonomia psíquica."
+                    sinais={[
+                      'Paciente em fase de alta terapêutica buscando manutenção dos ganhos.',
+                      'Histórico de recaída em quadros depressivos ou ansiosos.',
+                      'Necessidade de ferramenta de autorregulação entre sessões espaçadas.',
+                      'Demanda por desenvolvimento pessoal continuado pós-tratamento.',
+                    ]}
+                    aplicacao={[
+                      'Apresente os 5 exercícios práticos como prescrição estruturada para 8 semanas.',
+                      'Semanas 1-2: "Reescrita de Memória" — uma memória dolorosa por semana.',
+                      'Semanas 3-4: "Diálogo com o Eu Futuro" — visualização semanal.',
+                      'Semanas 5-6: "Carta de Sabedoria" — escrita expandida em 3 sessões.',
+                      'Semanas 7-8: integração — paciente cria seu próprio exercício e compartilha.',
+                      'Sessões de revisão mensais por 3 meses para consolidação.',
+                    ]}
+                    indicacoes={[
+                      'Prevenção de recaída pós-tratamento de depressão e ansiedade.',
+                      'Desenvolvimento pessoal e crescimento pós-traumático.',
+                      'Manutenção em pacientes com transtornos crônicos estabilizados.',
+                      'Programas de bem-estar em contexto organizacional ou educacional.',
+                    ]}
+                    cuidados={[
+                      'Não substitui acompanhamento profissional — é prática complementar.',
+                      'Monitorar sinais de descompensação caso a auto-escrita ative material intenso.',
+                      'Estabelecer canal de retorno claro caso o paciente precise reabrir tratamento.',
+                    ]}
+                  />
                 </div>
               </AccordionContent>
             </AccordionItem>
