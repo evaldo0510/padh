@@ -75,6 +75,98 @@ const CursoPCH = () => {
         </div>
       </section>
 
+      {/* Protocolo Geral de Intervenção Clínica */}
+      <section className="py-16 md:py-20 border-t border-border/30 bg-primary/[0.02]">
+        <div className="container mx-auto px-6 max-w-4xl">
+          <div className="text-center mb-10">
+            <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-primary/20 bg-primary/5 text-primary text-sm font-medium mb-4">
+              <Target className="h-4 w-4" />
+              Protocolo de Intervenção Clínica
+            </div>
+            <h2 className="text-3xl md:text-4xl font-heading font-bold text-foreground mb-4">
+              PCH no <span className="text-primary italic">P.A.D.H.</span> — Como Usar na Prática
+            </h2>
+            <p className="text-muted-foreground max-w-2xl mx-auto leading-relaxed">
+              Um mapa clínico para terapeutas, psicólogos e profissionais da saúde mental.
+              Cada módulo abaixo agora inclui um <strong className="text-foreground">Protocolo PCH</strong> com
+              identificação de sinais, aplicação passo a passo, indicações e cuidados éticos.
+            </p>
+          </div>
+
+          {/* Fluxo geral em 4 etapas */}
+          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
+            {[
+              {
+                pillar: 'P',
+                name: 'Poesia',
+                action: 'Escutar a linguagem do paciente para mapear seu mundo simbólico.',
+                tool: 'Módulo 1',
+              },
+              {
+                pillar: 'A',
+                name: 'Aplicada',
+                action: 'Aplicar técnicas (Poemadiagnóstico, Verso-Gatilho, indução leve).',
+                tool: 'Módulos 2-4',
+              },
+              {
+                pillar: 'D',
+                name: 'Desenvolvimento',
+                action: 'Aprofundar e instalar metáforas curativas que reorganizam crenças.',
+                tool: 'Módulos 5-6',
+              },
+              {
+                pillar: 'H',
+                name: 'Humano',
+                action: 'Integrar mudanças à identidade e sustentar autonomia psíquica.',
+                tool: 'Módulos 7-8',
+              },
+            ].map((p, i) => (
+              <div key={i} className="rounded-xl border border-primary/15 bg-card p-5 text-center">
+                <div className="w-12 h-12 mx-auto rounded-full bg-primary/10 flex items-center justify-center text-primary font-heading font-bold text-xl mb-3">
+                  {p.pillar}
+                </div>
+                <h3 className="font-heading font-semibold text-foreground mb-2">{p.name}</h3>
+                <p className="text-xs text-muted-foreground leading-relaxed mb-3">{p.action}</p>
+                <p className="text-xs text-primary font-medium uppercase tracking-wider">{p.tool}</p>
+              </div>
+            ))}
+          </div>
+
+          {/* Como identificar problemas mentais e emocionais */}
+          <div className="rounded-xl border border-primary/15 bg-card p-6 md:p-8">
+            <h3 className="text-xl font-heading font-semibold text-foreground mb-4 flex items-center gap-2">
+              <Brain className="h-5 w-5 text-primary" />
+              Como Identificar Problemas Mentais e Emocionais pela Linguagem
+            </h3>
+            <p className="text-sm text-muted-foreground mb-5 leading-relaxed">
+              A poesia funciona como um <strong className="text-foreground">teste projetivo natural</strong>:
+              as palavras escolhidas pelo paciente revelam estruturas profundas. Use esta tabela rápida em sessão:
+            </p>
+            <div className="grid md:grid-cols-2 gap-4 text-sm">
+              {[
+                { sinal: 'Imagens de queda, peso, escuridão', hipotese: 'Quadro depressivo' },
+                { sinal: 'Imagens de pressão, aceleração, descontrole', hipotese: 'Espectro ansioso' },
+                { sinal: 'Imagens fragmentadas, descontínuas, dissociadas', hipotese: 'Trauma não integrado' },
+                { sinal: 'Discurso pobre em emoção, técnico', hipotese: 'Alexitimia / defesas intelectuais' },
+                { sinal: 'Auto-imagem absoluta ("nunca", "sempre")', hipotese: 'Crença nuclear rígida' },
+                { sinal: 'Idealização ou desvalorização extremas', hipotese: 'Estrutura de personalidade frágil' },
+              ].map((item, i) => (
+                <div key={i} className="flex gap-3 p-3 rounded-lg bg-primary/[0.03] border border-primary/10">
+                  <div className="text-primary font-bold mt-0.5">→</div>
+                  <div>
+                    <p className="text-foreground font-medium mb-1">{item.sinal}</p>
+                    <p className="text-xs text-muted-foreground italic">Hipótese: {item.hipotese}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+            <p className="text-xs text-muted-foreground italic mt-5 text-center">
+              ⚠ Esta tabela é orientativa, não diagnóstica. Diagnóstico formal requer avaliação clínica completa.
+            </p>
+          </div>
+        </div>
+      </section>
+
       {/* Content */}
       <section className="py-12 md:py-20">
         <div className="container mx-auto px-6 max-w-4xl">
