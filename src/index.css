@@ -4,141 +4,128 @@
 @tailwind components;
 @tailwind utilities;
 
-/* P.A.D.H. — Sistema de Design Editorial */
+/* P.A.D.H. — Sistema de Design Editorial Visual Identity Update */
 
 @layer base {
   :root {
-    /* Core — Noite profunda com calor âmbar */
-    --background: 222 47% 6%;
-    --foreground: 40 20% 92%;
+    /* Core — Roxo profundo/Azul escuro com destaque dourado suave */
+    --background: 262 47% 6%; /* Deep Purple Background */
+    --foreground: 210 20% 90%; /* Soft White Text */
 
-    --card: 222 40% 9%;
-    --card-foreground: 40 20% 92%;
+    --card: 262 45% 9%;
+    --card-foreground: 210 20% 90%;
 
-    --popover: 222 40% 9%;
-    --popover-foreground: 40 20% 92%;
+    --popover: 262 45% 9%;
+    --popover-foreground: 210 20% 90%;
 
-    /* Primary — Dourado Âmbar quente */
-    --primary: 38 80% 55%;
-    --primary-foreground: 222 47% 6%;
-    --primary-light: 40 70% 72%;
-    --primary-dark: 36 85% 42%;
+    /* Primary — Dourado Âmbar suave (Destaque) */
+    --primary: 45 70% 60%;
+    --primary-foreground: 262 47% 6%;
+    --primary-light: 45 60% 75%;
+    --primary-dark: 45 80% 45%;
 
-    /* Secondary — Violeta profundo, espiritual */
-    --secondary: 262 50% 55%;
+    /* Secondary — Lilás/Violeta (Secundária) */
+    --secondary: 270 50% 65%;
     --secondary-foreground: 0 0% 100%;
-    --secondary-light: 262 45% 72%;
-    --secondary-dark: 262 55% 40%;
+    --secondary-light: 270 45% 75%;
+    --secondary-dark: 270 55% 50%;
 
     /* Accent tones */
-    --accent-warm: 20 70% 55%;
-    --accent-sage: 155 30% 50%;
+    --accent-warm: 45 70% 60%;
+    --accent-sage: 160 25% 45%;
     
-    /* Spiritual Palette */
-    --spiritual-gold: 38 80% 55%;
-    --spiritual-indigo: 230 45% 50%;
-    --spiritual-violet: 262 50% 55%;
-    --spiritual-rose: 340 50% 60%;
-    --spiritual-sage: 155 30% 50%;
-    --spiritual-amber: 25 75% 52%;
+    /* Spiritual Palette - Refined for deep therapeutic feel */
+    --spiritual-gold: 45 70% 60%;
+    --spiritual-indigo: 240 40% 55%;
+    --spiritual-violet: 270 50% 65%;
+    --spiritual-rose: 330 40% 65%;
+    --spiritual-sage: 160 25% 45%;
+    --spiritual-amber: 40 75% 55%;
 
-    /* ─── Module Palette — 8 cores únicas conectadas ─── */
-    /* Cada módulo tem identidade cromática própria, mas todas compartilham */
-    /* a mesma temperatura espiritual (saturação 45-80%, luminosidade alinhada). */
-    --m1: 38 80% 55%;    /* M1 · Âmbar dourado — luz da escuta */
-    --m2: 262 50% 60%;   /* M2 · Violeta profundo — transformação */
-    --m3: 230 60% 62%;   /* M3 · Índigo místico — transe leve */
-    --m4: 320 50% 65%;   /* M4 · Rosa-malva — prescrição amorosa */
-    --m5: 160 45% 50%;   /* M5 · Esmeralda profunda — jornada */
-    --m6: 15 70% 58%;    /* M6 · Terracota/cobre — sentido encarnado */
-    --m7: 210 55% 55%;   /* M7 · Azul-noite ancestral — holding */
-    --m8: 45 78% 62%;    /* M8 · Ouro-rosa luminoso — autonomia */
+    /* ─── Module Palette — Cores conectadas ao novo tema ─── */
+    --m1: 45 70% 60%;    /* M1 · Âmbar suave */
+    --m2: 270 50% 65%;   /* M2 · Lilás */
+    --m3: 240 40% 55%;   /* M3 · Índigo */
+    --m4: 330 40% 65%;   /* M4 · Rosa-malva suave */
+    --m5: 160 25% 45%;   /* M5 · Esmeralda suave */
+    --m6: 25 60% 55%;    /* M6 · Terracota suave */
+    --m7: 210 40% 50%;   /* M7 · Azul profundo suave */
+    --m8: 45 65% 65%;    /* M8 · Ouro-rosa */
 
-    
     /* Neutrals */
-    --muted: 222 20% 14%;
-    --muted-foreground: 220 15% 55%;
+    --muted: 262 20% 14%;
+    --muted-foreground: 210 15% 65%;
 
-    --accent: 222 18% 17%;
-    --accent-foreground: 40 15% 90%;
+    --accent: 262 18% 17%;
+    --accent-foreground: 210 20% 95%;
 
     --destructive: 0 65% 50%;
     --destructive-foreground: 0 0% 100%;
 
-    --border: 222 15% 18%;
-    --input: 222 15% 18%;
-    --ring: 38 80% 55%;
+    --border: 262 15% 18%;
+    --input: 262 15% 18%;
+    --ring: 45 70% 60%;
 
-    --radius: 0.75rem;
+    --radius: 0.875rem;
 
-    /* Gradients */
-    --gradient-hero: linear-gradient(160deg, hsl(222 47% 6%) 0%, hsl(230 35% 12%) 40%, hsl(262 30% 14%) 100%);
-    --gradient-card: linear-gradient(145deg, hsl(222 40% 9%) 0%, hsl(222 35% 12%) 100%);
-    --gradient-glow: radial-gradient(ellipse at 50% 0%, hsl(38 80% 55% / 0.08) 0%, transparent 60%);
-    --gradient-warm: radial-gradient(ellipse at 30% 50%, hsl(38 80% 55% / 0.06) 0%, transparent 50%);
+    /* Gradients — Updated with new core colors */
+    --gradient-hero: linear-gradient(160deg, hsl(262 47% 6%) 0%, hsl(262 35% 12%) 40%, hsl(270 30% 14%) 100%);
+    --gradient-card: linear-gradient(145deg, hsl(262 40% 9%) 0%, hsl(262 35% 12%) 100%);
+    --gradient-glow: radial-gradient(ellipse at 50% 0%, hsl(45 70% 60% / 0.08) 0%, transparent 60%);
+    --gradient-warm: radial-gradient(ellipse at 30% 50%, hsl(45 70% 60% / 0.06) 0%, transparent 50%);
 
-    /* Shadows */
+    /* Shadows — Updated with new highlight colors */
     --shadow-soft: 0 2px 12px -3px hsl(0 0% 0% / 0.4);
-    --shadow-medium: 0 8px 30px -8px hsl(38 80% 55% / 0.15), 0 4px 20px -4px hsl(0 0% 0% / 0.3);
-    --shadow-strong: 0 20px 50px -12px hsl(38 80% 55% / 0.2), 0 8px 40px -8px hsl(0 0% 0% / 0.4);
-    --shadow-glow: 0 0 40px hsl(38 80% 55% / 0.15), 0 0 80px hsl(262 50% 55% / 0.08);
+    --shadow-medium: 0 8px 30px -8px hsl(45 70% 60% / 0.15), 0 4px 20px -4px hsl(0 0% 0% / 0.3);
+    --shadow-strong: 0 20px 50px -12px hsl(45 70% 60% / 0.2), 0 8px 40px -8px hsl(0 0% 0% / 0.4);
+    --shadow-glow: 0 0 40px hsl(45 70% 60% / 0.15), 0 0 80px hsl(270 50% 65% / 0.08);
 
     /* Transitions */
     --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     --transition-gentle: all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
   }
 
+  /* Light mode adjusted but consistent with new identity */
   .light {
-    --background: 40 25% 97%;
-    --foreground: 222 40% 12%;
+    --background: 210 20% 97%;
+    --foreground: 262 40% 12%;
 
     --card: 0 0% 100%;
-    --card-foreground: 222 40% 12%;
+    --card-foreground: 262 40% 12%;
 
     --popover: 0 0% 100%;
-    --popover-foreground: 222 40% 12%;
+    --popover-foreground: 262 40% 12%;
 
-    --primary: 38 75% 48%;
+    --primary: 45 65% 45%;
     --primary-foreground: 0 0% 100%;
-    --primary-light: 40 65% 65%;
-    --primary-dark: 36 80% 38%;
+    --primary-light: 45 55% 65%;
+    --primary-dark: 45 70% 35%;
 
-    --secondary: 262 45% 50%;
+    --secondary: 270 45% 55%;
     --secondary-foreground: 0 0% 100%;
-    --secondary-light: 262 40% 68%;
-    --secondary-dark: 262 50% 38%;
+    --secondary-light: 270 40% 70%;
+    --secondary-dark: 270 50% 40%;
 
-    --muted: 40 15% 92%;
-    --muted-foreground: 222 15% 45%;
+    --muted: 210 15% 92%;
+    --muted-foreground: 262 15% 45%;
 
-    --accent: 40 15% 94%;
-    --accent-foreground: 222 30% 15%;
+    --accent: 210 15% 94%;
+    --accent-foreground: 262 30% 15%;
 
     --destructive: 0 65% 50%;
     --destructive-foreground: 0 0% 100%;
 
-    --border: 40 15% 88%;
-    --input: 40 15% 88%;
-    --ring: 38 75% 48%;
+    --border: 210 15% 88%;
+    --input: 210 15% 88%;
+    --ring: 45 65% 45%;
 
-    --shadow-soft: 0 2px 12px -3px hsl(222 30% 20% / 0.08);
-    --shadow-medium: 0 8px 30px -8px hsl(222 30% 20% / 0.12);
-    --shadow-strong: 0 20px 50px -12px hsl(222 30% 20% / 0.15);
-    --shadow-glow: 0 0 40px hsl(38 75% 48% / 0.1);
-
-    /* Module palette ajustada para tema claro — contraste AA garantido */
-    --m1: 38 80% 38%;
-    --m2: 262 55% 45%;
-    --m3: 230 60% 45%;
-    --m4: 320 55% 42%;
-    --m5: 160 55% 32%;
-    --m6: 15 70% 42%;
-    --m7: 210 60% 38%;
-    --m8: 42 80% 38%;
+    --shadow-soft: 0 2px 12px -3px hsl(262 30% 20% / 0.08);
+    --shadow-medium: 0 8px 30px -8px hsl(262 30% 20% / 0.12);
+    --shadow-strong: 0 20px 50px -12px hsl(262 30% 20% / 0.15);
+    --shadow-glow: 0 0 40px hsl(45 65% 45% / 0.1);
   }
 }
 
-/* ─── Utilitários por módulo: classes data-driven ─── */
 @layer utilities {
   .module-themed[data-module="1"] { --module: var(--m1); }
   .module-themed[data-module="2"] { --module: var(--m2); }
@@ -161,7 +148,6 @@
   .shadow-module-glow { box-shadow: 0 8px 32px -12px hsl(var(--module) / 0.35); }
 }
 
-
 @layer base {
   * {
     @apply border-border;
@@ -173,6 +159,10 @@
     text-rendering: optimizeLegibility;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+    background-image: 
+      radial-gradient(at 0% 0%, hsl(270 50% 65% / 0.05) 0px, transparent 50%),
+      radial-gradient(at 100% 0%, hsl(45 70% 60% / 0.03) 0px, transparent 50%);
+    background-attachment: fixed;
   }
 
   h1, h2, h3, h4, h5, h6 {
@@ -234,11 +224,6 @@
     100% { background-position: 600px 0; }
   }
 
-  @keyframes line-reveal {
-    0% { width: 0; }
-    100% { width: 100%; }
-  }
-
   .animate-gentle-bounce {
     animation: gentle-bounce 3s ease-in-out infinite;
   }
@@ -290,24 +275,24 @@
 
   .gradient-mesh {
     background: 
-      radial-gradient(at 20% 30%, hsl(38 80% 55% / 0.06) 0px, transparent 50%),
-      radial-gradient(at 80% 20%, hsl(262 50% 55% / 0.05) 0px, transparent 50%),
-      radial-gradient(at 50% 80%, hsl(155 30% 50% / 0.04) 0px, transparent 50%);
+      radial-gradient(at 20% 30%, hsl(45 70% 60% / 0.06) 0px, transparent 50%),
+      radial-gradient(at 80% 20%, hsl(270 50% 65% / 0.05) 0px, transparent 50%),
+      radial-gradient(at 50% 80%, hsl(160 25% 45% / 0.04) 0px, transparent 50%);
   }
 
   .gradient-spiritual {
-    background: linear-gradient(135deg, hsl(262 50% 55%) 0%, hsl(38 80% 55%) 100%);
+    background: linear-gradient(135deg, hsl(270 50% 65%) 0%, hsl(45 70% 60%) 100%);
   }
 
   .glow-text {
-    text-shadow: 0 0 20px hsl(38 80% 55% / 0.3),
-                 0 0 40px hsl(38 80% 55% / 0.15);
+    text-shadow: 0 0 20px hsl(45 70% 60% / 0.3),
+                 0 0 40px hsl(45 70% 60% / 0.15);
   }
 
   .border-glow {
-    border: 1px solid hsl(38 80% 55% / 0.2);
-    box-shadow: inset 0 0 20px hsl(38 80% 55% / 0.03),
-                0 0 20px hsl(38 80% 55% / 0.05);
+    border: 1px solid hsl(45 70% 60% / 0.2);
+    box-shadow: inset 0 0 20px hsl(45 70% 60% / 0.03),
+                0 0 20px hsl(45 70% 60% / 0.05);
   }
 
   .shadow-soft { box-shadow: var(--shadow-soft); }
@@ -333,15 +318,6 @@
     backdrop-filter: blur(12px);
     border: 1px solid hsl(var(--foreground) / 0.06);
     border-radius: 1rem;
-  }
-
-  /* Consistent section spacing */
-  .section-padding {
-    @apply py-20 md:py-28;
-  }
-
-  .section-header {
-    @apply text-center mb-14 md:mb-16;
   }
 
   .section-label {
@@ -398,53 +374,34 @@
     font-family: 'Playfair Display', serif;
   }
 
-  /* ─── Acessibilidade: foco visível em todos os interativos ─── */
   *:focus-visible {
     outline: 2px solid hsl(var(--ring));
     outline-offset: 2px;
     border-radius: 4px;
   }
 
-  /* Foco temático para elementos dentro de um módulo */
   .module-themed *:focus-visible {
     outline-color: hsl(var(--module, var(--ring)));
   }
-
-  /* Reduz movimento se usuário preferir */
-  @media (prefers-reduced-motion: reduce) {
-    *,
-    *::before,
-    *::after {
-      animation-duration: 0.01ms !important;
-      animation-iteration-count: 1 !important;
-      transition-duration: 0.01ms !important;
-      scroll-behavior: auto !important;
-    }
-  }
 }
 
-/* ═══════════════════════════════════════════════════════════════
-   MODO IMPRIMIR — Otimizado para A4
-   Limpa elementos extras, força tema claro, reorganiza blocos.
-   ═══════════════════════════════════════════════════════════════ */
 @media print {
   @page {
     size: A4;
     margin: 18mm 16mm;
   }
 
-  /* Força paleta clara legível em papel */
   :root,
   .dark,
   .light {
     --background: 0 0% 100%;
-    --foreground: 222 40% 12%;
+    --foreground: 262 40% 12%;
     --card: 0 0% 100%;
-    --card-foreground: 222 40% 12%;
+    --card-foreground: 262 40% 12%;
     --muted: 0 0% 96%;
-    --muted-foreground: 222 20% 30%;
+    --muted-foreground: 262 20% 30%;
     --border: 0 0% 80%;
-    --primary: 38 75% 38%;
+    --primary: 45 65% 35%;
     --primary-foreground: 0 0% 100%;
   }
 
@@ -455,7 +412,6 @@
     line-height: 1.45;
   }
 
-  /* Esconde toda a chrome do app */
   header, footer, nav,
   [role="banner"], [role="contentinfo"],
   .print\:hidden,
@@ -465,7 +421,6 @@
     display: none !important;
   }
 
-  /* Remove todos efeitos visuais pesados */
   *, *::before, *::after {
     background-image: none !important;
     box-shadow: none !important;
@@ -475,7 +430,6 @@
     transition: none !important;
   }
 
-  /* Glass cards viram blocos brancos com contorno suave */
   .glass-card,
   .glass-morphism,
   .gradient-card,
@@ -488,103 +442,10 @@
     border: 1px solid #ccc !important;
   }
 
-  /* Tipografia legível */
   h1 { font-size: 22pt; margin: 0 0 8pt; }
   h2 { font-size: 16pt; margin: 12pt 0 6pt; }
   h3 { font-size: 13pt; margin: 10pt 0 5pt; }
   h4 { font-size: 11.5pt; margin: 8pt 0 4pt; }
   p, li { font-size: 10.5pt; }
   small, .text-xs { font-size: 9pt; }
-
-  /* Container fluido */
-  .container {
-    max-width: 100% !important;
-    padding: 0 !important;
-    margin: 0 !important;
-  }
-
-  section {
-    padding: 8pt 0 !important;
-    margin: 0 !important;
-  }
-
-  /* Abre todos os accordions na impressão */
-  [data-state="closed"] > [role="region"],
-  [data-radix-collection-item] [hidden] {
-    display: block !important;
-    height: auto !important;
-    overflow: visible !important;
-  }
-
-  /* Quebra de página inteligente */
-  .module-themed,
-  [data-module],
-  .poem-block,
-  section > div,
-  article {
-    break-inside: avoid;
-    page-break-inside: avoid;
-  }
-
-  h1, h2, h3, h4 {
-    break-after: avoid;
-    page-break-after: avoid;
-  }
-
-  /* Cores de módulo viram apenas borda lateral em P&B */
-  .module-themed {
-    border-left: 4px solid hsl(var(--module)) !important;
-    padding-left: 10pt !important;
-    margin-bottom: 14pt !important;
-    -webkit-print-color-adjust: exact;
-    print-color-adjust: exact;
-  }
-
-  .text-module { color: hsl(var(--module)) !important; }
-  .bg-module-soft, .bg-module-tint {
-    background: white !important;
-    border: 1px solid hsl(var(--module) / 0.4) !important;
-  }
-
-  /* Imagens não devem cortar páginas */
-  img {
-    max-width: 100% !important;
-    page-break-inside: avoid;
-    break-inside: avoid;
-  }
-
-  /* Esconde elementos puramente decorativos / interativos sem valor em papel */
-  button:not(.print\:visible),
-  [role="button"]:not(.print\:visible),
-  .animate-shimmer,
-  .animate-float,
-  .animate-glow-pulse,
-  iframe,
-  video {
-    display: none !important;
-  }
-
-  /* Mostra URL ao lado de links externos */
-  a[href^="http"]::after {
-    content: " (" attr(href) ")";
-    font-size: 8pt;
-    color: #555;
-    word-break: break-all;
-  }
-
-  /* Checkbox/inputs viram quadrados imprimíveis */
-  input[type="checkbox"] {
-    appearance: none !important;
-    width: 10pt !important;
-    height: 10pt !important;
-    border: 1px solid #333 !important;
-    display: inline-block !important;
-  }
-  input[type="checkbox"]:checked::after {
-    content: "✓";
-    display: block;
-    text-align: center;
-    line-height: 10pt;
-    font-size: 9pt;
-  }
 }
