@@ -397,4 +397,194 @@
     color: hsl(var(--primary) / 0.2);
     font-family: 'Playfair Display', serif;
   }
+
+  /* ─── Acessibilidade: foco visível em todos os interativos ─── */
+  *:focus-visible {
+    outline: 2px solid hsl(var(--ring));
+    outline-offset: 2px;
+    border-radius: 4px;
+  }
+
+  /* Foco temático para elementos dentro de um módulo */
+  .module-themed *:focus-visible {
+    outline-color: hsl(var(--module, var(--ring)));
+  }
+
+  /* Reduz movimento se usuário preferir */
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   MODO IMPRIMIR — Otimizado para A4
+   Limpa elementos extras, força tema claro, reorganiza blocos.
+   ═══════════════════════════════════════════════════════════════ */
+@media print {
+  @page {
+    size: A4;
+    margin: 18mm 16mm;
+  }
+
+  /* Força paleta clara legível em papel */
+  :root,
+  .dark,
+  .light {
+    --background: 0 0% 100%;
+    --foreground: 222 40% 12%;
+    --card: 0 0% 100%;
+    --card-foreground: 222 40% 12%;
+    --muted: 0 0% 96%;
+    --muted-foreground: 222 20% 30%;
+    --border: 0 0% 80%;
+    --primary: 38 75% 38%;
+    --primary-foreground: 0 0% 100%;
+  }
+
+  html, body {
+    background: white !important;
+    color: black !important;
+    font-size: 11pt;
+    line-height: 1.45;
+  }
+
+  /* Esconde toda a chrome do app */
+  header, footer, nav,
+  [role="banner"], [role="contentinfo"],
+  .print\:hidden,
+  [data-pwa-prompt],
+  .fixed,
+  .sticky {
+    display: none !important;
+  }
+
+  /* Remove todos efeitos visuais pesados */
+  *, *::before, *::after {
+    background-image: none !important;
+    box-shadow: none !important;
+    text-shadow: none !important;
+    backdrop-filter: none !important;
+    animation: none !important;
+    transition: none !important;
+  }
+
+  /* Glass cards viram blocos brancos com contorno suave */
+  .glass-card,
+  .glass-morphism,
+  .gradient-card,
+  .gradient-hero,
+  .gradient-glow,
+  .gradient-warm,
+  .gradient-mesh,
+  .gradient-spiritual {
+    background: white !important;
+    border: 1px solid #ccc !important;
+  }
+
+  /* Tipografia legível */
+  h1 { font-size: 22pt; margin: 0 0 8pt; }
+  h2 { font-size: 16pt; margin: 12pt 0 6pt; }
+  h3 { font-size: 13pt; margin: 10pt 0 5pt; }
+  h4 { font-size: 11.5pt; margin: 8pt 0 4pt; }
+  p, li { font-size: 10.5pt; }
+  small, .text-xs { font-size: 9pt; }
+
+  /* Container fluido */
+  .container {
+    max-width: 100% !important;
+    padding: 0 !important;
+    margin: 0 !important;
+  }
+
+  section {
+    padding: 8pt 0 !important;
+    margin: 0 !important;
+  }
+
+  /* Abre todos os accordions na impressão */
+  [data-state="closed"] > [role="region"],
+  [data-radix-collection-item] [hidden] {
+    display: block !important;
+    height: auto !important;
+    overflow: visible !important;
+  }
+
+  /* Quebra de página inteligente */
+  .module-themed,
+  [data-module],
+  .poem-block,
+  section > div,
+  article {
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+
+  h1, h2, h3, h4 {
+    break-after: avoid;
+    page-break-after: avoid;
+  }
+
+  /* Cores de módulo viram apenas borda lateral em P&B */
+  .module-themed {
+    border-left: 4px solid hsl(var(--module)) !important;
+    padding-left: 10pt !important;
+    margin-bottom: 14pt !important;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+
+  .text-module { color: hsl(var(--module)) !important; }
+  .bg-module-soft, .bg-module-tint {
+    background: white !important;
+    border: 1px solid hsl(var(--module) / 0.4) !important;
+  }
+
+  /* Imagens não devem cortar páginas */
+  img {
+    max-width: 100% !important;
+    page-break-inside: avoid;
+    break-inside: avoid;
+  }
+
+  /* Esconde elementos puramente decorativos / interativos sem valor em papel */
+  button:not(.print\:visible),
+  [role="button"]:not(.print\:visible),
+  .animate-shimmer,
+  .animate-float,
+  .animate-glow-pulse,
+  iframe,
+  video {
+    display: none !important;
+  }
+
+  /* Mostra URL ao lado de links externos */
+  a[href^="http"]::after {
+    content: " (" attr(href) ")";
+    font-size: 8pt;
+    color: #555;
+    word-break: break-all;
+  }
+
+  /* Checkbox/inputs viram quadrados imprimíveis */
+  input[type="checkbox"] {
+    appearance: none !important;
+    width: 10pt !important;
+    height: 10pt !important;
+    border: 1px solid #333 !important;
+    display: inline-block !important;
+  }
+  input[type="checkbox"]:checked::after {
+    content: "✓";
+    display: block;
+    text-align: center;
+    line-height: 10pt;
+    font-size: 9pt;
+  }
 }
