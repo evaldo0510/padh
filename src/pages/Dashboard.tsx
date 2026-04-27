@@ -42,6 +42,15 @@ const Dashboard = () => {
   const { progress, isModuleUnlocked } = useCourseProgress();
   const navigate = useNavigate();
 
+  const handleLogout = async () => {
+    localStorage.removeItem('padh_simulated_user');
+    if (supabaseConfig.isConfigured) {
+      await supabase.auth.signOut();
+    }
+    toast.success("Sessão encerrada.");
+    navigate('/');
+  };
+
   const completedCount = progress.completedModules.length;
   const totalCount = MODULOS.length;
   const percentComplete = Math.round((completedCount / totalCount) * 100);
