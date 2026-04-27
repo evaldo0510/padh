@@ -33,6 +33,10 @@ export interface ModuloClinico {
   teoricos: TeoricoRef[];
   /** Checklist clínico rápido específico do módulo */
   checklistSinais: string[];
+  /** Atividades/Etapas para progresso granular */
+  atividades: Array<{ id: string; label: string }>;
+  /** Tempo estimado em minutos para conclusão */
+  tempoEstimado: number;
 }
 
 export const MODULOS: ModuloClinico[] = [
