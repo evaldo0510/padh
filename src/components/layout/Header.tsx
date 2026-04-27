@@ -41,16 +41,16 @@ const Header = () => {
 
   return (
     <header className="sticky top-0 z-50 glass-morphism border-b border-primary/10">
-      <div className="container mx-auto px-6">
-        <div className="flex items-center justify-between h-16">
+      <div className="container mx-auto px-4 md:px-6">
+        <div className="flex items-center justify-between h-16 gap-2">
           {/* Logo */}
-          <PrefetchLink to="/" className="flex items-center gap-3 group transition-all duration-300">
-            <Logo size="md" className="md:w-11 md:h-11" />
-            <div className="flex flex-col justify-center">
-              <span className="text-xl md:text-2xl font-heading font-black text-foreground leading-none tracking-tighter group-hover:text-primary transition-colors">
+          <PrefetchLink to="/" className="flex items-center gap-2 md:gap-3 group shrink-0 transition-all duration-300">
+            <Logo size="md" className="w-9 h-9 md:w-11 md:h-11" />
+            <div className="flex flex-col justify-center min-w-0">
+              <span className="text-lg md:text-2xl font-heading font-black text-foreground leading-none tracking-tighter group-hover:text-primary transition-colors truncate">
                 P.A.D.H.
               </span>
-              <span className="text-[9px] md:text-[10px] text-primary/80 leading-none font-bold uppercase tracking-wider mt-1 max-w-[160px] md:max-w-none">
+              <span className="text-[8px] md:text-[10px] text-primary/80 leading-none font-bold uppercase tracking-wider mt-0.5 md:mt-1 whitespace-nowrap overflow-hidden text-ellipsis max-w-[120px] xs:max-w-[160px] md:max-w-none">
                 Poesia Aplicada ao Desenvolvimento Humano
               </span>
             </div>
