@@ -173,9 +173,14 @@ const Dashboard = () => {
               <p className="text-xs text-muted-foreground mb-4">
                 {jornada.completedExercises.length} exercícios realizados na sua jornada de transformação.
               </p>
-              <Button size="sm" className="w-full gap-2 shadow-glow" onClick={() => navigate('/jornada')}>
-                Continuar Jornada <ChevronRight className="h-4 w-4" />
-              </Button>
+              <div className="flex gap-2">
+                <Button size="sm" variant="outline" className="flex-1" onClick={() => navigate('/diagnostico-jornada')}>
+                  Refazer Diagnóstico
+                </Button>
+                <Button size="sm" className="flex-1 gap-2 shadow-glow" onClick={() => navigate('/jornada')}>
+                  Continuar de onde parei <ChevronRight className="h-4 w-4" />
+                </Button>
+              </div>
             </CardContent>
           </Card>
         </div>
