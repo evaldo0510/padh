@@ -2,6 +2,7 @@ import React from 'react';
 import PageLayout from '@/components/layout/PageLayout';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
 import { BookOpen, Brain, Sparkles, Lightbulb, Heart, Flame, Music, PenTool, Eye, Target, Feather } from 'lucide-react';
+import ProtocoloPCH from '@/components/sections/ProtocoloPCH';
 
 import modulo1Img from '@/assets/curso-pch/modulo1-palavras.jpg';
 import modulo2Img from '@/assets/curso-pch/modulo2-reestruturacao.jpg';
@@ -71,6 +72,98 @@ const CursoPCH = () => {
           <p className="text-muted-foreground text-lg md:text-xl max-w-2xl mx-auto">
             Um guia completo com base teórica, exercícios práticos, técnicas avançadas e um modelo de sessão terapêutica em 4 fases.
           </p>
+        </div>
+      </section>
+
+      {/* Protocolo Geral de Intervenção Clínica */}
+      <section className="py-16 md:py-20 border-t border-border/30 bg-primary/[0.02]">
+        <div className="container mx-auto px-6 max-w-4xl">
+          <div className="text-center mb-10">
+            <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-primary/20 bg-primary/5 text-primary text-sm font-medium mb-4">
+              <Target className="h-4 w-4" />
+              Protocolo de Intervenção Clínica
+            </div>
+            <h2 className="text-3xl md:text-4xl font-heading font-bold text-foreground mb-4">
+              PCH no <span className="text-primary italic">P.A.D.H.</span> — Como Usar na Prática
+            </h2>
+            <p className="text-muted-foreground max-w-2xl mx-auto leading-relaxed">
+              Um mapa clínico para terapeutas, psicólogos e profissionais da saúde mental.
+              Cada módulo abaixo agora inclui um <strong className="text-foreground">Protocolo PCH</strong> com
+              identificação de sinais, aplicação passo a passo, indicações e cuidados éticos.
+            </p>
+          </div>
+
+          {/* Fluxo geral em 4 etapas */}
+          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
+            {[
+              {
+                pillar: 'P',
+                name: 'Poesia',
+                action: 'Escutar a linguagem do paciente para mapear seu mundo simbólico.',
+                tool: 'Módulo 1',
+              },
+              {
+                pillar: 'A',
+                name: 'Aplicada',
+                action: 'Aplicar técnicas (Poemadiagnóstico, Verso-Gatilho, indução leve).',
+                tool: 'Módulos 2-4',
+              },
+              {
+                pillar: 'D',
+                name: 'Desenvolvimento',
+                action: 'Aprofundar e instalar metáforas curativas que reorganizam crenças.',
+                tool: 'Módulos 5-6',
+              },
+              {
+                pillar: 'H',
+                name: 'Humano',
+                action: 'Integrar mudanças à identidade e sustentar autonomia psíquica.',
+                tool: 'Módulos 7-8',
+              },
+            ].map((p, i) => (
+              <div key={i} className="rounded-xl border border-primary/15 bg-card p-5 text-center">
+                <div className="w-12 h-12 mx-auto rounded-full bg-primary/10 flex items-center justify-center text-primary font-heading font-bold text-xl mb-3">
+                  {p.pillar}
+                </div>
+                <h3 className="font-heading font-semibold text-foreground mb-2">{p.name}</h3>
+                <p className="text-xs text-muted-foreground leading-relaxed mb-3">{p.action}</p>
+                <p className="text-xs text-primary font-medium uppercase tracking-wider">{p.tool}</p>
+              </div>
+            ))}
+          </div>
+
+          {/* Como identificar problemas mentais e emocionais */}
+          <div className="rounded-xl border border-primary/15 bg-card p-6 md:p-8">
+            <h3 className="text-xl font-heading font-semibold text-foreground mb-4 flex items-center gap-2">
+              <Brain className="h-5 w-5 text-primary" />
+              Como Identificar Problemas Mentais e Emocionais pela Linguagem
+            </h3>
+            <p className="text-sm text-muted-foreground mb-5 leading-relaxed">
+              A poesia funciona como um <strong className="text-foreground">teste projetivo natural</strong>:
+              as palavras escolhidas pelo paciente revelam estruturas profundas. Use esta tabela rápida em sessão:
+            </p>
+            <div className="grid md:grid-cols-2 gap-4 text-sm">
+              {[
+                { sinal: 'Imagens de queda, peso, escuridão', hipotese: 'Quadro depressivo' },
+                { sinal: 'Imagens de pressão, aceleração, descontrole', hipotese: 'Espectro ansioso' },
+                { sinal: 'Imagens fragmentadas, descontínuas, dissociadas', hipotese: 'Trauma não integrado' },
+                { sinal: 'Discurso pobre em emoção, técnico', hipotese: 'Alexitimia / defesas intelectuais' },
+                { sinal: 'Auto-imagem absoluta ("nunca", "sempre")', hipotese: 'Crença nuclear rígida' },
+                { sinal: 'Idealização ou desvalorização extremas', hipotese: 'Estrutura de personalidade frágil' },
+              ].map((item, i) => (
+                <div key={i} className="flex gap-3 p-3 rounded-lg bg-primary/[0.03] border border-primary/10">
+                  <div className="text-primary font-bold mt-0.5">→</div>
+                  <div>
+                    <p className="text-foreground font-medium mb-1">{item.sinal}</p>
+                    <p className="text-xs text-muted-foreground italic">Hipótese: {item.hipotese}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+            <p className="text-xs text-muted-foreground italic mt-5 text-center">
+              ⚠ Esta tabela é orientativa, não diagnóstica. Diagnóstico formal requer avaliação clínica completa.
+            </p>
+          </div>
         </div>
       </section>
 
@@ -159,6 +252,36 @@ E assim caminho, leve e inteiro,
 sabendo que sou e sempre serei.
 Minha verdade, minha essência,
 meu próprio rumo, que hoje encontrei.`}</Poem>
+
+                  <ProtocoloPCH
+                    modulo="Módulo 1 · Pilar P (Poesia)"
+                    foco="Escutar como o paciente usa as palavras revela a estrutura do seu sofrimento."
+                    sinais={[
+                      'Vocabulário marcado por absolutos ("sempre", "nunca", "ninguém") — sinal de pensamento dicotômico.',
+                      'Uso recorrente de metáforas de prisão, peso ou queda — indica somatização e desesperança.',
+                      'Pobreza descritiva ao falar de emoções (alexitimia) — dificuldade de mentalização.',
+                      'Discurso fragmentado, sem nexo temporal — indício de trauma não integrado.',
+                      'Palavras de auto-desqualificação repetidas ("sou burro", "não sirvo") — crenças nucleares ativas.',
+                    ]}
+                    aplicacao={[
+                      'Anote em sessão 5 a 7 palavras-chave que o paciente repete espontaneamente.',
+                      'Devolva essas palavras em forma de pergunta poética: "O que mora dentro desse \'sempre\'?"',
+                      'Convide o paciente a substituir uma palavra rígida por uma imagem (ex.: "vazio" → "lago seco").',
+                      'Construa juntos um mini-verso de 2 linhas usando a nova imagem.',
+                      'Registre o verso no prontuário como linha de base do trabalho semântico.',
+                    ]}
+                    indicacoes={[
+                      'Ansiedade generalizada com discurso ruminativo.',
+                      'Depressão leve a moderada com auto-crítica acentuada.',
+                      'Pacientes em fase inicial de psicoterapia, ainda com defesas racionais altas.',
+                      'Trabalho com adolescentes que resistem à linguagem clínica direta.',
+                    ]}
+                    cuidados={[
+                      'Evitar metáforas impostas pelo terapeuta — elas devem emergir do material do paciente.',
+                      'Em quadros psicóticos, manter linguagem concreta e evitar duplos sentidos.',
+                      'Não usar como substituto de avaliação diagnóstica formal.',
+                    ]}
+                  />
                 </div>
               </AccordionContent>
             </AccordionItem>
@@ -245,6 +368,37 @@ a voz que liberta é mais serena.
 Ela não precisa gritar para ser ouvida,
 porque a verdade fala baixo,
 mas ressoa fundo.`}</Poem>
+
+                  <ProtocoloPCH
+                    modulo="Módulo 2 · Pilar A (Aplicada)"
+                    foco="Reestruturar crenças nucleares limitantes através do contraste poético entre voz crítica e voz libertadora."
+                    sinais={[
+                      'Crenças centrais identificáveis: "não sou suficiente", "não mereço", "preciso ser perfeito".',
+                      'Distorções cognitivas: catastrofização, leitura mental, personalização.',
+                      'Padrões de auto-sabotagem cíclicos relatados em diferentes áreas da vida.',
+                      'Conflito interno entre desejo e permissão (paciente sabe o que quer mas não age).',
+                      'Reações desproporcionais a gatilhos específicos (indica esquema ativado).',
+                    ]}
+                    aplicacao={[
+                      'Mapeie a crença nuclear usando a técnica da seta descendente clássica.',
+                      'Peça ao paciente para nomear as duas vozes internas (crítica e libertadora).',
+                      'Escreva juntos um poema-diálogo de 8 a 12 versos contrastando ambas.',
+                      'Faça o paciente ler em voz alta primeiro a voz crítica, depois a libertadora.',
+                      'Observe a respiração e a postura — registre mudanças somáticas no prontuário.',
+                      'Defina como tarefa: ler o verso libertador 2x ao dia por 21 dias.',
+                    ]}
+                    indicacoes={[
+                      'Transtornos de personalidade com esquemas rígidos.',
+                      'TOC com pensamentos intrusivos auto-críticos.',
+                      'Burnout e síndrome do impostor.',
+                      'Pós-tratamento de depressão para prevenção de recaída.',
+                    ]}
+                    cuidados={[
+                      'Não confrontar a voz crítica abruptamente em pacientes com história de abuso.',
+                      'Em transtorno bipolar, evitar ativação excessiva — preferir tom contemplativo.',
+                      'Validar antes de reestruturar — a crença teve função protetiva no passado.',
+                    ]}
+                  />
                 </div>
               </AccordionContent>
             </AccordionItem>
@@ -322,6 +476,37 @@ um novo espaço se abre…
 
 O velho se dissolve… o novo floresce…
 e tudo simplesmente… acontece…`}</Poem>
+
+                  <ProtocoloPCH
+                    modulo="Módulo 3 · Pilar A (Aplicada)"
+                    foco="Induzir estados de transe leve usando linguagem ericksoniana e ritmo poético para acessar o inconsciente terapêutico."
+                    sinais={[
+                      'Hipervigilância e dificuldade de relaxar — sistema nervoso simpático cronicamente ativado.',
+                      'Insônia inicial ou intermediária com pensamento acelerado.',
+                      'Dificuldade de acesso a memórias emocionais (defesa intelectual).',
+                      'Resistência consciente à mudança ("eu sei o que tenho que fazer, mas...").',
+                      'Bloqueio criativo ou sensação de "cabeça travada".',
+                    ]}
+                    aplicacao={[
+                      'Estabeleça pacing inicial: respire no ritmo do paciente por 30 segundos.',
+                      'Inicie leitura do poema em tom 20% mais lento que sua fala normal.',
+                      'Use reticências e pausas para criar espaço interno entre os versos.',
+                      'Insira comandos embutidos: "perceba como…", "permita-se sentir…".',
+                      'Após o poema, mantenha 1 minuto de silêncio antes de qualquer pergunta.',
+                      'Pergunte: "O que se moveu por dentro agora?" — registre a resposta literal.',
+                    ]}
+                    indicacoes={[
+                      'Transtornos de ansiedade com componente somático intenso.',
+                      'TEPT em fase de estabilização (após segurança estabelecida).',
+                      'Dores crônicas de origem psicossomática.',
+                      'Preparação para procedimentos médicos invasivos.',
+                    ]}
+                    cuidados={[
+                      'Contraindicado em surto psicótico ativo ou dissociação severa.',
+                      'Não usar em pacientes com história de transe involuntário sem supervisão.',
+                      'Sempre encerrar com ancoragem no presente (5-4-3-2-1 sensorial).',
+                    ]}
+                  />
                 </div>
               </AccordionContent>
             </AccordionItem>
@@ -405,6 +590,36 @@ para iluminar o próximo passo.`}</Poem>
                       <li>• <strong className="text-foreground">Teste em voz alta</strong> — se tropeçar na leitura, simplifique. O poema terapêutico deve fluir como respiração.</li>
                     </ul>
                   </SectionCard>
+
+                  <ProtocoloPCH
+                    modulo="Módulo 4 · Pilar A (Aplicada)"
+                    foco="Construir poemas sugestivos personalizados como prescrição terapêutica adaptada à demanda clínica."
+                    sinais={[
+                      'Demanda específica e bem delimitada (ex.: medo de falar em público, perda recente).',
+                      'Capacidade preservada de imaginar cenas e sentir emoções (mentalização ativa).',
+                      'Engajamento na aliança terapêutica e abertura para tarefas extra-sessão.',
+                      'Necessidade de uma "âncora" simbólica entre sessões para sustentar o trabalho.',
+                    ]}
+                    aplicacao={[
+                      'Escolha o eixo terapêutico (autocompaixão, coragem, perdão, luto, etc.).',
+                      'Use o vocabulário do próprio paciente colhido nos Módulos 1 e 2.',
+                      'Estruture: 1 verso de validação + 2 versos de transição + 2 versos de expansão.',
+                      'Termine com um verso aberto que funcione como "porta" para novas significações.',
+                      'Entregue impresso ou áudio gravado pelo terapeuta na voz lenta e calma.',
+                      'Solicite registro em diário das sensações após cada leitura.',
+                    ]}
+                    indicacoes={[
+                      'Luto complicado em fase de elaboração.',
+                      'Transtornos de ajustamento e crises situacionais.',
+                      'Reabilitação emocional pós-término de relacionamento ou demissão.',
+                      'Apoio a pacientes oncológicos durante tratamento.',
+                    ]}
+                    cuidados={[
+                      'Nunca prometer cura — o poema é coadjuvante, não substitui o tratamento principal.',
+                      'Evitar versos que neguem a dor ("não chore") — sempre acolher antes de transformar.',
+                      'Revisar com o paciente antes de "prescrever" — co-autoria aumenta adesão.',
+                    ]}
+                  />
                 </div>
               </AccordionContent>
             </AccordionItem>
@@ -494,6 +709,36 @@ Com a certeza de que, a cada passo dado,
 Está cada vez mais próximo de alcançar a sua essência.`}</Poem>
                     </div>
                   </SectionCard>
+
+                  <ProtocoloPCH
+                    modulo="Módulo 5 · Pilar D (Desenvolvimento)"
+                    foco="Aplicar técnicas avançadas de indução para aprofundar o estado terapêutico e instalar metáforas curativas duradouras."
+                    sinais={[
+                      'Plateau terapêutico — paciente "estagnado" mesmo com adesão ao processo.',
+                      'Bloqueios repetitivos no mesmo tema apesar de insights cognitivos.',
+                      'Resistência inconsciente identificada por sonhos repetitivos ou atos falhos.',
+                      'Necessidade de aprofundar mudança já iniciada superficialmente.',
+                    ]}
+                    aplicacao={[
+                      'Confirme estabilidade emocional antes de aplicar técnicas mais profundas.',
+                      'Use a "Indução do Caminho" como abertura — 5 minutos de visualização guiada.',
+                      'Apresente a metáfora central do paciente em formato narrativo poético.',
+                      'Faça uma sugestão pós-hipnótica simples ancorada em um gesto (ex.: tocar o pulso).',
+                      'Conduza saída gradual: respiração → consciência corporal → orientação espacial.',
+                      'Documente literalmente as imagens espontâneas que surgiram durante o transe.',
+                    ]}
+                    indicacoes={[
+                      'Pacientes em terapia de longa duração com necessidade de aprofundamento.',
+                      'Trabalho com self compassion em traumas de desenvolvimento.',
+                      'Integração de partes dissociadas (em contexto de IFS ou similares).',
+                      'Reprocessamento de memórias com componente sensorial intenso.',
+                    ]}
+                    cuidados={[
+                      'Requer treinamento formal em hipnose clínica supervisionada.',
+                      'Não aplicar sem aliança terapêutica sólida (mín. 6-8 sessões prévias).',
+                      'Ter sempre um plano de aterramento pronto caso emerja material avassalador.',
+                    ]}
+                  />
                 </div>
               </AccordionContent>
             </AccordionItem>
@@ -567,6 +812,36 @@ E quando percebo, já estou mais longe do que imaginei."`}</Poem>
                       <li>Que medos espera ter superado?</li>
                     </ul>
                   </SectionCard>
+
+                  <ProtocoloPCH
+                    modulo="Módulo 6 · Pilar D (Desenvolvimento)"
+                    foco="Selecionar o tipo de poesia terapêutica adequado ao quadro clínico e ao momento do tratamento."
+                    sinais={[
+                      'Identificação clara do estágio do processo: abertura, elaboração ou integração.',
+                      'Quadros mistos exigindo abordagem multimodal (ex.: ansiedade + luto).',
+                      'Necessidade de variar registros (cognitivo, emocional, somático, espiritual).',
+                      'Pacientes que respondem mais a um tipo específico de linguagem.',
+                    ]}
+                    aplicacao={[
+                      'Mapeie em qual dos 5 tipos o paciente se encaixa: catártico, contemplativo, mobilizador, integrativo ou ritualístico.',
+                      'Para abertura: prefira o catártico — autoriza expressão de dor.',
+                      'Para meio do processo: use o mobilizador — convoca à ação.',
+                      'Para integração: aplique o ritualístico — sela a transformação.',
+                      'Combine no máximo 2 tipos por sessão para evitar sobrecarga.',
+                      'Avalie ao final qual tipo gerou maior ressonância e oriente a continuidade.',
+                    ]}
+                    indicacoes={[
+                      'Trabalho com luto em todas as fases.',
+                      'Recuperação de violência doméstica ou sexual (contexto especializado).',
+                      'Acompanhamento de transições de vida (divórcio, aposentadoria, parentalidade).',
+                      'Cuidados paliativos e processos de fim de vida.',
+                    ]}
+                    cuidados={[
+                      'Não usar poesia catártica sem capacidade de contenção emocional na sessão.',
+                      'Em pacientes religiosos, respeitar referenciais simbólicos próprios.',
+                      'Adaptar o tipo conforme retorno do paciente — flexibilidade é clínica.',
+                    ]}
+                  />
                 </div>
               </AccordionContent>
             </AccordionItem>
@@ -662,6 +937,36 @@ Não porque foi dada a você...
 Mas porque sempre esteve dentro de você."`}</Poem>
                     <p className="text-sm mt-4 italic text-primary/80">🎭 Sugestão: Pedir que coloquem a mão no peito e perguntar: "O que essa chama representa para você?"</p>
                   </SectionCard>
+
+                  <ProtocoloPCH
+                    modulo="Módulo 7 · Pilares P-A-D-H integrados"
+                    foco="Conduzir a sessão terapêutica completa em 4 fases (P.A.D.H.) com diagnóstico contínuo e intervenções escalonadas."
+                    sinais={[
+                      'Fase P (Poesia): paciente chega tenso, defesas altas, discurso superficial.',
+                      'Fase A (Aplicada): emoção começa a fluir, surgem temas centrais e crenças nucleares.',
+                      'Fase D (Desenvolvimento): bloqueios afloram — choro, raiva, silêncio prolongado.',
+                      'Fase H (Humano): integração visível — postura muda, voz se firma, olhar se aclara.',
+                    ]}
+                    aplicacao={[
+                      'P · Acolhimento (10 min): use poema curto de presença para regular o sistema nervoso.',
+                      'A · Identificação (15 min): aplique Poemadiagnóstico — escute palavras-chave repetidas.',
+                      'D · Transformação (15 min): trabalhe com Poema-Funil ou Verso-Gatilho conforme demanda.',
+                      'H · Ancoragem (10 min): feche com Ritual do Silêncio + carta-poema para casa.',
+                      'Registre em prontuário: estado inicial, ferramenta aplicada, resposta emocional, tarefa.',
+                      'Reavalie a cada 4 sessões — ajuste o protocolo conforme a evolução.',
+                    ]}
+                    indicacoes={[
+                      'Modelo aplicável a praticamente todos os quadros clínicos com adaptações.',
+                      'Ideal para sessões de 50 minutos em consultório individual.',
+                      'Adaptável para grupos terapêuticos (estendendo cada fase em 50%).',
+                      'Compatível com TCC, psicanálise, gestalt e abordagens humanistas.',
+                    ]}
+                    cuidados={[
+                      'Nunca pular a fase P — o aterramento inicial protege o trabalho subsequente.',
+                      'Se a fase D ativar conteúdo intenso, prolongar a fase H para reorganização.',
+                      'Documentar consentimento informado para uso de técnicas hipnóticas leves.',
+                    ]}
+                  />
                 </div>
               </AccordionContent>
             </AccordionItem>
@@ -764,6 +1069,36 @@ só precisa de tempo, terra e coragem para abrir."`}</Poem>
                   </SectionCard>
 
                   <Quote>Este exercício não termina no papel. É um processo contínuo de transformação. Cada vez que o medo se apresentar, lembre-se da sua carta de sabedoria e se conecte com a visão mais elevada que você já criou.</Quote>
+
+                  <ProtocoloPCH
+                    modulo="Módulo 8 · Pilar H (Humano)"
+                    foco="Sustentar a transformação por meio de prática contínua de auto-escrita poética como ferramenta de autonomia psíquica."
+                    sinais={[
+                      'Paciente em fase de alta terapêutica buscando manutenção dos ganhos.',
+                      'Histórico de recaída em quadros depressivos ou ansiosos.',
+                      'Necessidade de ferramenta de autorregulação entre sessões espaçadas.',
+                      'Demanda por desenvolvimento pessoal continuado pós-tratamento.',
+                    ]}
+                    aplicacao={[
+                      'Apresente os 5 exercícios práticos como prescrição estruturada para 8 semanas.',
+                      'Semanas 1-2: "Reescrita de Memória" — uma memória dolorosa por semana.',
+                      'Semanas 3-4: "Diálogo com o Eu Futuro" — visualização semanal.',
+                      'Semanas 5-6: "Carta de Sabedoria" — escrita expandida em 3 sessões.',
+                      'Semanas 7-8: integração — paciente cria seu próprio exercício e compartilha.',
+                      'Sessões de revisão mensais por 3 meses para consolidação.',
+                    ]}
+                    indicacoes={[
+                      'Prevenção de recaída pós-tratamento de depressão e ansiedade.',
+                      'Desenvolvimento pessoal e crescimento pós-traumático.',
+                      'Manutenção em pacientes com transtornos crônicos estabilizados.',
+                      'Programas de bem-estar em contexto organizacional ou educacional.',
+                    ]}
+                    cuidados={[
+                      'Não substitui acompanhamento profissional — é prática complementar.',
+                      'Monitorar sinais de descompensação caso a auto-escrita ative material intenso.',
+                      'Estabelecer canal de retorno claro caso o paciente precise reabrir tratamento.',
+                    ]}
+                  />
                 </div>
               </AccordionContent>
             </AccordionItem>
