@@ -111,8 +111,11 @@ const Header = () => {
                 </div>
               ))}
             </nav>
-            <div className="ml-3 pl-3 border-l border-border/50">
+            <div className="ml-3 pl-3 border-l border-border/50 flex items-center gap-4">
               <ThemeToggle />
+              <Button size="sm" variant="ghost" asChild>
+                <Link to="/login">Entrar</Link>
+              </Button>
             </div>
           </div>
 
