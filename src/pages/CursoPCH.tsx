@@ -498,6 +498,36 @@ para iluminar o próximo passo.`}</Poem>
                       <li>• <strong className="text-foreground">Teste em voz alta</strong> — se tropeçar na leitura, simplifique. O poema terapêutico deve fluir como respiração.</li>
                     </ul>
                   </SectionCard>
+
+                  <ProtocoloPCH
+                    modulo="Módulo 4 · Pilar A (Aplicada)"
+                    foco="Construir poemas sugestivos personalizados como prescrição terapêutica adaptada à demanda clínica."
+                    sinais={[
+                      'Demanda específica e bem delimitada (ex.: medo de falar em público, perda recente).',
+                      'Capacidade preservada de imaginar cenas e sentir emoções (mentalização ativa).',
+                      'Engajamento na aliança terapêutica e abertura para tarefas extra-sessão.',
+                      'Necessidade de uma "âncora" simbólica entre sessões para sustentar o trabalho.',
+                    ]}
+                    aplicacao={[
+                      'Escolha o eixo terapêutico (autocompaixão, coragem, perdão, luto, etc.).',
+                      'Use o vocabulário do próprio paciente colhido nos Módulos 1 e 2.',
+                      'Estruture: 1 verso de validação + 2 versos de transição + 2 versos de expansão.',
+                      'Termine com um verso aberto que funcione como "porta" para novas significações.',
+                      'Entregue impresso ou áudio gravado pelo terapeuta na voz lenta e calma.',
+                      'Solicite registro em diário das sensações após cada leitura.',
+                    ]}
+                    indicacoes={[
+                      'Luto complicado em fase de elaboração.',
+                      'Transtornos de ajustamento e crises situacionais.',
+                      'Reabilitação emocional pós-término de relacionamento ou demissão.',
+                      'Apoio a pacientes oncológicos durante tratamento.',
+                    ]}
+                    cuidados={[
+                      'Nunca prometer cura — o poema é coadjuvante, não substitui o tratamento principal.',
+                      'Evitar versos que neguem a dor ("não chore") — sempre acolher antes de transformar.',
+                      'Revisar com o paciente antes de "prescrever" — co-autoria aumenta adesão.',
+                    ]}
+                  />
                 </div>
               </AccordionContent>
             </AccordionItem>
