@@ -408,6 +408,12 @@ export const MODULOS: ModuloClinico[] = [
       'Resposta diferencial a estilos',
       'Tema existencial em emergência',
     ],
+    atividades: [
+      { id: 'mapeamento_tipo', label: 'Mapeamento do Tipo de Poesia' },
+      { id: 'aplicacao_catartica', label: 'Aplicação Catártica/Mobilizadora' },
+      { id: 'integracao_sentido', label: 'Integração de Sentido' }
+    ],
+    tempoEstimado: 60,
   },
   {
     id: 'modulo-7',
