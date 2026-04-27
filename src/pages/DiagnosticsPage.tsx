@@ -206,6 +206,37 @@ const DiagnosticsPage = () => {
             </ul>
           </CardContent>
         </Card>
+
+        {/* Session Diagnostics */}
+        <Card className="mt-8 border-primary/10">
+          <CardHeader>
+            <CardTitle className="flex items-center gap-2">
+              <User className="h-5 w-5 text-primary" /> Sessão Atual
+            </CardTitle>
+            <CardDescription>Status da autenticação</CardDescription>
+          </CardHeader>
+          <CardContent className="space-y-4">
+            {simulatedUser ? (
+              <div className="flex justify-between items-center p-3 bg-muted/50 rounded-lg">
+                <div className="space-y-1">
+                  <p className="text-sm font-bold">Modo Simulado Ativo</p>
+                  <p className="text-xs text-muted-foreground">{simulatedUser.email}</p>
+                </div>
+                <Button variant="ghost" size="sm" onClick={clearSimulatedSession} className="text-red-500 hover:text-red-600 hover:bg-red-50">
+                  <Trash2 className="h-4 w-4 mr-2" /> Limpar
+                </Button>
+              </div>
+            ) : (
+              <p className="text-sm text-muted-foreground italic">Nenhuma sessão simulada encontrada.</p>
+            )}
+            
+            {canConnect && (
+              <Button variant="outline" size="sm" className="w-full" onClick={() => navigate('/login')}>
+                Verificar Login Real
+              </Button>
+            )}
+          </CardContent>
+        </Card>
       </div>
     </PageLayout>
   );
