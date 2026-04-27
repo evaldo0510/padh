@@ -47,6 +47,7 @@ const JornadaHome = lazy(() => import("./pages/JornadaHome"));
 const DiagnosticoJornada = lazy(() => import("./pages/DiagnosticoJornada"));
 const BibliotecaExercicios = lazy(() => import("./pages/BibliotecaExercicios"));
 const SessaoView = lazy(() => import("./pages/SessaoView"));
+const LoginPage = lazy(() => import("./pages/LoginPage"));
 
 const queryClient = new QueryClient();
 
