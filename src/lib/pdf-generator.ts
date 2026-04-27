@@ -345,7 +345,7 @@ export function gerarPDFProntuarioBranco() {
 }
 
 /* ─────────── PDF DO RELATÓRIO DE PROGRESSO ─────────── */
-export function gerarRelatorioProgresso(progressData: any, modulos: ModuloClinico[]) {
+export function gerarRelatorioProgresso(progressData: any, modulos: ModuloClinico[], jornadaProgress?: any) {
   const doc = new jsPDF({ unit: 'mm', format: 'a4' });
   header(doc, 'Relatório de Evolução P.A.D.H.', 'Progresso do Aluno');
 
@@ -360,10 +360,32 @@ export function gerarRelatorioProgresso(progressData: any, modulos: ModuloClinic
   doc.setFontSize(10);
   doc.text(`Trilha Atual: ${progressData.diagnosisResult || 'Geral'}`, PAGE.margin, y);
   y += 6;
+  if (jornadaProgress) {
+    doc.text(`Fase da Jornada: ${jornadaProgress.currentPhaseId}`, PAGE.margin, y);
+    y += 6;
+  }
   doc.text(`Data de Emissão: ${new Date().toLocaleDateString()}`, PAGE.margin, y);
   y += 10;
 
-  y = sectionTitle(doc, y, '2. PROGRESSO GERAL DO CURSO');
+  if (jornadaProgress && jornadaProgress.responses.length > 0) {
+    y = sectionTitle(doc, y, '2. REFLEXÕES DA JORNADA');
+    const responses = jornadaProgress.responses.slice(-5); // Last 5
+    responses.forEach((r: any) => {
+      if (y > PAGE.h - 40) { doc.addPage(); y = 32; }
+      doc.setFont('helvetica', 'bold');
+      doc.setFontSize(9);
+      doc.text(`Reflexão: ${r.date.split('T')[0]}`, PAGE.margin, y);
+      y += 5;
+      doc.setFont('helvetica', 'italic');
+      doc.setFontSize(8.5);
+      const lines = doc.splitTextToSize(`"${r.response}"`, PAGE.w - PAGE.margin * 2);
+      doc.text(lines, PAGE.margin, y);
+      y += lines.length * 4 + 4;
+    });
+    y += 6;
+  }
+
+  y = sectionTitle(doc, y, '3. PROGRESSO GERAL DO CURSO');
   const totalModulos = modulos.length;
   const concluidos = progressData.completedModules.length;
   const percent = Math.round((concluidos / totalModulos) * 100);
