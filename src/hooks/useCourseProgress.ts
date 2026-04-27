@@ -2,9 +2,11 @@ import { useState, useEffect } from 'react';
 
 export interface ProgressData {
   completedModules: string[];
+  completedActivities: Record<string, string[]>; // moduleId -> activityIds[]
   lastAccessedModule?: string;
   diagnosisResult?: string;
   scores?: Record<string, number>;
+  notifications: Array<{ id: string; title: string; message: string; date: string; read: boolean }>;
 }
 
 const STORAGE_KEY = 'padh_course_progress';
