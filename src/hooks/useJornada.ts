@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { toast } from 'sonner';
+import { supabase, hasSupabaseConfig } from '@/integrations/supabase/client';
 
 export interface RespostaExercicio {
   exerciseId: string;
@@ -12,6 +13,7 @@ export interface JornadaProgress {
   completedExercises: string[]; // exerciseId[]
   completedSessions: string[]; // sessionId[]
   responses: RespostaExercicio[];
+  last_updated?: string;
 }
 
 const STORAGE_KEY = 'padh_jornada_progress';
@@ -29,15 +31,56 @@ export const useJornada = () => {
     return saved ? JSON.parse(saved) : INITIAL_JORNADA;
   });
 
+  const [isSyncing, setIsSyncing] = useState(false);
+
+  // Initial Sync from DB
+  useEffect(() => {
+    const fetchProgress = async () => {
+      if (!hasSupabaseConfig()) return;
+      
+      const { data: { user } } = await supabase.auth.getUser();
+      if (!user) return;
+
+      setIsSyncing(true);
+      const { data, error } = await supabase
+        .from('user_progress')
+        .select('progress_data')
+        .eq('user_id', user.id)
+        .single();
+
+      if (data && !error) {
+        setJornada(data.progress_data);
+      }
+      setIsSyncing(false);
+    };
+
+    fetchProgress();
+  }, []);
+
+  // Save to LocalStorage and DB
   useEffect(() => {
     localStorage.setItem(STORAGE_KEY, JSON.stringify(jornada));
+    
+    const syncToDB = async () => {
+      if (!hasSupabaseConfig()) return;
+      const { data: { user } } = await supabase.auth.getUser();
+      if (!user) return;
+
+      await supabase
+        .from('user_progress')
+        .upsert({ 
+          user_id: user.id, 
+          progress_data: jornada,
+          updated_at: new Date().toISOString()
+        });
+    };
+
+    syncToDB();
   }, [jornada]);
 
   const saveResponse = (exerciseId: string, response: string) => {
     setJornada(prev => {
-      // Remove previous response for this exercise if exists
       const otherResponses = prev.responses.filter(r => r.exerciseId !== exerciseId);
-      
       const newResponse = {
         exerciseId,
         response,
@@ -54,7 +97,7 @@ export const useJornada = () => {
     });
     
     toast.success("Resposta salva", {
-      description: "Seu progresso foi registrado na jornada."
+      description: "Seu progresso foi sincronizado."
     });
   };
 
@@ -65,7 +108,7 @@ export const useJornada = () => {
         completedSessions: [...prev.completedSessions, sessionId],
       }));
       toast.success("Sessão Concluída!", {
-        description: "Você deu mais um passo importante."
+        description: "Mais um passo na sua jornada."
       });
     }
   };
@@ -87,5 +130,7 @@ export const useJornada = () => {
     completeSession,
     setPhase,
     getResponse,
+    isSyncing,
+    hasConfig: hasSupabaseConfig()
   };
 };
