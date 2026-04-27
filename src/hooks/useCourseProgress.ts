@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { toast } from 'sonner';
 
 export interface ProgressData {
   completedModules: string[];
@@ -11,15 +12,43 @@ export interface ProgressData {
 
 const STORAGE_KEY = 'padh_course_progress';
 
+const INITIAL_PROGRESS: ProgressData = {
+  completedModules: [],
+  completedActivities: {},
+  notifications: [],
+};
+
 export const useCourseProgress = () => {
   const [progress, setProgress] = useState<ProgressData>(() => {
     const saved = localStorage.getItem(STORAGE_KEY);
-    return saved ? JSON.parse(saved) : { completedModules: [] };
+    if (saved) {
+      const parsed = JSON.parse(saved);
+      return {
+        ...INITIAL_PROGRESS,
+        ...parsed,
+      };
+    }
+    return INITIAL_PROGRESS;
   });
 
   useEffect(() => {
     localStorage.setItem(STORAGE_KEY, JSON.stringify(progress));
   }, [progress]);
+
+  const addNotification = (title: string, message: string) => {
+    const newNotif = {
+      id: Math.random().toString(36).substr(2, 9),
+      title,
+      message,
+      date: new Date().toISOString(),
+      read: false,
+    };
+    setProgress(prev => ({
+      ...prev,
+      notifications: [newNotif, ...prev.notifications].slice(0, 20), // Keep last 20
+    }));
+    toast.success(title, { description: message });
+  };
 
   const completeModule = (moduleId: string) => {
     if (!progress.completedModules.includes(moduleId)) {
@@ -27,7 +56,26 @@ export const useCourseProgress = () => {
         ...prev,
         completedModules: [...prev.completedModules, moduleId],
       }));
+      addNotification("Módulo Concluído!", `Parabéns! Você completou o ${moduleId}. Próximo passo desbloqueado.`);
     }
+  };
+
+  const completeActivity = (moduleId: string, activityId: string) => {
+    setProgress(prev => {
+      const activities = prev.completedActivities[moduleId] || [];
+      if (activities.includes(activityId)) return prev;
+      
+      const updated = {
+        ...prev,
+        completedActivities: {
+          ...prev.completedActivities,
+          [moduleId]: [...activities, activityId],
+        },
+      };
+      
+      return updated;
+    });
+    addNotification("Atividade Concluída", "Sua evolução foi registrada com sucesso.");
   };
 
   const setLastAccessed = (moduleId: string) => {
@@ -43,29 +91,41 @@ export const useCourseProgress = () => {
       diagnosisResult: result,
       scores,
     }));
+    addNotification("Diagnóstico Realizado", `Sua trilha "${result}" foi configurada.`);
+  };
+
+  const markNotificationRead = (id: string) => {
+    setProgress(prev => ({
+      ...prev,
+      notifications: prev.notifications.map(n => n.id === id ? { ...n, read: true } : n),
+    }));
   };
 
   const resetProgress = () => {
-    const fresh = { completedModules: [] };
-    setProgress(fresh);
+    setProgress(INITIAL_PROGRESS);
     localStorage.removeItem(STORAGE_KEY);
   };
 
   const isModuleUnlocked = (index: number) => {
     if (index === 0) return true;
-    // For now, let's say a module is unlocked if the previous one is completed
-    // but the user might want a more relaxed unlocking.
-    // Let's stick to strict: must complete previous.
-    const prevModuleId = `modulo-${index}`; // indices are 1-based in IDs usually
+    const prevModuleId = `modulo-${index}`; 
     return progress.completedModules.includes(prevModuleId);
+  };
+
+  const getModuleProgress = (moduleId: string, totalActivities: number) => {
+    const completed = progress.completedActivities[moduleId]?.length || 0;
+    return totalActivities > 0 ? Math.round((completed / totalActivities) * 100) : 0;
   };
 
   return {
     progress,
     completeModule,
+    completeActivity,
     setLastAccessed,
     setDiagnosis,
     resetProgress,
     isModuleUnlocked,
+    getModuleProgress,
+    markNotificationRead,
   };
 };
