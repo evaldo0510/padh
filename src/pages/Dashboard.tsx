@@ -56,6 +56,7 @@ const Dashboard = () => {
       currentPage="Dashboard"
     >
       <div className="container mx-auto px-6 py-12 max-w-6xl">
+        <SupabaseConfigBanner />
         {/* Welcome Header */}
         <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-6 mb-12">
           <div>
