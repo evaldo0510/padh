@@ -160,6 +160,36 @@ E assim caminho, leve e inteiro,
 sabendo que sou e sempre serei.
 Minha verdade, minha essência,
 meu próprio rumo, que hoje encontrei.`}</Poem>
+
+                  <ProtocoloPCH
+                    modulo="Módulo 1 · Pilar P (Poesia)"
+                    foco="Escutar como o paciente usa as palavras revela a estrutura do seu sofrimento."
+                    sinais={[
+                      'Vocabulário marcado por absolutos ("sempre", "nunca", "ninguém") — sinal de pensamento dicotômico.',
+                      'Uso recorrente de metáforas de prisão, peso ou queda — indica somatização e desesperança.',
+                      'Pobreza descritiva ao falar de emoções (alexitimia) — dificuldade de mentalização.',
+                      'Discurso fragmentado, sem nexo temporal — indício de trauma não integrado.',
+                      'Palavras de auto-desqualificação repetidas ("sou burro", "não sirvo") — crenças nucleares ativas.',
+                    ]}
+                    aplicacao={[
+                      'Anote em sessão 5 a 7 palavras-chave que o paciente repete espontaneamente.',
+                      'Devolva essas palavras em forma de pergunta poética: "O que mora dentro desse \'sempre\'?"',
+                      'Convide o paciente a substituir uma palavra rígida por uma imagem (ex.: "vazio" → "lago seco").',
+                      'Construa juntos um mini-verso de 2 linhas usando a nova imagem.',
+                      'Registre o verso no prontuário como linha de base do trabalho semântico.',
+                    ]}
+                    indicacoes={[
+                      'Ansiedade generalizada com discurso ruminativo.',
+                      'Depressão leve a moderada com auto-crítica acentuada.',
+                      'Pacientes em fase inicial de psicoterapia, ainda com defesas racionais altas.',
+                      'Trabalho com adolescentes que resistem à linguagem clínica direta.',
+                    ]}
+                    cuidados={[
+                      'Evitar metáforas impostas pelo terapeuta — elas devem emergir do material do paciente.',
+                      'Em quadros psicóticos, manter linguagem concreta e evitar duplos sentidos.',
+                      'Não usar como substituto de avaliação diagnóstica formal.',
+                    ]}
+                  />
                 </div>
               </AccordionContent>
             </AccordionItem>
