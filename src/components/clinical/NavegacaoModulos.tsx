@@ -154,23 +154,28 @@ const NavegacaoModulos: React.FC = () => {
               id="nav-modulos-grid"
               className="grid grid-cols-4 gap-2 p-3 border-t border-border/30 animate-fade-in-up"
             >
-              {MODULOS.map((m) => {
+              {MODULOS.map((m, idx) => {
                 const isActive = active === m.id;
+                const isUnlocked = isModuleUnlocked(idx);
+                const isCompleted = courseProgress.completedModules.includes(m.id);
                 return (
                   <li key={m.id} data-module={m.numero} className="module-themed">
                     <button
                       type="button"
-                      onClick={() => goTo(m.id)}
+                      onClick={() => isUnlocked && goTo(m.id)}
+                      disabled={!isUnlocked}
                       aria-label={`Ir para Módulo ${m.numero}: ${m.corNome}`}
                       aria-current={isActive ? 'true' : undefined}
                       className={`w-full aspect-square rounded-xl flex flex-col items-center justify-center gap-0.5 border-2 transition-all focus:outline-none focus-visible:ring-2 focus-visible:ring-module focus-visible:ring-offset-2 focus-visible:ring-offset-background ${
                         isActive
                           ? 'bg-module text-background border-module shadow-module-glow scale-105'
-                          : 'bg-module-tint text-module border-module/30 hover:border-module'
+                          : isUnlocked 
+                            ? 'bg-module-tint text-module border-module/30 hover:border-module'
+                            : 'bg-muted text-muted-foreground border-border opacity-50'
                       }`}
                     >
                       <span className="font-heading font-bold text-base leading-none">
-                        {m.numero}
+                        {!isUnlocked ? <Lock className="h-3 w-3" /> : isCompleted ? <CheckCircle2 className="h-4 w-4" /> : m.numero}
                       </span>
                       <span className="text-[9px] font-semibold uppercase tracking-wider opacity-80">
                         {m.pilar}
