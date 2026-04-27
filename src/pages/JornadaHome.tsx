@@ -79,7 +79,7 @@ const JornadaHome = () => {
                   : "O Supabase não está configurado. Seu progresso está seguro neste navegador, mas não será sincronizado entre dispositivos."}
               </span>
               {hasConfig && (
-                <Button variant="outline" size="xs" onClick={toggleOffline} className="w-fit h-7 text-[10px] px-2">
+                <Button variant="outline" size="sm" onClick={toggleOffline} className="w-fit h-7 text-[10px] px-2">
                   {isOffline ? "Reativar Nuvem" : "Pausar Sincronização"}
                 </Button>
               )}
