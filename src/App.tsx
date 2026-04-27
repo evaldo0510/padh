@@ -39,6 +39,8 @@ const VendaPoesiaHipnotica = lazy(() => import("./pages/venda/VendaPoesiaHipnoti
 const CienciaPoesia = lazy(() => import("./pages/CienciaPoesia"));
 const ComboPADH = lazy(() => import("./pages/ComboPADH"));
 const Admin = lazy(() => import("./pages/Admin"));
+const Prontuario = lazy(() => import("./pages/Prontuario"));
+const RecursosClinicos = lazy(() => import("./pages/RecursosClinicos"));
 
 const queryClient = new QueryClient();
 
@@ -77,6 +79,8 @@ const AnimatedRoutes = () => {
           <Route path="/ciencia-da-poesia" element={<PageTransition><CienciaPoesia /></PageTransition>} />
           <Route path="/combo-padh" element={<PageTransition><ComboPADH /></PageTransition>} />
           <Route path="/admin" element={<PageTransition><Admin /></PageTransition>} />
+          <Route path="/prontuario-pch" element={<PageTransition><Prontuario /></PageTransition>} />
+          <Route path="/recursos-clinicos" element={<PageTransition><RecursosClinicos /></PageTransition>} />
           <Route path="*" element={<PageTransition><NotFound /></PageTransition>} />
         </Routes>
       </AnimatePresence>

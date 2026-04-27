@@ -3,6 +3,14 @@ import PageLayout from '@/components/layout/PageLayout';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
 import { BookOpen, Brain, Sparkles, Lightbulb, Heart, Flame, Music, PenTool, Eye, Target, Feather } from 'lucide-react';
 import ProtocoloPCH from '@/components/sections/ProtocoloPCH';
+import ChecklistClinico from '@/components/clinical/ChecklistClinico';
+import FundamentacaoTeorica from '@/components/clinical/FundamentacaoTeorica';
+import BotaoImprimirPDF from '@/components/clinical/BotaoImprimirPDF';
+import FluxogramaDecisao from '@/components/clinical/FluxogramaDecisao';
+import { MODULOS, getModulo } from '@/lib/dados-clinicos';
+import { Link } from 'react-router-dom';
+import { Button } from '@/components/ui/button';
+import { FileText, GitBranch as GitBranchIcon } from 'lucide-react';
 
 import modulo1Img from '@/assets/curso-pch/modulo1-palavras.jpg';
 import modulo2Img from '@/assets/curso-pch/modulo2-reestruturacao.jpg';
@@ -164,6 +172,21 @@ const CursoPCH = () => {
               ⚠ Esta tabela é orientativa, não diagnóstica. Diagnóstico formal requer avaliação clínica completa.
             </p>
           </div>
+
+          {/* Fluxograma de Decisão Clínica */}
+          <div className="mt-10">
+            <FluxogramaDecisao />
+          </div>
+
+          {/* Quick links para recursos clínicos */}
+          <div className="mt-8 flex flex-wrap gap-3 justify-center">
+            <Button asChild variant="outline" className="gap-2">
+              <Link to="/recursos-clinicos"><FileText className="h-4 w-4" /> Hub de Recursos Clínicos</Link>
+            </Button>
+            <Button asChild variant="outline" className="gap-2">
+              <Link to="/prontuario-pch"><FileText className="h-4 w-4" /> Prontuário de Sessão</Link>
+            </Button>
+          </div>
         </div>
       </section>
 
@@ -187,6 +210,7 @@ const CursoPCH = () => {
               </AccordionTrigger>
               <AccordionContent className="pb-8">
                 <ModuleImage src={modulo1Img} alt="O Poder das Palavras — livro aberto com luz cósmica" />
+                <ChecklistClinico modulo={getModulo("modulo-1")!} />
                 <div className="space-y-6 text-muted-foreground leading-relaxed">
                   <p>A palavra tem um impacto profundo na psique humana, sendo a principal ferramenta da terapia. Quando usada com propósito e poesia, ela pode reestruturar pensamentos e emoções, proporcionando novas percepções e caminhos para a transformação interior.</p>
                   <p>A palavra bem utilizada influencia emoções, crenças e até reconfigura padrões mentais. Seja na hipnoterapia, na PNL, na psicologia ou na meditação guiada, a forma como nos expressamos pode gerar profundas mudanças internas.</p>
@@ -282,6 +306,13 @@ meu próprio rumo, que hoje encontrei.`}</Poem>
                       'Não usar como substituto de avaliação diagnóstica formal.',
                     ]}
                   />
+
+                  <FundamentacaoTeorica
+                    teoricos={getModulo("modulo-1")!.teoricos}
+                    pilar={getModulo("modulo-1")!.pilar}
+                  />
+
+                  <BotaoImprimirPDF modulo={getModulo("modulo-1")!} />
                 </div>
               </AccordionContent>
             </AccordionItem>
@@ -301,6 +332,7 @@ meu próprio rumo, que hoje encontrei.`}</Poem>
               </AccordionTrigger>
               <AccordionContent className="pb-8">
                 <ModuleImage src={modulo2Img} alt="Reestruturação de Crenças — borboleta emergindo de casulo" />
+                <ChecklistClinico modulo={getModulo("modulo-2")!} />
                 <div className="space-y-6 text-muted-foreground leading-relaxed">
                   <h3 className="text-lg font-heading font-semibold text-foreground">🔹 Exercício 1: Identificação e Ressignificação</h3>
                   <p>🎯 <strong className="text-foreground">Objetivo:</strong> Tornar consciente uma crença negativa e iniciar o processo de mudança.</p>
@@ -399,6 +431,13 @@ mas ressoa fundo.`}</Poem>
                       'Validar antes de reestruturar — a crença teve função protetiva no passado.',
                     ]}
                   />
+
+                  <FundamentacaoTeorica
+                    teoricos={getModulo("modulo-2")!.teoricos}
+                    pilar={getModulo("modulo-2")!.pilar}
+                  />
+
+                  <BotaoImprimirPDF modulo={getModulo("modulo-2")!} />
                 </div>
               </AccordionContent>
             </AccordionItem>
@@ -418,6 +457,7 @@ mas ressoa fundo.`}</Poem>
               </AccordionTrigger>
               <AccordionContent className="pb-8">
                 <ModuleImage src={modulo3Img} alt="Linguagem Hipnótica — cérebro feito de luz e palavras" />
+                <ChecklistClinico modulo={getModulo("modulo-3")!} />
                 <div className="space-y-6 text-muted-foreground leading-relaxed">
 
                   <SectionCard>
@@ -507,6 +547,13 @@ e tudo simplesmente… acontece…`}</Poem>
                       'Sempre encerrar com ancoragem no presente (5-4-3-2-1 sensorial).',
                     ]}
                   />
+
+                  <FundamentacaoTeorica
+                    teoricos={getModulo("modulo-3")!.teoricos}
+                    pilar={getModulo("modulo-3")!.pilar}
+                  />
+
+                  <BotaoImprimirPDF modulo={getModulo("modulo-3")!} />
                 </div>
               </AccordionContent>
             </AccordionItem>
@@ -526,6 +573,7 @@ e tudo simplesmente… acontece…`}</Poem>
               </AccordionTrigger>
               <AccordionContent className="pb-8">
                 <ModuleImage src={modulo4Img} alt="Modelos de Poemas — pessoa no topo da montanha ao nascer do sol" />
+                <ChecklistClinico modulo={getModulo("modulo-4")!} />
                 <div className="space-y-6 text-muted-foreground leading-relaxed">
                   <Poem title="🌊 Superação — Fluir e Crescer">{`As marés já mudaram tantas vezes…
 e cada onda soube aonde chegar.
@@ -620,6 +668,13 @@ para iluminar o próximo passo.`}</Poem>
                       'Revisar com o paciente antes de "prescrever" — co-autoria aumenta adesão.',
                     ]}
                   />
+
+                  <FundamentacaoTeorica
+                    teoricos={getModulo("modulo-4")!.teoricos}
+                    pilar={getModulo("modulo-4")!.pilar}
+                  />
+
+                  <BotaoImprimirPDF modulo={getModulo("modulo-4")!} />
                 </div>
               </AccordionContent>
             </AccordionItem>
@@ -639,6 +694,7 @@ para iluminar o próximo passo.`}</Poem>
               </AccordionTrigger>
               <AccordionContent className="pb-8">
                 <ModuleImage src={modulo5Img} alt="Técnicas Avançadas — ondas do oceano com notas musicais" />
+                <ChecklistClinico modulo={getModulo("modulo-5")!} />
                 <div className="space-y-6 text-muted-foreground leading-relaxed">
 
                   <SectionCard>
@@ -739,6 +795,13 @@ Está cada vez mais próximo de alcançar a sua essência.`}</Poem>
                       'Ter sempre um plano de aterramento pronto caso emerja material avassalador.',
                     ]}
                   />
+
+                  <FundamentacaoTeorica
+                    teoricos={getModulo("modulo-5")!.teoricos}
+                    pilar={getModulo("modulo-5")!.pilar}
+                  />
+
+                  <BotaoImprimirPDF modulo={getModulo("modulo-5")!} />
                 </div>
               </AccordionContent>
             </AccordionItem>
@@ -758,6 +821,7 @@ Está cada vez mais próximo de alcançar a sua essência.`}</Poem>
               </AccordionTrigger>
               <AccordionContent className="pb-8">
                 <ModuleImage src={modulo6Img} alt="Poesia Terapêutica — flor de lótus em luz dourada" />
+                <ChecklistClinico modulo={getModulo("modulo-6")!} />
                 <div className="space-y-6 text-muted-foreground leading-relaxed">
 
                   <SectionCard>
@@ -842,6 +906,13 @@ E quando percebo, já estou mais longe do que imaginei."`}</Poem>
                       'Adaptar o tipo conforme retorno do paciente — flexibilidade é clínica.',
                     ]}
                   />
+
+                  <FundamentacaoTeorica
+                    teoricos={getModulo("modulo-6")!.teoricos}
+                    pilar={getModulo("modulo-6")!.pilar}
+                  />
+
+                  <BotaoImprimirPDF modulo={getModulo("modulo-6")!} />
                 </div>
               </AccordionContent>
             </AccordionItem>
@@ -861,6 +932,7 @@ E quando percebo, já estou mais longe do que imaginei."`}</Poem>
               </AccordionTrigger>
               <AccordionContent className="pb-8">
                 <ModuleImage src={modulo7Img} alt="Sessão em 4 Fases — círculos de luz interconectados" />
+                <ChecklistClinico modulo={getModulo("modulo-7")!} />
                 <div className="space-y-6 text-muted-foreground leading-relaxed">
 
                   <SectionCard className="border-l-4 border-l-primary/40">
@@ -967,6 +1039,13 @@ Mas porque sempre esteve dentro de você."`}</Poem>
                       'Documentar consentimento informado para uso de técnicas hipnóticas leves.',
                     ]}
                   />
+
+                  <FundamentacaoTeorica
+                    teoricos={getModulo("modulo-7")!.teoricos}
+                    pilar={getModulo("modulo-7")!.pilar}
+                  />
+
+                  <BotaoImprimirPDF modulo={getModulo("modulo-7")!} />
                 </div>
               </AccordionContent>
             </AccordionItem>
@@ -986,6 +1065,7 @@ Mas porque sempre esteve dentro de você."`}</Poem>
               </AccordionTrigger>
               <AccordionContent className="pb-8">
                 <ModuleImage src={modulo8Img} alt="Exercícios Práticos — mão escrevendo poesia à luz de vela" />
+                <ChecklistClinico modulo={getModulo("modulo-8")!} />
                 <div className="space-y-6 text-muted-foreground leading-relaxed">
                   <p>Os seguintes exercícios foram desenvolvidos para ajudar você a acessar suas emoções, ressignificar desafios e criar uma nova narrativa para sua vida. Pegue um caderno, encontre um espaço tranquilo e mergulhe na experiência.</p>
 
@@ -1099,6 +1179,13 @@ só precisa de tempo, terra e coragem para abrir."`}</Poem>
                       'Estabelecer canal de retorno claro caso o paciente precise reabrir tratamento.',
                     ]}
                   />
+
+                  <FundamentacaoTeorica
+                    teoricos={getModulo("modulo-8")!.teoricos}
+                    pilar={getModulo("modulo-8")!.pilar}
+                  />
+
+                  <BotaoImprimirPDF modulo={getModulo("modulo-8")!} />
                 </div>
               </AccordionContent>
             </AccordionItem>
