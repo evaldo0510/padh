@@ -63,6 +63,9 @@ export const useJornada = () => {
   useEffect(() => {
     localStorage.setItem(STORAGE_KEY, JSON.stringify(jornada));
     
+    // Notify about data change for sync indicator
+    window.dispatchEvent(new Event('padh_data_change'));
+    
     const syncToDB = async () => {
       if (isOffline || !hasSupabaseConfig()) return;
       const { data: { user } } = await supabase.auth.getUser();
@@ -78,7 +81,7 @@ export const useJornada = () => {
     };
 
     syncToDB();
-  }, [jornada]);
+  }, [jornada, isOffline]);
 
   const saveResponse = (exerciseId: string, response: string) => {
     setJornada(prev => {

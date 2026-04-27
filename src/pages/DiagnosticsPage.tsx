@@ -11,17 +11,33 @@ import {
   Wifi, 
   WifiOff,
   Server,
-  Lock
+  Lock,
+  User,
+  Trash2
 } from 'lucide-react';
 import { supabaseConfig, supabase } from '@/integrations/supabase/client';
 import { toast } from 'sonner';
 import { useOfflineMode } from '@/hooks/useOfflineMode';
+import { useNavigate } from 'react-router-dom';
 
 const DiagnosticsPage = () => {
   const { isOffline, toggleOffline, canConnect } = useOfflineMode();
   const [checking, setChecking] = useState(false);
   const [status, setStatus] = useState<'idle' | 'success' | 'error'>('idle');
   const [errorDetails, setErrorDetails] = useState<string | null>(null);
+  const [simulatedUser, setSimulatedUser] = useState<any>(null);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const saved = localStorage.getItem('padh_simulated_user');
+    if (saved) setSimulatedUser(JSON.parse(saved));
+  }, []);
+
+  const clearSimulatedSession = () => {
+    localStorage.removeItem('padh_simulated_user');
+    setSimulatedUser(null);
+    toast.success("Sessão simulada removida.");
+  };
 
   const runConnectivityCheck = async () => {
     setChecking(true);
@@ -188,6 +204,37 @@ const DiagnosticsPage = () => {
                 <span>Sem o Supabase configurado, os dados não serão sincronizados entre diferentes computadores ou celulares.</span>
               </li>
             </ul>
+          </CardContent>
+        </Card>
+
+        {/* Session Diagnostics */}
+        <Card className="mt-8 border-primary/10">
+          <CardHeader>
+            <CardTitle className="flex items-center gap-2">
+              <User className="h-5 w-5 text-primary" /> Sessão Atual
+            </CardTitle>
+            <CardDescription>Status da autenticação</CardDescription>
+          </CardHeader>
+          <CardContent className="space-y-4">
+            {simulatedUser ? (
+              <div className="flex justify-between items-center p-3 bg-muted/50 rounded-lg">
+                <div className="space-y-1">
+                  <p className="text-sm font-bold">Modo Simulado Ativo</p>
+                  <p className="text-xs text-muted-foreground">{simulatedUser.email}</p>
+                </div>
+                <Button variant="ghost" size="sm" onClick={clearSimulatedSession} className="text-red-500 hover:text-red-600 hover:bg-red-50">
+                  <Trash2 className="h-4 w-4 mr-2" /> Limpar
+                </Button>
+              </div>
+            ) : (
+              <p className="text-sm text-muted-foreground italic">Nenhuma sessão simulada encontrada.</p>
+            )}
+            
+            {canConnect && (
+              <Button variant="outline" size="sm" className="w-full" onClick={() => navigate('/login')}>
+                Verificar Login Real
+              </Button>
+            )}
           </CardContent>
         </Card>
       </div>

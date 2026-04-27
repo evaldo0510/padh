@@ -60,6 +60,9 @@ export const useCourseProgress = () => {
   useEffect(() => {
     localStorage.setItem(STORAGE_KEY, JSON.stringify(progress));
     
+    // Notify about data change for sync indicator
+    window.dispatchEvent(new Event('padh_data_change'));
+    
     const syncToDB = async () => {
       if (isOffline || !hasSupabaseConfig()) return;
       const { data: { user } } = await supabase.auth.getUser();
@@ -75,7 +78,7 @@ export const useCourseProgress = () => {
     };
 
     syncToDB();
-  }, [progress]);
+  }, [progress, isOffline]);
 
   const addNotification = (title: string, message: string) => {
     const newNotif = {

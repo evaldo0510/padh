@@ -1,15 +1,60 @@
-import React, { useState } from 'react';
-import { useLocation, Link } from 'react-router-dom';
-import { Menu, X, ChevronDown } from 'lucide-react';
+import React, { useState, useEffect } from 'react';
+import { useLocation, Link, useNavigate } from 'react-router-dom';
+import { Menu, X, ChevronDown, LogOut, User } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { ThemeToggle } from '@/components/ui/theme-toggle';
 import PrefetchLink from './PrefetchLink';
 import Logo from '@/components/ui/Logo';
+import { supabase, supabaseConfig } from '@/integrations/supabase/client';
+import { toast } from 'sonner';
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isToolsOpen, setIsToolsOpen] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
   const location = useLocation();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const checkAuth = async () => {
+      // Check simulated login
+      const simulated = localStorage.getItem('padh_simulated_user');
+      if (simulated) {
+        setIsLoggedIn(true);
+        return;
+      }
+
+      // Check real supabase login
+      if (supabaseConfig.isConfigured) {
+        const { data: { session } } = await supabase.auth.getSession();
+        setIsLoggedIn(!!session);
+      }
+    };
+
+    checkAuth();
+
+    // Listen for auth changes if supabase is configured
+    if (supabaseConfig.isConfigured) {
+      const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
+        setIsLoggedIn(!!session || !!localStorage.getItem('padh_simulated_user'));
+      });
+      return () => subscription.unsubscribe();
+    }
+  }, []);
+
+  const handleLogout = async () => {
+    // Clear simulated login
+    localStorage.removeItem('padh_simulated_user');
+    
+    // Clear real supabase login if configured
+    if (supabaseConfig.isConfigured) {
+      await supabase.auth.signOut();
+    }
+    
+    setIsLoggedIn(false);
+    toast.success("Sessão encerrada com sucesso.");
+    navigate('/');
+  };
 
   const navItems = [
     { name: 'Início', path: '/' },
@@ -113,9 +158,22 @@ const Header = () => {
             </nav>
             <div className="ml-3 pl-3 border-l border-border/50 flex items-center gap-4">
               <ThemeToggle />
-              <Button size="sm" variant="ghost" asChild>
-                <Link to="/login">Entrar</Link>
-              </Button>
+              {isLoggedIn ? (
+                <div className="flex items-center gap-2">
+                  <Button size="sm" variant="ghost" className="gap-2" asChild>
+                    <Link to="/dashboard">
+                      <User className="h-4 w-4" /> Minha Área
+                    </Link>
+                  </Button>
+                  <Button size="sm" variant="outline" className="gap-2 text-red-500 hover:text-red-600 hover:bg-red-50 dark:hover:bg-red-950/20" onClick={handleLogout}>
+                    <LogOut className="h-4 w-4" /> Sair
+                  </Button>
+                </div>
+              ) : (
+                <Button size="sm" variant="ghost" asChild>
+                  <Link to="/login">Entrar</Link>
+                </Button>
+              )}
             </div>
           </div>
 
@@ -170,6 +228,23 @@ const Header = () => {
                   )}
                 </React.Fragment>
               ))}
+              
+              <div className="mt-4 pt-4 border-t border-border/30 px-3">
+                {isLoggedIn ? (
+                  <div className="flex flex-col gap-2">
+                    <Button variant="outline" className="w-full justify-start gap-2" asChild onClick={() => setIsMenuOpen(false)}>
+                      <Link to="/dashboard"><User className="h-4 w-4" /> Minha Área</Link>
+                    </Button>
+                    <Button variant="destructive" className="w-full justify-start gap-2" onClick={() => { handleLogout(); setIsMenuOpen(false); }}>
+                      <LogOut className="h-4 w-4" /> Sair
+                    </Button>
+                  </div>
+                ) : (
+                  <Button className="w-full justify-start gap-2" asChild onClick={() => setIsMenuOpen(false)}>
+                    <Link to="/login">Entrar na Plataforma</Link>
+                  </Button>
+                )}
+              </div>
             </nav>
           </div>
         )}

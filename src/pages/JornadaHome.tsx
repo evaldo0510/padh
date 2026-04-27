@@ -20,10 +20,12 @@ import {
 } from 'lucide-react';
 import { Link, useNavigate } from 'react-router-dom';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
+import { useOfflineMode } from '@/hooks/useOfflineMode';
 
 const JornadaHome = () => {
   const navigate = useNavigate();
   const { jornada, isSyncing, hasConfig } = useJornada();
+  const { isOffline, toggleOffline } = useOfflineMode();
 
   // Logic to find next available session
   const findNextSession = () => {
@@ -57,12 +59,30 @@ const JornadaHome = () => {
     >
       <div className="container mx-auto px-6 py-12 max-w-6xl">
         {/* DB Sync Status */}
-        {!hasConfig && (
-          <Alert variant="destructive" className="mb-8 border-amber-500/50 bg-amber-500/5 text-amber-600 dark:text-amber-400">
-            <AlertCircle className="h-4 w-4" />
-            <AlertTitle>Modo Offline</AlertTitle>
-            <AlertDescription className="text-xs">
-              Conecte o Supabase para sincronizar seu progresso entre dispositivos. Seu progresso atual está salvo localmente.
+        {(isOffline || !hasConfig) && (
+          <Alert 
+            variant={isOffline && hasConfig ? "default" : "destructive"} 
+            className={`mb-8 border-2 backdrop-blur-sm ${
+              isOffline && hasConfig 
+                ? "border-amber-500/20 bg-amber-50/50 dark:bg-amber-950/10" 
+                : "border-red-500/20 bg-red-50/50 dark:bg-red-950/10"
+            }`}
+          >
+            {isOffline ? <AlertCircle className="h-4 w-4" /> : <AlertCircle className="h-4 w-4" />}
+            <AlertTitle className="font-bold">
+              {isOffline && hasConfig ? "Modo Offline Ativado" : "Conexão com Nuvem Indisponível"}
+            </AlertTitle>
+            <AlertDescription className="text-xs mt-1 flex flex-col gap-2">
+              <span>
+                {isOffline && hasConfig 
+                  ? "Sua sincronização com o banco de dados está pausada. Alterações serão salvas apenas localmente." 
+                  : "O Supabase não está configurado. Seu progresso está seguro neste navegador, mas não será sincronizado entre dispositivos."}
+              </span>
+              {hasConfig && (
+                <Button variant="outline" size="sm" onClick={toggleOffline} className="w-fit h-7 text-[10px] px-2">
+                  {isOffline ? "Reativar Nuvem" : "Pausar Sincronização"}
+                </Button>
+              )}
             </AlertDescription>
           </Alert>
         )}
