@@ -199,7 +199,7 @@ const CursoPCH = () => {
           <Accordion type="multiple" className="space-y-4">
 
             {/* ══════════════ MÓDULO 1 ══════════════ */}
-            <AccordionItem value="modulo-1" data-module="1" className="module-themed glass-card rounded-2xl border border-module/30 hover:border-module/60 transition-colors px-6">
+            <AccordionItem value="modulo-1" data-module="1" id="modulo-1" className="module-themed glass-card rounded-2xl border border-module/30 hover:border-module/60 transition-colors px-6">
               <AccordionTrigger className="py-6 hover:no-underline">
                 <div className="flex items-center gap-3 text-left">
                   <div className="w-11 h-11 rounded-xl bg-module-soft flex items-center justify-center shrink-0 ring-1 ring-module/20">
@@ -214,6 +214,7 @@ const CursoPCH = () => {
               <AccordionContent className="pb-8">
                 <ModuleImage src={modulo1Img} alt="O Poder das Palavras — livro aberto com luz cósmica" />
                 <ChecklistClinico modulo={getModulo("modulo-1")!} />
+                <LegendaCromatica modulo={getModulo("modulo-1")!} />
                 <div className="space-y-6 text-muted-foreground leading-relaxed">
                   <p>A palavra tem um impacto profundo na psique humana, sendo a principal ferramenta da terapia. Quando usada com propósito e poesia, ela pode reestruturar pensamentos e emoções, proporcionando novas percepções e caminhos para a transformação interior.</p>
                   <p>A palavra bem utilizada influencia emoções, crenças e até reconfigura padrões mentais. Seja na hipnoterapia, na PNL, na psicologia ou na meditação guiada, a forma como nos expressamos pode gerar profundas mudanças internas.</p>
@@ -323,7 +324,7 @@ meu próprio rumo, que hoje encontrei.`}</Poem>
             </AccordionItem>
 
             {/* ══════════════ MÓDULO 2 ══════════════ */}
-            <AccordionItem value="modulo-2" data-module="2" className="module-themed glass-card rounded-2xl border border-module/30 hover:border-module/60 transition-colors px-6">
+            <AccordionItem value="modulo-2" data-module="2" id="modulo-2" className="module-themed glass-card rounded-2xl border border-module/30 hover:border-module/60 transition-colors px-6">
               <AccordionTrigger className="py-6 hover:no-underline">
                 <div className="flex items-center gap-3 text-left">
                   <div className="w-11 h-11 rounded-xl bg-module-soft flex items-center justify-center shrink-0 ring-1 ring-module/20">
@@ -338,6 +339,7 @@ meu próprio rumo, que hoje encontrei.`}</Poem>
               <AccordionContent className="pb-8">
                 <ModuleImage src={modulo2Img} alt="Reestruturação de Crenças — borboleta emergindo de casulo" />
                 <ChecklistClinico modulo={getModulo("modulo-2")!} />
+                <LegendaCromatica modulo={getModulo("modulo-2")!} />
                 <div className="space-y-6 text-muted-foreground leading-relaxed">
                   <h3 className="text-lg font-heading font-semibold text-foreground">🔹 Exercício 1: Identificação e Ressignificação</h3>
                   <p>🎯 <strong className="text-foreground">Objetivo:</strong> Tornar consciente uma crença negativa e iniciar o processo de mudança.</p>
@@ -450,7 +452,7 @@ mas ressoa fundo.`}</Poem>
             </AccordionItem>
 
             {/* ══════════════ MÓDULO 3 ══════════════ */}
-            <AccordionItem value="modulo-3" data-module="3" className="module-themed glass-card rounded-2xl border border-module/30 hover:border-module/60 transition-colors px-6">
+            <AccordionItem value="modulo-3" data-module="3" id="modulo-3" className="module-themed glass-card rounded-2xl border border-module/30 hover:border-module/60 transition-colors px-6">
               <AccordionTrigger className="py-6 hover:no-underline">
                 <div className="flex items-center gap-3 text-left">
                   <div className="w-11 h-11 rounded-xl bg-module-soft flex items-center justify-center shrink-0 ring-1 ring-module/20">
@@ -465,6 +467,7 @@ mas ressoa fundo.`}</Poem>
               <AccordionContent className="pb-8">
                 <ModuleImage src={modulo3Img} alt="Linguagem Hipnótica — cérebro feito de luz e palavras" />
                 <ChecklistClinico modulo={getModulo("modulo-3")!} />
+                <LegendaCromatica modulo={getModulo("modulo-3")!} />
                 <div className="space-y-6 text-muted-foreground leading-relaxed">
 
                   <SectionCard>
@@ -568,7 +571,7 @@ e tudo simplesmente… acontece…`}</Poem>
             </AccordionItem>
 
             {/* ══════════════ MÓDULO 4 ══════════════ */}
-            <AccordionItem value="modulo-4" data-module="4" className="module-themed glass-card rounded-2xl border border-module/30 hover:border-module/60 transition-colors px-6">
+            <AccordionItem value="modulo-4" data-module="4" id="modulo-4" className="module-themed glass-card rounded-2xl border border-module/30 hover:border-module/60 transition-colors px-6">
               <AccordionTrigger className="py-6 hover:no-underline">
                 <div className="flex items-center gap-3 text-left">
                   <div className="w-11 h-11 rounded-xl bg-module-soft flex items-center justify-center shrink-0 ring-1 ring-module/20">
@@ -583,6 +586,7 @@ e tudo simplesmente… acontece…`}</Poem>
               <AccordionContent className="pb-8">
                 <ModuleImage src={modulo4Img} alt="Modelos de Poemas — pessoa no topo da montanha ao nascer do sol" />
                 <ChecklistClinico modulo={getModulo("modulo-4")!} />
+                <LegendaCromatica modulo={getModulo("modulo-4")!} />
                 <div className="space-y-6 text-muted-foreground leading-relaxed">
                   <Poem title="🌊 Superação — Fluir e Crescer">{`As marés já mudaram tantas vezes…
 e cada onda soube aonde chegar.
@@ -691,7 +695,7 @@ para iluminar o próximo passo.`}</Poem>
             </AccordionItem>
 
             {/* ══════════════ MÓDULO 5 ══════════════ */}
-            <AccordionItem value="modulo-5" data-module="5" className="module-themed glass-card rounded-2xl border border-module/30 hover:border-module/60 transition-colors px-6">
+            <AccordionItem value="modulo-5" data-module="5" id="modulo-5" className="module-themed glass-card rounded-2xl border border-module/30 hover:border-module/60 transition-colors px-6">
               <AccordionTrigger className="py-6 hover:no-underline">
                 <div className="flex items-center gap-3 text-left">
                   <div className="w-11 h-11 rounded-xl bg-module-soft flex items-center justify-center shrink-0 ring-1 ring-module/20">
@@ -706,6 +710,7 @@ para iluminar o próximo passo.`}</Poem>
               <AccordionContent className="pb-8">
                 <ModuleImage src={modulo5Img} alt="Técnicas Avançadas — ondas do oceano com notas musicais" />
                 <ChecklistClinico modulo={getModulo("modulo-5")!} />
+                <LegendaCromatica modulo={getModulo("modulo-5")!} />
                 <div className="space-y-6 text-muted-foreground leading-relaxed">
 
                   <SectionCard>
@@ -820,7 +825,7 @@ Está cada vez mais próximo de alcançar a sua essência.`}</Poem>
             </AccordionItem>
 
             {/* ══════════════ MÓDULO 6 ══════════════ */}
-            <AccordionItem value="modulo-6" data-module="6" className="module-themed glass-card rounded-2xl border border-module/30 hover:border-module/60 transition-colors px-6">
+            <AccordionItem value="modulo-6" data-module="6" id="modulo-6" className="module-themed glass-card rounded-2xl border border-module/30 hover:border-module/60 transition-colors px-6">
               <AccordionTrigger className="py-6 hover:no-underline">
                 <div className="flex items-center gap-3 text-left">
                   <div className="w-11 h-11 rounded-xl bg-module-soft flex items-center justify-center shrink-0 ring-1 ring-module/20">
@@ -835,6 +840,7 @@ Está cada vez mais próximo de alcançar a sua essência.`}</Poem>
               <AccordionContent className="pb-8">
                 <ModuleImage src={modulo6Img} alt="Poesia Terapêutica — flor de lótus em luz dourada" />
                 <ChecklistClinico modulo={getModulo("modulo-6")!} />
+                <LegendaCromatica modulo={getModulo("modulo-6")!} />
                 <div className="space-y-6 text-muted-foreground leading-relaxed">
 
                   <SectionCard>
@@ -933,7 +939,7 @@ E quando percebo, já estou mais longe do que imaginei."`}</Poem>
             </AccordionItem>
 
             {/* ══════════════ MÓDULO 7 ══════════════ */}
-            <AccordionItem value="modulo-7" data-module="7" className="module-themed glass-card rounded-2xl border border-module/30 hover:border-module/60 transition-colors px-6">
+            <AccordionItem value="modulo-7" data-module="7" id="modulo-7" className="module-themed glass-card rounded-2xl border border-module/30 hover:border-module/60 transition-colors px-6">
               <AccordionTrigger className="py-6 hover:no-underline">
                 <div className="flex items-center gap-3 text-left">
                   <div className="w-11 h-11 rounded-xl bg-module-soft flex items-center justify-center shrink-0 ring-1 ring-module/20">
@@ -948,6 +954,7 @@ E quando percebo, já estou mais longe do que imaginei."`}</Poem>
               <AccordionContent className="pb-8">
                 <ModuleImage src={modulo7Img} alt="Sessão em 4 Fases — círculos de luz interconectados" />
                 <ChecklistClinico modulo={getModulo("modulo-7")!} />
+                <LegendaCromatica modulo={getModulo("modulo-7")!} />
                 <div className="space-y-6 text-muted-foreground leading-relaxed">
 
                   <SectionCard className="border-l-4 border-l-primary/40">
@@ -1068,7 +1075,7 @@ Mas porque sempre esteve dentro de você."`}</Poem>
             </AccordionItem>
 
             {/* ══════════════ MÓDULO 8 ══════════════ */}
-            <AccordionItem value="modulo-8" data-module="8" className="module-themed glass-card rounded-2xl border border-module/30 hover:border-module/60 transition-colors px-6">
+            <AccordionItem value="modulo-8" data-module="8" id="modulo-8" className="module-themed glass-card rounded-2xl border border-module/30 hover:border-module/60 transition-colors px-6">
               <AccordionTrigger className="py-6 hover:no-underline">
                 <div className="flex items-center gap-3 text-left">
                   <div className="w-11 h-11 rounded-xl bg-module-soft flex items-center justify-center shrink-0 ring-1 ring-module/20">
@@ -1083,6 +1090,7 @@ Mas porque sempre esteve dentro de você."`}</Poem>
               <AccordionContent className="pb-8">
                 <ModuleImage src={modulo8Img} alt="Exercícios Práticos — mão escrevendo poesia à luz de vela" />
                 <ChecklistClinico modulo={getModulo("modulo-8")!} />
+                <LegendaCromatica modulo={getModulo("modulo-8")!} />
                 <div className="space-y-6 text-muted-foreground leading-relaxed">
                   <p>Os seguintes exercícios foram desenvolvidos para ajudar você a acessar suas emoções, ressignificar desafios e criar uma nova narrativa para sua vida. Pegue um caderno, encontre um espaço tranquilo e mergulhe na experiência.</p>
 
