@@ -64,7 +64,7 @@ export const useJornada = () => {
     localStorage.setItem(STORAGE_KEY, JSON.stringify(jornada));
     
     const syncToDB = async () => {
-      if (!hasSupabaseConfig()) return;
+      if (isOffline || !hasSupabaseConfig()) return;
       const { data: { user } } = await supabase.auth.getUser();
       if (!user) return;
 
