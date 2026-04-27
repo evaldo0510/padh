@@ -470,6 +470,13 @@ export const MODULOS: ModuloClinico[] = [
       'Integração visível (Fase H)',
       'Aliança terapêutica estável',
     ],
+    atividades: [
+      { id: 'fase_p', label: 'Fase P (Acolhimento)' },
+      { id: 'fase_a', label: 'Fase A (Identificação)' },
+      { id: 'fase_d', label: 'Fase D (Transformação)' },
+      { id: 'fase_h', label: 'Fase H (Ancoragem)' }
+    ],
+    tempoEstimado: 80,
   },
   {
     id: 'modulo-8',
