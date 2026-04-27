@@ -99,6 +99,7 @@ const AnimatedRoutes = () => {
           <Route path="/dashboard" element={<PageTransition><Dashboard /></PageTransition>} />
           <Route path="/diagnostico" element={<PageTransition><Diagnostico /></PageTransition>} />
           <Route path="/diagnosticos" element={<PageTransition><DiagnosticsPage /></PageTransition>} />
+          <Route path="/configurar-supabase" element={<PageTransition><ConfigGuidePage /></PageTransition>} />
           <Route path="*" element={<PageTransition><NotFound /></PageTransition>} />
         </Routes>
       </AnimatePresence>
