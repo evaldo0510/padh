@@ -11,7 +11,20 @@ const COLORS = {
   border: [220, 220, 225] as [number, number, number],
 };
 
+/** RGB único por módulo — espelha as cores do site (HSL convertido) */
+const MODULE_RGB: Record<number, [number, number, number]> = {
+  1: [217, 158, 56],   // Âmbar dourado
+  2: [142, 105, 191],  // Violeta profundo
+  3: [108, 130, 217],  // Índigo místico
+  4: [200, 130, 178],  // Rosa-malva
+  5: [69, 168, 130],   // Esmeralda
+  6: [217, 113, 70],   // Terracota/cobre
+  7: [86, 130, 184],   // Azul-noite
+  8: [232, 187, 76],   // Ouro-rosa
+};
+
 const PAGE = { w: 210, h: 297, margin: 18 };
+
 
 function header(doc: jsPDF, title: string, subtitle: string) {
   doc.setFillColor(...COLORS.primary);
