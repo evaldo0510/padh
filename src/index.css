@@ -126,15 +126,15 @@
     --shadow-strong: 0 20px 50px -12px hsl(222 30% 20% / 0.15);
     --shadow-glow: 0 0 40px hsl(38 75% 48% / 0.1);
 
-    /* Module palette ajustada para tema claro (luminosidade reduzida) */
-    --m1: 38 75% 48%;
-    --m2: 262 45% 50%;
-    --m3: 230 55% 52%;
-    --m4: 320 45% 55%;
-    --m5: 160 50% 38%;
-    --m6: 15 65% 48%;
-    --m7: 210 50% 45%;
-    --m8: 42 75% 50%;
+    /* Module palette ajustada para tema claro — contraste AA garantido */
+    --m1: 38 80% 38%;
+    --m2: 262 55% 45%;
+    --m3: 230 60% 45%;
+    --m4: 320 55% 42%;
+    --m5: 160 55% 32%;
+    --m6: 15 70% 42%;
+    --m7: 210 60% 38%;
+    --m8: 42 80% 38%;
   }
 }
 
