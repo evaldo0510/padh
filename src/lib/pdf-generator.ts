@@ -192,9 +192,18 @@ export function gerarPDFTerapeuta(modulo: ModuloClinico) {
 /* ─────────── PDF DO PACIENTE ─────────── */
 export function gerarPDFPaciente(modulo: ModuloClinico) {
   const doc = new jsPDF({ unit: 'mm', format: 'a4' });
-  header(doc, modulo.titulo, `Módulo ${modulo.numero} · Para você`);
+  const cor = MODULE_RGB[modulo.numero] ?? COLORS.primary;
+  header(doc, modulo.titulo, `Módulo ${modulo.numero} · Para você`, cor);
 
   let y = 32;
+  doc.setFillColor(...cor);
+  doc.circle(PAGE.margin + 2, y - 1, 1.6, 'F');
+  doc.setFont('helvetica', 'italic');
+  doc.setFontSize(8.5);
+  doc.setTextColor(...COLORS.muted);
+  doc.text(`${modulo.corNome} — ${modulo.corSimbolo}`, PAGE.margin + 6, y);
+  y += 6;
+
   doc.setFont('helvetica', 'bold');
   doc.setFontSize(18);
   doc.setTextColor(...COLORS.text);
@@ -213,10 +222,10 @@ export function gerarPDFPaciente(modulo: ModuloClinico) {
     y = addPoemBlock(doc, y, `Poema-prescrição: ${modulo.poemaPrescricao.titulo}`, modulo.poemaPrescricao.texto);
   }
 
-  y = sectionTitle(doc, y + 2, 'Suas Práticas para a Semana');
+  y = sectionTitle(doc, y + 2, 'Suas Práticas para a Semana', cor);
   y = addList(doc, y, modulo.tarefasPaciente.map((t, i) => `${i + 1}. ${t}`), '');
 
-  y = sectionTitle(doc, y, 'Diário de Sensações');
+  y = sectionTitle(doc, y, 'Diário de Sensações', cor);
   doc.setFont('helvetica', 'italic');
   doc.setFontSize(9);
   doc.setTextColor(...COLORS.muted);
