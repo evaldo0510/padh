@@ -156,6 +156,25 @@ const Dashboard = () => {
               </Button>
             </CardContent>
           </Card>
+
+          <Card className="border-primary/10 bg-primary/5">
+            <CardHeader className="pb-2">
+              <CardDescription className="flex items-center gap-2">
+                <Compass className="h-4 w-4 text-primary" /> Jornada Terapêutica
+              </CardDescription>
+              <CardTitle className="text-xl font-bold">
+                {JORNADA_DATA.find(f => f.id === jornada.currentPhaseId)?.titulo || "Não iniciada"}
+              </CardTitle>
+            </CardHeader>
+            <CardContent>
+              <p className="text-xs text-muted-foreground mb-4">
+                {jornada.completedExercises.length} exercícios realizados na sua jornada de transformação.
+              </p>
+              <Button size="sm" className="w-full gap-2 shadow-glow" onClick={() => navigate('/jornada')}>
+                Continuar Jornada <ChevronRight className="h-4 w-4" />
+              </Button>
+            </CardContent>
+          </Card>
         </div>
 
         {/* Learning Path */}
