@@ -2,6 +2,7 @@ import React from 'react';
 import { Button } from '@/components/ui/button';
 import { FileDown, Share2 } from 'lucide-react';
 import { useCourseProgress } from '@/hooks/useCourseProgress';
+import { useJornada } from '@/hooks/useJornada';
 import { MODULOS } from '@/lib/dados-clinicos';
 import { gerarRelatorioProgresso } from '@/lib/pdf-generator';
 import { toast } from 'sonner';
