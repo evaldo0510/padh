@@ -90,9 +90,17 @@ const RecursosClinicos: React.FC = () => {
               <h2 className="text-2xl md:text-3xl font-heading font-bold text-foreground mb-3">
                 Biblioteca de PDFs por Módulo
               </h2>
-              <p className="text-muted-foreground max-w-xl mx-auto">
-                Cada módulo possui dois PDFs: um para o terapeuta (protocolo completo) e outro para entregar ao paciente.
+              <p className="text-muted-foreground max-w-xl mx-auto mb-5">
+                Cada módulo tem identidade cromática própria — uma paleta única conectada pela mesma temperatura espiritual.
               </p>
+              <div className="flex flex-wrap gap-2 justify-center">
+                {MODULOS.map(m => (
+                  <div key={m.id} data-module={m.numero} className="module-themed flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-module-soft border border-module/20">
+                    <span className="w-2 h-2 rounded-full bg-module shadow-module-glow" />
+                    <span className="text-[11px] font-medium text-foreground/80">M{m.numero}</span>
+                  </div>
+                ))}
+              </div>
             </div>
 
             <div className="space-y-3">
