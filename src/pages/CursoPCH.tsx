@@ -2,6 +2,7 @@ import React from 'react';
 import PageLayout from '@/components/layout/PageLayout';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
 import { BookOpen, Brain, Sparkles, Lightbulb, Heart, Flame, Music, PenTool, Eye, Target, Feather } from 'lucide-react';
+import ProtocoloPCH from '@/components/sections/ProtocoloPCH';
 
 import modulo1Img from '@/assets/curso-pch/modulo1-palavras.jpg';
 import modulo2Img from '@/assets/curso-pch/modulo2-reestruturacao.jpg';
