@@ -617,6 +617,36 @@ Com a certeza de que, a cada passo dado,
 Está cada vez mais próximo de alcançar a sua essência.`}</Poem>
                     </div>
                   </SectionCard>
+
+                  <ProtocoloPCH
+                    modulo="Módulo 5 · Pilar D (Desenvolvimento)"
+                    foco="Aplicar técnicas avançadas de indução para aprofundar o estado terapêutico e instalar metáforas curativas duradouras."
+                    sinais={[
+                      'Plateau terapêutico — paciente "estagnado" mesmo com adesão ao processo.',
+                      'Bloqueios repetitivos no mesmo tema apesar de insights cognitivos.',
+                      'Resistência inconsciente identificada por sonhos repetitivos ou atos falhos.',
+                      'Necessidade de aprofundar mudança já iniciada superficialmente.',
+                    ]}
+                    aplicacao={[
+                      'Confirme estabilidade emocional antes de aplicar técnicas mais profundas.',
+                      'Use a "Indução do Caminho" como abertura — 5 minutos de visualização guiada.',
+                      'Apresente a metáfora central do paciente em formato narrativo poético.',
+                      'Faça uma sugestão pós-hipnótica simples ancorada em um gesto (ex.: tocar o pulso).',
+                      'Conduza saída gradual: respiração → consciência corporal → orientação espacial.',
+                      'Documente literalmente as imagens espontâneas que surgiram durante o transe.',
+                    ]}
+                    indicacoes={[
+                      'Pacientes em terapia de longa duração com necessidade de aprofundamento.',
+                      'Trabalho com self compassion em traumas de desenvolvimento.',
+                      'Integração de partes dissociadas (em contexto de IFS ou similares).',
+                      'Reprocessamento de memórias com componente sensorial intenso.',
+                    ]}
+                    cuidados={[
+                      'Requer treinamento formal em hipnose clínica supervisionada.',
+                      'Não aplicar sem aliança terapêutica sólida (mín. 6-8 sessões prévias).',
+                      'Ter sempre um plano de aterramento pronto caso emerja material avassalador.',
+                    ]}
+                  />
                 </div>
               </AccordionContent>
             </AccordionItem>
