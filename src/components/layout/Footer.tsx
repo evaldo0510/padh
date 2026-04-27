@@ -55,9 +55,12 @@ const Footer = () => {
           <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-10 mb-12">
             {/* Brand */}
             <div className="sm:col-span-2 lg:col-span-1">
-              <div className="flex items-center gap-2.5 mb-4 group">
-                <Logo />
-                <span className="font-heading font-bold text-foreground text-lg tracking-wide group-hover:text-primary transition-colors">P.A.D.H.</span>
+              <div className="flex items-center gap-3 mb-6 group transition-all duration-300">
+                <Logo size="md" />
+                <div className="flex flex-col justify-center">
+                  <span className="font-heading font-black text-foreground text-xl tracking-tighter group-hover:text-primary transition-colors">P.A.D.H.</span>
+                  <span className="text-[9px] text-primary/80 leading-none font-bold uppercase tracking-wider mt-1">Poesia Aplicada</span>
+                </div>
               </div>
               <p className="text-sm text-muted-foreground leading-relaxed mb-5">
                 Poesia Aplicada ao Desenvolvimento Humano — neurociência, hipnose e linguagem simbólica a serviço da transformation interior.

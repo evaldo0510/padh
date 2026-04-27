@@ -44,13 +44,13 @@ const Header = () => {
       <div className="container mx-auto px-6">
         <div className="flex items-center justify-between h-16">
           {/* Logo */}
-          <PrefetchLink to="/" className="flex items-center gap-2.5 group">
-            <Logo />
-            <div className="flex flex-col">
-              <span className="text-lg font-heading font-bold text-foreground leading-none tracking-wide group-hover:text-primary transition-colors">
+          <PrefetchLink to="/" className="flex items-center gap-3 group transition-all duration-300">
+            <Logo size="md" className="md:w-11 md:h-11" />
+            <div className="flex flex-col justify-center">
+              <span className="text-xl md:text-2xl font-heading font-black text-foreground leading-none tracking-tighter group-hover:text-primary transition-colors">
                 P.A.D.H.
               </span>
-              <span className="text-[10px] text-primary leading-tight font-medium max-w-[150px]">
+              <span className="text-[9px] md:text-[10px] text-primary/80 leading-none font-bold uppercase tracking-wider mt-1 max-w-[160px] md:max-w-none">
                 Poesia Aplicada ao Desenvolvimento Humano
               </span>
             </div>
