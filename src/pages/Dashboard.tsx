@@ -17,7 +17,8 @@ import {
   LayoutDashboard,
   Calendar,
   RefreshCw,
-  Bell
+  Bell,
+  Compass
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Progress } from '@/components/ui/progress';
@@ -26,8 +27,13 @@ import WeeklySchedule from '@/components/dashboard/WeeklySchedule';
 import ReviewSection from '@/components/dashboard/ReviewSection';
 import ProgressReportExport from '@/components/dashboard/ProgressReportExport';
 import NotificationCenter from '@/components/dashboard/NotificationCenter';
+import ResponseHistory from '@/components/dashboard/ResponseHistory';
+
+import { useJornada } from '@/hooks/useJornada';
+import { JORNADA_DATA } from '@/lib/jornada-data';
 
 const Dashboard = () => {
+  const { jornada } = useJornada();
   const { progress, isModuleUnlocked } = useCourseProgress();
   const navigate = useNavigate();
 
@@ -93,6 +99,7 @@ const Dashboard = () => {
             </Card>
             
             <ReviewSection />
+            <ResponseHistory />
           </div>
           
           <div>
@@ -150,6 +157,30 @@ const Dashboard = () => {
               <Button variant="ghost" size="sm" className="w-full" onClick={() => navigate('/curso-padh')}>
                 Retomar aula
               </Button>
+            </CardContent>
+          </Card>
+
+          <Card className="border-primary/10 bg-primary/5">
+            <CardHeader className="pb-2">
+              <CardDescription className="flex items-center gap-2">
+                <Compass className="h-4 w-4 text-primary" /> Jornada Terapêutica
+              </CardDescription>
+              <CardTitle className="text-xl font-bold">
+                {JORNADA_DATA.find(f => f.id === jornada.currentPhaseId)?.titulo || "Não iniciada"}
+              </CardTitle>
+            </CardHeader>
+            <CardContent>
+              <p className="text-xs text-muted-foreground mb-4">
+                {jornada.completedExercises.length} exercícios realizados na sua jornada de transformação.
+              </p>
+              <div className="flex gap-2">
+                <Button size="sm" variant="outline" className="flex-1" onClick={() => navigate('/diagnostico-jornada')}>
+                  Refazer Diagnóstico
+                </Button>
+                <Button size="sm" className="flex-1 gap-2 shadow-glow" onClick={() => navigate('/jornada')}>
+                  Continuar de onde parei <ChevronRight className="h-4 w-4" />
+                </Button>
+              </div>
             </CardContent>
           </Card>
         </div>

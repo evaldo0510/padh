@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useLocation } from 'react-router-dom';
+import { useLocation, Link } from 'react-router-dom';
 import { Menu, X, ChevronDown } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { ThemeToggle } from '@/components/ui/theme-toggle';
@@ -14,6 +14,7 @@ const Header = () => {
   const navItems = [
     { name: 'Início', path: '/' },
     { name: 'Dashboard', path: '/dashboard' },
+    { name: 'Jornada', path: '/jornada' },
     { name: 'Sobre', path: '/sobre' },
     { name: 'Livro-Curso', path: '/livro-curso' },
     { name: 'Formação P.A.D.H.', path: '/formacao' },
@@ -110,8 +111,11 @@ const Header = () => {
                 </div>
               ))}
             </nav>
-            <div className="ml-3 pl-3 border-l border-border/50">
+            <div className="ml-3 pl-3 border-l border-border/50 flex items-center gap-4">
               <ThemeToggle />
+              <Button size="sm" variant="ghost" asChild>
+                <Link to="/login">Entrar</Link>
+              </Button>
             </div>
           </div>
 
