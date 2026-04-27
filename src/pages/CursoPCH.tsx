@@ -1,7 +1,7 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import PageLayout from '@/components/layout/PageLayout';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
-import { BookOpen, Brain, Sparkles, Lightbulb, Heart, Flame, Music, PenTool, Eye, Target, Feather } from 'lucide-react';
+import { BookOpen, Brain, Sparkles, Lightbulb, Heart, Flame, Music, PenTool, Eye, Target, Feather, Lock, CheckCircle2 } from 'lucide-react';
 import ProtocoloPCH from '@/components/sections/ProtocoloPCH';
 import ChecklistClinico from '@/components/clinical/ChecklistClinico';
 import FundamentacaoTeorica from '@/components/clinical/FundamentacaoTeorica';
@@ -14,6 +14,8 @@ import { MODULOS, getModulo } from '@/lib/dados-clinicos';
 import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { FileText, GitBranch as GitBranchIcon } from 'lucide-react';
+import { useCourseProgress } from '@/hooks/useCourseProgress';
+import { toast } from 'sonner';
 
 import modulo1Img from '@/assets/curso-pch/modulo1-palavras.jpg';
 import modulo2Img from '@/assets/curso-pch/modulo2-reestruturacao.jpg';
@@ -58,6 +60,39 @@ const ExerciseStep = ({ step, title, children }: { step: string; title: string; 
 
 /* ─────────────────────── page ─────────────────────── */
 const CursoPCH = () => {
+  const { progress, completeModule, isModuleUnlocked, setLastAccessed } = useCourseProgress();
+
+  const handleComplete = (moduleId: string, nextModuleId?: string) => {
+    completeModule(moduleId);
+    toast.success("Módulo concluído!", {
+      description: nextModuleId ? "O próximo módulo foi desbloqueado." : "Parabéns por concluir o curso!",
+    });
+  };
+
+  const ConclusionButton = ({ moduleId, nextModuleId }: { moduleId: string, nextModuleId?: string }) => {
+    const isCompleted = progress.completedModules.includes(moduleId);
+    
+    return (
+      <div className="mt-12 p-6 rounded-2xl border border-primary/20 bg-primary/5 flex flex-col items-center text-center">
+        <h4 className="font-heading font-semibold text-foreground mb-2">
+          {isCompleted ? "Módulo Concluído" : "Fim deste Módulo"}
+        </h4>
+        <p className="text-sm text-muted-foreground mb-6">
+          {isCompleted 
+            ? "Você já concluiu esta etapa. Pode revisar o conteúdo sempre que desejar." 
+            : "Marque como concluído para desbloquear o próximo conteúdo da sua trilha."}
+        </p>
+        <Button 
+          onClick={() => handleComplete(moduleId, nextModuleId)}
+          disabled={isCompleted}
+          className="gap-2"
+        >
+          {isCompleted ? <CheckCircle2 className="h-4 w-4 text-white" /> : <Sparkles className="h-4 w-4" />}
+          {isCompleted ? "Módulo Concluído" : "Concluir e Desbloquear"}
+        </Button>
+      </div>
+    );
+  };
   return (
     <PageLayout
       seo={{
@@ -201,14 +236,27 @@ const CursoPCH = () => {
           <Accordion type="multiple" className="space-y-4">
 
             {/* ══════════════ MÓDULO 1 ══════════════ */}
-            <AccordionItem value="modulo-1" data-module="1" id="modulo-1" className="module-themed glass-card rounded-2xl border border-module/30 hover:border-module/60 transition-colors px-6">
-              <AccordionTrigger className="py-6 hover:no-underline">
+            <AccordionItem 
+              value="modulo-1" 
+              data-module="1" 
+              id="modulo-1" 
+              className={`module-themed glass-card rounded-2xl border transition-colors px-6 ${
+                !isModuleUnlocked(0) ? 'opacity-60 grayscale-[0.5]' : 'border-module/30 hover:border-module/60'
+              }`}
+            >
+              <AccordionTrigger 
+                className="py-6 hover:no-underline"
+                disabled={!isModuleUnlocked(0)}
+              >
                 <div className="flex items-center gap-3 text-left">
                   <div className="w-11 h-11 rounded-xl bg-module-soft flex items-center justify-center shrink-0 ring-1 ring-module/20">
-                    <BookOpen className="h-5 w-5 text-module" />
+                    {!isModuleUnlocked(0) ? <Lock className="h-5 w-5 text-muted-foreground" /> : <BookOpen className="h-5 w-5 text-module" />}
                   </div>
-                  <div>
-                    <p className="text-[10px] text-module font-bold uppercase tracking-[0.2em]">Módulo 1</p>
+                  <div className="flex-1">
+                    <div className="flex items-center gap-2">
+                      <p className="text-[10px] text-module font-bold uppercase tracking-[0.2em]">Módulo 1</p>
+                      {progress.completedModules.includes('modulo-1') && <CheckCircle2 className="h-3 w-3 text-primary" />}
+                    </div>
                     <h2 className="text-xl font-heading font-semibold text-foreground">Base Teórica — O Poder das Palavras</h2>
                   </div>
                 </div>
@@ -321,19 +369,33 @@ meu próprio rumo, que hoje encontrei.`}</Poem>
                   />
 
                   <BotaoImprimirPDF modulo={getModulo("modulo-1")!} />
+                  <ConclusionButton moduleId="modulo-1" nextModuleId="modulo-2" />
                 </div>
               </AccordionContent>
             </AccordionItem>
 
             {/* ══════════════ MÓDULO 2 ══════════════ */}
-            <AccordionItem value="modulo-2" data-module="2" id="modulo-2" className="module-themed glass-card rounded-2xl border border-module/30 hover:border-module/60 transition-colors px-6">
-              <AccordionTrigger className="py-6 hover:no-underline">
+            <AccordionItem 
+              value="modulo-2" 
+              data-module="2" 
+              id="modulo-2" 
+              className={`module-themed glass-card rounded-2xl border transition-colors px-6 ${
+                !isModuleUnlocked(1) ? 'opacity-60 grayscale-[0.5]' : 'border-module/30 hover:border-module/60'
+              }`}
+            >
+              <AccordionTrigger 
+                className="py-6 hover:no-underline"
+                disabled={!isModuleUnlocked(1)}
+              >
                 <div className="flex items-center gap-3 text-left">
                   <div className="w-11 h-11 rounded-xl bg-module-soft flex items-center justify-center shrink-0 ring-1 ring-module/20">
-                    <PenTool className="h-5 w-5 text-module" />
+                    {!isModuleUnlocked(1) ? <Lock className="h-5 w-5 text-muted-foreground" /> : <PenTool className="h-5 w-5 text-module" />}
                   </div>
-                  <div>
-                    <p className="text-[10px] text-module font-bold uppercase tracking-[0.2em]">Módulo 2</p>
+                  <div className="flex-1">
+                    <div className="flex items-center gap-2">
+                      <p className="text-[10px] text-module font-bold uppercase tracking-[0.2em]">Módulo 2</p>
+                      {progress.completedModules.includes('modulo-2') && <CheckCircle2 className="h-3 w-3 text-primary" />}
+                    </div>
                     <h2 className="text-xl font-heading font-semibold text-foreground">Exercícios de Reestruturação de Crenças</h2>
                   </div>
                 </div>
@@ -449,19 +511,33 @@ mas ressoa fundo.`}</Poem>
                   />
 
                   <BotaoImprimirPDF modulo={getModulo("modulo-2")!} />
+                  <ConclusionButton moduleId="modulo-2" nextModuleId="modulo-3" />
                 </div>
               </AccordionContent>
             </AccordionItem>
 
             {/* ══════════════ MÓDULO 3 ══════════════ */}
-            <AccordionItem value="modulo-3" data-module="3" id="modulo-3" className="module-themed glass-card rounded-2xl border border-module/30 hover:border-module/60 transition-colors px-6">
-              <AccordionTrigger className="py-6 hover:no-underline">
+            <AccordionItem 
+              value="modulo-3" 
+              data-module="3" 
+              id="modulo-3" 
+              className={`module-themed glass-card rounded-2xl border transition-colors px-6 ${
+                !isModuleUnlocked(2) ? 'opacity-60 grayscale-[0.5]' : 'border-module/30 hover:border-module/60'
+              }`}
+            >
+              <AccordionTrigger 
+                className="py-6 hover:no-underline"
+                disabled={!isModuleUnlocked(2)}
+              >
                 <div className="flex items-center gap-3 text-left">
                   <div className="w-11 h-11 rounded-xl bg-module-soft flex items-center justify-center shrink-0 ring-1 ring-module/20">
-                    <Brain className="h-5 w-5 text-module" />
+                    {!isModuleUnlocked(2) ? <Lock className="h-5 w-5 text-muted-foreground" /> : <Brain className="h-5 w-5 text-module" />}
                   </div>
-                  <div>
-                    <p className="text-[10px] text-module font-bold uppercase tracking-[0.2em]">Módulo 3</p>
+                  <div className="flex-1">
+                    <div className="flex items-center gap-2">
+                      <p className="text-[10px] text-module font-bold uppercase tracking-[0.2em]">Módulo 3</p>
+                      {progress.completedModules.includes('modulo-3') && <CheckCircle2 className="h-3 w-3 text-primary" />}
+                    </div>
                     <h2 className="text-xl font-heading font-semibold text-foreground">Técnicas de Linguagem Hipnótica</h2>
                   </div>
                 </div>
@@ -568,19 +644,33 @@ e tudo simplesmente… acontece…`}</Poem>
                   />
 
                   <BotaoImprimirPDF modulo={getModulo("modulo-3")!} />
+                  <ConclusionButton moduleId="modulo-3" nextModuleId="modulo-4" />
                 </div>
               </AccordionContent>
             </AccordionItem>
 
             {/* ══════════════ MÓDULO 4 ══════════════ */}
-            <AccordionItem value="modulo-4" data-module="4" id="modulo-4" className="module-themed glass-card rounded-2xl border border-module/30 hover:border-module/60 transition-colors px-6">
-              <AccordionTrigger className="py-6 hover:no-underline">
+            <AccordionItem 
+              value="modulo-4" 
+              data-module="4" 
+              id="modulo-4" 
+              className={`module-themed glass-card rounded-2xl border transition-colors px-6 ${
+                !isModuleUnlocked(3) ? 'opacity-60 grayscale-[0.5]' : 'border-module/30 hover:border-module/60'
+              }`}
+            >
+              <AccordionTrigger 
+                className="py-6 hover:no-underline"
+                disabled={!isModuleUnlocked(3)}
+              >
                 <div className="flex items-center gap-3 text-left">
                   <div className="w-11 h-11 rounded-xl bg-module-soft flex items-center justify-center shrink-0 ring-1 ring-module/20">
-                    <Feather className="h-5 w-5 text-module" />
+                    {!isModuleUnlocked(3) ? <Lock className="h-5 w-5 text-muted-foreground" /> : <Feather className="h-5 w-5 text-module" />}
                   </div>
-                  <div>
-                    <p className="text-[10px] text-module font-bold uppercase tracking-[0.2em]">Módulo 4</p>
+                  <div className="flex-1">
+                    <div className="flex items-center gap-2">
+                      <p className="text-[10px] text-module font-bold uppercase tracking-[0.2em]">Módulo 4</p>
+                      {progress.completedModules.includes('modulo-4') && <CheckCircle2 className="h-3 w-3 text-primary" />}
+                    </div>
                     <h2 className="text-xl font-heading font-semibold text-foreground">Modelos de Poemas Sugestivos</h2>
                   </div>
                 </div>
@@ -692,19 +782,33 @@ para iluminar o próximo passo.`}</Poem>
                   />
 
                   <BotaoImprimirPDF modulo={getModulo("modulo-4")!} />
+                  <ConclusionButton moduleId="modulo-4" nextModuleId="modulo-5" />
                 </div>
               </AccordionContent>
             </AccordionItem>
 
             {/* ══════════════ MÓDULO 5 ══════════════ */}
-            <AccordionItem value="modulo-5" data-module="5" id="modulo-5" className="module-themed glass-card rounded-2xl border border-module/30 hover:border-module/60 transition-colors px-6">
-              <AccordionTrigger className="py-6 hover:no-underline">
+            <AccordionItem 
+              value="modulo-5" 
+              data-module="5" 
+              id="modulo-5" 
+              className={`module-themed glass-card rounded-2xl border transition-colors px-6 ${
+                !isModuleUnlocked(4) ? 'opacity-60 grayscale-[0.5]' : 'border-module/30 hover:border-module/60'
+              }`}
+            >
+              <AccordionTrigger 
+                className="py-6 hover:no-underline"
+                disabled={!isModuleUnlocked(4)}
+              >
                 <div className="flex items-center gap-3 text-left">
                   <div className="w-11 h-11 rounded-xl bg-module-soft flex items-center justify-center shrink-0 ring-1 ring-module/20">
-                    <Lightbulb className="h-5 w-5 text-module" />
+                    {!isModuleUnlocked(4) ? <Lock className="h-5 w-5 text-muted-foreground" /> : <Lightbulb className="h-5 w-5 text-module" />}
                   </div>
-                  <div>
-                    <p className="text-[10px] text-module font-bold uppercase tracking-[0.2em]">Módulo 5</p>
+                  <div className="flex-1">
+                    <div className="flex items-center gap-2">
+                      <p className="text-[10px] text-module font-bold uppercase tracking-[0.2em]">Módulo 5</p>
+                      {progress.completedModules.includes('modulo-5') && <CheckCircle2 className="h-3 w-3 text-primary" />}
+                    </div>
                     <h2 className="text-xl font-heading font-semibold text-foreground">Técnicas Avançadas — Metáforas, Pacing e Leading</h2>
                   </div>
                 </div>
@@ -822,19 +926,33 @@ Está cada vez mais próximo de alcançar a sua essência.`}</Poem>
                   />
 
                   <BotaoImprimirPDF modulo={getModulo("modulo-5")!} />
+                  <ConclusionButton moduleId="modulo-5" nextModuleId="modulo-6" />
                 </div>
               </AccordionContent>
             </AccordionItem>
 
             {/* ══════════════ MÓDULO 6 ══════════════ */}
-            <AccordionItem value="modulo-6" data-module="6" id="modulo-6" className="module-themed glass-card rounded-2xl border border-module/30 hover:border-module/60 transition-colors px-6">
-              <AccordionTrigger className="py-6 hover:no-underline">
+            <AccordionItem 
+              value="modulo-6" 
+              data-module="6" 
+              id="modulo-6" 
+              className={`module-themed glass-card rounded-2xl border transition-colors px-6 ${
+                !isModuleUnlocked(5) ? 'opacity-60 grayscale-[0.5]' : 'border-module/30 hover:border-module/60'
+              }`}
+            >
+              <AccordionTrigger 
+                className="py-6 hover:no-underline"
+                disabled={!isModuleUnlocked(5)}
+              >
                 <div className="flex items-center gap-3 text-left">
                   <div className="w-11 h-11 rounded-xl bg-module-soft flex items-center justify-center shrink-0 ring-1 ring-module/20">
-                    <Eye className="h-5 w-5 text-module" />
+                    {!isModuleUnlocked(5) ? <Lock className="h-5 w-5 text-muted-foreground" /> : <Eye className="h-5 w-5 text-module" />}
                   </div>
-                  <div>
-                    <p className="text-[10px] text-module font-bold uppercase tracking-[0.2em]">Módulo 6</p>
+                  <div className="flex-1">
+                    <div className="flex items-center gap-2">
+                      <p className="text-[10px] text-module font-bold uppercase tracking-[0.2em]">Módulo 6</p>
+                      {progress.completedModules.includes('modulo-6') && <CheckCircle2 className="h-3 w-3 text-primary" />}
+                    </div>
                     <h2 className="text-xl font-heading font-semibold text-foreground">Poesia Terapêutica — Tipos e Aplicações</h2>
                   </div>
                 </div>
@@ -936,19 +1054,33 @@ E quando percebo, já estou mais longe do que imaginei."`}</Poem>
                   />
 
                   <BotaoImprimirPDF modulo={getModulo("modulo-6")!} />
+                  <ConclusionButton moduleId="modulo-6" nextModuleId="modulo-7" />
                 </div>
               </AccordionContent>
             </AccordionItem>
 
             {/* ══════════════ MÓDULO 7 ══════════════ */}
-            <AccordionItem value="modulo-7" data-module="7" id="modulo-7" className="module-themed glass-card rounded-2xl border border-module/30 hover:border-module/60 transition-colors px-6">
-              <AccordionTrigger className="py-6 hover:no-underline">
+            <AccordionItem 
+              value="modulo-7" 
+              data-module="7" 
+              id="modulo-7" 
+              className={`module-themed glass-card rounded-2xl border transition-colors px-6 ${
+                !isModuleUnlocked(6) ? 'opacity-60 grayscale-[0.5]' : 'border-module/30 hover:border-module/60'
+              }`}
+            >
+              <AccordionTrigger 
+                className="py-6 hover:no-underline"
+                disabled={!isModuleUnlocked(6)}
+              >
                 <div className="flex items-center gap-3 text-left">
                   <div className="w-11 h-11 rounded-xl bg-module-soft flex items-center justify-center shrink-0 ring-1 ring-module/20">
-                    <Target className="h-5 w-5 text-module" />
+                    {!isModuleUnlocked(6) ? <Lock className="h-5 w-5 text-muted-foreground" /> : <Target className="h-5 w-5 text-module" />}
                   </div>
-                  <div>
-                    <p className="text-[10px] text-module font-bold uppercase tracking-[0.2em]">Módulo 7</p>
+                  <div className="flex-1">
+                    <div className="flex items-center gap-2">
+                      <p className="text-[10px] text-module font-bold uppercase tracking-[0.2em]">Módulo 7</p>
+                      {progress.completedModules.includes('modulo-7') && <CheckCircle2 className="h-3 w-3 text-primary" />}
+                    </div>
                     <h2 className="text-xl font-heading font-semibold text-foreground">Sessão Terapêutica em 4 Fases (P.A.D.H.)</h2>
                   </div>
                 </div>
@@ -1072,19 +1204,33 @@ Mas porque sempre esteve dentro de você."`}</Poem>
                   />
 
                   <BotaoImprimirPDF modulo={getModulo("modulo-7")!} />
+                  <ConclusionButton moduleId="modulo-7" nextModuleId="modulo-8" />
                 </div>
               </AccordionContent>
             </AccordionItem>
 
             {/* ══════════════ MÓDULO 8 ══════════════ */}
-            <AccordionItem value="modulo-8" data-module="8" id="modulo-8" className="module-themed glass-card rounded-2xl border border-module/30 hover:border-module/60 transition-colors px-6">
-              <AccordionTrigger className="py-6 hover:no-underline">
+            <AccordionItem 
+              value="modulo-8" 
+              data-module="8" 
+              id="modulo-8" 
+              className={`module-themed glass-card rounded-2xl border transition-colors px-6 ${
+                !isModuleUnlocked(7) ? 'opacity-60 grayscale-[0.5]' : 'border-module/30 hover:border-module/60'
+              }`}
+            >
+              <AccordionTrigger 
+                className="py-6 hover:no-underline"
+                disabled={!isModuleUnlocked(7)}
+              >
                 <div className="flex items-center gap-3 text-left">
                   <div className="w-11 h-11 rounded-xl bg-module-soft flex items-center justify-center shrink-0 ring-1 ring-module/20">
-                    <Heart className="h-5 w-5 text-module" />
+                    {!isModuleUnlocked(7) ? <Lock className="h-5 w-5 text-muted-foreground" /> : <Heart className="h-5 w-5 text-module" />}
                   </div>
-                  <div>
-                    <p className="text-[10px] text-module font-bold uppercase tracking-[0.2em]">Módulo 8</p>
+                  <div className="flex-1">
+                    <div className="flex items-center gap-2">
+                      <p className="text-[10px] text-module font-bold uppercase tracking-[0.2em]">Módulo 8</p>
+                      {progress.completedModules.includes('modulo-8') && <CheckCircle2 className="h-3 w-3 text-primary" />}
+                    </div>
                     <h2 className="text-xl font-heading font-semibold text-foreground">Exercícios Práticos — Reescrevendo sua História</h2>
                   </div>
                 </div>
@@ -1215,6 +1361,7 @@ só precisa de tempo, terra e coragem para abrir."`}</Poem>
                   />
 
                   <BotaoImprimirPDF modulo={getModulo("modulo-8")!} />
+                  <ConclusionButton moduleId="modulo-8" />
                 </div>
               </AccordionContent>
             </AccordionItem>

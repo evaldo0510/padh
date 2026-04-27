@@ -110,15 +110,15 @@ const Index = () => {
             
             {/* CTA */}
             <div className="flex flex-col sm:flex-row gap-3 justify-center pt-4">
-              <Link to="/livro-curso">
-                <Button size="lg" className="w-full sm:w-auto bg-primary text-primary-foreground hover:bg-primary-dark text-base px-8">
-                  Iniciar Jornada
-                  <ArrowRight className="ml-2 h-4 w-4" />
+              <Link to="/diagnostico">
+                <Button size="lg" className="w-full sm:w-auto bg-primary text-primary-foreground hover:bg-primary-dark text-base px-8 shadow-module-glow">
+                  Começar Diagnóstico
+                  <Sparkles className="ml-2 h-4 w-4" />
                 </Button>
               </Link>
-              <Link to="/formacao">
+              <Link to="/livro-curso">
                 <Button variant="outline" size="lg" className="w-full sm:w-auto border-primary/30 text-foreground hover:bg-primary/5 text-base px-8">
-                  Conhecer a Formação
+                  Ver Livro-Curso
                 </Button>
               </Link>
             </div>

@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import PageLayout from '@/components/layout/PageLayout';
 import { Button } from '@/components/ui/button';
-import { FileText, FileDown, GitBranch, ClipboardCheck, Stethoscope, User, BookOpen } from 'lucide-react';
+import { FileText, FileDown, GitBranch, ClipboardCheck, Stethoscope, User, BookOpen, PenTool, Sparkles, LayoutDashboard, Brain } from 'lucide-react';
 import { MODULOS } from '@/lib/dados-clinicos';
 import { gerarPDFTerapeuta, gerarPDFPaciente, gerarPDFProntuarioBranco } from '@/lib/pdf-generator';
 import FluxogramaDecisao from '@/components/clinical/FluxogramaDecisao';
@@ -36,7 +36,18 @@ const RecursosClinicos: React.FC = () => {
       {/* Grid de recursos principais */}
       <section className="py-12 md:py-16">
         <div className="container mx-auto px-6 max-w-5xl">
-          <div className="grid md:grid-cols-3 gap-6 mb-16">
+          <div className="grid md:grid-cols-4 gap-6 mb-16">
+            <Link to="/dashboard" className="glass-card rounded-2xl p-6 border-primary/20 bg-primary/5 hover:border-primary/40 hover:-translate-y-1 transition-all group">
+              <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center mb-4 group-hover:bg-primary/20 transition-colors">
+                <LayoutDashboard className="h-6 w-6 text-primary" />
+              </div>
+              <h3 className="font-heading font-semibold text-foreground text-lg mb-2">Painel do Aluno</h3>
+              <p className="text-sm text-muted-foreground leading-relaxed mb-4">
+                Acompanhe sua trilha de aprendizado e progresso nos módulos.
+              </p>
+              <span className="text-sm text-primary font-medium">Ver progresso →</span>
+            </Link>
+
             <Link to="/prontuario-pch" className="glass-card rounded-2xl p-6 hover:border-primary/40 hover:-translate-y-1 transition-all group">
               <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center mb-4 group-hover:bg-primary/20 transition-colors">
                 <FileText className="h-6 w-6 text-primary" />
@@ -131,6 +142,42 @@ const RecursosClinicos: React.FC = () => {
                     </Button>
                   </div>
                 </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Seção de Ferramentas */}
+          <div className="mb-16">
+            <div className="text-center mb-8">
+              <h2 className="text-2xl md:text-3xl font-heading font-bold text-foreground mb-3">
+                Ferramentas de Intervenção
+              </h2>
+              <p className="text-muted-foreground max-w-xl mx-auto">
+                Acesse as ferramentas práticas para aplicação direta nas sessões.
+              </p>
+            </div>
+            
+            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+              {[
+                { name: 'Poema-Funil', path: '/ferramentas/poema-funil', icon: Sparkles },
+                { name: 'Verso-Gatilho', path: '/ferramentas/verso-gatilho', icon: PenTool },
+                { name: 'Poemadiagnóstico', path: '/ferramentas/poemadiagnostico', icon: Stethoscope },
+                { name: 'Voz Interna', path: '/ferramentas/caderno-voz-interna', icon: BookOpen },
+                { name: 'Encenação Poética', path: '/ferramentas/encenacao-poetica', icon: User },
+                { name: 'Reescrita Poética', path: '/ferramentas/reescrita-poetica', icon: GitBranch },
+                { name: 'Ritual do Silêncio', path: '/ferramentas/ritual-silencio', icon: ClipboardCheck },
+                { name: 'Poesia Hipnótica', path: '/ferramentas/poesia-hipnotica', icon: Brain },
+              ].map((tool, idx) => (
+                <Link 
+                  key={idx} 
+                  to={tool.path}
+                  className="p-4 rounded-xl border border-border bg-card hover:border-primary/40 hover:bg-primary/[0.02] transition-all flex flex-col items-center text-center gap-3"
+                >
+                  <div className="w-10 h-10 rounded-full bg-primary/5 flex items-center justify-center">
+                    <tool.icon className="h-5 w-5 text-primary/70" />
+                  </div>
+                  <span className="text-sm font-medium text-foreground">{tool.name}</span>
+                </Link>
               ))}
             </div>
           </div>
