@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { toast } from 'sonner';
 import { supabase, hasSupabaseConfig } from '@/integrations/supabase/client';
 import { useOfflineMode } from './useOfflineMode';
+import { reportSyncStatus } from './useSyncStatus';
 
 export interface RespostaExercicio {
   exerciseId: string;
