@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import PageLayout from '@/components/layout/PageLayout';
 import { useCourseProgress } from '@/hooks/useCourseProgress';
 import { MODULOS } from '@/lib/dados-clinicos';
@@ -18,7 +18,8 @@ import {
   Calendar,
   RefreshCw,
   Bell,
-  Compass
+  Compass,
+  LogOut
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Progress } from '@/components/ui/progress';
@@ -29,6 +30,9 @@ import ProgressReportExport from '@/components/dashboard/ProgressReportExport';
 import NotificationCenter from '@/components/dashboard/NotificationCenter';
 import ResponseHistory from '@/components/dashboard/ResponseHistory';
 import SupabaseConfigBanner from '@/components/dashboard/SupabaseConfigBanner';
+import SyncStatusIndicator from '@/components/dashboard/SyncStatusIndicator';
+import { supabase, supabaseConfig } from '@/integrations/supabase/client';
+import { toast } from 'sonner';
 
 import { useJornada } from '@/hooks/useJornada';
 import { JORNADA_DATA } from '@/lib/jornada-data';
