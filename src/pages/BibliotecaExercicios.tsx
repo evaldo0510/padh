@@ -3,7 +3,7 @@ import PageLayout from '@/components/layout/PageLayout';
 import { JORNADA_DATA } from '@/lib/jornada-data';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Library, PenTool, Search } from 'lucide-react';
-import { Input } from '@/components/ui/button'; // Wait, Input should be from ui/input but it might not exist. I'll check.
+import { Input } from '@/components/ui/input';
 import { Link } from 'react-router-dom';
 
 const BibliotecaExercicios = () => {
