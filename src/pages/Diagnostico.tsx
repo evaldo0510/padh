@@ -84,7 +84,10 @@ const Diagnostico = () => {
 
   if (showResult) {
     return (
-      <PageLayout currentPage="Diagnóstico Inicial">
+      <PageLayout 
+        seo={{ title: 'Resultado do Diagnóstico — P.A.D.H.', description: 'Veja sua trilha de aprendizado personalizada.', path: '/diagnostico' }}
+        currentPage="Diagnóstico Inicial"
+      >
         <div className="container mx-auto px-6 py-20 max-w-2xl text-center">
           <motion.div
             initial={{ opacity: 0, scale: 0.9 }}
@@ -116,7 +119,10 @@ const Diagnostico = () => {
   }
 
   return (
-    <PageLayout currentPage="Diagnóstico Inicial">
+    <PageLayout 
+      seo={{ title: 'Diagnóstico Inicial — P.A.D.H.', description: 'Descubra sua trilha de aprendizado personalizada na metodologia P.A.D.H.', path: '/diagnostico' }}
+      currentPage="Diagnóstico Inicial"
+    >
       <div className="container mx-auto px-6 py-20 max-w-2xl">
         <div className="mb-12 text-center">
           <h1 className="text-3xl font-heading font-bold mb-4">Diagnóstico de Jornada P.A.D.H.</h1>
