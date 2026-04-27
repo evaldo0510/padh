@@ -16,6 +16,7 @@ import { Button } from '@/components/ui/button';
 import { FileText, GitBranch as GitBranchIcon } from 'lucide-react';
 import { useCourseProgress } from '@/hooks/useCourseProgress';
 import { toast } from 'sonner';
+import ActivityTracker from '@/components/clinical/ActivityTracker';
 
 import modulo1Img from '@/assets/curso-pch/modulo1-palavras.jpg';
 import modulo2Img from '@/assets/curso-pch/modulo2-reestruturacao.jpg';
