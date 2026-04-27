@@ -18,6 +18,14 @@ const LoginPage = () => {
 
   const handleLogin = (e: React.FormEvent) => {
     e.preventDefault();
+    
+    if (!supabaseConfig.isConfigured) {
+      toast.warning("Modo Demonstração Ativo", {
+        description: "O banco de dados não está configurado. O acesso será simulado localmente.",
+        duration: 5000,
+      });
+    }
+
     setIsLoading(true);
     
     // Simulating login for demo purposes
