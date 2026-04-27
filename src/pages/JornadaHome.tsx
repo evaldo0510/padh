@@ -20,6 +20,7 @@ import {
 } from 'lucide-react';
 import { Link, useNavigate } from 'react-router-dom';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
+import { useOfflineMode } from '@/hooks/useOfflineMode';
 
 const JornadaHome = () => {
   const navigate = useNavigate();
