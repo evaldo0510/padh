@@ -14,11 +14,18 @@ import {
   CheckCircle2,
   Library,
   Sparkles,
-  LayoutDashboard
+  LayoutDashboard,
+  Calendar,
+  RefreshCw,
+  Bell
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Progress } from '@/components/ui/progress';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import WeeklySchedule from '@/components/dashboard/WeeklySchedule';
+import ReviewSection from '@/components/dashboard/ReviewSection';
+import ProgressReportExport from '@/components/dashboard/ProgressReportExport';
+import NotificationCenter from '@/components/dashboard/NotificationCenter';
 
 const Dashboard = () => {
   const { progress, isModuleUnlocked } = useCourseProgress();
