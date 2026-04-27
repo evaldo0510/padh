@@ -41,6 +41,8 @@ const ComboPADH = lazy(() => import("./pages/ComboPADH"));
 const Admin = lazy(() => import("./pages/Admin"));
 const Prontuario = lazy(() => import("./pages/Prontuario"));
 const RecursosClinicos = lazy(() => import("./pages/RecursosClinicos"));
+const Dashboard = lazy(() => import("./pages/Dashboard"));
+const Diagnostico = lazy(() => import("./pages/Diagnostico"));
 
 const queryClient = new QueryClient();
 
@@ -81,6 +83,8 @@ const AnimatedRoutes = () => {
           <Route path="/admin" element={<PageTransition><Admin /></PageTransition>} />
           <Route path="/prontuario-pch" element={<PageTransition><Prontuario /></PageTransition>} />
           <Route path="/recursos-clinicos" element={<PageTransition><RecursosClinicos /></PageTransition>} />
+          <Route path="/dashboard" element={<PageTransition><Dashboard /></PageTransition>} />
+          <Route path="/diagnostico" element={<PageTransition><Diagnostico /></PageTransition>} />
           <Route path="*" element={<PageTransition><NotFound /></PageTransition>} />
         </Routes>
       </AnimatePresence>
