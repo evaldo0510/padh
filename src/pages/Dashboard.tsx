@@ -27,7 +27,11 @@ import ReviewSection from '@/components/dashboard/ReviewSection';
 import ProgressReportExport from '@/components/dashboard/ProgressReportExport';
 import NotificationCenter from '@/components/dashboard/NotificationCenter';
 
+import { useJornada } from '@/hooks/useJornada';
+import { JORNADA_DATA } from '@/lib/jornada-data';
+
 const Dashboard = () => {
+  const { jornada } = useJornada();
   const { progress, isModuleUnlocked } = useCourseProgress();
   const navigate = useNavigate();
 
