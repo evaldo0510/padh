@@ -1361,6 +1361,7 @@ só precisa de tempo, terra e coragem para abrir."`}</Poem>
                   />
 
                   <BotaoImprimirPDF modulo={getModulo("modulo-8")!} />
+                  <ConclusionButton moduleId="modulo-8" />
                 </div>
               </AccordionContent>
             </AccordionItem>
