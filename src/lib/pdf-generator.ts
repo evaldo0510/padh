@@ -26,9 +26,12 @@ const MODULE_RGB: Record<number, [number, number, number]> = {
 const PAGE = { w: 210, h: 297, margin: 18 };
 
 
-function header(doc: jsPDF, title: string, subtitle: string) {
-  doc.setFillColor(...COLORS.primary);
+function header(doc: jsPDF, title: string, subtitle: string, color: [number, number, number] = COLORS.primary) {
+  doc.setFillColor(...color);
   doc.rect(0, 0, PAGE.w, 24, 'F');
+  // accent line
+  doc.setFillColor(255, 255, 255);
+  doc.rect(0, 24, PAGE.w, 0.6, 'F');
   doc.setTextColor(255, 255, 255);
   doc.setFont('helvetica', 'bold');
   doc.setFontSize(14);
@@ -46,6 +49,7 @@ function header(doc: jsPDF, title: string, subtitle: string) {
 
   doc.setTextColor(...COLORS.text);
 }
+
 
 function footer(doc: jsPDF) {
   const totalPages = doc.getNumberOfPages();
