@@ -644,19 +644,33 @@ e tudo simplesmente… acontece…`}</Poem>
                   />
 
                   <BotaoImprimirPDF modulo={getModulo("modulo-3")!} />
+                  <ConclusionButton moduleId="modulo-3" nextModuleId="modulo-4" />
                 </div>
               </AccordionContent>
             </AccordionItem>
 
             {/* ══════════════ MÓDULO 4 ══════════════ */}
-            <AccordionItem value="modulo-4" data-module="4" id="modulo-4" className="module-themed glass-card rounded-2xl border border-module/30 hover:border-module/60 transition-colors px-6">
-              <AccordionTrigger className="py-6 hover:no-underline">
+            <AccordionItem 
+              value="modulo-4" 
+              data-module="4" 
+              id="modulo-4" 
+              className={`module-themed glass-card rounded-2xl border transition-colors px-6 ${
+                !isModuleUnlocked(3) ? 'opacity-60 grayscale-[0.5]' : 'border-module/30 hover:border-module/60'
+              }`}
+            >
+              <AccordionTrigger 
+                className="py-6 hover:no-underline"
+                disabled={!isModuleUnlocked(3)}
+              >
                 <div className="flex items-center gap-3 text-left">
                   <div className="w-11 h-11 rounded-xl bg-module-soft flex items-center justify-center shrink-0 ring-1 ring-module/20">
-                    <Feather className="h-5 w-5 text-module" />
+                    {!isModuleUnlocked(3) ? <Lock className="h-5 w-5 text-muted-foreground" /> : <Feather className="h-5 w-5 text-module" />}
                   </div>
-                  <div>
-                    <p className="text-[10px] text-module font-bold uppercase tracking-[0.2em]">Módulo 4</p>
+                  <div className="flex-1">
+                    <div className="flex items-center gap-2">
+                      <p className="text-[10px] text-module font-bold uppercase tracking-[0.2em]">Módulo 4</p>
+                      {progress.completedModules.includes('modulo-4') && <CheckCircle2 className="h-3 w-3 text-primary" />}
+                    </div>
                     <h2 className="text-xl font-heading font-semibold text-foreground">Modelos de Poemas Sugestivos</h2>
                   </div>
                 </div>
