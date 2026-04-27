@@ -20,3 +20,6 @@ export const supabase = createClient(supabaseUrl, supabaseAnonKey);
  *   updated_at timestamp with time zone default timezone('utc'::text, now())
  * );
  */
+export const hasSupabaseConfig = () => {
+  return !!supabaseUrl && !!supabaseAnonKey;
+};
