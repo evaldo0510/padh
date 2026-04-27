@@ -25,6 +25,19 @@ const DiagnosticsPage = () => {
   const [checking, setChecking] = useState(false);
   const [status, setStatus] = useState<'idle' | 'success' | 'error'>('idle');
   const [errorDetails, setErrorDetails] = useState<string | null>(null);
+  const [simulatedUser, setSimulatedUser] = useState<any>(null);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const saved = localStorage.getItem('padh_simulated_user');
+    if (saved) setSimulatedUser(JSON.parse(saved));
+  }, []);
+
+  const clearSimulatedSession = () => {
+    localStorage.removeItem('padh_simulated_user');
+    setSimulatedUser(null);
+    toast.success("Sessão simulada removida.");
+  };
 
   const runConnectivityCheck = async () => {
     setChecking(true);
