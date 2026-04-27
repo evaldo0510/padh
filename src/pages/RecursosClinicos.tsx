@@ -97,24 +97,28 @@ const RecursosClinicos: React.FC = () => {
 
             <div className="space-y-3">
               {MODULOS.map(m => (
-                <div key={m.id} className="glass-card rounded-xl p-4 md:p-5 flex flex-col md:flex-row md:items-center gap-4">
+                <div
+                  key={m.id}
+                  data-module={m.numero}
+                  className="module-themed glass-card rounded-xl p-4 md:p-5 flex flex-col md:flex-row md:items-center gap-4 border border-module/30 hover:border-module/60 transition-colors"
+                >
                   <div className="flex items-start gap-3 flex-1 min-w-0">
-                    <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center shrink-0">
-                      <BookOpen className="h-5 w-5 text-primary" />
+                    <div className="w-11 h-11 rounded-xl bg-module-soft flex items-center justify-center shrink-0 ring-1 ring-module/20">
+                      <BookOpen className="h-5 w-5 text-module" />
                     </div>
                     <div className="min-w-0">
-                      <p className="text-xs text-primary font-medium uppercase tracking-wider">
-                        Módulo {m.numero} · Pilar {m.pilar}
+                      <p className="text-[10px] text-module font-bold uppercase tracking-[0.2em]">
+                        Módulo {m.numero} · Pilar {m.pilar} · {m.corNome}
                       </p>
                       <h4 className="font-heading font-semibold text-foreground truncate">{m.titulo}</h4>
-                      <p className="text-xs text-muted-foreground line-clamp-1 mt-0.5">{m.foco}</p>
+                      <p className="text-xs text-muted-foreground line-clamp-1 mt-0.5 italic">{m.corSimbolo}</p>
                     </div>
                   </div>
                   <div className="flex flex-wrap gap-2 shrink-0">
-                    <Button size="sm" variant="outline" onClick={() => { gerarPDFTerapeuta(m); toast.success(`PDF Terapeuta — Módulo ${m.numero}`); }} className="gap-1.5">
+                    <Button size="sm" variant="outline" onClick={() => { gerarPDFTerapeuta(m); toast.success(`PDF Terapeuta — Módulo ${m.numero}`); }} className="gap-1.5 border-module hover:bg-module-soft hover:text-module">
                       <Stethoscope className="h-3.5 w-3.5" /> Terapeuta
                     </Button>
-                    <Button size="sm" variant="outline" onClick={() => { gerarPDFPaciente(m); toast.success(`PDF Paciente — Módulo ${m.numero}`); }} className="gap-1.5">
+                    <Button size="sm" variant="outline" onClick={() => { gerarPDFPaciente(m); toast.success(`PDF Paciente — Módulo ${m.numero}`); }} className="gap-1.5 border-module hover:bg-module-soft hover:text-module">
                       <User className="h-3.5 w-3.5" /> Paciente
                     </Button>
                   </div>
