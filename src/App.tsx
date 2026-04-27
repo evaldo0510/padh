@@ -9,6 +9,7 @@ import { lazy, Suspense } from "react";
 import PageTransition from "./components/layout/PageTransition";
 import { PageSkeleton } from "./components/ui/page-skeleton";
 import PWAPrompt from "./components/layout/PWAPrompt";
+import SupabaseErrorBoundary from "./components/layout/SupabaseErrorBoundary";
 
 const Index = lazy(() => import("./pages/Index"));
 const NotFound = lazy(() => import("./pages/NotFound"));
