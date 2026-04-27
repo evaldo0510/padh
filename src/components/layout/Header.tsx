@@ -4,59 +4,23 @@ import { Menu, X, ChevronDown } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { ThemeToggle } from '@/components/ui/theme-toggle';
 import PrefetchLink from './PrefetchLink';
-import logoPadh from '@/assets/logo.svg';
-import logoPadhLight from '@/assets/logo.svg';
+import Logo from '@/components/ui/Logo';
 
 const Header = () => {
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [isToolsOpen, setIsToolsOpen] = useState(false);
-  const location = useLocation();
-
-  const navItems = [
-    { name: 'Início', path: '/' },
-    { name: 'Sobre', path: '/sobre' },
-    { name: 'Livro-Curso', path: '/livro-curso' },
-    { name: 'Formação P.A.D.H.', path: '/formacao' },
-    { name: 'Curso P.A.D.H.', path: '/curso-padh' },
-    { name: 'Recursos Clínicos', path: '/recursos-clinicos' },
-    { name: 'Ferramentas', path: '/ferramentas', hasDropdown: true },
-    { name: 'Ciência', path: '/ciencia-da-poesia' },
-    { name: 'Mapa Cerebral', path: '/mapa-cerebral' },
-    { name: 'Aula Exclusiva', path: '/aula-exclusiva' },
-    { name: 'Contato', path: '/contato' }
-  ];
-
-  const toolLinks = [
-    { name: '1. Poema-Funil', path: '/ferramentas/poema-funil' },
-    { name: '2. Verso-Gatilho', path: '/ferramentas/verso-gatilho' },
-    { name: '3. Poemadiagnóstico', path: '/ferramentas/poemadiagnostico' },
-    { name: '4. Caderno de Voz Interna', path: '/ferramentas/caderno-voz-interna' },
-    { name: '5. Encenação Poética', path: '/ferramentas/encenacao-poetica' },
-    { name: '6. Reescrita Poética', path: '/ferramentas/reescrita-poetica' },
-    { name: '7. Ritual do Silêncio', path: '/ferramentas/ritual-silencio' },
-    { name: '8. Poesia Hipnótica', path: '/ferramentas/poesia-hipnotica' },
-  ];
-
-  const isActive = (path: string) => location.pathname === path;
-  const isToolsActive = location.pathname.startsWith('/ferramentas');
-
+...
   return (
     <header className="sticky top-0 z-50 glass-morphism border-b border-primary/10">
       <div className="container mx-auto px-6">
         <div className="flex items-center justify-between h-16">
           {/* Logo */}
           <PrefetchLink to="/" className="flex items-center gap-2.5 group">
-            <img src={logoPadhLight} alt="P.A.D.H. Logo" className="w-10 h-10 object-contain hidden dark:block" />
-            <img src={logoPadh} alt="P.A.D.H. Logo" className="w-10 h-10 object-contain block dark:hidden" />
+            <Logo />
             <div className="flex flex-col">
-              <span className="text-lg font-heading font-bold text-foreground leading-none tracking-wide">
+              <span className="text-lg font-heading font-bold text-foreground leading-none tracking-wide group-hover:text-primary transition-colors">
                 P.A.D.H.
               </span>
               <span className="text-[10px] text-primary leading-tight font-medium max-w-[150px]">
                 Poesia Aplicada ao Desenvolvimento Humano
-              </span>
-              <span className="text-[10px] text-muted-foreground leading-none tracking-widest uppercase mt-0.5">
-                Evaldo de Jesus Santana
               </span>
             </div>
           </PrefetchLink>
