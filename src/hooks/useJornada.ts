@@ -27,6 +27,7 @@ const INITIAL_JORNADA: JornadaProgress = {
 };
 
 export const useJornada = () => {
+  const { isOffline } = useOfflineMode();
   const [jornada, setJornada] = useState<JornadaProgress>(() => {
     const saved = localStorage.getItem(STORAGE_KEY);
     return saved ? JSON.parse(saved) : INITIAL_JORNADA;
