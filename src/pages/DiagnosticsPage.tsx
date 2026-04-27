@@ -18,7 +18,7 @@ import {
 import { supabaseConfig, supabase } from '@/integrations/supabase/client';
 import { toast } from 'sonner';
 import { useOfflineMode } from '@/hooks/useOfflineMode';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 
 const DiagnosticsPage = () => {
   const { isOffline, toggleOffline, canConnect } = useOfflineMode();
