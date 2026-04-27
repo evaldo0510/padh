@@ -5,7 +5,53 @@ import PrefetchLink from './PrefetchLink';
 import Logo from '@/components/ui/Logo';
 
 const Footer = () => {
-...
+  const footerAnim = useScrollAnimation(0.1);
+
+  const navLinks = [
+    { name: 'Início', path: '/' },
+    { name: 'Sobre', path: '/sobre' },
+    { name: 'Livro-Curso', path: '/livro-curso' },
+    { name: 'Formação P.A.D.H.', path: '/formacao' },
+    { name: 'Ferramentas P.A.D.H.', path: '/ferramentas' },
+    { name: 'Mapa Cerebral', path: '/mapa-cerebral' },
+    { name: 'Curso P.A.D.H.', path: '/curso-padh' },
+    { name: 'Aula Exclusiva', path: '/aula-exclusiva' },
+    { name: 'Ciência da Poesia', path: '/ciencia-da-poesia' },
+    { name: 'Contato', path: '/contato' },
+  ];
+
+  const toolLinks = [
+    { name: 'Poema-Funil', path: '/ferramentas/poema-funil' },
+    { name: 'Verso-Gatilho', path: '/ferramentas/verso-gatilho' },
+    { name: 'Poemadiagnóstico', path: '/ferramentas/poemadiagnostico' },
+    { name: 'Caderno de Voz Interna', path: '/ferramentas/caderno-voz-interna' },
+    { name: 'Encenação Poética', path: '/ferramentas/encenacao-poetica' },
+    { name: 'Reescrita Poética', path: '/ferramentas/reescrita-poetica' },
+    { name: 'Ritual do Silêncio', path: '/ferramentas/ritual-silencio' },
+    { name: 'Poesia Hipnótica', path: '/ferramentas/poesia-hipnotica' },
+  ];
+
+  const resourceLinks = [
+    { name: 'NAPT (Poetry Therapy)', href: 'https://poetrytherapy.org/', external: true },
+    { name: 'Journal of Poetry Therapy', href: 'https://www.tandfonline.com/journals/tjpt20', external: true },
+  ];
+
+  const socials = [
+    { icon: <Instagram className="h-4 w-4" />, label: 'Instagram', href: '#' },
+    { icon: <Youtube className="h-4 w-4" />, label: 'YouTube', href: '#' },
+    { icon: <Mail className="h-4 w-4" />, label: 'E-mail', href: 'mailto:contato@padh.com.br' },
+  ];
+
+  return (
+    <footer className="border-t border-border/30 mt-12">
+      <div
+        ref={footerAnim.ref}
+        className={`container mx-auto px-6 py-16 transition-all duration-1000 ${
+          footerAnim.isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-12'
+        }`}
+      >
+        <div className="max-w-5xl mx-auto">
+          {/* Main grid */}
           <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-10 mb-12">
             {/* Brand */}
             <div className="sm:col-span-2 lg:col-span-1">
@@ -14,7 +60,7 @@ const Footer = () => {
                 <span className="font-heading font-bold text-foreground text-lg tracking-wide group-hover:text-primary transition-colors">P.A.D.H.</span>
               </div>
               <p className="text-sm text-muted-foreground leading-relaxed mb-5">
-                Poesia Aplicada ao Desenvolvimento Humano — neurociência, hipnose e linguagem simbólica a serviço da transformação interior.
+                Poesia Aplicada ao Desenvolvimento Humano — neurociência, hipnose e linguagem simbólica a serviço da transformation interior.
               </p>
               {/* Socials */}
               <div className="flex gap-2">
