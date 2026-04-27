@@ -67,6 +67,8 @@ const CursoPCH = () => {
       }}
       currentPage="Curso P.A.D.H."
     >
+      <NavegacaoModulos />
+      <BotaoModoImprimir />
       {/* Hero */}
       <section className="relative py-20 md:py-28 overflow-hidden">
         <div className="absolute inset-0 gradient-hero" />
