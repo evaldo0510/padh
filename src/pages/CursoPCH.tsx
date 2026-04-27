@@ -276,6 +276,37 @@ a voz que liberta é mais serena.
 Ela não precisa gritar para ser ouvida,
 porque a verdade fala baixo,
 mas ressoa fundo.`}</Poem>
+
+                  <ProtocoloPCH
+                    modulo="Módulo 2 · Pilar A (Aplicada)"
+                    foco="Reestruturar crenças nucleares limitantes através do contraste poético entre voz crítica e voz libertadora."
+                    sinais={[
+                      'Crenças centrais identificáveis: "não sou suficiente", "não mereço", "preciso ser perfeito".',
+                      'Distorções cognitivas: catastrofização, leitura mental, personalização.',
+                      'Padrões de auto-sabotagem cíclicos relatados em diferentes áreas da vida.',
+                      'Conflito interno entre desejo e permissão (paciente sabe o que quer mas não age).',
+                      'Reações desproporcionais a gatilhos específicos (indica esquema ativado).',
+                    ]}
+                    aplicacao={[
+                      'Mapeie a crença nuclear usando a técnica da seta descendente clássica.',
+                      'Peça ao paciente para nomear as duas vozes internas (crítica e libertadora).',
+                      'Escreva juntos um poema-diálogo de 8 a 12 versos contrastando ambas.',
+                      'Faça o paciente ler em voz alta primeiro a voz crítica, depois a libertadora.',
+                      'Observe a respiração e a postura — registre mudanças somáticas no prontuário.',
+                      'Defina como tarefa: ler o verso libertador 2x ao dia por 21 dias.',
+                    ]}
+                    indicacoes={[
+                      'Transtornos de personalidade com esquemas rígidos.',
+                      'TOC com pensamentos intrusivos auto-críticos.',
+                      'Burnout e síndrome do impostor.',
+                      'Pós-tratamento de depressão para prevenção de recaída.',
+                    ]}
+                    cuidados={[
+                      'Não confrontar a voz crítica abruptamente em pacientes com história de abuso.',
+                      'Em transtorno bipolar, evitar ativação excessiva — preferir tom contemplativo.',
+                      'Validar antes de reestruturar — a crença teve função protetiva no passado.',
+                    ]}
+                  />
                 </div>
               </AccordionContent>
             </AccordionItem>
