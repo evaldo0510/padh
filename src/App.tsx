@@ -50,6 +50,7 @@ const BibliotecaExercicios = lazy(() => import("./pages/BibliotecaExercicios"));
 const SessaoView = lazy(() => import("./pages/SessaoView"));
 const LoginPage = lazy(() => import("./pages/LoginPage"));
 const DiagnosticsPage = lazy(() => import("./pages/DiagnosticsPage"));
+const ConfigGuidePage = lazy(() => import("./pages/ConfigGuidePage"));
 
 const queryClient = new QueryClient();
 
