@@ -28,6 +28,7 @@ import ReviewSection from '@/components/dashboard/ReviewSection';
 import ProgressReportExport from '@/components/dashboard/ProgressReportExport';
 import NotificationCenter from '@/components/dashboard/NotificationCenter';
 import ResponseHistory from '@/components/dashboard/ResponseHistory';
+import SupabaseConfigBanner from '@/components/dashboard/SupabaseConfigBanner';
 
 import { useJornada } from '@/hooks/useJornada';
 import { JORNADA_DATA } from '@/lib/jornada-data';
@@ -55,6 +56,7 @@ const Dashboard = () => {
       currentPage="Dashboard"
     >
       <div className="container mx-auto px-6 py-12 max-w-6xl">
+        <SupabaseConfigBanner />
         {/* Welcome Header */}
         <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-6 mb-12">
           <div>

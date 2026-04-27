@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { toast } from 'sonner';
 import { supabase, hasSupabaseConfig } from '@/integrations/supabase/client';
+import { useOfflineMode } from './useOfflineMode';
 
 export interface ProgressData {
   completedModules: string[];
@@ -20,6 +21,7 @@ const INITIAL_PROGRESS: ProgressData = {
 };
 
 export const useCourseProgress = () => {
+  const { isOffline } = useOfflineMode();
   const [progress, setProgress] = useState<ProgressData>(() => {
     const saved = localStorage.getItem(STORAGE_KEY);
     if (saved) {
@@ -36,7 +38,7 @@ export const useCourseProgress = () => {
   // Initial Sync from DB
   useEffect(() => {
     const fetchProgress = async () => {
-      if (!hasSupabaseConfig()) return;
+      if (isOffline || !hasSupabaseConfig()) return;
       const { data: { user } } = await supabase.auth.getUser();
       if (!user) return;
 
@@ -59,7 +61,7 @@ export const useCourseProgress = () => {
     localStorage.setItem(STORAGE_KEY, JSON.stringify(progress));
     
     const syncToDB = async () => {
-      if (!hasSupabaseConfig()) return;
+      if (isOffline || !hasSupabaseConfig()) return;
       const { data: { user } } = await supabase.auth.getUser();
       if (!user) return;
 

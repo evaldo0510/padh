@@ -7,6 +7,8 @@ import { Label } from '@/components/ui/label';
 import { Feather, Sparkles, ArrowRight } from 'lucide-react';
 import { useNavigate, Link } from 'react-router-dom';
 import { toast } from 'sonner';
+import { supabaseConfig } from '@/integrations/supabase/client';
+import { ShieldAlert } from 'lucide-react';
 
 const LoginPage = () => {
   const [email, setEmail] = useState('');
@@ -16,6 +18,14 @@ const LoginPage = () => {
 
   const handleLogin = (e: React.FormEvent) => {
     e.preventDefault();
+    
+    if (!supabaseConfig.isConfigured) {
+      toast.warning("Modo Demonstração Ativo", {
+        description: "O banco de dados não está configurado. O acesso será simulado localmente.",
+        duration: 5000,
+      });
+    }
+
     setIsLoading(true);
     
     // Simulating login for demo purposes
@@ -51,6 +61,12 @@ const LoginPage = () => {
             <CardHeader>
               <CardTitle>Entrar</CardTitle>
               <CardDescription>Use seu e-mail e senha cadastrados.</CardDescription>
+              {!supabaseConfig.isConfigured && (
+                <div className="mt-2 p-2 bg-amber-50 dark:bg-amber-950/20 rounded border border-amber-200 dark:border-amber-900/30 flex items-center gap-2 text-[10px] text-amber-700 dark:text-amber-400">
+                  <ShieldAlert className="h-3 w-3 shrink-0" />
+                  <span>Configuração de nuvem ausente. Login simulado.</span>
+                </div>
+              )}
             </CardHeader>
             <CardContent>
               <form onSubmit={handleLogin} className="space-y-4">

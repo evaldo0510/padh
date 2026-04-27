@@ -48,6 +48,7 @@ const DiagnosticoJornada = lazy(() => import("./pages/DiagnosticoJornada"));
 const BibliotecaExercicios = lazy(() => import("./pages/BibliotecaExercicios"));
 const SessaoView = lazy(() => import("./pages/SessaoView"));
 const LoginPage = lazy(() => import("./pages/LoginPage"));
+const DiagnosticsPage = lazy(() => import("./pages/DiagnosticsPage"));
 
 const queryClient = new QueryClient();
 
@@ -95,6 +96,7 @@ const AnimatedRoutes = () => {
           <Route path="/login" element={<PageTransition><LoginPage /></PageTransition>} />
           <Route path="/dashboard" element={<PageTransition><Dashboard /></PageTransition>} />
           <Route path="/diagnostico" element={<PageTransition><Diagnostico /></PageTransition>} />
+          <Route path="/diagnosticos" element={<PageTransition><DiagnosticsPage /></PageTransition>} />
           <Route path="*" element={<PageTransition><NotFound /></PageTransition>} />
         </Routes>
       </AnimatePresence>

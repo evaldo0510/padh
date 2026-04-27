@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { toast } from 'sonner';
 import { supabase, hasSupabaseConfig } from '@/integrations/supabase/client';
+import { useOfflineMode } from './useOfflineMode';
 
 export interface RespostaExercicio {
   exerciseId: string;
@@ -26,6 +27,7 @@ const INITIAL_JORNADA: JornadaProgress = {
 };
 
 export const useJornada = () => {
+  const { isOffline } = useOfflineMode();
   const [jornada, setJornada] = useState<JornadaProgress>(() => {
     const saved = localStorage.getItem(STORAGE_KEY);
     return saved ? JSON.parse(saved) : INITIAL_JORNADA;
@@ -36,7 +38,7 @@ export const useJornada = () => {
   // Initial Sync from DB
   useEffect(() => {
     const fetchProgress = async () => {
-      if (!hasSupabaseConfig()) return;
+      if (isOffline || !hasSupabaseConfig()) return;
       
       const { data: { user } } = await supabase.auth.getUser();
       if (!user) return;
@@ -62,7 +64,7 @@ export const useJornada = () => {
     localStorage.setItem(STORAGE_KEY, JSON.stringify(jornada));
     
     const syncToDB = async () => {
-      if (!hasSupabaseConfig()) return;
+      if (isOffline || !hasSupabaseConfig()) return;
       const { data: { user } } = await supabase.auth.getUser();
       if (!user) return;
 
