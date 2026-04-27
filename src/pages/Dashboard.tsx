@@ -99,6 +99,7 @@ const Dashboard = () => {
             </Card>
             
             <ReviewSection />
+            <ResponseHistory />
           </div>
           
           <div>
