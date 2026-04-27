@@ -358,36 +358,62 @@ export function gerarRelatorioProgresso(progressData: any, modulos: ModuloClinic
   y = sectionTitle(doc, y, '1. PERFIL E DIAGNÓSTICO');
   doc.setFont('helvetica', 'normal');
   doc.setFontSize(10);
-  doc.text(`Trilha Atual: ${progressData.diagnosisResult || 'Geral'}`, PAGE.margin, y);
+  doc.text(`Trilha Sugerida: ${progressData.diagnosisResult || 'Não realizada'}`, PAGE.margin, y);
   y += 6;
   if (jornadaProgress) {
-    doc.text(`Fase da Jornada: ${jornadaProgress.currentPhaseId}`, PAGE.margin, y);
+    doc.text(`Fase Atual da Jornada: ${jornadaProgress.currentPhaseId}`, PAGE.margin, y);
     y += 6;
   }
   doc.text(`Data de Emissão: ${new Date().toLocaleDateString()}`, PAGE.margin, y);
   y += 10;
 
-  if (jornadaProgress && jornadaProgress.responses.length > 0) {
-    y = sectionTitle(doc, y, '2. REFLEXÕES DA JORNADA');
-    const responses = jornadaProgress.responses.slice(-5); // Last 5
-    responses.forEach((r: any) => {
+  // Jornada por Fase
+  if (jornadaProgress) {
+    y = sectionTitle(doc, y, '2. STATUS DA JORNADA POR FASE');
+    const fases = [
+      { id: 'fase-1', titulo: 'Despertar' },
+      { id: 'fase-2', titulo: 'Encontro com a Sombra' },
+      { id: 'fase-3', titulo: 'Reprogramação' },
+      { id: 'fase-4', titulo: 'Expansão' }
+    ];
+
+    const faseBody = fases.map(f => {
+      const isCurrent = jornadaProgress.currentPhaseId === f.id;
+      const isDone = (jornadaProgress.completedSessions || []).length > 0 && !isCurrent;
+      return [f.titulo, isCurrent ? 'EM ANDAMENTO' : (isDone ? 'CONCLUÍDA' : 'BLOQUEADA')];
+    });
+
+    autoTable(doc, {
+      startY: y,
+      head: [['Fase', 'Status']],
+      body: faseBody,
+      theme: 'grid',
+      headStyles: { fillColor: COLORS.primary },
+      margin: { left: PAGE.margin, right: PAGE.margin },
+    });
+    y = (doc as any).lastAutoTable.finalY + 10;
+  }
+
+  if (jornadaProgress && (jornadaProgress.responses || []).length > 0) {
+    y = sectionTitle(doc, y, '3. REFLEXÕES E RESPOSTAS DETALHADAS');
+    jornadaProgress.responses.forEach((r: any) => {
       if (y > PAGE.h - 40) { doc.addPage(); y = 32; }
       doc.setFont('helvetica', 'bold');
       doc.setFontSize(9);
-      doc.text(`Reflexão: ${r.date.split('T')[0]}`, PAGE.margin, y);
+      doc.text(`Exercício: ${r.exerciseId} (${r.date.split('T')[0]})`, PAGE.margin, y);
       y += 5;
       doc.setFont('helvetica', 'italic');
       doc.setFontSize(8.5);
       const lines = doc.splitTextToSize(`"${r.response}"`, PAGE.w - PAGE.margin * 2);
       doc.text(lines, PAGE.margin, y);
-      y += lines.length * 4 + 4;
+      y += lines.length * 4 + 6;
     });
     y += 6;
   }
 
-  y = sectionTitle(doc, y, '3. PROGRESSO GERAL DO CURSO');
+  y = sectionTitle(doc, y, '4. PROGRESSO DO CURSO TÉCNICO');
   const totalModulos = modulos.length;
-  const concluidos = progressData.completedModules.length;
+  const concluidos = (progressData.completedModules || []).length;
   const percent = Math.round((concluidos / totalModulos) * 100);
   
   doc.setFillColor(240, 240, 240);
@@ -399,23 +425,23 @@ export function gerarRelatorioProgresso(progressData: any, modulos: ModuloClinic
   doc.text(`${percent}% dos módulos concluídos (${concluidos} de ${totalModulos})`, PAGE.margin, y);
   y += 10;
 
-  y = sectionTitle(doc, y, '3. DETALHAMENTO POR MÓDULO');
+  y = sectionTitle(doc, y, '5. DETALHAMENTO DOS MÓDULOS');
   
   const body = modulos.map(m => {
-    const isCompleted = progressData.completedModules.includes(m.id);
-    const activities = progressData.completedActivities[m.id]?.length || 0;
-    const totalActivities = m.atividades.length;
+    const isCompleted = (progressData.completedModules || []).includes(m.id);
+    const activities = (progressData.completedActivities[m.id] || []).length;
+    const totalActivities = (m.atividades || []).length;
     return [
       `M${m.numero}`,
       m.titulo,
-      isCompleted ? 'CONCLUÍDO' : `${activities}/${totalActivities} atv.`,
+      isCompleted ? 'CONCLUÍDO' : `${activities}/${totalActivities} etapas`,
       isCompleted ? '100%' : `${Math.round((activities / totalActivities) * 100)}%`
     ];
   });
 
   autoTable(doc, {
     startY: y,
-    head: [['Nº', 'Título do Módulo', 'Status', 'Progresso']],
+    head: [['Nº', 'Título do Módulo', 'Etapas', 'Progresso']],
     body: body,
     theme: 'striped',
     headStyles: { fillColor: COLORS.primary, textColor: 255 },
@@ -427,17 +453,16 @@ export function gerarRelatorioProgresso(progressData: any, modulos: ModuloClinic
 
   if (y > PAGE.h - 40) { doc.addPage(); y = 32; }
   
-  y = sectionTitle(doc, y, '4. PRÓXIMOS PASSOS SUGERIDOS');
-  const nextModule = modulos.find(m => !progressData.completedModules.includes(m.id));
+  y = sectionTitle(doc, y, '6. PRÓXIMOS PASSOS');
+  const nextModule = modulos.find(m => !(progressData.completedModules || []).includes(m.id));
   if (nextModule) {
-    y = addParagraph(doc, y, `Seu próximo foco deve ser o "${nextModule.titulo}".`);
-    y = addList(doc, y, nextModule.atividades.map(a => a.label), '→');
+    y = addParagraph(doc, y, `Continuar jornada técnica em: "${nextModule.titulo}".`);
   } else {
-    y = addParagraph(doc, y, 'Parabéns! Você concluiu todos os módulos da jornada P.A.D.H.');
+    y = addParagraph(doc, y, 'Parabéns! Você concluiu todos os módulos técnicos da formação.');
   }
 
   footer(doc);
-  doc.save('Relatorio_Progresso_PADH.pdf');
+  doc.save('Relatorio_Evolucao_PADH.pdf');
 }
 
 function slug(s: string): string {

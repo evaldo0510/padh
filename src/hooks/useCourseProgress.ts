@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { toast } from 'sonner';
+import { supabase, hasSupabaseConfig } from '@/integrations/supabase/client';
 
 export interface ProgressData {
   completedModules: string[];
@@ -22,17 +23,56 @@ export const useCourseProgress = () => {
   const [progress, setProgress] = useState<ProgressData>(() => {
     const saved = localStorage.getItem(STORAGE_KEY);
     if (saved) {
-      const parsed = JSON.parse(saved);
-      return {
-        ...INITIAL_PROGRESS,
-        ...parsed,
-      };
+      try {
+        const parsed = JSON.parse(saved);
+        return { ...INITIAL_PROGRESS, ...parsed };
+      } catch (e) {
+        return INITIAL_PROGRESS;
+      }
     }
     return INITIAL_PROGRESS;
   });
 
+  // Initial Sync from DB
+  useEffect(() => {
+    const fetchProgress = async () => {
+      if (!hasSupabaseConfig()) return;
+      const { data: { user } } = await supabase.auth.getUser();
+      if (!user) return;
+
+      const { data, error } = await supabase
+        .from('course_progress')
+        .select('progress_data')
+        .eq('user_id', user.id)
+        .single();
+
+      if (data && !error) {
+        setProgress(data.progress_data);
+      }
+    };
+
+    fetchProgress();
+  }, []);
+
+  // Save to LocalStorage and DB
   useEffect(() => {
     localStorage.setItem(STORAGE_KEY, JSON.stringify(progress));
+    
+    const syncToDB = async () => {
+      if (!hasSupabaseConfig()) return;
+      const { data: { user } } = await supabase.auth.getUser();
+      if (!user) return;
+
+      await supabase
+        .from('course_progress')
+        .upsert({ 
+          user_id: user.id, 
+          progress_data: progress,
+          updated_at: new Date().toISOString()
+        });
+    };
+
+    syncToDB();
   }, [progress]);
 
   const addNotification = (title: string, message: string) => {
@@ -45,7 +85,7 @@ export const useCourseProgress = () => {
     };
     setProgress(prev => ({
       ...prev,
-      notifications: [newNotif, ...prev.notifications].slice(0, 20), // Keep last 20
+      notifications: [newNotif, ...prev.notifications].slice(0, 20),
     }));
     toast.success(title, { description: message });
   };
@@ -56,7 +96,7 @@ export const useCourseProgress = () => {
         ...prev,
         completedModules: [...prev.completedModules, moduleId],
       }));
-      addNotification("Módulo Concluído!", `Parabéns! Você completou o ${moduleId}. Próximo passo desbloqueado.`);
+      addNotification("Módulo Concluído!", `Parabéns! Você completou o módulo técnico. Próximo passo desbloqueado.`);
     }
   };
 
@@ -65,17 +105,15 @@ export const useCourseProgress = () => {
       const activities = prev.completedActivities[moduleId] || [];
       if (activities.includes(activityId)) return prev;
       
-      const updated = {
+      return {
         ...prev,
         completedActivities: {
           ...prev.completedActivities,
           [moduleId]: [...activities, activityId],
         },
       };
-      
-      return updated;
     });
-    addNotification("Atividade Concluída", "Sua evolução foi registrada com sucesso.");
+    addNotification("Etapa Concluída", "Sua evolução técnica foi registrada.");
   };
 
   const setLastAccessed = (moduleId: string) => {
@@ -91,7 +129,7 @@ export const useCourseProgress = () => {
       diagnosisResult: result,
       scores,
     }));
-    addNotification("Diagnóstico Realizado", `Sua trilha "${result}" foi configurada.`);
+    addNotification("Diagnóstico Realizado", `Sua trilha técnica "${result}" foi configurada.`);
   };
 
   const markNotificationRead = (id: string) => {
