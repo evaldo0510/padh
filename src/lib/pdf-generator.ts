@@ -344,6 +344,80 @@ export function gerarPDFProntuarioBranco() {
   doc.save('PADH_Prontuario_PCH_Sessao.pdf');
 }
 
+/* ─────────── PDF DO RELATÓRIO DE PROGRESSO ─────────── */
+export function gerarRelatorioProgresso(progressData: any, modulos: ModuloClinico[]) {
+  const doc = new jsPDF({ unit: 'mm', format: 'a4' });
+  header(doc, 'Relatório de Evolução P.A.D.H.', 'Progresso do Aluno');
+
+  let y = 32;
+  doc.setFont('helvetica', 'bold');
+  doc.setFontSize(16);
+  doc.text('Relatório de Jornada Terapêutica', PAGE.margin, y);
+  y += 10;
+
+  y = sectionTitle(doc, y, '1. PERFIL E DIAGNÓSTICO');
+  doc.setFont('helvetica', 'normal');
+  doc.setFontSize(10);
+  doc.text(`Trilha Atual: ${progressData.diagnosisResult || 'Geral'}`, PAGE.margin, y);
+  y += 6;
+  doc.text(`Data de Emissão: ${new Date().toLocaleDateString()}`, PAGE.margin, y);
+  y += 10;
+
+  y = sectionTitle(doc, y, '2. PROGRESSO GERAL DO CURSO');
+  const totalModulos = modulos.length;
+  const concluidos = progressData.completedModules.length;
+  const percent = Math.round((concluidos / totalModulos) * 100);
+  
+  doc.setFillColor(240, 240, 240);
+  doc.rect(PAGE.margin, y, PAGE.w - PAGE.margin * 2, 8, 'F');
+  doc.setFillColor(...COLORS.primary);
+  doc.rect(PAGE.margin, y, (PAGE.w - PAGE.margin * 2) * (percent / 100), 8, 'F');
+  y += 14;
+  doc.setFontSize(10);
+  doc.text(`${percent}% dos módulos concluídos (${concluidos} de ${totalModulos})`, PAGE.margin, y);
+  y += 10;
+
+  y = sectionTitle(doc, y, '3. DETALHAMENTO POR MÓDULO');
+  
+  const body = modulos.map(m => {
+    const isCompleted = progressData.completedModules.includes(m.id);
+    const activities = progressData.completedActivities[m.id]?.length || 0;
+    const totalActivities = m.atividades.length;
+    return [
+      `M${m.numero}`,
+      m.titulo,
+      isCompleted ? 'CONCLUÍDO' : `${activities}/${totalActivities} atv.`,
+      isCompleted ? '100%' : `${Math.round((activities / totalActivities) * 100)}%`
+    ];
+  });
+
+  autoTable(doc, {
+    startY: y,
+    head: [['Nº', 'Título do Módulo', 'Status', 'Progresso']],
+    body: body,
+    theme: 'striped',
+    headStyles: { fillColor: COLORS.primary, textColor: 255 },
+    bodyStyles: { fontSize: 9 },
+    margin: { left: PAGE.margin, right: PAGE.margin },
+  });
+
+  y = (doc as any).lastAutoTable.finalY + 15;
+
+  if (y > PAGE.h - 40) { doc.addPage(); y = 32; }
+  
+  y = sectionTitle(doc, y, '4. PRÓXIMOS PASSOS SUGERIDOS');
+  const nextModule = modulos.find(m => !progressData.completedModules.includes(m.id));
+  if (nextModule) {
+    y = addParagraph(doc, y, `Seu próximo foco deve ser o "${nextModule.titulo}".`);
+    y = addList(doc, y, nextModule.atividades.map(a => a.label), '→');
+  } else {
+    y = addParagraph(doc, y, 'Parabéns! Você concluiu todos os módulos da jornada P.A.D.H.');
+  }
+
+  footer(doc);
+  doc.save('Relatorio_Progresso_PADH.pdf');
+}
+
 function slug(s: string): string {
   return s.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
 }

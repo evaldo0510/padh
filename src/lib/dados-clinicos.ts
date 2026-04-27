@@ -33,6 +33,10 @@ export interface ModuloClinico {
   teoricos: TeoricoRef[];
   /** Checklist clínico rápido específico do módulo */
   checklistSinais: string[];
+  /** Atividades/Etapas para progresso granular */
+  atividades: Array<{ id: string; label: string }>;
+  /** Tempo estimado em minutos para conclusão */
+  tempoEstimado: number;
 }
 
 export const MODULOS: ModuloClinico[] = [
@@ -92,6 +96,12 @@ export const MODULOS: ModuloClinico[] = [
       'Auto-desqualificação verbal',
       'Discurso fragmentado',
     ],
+    atividades: [
+      { id: 'teoria', label: 'Estudo da Base Teórica' },
+      { id: 'escuta', label: 'Prática de Escuta Ativa' },
+      { id: 'checklist', label: 'Checklist de Sinais' }
+    ],
+    tempoEstimado: 45,
   },
   {
     id: 'modulo-2',
@@ -150,6 +160,12 @@ export const MODULOS: ModuloClinico[] = [
       'Reação desproporcional a gatilho',
       'Conflito desejo × permissão',
     ],
+    atividades: [
+      { id: 'mapeamento', label: 'Mapeamento de Crenças' },
+      { id: 'dialogo', label: 'Poema-Diálogo' },
+      { id: 'reestruturacao', label: 'Aplicação da Reestruturação' }
+    ],
+    tempoEstimado: 60,
   },
   {
     id: 'modulo-3',
@@ -206,6 +222,12 @@ export const MODULOS: ModuloClinico[] = [
       'Resistência consciente à mudança',
       'Bloqueio criativo',
     ],
+    atividades: [
+      { id: 'pacing', label: 'Estabelecimento de Pacing' },
+      { id: 'inducao', label: 'Indução de Transe Leve' },
+      { id: 'comandos', label: 'Uso de Comandos Embutidos' }
+    ],
+    tempoEstimado: 50,
   },
   {
     id: 'modulo-4',
@@ -262,6 +284,12 @@ export const MODULOS: ModuloClinico[] = [
       'Necessidade de âncora simbólica',
       'Abertura para homework',
     ],
+    atividades: [
+      { id: 'identificacao_demanda', label: 'Identificação de Demanda Específica' },
+      { id: 'construcao_poema', label: 'Construção de Poema Personalizado' },
+      { id: 'prescricao', label: 'Entrega da Prescrição Poética' }
+    ],
+    tempoEstimado: 55,
   },
   {
     id: 'modulo-5',
@@ -318,6 +346,12 @@ export const MODULOS: ModuloClinico[] = [
       'Estabilidade emocional confirmada',
       'Mudança superficial precisa aprofundar',
     ],
+    atividades: [
+      { id: 'visualizacao_caminho', label: 'Visualização do Caminho' },
+      { id: 'instalacao_metafora', label: 'Instalação de Metáfora Curativa' },
+      { id: 'sugestao_pos_hipnotica', label: 'Sugestão Pós-Hipnótica' }
+    ],
+    tempoEstimado: 70,
   },
   {
     id: 'modulo-6',
@@ -374,6 +408,12 @@ export const MODULOS: ModuloClinico[] = [
       'Resposta diferencial a estilos',
       'Tema existencial em emergência',
     ],
+    atividades: [
+      { id: 'mapeamento_tipo', label: 'Mapeamento do Tipo de Poesia' },
+      { id: 'aplicacao_catartica', label: 'Aplicação Catártica/Mobilizadora' },
+      { id: 'integracao_sentido', label: 'Integração de Sentido' }
+    ],
+    tempoEstimado: 60,
   },
   {
     id: 'modulo-7',
@@ -430,6 +470,13 @@ export const MODULOS: ModuloClinico[] = [
       'Integração visível (Fase H)',
       'Aliança terapêutica estável',
     ],
+    atividades: [
+      { id: 'fase_p', label: 'Fase P (Acolhimento)' },
+      { id: 'fase_a', label: 'Fase A (Identificação)' },
+      { id: 'fase_d', label: 'Fase D (Transformação)' },
+      { id: 'fase_h', label: 'Fase H (Ancoragem)' }
+    ],
+    tempoEstimado: 80,
   },
   {
     id: 'modulo-8',
@@ -486,6 +533,12 @@ export const MODULOS: ModuloClinico[] = [
       'Desejo de autonomia',
       'Rede de apoio externa ativa',
     ],
+    atividades: [
+      { id: 'dialogo_futuro', label: 'Diálogo com Eu Futuro' },
+      { id: 'manual_pessoal', label: 'Criação do Manual Poético' },
+      { id: 'carta_semente', label: 'Ritual da Carta-Semente' }
+    ],
+    tempoEstimado: 90,
   },
 ];
 

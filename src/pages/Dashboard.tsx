@@ -14,11 +14,18 @@ import {
   CheckCircle2,
   Library,
   Sparkles,
-  LayoutDashboard
+  LayoutDashboard,
+  Calendar,
+  RefreshCw,
+  Bell
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Progress } from '@/components/ui/progress';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import WeeklySchedule from '@/components/dashboard/WeeklySchedule';
+import ReviewSection from '@/components/dashboard/ReviewSection';
+import ProgressReportExport from '@/components/dashboard/ProgressReportExport';
+import NotificationCenter from '@/components/dashboard/NotificationCenter';
 
 const Dashboard = () => {
   const { progress, isModuleUnlocked } = useCourseProgress();
@@ -61,13 +68,35 @@ const Dashboard = () => {
               )}
             </p>
           </div>
-          <div className="flex gap-4">
+          <div className="flex gap-4 items-center">
+            <NotificationCenter />
             <Button asChild variant="outline" className="gap-2">
               <Link to="/recursos-clinicos"><Library className="h-4 w-4" /> Biblioteca</Link>
             </Button>
             <Button asChild className="gap-2">
               <Link to="/curso-padh"><PlayCircle className="h-4 w-4" /> Continuar</Link>
             </Button>
+          </div>
+        </div>
+
+        {/* Export and Schedule Row */}
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-12">
+          <div className="lg:col-span-2 space-y-8">
+            <Card className="border-primary/10 bg-primary/[0.02]">
+              <CardContent className="p-6 flex flex-col md:flex-row justify-between items-center gap-6">
+                <div className="text-center md:text-left">
+                  <h3 className="text-lg font-heading font-bold mb-1">Exportar Evolução</h3>
+                  <p className="text-sm text-muted-foreground">Gere um relatório detalhado da sua jornada P.A.D.H. em PDF.</p>
+                </div>
+                <ProgressReportExport />
+              </CardContent>
+            </Card>
+            
+            <ReviewSection />
+          </div>
+          
+          <div>
+            <WeeklySchedule />
           </div>
         </div>
 
@@ -135,11 +164,14 @@ const Dashboard = () => {
             {MODULOS.map((modulo, index) => {
               const isCompleted = progress.completedModules.includes(modulo.id);
               const isUnlocked = isModuleUnlocked(index);
+              const activitiesCount = progress.completedActivities[modulo.id]?.length || 0;
+              const totalActivities = modulo.atividades.length;
+              const modulePercent = Math.round((activitiesCount / totalActivities) * 100);
               
               return (
                 <div 
                   key={modulo.id}
-                  className={`flex items-center gap-4 p-4 rounded-2xl border transition-all ${
+                  className={`flex flex-col md:flex-row md:items-center gap-4 p-4 md:p-6 rounded-2xl border transition-all ${
                     isCompleted 
                       ? 'bg-primary/5 border-primary/20' 
                       : isUnlocked 
@@ -147,32 +179,42 @@ const Dashboard = () => {
                         : 'bg-muted/50 border-border opacity-60'
                   }`}
                 >
-                  <div className={`w-12 h-12 rounded-full flex items-center justify-center shrink-0 ${
-                    isCompleted ? 'bg-primary text-white' : 'bg-secondary text-muted-foreground'
-                  }`}>
-                    {isCompleted ? <CheckCircle2 className="h-6 w-6" /> : index + 1}
-                  </div>
-                  
-                  <div className="flex-1">
-                    <div className="flex items-center gap-2">
-                      <h3 className={`font-semibold ${isUnlocked ? 'text-foreground' : 'text-muted-foreground'}`}>
-                        {modulo.titulo}
-                      </h3>
-                      {!isUnlocked && <Lock className="h-3 w-3 text-muted-foreground" />}
+                  <div className="flex items-center gap-4 flex-1">
+                    <div className={`w-12 h-12 rounded-full flex items-center justify-center shrink-0 ${
+                      isCompleted ? 'bg-primary text-white' : 'bg-secondary text-muted-foreground'
+                    }`}>
+                      {isCompleted ? <CheckCircle2 className="h-6 w-6" /> : index + 1}
                     </div>
-                    <p className="text-xs text-muted-foreground">Pilar {modulo.pilar} · {modulo.pilarNome}</p>
+                    
+                    <div className="flex-1 min-w-0">
+                      <div className="flex items-center gap-2">
+                        <h3 className={`font-semibold truncate ${isUnlocked ? 'text-foreground' : 'text-muted-foreground'}`}>
+                          {modulo.titulo}
+                        </h3>
+                        {!isUnlocked && <Lock className="h-3 w-3 text-muted-foreground" />}
+                      </div>
+                      <div className="flex flex-wrap items-center gap-x-4 gap-y-1 mt-1">
+                        <p className="text-[10px] text-muted-foreground uppercase tracking-wider font-bold">Pilar {modulo.pilar} · {modulo.pilarNome}</p>
+                        {isUnlocked && !isCompleted && (
+                          <p className="text-[10px] text-primary font-bold">{activitiesCount} de {totalActivities} etapas concluídas</p>
+                        )}
+                      </div>
+                      {isUnlocked && !isCompleted && (
+                        <Progress value={modulePercent} className="h-1 mt-2 max-w-[200px]" />
+                      )}
+                    </div>
                   </div>
 
-                  <div className="flex items-center gap-3">
+                  <div className="flex items-center justify-end gap-3 mt-4 md:mt-0">
                     {isUnlocked ? (
-                      <Button variant={isCompleted ? "ghost" : "outline"} size="sm" asChild>
+                      <Button variant={isCompleted ? "ghost" : "outline"} size="sm" asChild className="w-full md:w-auto">
                         <Link to="/curso-padh">
-                          {isCompleted ? "Revisar" : "Iniciar"}
+                          {isCompleted ? "Revisar" : "Continuar"}
                           <ChevronRight className="h-4 w-4 ml-1" />
                         </Link>
                       </Button>
                     ) : (
-                      <span className="text-xs font-medium text-muted-foreground px-3 py-1 bg-muted rounded-full">
+                      <span className="text-xs font-medium text-muted-foreground px-3 py-1 bg-muted rounded-full w-full md:w-auto text-center">
                         Bloqueado
                       </span>
                     )}

@@ -16,6 +16,7 @@ import { Button } from '@/components/ui/button';
 import { FileText, GitBranch as GitBranchIcon } from 'lucide-react';
 import { useCourseProgress } from '@/hooks/useCourseProgress';
 import { toast } from 'sonner';
+import ActivityTracker from '@/components/clinical/ActivityTracker';
 
 import modulo1Img from '@/assets/curso-pch/modulo1-palavras.jpg';
 import modulo2Img from '@/assets/curso-pch/modulo2-reestruturacao.jpg';
@@ -369,6 +370,12 @@ meu próprio rumo, que hoje encontrei.`}</Poem>
                   />
 
                   <BotaoImprimirPDF modulo={getModulo("modulo-1")!} />
+                  <div className="mt-8 space-y-4">
+                    <h4 className="font-heading font-semibold text-sm text-foreground">Etapas de Aprendizado</h4>
+                    {getModulo("modulo-1")?.atividades.map(atv => (
+                      <ActivityTracker key={atv.id} moduleId="modulo-1" activityId={atv.id} label={atv.label} />
+                    ))}
+                  </div>
                   <ConclusionButton moduleId="modulo-1" nextModuleId="modulo-2" />
                 </div>
               </AccordionContent>
@@ -511,6 +518,12 @@ mas ressoa fundo.`}</Poem>
                   />
 
                   <BotaoImprimirPDF modulo={getModulo("modulo-2")!} />
+                  <div className="mt-8 space-y-4">
+                    <h4 className="font-heading font-semibold text-sm text-foreground">Etapas de Aprendizado</h4>
+                    {getModulo("modulo-2")?.atividades.map(atv => (
+                      <ActivityTracker key={atv.id} moduleId="modulo-2" activityId={atv.id} label={atv.label} />
+                    ))}
+                  </div>
                   <ConclusionButton moduleId="modulo-2" nextModuleId="modulo-3" />
                 </div>
               </AccordionContent>
@@ -644,6 +657,12 @@ e tudo simplesmente… acontece…`}</Poem>
                   />
 
                   <BotaoImprimirPDF modulo={getModulo("modulo-3")!} />
+                  <div className="mt-8 space-y-4">
+                    <h4 className="font-heading font-semibold text-sm text-foreground">Etapas de Aprendizado</h4>
+                    {getModulo("modulo-3")?.atividades.map(atv => (
+                      <ActivityTracker key={atv.id} moduleId="modulo-3" activityId={atv.id} label={atv.label} />
+                    ))}
+                  </div>
                   <ConclusionButton moduleId="modulo-3" nextModuleId="modulo-4" />
                 </div>
               </AccordionContent>
@@ -782,6 +801,12 @@ para iluminar o próximo passo.`}</Poem>
                   />
 
                   <BotaoImprimirPDF modulo={getModulo("modulo-4")!} />
+                  <div className="mt-8 space-y-4">
+                    <h4 className="font-heading font-semibold text-sm text-foreground">Etapas de Aprendizado</h4>
+                    {getModulo("modulo-4")?.atividades.map(atv => (
+                      <ActivityTracker key={atv.id} moduleId="modulo-4" activityId={atv.id} label={atv.label} />
+                    ))}
+                  </div>
                   <ConclusionButton moduleId="modulo-4" nextModuleId="modulo-5" />
                 </div>
               </AccordionContent>
@@ -926,6 +951,12 @@ Está cada vez mais próximo de alcançar a sua essência.`}</Poem>
                   />
 
                   <BotaoImprimirPDF modulo={getModulo("modulo-5")!} />
+                  <div className="mt-8 space-y-4">
+                    <h4 className="font-heading font-semibold text-sm text-foreground">Etapas de Aprendizado</h4>
+                    {getModulo("modulo-5")?.atividades.map(atv => (
+                      <ActivityTracker key={atv.id} moduleId="modulo-5" activityId={atv.id} label={atv.label} />
+                    ))}
+                  </div>
                   <ConclusionButton moduleId="modulo-5" nextModuleId="modulo-6" />
                 </div>
               </AccordionContent>
@@ -1054,6 +1085,12 @@ E quando percebo, já estou mais longe do que imaginei."`}</Poem>
                   />
 
                   <BotaoImprimirPDF modulo={getModulo("modulo-6")!} />
+                  <div className="mt-8 space-y-4">
+                    <h4 className="font-heading font-semibold text-sm text-foreground">Etapas de Aprendizado</h4>
+                    {getModulo("modulo-6")?.atividades.map(atv => (
+                      <ActivityTracker key={atv.id} moduleId="modulo-6" activityId={atv.id} label={atv.label} />
+                    ))}
+                  </div>
                   <ConclusionButton moduleId="modulo-6" nextModuleId="modulo-7" />
                 </div>
               </AccordionContent>
@@ -1204,6 +1241,12 @@ Mas porque sempre esteve dentro de você."`}</Poem>
                   />
 
                   <BotaoImprimirPDF modulo={getModulo("modulo-7")!} />
+                  <div className="mt-8 space-y-4">
+                    <h4 className="font-heading font-semibold text-sm text-foreground">Etapas de Aprendizado</h4>
+                    {getModulo("modulo-7")?.atividades.map(atv => (
+                      <ActivityTracker key={atv.id} moduleId="modulo-7" activityId={atv.id} label={atv.label} />
+                    ))}
+                  </div>
                   <ConclusionButton moduleId="modulo-7" nextModuleId="modulo-8" />
                 </div>
               </AccordionContent>
@@ -1361,6 +1404,12 @@ só precisa de tempo, terra e coragem para abrir."`}</Poem>
                   />
 
                   <BotaoImprimirPDF modulo={getModulo("modulo-8")!} />
+                  <div className="mt-8 space-y-4">
+                    <h4 className="font-heading font-semibold text-sm text-foreground">Etapas de Aprendizado</h4>
+                    {getModulo("modulo-8")?.atividades.map(atv => (
+                      <ActivityTracker key={atv.id} moduleId="modulo-8" activityId={atv.id} label={atv.label} />
+                    ))}
+                  </div>
                   <ConclusionButton moduleId="modulo-8" />
                 </div>
               </AccordionContent>
