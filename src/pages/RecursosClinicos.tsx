@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import PageLayout from '@/components/layout/PageLayout';
 import { Button } from '@/components/ui/button';
-import { FileText, FileDown, GitBranch, ClipboardCheck, Stethoscope, User, BookOpen, PenTool, Sparkles, LayoutDashboard } from 'lucide-react';
+import { FileText, FileDown, GitBranch, ClipboardCheck, Stethoscope, User, BookOpen, PenTool, Sparkles, LayoutDashboard, Brain } from 'lucide-react';
 import { MODULOS } from '@/lib/dados-clinicos';
 import { gerarPDFTerapeuta, gerarPDFPaciente, gerarPDFProntuarioBranco } from '@/lib/pdf-generator';
 import FluxogramaDecisao from '@/components/clinical/FluxogramaDecisao';
