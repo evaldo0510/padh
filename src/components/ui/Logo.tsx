@@ -36,10 +36,11 @@ const Logo: React.FC<LogoProps> = ({ className = "", size = "md" }) => {
       
       {/* Inner square - smoother behavior */}
       <div className="absolute inset-0 rounded-xl bg-background dark:bg-zinc-900 border border-primary/30 -rotate-3 transition-all duration-700 ease-in-out group-hover:rotate-0 flex items-center justify-center shadow-sm group-hover:shadow-lg group-hover:shadow-primary/10 group-hover:border-primary/60 overflow-hidden">
-        {/* Permanent SVG Pattern for texture and fallback */}
-        <svg className="absolute inset-0 w-full h-full opacity-[0.05] pointer-events-none transition-opacity duration-500 group-hover:opacity-[0.08]" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <path d="M0 20 L100 80 M0 80 L100 20" stroke="currentColor" strokeWidth="0.5" />
-          <circle cx="50" cy="50" r="40" stroke="currentColor" strokeWidth="0.5" strokeDasharray="2 2" />
+        {/* SVG Fallback & Texture - Recognizable even if icons don't load */}
+        <svg className="absolute inset-0 w-full h-full opacity-[0.05] pointer-events-none transition-opacity duration-500 group-hover:opacity-[0.1]" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+          {/* Subtle quill shape as fallback */}
+          <path d="M30 70 L70 30 M65 25 L75 35 M30 70 C25 75 20 70 25 65" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
+          <circle cx="50" cy="50" r="42" stroke="currentColor" strokeWidth="0.5" strokeDasharray="3 3" />
         </svg>
 
         {/* The Icons with smoother scale */}
