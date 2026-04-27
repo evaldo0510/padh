@@ -21,6 +21,7 @@ const INITIAL_PROGRESS: ProgressData = {
 };
 
 export const useCourseProgress = () => {
+  const { isOffline } = useOfflineMode();
   const [progress, setProgress] = useState<ProgressData>(() => {
     const saved = localStorage.getItem(STORAGE_KEY);
     if (saved) {
