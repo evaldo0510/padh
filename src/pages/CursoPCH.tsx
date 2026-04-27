@@ -370,6 +370,12 @@ meu próprio rumo, que hoje encontrei.`}</Poem>
                   />
 
                   <BotaoImprimirPDF modulo={getModulo("modulo-1")!} />
+                  <div className="mt-8 space-y-4">
+                    <h4 className="font-heading font-semibold text-sm text-foreground">Etapas de Aprendizado</h4>
+                    {getModulo("modulo-1")?.atividades.map(atv => (
+                      <ActivityTracker key={atv.id} moduleId="modulo-1" activityId={atv.id} label={atv.label} />
+                    ))}
+                  </div>
                   <ConclusionButton moduleId="modulo-1" nextModuleId="modulo-2" />
                 </div>
               </AccordionContent>
