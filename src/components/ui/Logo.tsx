@@ -44,11 +44,11 @@ const Logo: React.FC<LogoProps> = ({ className = "", size = "md" }) => {
         <Feather className={`${iconSizes[size]} text-primary transition-transform duration-500 group-hover:scale-110`} strokeWidth={1.5} />
         <Sparkles className={`absolute -top-1 -right-1 ${sparkleSizes[size]} text-primary animate-pulse`} />
       </div>
-...
+      
+      {/* Decorative dots */}
       <div className="absolute -bottom-0.5 -left-0.5 w-1.5 h-1.5 rounded-full bg-primary/40 group-hover:bg-primary transition-colors" />
       <div className="absolute -top-0.5 -right-0.5 w-1 h-1 rounded-full bg-primary/40 group-hover:bg-primary transition-colors" />
     </div>
-  );
   );
 };
 
