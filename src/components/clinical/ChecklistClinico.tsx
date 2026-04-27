@@ -46,78 +46,84 @@ const ChecklistClinico: React.FC<Props> = ({ modulo }) => {
   const reset = () => setState(initial());
 
   return (
-    <div className="rounded-xl border border-secondary/20 bg-secondary/[0.03] p-5 mb-6">
-      <div className="flex items-start justify-between gap-3 mb-4">
+    <div className="rounded-2xl border border-module bg-module-tint p-5 md:p-6 mb-6 shadow-module-glow">
+      <div className="flex items-start justify-between gap-3 mb-5">
         <div className="flex items-start gap-3">
-          <div className="w-10 h-10 rounded-lg bg-secondary/15 flex items-center justify-center shrink-0">
-            <ClipboardCheck className="h-5 w-5 text-secondary" />
+          <div className="w-11 h-11 rounded-xl bg-module-soft flex items-center justify-center shrink-0">
+            <ClipboardCheck className="h-5 w-5 text-module" />
           </div>
           <div>
-            <p className="text-xs uppercase tracking-wider text-secondary font-semibold">Checklist Clínico Rápido</p>
-            <h4 className="font-heading font-semibold text-foreground">Antes de aplicar a intervenção</h4>
-            <p className="text-xs text-muted-foreground mt-1">Marque os itens observáveis. Salvo automaticamente.</p>
+            <p className="text-[10px] uppercase tracking-[0.2em] text-module font-bold">Pré-Sessão</p>
+            <h4 className="font-heading font-semibold text-foreground text-base md:text-lg">
+              Checklist Clínico Rápido
+            </h4>
+            <p className="text-xs text-muted-foreground mt-0.5">
+              Marque antes de aplicar a intervenção. Salvo automaticamente.
+            </p>
           </div>
         </div>
-        <Button size="sm" variant="ghost" onClick={reset} className="gap-1 text-xs h-8">
+        <Button size="sm" variant="ghost" onClick={reset} className="gap-1 text-xs h-8 shrink-0">
           <RotateCcw className="h-3 w-3" /> Limpar
         </Button>
       </div>
 
-      <div className="space-y-4 text-sm">
+      <div className="space-y-5 text-sm">
         {/* Sinais */}
         <div>
-          <p className="font-medium text-foreground mb-2">1. Sinais presentes</p>
+          <p className="font-medium text-foreground mb-2.5">1. Sinais presentes</p>
           <div className="space-y-1.5">
             {modulo.checklistSinais.map((sinal, i) => (
-              <label key={i} className="flex items-start gap-2 cursor-pointer hover:text-foreground transition-colors">
+              <label key={i} className="flex items-start gap-2.5 cursor-pointer hover:text-foreground transition-colors p-1 rounded">
                 <Checkbox
                   checked={!!state.sinais[i]}
                   onCheckedChange={(v) => setState(s => ({ ...s, sinais: { ...s.sinais, [i]: !!v } }))}
-                  className="mt-0.5"
+                  className="mt-0.5 border-module data-[state=checked]:bg-module data-[state=checked]:text-background"
                 />
-                <span className="text-muted-foreground">{sinal}</span>
+                <span className="text-muted-foreground leading-relaxed">{sinal}</span>
               </label>
             ))}
           </div>
         </div>
 
-        {/* Contenção */}
-        <div>
-          <p className="font-medium text-foreground mb-2">2. Nível de contenção emocional</p>
-          <div className="flex gap-2 flex-wrap">
-            {(['baixo', 'moderado', 'alto'] as const).map(n => (
-              <button
-                key={n}
-                onClick={() => setState(s => ({ ...s, contencao: n }))}
-                className={`px-3 py-1.5 rounded-md text-xs font-medium border transition-colors ${
-                  state.contencao === n
-                    ? 'bg-secondary text-secondary-foreground border-secondary'
-                    : 'bg-background border-border text-muted-foreground hover:border-secondary/40'
-                }`}
-              >
-                {n.charAt(0).toUpperCase() + n.slice(1)}
-              </button>
-            ))}
+        <div className="grid sm:grid-cols-2 gap-5">
+          {/* Contenção */}
+          <div>
+            <p className="font-medium text-foreground mb-2">2. Nível de contenção</p>
+            <div className="flex gap-1.5 flex-wrap">
+              {(['baixo', 'moderado', 'alto'] as const).map(n => (
+                <button
+                  key={n}
+                  onClick={() => setState(s => ({ ...s, contencao: n }))}
+                  className={`flex-1 px-2.5 py-1.5 rounded-md text-xs font-medium border transition-all ${
+                    state.contencao === n
+                      ? 'bg-module text-background border-module-strong shadow-module-glow'
+                      : 'bg-background border-border text-muted-foreground hover:border-module'
+                  }`}
+                >
+                  {n.charAt(0).toUpperCase() + n.slice(1)}
+                </button>
+              ))}
+            </div>
           </div>
-        </div>
 
-        {/* Rapport */}
-        <div>
-          <p className="font-medium text-foreground mb-2">3. Estado de rapport (1–5)</p>
-          <div className="flex gap-1.5">
-            {[1, 2, 3, 4, 5].map(n => (
-              <button
-                key={n}
-                onClick={() => setState(s => ({ ...s, rapport: n }))}
-                className={`w-9 h-9 rounded-md text-sm font-semibold border transition-colors ${
-                  state.rapport === n
-                    ? 'bg-primary text-primary-foreground border-primary'
-                    : 'bg-background border-border text-muted-foreground hover:border-primary/40'
-                }`}
-              >
-                {n}
-              </button>
-            ))}
+          {/* Rapport */}
+          <div>
+            <p className="font-medium text-foreground mb-2">3. Rapport (1–5)</p>
+            <div className="flex gap-1.5">
+              {[1, 2, 3, 4, 5].map(n => (
+                <button
+                  key={n}
+                  onClick={() => setState(s => ({ ...s, rapport: n }))}
+                  className={`flex-1 h-9 rounded-md text-sm font-semibold border transition-all ${
+                    state.rapport === n
+                      ? 'bg-module text-background border-module-strong shadow-module-glow'
+                      : 'bg-background border-border text-muted-foreground hover:border-module'
+                  }`}
+                >
+                  {n}
+                </button>
+              ))}
+            </div>
           </div>
         </div>
 
@@ -136,11 +142,11 @@ const ChecklistClinico: React.FC<Props> = ({ modulo }) => {
                     onClick={() => setState(s => ({ ...s, [key]: v }) as ChecklistState)}
                     className={`flex-1 px-2 py-1.5 rounded-md text-xs font-medium border transition-colors ${
                       state[key] === v
-                        ? v ? 'bg-primary/15 text-primary border-primary/40' : 'bg-destructive/10 text-destructive border-destructive/30'
+                        ? v ? 'bg-module-soft text-module border-module-strong' : 'bg-destructive/10 text-destructive border-destructive/30'
                         : 'bg-background border-border text-muted-foreground'
                     }`}
                   >
-                    {v ? 'Sim' : 'Não'}
+                    {v ? '✓ Sim' : '✗ Não'}
                   </button>
                 ))}
               </div>
@@ -150,16 +156,16 @@ const ChecklistClinico: React.FC<Props> = ({ modulo }) => {
 
         {/* Teórico ativado */}
         <div>
-          <p className="font-medium text-foreground mb-2">6. Referencial teórico ativado nesta sessão</p>
-          <div className="flex gap-2 flex-wrap">
+          <p className="font-medium text-foreground mb-2">6. Referencial teórico ativado</p>
+          <div className="flex gap-1.5 flex-wrap">
             {modulo.teoricos.map(t => (
               <button
                 key={t.nome}
                 onClick={() => setState(s => ({ ...s, teoricoAtivado: t.nome }))}
-                className={`px-3 py-1.5 rounded-full text-xs font-medium border transition-colors ${
+                className={`px-3 py-1.5 rounded-full text-xs font-medium border transition-all ${
                   state.teoricoAtivado === t.nome
-                    ? 'bg-primary/15 text-primary border-primary/40'
-                    : 'bg-background border-border text-muted-foreground hover:border-primary/40'
+                    ? 'bg-module-soft text-module border-module-strong'
+                    : 'bg-background border-border text-muted-foreground hover:border-module'
                 }`}
               >
                 {t.nome}
@@ -176,7 +182,7 @@ const ChecklistClinico: React.FC<Props> = ({ modulo }) => {
             onChange={(e) => setState(s => ({ ...s, proximoPasso: e.target.value }))}
             placeholder="Ex.: Aplicar Verso-Gatilho na próxima sessão, validar tarefa de casa…"
             rows={2}
-            className="w-full text-sm px-3 py-2 rounded-md border border-border bg-background text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/30 resize-none"
+            className="w-full text-sm px-3 py-2 rounded-md border border-border bg-background text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 ring-module resize-none"
           />
         </div>
       </div>
