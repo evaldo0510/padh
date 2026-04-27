@@ -79,6 +79,8 @@ const AnimatedRoutes = () => {
           <Route path="/ciencia-da-poesia" element={<PageTransition><CienciaPoesia /></PageTransition>} />
           <Route path="/combo-padh" element={<PageTransition><ComboPADH /></PageTransition>} />
           <Route path="/admin" element={<PageTransition><Admin /></PageTransition>} />
+          <Route path="/prontuario-pch" element={<PageTransition><Prontuario /></PageTransition>} />
+          <Route path="/recursos-clinicos" element={<PageTransition><RecursosClinicos /></PageTransition>} />
           <Route path="*" element={<PageTransition><NotFound /></PageTransition>} />
         </Routes>
       </AnimatePresence>
