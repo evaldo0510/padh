@@ -113,7 +113,9 @@ const App = () => (
         <Sonner />
         <PWAPrompt />
         <BrowserRouter>
-          <AnimatedRoutes />
+          <SupabaseErrorBoundary>
+            <AnimatedRoutes />
+          </SupabaseErrorBoundary>
         </BrowserRouter>
       </TooltipProvider>
     </QueryClientProvider>
