@@ -160,6 +160,12 @@ export const MODULOS: ModuloClinico[] = [
       'Reação desproporcional a gatilho',
       'Conflito desejo × permissão',
     ],
+    atividades: [
+      { id: 'mapeamento', label: 'Mapeamento de Crenças' },
+      { id: 'dialogo', label: 'Poema-Diálogo' },
+      { id: 'reestruturacao', label: 'Aplicação da Reestruturação' }
+    ],
+    tempoEstimado: 60,
   },
   {
     id: 'modulo-3',
