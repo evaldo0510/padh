@@ -172,6 +172,21 @@ const CursoPCH = () => {
               ⚠ Esta tabela é orientativa, não diagnóstica. Diagnóstico formal requer avaliação clínica completa.
             </p>
           </div>
+
+          {/* Fluxograma de Decisão Clínica */}
+          <div className="mt-10">
+            <FluxogramaDecisao />
+          </div>
+
+          {/* Quick links para recursos clínicos */}
+          <div className="mt-8 flex flex-wrap gap-3 justify-center">
+            <Button asChild variant="outline" className="gap-2">
+              <Link to="/recursos-clinicos"><FileText className="h-4 w-4" /> Hub de Recursos Clínicos</Link>
+            </Button>
+            <Button asChild variant="outline" className="gap-2">
+              <Link to="/prontuario-pch"><FileText className="h-4 w-4" /> Prontuário de Sessão</Link>
+            </Button>
+          </div>
         </div>
       </section>
 
