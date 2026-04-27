@@ -107,5 +107,3 @@ const SupabaseConfigBanner = () => {
 };
 
 export default SupabaseConfigBanner;
-
-export default SupabaseConfigBanner;
