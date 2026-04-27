@@ -156,9 +156,19 @@ const DiagnosticsPage = () => {
         {/* Offline Mode Info */}
         <Card className="border-primary/10 bg-primary/[0.02]">
           <CardHeader>
-            <CardTitle className="flex items-center gap-2">
-              <WifiOff className="h-5 w-5 text-primary" /> Sincronização e Modo Offline
-            </CardTitle>
+            <div className="flex justify-between items-center">
+              <CardTitle className="flex items-center gap-2">
+                <WifiOff className="h-5 w-5 text-primary" /> Sincronização e Modo Offline
+              </CardTitle>
+              <Button 
+                variant={isOffline ? "destructive" : "outline"} 
+                size="sm" 
+                onClick={toggleOffline}
+                disabled={!canConnect}
+              >
+                {isOffline ? "Desativar Modo Offline" : "Ativar Modo Offline"}
+              </Button>
+            </div>
           </CardHeader>
           <CardContent className="space-y-4">
             <p className="text-sm text-muted-foreground">
