@@ -99,19 +99,24 @@ const DiagnosticsPage = () => {
               </div>
             </CardHeader>
             <CardContent className="space-y-4">
-              <div className="space-y-2">
-                <div className="flex justify-between text-sm">
-                  <span className="text-muted-foreground">URL:</span>
-                  <span className={supabaseConfig.url ? "text-green-600 font-mono" : "text-red-500 font-bold"}>
-                    {supabaseConfig.url ? "Configurada" : "Ausente"}
+              <div className="space-y-3">
+                <div className="flex justify-between items-center text-sm p-2 bg-muted/30 rounded border border-border/50">
+                  <span className="text-muted-foreground font-medium">VITE_SUPABASE_URL:</span>
+                  <span className={supabaseConfig.url ? "text-primary font-mono text-[10px]" : "text-red-500 font-bold"}>
+                    {supabaseConfig.url ? `${supabaseConfig.url.substring(0, 15)}...${supabaseConfig.url.substring(supabaseConfig.url.length - 5)}` : "Ausente"}
                   </span>
                 </div>
-                <div className="flex justify-between text-sm">
-                  <span className="text-muted-foreground">Anon Key:</span>
-                  <span className={supabaseConfig.anonKey ? "text-green-600 font-mono" : "text-red-500 font-bold"}>
-                    {supabaseConfig.anonKey ? "Configurada" : "Ausente"}
+                <div className="flex justify-between items-center text-sm p-2 bg-muted/30 rounded border border-border/50">
+                  <span className="text-muted-foreground font-medium">VITE_SUPABASE_ANON_KEY:</span>
+                  <span className={supabaseConfig.anonKey ? "text-primary font-mono text-[10px]" : "text-red-500 font-bold"}>
+                    {supabaseConfig.anonKey ? `${supabaseConfig.anonKey.substring(0, 5)}...${supabaseConfig.anonKey.substring(supabaseConfig.anonKey.length - 5)}` : "Ausente"}
                   </span>
                 </div>
+                {!supabaseConfig.isConfigured && (
+                  <Button variant="link" size="sm" asChild className="p-0 h-auto text-primary text-xs">
+                    <Link to="/configurar-supabase">Ver guia de configuração</Link>
+                  </Button>
+                )}
               </div>
             </CardContent>
           </Card>
