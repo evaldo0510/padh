@@ -16,6 +16,10 @@ export interface ModuloClinico {
   titulo: string;
   pilar: 'P' | 'A' | 'D' | 'H';
   pilarNome: string;
+  /** Nome poético da identidade cromática deste módulo */
+  corNome: string;
+  /** Significado simbólico da cor escolhida */
+  corSimbolo: string;
   foco: string;
   sinais: string[];
   aplicacao: string[];
