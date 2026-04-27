@@ -38,7 +38,7 @@ export const useJornada = () => {
   // Initial Sync from DB
   useEffect(() => {
     const fetchProgress = async () => {
-      if (!hasSupabaseConfig()) return;
+      if (isOffline || !hasSupabaseConfig()) return;
       
       const { data: { user } } = await supabase.auth.getUser();
       if (!user) return;
