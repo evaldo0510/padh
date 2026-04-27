@@ -845,6 +845,36 @@ Não porque foi dada a você...
 Mas porque sempre esteve dentro de você."`}</Poem>
                     <p className="text-sm mt-4 italic text-primary/80">🎭 Sugestão: Pedir que coloquem a mão no peito e perguntar: "O que essa chama representa para você?"</p>
                   </SectionCard>
+
+                  <ProtocoloPCH
+                    modulo="Módulo 7 · Pilares P-A-D-H integrados"
+                    foco="Conduzir a sessão terapêutica completa em 4 fases (P.A.D.H.) com diagnóstico contínuo e intervenções escalonadas."
+                    sinais={[
+                      'Fase P (Poesia): paciente chega tenso, defesas altas, discurso superficial.',
+                      'Fase A (Aplicada): emoção começa a fluir, surgem temas centrais e crenças nucleares.',
+                      'Fase D (Desenvolvimento): bloqueios afloram — choro, raiva, silêncio prolongado.',
+                      'Fase H (Humano): integração visível — postura muda, voz se firma, olhar se aclara.',
+                    ]}
+                    aplicacao={[
+                      'P · Acolhimento (10 min): use poema curto de presença para regular o sistema nervoso.',
+                      'A · Identificação (15 min): aplique Poemadiagnóstico — escute palavras-chave repetidas.',
+                      'D · Transformação (15 min): trabalhe com Poema-Funil ou Verso-Gatilho conforme demanda.',
+                      'H · Ancoragem (10 min): feche com Ritual do Silêncio + carta-poema para casa.',
+                      'Registre em prontuário: estado inicial, ferramenta aplicada, resposta emocional, tarefa.',
+                      'Reavalie a cada 4 sessões — ajuste o protocolo conforme a evolução.',
+                    ]}
+                    indicacoes={[
+                      'Modelo aplicável a praticamente todos os quadros clínicos com adaptações.',
+                      'Ideal para sessões de 50 minutos em consultório individual.',
+                      'Adaptável para grupos terapêuticos (estendendo cada fase em 50%).',
+                      'Compatível com TCC, psicanálise, gestalt e abordagens humanistas.',
+                    ]}
+                    cuidados={[
+                      'Nunca pular a fase P — o aterramento inicial protege o trabalho subsequente.',
+                      'Se a fase D ativar conteúdo intenso, prolongar a fase H para reorganização.',
+                      'Documentar consentimento informado para uso de técnicas hipnóticas leves.',
+                    ]}
+                  />
                 </div>
               </AccordionContent>
             </AccordionItem>
