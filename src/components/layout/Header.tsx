@@ -7,7 +7,38 @@ import PrefetchLink from './PrefetchLink';
 import Logo from '@/components/ui/Logo';
 
 const Header = () => {
-...
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isToolsOpen, setIsToolsOpen] = useState(false);
+  const location = useLocation();
+
+  const navItems = [
+    { name: 'Início', path: '/' },
+    { name: 'Sobre', path: '/sobre' },
+    { name: 'Livro-Curso', path: '/livro-curso' },
+    { name: 'Formação P.A.D.H.', path: '/formacao' },
+    { name: 'Curso P.A.D.H.', path: '/curso-padh' },
+    { name: 'Recursos Clínicos', path: '/recursos-clinicos' },
+    { name: 'Ferramentas', path: '/ferramentas', hasDropdown: true },
+    { name: 'Ciência', path: '/ciencia-da-poesia' },
+    { name: 'Mapa Cerebral', path: '/mapa-cerebral' },
+    { name: 'Aula Exclusiva', path: '/aula-exclusiva' },
+    { name: 'Contato', path: '/contato' }
+  ];
+
+  const toolLinks = [
+    { name: '1. Poema-Funil', path: '/ferramentas/poema-funil' },
+    { name: '2. Verso-Gatilho', path: '/ferramentas/verso-gatilho' },
+    { name: '3. Poemadiagnóstico', path: '/ferramentas/poemadiagnostico' },
+    { name: '4. Caderno de Voz Interna', path: '/ferramentas/caderno-voz-interna' },
+    { name: '5. Encenação Poética', path: '/ferramentas/encenacao-poetica' },
+    { name: '6. Reescrita Poética', path: '/ferramentas/reescrita-poetica' },
+    { name: '7. Ritual do Silêncio', path: '/ferramentas/ritual-silencio' },
+    { name: '8. Poesia Hipnótica', path: '/ferramentas/poesia-hipnotica' },
+  ];
+
+  const isActive = (path: string) => location.pathname === path;
+  const isToolsActive = location.pathname.startsWith('/ferramentas');
+
   return (
     <header className="sticky top-0 z-50 glass-morphism border-b border-primary/10">
       <div className="container mx-auto px-6">
