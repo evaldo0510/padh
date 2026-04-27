@@ -284,6 +284,12 @@ export const MODULOS: ModuloClinico[] = [
       'Necessidade de âncora simbólica',
       'Abertura para homework',
     ],
+    atividades: [
+      { id: 'identificacao_demanda', label: 'Identificação de Demanda Específica' },
+      { id: 'construcao_poema', label: 'Construção de Poema Personalizado' },
+      { id: 'prescricao', label: 'Entrega da Prescrição Poética' }
+    ],
+    tempoEstimado: 55,
   },
   {
     id: 'modulo-5',
