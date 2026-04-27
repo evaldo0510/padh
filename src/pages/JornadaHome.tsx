@@ -24,6 +24,7 @@ import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 const JornadaHome = () => {
   const navigate = useNavigate();
   const { jornada, isSyncing, hasConfig } = useJornada();
+  const { isOffline, toggleOffline } = useOfflineMode();
 
   // Logic to find next available session
   const findNextSession = () => {
