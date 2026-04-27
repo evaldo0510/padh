@@ -43,6 +43,12 @@ const Prontuario = lazy(() => import("./pages/Prontuario"));
 const RecursosClinicos = lazy(() => import("./pages/RecursosClinicos"));
 const Dashboard = lazy(() => import("./pages/Dashboard"));
 const Diagnostico = lazy(() => import("./pages/Diagnostico"));
+const JornadaHome = lazy(() => import("./pages/JornadaHome"));
+const DiagnosticoJornada = lazy(() => import("./pages/DiagnosticoJornada"));
+const BibliotecaExercicios = lazy(() => import("./pages/BibliotecaExercicios"));
+const SessaoView = lazy(() => import("./pages/SessaoView"));
+const Dashboard = lazy(() => import("./pages/Dashboard"));
+const Diagnostico = lazy(() => import("./pages/Diagnostico"));
 
 const queryClient = new QueryClient();
 
