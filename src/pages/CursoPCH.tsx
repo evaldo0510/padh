@@ -720,6 +720,36 @@ E quando percebo, já estou mais longe do que imaginei."`}</Poem>
                       <li>Que medos espera ter superado?</li>
                     </ul>
                   </SectionCard>
+
+                  <ProtocoloPCH
+                    modulo="Módulo 6 · Pilar D (Desenvolvimento)"
+                    foco="Selecionar o tipo de poesia terapêutica adequado ao quadro clínico e ao momento do tratamento."
+                    sinais={[
+                      'Identificação clara do estágio do processo: abertura, elaboração ou integração.',
+                      'Quadros mistos exigindo abordagem multimodal (ex.: ansiedade + luto).',
+                      'Necessidade de variar registros (cognitivo, emocional, somático, espiritual).',
+                      'Pacientes que respondem mais a um tipo específico de linguagem.',
+                    ]}
+                    aplicacao={[
+                      'Mapeie em qual dos 5 tipos o paciente se encaixa: catártico, contemplativo, mobilizador, integrativo ou ritualístico.',
+                      'Para abertura: prefira o catártico — autoriza expressão de dor.',
+                      'Para meio do processo: use o mobilizador — convoca à ação.',
+                      'Para integração: aplique o ritualístico — sela a transformação.',
+                      'Combine no máximo 2 tipos por sessão para evitar sobrecarga.',
+                      'Avalie ao final qual tipo gerou maior ressonância e oriente a continuidade.',
+                    ]}
+                    indicacoes={[
+                      'Trabalho com luto em todas as fases.',
+                      'Recuperação de violência doméstica ou sexual (contexto especializado).',
+                      'Acompanhamento de transições de vida (divórcio, aposentadoria, parentalidade).',
+                      'Cuidados paliativos e processos de fim de vida.',
+                    ]}
+                    cuidados={[
+                      'Não usar poesia catártica sem capacidade de contenção emocional na sessão.',
+                      'Em pacientes religiosos, respeitar referenciais simbólicos próprios.',
+                      'Adaptar o tipo conforme retorno do paciente — flexibilidade é clínica.',
+                    ]}
+                  />
                 </div>
               </AccordionContent>
             </AccordionItem>
