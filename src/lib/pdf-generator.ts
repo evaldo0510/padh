@@ -11,11 +11,27 @@ const COLORS = {
   border: [220, 220, 225] as [number, number, number],
 };
 
+/** RGB único por módulo — espelha as cores do site (HSL convertido) */
+const MODULE_RGB: Record<number, [number, number, number]> = {
+  1: [217, 158, 56],   // Âmbar dourado
+  2: [142, 105, 191],  // Violeta profundo
+  3: [108, 130, 217],  // Índigo místico
+  4: [200, 130, 178],  // Rosa-malva
+  5: [69, 168, 130],   // Esmeralda
+  6: [217, 113, 70],   // Terracota/cobre
+  7: [86, 130, 184],   // Azul-noite
+  8: [232, 187, 76],   // Ouro-rosa
+};
+
 const PAGE = { w: 210, h: 297, margin: 18 };
 
-function header(doc: jsPDF, title: string, subtitle: string) {
-  doc.setFillColor(...COLORS.primary);
+
+function header(doc: jsPDF, title: string, subtitle: string, color: [number, number, number] = COLORS.primary) {
+  doc.setFillColor(...color);
   doc.rect(0, 0, PAGE.w, 24, 'F');
+  // accent line
+  doc.setFillColor(255, 255, 255);
+  doc.rect(0, 24, PAGE.w, 0.6, 'F');
   doc.setTextColor(255, 255, 255);
   doc.setFont('helvetica', 'bold');
   doc.setFontSize(14);
@@ -33,6 +49,7 @@ function header(doc: jsPDF, title: string, subtitle: string) {
 
   doc.setTextColor(...COLORS.text);
 }
+
 
 function footer(doc: jsPDF) {
   const totalPages = doc.getNumberOfPages();
@@ -111,45 +128,55 @@ function addPoemBlock(doc: jsPDF, y: number, titulo: string, texto: string): num
 /* ─────────── PDF DO TERAPEUTA ─────────── */
 export function gerarPDFTerapeuta(modulo: ModuloClinico) {
   const doc = new jsPDF({ unit: 'mm', format: 'a4' });
-  header(doc, modulo.titulo, `Módulo ${modulo.numero} · Terapeuta`);
+  const cor = MODULE_RGB[modulo.numero] ?? COLORS.primary;
+  header(doc, modulo.titulo, `Módulo ${modulo.numero} · Terapeuta`, cor);
 
   let y = 32;
+  // Tag de cor do módulo
+  doc.setFillColor(...cor);
+  doc.circle(PAGE.margin + 2, y - 1, 1.6, 'F');
+  doc.setFont('helvetica', 'italic');
+  doc.setFontSize(8.5);
+  doc.setTextColor(...COLORS.muted);
+  doc.text(`${modulo.corNome} — ${modulo.corSimbolo}`, PAGE.margin + 6, y);
+  y += 6;
+
   doc.setFont('helvetica', 'bold');
   doc.setFontSize(16);
   doc.setTextColor(...COLORS.text);
   doc.text(`Pilar ${modulo.pilar} — ${modulo.pilarNome}`, PAGE.margin, y);
-  y += 8;
+  y += 7;
   doc.setFont('helvetica', 'italic');
   doc.setFontSize(10);
   doc.setTextColor(...COLORS.muted);
   y = addParagraph(doc, y, `Foco clínico: ${modulo.foco}`, true);
 
-  y = sectionTitle(doc, y + 2, '1. SINAIS — Identificação Emocional & Mental');
+  y = sectionTitle(doc, y + 2, '1. SINAIS — Identificação Emocional & Mental', cor);
   y = addList(doc, y, modulo.sinais);
 
-  y = sectionTitle(doc, y, '2. APLICAÇÃO — Passo a Passo Clínico');
+  y = sectionTitle(doc, y, '2. APLICAÇÃO — Passo a Passo Clínico', cor);
   y = addList(doc, y, modulo.aplicacao.map((a, i) => `Passo ${i + 1}. ${a}`), '');
 
-  y = sectionTitle(doc, y, '3. INDICAÇÕES TERAPÊUTICAS');
+  y = sectionTitle(doc, y, '3. INDICAÇÕES TERAPÊUTICAS', cor);
   y = addList(doc, y, modulo.indicacoes, '▸');
 
   y = sectionTitle(doc, y, '4. CUIDADOS ÉTICOS & CONTRAINDICAÇÕES', COLORS.accent);
   y = addList(doc, y, modulo.cuidados, '⚠');
 
-  y = sectionTitle(doc, y, '5. FUNDAMENTAÇÃO TEÓRICA');
+  y = sectionTitle(doc, y, '5. FUNDAMENTAÇÃO TEÓRICA', cor);
   autoTable(doc, {
     startY: y,
     head: [['Teórico', 'Obra', 'Contribuição']],
     body: modulo.teoricos.map(t => [t.nome, t.obra ?? '—', t.contribuicao]),
     theme: 'grid',
-    headStyles: { fillColor: COLORS.primary, textColor: 255, fontSize: 9 },
+    headStyles: { fillColor: cor, textColor: 255, fontSize: 9 },
     bodyStyles: { fontSize: 8.5, textColor: COLORS.text },
     margin: { left: PAGE.margin, right: PAGE.margin },
     styles: { cellPadding: 2.5 },
   });
   y = (doc as any).lastAutoTable.finalY + 6;
 
-  y = sectionTitle(doc, y, '6. ANOTAÇÕES CLÍNICAS DA SESSÃO');
+  y = sectionTitle(doc, y, '6. ANOTAÇÕES CLÍNICAS DA SESSÃO', cor);
   doc.setDrawColor(...COLORS.border);
   for (let i = 0; i < 6; i++) {
     if (y > PAGE.h - 30) { doc.addPage(); y = 32; }
@@ -161,12 +188,22 @@ export function gerarPDFTerapeuta(modulo: ModuloClinico) {
   doc.save(`PADH_Terapeuta_M${modulo.numero}_${slug(modulo.titulo)}.pdf`);
 }
 
+
 /* ─────────── PDF DO PACIENTE ─────────── */
 export function gerarPDFPaciente(modulo: ModuloClinico) {
   const doc = new jsPDF({ unit: 'mm', format: 'a4' });
-  header(doc, modulo.titulo, `Módulo ${modulo.numero} · Para você`);
+  const cor = MODULE_RGB[modulo.numero] ?? COLORS.primary;
+  header(doc, modulo.titulo, `Módulo ${modulo.numero} · Para você`, cor);
 
   let y = 32;
+  doc.setFillColor(...cor);
+  doc.circle(PAGE.margin + 2, y - 1, 1.6, 'F');
+  doc.setFont('helvetica', 'italic');
+  doc.setFontSize(8.5);
+  doc.setTextColor(...COLORS.muted);
+  doc.text(`${modulo.corNome} — ${modulo.corSimbolo}`, PAGE.margin + 6, y);
+  y += 6;
+
   doc.setFont('helvetica', 'bold');
   doc.setFontSize(18);
   doc.setTextColor(...COLORS.text);
@@ -185,10 +222,10 @@ export function gerarPDFPaciente(modulo: ModuloClinico) {
     y = addPoemBlock(doc, y, `Poema-prescrição: ${modulo.poemaPrescricao.titulo}`, modulo.poemaPrescricao.texto);
   }
 
-  y = sectionTitle(doc, y + 2, 'Suas Práticas para a Semana');
+  y = sectionTitle(doc, y + 2, 'Suas Práticas para a Semana', cor);
   y = addList(doc, y, modulo.tarefasPaciente.map((t, i) => `${i + 1}. ${t}`), '');
 
-  y = sectionTitle(doc, y, 'Diário de Sensações');
+  y = sectionTitle(doc, y, 'Diário de Sensações', cor);
   doc.setFont('helvetica', 'italic');
   doc.setFontSize(9);
   doc.setTextColor(...COLORS.muted);

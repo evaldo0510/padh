@@ -143,7 +143,7 @@ const CursoPCH = () => {
           {/* Como identificar problemas mentais e emocionais */}
           <div className="rounded-xl border border-primary/15 bg-card p-6 md:p-8">
             <h3 className="text-xl font-heading font-semibold text-foreground mb-4 flex items-center gap-2">
-              <Brain className="h-5 w-5 text-primary" />
+              <Brain className="h-5 w-5 text-module" />
               Como Identificar Problemas Mentais e Emocionais pela Linguagem
             </h3>
             <p className="text-sm text-muted-foreground mb-5 leading-relaxed">
@@ -196,14 +196,14 @@ const CursoPCH = () => {
           <Accordion type="multiple" className="space-y-4">
 
             {/* ══════════════ MÓDULO 1 ══════════════ */}
-            <AccordionItem value="modulo-1" className="glass-card rounded-xl border-primary/10 px-6">
+            <AccordionItem value="modulo-1" data-module="1" className="module-themed glass-card rounded-2xl border border-module/30 hover:border-module/60 transition-colors px-6">
               <AccordionTrigger className="py-6 hover:no-underline">
                 <div className="flex items-center gap-3 text-left">
-                  <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center shrink-0">
-                    <BookOpen className="h-5 w-5 text-primary" />
+                  <div className="w-11 h-11 rounded-xl bg-module-soft flex items-center justify-center shrink-0 ring-1 ring-module/20">
+                    <BookOpen className="h-5 w-5 text-module" />
                   </div>
                   <div>
-                    <p className="text-xs text-primary font-medium uppercase tracking-wider">Módulo 1</p>
+                    <p className="text-[10px] text-module font-bold uppercase tracking-[0.2em]">Módulo 1</p>
                     <h2 className="text-xl font-heading font-semibold text-foreground">Base Teórica — O Poder das Palavras</h2>
                   </div>
                 </div>
@@ -310,6 +310,8 @@ meu próprio rumo, que hoje encontrei.`}</Poem>
                   <FundamentacaoTeorica
                     teoricos={getModulo("modulo-1")!.teoricos}
                     pilar={getModulo("modulo-1")!.pilar}
+                    corNome={getModulo("modulo-1")!.corNome}
+                    corSimbolo={getModulo("modulo-1")!.corSimbolo}
                   />
 
                   <BotaoImprimirPDF modulo={getModulo("modulo-1")!} />
@@ -318,14 +320,14 @@ meu próprio rumo, que hoje encontrei.`}</Poem>
             </AccordionItem>
 
             {/* ══════════════ MÓDULO 2 ══════════════ */}
-            <AccordionItem value="modulo-2" className="glass-card rounded-xl border-primary/10 px-6">
+            <AccordionItem value="modulo-2" data-module="2" className="module-themed glass-card rounded-2xl border border-module/30 hover:border-module/60 transition-colors px-6">
               <AccordionTrigger className="py-6 hover:no-underline">
                 <div className="flex items-center gap-3 text-left">
-                  <div className="w-10 h-10 rounded-lg bg-secondary/10 flex items-center justify-center shrink-0">
-                    <PenTool className="h-5 w-5 text-secondary" />
+                  <div className="w-11 h-11 rounded-xl bg-module-soft flex items-center justify-center shrink-0 ring-1 ring-module/20">
+                    <PenTool className="h-5 w-5 text-module" />
                   </div>
                   <div>
-                    <p className="text-xs text-primary font-medium uppercase tracking-wider">Módulo 2</p>
+                    <p className="text-[10px] text-module font-bold uppercase tracking-[0.2em]">Módulo 2</p>
                     <h2 className="text-xl font-heading font-semibold text-foreground">Exercícios de Reestruturação de Crenças</h2>
                   </div>
                 </div>
@@ -435,6 +437,8 @@ mas ressoa fundo.`}</Poem>
                   <FundamentacaoTeorica
                     teoricos={getModulo("modulo-2")!.teoricos}
                     pilar={getModulo("modulo-2")!.pilar}
+                    corNome={getModulo("modulo-2")!.corNome}
+                    corSimbolo={getModulo("modulo-2")!.corSimbolo}
                   />
 
                   <BotaoImprimirPDF modulo={getModulo("modulo-2")!} />
@@ -443,14 +447,14 @@ mas ressoa fundo.`}</Poem>
             </AccordionItem>
 
             {/* ══════════════ MÓDULO 3 ══════════════ */}
-            <AccordionItem value="modulo-3" className="glass-card rounded-xl border-primary/10 px-6">
+            <AccordionItem value="modulo-3" data-module="3" className="module-themed glass-card rounded-2xl border border-module/30 hover:border-module/60 transition-colors px-6">
               <AccordionTrigger className="py-6 hover:no-underline">
                 <div className="flex items-center gap-3 text-left">
-                  <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center shrink-0">
-                    <Brain className="h-5 w-5 text-primary" />
+                  <div className="w-11 h-11 rounded-xl bg-module-soft flex items-center justify-center shrink-0 ring-1 ring-module/20">
+                    <Brain className="h-5 w-5 text-module" />
                   </div>
                   <div>
-                    <p className="text-xs text-primary font-medium uppercase tracking-wider">Módulo 3</p>
+                    <p className="text-[10px] text-module font-bold uppercase tracking-[0.2em]">Módulo 3</p>
                     <h2 className="text-xl font-heading font-semibold text-foreground">Técnicas de Linguagem Hipnótica</h2>
                   </div>
                 </div>
@@ -551,6 +555,8 @@ e tudo simplesmente… acontece…`}</Poem>
                   <FundamentacaoTeorica
                     teoricos={getModulo("modulo-3")!.teoricos}
                     pilar={getModulo("modulo-3")!.pilar}
+                    corNome={getModulo("modulo-3")!.corNome}
+                    corSimbolo={getModulo("modulo-3")!.corSimbolo}
                   />
 
                   <BotaoImprimirPDF modulo={getModulo("modulo-3")!} />
@@ -559,14 +565,14 @@ e tudo simplesmente… acontece…`}</Poem>
             </AccordionItem>
 
             {/* ══════════════ MÓDULO 4 ══════════════ */}
-            <AccordionItem value="modulo-4" className="glass-card rounded-xl border-primary/10 px-6">
+            <AccordionItem value="modulo-4" data-module="4" className="module-themed glass-card rounded-2xl border border-module/30 hover:border-module/60 transition-colors px-6">
               <AccordionTrigger className="py-6 hover:no-underline">
                 <div className="flex items-center gap-3 text-left">
-                  <div className="w-10 h-10 rounded-lg bg-secondary/10 flex items-center justify-center shrink-0">
-                    <Feather className="h-5 w-5 text-secondary" />
+                  <div className="w-11 h-11 rounded-xl bg-module-soft flex items-center justify-center shrink-0 ring-1 ring-module/20">
+                    <Feather className="h-5 w-5 text-module" />
                   </div>
                   <div>
-                    <p className="text-xs text-primary font-medium uppercase tracking-wider">Módulo 4</p>
+                    <p className="text-[10px] text-module font-bold uppercase tracking-[0.2em]">Módulo 4</p>
                     <h2 className="text-xl font-heading font-semibold text-foreground">Modelos de Poemas Sugestivos</h2>
                   </div>
                 </div>
@@ -672,6 +678,8 @@ para iluminar o próximo passo.`}</Poem>
                   <FundamentacaoTeorica
                     teoricos={getModulo("modulo-4")!.teoricos}
                     pilar={getModulo("modulo-4")!.pilar}
+                    corNome={getModulo("modulo-4")!.corNome}
+                    corSimbolo={getModulo("modulo-4")!.corSimbolo}
                   />
 
                   <BotaoImprimirPDF modulo={getModulo("modulo-4")!} />
@@ -680,14 +688,14 @@ para iluminar o próximo passo.`}</Poem>
             </AccordionItem>
 
             {/* ══════════════ MÓDULO 5 ══════════════ */}
-            <AccordionItem value="modulo-5" className="glass-card rounded-xl border-primary/10 px-6">
+            <AccordionItem value="modulo-5" data-module="5" className="module-themed glass-card rounded-2xl border border-module/30 hover:border-module/60 transition-colors px-6">
               <AccordionTrigger className="py-6 hover:no-underline">
                 <div className="flex items-center gap-3 text-left">
-                  <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center shrink-0">
-                    <Lightbulb className="h-5 w-5 text-primary" />
+                  <div className="w-11 h-11 rounded-xl bg-module-soft flex items-center justify-center shrink-0 ring-1 ring-module/20">
+                    <Lightbulb className="h-5 w-5 text-module" />
                   </div>
                   <div>
-                    <p className="text-xs text-primary font-medium uppercase tracking-wider">Módulo 5</p>
+                    <p className="text-[10px] text-module font-bold uppercase tracking-[0.2em]">Módulo 5</p>
                     <h2 className="text-xl font-heading font-semibold text-foreground">Técnicas Avançadas — Metáforas, Pacing e Leading</h2>
                   </div>
                 </div>
@@ -799,6 +807,8 @@ Está cada vez mais próximo de alcançar a sua essência.`}</Poem>
                   <FundamentacaoTeorica
                     teoricos={getModulo("modulo-5")!.teoricos}
                     pilar={getModulo("modulo-5")!.pilar}
+                    corNome={getModulo("modulo-5")!.corNome}
+                    corSimbolo={getModulo("modulo-5")!.corSimbolo}
                   />
 
                   <BotaoImprimirPDF modulo={getModulo("modulo-5")!} />
@@ -807,14 +817,14 @@ Está cada vez mais próximo de alcançar a sua essência.`}</Poem>
             </AccordionItem>
 
             {/* ══════════════ MÓDULO 6 ══════════════ */}
-            <AccordionItem value="modulo-6" className="glass-card rounded-xl border-primary/10 px-6">
+            <AccordionItem value="modulo-6" data-module="6" className="module-themed glass-card rounded-2xl border border-module/30 hover:border-module/60 transition-colors px-6">
               <AccordionTrigger className="py-6 hover:no-underline">
                 <div className="flex items-center gap-3 text-left">
-                  <div className="w-10 h-10 rounded-lg bg-secondary/10 flex items-center justify-center shrink-0">
-                    <Eye className="h-5 w-5 text-secondary" />
+                  <div className="w-11 h-11 rounded-xl bg-module-soft flex items-center justify-center shrink-0 ring-1 ring-module/20">
+                    <Eye className="h-5 w-5 text-module" />
                   </div>
                   <div>
-                    <p className="text-xs text-primary font-medium uppercase tracking-wider">Módulo 6</p>
+                    <p className="text-[10px] text-module font-bold uppercase tracking-[0.2em]">Módulo 6</p>
                     <h2 className="text-xl font-heading font-semibold text-foreground">Poesia Terapêutica — Tipos e Aplicações</h2>
                   </div>
                 </div>
@@ -910,6 +920,8 @@ E quando percebo, já estou mais longe do que imaginei."`}</Poem>
                   <FundamentacaoTeorica
                     teoricos={getModulo("modulo-6")!.teoricos}
                     pilar={getModulo("modulo-6")!.pilar}
+                    corNome={getModulo("modulo-6")!.corNome}
+                    corSimbolo={getModulo("modulo-6")!.corSimbolo}
                   />
 
                   <BotaoImprimirPDF modulo={getModulo("modulo-6")!} />
@@ -918,14 +930,14 @@ E quando percebo, já estou mais longe do que imaginei."`}</Poem>
             </AccordionItem>
 
             {/* ══════════════ MÓDULO 7 ══════════════ */}
-            <AccordionItem value="modulo-7" className="glass-card rounded-xl border-primary/10 px-6">
+            <AccordionItem value="modulo-7" data-module="7" className="module-themed glass-card rounded-2xl border border-module/30 hover:border-module/60 transition-colors px-6">
               <AccordionTrigger className="py-6 hover:no-underline">
                 <div className="flex items-center gap-3 text-left">
-                  <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center shrink-0">
-                    <Target className="h-5 w-5 text-primary" />
+                  <div className="w-11 h-11 rounded-xl bg-module-soft flex items-center justify-center shrink-0 ring-1 ring-module/20">
+                    <Target className="h-5 w-5 text-module" />
                   </div>
                   <div>
-                    <p className="text-xs text-primary font-medium uppercase tracking-wider">Módulo 7</p>
+                    <p className="text-[10px] text-module font-bold uppercase tracking-[0.2em]">Módulo 7</p>
                     <h2 className="text-xl font-heading font-semibold text-foreground">Sessão Terapêutica em 4 Fases (P.A.D.H.)</h2>
                   </div>
                 </div>
@@ -1043,6 +1055,8 @@ Mas porque sempre esteve dentro de você."`}</Poem>
                   <FundamentacaoTeorica
                     teoricos={getModulo("modulo-7")!.teoricos}
                     pilar={getModulo("modulo-7")!.pilar}
+                    corNome={getModulo("modulo-7")!.corNome}
+                    corSimbolo={getModulo("modulo-7")!.corSimbolo}
                   />
 
                   <BotaoImprimirPDF modulo={getModulo("modulo-7")!} />
@@ -1051,14 +1065,14 @@ Mas porque sempre esteve dentro de você."`}</Poem>
             </AccordionItem>
 
             {/* ══════════════ MÓDULO 8 ══════════════ */}
-            <AccordionItem value="modulo-8" className="glass-card rounded-xl border-primary/10 px-6">
+            <AccordionItem value="modulo-8" data-module="8" className="module-themed glass-card rounded-2xl border border-module/30 hover:border-module/60 transition-colors px-6">
               <AccordionTrigger className="py-6 hover:no-underline">
                 <div className="flex items-center gap-3 text-left">
-                  <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center shrink-0">
-                    <Heart className="h-5 w-5 text-primary" />
+                  <div className="w-11 h-11 rounded-xl bg-module-soft flex items-center justify-center shrink-0 ring-1 ring-module/20">
+                    <Heart className="h-5 w-5 text-module" />
                   </div>
                   <div>
-                    <p className="text-xs text-primary font-medium uppercase tracking-wider">Módulo 8</p>
+                    <p className="text-[10px] text-module font-bold uppercase tracking-[0.2em]">Módulo 8</p>
                     <h2 className="text-xl font-heading font-semibold text-foreground">Exercícios Práticos — Reescrevendo sua História</h2>
                   </div>
                 </div>
@@ -1183,6 +1197,8 @@ só precisa de tempo, terra e coragem para abrir."`}</Poem>
                   <FundamentacaoTeorica
                     teoricos={getModulo("modulo-8")!.teoricos}
                     pilar={getModulo("modulo-8")!.pilar}
+                    corNome={getModulo("modulo-8")!.corNome}
+                    corSimbolo={getModulo("modulo-8")!.corSimbolo}
                   />
 
                   <BotaoImprimirPDF modulo={getModulo("modulo-8")!} />

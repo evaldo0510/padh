@@ -32,10 +32,10 @@ const BotaoImprimirPDF: React.FC<Props> = ({ modulo, variant = 'card' }) => {
   if (variant === 'inline') {
     return (
       <div className="flex flex-wrap gap-2">
-        <Button size="sm" variant="outline" onClick={handleTerapeuta} className="gap-2">
+        <Button size="sm" variant="outline" onClick={handleTerapeuta} className="gap-2 border-module hover:bg-module-soft hover:text-module">
           <Stethoscope className="h-3.5 w-3.5" /> PDF Terapeuta
         </Button>
-        <Button size="sm" variant="outline" onClick={handlePaciente} className="gap-2">
+        <Button size="sm" variant="outline" onClick={handlePaciente} className="gap-2 border-module hover:bg-module-soft hover:text-module">
           <User className="h-3.5 w-3.5" /> PDF Paciente
         </Button>
       </div>
@@ -43,23 +43,26 @@ const BotaoImprimirPDF: React.FC<Props> = ({ modulo, variant = 'card' }) => {
   }
 
   return (
-    <div className="mt-6 rounded-xl border-2 border-dashed border-primary/25 bg-primary/[0.02] p-5">
+    <div className="mt-6 rounded-2xl border-2 border-dashed border-module bg-module-tint p-5 md:p-6">
       <div className="flex items-start gap-3 mb-4">
-        <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center shrink-0">
-          <FileDown className="h-5 w-5 text-primary" />
+        <div className="w-11 h-11 rounded-xl bg-module-soft flex items-center justify-center shrink-0">
+          <FileDown className="h-5 w-5 text-module" />
         </div>
         <div>
-          <h4 className="font-heading font-semibold text-foreground text-base">Versões Imprimíveis</h4>
-          <p className="text-xs text-muted-foreground mt-0.5">
-            Baixe os protocolos em PDF para usar em consulta ou entregar ao paciente.
+          <p className="text-[10px] uppercase tracking-[0.22em] text-module font-bold mb-1">Para Imprimir</p>
+          <h4 className="font-heading font-semibold text-foreground text-base md:text-lg">
+            Versões Imprimíveis em PDF
+          </h4>
+          <p className="text-xs text-muted-foreground mt-1">
+            Baixe os protocolos para usar em consulta ou entregar ao paciente.
           </p>
         </div>
       </div>
       <div className="grid sm:grid-cols-2 gap-3">
-        <Button onClick={handleTerapeuta} variant="default" className="gap-2">
+        <Button onClick={handleTerapeuta} className="gap-2 bg-module text-background hover:opacity-90 border-0 shadow-module-glow">
           <Stethoscope className="h-4 w-4" /> PDF do Terapeuta
         </Button>
-        <Button onClick={handlePaciente} variant="secondary" className="gap-2">
+        <Button onClick={handlePaciente} variant="outline" className="gap-2 border-module text-foreground hover:bg-module-soft hover:text-module">
           <User className="h-4 w-4" /> PDF do Paciente
         </Button>
       </div>

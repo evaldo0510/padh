@@ -16,6 +16,10 @@ export interface ModuloClinico {
   titulo: string;
   pilar: 'P' | 'A' | 'D' | 'H';
   pilarNome: string;
+  /** Nome poético da identidade cromática deste módulo */
+  corNome: string;
+  /** Significado simbólico da cor escolhida */
+  corSimbolo: string;
   foco: string;
   sinais: string[];
   aplicacao: string[];
@@ -35,6 +39,8 @@ export const MODULOS: ModuloClinico[] = [
   {
     id: 'modulo-1',
     numero: 1,
+    corNome: 'Âmbar dourado',
+    corSimbolo: 'Luz da escuta — a palavra como faísca de consciência.',
     titulo: 'Base Teórica — O Poder das Palavras',
     pilar: 'P',
     pilarNome: 'Poesia (Escuta)',
@@ -90,6 +96,8 @@ export const MODULOS: ModuloClinico[] = [
   {
     id: 'modulo-2',
     numero: 2,
+    corNome: 'Violeta profundo',
+    corSimbolo: 'Transformação alquímica — onde a crença vira liberdade.',
     titulo: 'Reestruturação de Crenças',
     pilar: 'A',
     pilarNome: 'Aplicada (Reestruturação)',
@@ -146,6 +154,8 @@ export const MODULOS: ModuloClinico[] = [
   {
     id: 'modulo-3',
     numero: 3,
+    corNome: 'Índigo místico',
+    corSimbolo: 'Transe leve — fronteira entre o consciente e o sonho.',
     titulo: 'Técnicas de Linguagem Hipnótica',
     pilar: 'A',
     pilarNome: 'Aplicada (Indução Leve)',
@@ -200,6 +210,8 @@ export const MODULOS: ModuloClinico[] = [
   {
     id: 'modulo-4',
     numero: 4,
+    corNome: 'Rosa-malva',
+    corSimbolo: 'Prescrição amorosa — o cuidado feito verso.',
     titulo: 'Construção de Poemas Hipnóticos',
     pilar: 'A',
     pilarNome: 'Aplicada (Prescrição)',
@@ -254,6 +266,8 @@ export const MODULOS: ModuloClinico[] = [
   {
     id: 'modulo-5',
     numero: 5,
+    corNome: 'Esmeralda profunda',
+    corSimbolo: 'Jornada do herói — a floresta interior do símbolo.',
     titulo: 'Técnicas Avançadas — Metáforas Curativas',
     pilar: 'D',
     pilarNome: 'Desenvolvimento (Aprofundamento)',
@@ -308,6 +322,8 @@ export const MODULOS: ModuloClinico[] = [
   {
     id: 'modulo-6',
     numero: 6,
+    corNome: 'Terracota & cobre',
+    corSimbolo: 'Sentido encarnado — a poesia que vira corpo.',
     titulo: 'Tipos de Poesia Terapêutica',
     pilar: 'D',
     pilarNome: 'Desenvolvimento (Adequação)',
@@ -362,6 +378,8 @@ export const MODULOS: ModuloClinico[] = [
   {
     id: 'modulo-7',
     numero: 7,
+    corNome: 'Azul-noite ancestral',
+    corSimbolo: 'Holding — o colo psíquico que sustenta a mudança.',
     titulo: 'Sessão Terapêutica em 4 Fases (P.A.D.H.)',
     pilar: 'H',
     pilarNome: 'Humano (Integração)',
@@ -416,6 +434,8 @@ export const MODULOS: ModuloClinico[] = [
   {
     id: 'modulo-8',
     numero: 8,
+    corNome: 'Ouro-rosa luminoso',
+    corSimbolo: 'Autonomia & flow — o brilho da maturidade poética.',
     titulo: 'Exercícios Práticos Avançados',
     pilar: 'H',
     pilarNome: 'Humano (Autonomia)',

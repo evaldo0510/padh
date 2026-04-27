@@ -2,23 +2,17 @@ import React from 'react';
 import { Stethoscope, Search, Compass, ShieldCheck, AlertCircle, ClipboardList } from 'lucide-react';
 
 interface ProtocoloPCHProps {
-  /** Nome do módulo (ex.: "Módulo 1") para contextualizar o protocolo */
   modulo: string;
-  /** Foco clínico específico deste módulo */
   foco: string;
-  /** Sinais emocionais/mentais que esta etapa ajuda a identificar */
   sinais: string[];
-  /** Passo a passo de aplicação clínica */
   aplicacao: string[];
-  /** Indicações terapêuticas */
   indicacoes: string[];
-  /** Cuidados éticos e contraindicações */
   cuidados?: string[];
 }
 
 /**
  * Bloco de Protocolo Clínico — apresenta como aplicar a PCH dentro do P.A.D.H.
- * em cada módulo, sem alterar o conteúdo original.
+ * Usa a variável CSS `--module` herdada do container `module-themed[data-module="N"]`.
  */
 const ProtocoloPCH: React.FC<ProtocoloPCHProps> = ({
   modulo,
@@ -29,14 +23,14 @@ const ProtocoloPCH: React.FC<ProtocoloPCHProps> = ({
   cuidados,
 }) => {
   return (
-    <div className="mt-10 pt-8 border-t-2 border-primary/15">
+    <div className="mt-10 pt-8 border-t-2 border-module/40">
       {/* Cabeçalho do Protocolo */}
       <div className="flex items-start gap-3 mb-6">
-        <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center shrink-0 mt-1">
-          <Stethoscope className="h-6 w-6 text-primary" />
+        <div className="w-12 h-12 rounded-xl bg-module-soft flex items-center justify-center shrink-0 mt-1">
+          <Stethoscope className="h-6 w-6 text-module" />
         </div>
         <div>
-          <p className="text-xs uppercase tracking-[0.18em] text-primary font-semibold mb-1">
+          <p className="text-xs uppercase tracking-[0.18em] text-module font-semibold mb-1">
             Protocolo Clínico PCH no P.A.D.H. · {modulo}
           </p>
           <h3 className="text-xl md:text-2xl font-heading font-semibold text-foreground">
@@ -50,9 +44,9 @@ const ProtocoloPCH: React.FC<ProtocoloPCHProps> = ({
 
       <div className="grid md:grid-cols-2 gap-5">
         {/* Sinais & Diagnóstico */}
-        <div className="rounded-xl border border-primary/15 bg-primary/[0.03] p-5">
+        <div className="rounded-xl border border-module bg-module-tint p-5">
           <div className="flex items-center gap-2 mb-3">
-            <Search className="h-4 w-4 text-primary" />
+            <Search className="h-4 w-4 text-module" />
             <h4 className="font-heading font-semibold text-foreground">
               Identificação Emocional & Mental
             </h4>
@@ -63,7 +57,7 @@ const ProtocoloPCH: React.FC<ProtocoloPCHProps> = ({
           <ul className="space-y-2">
             {sinais.map((s, i) => (
               <li key={i} className="text-sm text-muted-foreground flex gap-2 leading-relaxed">
-                <span className="text-primary mt-1.5 shrink-0">◦</span>
+                <span className="text-module mt-1.5 shrink-0">◦</span>
                 <span>{s}</span>
               </li>
             ))}
@@ -71,9 +65,9 @@ const ProtocoloPCH: React.FC<ProtocoloPCHProps> = ({
         </div>
 
         {/* Aplicação Prática */}
-        <div className="rounded-xl border border-primary/15 bg-primary/[0.03] p-5">
+        <div className="rounded-xl border border-module bg-module-tint p-5">
           <div className="flex items-center gap-2 mb-3">
-            <ClipboardList className="h-4 w-4 text-primary" />
+            <ClipboardList className="h-4 w-4 text-module" />
             <h4 className="font-heading font-semibold text-foreground">
               Aplicação Passo a Passo
             </h4>
@@ -81,7 +75,7 @@ const ProtocoloPCH: React.FC<ProtocoloPCHProps> = ({
           <ol className="space-y-2.5">
             {aplicacao.map((a, i) => (
               <li key={i} className="text-sm text-muted-foreground flex gap-2.5 leading-relaxed">
-                <span className="shrink-0 w-5 h-5 rounded-full bg-primary/10 text-primary text-xs font-bold flex items-center justify-center mt-0.5">
+                <span className="shrink-0 w-5 h-5 rounded-full bg-module-soft text-module text-xs font-bold flex items-center justify-center mt-0.5">
                   {i + 1}
                 </span>
                 <span>{a}</span>
@@ -91,9 +85,9 @@ const ProtocoloPCH: React.FC<ProtocoloPCHProps> = ({
         </div>
 
         {/* Indicações */}
-        <div className="rounded-xl border border-secondary/20 bg-secondary/[0.04] p-5">
+        <div className="rounded-xl border border-module bg-module-tint p-5">
           <div className="flex items-center gap-2 mb-3">
-            <Compass className="h-4 w-4 text-secondary" />
+            <Compass className="h-4 w-4 text-module" />
             <h4 className="font-heading font-semibold text-foreground">
               Indicações Terapêuticas
             </h4>
@@ -101,16 +95,16 @@ const ProtocoloPCH: React.FC<ProtocoloPCHProps> = ({
           <ul className="space-y-2">
             {indicacoes.map((ind, i) => (
               <li key={i} className="text-sm text-muted-foreground flex gap-2 leading-relaxed">
-                <span className="text-secondary mt-1.5 shrink-0">▸</span>
+                <span className="text-module mt-1.5 shrink-0">▸</span>
                 <span>{ind}</span>
               </li>
             ))}
           </ul>
         </div>
 
-        {/* Cuidados Éticos */}
+        {/* Cuidados Éticos — sempre âmbar para sinalizar atenção universal */}
         {cuidados && cuidados.length > 0 && (
-          <div className="rounded-xl border border-spiritual-amber/25 bg-spiritual-amber/[0.05] p-5">
+          <div className="rounded-xl border border-spiritual-amber/30 bg-spiritual-amber/[0.05] p-5">
             <div className="flex items-center gap-2 mb-3">
               <ShieldCheck className="h-4 w-4 text-spiritual-amber" />
               <h4 className="font-heading font-semibold text-foreground">
