@@ -96,6 +96,12 @@ export const MODULOS: ModuloClinico[] = [
       'Auto-desqualificação verbal',
       'Discurso fragmentado',
     ],
+    atividades: [
+      { id: 'teoria', label: 'Estudo da Base Teórica' },
+      { id: 'escuta', label: 'Prática de Escuta Ativa' },
+      { id: 'checklist', label: 'Checklist de Sinais' }
+    ],
+    tempoEstimado: 45,
   },
   {
     id: 'modulo-2',
