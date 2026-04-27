@@ -15,8 +15,10 @@ import {
 } from 'lucide-react';
 import { supabaseConfig, supabase } from '@/integrations/supabase/client';
 import { toast } from 'sonner';
+import { useOfflineMode } from '@/hooks/useOfflineMode';
 
 const DiagnosticsPage = () => {
+  const { isOffline, toggleOffline, canConnect } = useOfflineMode();
   const [checking, setChecking] = useState(false);
   const [status, setStatus] = useState<'idle' | 'success' | 'error'>('idle');
   const [errorDetails, setErrorDetails] = useState<string | null>(null);
