@@ -7,6 +7,8 @@ import { Label } from '@/components/ui/label';
 import { Feather, Sparkles, ArrowRight } from 'lucide-react';
 import { useNavigate, Link } from 'react-router-dom';
 import { toast } from 'sonner';
+import { supabaseConfig } from '@/integrations/supabase/client';
+import { ShieldAlert } from 'lucide-react';
 
 const LoginPage = () => {
   const [email, setEmail] = useState('');
