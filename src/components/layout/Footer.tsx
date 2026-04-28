@@ -46,6 +46,10 @@ const Footer = () => {
       name: "Contato",
       path: "/contato",
     },
+    {
+      name: "Guia de UI",
+      path: "/ui-guide",
+    },
   ];
   const toolLinks = [
     {

@@ -75,6 +75,7 @@ const SessaoView = lazy(() => import("./pages/SessaoView"));
 const LoginPage = lazy(() => import("./pages/LoginPage"));
 const DiagnosticsPage = lazy(() => import("./pages/DiagnosticsPage"));
 const ConfigGuidePage = lazy(() => import("./pages/ConfigGuidePage"));
+const UiGuide = lazy(() => import("./pages/UiGuide"));
 
 const queryClient = new QueryClient();
 
@@ -394,6 +395,14 @@ const AnimatedRoutes = () => {
             element={
               <PageTransition>
                 <ConfigGuidePage />
+              </PageTransition>
+            }
+          />
+          <Route
+            path="/ui-guide"
+            element={
+              <PageTransition>
+                <UiGuide />
               </PageTransition>
             }
           />
