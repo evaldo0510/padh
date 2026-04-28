@@ -132,7 +132,7 @@ const Dashboard = () => {
           <Card className="border-primary/10">
             <CardHeader className="pb-2">
               <CardDescription className="flex items-center gap-2">
-                <Trophy className="h-4 w-4 text-primary" /> Progresso Geral
+                <Trophy className="h-4 w-4 spiritual-icon" /> Progresso Geral
               </CardDescription>
               <CardTitle className="text-3xl font-bold">{percentComplete}%</CardTitle>
             </CardHeader>
