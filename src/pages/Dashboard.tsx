@@ -432,8 +432,13 @@ const Dashboard = () => {
             isAuthenticated={isAuthenticated}
             filter={filter}
             setFilter={setFilter}
+            sort={sort}
+            setSort={setSort}
             visibleCount={visibleCount}
             setVisibleCount={setVisibleCount}
+            loading={loadingProgress}
+            reloading={reloading}
+            onReload={handleReload}
           />
 
           {/* User Stats & Info Section (Bottom) */}
