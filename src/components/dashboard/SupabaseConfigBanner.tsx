@@ -75,14 +75,12 @@ const SupabaseConfigBanner = () => {
               Status do Sistema: {isOffline ? "Modo Offline" : "Modo Online"}
             </span>
             <div className="flex gap-2">
-              <span className={`text-[10px] font-bold px-2 py-0.5 rounded-full border flex items-center gap-1 ${syncBadge.color}`}>
+              <Badge variant={syncBadge.variant} className={`text-[10px] font-bold px-2 py-0.5 gap-1 ${syncBadge.className}`}>
                 {syncBadge.icon} {syncBadge.label}
-              </span>
-              <span className={`text-[10px] font-bold px-2 py-0.5 rounded-full border ${
-                configStatus ? "bg-primary/10 text-primary border-primary/20" : "bg-destructive/10 text-destructive border-destructive/20"
-              }`}>
+              </Badge>
+              <Badge variant={configStatus ? "spiritual" : "destructive"} className={`text-[10px] font-bold px-2 py-0.5 ${configStatus ? "spiritual-chip-amber" : ""}`}>
                 Config: {configStatus ? "OK" : "PENDENTE"}
-              </span>
+              </Badge>
             </div>
           </AlertTitle>
           
