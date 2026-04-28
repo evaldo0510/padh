@@ -45,6 +45,7 @@ type EpisodeProgressRow = {
 };
 
 type FilterMode = "all" | "completed" | "in_progress" | "not_started";
+type SortMode = "default" | "status" | "recent";
 const PAGE_SIZE = 8;
 
 const Dashboard = () => {
@@ -58,7 +59,10 @@ const Dashboard = () => {
   const [navigatingTo, setNavigatingTo] = useState<string | null>(null);
   const [remoteProgress, setRemoteProgress] = useState<EpisodeProgressRow[]>([]);
   const [filter, setFilter] = useState<FilterMode>("all");
+  const [sort, setSort] = useState<SortMode>("default");
   const [visibleCount, setVisibleCount] = useState(PAGE_SIZE);
+  const [loadingProgress, setLoadingProgress] = useState(true);
+  const [reloading, setReloading] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 50);
@@ -72,43 +76,61 @@ const Dashboard = () => {
     toast.dismiss("nav-toast");
   }, [location.pathname]);
 
-  // Fetch episode_progress from Supabase for the authenticated user
-  useEffect(() => {
-    if (!isAuthenticated || !user) {
-      setRemoteProgress([]);
-      return;
-    }
-    let cancelled = false;
-    (async () => {
-      const { data, error } = await supabase
-        .from("episode_progress")
-        .select("session_id,phase_id,status,completed_at")
-        .eq("user_id", user.id);
-      if (!cancelled && !error && data) {
-        setRemoteProgress(data as EpisodeProgressRow[]);
+  // Optimized fetch: only the columns/statuses we need given the active filter
+  const loadProgress = React.useCallback(
+    async (silent = false) => {
+      if (!isAuthenticated || !user) {
+        setRemoteProgress([]);
+        setLoadingProgress(false);
+        return;
       }
-    })();
+      if (!silent) setLoadingProgress(true);
+      let query = supabase
+        .from("episode_progress")
+        .select("session_id,phase_id,status,completed_at,updated_at")
+        .eq("user_id", user.id);
+      // Server-side narrow when filter targets a specific status
+      if (filter === "completed") query = query.eq("status", "completed");
+      else if (filter === "in_progress") query = query.eq("status", "in_progress");
+      const { data, error } = await query;
+      if (!error && data) setRemoteProgress(data as EpisodeProgressRow[]);
+      setLoadingProgress(false);
+    },
+    [isAuthenticated, user, filter],
+  );
 
+  useEffect(() => {
+    let cancelled = false;
+    loadProgress().catch(() => {
+      if (!cancelled) setLoadingProgress(false);
+    });
+    return () => {
+      cancelled = true;
+    };
+  }, [loadProgress]);
+
+  // Realtime: refresh on any change to this user's episode_progress
+  useEffect(() => {
+    if (!isAuthenticated || !user) return;
     const channel = supabase
       .channel(`dashboard-progress-${user.id}`)
       .on(
         "postgres_changes",
         { event: "*", schema: "public", table: "episode_progress", filter: `user_id=eq.${user.id}` },
-        async () => {
-          const { data } = await supabase
-            .from("episode_progress")
-            .select("session_id,phase_id,status,completed_at")
-            .eq("user_id", user.id);
-          if (data) setRemoteProgress(data as EpisodeProgressRow[]);
-        },
+        () => loadProgress(true),
       )
       .subscribe();
-
     return () => {
-      cancelled = true;
       supabase.removeChannel(channel);
     };
-  }, [isAuthenticated, user]);
+  }, [isAuthenticated, user, loadProgress]);
+
+  const handleReload = async () => {
+    setReloading(true);
+    await loadProgress(true);
+    setReloading(false);
+    toast.success("Progresso atualizado.");
+  };
 
   const goTo = (path: string, label: string) => {
     setNavigatingTo(path);
