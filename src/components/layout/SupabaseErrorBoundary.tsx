@@ -68,16 +68,14 @@ class SupabaseErrorBoundary extends Component<Props, State> {
                 <RefreshCw className="spiritual-icon" /> Tentar Novamente{" "}
               </Button>{" "}
               <Button variant="outline" asChild className="w-full gap-2">
-                {" "}
                 <Link to="/diagnosticos">
                   {" "}
                   <Settings className="spiritual-icon" /> Abrir
                   Diagnósticos{" "}
-                </Link>{" "}
+                </Link>
               </Button>{" "}
               <Button variant="ghost" asChild className="w-full">
-                {" "}
-                <Link to="/">Voltar para o Início</Link>{" "}
+                <Link to="/">Voltar para o Início</Link>
               </Button>{" "}
             </div>{" "}
           </div>{" "}
