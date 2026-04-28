@@ -163,6 +163,45 @@ const Dashboard = () => {
         {/* Content Rows */}
         <div className="space-y-8 pb-20 -mt-20 md:-mt-32 relative z-30">
           
+          {/* Row: Meus Favoritos */}
+          {jornada.favorites && jornada.favorites.length > 0 && (
+            <NetflixCarousel title="Minha Lista">
+               {jornada.favorites.map((favId) => {
+                 // Try to find if it's a tool or a session
+                 const isTool = favId.startsWith('/');
+                 const sessao = JORNADA_DATA.flatMap(f => f.sessoes).find(s => s.id === favId);
+                 
+                 if (isTool) {
+                    const toolName = favId.split('/').pop()?.replace(/-/g, ' ');
+                    return (
+                      <StreamingCard 
+                        key={favId}
+                        title={toolName || "Ferramenta"}
+                        subtitle="Ferramenta"
+                        onClick={() => navigate(favId)}
+                        type="episode"
+                      />
+                    );
+                 }
+                 
+                 if (sessao) {
+                    const fase = JORNADA_DATA.find(f => f.sessoes.some(s => s.id === sessao.id));
+                    return (
+                      <StreamingCard 
+                        key={favId}
+                        title={sessao.titulo}
+                        subtitle={fase?.titulo}
+                        onClick={() => navigate(`/jornada/${fase?.id}/${sessao.id}`)}
+                        type="series"
+                      />
+                    );
+                 }
+                 
+                 return null;
+               })}
+            </NetflixCarousel>
+          )}
+
           {/* Row: Continuar de Onde Parei */}
           {nextSession && (
             <NetflixCarousel title="Continuar de Onde Parei">
