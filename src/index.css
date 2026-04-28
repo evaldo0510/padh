@@ -477,6 +477,14 @@
     @apply w-8 h-8;
   }
 
+  /* Color Variants */
+  .spiritual-icon-indigo { @apply text-spiritual-indigo; }
+  .spiritual-icon-violet { @apply text-spiritual-violet; }
+  .spiritual-icon-sage { @apply text-spiritual-sage; }
+  .spiritual-icon-rose { @apply text-spiritual-rose; }
+  .spiritual-icon-amber { @apply text-spiritual-amber; }
+  .spiritual-icon-muted { @apply text-muted-foreground; }
+
   .spiritual-chip {
     @apply inline-flex items-center px-3 py-1 rounded-full text-[10px] font-bold tracking-wider uppercase
     bg-background/80 border border-primary/20 text-foreground shadow-soft 
