@@ -1,6 +1,6 @@
-import React from 'react';
-import { Link, LinkProps } from 'react-router-dom';
-import { prefetchRoute } from '@/lib/route-prefetch';
+import React from "react";
+import { Link, LinkProps } from "react-router-dom";
+import { prefetchRoute } from "@/lib/route-prefetch";
 
 interface PrefetchLinkProps extends LinkProps {
   to: string;
@@ -21,8 +21,8 @@ const PrefetchLink = React.forwardRef<HTMLAnchorElement, PrefetchLinkProps>(
       }}
       {...props}
     />
-  )
+  ),
 );
 
-PrefetchLink.displayName = 'PrefetchLink';
+PrefetchLink.displayName = "PrefetchLink";
 export default PrefetchLink;

@@ -20,7 +20,10 @@ export const CardGridSkeleton = ({ count = 4 }: { count?: number }) => (
     <Skeleton className="h-10 w-64 mx-auto mb-8" />
     <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto">
       {Array.from({ length: count }).map((_, i) => (
-        <div key={i} className="rounded-xl border border-border/50 p-6 space-y-4">
+        <div
+          key={i}
+          className="rounded-xl border border-border/50 p-6 space-y-4"
+        >
           <Skeleton className="h-10 w-10 rounded-lg" />
           <Skeleton className="h-6 w-3/4" />
           <Skeleton className="h-4 w-full" />

@@ -1,8 +1,8 @@
-import { useState, useEffect } from 'react';
-import { toast } from 'sonner';
-import { supabase, hasSupabaseConfig } from '@/integrations/supabase/client';
-import { useOfflineMode } from './useOfflineMode';
-import { reportSyncStatus } from './useSyncStatus';
+import { useState, useEffect } from "react";
+import { toast } from "sonner";
+import { supabase, hasSupabaseConfig } from "@/integrations/supabase/client";
+import { useOfflineMode } from "./useOfflineMode";
+import { reportSyncStatus } from "./useSyncStatus";
 
 export interface ProgressData {
   completedModules: string[];
@@ -10,10 +10,16 @@ export interface ProgressData {
   lastAccessedModule?: string;
   diagnosisResult?: string;
   scores?: Record<string, number>;
-  notifications: Array<{ id: string; title: string; message: string; date: string; read: boolean }>;
+  notifications: Array<{
+    id: string;
+    title: string;
+    message: string;
+    date: string;
+    read: boolean;
+  }>;
 }
 
-const STORAGE_KEY = 'padh_course_progress';
+const STORAGE_KEY = "padh_course_progress";
 
 const INITIAL_PROGRESS: ProgressData = {
   completedModules: [],
@@ -40,13 +46,15 @@ export const useCourseProgress = () => {
   useEffect(() => {
     const fetchProgress = async () => {
       if (isOffline || !hasSupabaseConfig()) return;
-      const { data: { user } } = await supabase.auth.getUser();
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
       if (!user) return;
 
       const { data, error } = await supabase
-        .from('course_progress')
-        .select('progress_data')
-        .eq('user_id', user.id)
+        .from("course_progress")
+        .select("progress_data")
+        .eq("user_id", user.id)
         .single();
 
       if (data && !error) {
@@ -60,36 +68,36 @@ export const useCourseProgress = () => {
   // Save to LocalStorage and DB
   useEffect(() => {
     localStorage.setItem(STORAGE_KEY, JSON.stringify(progress));
-    
+
     // Notify about data change for sync indicator
-    window.dispatchEvent(new Event('padh_data_change'));
-    
+    window.dispatchEvent(new Event("padh_data_change"));
+
     const syncToDB = async () => {
       if (isOffline || !hasSupabaseConfig()) {
-        reportSyncStatus('blocked');
-        return;
-      }
-      
-      const { data: { user } } = await supabase.auth.getUser();
-      if (!user) {
-        reportSyncStatus('blocked');
+        reportSyncStatus("blocked");
         return;
       }
 
-      reportSyncStatus('pending');
-      const { error } = await supabase
-        .from('course_progress')
-        .upsert({ 
-          user_id: user.id, 
-          progress_data: progress,
-          updated_at: new Date().toISOString()
-        });
-      
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
+      if (!user) {
+        reportSyncStatus("blocked");
+        return;
+      }
+
+      reportSyncStatus("pending");
+      const { error } = await supabase.from("course_progress").upsert({
+        user_id: user.id,
+        progress_data: progress,
+        updated_at: new Date().toISOString(),
+      });
+
       if (error) {
         console.error("Sync error:", error);
-        reportSyncStatus('error');
+        reportSyncStatus("error");
       } else {
-        reportSyncStatus('ok');
+        reportSyncStatus("ok");
       }
     };
 
@@ -104,7 +112,7 @@ export const useCourseProgress = () => {
       date: new Date().toISOString(),
       read: false,
     };
-    setProgress(prev => ({
+    setProgress((prev) => ({
       ...prev,
       notifications: [newNotif, ...prev.notifications].slice(0, 20),
     }));
@@ -113,19 +121,22 @@ export const useCourseProgress = () => {
 
   const completeModule = (moduleId: string) => {
     if (!progress.completedModules.includes(moduleId)) {
-      setProgress(prev => ({
+      setProgress((prev) => ({
         ...prev,
         completedModules: [...prev.completedModules, moduleId],
       }));
-      addNotification("Módulo Concluído!", `Parabéns! Você completou o módulo técnico. Próximo passo desbloqueado.`);
+      addNotification(
+        "Módulo Concluído!",
+        `Parabéns! Você completou o módulo técnico. Próximo passo desbloqueado.`,
+      );
     }
   };
 
   const completeActivity = (moduleId: string, activityId: string) => {
-    setProgress(prev => {
+    setProgress((prev) => {
       const activities = prev.completedActivities[moduleId] || [];
       if (activities.includes(activityId)) return prev;
-      
+
       return {
         ...prev,
         completedActivities: {
@@ -138,25 +149,30 @@ export const useCourseProgress = () => {
   };
 
   const setLastAccessed = (moduleId: string) => {
-    setProgress(prev => ({
+    setProgress((prev) => ({
       ...prev,
       lastAccessedModule: moduleId,
     }));
   };
 
   const setDiagnosis = (result: string, scores?: Record<string, number>) => {
-    setProgress(prev => ({
+    setProgress((prev) => ({
       ...prev,
       diagnosisResult: result,
       scores,
     }));
-    addNotification("Diagnóstico Realizado", `Sua trilha técnica "${result}" foi configurada.`);
+    addNotification(
+      "Diagnóstico Realizado",
+      `Sua trilha técnica "${result}" foi configurada.`,
+    );
   };
 
   const markNotificationRead = (id: string) => {
-    setProgress(prev => ({
+    setProgress((prev) => ({
       ...prev,
-      notifications: prev.notifications.map(n => n.id === id ? { ...n, read: true } : n),
+      notifications: prev.notifications.map((n) =>
+        n.id === id ? { ...n, read: true } : n,
+      ),
     }));
   };
 
@@ -167,13 +183,15 @@ export const useCourseProgress = () => {
 
   const isModuleUnlocked = (index: number) => {
     if (index === 0) return true;
-    const prevModuleId = `modulo-${index}`; 
+    const prevModuleId = `modulo-${index}`;
     return progress.completedModules.includes(prevModuleId);
   };
 
   const getModuleProgress = (moduleId: string, totalActivities: number) => {
     const completed = progress.completedActivities[moduleId]?.length || 0;
-    return totalActivities > 0 ? Math.round((completed / totalActivities) * 100) : 0;
+    return totalActivities > 0
+      ? Math.round((completed / totalActivities) * 100)
+      : 0;
   };
 
   return {

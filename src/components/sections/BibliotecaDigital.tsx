@@ -27,7 +27,7 @@ const libraryItems: LibraryItem[] = [
     date: '2024-01-15',
     category: 'Autoconhecimento',
     tags: ['liberdade', 'autoconhecimento', 'prisão interior'],
-    favorite: true
+    favorite: true,
   },
   {
     id: '2',
@@ -38,7 +38,7 @@ const libraryItems: LibraryItem[] = [
     date: '2024-01-12',
     category: 'Metodologia',
     tags: ['hipnose', 'poesia', 'terapia'],
-    favorite: false
+    favorite: false,
   },
   {
     id: '3',
@@ -49,7 +49,7 @@ const libraryItems: LibraryItem[] = [
     date: '2024-01-10',
     category: 'Fé',
     tags: ['fé', 'esperança', 'proteção divina'],
-    favorite: true
+    favorite: true,
   },
   {
     id: '4',
@@ -60,29 +60,29 @@ const libraryItems: LibraryItem[] = [
     date: '2024-01-08',
     category: 'Reflexão',
     tags: ['perdão', 'cura interior', 'libertação'],
-    favorite: false
-  }
+    favorite: false,
+  },
 ];
 
 const typeColors = {
   chapter: 'spiritual-chip-amber',
   tool: 'spiritual-chip-violet',
   poem: 'spiritual-chip-violet',
-  reflection: 'spiritual-chip-muted'
+  reflection: 'spiritual-chip-muted',
 };
 
 const typeNames = {
   chapter: 'Capítulo',
   tool: 'Ferramenta',
   poem: 'Poema',
-  reflection: 'Reflexão'
+  reflection: 'Reflexão',
 };
 
 const typeIcons = {
-  chapter: <BookOpen className="h-4 w-4 spiritual-icon" />,
-  tool: <Star className="h-4 w-4 spiritual-icon" />,
-  poem: <Heart className="h-4 w-4 spiritual-icon" />,
-  reflection: <Bookmark className="h-4 w-4 spiritual-icon" />
+  chapter: <BookOpen className="spiritual-icon" />,
+  tool: <Star className="spiritual-icon" />,
+  poem: <Heart className="spiritual-icon" />,
+  reflection: <Bookmark className="spiritual-icon" />,
 };
 
 export const BibliotecaDigital = () => {
@@ -91,13 +91,12 @@ export const BibliotecaDigital = () => {
   const [selectedType, setSelectedType] = useState<string>('all');
   const [selectedItem, setSelectedItem] = useState<LibraryItem | null>(items[0]);
 
-  const filteredItems = items.filter(item => {
-    const matchesSearch = item.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                         item.content.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                         item.tags.some(tag => tag.toLowerCase().includes(searchTerm.toLowerCase()));
-    
+  const filteredItems = items.filter((item) => {
+    const matchesSearch =
+      item.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      item.content.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      item.tags.some((tag) => tag.toLowerCase().includes(searchTerm.toLowerCase()));
     const matchesType = selectedType === 'all' || item.type === selectedType;
-    
     return matchesSearch && matchesType;
   });
 
@@ -119,9 +118,7 @@ export const BibliotecaDigital = () => {
           <div className="flex justify-center mb-4">
             <BookOpen className="h-12 w-12 animate-gentle-bounce" />
           </div>
-          <CardTitle className="text-4xl md:text-5xl font-heading font-bold mb-4">
-            Biblioteca Digital
-          </CardTitle>
+          <CardTitle className="text-4xl md:text-5xl font-heading font-bold mb-4">Biblioteca Digital</CardTitle>
           <p className="text-xl opacity-90 max-w-3xl mx-auto">
             Seu acervo completo de capítulos, ferramentas, poemas e reflexões organizados e acessíveis
           </p>
@@ -132,10 +129,9 @@ export const BibliotecaDigital = () => {
       <Card className="shadow-medium">
         <CardContent className="p-6">
           <div className="flex flex-col md:flex-row gap-4">
-            
             {/* Search */}
             <div className="flex-1 relative">
-              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 spiritual-icon text-muted-foreground" />
               <Input
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
@@ -152,8 +148,7 @@ export const BibliotecaDigital = () => {
                 onClick={() => setSelectedType('all')}
                 className="flex items-center gap-2"
               >
-                <Filter className="h-4 w-4" />
-                Todos
+                <Filter className="spiritual-icon" /> Todos
               </Button>
               <Button
                 variant={selectedType === 'chapter' ? 'default' : 'outline'}
@@ -161,8 +156,7 @@ export const BibliotecaDigital = () => {
                 onClick={() => setSelectedType('chapter')}
                 className="flex items-center gap-2"
               >
-                {typeIcons.chapter}
-                Capítulos
+                {typeIcons.chapter} Capítulos
               </Button>
               <Button
                 variant={selectedType === 'tool' ? 'default' : 'outline'}
@@ -170,8 +164,7 @@ export const BibliotecaDigital = () => {
                 onClick={() => setSelectedType('tool')}
                 className="flex items-center gap-2"
               >
-                {typeIcons.tool}
-                Ferramentas
+                {typeIcons.tool} Ferramentas
               </Button>
               <Button
                 variant={selectedType === 'poem' ? 'default' : 'outline'}
@@ -179,8 +172,7 @@ export const BibliotecaDigital = () => {
                 onClick={() => setSelectedType('poem')}
                 className="flex items-center gap-2"
               >
-                {typeIcons.poem}
-                Poemas
+                {typeIcons.poem} Poemas
               </Button>
               <Button
                 variant={selectedType === 'reflection' ? 'default' : 'outline'}
@@ -188,18 +180,17 @@ export const BibliotecaDigital = () => {
                 onClick={() => setSelectedType('reflection')}
                 className="flex items-center gap-2"
               >
-                {typeIcons.reflection}
-                Reflexões
+                {typeIcons.reflection} Reflexões
               </Button>
             </div>
 
             {/* Import/Export */}
             <div className="flex gap-2">
               <Button variant="outline" size="sm" onClick={handleImport}>
-                <Upload className="h-4 w-4" />
+                <Upload className="spiritual-icon" />
               </Button>
               <Button variant="outline" size="sm" onClick={handleExport}>
-                <Download className="h-4 w-4" />
+                <Download className="spiritual-icon" />
               </Button>
             </div>
           </div>
@@ -207,12 +198,11 @@ export const BibliotecaDigital = () => {
       </Card>
 
       <div className="grid lg:grid-cols-3 gap-8">
-        
         {/* Items List */}
         <Card className="lg:col-span-1 glass-morphism border-primary/20">
           <CardHeader>
             <CardTitle className="text-xl font-heading flex items-center gap-2">
-              <BookOpen className="h-5 w-5 text-spiritual-indigo" />
+              <BookOpen className="spiritual-icon spiritual-icon-lg text-spiritual-indigo" />
               Conteúdos ({filteredItems.length})
             </CardTitle>
           </CardHeader>
@@ -221,8 +211,8 @@ export const BibliotecaDigital = () => {
               <div
                 key={item.id}
                 className={`p-4 rounded-lg cursor-pointer transition-smooth border ${
-                  selectedItem?.id === item.id 
-                    ? 'bg-primary/10 border-primary shadow-soft' 
+                  selectedItem?.id === item.id
+                    ? 'bg-primary/10 border-primary shadow-soft'
                     : 'bg-muted/30 border-transparent hover:bg-muted/50'
                 }`}
                 onClick={() => setSelectedItem(item)}
@@ -234,25 +224,18 @@ export const BibliotecaDigital = () => {
                       {typeNames[item.type]}
                     </Badge>
                   </div>
-                  {item.favorite && (
-                    <Heart className="h-4 w-4 text-spiritual-rose fill-spiritual-rose" />
-                  )}
+                  {item.favorite && <Heart className="spiritual-icon text-spiritual-rose fill-spiritual-rose" />}
                 </div>
-                
                 <h4 className="font-heading font-semibold text-sm mb-1 line-clamp-2">{item.title}</h4>
                 <p className="text-xs text-muted-foreground mb-2 line-clamp-2">{item.content}</p>
-                
                 <div className="flex items-center justify-between text-xs text-muted-foreground">
                   <div className="flex items-center gap-1">
-                    <User className="h-3 w-3" />
-                    {item.author}
+                    <User className="h-3 w-3" /> {item.author}
                   </div>
                   <div className="flex items-center gap-1">
-                    <Calendar className="h-3 w-3" />
-                    {new Date(item.date).toLocaleDateString('pt-BR')}
+                    <Calendar className="h-3 w-3" /> {new Date(item.date).toLocaleDateString('pt-BR')}
                   </div>
                 </div>
-
                 {/* Tags */}
                 <div className="flex flex-wrap gap-1 mt-2">
                   {item.tags.slice(0, 2).map((tag, index) => (
@@ -266,7 +249,6 @@ export const BibliotecaDigital = () => {
                 </div>
               </div>
             ))}
-
             {filteredItems.length === 0 && (
               <div className="text-center py-8">
                 <Search className="h-12 w-12 text-muted-foreground/50 mx-auto mb-3" />
@@ -292,41 +274,60 @@ export const BibliotecaDigital = () => {
                         </Badge>
                         <span className="text-sm text-muted-foreground">{selectedItem.category}</span>
                         {selectedItem.favorite && (
-                          <Heart className="h-5 w-5 text-spiritual-rose fill-spiritual-rose" />
+                          <Heart className="spiritual-icon spiritual-icon-lg text-spiritual-rose fill-spiritual-rose" />
                         )}
                       </div>
-                      
-                      <CardTitle className="text-3xl font-heading text-primary">
-                        {selectedItem.title}
-                      </CardTitle>
-                      
+                      <CardTitle className="text-3xl font-heading text-primary">{selectedItem.title}</CardTitle>
                       <div className="flex items-center gap-4 text-sm text-muted-foreground">
                         <div className="flex items-center gap-1">
-                          <User className="h-4 w-4" />
-                          {selectedItem.author}
+                          <User className="spiritual-icon" /> {selectedItem.author}
                         </div>
                         <div className="flex items-center gap-1">
-                          <Calendar className="h-4 w-4" />
-                          {new Date(selectedItem.date).toLocaleDateString('pt-BR')}
+                          <Calendar className="spiritual-icon" /> {new Date(selectedItem.date).toLocaleDateString('pt-BR')}
                         </div>
                       </div>
                     </div>
-
                     <div className="flex gap-2">
                       <Button variant="outline" size="sm">
-                        <Bookmark className="h-4 w-4" />
+                        <Bookmark className="spiritual-icon" />
                       </Button>
                       <Button variant="outline" size="sm">
-                        <Heart className="h-4 w-4" />
+                        <Heart className="spiritual-icon" />
                       </Button>
                       <Button variant="outline" size="sm">
-                        <Download className="h-4 w-4" />
+                        <Download className="spiritual-icon" />
                       </Button>
                     </div>
                   </div>
                 </CardHeader>
                 <CardContent>
-                  <div className={`bg-gradient-to-br from-${selectedItem.type === 'chapter' ? 'primary' : selectedItem.type === 'tool' ? 'spiritual-violet' : selectedItem.type === 'poem' ? 'secondary' : 'spiritual-indigo'}/5 to-${selectedItem.type === 'chapter' ? 'primary' : selectedItem.type === 'tool' ? 'spiritual-violet' : selectedItem.type === 'poem' ? 'secondary' : 'spiritual-indigo'}/10 border-l-4 border-${selectedItem.type === 'chapter' ? 'primary' : selectedItem.type === 'tool' ? 'spiritual-violet' : selectedItem.type === 'poem' ? 'secondary' : 'spiritual-indigo'} rounded-lg p-6`}>
+                  <div
+                    className={`bg-gradient-to-br from-${
+                      selectedItem.type === 'chapter'
+                        ? 'primary'
+                        : selectedItem.type === 'tool'
+                        ? 'spiritual-violet'
+                        : selectedItem.type === 'poem'
+                        ? 'secondary'
+                        : 'spiritual-indigo'
+                    }/5 to-${
+                      selectedItem.type === 'chapter'
+                        ? 'primary'
+                        : selectedItem.type === 'tool'
+                        ? 'spiritual-violet'
+                        : selectedItem.type === 'poem'
+                        ? 'secondary'
+                        : 'spiritual-indigo'
+                    }/10 border-l-4 border-${
+                      selectedItem.type === 'chapter'
+                        ? 'primary'
+                        : selectedItem.type === 'tool'
+                        ? 'spiritual-violet'
+                        : selectedItem.type === 'poem'
+                        ? 'secondary'
+                        : 'spiritual-indigo'
+                    } rounded-lg p-6`}
+                  >
                     {selectedItem.type === 'poem' ? (
                       <blockquote className="poem-text text-foreground whitespace-pre-line">
                         {selectedItem.content}
@@ -352,7 +353,6 @@ export const BibliotecaDigital = () => {
                         ))}
                       </div>
                     </div>
-                    
                     <div className="grid md:grid-cols-3 gap-4 pt-4 border-t">
                       <div>
                         <span className="text-sm font-medium text-muted-foreground">Categoria:</span>
@@ -368,7 +368,7 @@ export const BibliotecaDigital = () => {
                           {new Date(selectedItem.date).toLocaleDateString('pt-BR', {
                             day: 'numeric',
                             month: 'long',
-                            year: 'numeric'
+                            year: 'numeric',
                           })}
                         </p>
                       </div>
@@ -381,9 +381,7 @@ export const BibliotecaDigital = () => {
             <Card className="shadow-medium">
               <CardContent className="p-12 text-center">
                 <BookOpen className="h-16 w-16 text-muted-foreground/50 mx-auto mb-4" />
-                <h3 className="text-xl font-heading font-semibold text-muted-foreground mb-2">
-                  Selecione um item
-                </h3>
+                <h3 className="text-xl font-heading font-semibold text-muted-foreground mb-2">Selecione um item</h3>
                 <p className="text-muted-foreground">
                   Escolha um conteúdo da lista ao lado para visualizar seus detalhes
                 </p>

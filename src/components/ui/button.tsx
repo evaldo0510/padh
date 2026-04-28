@@ -9,14 +9,20 @@ const buttonVariants = cva(
   {
     variants: {
       variant: {
-        default: "bg-primary text-primary-foreground hover:bg-primary/90 hover:shadow-primary/30",
-        destructive: "bg-destructive text-destructive-foreground hover:bg-destructive/90 hover:shadow-destructive/30",
-        outline: "border border-primary/30 bg-background/50 text-foreground hover:bg-primary/10 hover:text-primary hover:border-primary/60",
-        secondary: "bg-secondary text-secondary-foreground hover:bg-secondary/80 hover:shadow-secondary/30",
+        default:
+          "bg-primary text-primary-foreground hover:bg-primary/90 hover:shadow-primary/30",
+        destructive:
+          "bg-destructive text-destructive-foreground hover:bg-destructive/90 hover:shadow-destructive/30",
+        outline:
+          "border border-primary/30 bg-background/50 text-foreground hover:bg-primary/10 hover:text-primary hover:border-primary/60",
+        secondary:
+          "bg-secondary text-secondary-foreground hover:bg-secondary/80 hover:shadow-secondary/30",
         ghost: "text-foreground hover:bg-primary/10 hover:text-primary",
         link: "text-primary underline-offset-4 hover:underline",
-        premium: "bg-gradient-to-r from-primary via-secondary to-primary bg-[length:200%_100%] text-primary-foreground hover:bg-[position:100%_0] hover:shadow-xl hover:shadow-primary/40 hover:scale-105 transition-all duration-500",
-        glass: "bg-background/10 backdrop-blur-md border border-primary/20 text-foreground hover:bg-background/20 hover:border-primary/50 hover:shadow-glow",
+        premium:
+          "bg-gradient-to-r from-primary via-secondary to-primary bg-[length:200%_100%] text-primary-foreground hover:bg-[position:100%_0] hover:shadow-xl hover:shadow-primary/40 hover:scale-105 transition-all duration-500",
+        glass:
+          "bg-background/10 backdrop-blur-md border border-primary/20 text-foreground hover:bg-background/20 hover:border-primary/50 hover:shadow-glow",
       },
       size: {
         default: "h-11 px-4 py-2",
@@ -33,7 +39,8 @@ const buttonVariants = cva(
 );
 
 export interface ButtonProps
-  extends React.ButtonHTMLAttributes<HTMLButtonElement>,
+  extends
+    React.ButtonHTMLAttributes<HTMLButtonElement>,
     VariantProps<typeof buttonVariants> {
   asChild?: boolean;
 }
@@ -41,7 +48,13 @@ export interface ButtonProps
 const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
   ({ className, variant, size, asChild = false, ...props }, ref) => {
     const Comp = asChild ? Slot : "button";
-    return <Comp className={cn(buttonVariants({ variant, size, className }))} ref={ref} {...props} />;
+    return (
+      <Comp
+        className={cn(buttonVariants({ variant, size, className }))}
+        ref={ref}
+        {...props}
+      />
+    );
   },
 );
 Button.displayName = "Button";

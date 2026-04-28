@@ -1,5 +1,16 @@
 import React, { useState } from 'react';
-import { AlertCircle, Database, Settings, ShieldAlert, Wifi, WifiOff, RefreshCw, HelpCircle, CheckCircle2, Clock } from 'lucide-react';
+import {
+  AlertCircle,
+  Database,
+  Settings,
+  ShieldAlert,
+  Wifi,
+  WifiOff,
+  RefreshCw,
+  HelpCircle,
+  CheckCircle2,
+  Clock,
+} from 'lucide-react';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
@@ -13,7 +24,6 @@ const SupabaseConfigBanner = () => {
   const { isOffline, toggleOffline, canConnect } = useOfflineMode();
   const { status: syncStatus } = useSyncStatus();
   const [isReconnecting, setIsReconnecting] = useState(false);
-  
   const configStatus = supabaseConfig.isConfigured;
 
   const maskValue = (val: string) => {
@@ -24,10 +34,10 @@ const SupabaseConfigBanner = () => {
 
   const handleReconnect = async () => {
     setIsReconnecting(true);
-    // Simulate a check - in reality, vite env vars require a rebuild to change,
+    // Simulate a check - in reality, vite env vars require a rebuild to change, 
     // but we can check if the current ones work.
     try {
-      await new Promise(resolve => setTimeout(resolve, 800));
+      await new Promise((resolve) => setTimeout(resolve, 800));
       if (canConnect) {
         toast.success("Conexão com Supabase verificada!");
       } else {
@@ -39,102 +49,163 @@ const SupabaseConfigBanner = () => {
   };
 
   const getSyncBadge = () => {
-    if (!configStatus || isOffline) return { label: "BLOQUEADO", variant: "spiritual" as const, className: "spiritual-chip-muted", icon: <Clock className="h-3 w-3" /> };
-    
+    if (!configStatus || isOffline)
+      return {
+        label: "BLOQUEADO",
+        variant: "spiritual" as const,
+        className: "spiritual-chip-muted",
+        icon: <Clock className="h-3 w-3" />,
+      };
+
     switch (syncStatus) {
-      case 'ok': return { label: "SYNC: OK", variant: "spiritual" as const, className: "spiritual-chip-amber", icon: <CheckCircle2 className="h-3 w-3" /> };
-      case 'pending': return { label: "SYNC: PENDENTE", variant: "spiritual" as const, className: "spiritual-chip-violet", icon: <RefreshCw className="h-3 w-3 animate-spin" /> };
-      case 'error': return { label: "SYNC: ERRO", variant: "destructive" as const, className: "", icon: <AlertCircle className="h-3 w-3" /> };
-      default: return { label: "SYNC: OK", variant: "spiritual" as const, className: "spiritual-chip-amber", icon: <CheckCircle2 className="h-3 w-3" /> };
+      case 'ok':
+        return {
+          label: "SYNC: OK",
+          variant: "spiritual" as const,
+          className: "spiritual-chip-amber",
+          icon: <CheckCircle2 className="h-3 w-3" />,
+        };
+      case 'pending':
+        return {
+          label: "SYNC: PENDENTE",
+          variant: "spiritual" as const,
+          className: "spiritual-chip-violet",
+          icon: <RefreshCw className="h-3 w-3 animate-spin" />,
+        };
+      case 'error':
+        return {
+          label: "SYNC: ERRO",
+          variant: "destructive" as const,
+          className: "",
+          icon: <AlertCircle className="h-3 w-3" />,
+        };
+      default:
+        return {
+          label: "SYNC: OK",
+          variant: "spiritual" as const,
+          className: "spiritual-chip-amber",
+          icon: <CheckCircle2 className="h-3 w-3" />,
+        };
     }
   };
 
   const syncBadge = getSyncBadge();
 
   return (
-    <Alert 
+    <Alert
       variant="default"
       className={`mb-8 border-2 backdrop-blur-sm transition-all duration-300 shadow-sm ${
-        !configStatus 
-          ? "border-destructive/20 bg-destructive/5" 
-          : isOffline 
-            ? "border-primary/20 bg-primary/5"
-            : "border-primary/20 bg-primary/5"
+        !configStatus
+          ? "border-destructive/20 bg-destructive/5"
+          : isOffline
+          ? "border-primary/20 bg-primary/5"
+          : "border-primary/20 bg-primary/5"
       }`}
     >
       <div className="flex items-start gap-4">
-        <div className={`p-2.5 rounded-xl shadow-inner ${
-          !configStatus ? "bg-destructive/10 text-destructive" : isOffline ? "bg-primary/10 text-primary" : "bg-primary/10 text-primary"
-        }`}>
-          {!configStatus ? <ShieldAlert className="h-6 w-6" /> : isOffline ? <WifiOff className="h-6 w-6" /> : <Wifi className="h-6 w-6" />}
+        <div
+          className={`p-2.5 rounded-xl shadow-inner ${
+            !configStatus
+              ? "bg-destructive/10 text-destructive"
+              : isOffline
+              ? "bg-primary/10 text-primary"
+              : "bg-primary/10 text-primary"
+          }`}
+        >
+          {!configStatus ? (
+            <ShieldAlert className="spiritual-icon spiritual-icon-xl" />
+          ) : isOffline ? (
+            <WifiOff className="spiritual-icon spiritual-icon-xl" />
+          ) : (
+            <Wifi className="spiritual-icon spiritual-icon-xl" />
+          )}
         </div>
-        
         <div className="flex-1">
           <AlertTitle className="font-heading font-bold flex items-center justify-between flex-wrap gap-2 text-base">
             <span className="flex items-center gap-2">
               Status do Sistema: {isOffline ? "Modo Offline" : "Modo Online"}
             </span>
             <div className="flex gap-2">
-              <Badge variant={syncBadge.variant} className={`text-[10px] font-bold px-2 py-0.5 gap-1 ${syncBadge.className}`}>
-                {syncBadge.icon} {syncBadge.label}
+              <Badge
+                variant={syncBadge.variant}
+                className={`text-[10px] font-bold px-2 py-0.5 gap-1 ${syncBadge.className}`}
+              >
+                {syncBadge.icon}
+                {syncBadge.label}
               </Badge>
-              <Badge variant={configStatus ? "spiritual" : "destructive"} className={`text-[10px] font-bold px-2 py-0.5 ${configStatus ? "spiritual-chip-amber" : ""}`}>
+              <Badge
+                variant={configStatus ? "spiritual" : "destructive"}
+                className={`text-[10px] font-bold px-2 py-0.5 ${
+                  configStatus ? "spiritual-chip-amber" : ""
+                }`}
+              >
                 Config: {configStatus ? "OK" : "PENDENTE"}
               </Badge>
             </div>
           </AlertTitle>
-          
           <AlertDescription className="mt-3">
             <p className="text-sm text-muted-foreground mb-4 leading-relaxed">
-              {isOffline 
+              {isOffline
                 ? "O sistema está operando em modo offline. O progresso será salvo apenas localmente neste navegador."
                 : "O sistema está sincronizando dados com o servidor Supabase em tempo real."}
             </p>
-            
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 items-center">
               <div className="bg-background/80 p-3 rounded-lg border border-border/50 font-mono text-[11px] space-y-1.5 shadow-sm">
                 <div className="flex justify-between items-center">
                   <span className="text-muted-foreground">URL:</span>
-                  <span className={`font-bold ${supabaseConfig.url ? "text-primary" : "text-red-500"}`}>
+                  <span
+                    className={`font-bold ${
+                      supabaseConfig.url ? "text-primary" : "text-red-500"
+                    }`}
+                  >
                     {maskValue(supabaseConfig.url)}
                   </span>
                 </div>
                 <div className="flex justify-between items-center">
                   <span className="text-muted-foreground">ANON_KEY:</span>
-                  <span className={`font-bold ${supabaseConfig.anonKey ? "text-primary" : "text-red-500"}`}>
+                  <span
+                    className={`font-bold ${
+                      supabaseConfig.anonKey ? "text-primary" : "text-red-500"
+                    }`}
+                  >
                     {maskValue(supabaseConfig.anonKey)}
                   </span>
                 </div>
               </div>
-
               <div className="flex flex-wrap gap-2 justify-end">
-                <Button 
-                  variant="outline" 
-                  size="sm" 
+                <Button
+                  variant="outline"
+                  size="sm"
                   onClick={handleReconnect}
                   disabled={isReconnecting}
                   className="bg-background h-8 text-xs font-medium"
                 >
-                  <RefreshCw className={`h-3 w-3 mr-1.5 spiritual-icon ${isReconnecting ? 'animate-spin' : ''}`} /> 
+                  <RefreshCw
+                    className={`h-3 w-3 mr-1.5 spiritual-icon ${isReconnecting ? 'animate-spin' : ''}`}
+                  />
                   Tentar reconectar
                 </Button>
-
                 <Button variant="outline" size="sm" asChild className="bg-background h-8 text-xs font-medium">
                   <Link to="/diagnosticos">
-                    <Settings className="h-3 w-3 mr-1.5 spiritual-icon" /> Diagnósticos
+                    <Settings className="h-3 w-3 mr-1.5 spiritual-icon" />
+                    Diagnósticos
                   </Link>
                 </Button>
-                
-                <Button variant="ghost" size="sm" asChild className="h-8 text-xs text-primary hover:text-primary/80 hover:bg-primary/5">
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  asChild
+                  className="h-8 text-xs text-primary hover:text-primary/80 hover:bg-primary/5"
+                >
                   <Link to="/configurar-supabase">
-                    <HelpCircle className="h-3 w-3 mr-1.5 spiritual-icon" /> Como configurar
+                    <HelpCircle className="h-3 w-3 mr-1.5 spiritual-icon" />
+                    Como configurar
                   </Link>
                 </Button>
-                
                 {canConnect && (
-                  <Button 
-                    variant={isOffline ? "default" : "secondary"} 
-                    size="sm" 
+                  <Button
+                    variant={isOffline ? "default" : "secondary"}
+                    size="sm"
                     onClick={toggleOffline}
                     className="h-8 text-xs font-bold"
                   >

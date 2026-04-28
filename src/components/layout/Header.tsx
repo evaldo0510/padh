@@ -23,7 +23,7 @@ const Header = () => {
         setIsLoggedIn(true);
         return;
       }
-
+      
       // Check real supabase login
       if (supabaseConfig.isConfigured) {
         const { data: { session } } = await supabase.auth.getSession();
@@ -38,6 +38,7 @@ const Header = () => {
       const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
         setIsLoggedIn(!!session || !!localStorage.getItem('padh_simulated_user'));
       });
+
       return () => subscription.unsubscribe();
     }
   }, []);
@@ -107,15 +108,17 @@ const Header = () => {
           <div className="hidden lg:flex items-center gap-1">
             <nav className="flex items-center gap-0.5">
               {navItems.map((item) => (
-                <div key={item.path} className="relative" 
+                <div 
+                  key={item.path} 
+                  className="relative"
                   onMouseEnter={() => item.hasDropdown && setIsToolsOpen(true)}
                   onMouseLeave={() => item.hasDropdown && setIsToolsOpen(false)}
                 >
-                  <PrefetchLink
+                  <PrefetchLink 
                     to={item.path}
                     className={`relative px-3 py-1.5 text-sm transition-all duration-300 rounded-md inline-flex items-center gap-1 ${
-                      (item.hasDropdown ? isToolsActive : isActive(item.path))
-                        ? 'text-primary font-medium'
+                      (item.hasDropdown ? isToolsActive : isActive(item.path)) 
+                        ? 'text-primary font-medium' 
                         : 'text-muted-foreground hover:text-foreground'
                     }`}
                   >
@@ -130,20 +133,20 @@ const Header = () => {
                   {item.hasDropdown && isToolsOpen && (
                     <div className="absolute top-full left-0 pt-1 z-50">
                       <div className="bg-card border border-border/50 rounded-lg shadow-lg py-2 min-w-[220px]">
-                        <PrefetchLink
-                          to="/ferramentas"
+                        <PrefetchLink 
+                          to="/ferramentas" 
                           className="block px-4 py-2 text-sm text-muted-foreground hover:text-primary hover:bg-primary/5 transition-colors font-medium"
                         >
                           Todas as Ferramentas
                         </PrefetchLink>
                         <div className="h-px bg-border/30 my-1" />
                         {toolLinks.map((tool) => (
-                          <PrefetchLink
+                          <PrefetchLink 
                             key={tool.path}
                             to={tool.path}
                             className={`block px-4 py-1.5 text-sm transition-colors ${
-                              isActive(tool.path)
-                                ? 'text-primary bg-primary/5'
+                              isActive(tool.path) 
+                                ? 'text-primary bg-primary/5' 
                                 : 'text-muted-foreground hover:text-foreground hover:bg-muted/50'
                             }`}
                           >
@@ -156,17 +159,25 @@ const Header = () => {
                 </div>
               ))}
             </nav>
+
             <div className="ml-3 pl-3 border-l border-border/50 flex items-center gap-4">
               <ThemeToggle />
               {isLoggedIn ? (
                 <div className="flex items-center gap-2">
                   <Button size="sm" variant="ghost" className="gap-2" asChild>
                     <Link to="/dashboard">
-                      <User className="h-4 w-4" /> Minha Área
+                      <User className="spiritual-icon" />
+                      Minha Área
                     </Link>
                   </Button>
-                  <Button size="sm" variant="outline" className="gap-2 text-red-500 hover:text-red-600 hover:bg-red-50 dark:hover:bg-red-950/20" onClick={handleLogout}>
-                    <LogOut className="h-4 w-4" /> Sair
+                  <Button 
+                    size="sm" 
+                    variant="outline" 
+                    className="gap-2 text-red-500 hover:text-red-600 hover:bg-red-50 dark:hover:bg-red-950/20"
+                    onClick={handleLogout}
+                  >
+                    <LogOut className="spiritual-icon" />
+                    Sair
                   </Button>
                 </div>
               ) : (
@@ -180,13 +191,13 @@ const Header = () => {
           {/* Mobile */}
           <div className="lg:hidden flex items-center gap-2">
             <ThemeToggle />
-            <Button
-              variant="ghost"
-              size="sm"
+            <Button 
+              variant="ghost" 
+              size="sm" 
               onClick={() => setIsMenuOpen(!isMenuOpen)}
               className="h-8 w-8 p-0"
             >
-              {isMenuOpen ? <X className="h-4 w-4" /> : <Menu className="h-4 w-4" />}
+              {isMenuOpen ? <X className="spiritual-icon" /> : <Menu className="spiritual-icon" />}
             </Button>
           </div>
         </div>
@@ -228,15 +239,22 @@ const Header = () => {
                   )}
                 </React.Fragment>
               ))}
-              
               <div className="mt-4 pt-4 border-t border-border/30 px-3">
                 {isLoggedIn ? (
                   <div className="flex flex-col gap-2">
                     <Button variant="outline" className="w-full justify-start gap-2" asChild onClick={() => setIsMenuOpen(false)}>
-                      <Link to="/dashboard"><User className="h-4 w-4" /> Minha Área</Link>
+                      <Link to="/dashboard"><User className="spiritual-icon" /> Minha Área</Link>
                     </Button>
-                    <Button variant="destructive" className="w-full justify-start gap-2" onClick={() => { handleLogout(); setIsMenuOpen(false); }}>
-                      <LogOut className="h-4 w-4" /> Sair
+                    <Button 
+                      variant="destructive" 
+                      className="w-full justify-start gap-2" 
+                      onClick={() => {
+                        handleLogout();
+                        setIsMenuOpen(false);
+                      }}
+                    >
+                      <LogOut className="spiritual-icon" />
+                      Sair
                     </Button>
                   </div>
                 ) : (

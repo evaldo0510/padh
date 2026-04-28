@@ -4,11 +4,10 @@ import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/com
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { Feather, Sparkles, ArrowRight, LogIn } from 'lucide-react';
+import { Feather, Sparkles, ArrowRight, LogIn, ShieldAlert } from 'lucide-react';
 import { useNavigate, Link } from 'react-router-dom';
 import { toast } from 'sonner';
 import { supabaseConfig, supabase } from '@/integrations/supabase/client';
-import { ShieldAlert } from 'lucide-react';
 
 const LoginPage = () => {
   const [email, setEmail] = useState('');
@@ -34,15 +33,15 @@ const LoginPage = () => {
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsLoading(true);
-
+    
     try {
       if (!supabaseConfig.isConfigured) {
         // Simulated Login
         setTimeout(() => {
           localStorage.setItem('padh_simulated_user', JSON.stringify({
-            email,
-            id: 'simulated-user-' + Date.now(),
-            name: email.split('@')[0]
+            email, 
+            id: 'simulated-user-' + Date.now(), 
+            name: email.split('@')[0] 
           }));
           
           toast.warning("Modo Demonstração Ativo", {
@@ -103,7 +102,7 @@ const LoginPage = () => {
           <Card className="border-primary/10 shadow-xl">
             <CardHeader>
               <CardTitle className="flex items-center gap-2">
-                <LogIn className="h-5 w-5" /> Entrar
+                <LogIn className="spiritual-icon spiritual-icon-lg" /> Entrar
               </CardTitle>
               <CardDescription>Use seu e-mail e senha cadastrados.</CardDescription>
               {!supabaseConfig.isConfigured && (
@@ -117,34 +116,35 @@ const LoginPage = () => {
               <form onSubmit={handleLogin} className="space-y-4">
                 <div className="space-y-2">
                   <Label htmlFor="email">E-mail</Label>
-                  <Input 
-                    id="email" 
-                    type="email" 
-                    placeholder="seu@email.com" 
+                  <Input
+                    id="email"
+                    type="email"
+                    placeholder="seu@email.com"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
-                    required 
+                    required
                   />
                 </div>
                 <div className="space-y-2">
                   <div className="flex justify-between">
                     <Label htmlFor="password">Senha</Label>
-                    <button type="button" className="text-xs text-primary hover:underline">Esqueceu a senha?</button>
+                    <button type="button" className="text-xs text-primary hover:underline">
+                      Esqueceu a senha?
+                    </button>
                   </div>
-                  <Input 
-                    id="password" 
-                    type="password" 
+                  <Input
+                    id="password"
+                    type="password"
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
-                    required 
+                    required
                   />
                 </div>
                 <Button type="submit" className="w-full py-6 gap-2" disabled={isLoading}>
                   {isLoading ? 'Acessando...' : 'Entrar na Plataforma'}
-                  {!isLoading && <ArrowRight className="h-4 w-4" />}
+                  {!isLoading && <ArrowRight className="spiritual-icon" />}
                 </Button>
               </form>
-              
               <div className="mt-6 pt-6 border-t border-primary/5 text-center">
                 <p className="text-sm text-muted-foreground">
                   Ainda não tem uma conta?{' '}
@@ -155,11 +155,10 @@ const LoginPage = () => {
               </div>
             </CardContent>
           </Card>
-          
+
           <div className="mt-8 flex justify-center">
             <p className="text-[10px] text-muted-foreground flex items-center gap-2">
-              <Sparkles className="h-3 w-3" />
-              Sua jornada poética começa aqui.
+              <Sparkles className="h-3 w-3" /> Sua jornada poética começa aqui.
             </p>
           </div>
         </div>

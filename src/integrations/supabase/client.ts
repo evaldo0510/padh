@@ -1,12 +1,12 @@
-import { createClient, SupabaseClient } from '@supabase/supabase-js';
+import { createClient, SupabaseClient } from "@supabase/supabase-js";
 
-const supabaseUrl = import.meta.env.VITE_SUPABASE_URL || '';
-const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY || '';
+const supabaseUrl = import.meta.env.VITE_SUPABASE_URL || "";
+const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY || "";
 
 export const supabaseConfig = {
   url: supabaseUrl,
   anonKey: supabaseAnonKey,
-  isConfigured: !!supabaseUrl && !!supabaseAnonKey
+  isConfigured: !!supabaseUrl && !!supabaseAnonKey,
 };
 
 export const hasSupabaseConfig = () => supabaseConfig.isConfigured;
@@ -18,13 +18,23 @@ export const supabase: SupabaseClient = hasSupabaseConfig()
   : ({
       auth: {
         getUser: async () => ({ data: { user: null }, error: null }),
-        signInWithPassword: async () => ({ data: null, error: new Error('Supabase not configured') }),
-        signUp: async () => ({ data: null, error: new Error('Supabase not configured') }),
+        signInWithPassword: async () => ({
+          data: null,
+          error: new Error("Supabase not configured"),
+        }),
+        signUp: async () => ({
+          data: null,
+          error: new Error("Supabase not configured"),
+        }),
         signOut: async () => ({ error: null }),
-        onAuthStateChange: () => ({ data: { subscription: { unsubscribe: () => {} } } }),
+        onAuthStateChange: () => ({
+          data: { subscription: { unsubscribe: () => {} } },
+        }),
       },
       from: () => ({
-        select: () => ({ eq: () => ({ single: async () => ({ data: null, error: null }) }) }),
+        select: () => ({
+          eq: () => ({ single: async () => ({ data: null, error: null }) }),
+        }),
         upsert: async () => ({ data: null, error: null }),
         insert: async () => ({ data: null, error: null }),
         update: () => ({ eq: async () => ({ data: null, error: null }) }),

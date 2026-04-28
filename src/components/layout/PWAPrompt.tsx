@@ -1,9 +1,8 @@
-import { useRegisterSW } from 'virtual:pwa-register/react';
+import { useRegisterSW } from "virtual:pwa-register/react";
 import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
-import { useEffect } from 'react';
-import { RefreshCw } from 'lucide-react';
-
+import { useEffect } from "react";
+import { RefreshCw } from "lucide-react";
 const PWAPrompt = () => {
   const {
     offlineReady: [offlineReady, setOfflineReady],
@@ -11,18 +10,16 @@ const PWAPrompt = () => {
     updateServiceWorker,
   } = useRegisterSW({
     onRegistered(r) {
-      console.log('SW Registered: ' + r);
+      console.log("SW Registered: " + r);
     },
     onRegisterError(error) {
-      console.log('SW registration error', error);
+      console.log("SW registration error", error);
     },
   });
-
   const close = () => {
     setOfflineReady(false);
     setNeedRefresh(false);
   };
-
   useEffect(() => {
     if (offlineReady) {
       toast.success("App pronto para uso offline!", {
@@ -30,22 +27,20 @@ const PWAPrompt = () => {
       });
     }
   }, [offlineReady]);
-
   useEffect(() => {
     if (needRefresh) {
       toast("Nova versão disponível!", {
-        description: "Clique em atualizar para obter as melhorias mais recentes.",
+        description:
+          "Clique em atualizar para obter as melhorias mais recentes.",
         action: {
           label: "Atualizar",
           onClick: () => updateServiceWorker(true),
         },
         duration: Infinity,
-        icon: <RefreshCw className="h-4 w-4 animate-spin-slow" />,
+        icon: <RefreshCw className="spiritual-icon animate-spin-slow" />,
       });
     }
   }, [needRefresh, updateServiceWorker]);
-
   return null;
 };
-
 export default PWAPrompt;

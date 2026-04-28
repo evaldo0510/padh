@@ -1,147 +1,190 @@
-import React, { useState, useEffect } from 'react';
-import PageLayout from '@/components/layout/PageLayout';
-import { useParams, useNavigate } from 'react-router-dom';
-import { JORNADA_DATA } from '@/lib/jornada-data';
-import { useJornada } from '@/hooks/useJornada';
-import { Button } from '@/components/ui/button';
-import { Textarea } from '@/components/ui/textarea';
-import { Card, CardContent, CardHeader, CardTitle, CardFooter } from '@/components/ui/card';
-import { Progress } from '@/components/ui/progress';
-import { 
-  ChevronLeft, 
-  ChevronRight, 
-  CheckCircle2, 
+import React, { useState, useEffect } from "react";
+import PageLayout from "@/components/layout/PageLayout";
+import { useParams, useNavigate } from "react-router-dom";
+import { JORNADA_DATA } from "@/lib/jornada-data";
+import { useJornada } from "@/hooks/useJornada";
+import { Button } from "@/components/ui/button";
+import { Textarea } from "@/components/ui/textarea";
+import {
+  Card,
+  CardContent,
+  CardHeader,
+  CardTitle,
+  CardFooter,
+} from "@/components/ui/card";
+import { Progress } from "@/components/ui/progress";
+import {
+  ChevronLeft,
+  ChevronRight,
+  CheckCircle2,
   Sparkles,
-  ArrowLeft
-} from 'lucide-react';
-import { motion, AnimatePresence } from 'framer-motion';
-
+  ArrowLeft,
+} from "lucide-react";
+import { motion, AnimatePresence } from "framer-motion";
 const SessaoView = () => {
   const { phaseId, sessionId } = useParams();
   const navigate = useNavigate();
   const { jornada, saveResponse, completeSession, getResponse } = useJornada();
-
-  const fase = JORNADA_DATA.find(f => f.id === phaseId);
-  const sessao = fase?.sessoes.find(s => s.id === sessionId);
-  
+  const fase = JORNADA_DATA.find((f) => f.id === phaseId);
+  const sessao = fase?.sessoes.find((s) => s.id === sessionId);
   const [currentExIdx, setCurrentExIdx] = useState(0);
-  const [response, setResponse] = useState('');
-
+  const [response, setResponse] = useState("");
   useEffect(() => {
     if (sessao) {
       setResponse(getResponse(sessao.exercicios[currentExIdx].id));
     }
   }, [currentExIdx, sessao]);
-
   if (!sessao || !fase) return <div>Sessão não encontrada</div>;
-
   const currentEx = sessao.exercicios[currentExIdx];
   const totalEx = sessao.exercicios.length;
   const progress = ((currentExIdx + 1) / totalEx) * 100;
   const isLast = currentExIdx === totalEx - 1;
-
   const handleNext = () => {
     saveResponse(currentEx.id, response);
     if (isLast) {
       completeSession(sessao.id);
-      navigate('/jornada');
+      navigate("/jornada");
     } else {
       setCurrentExIdx(currentExIdx + 1);
     }
   };
-
   const handlePrev = () => {
     if (currentExIdx > 0) {
       setCurrentExIdx(currentExIdx - 1);
     }
   };
-
   return (
     <PageLayout
       seo={{
-        title: `${sessao.titulo} — Jornada P.A.D.H.`,
+        title: `${sessao.titulo}
+— Jornada P.A.D.H.`,
         description: sessao.descricao,
         path: `/jornada/${phaseId}/${sessionId}`,
       }}
       currentPage="Sessão"
     >
+      {" "}
       <div className="container mx-auto px-6 py-12 max-w-3xl">
+        {" "}
         <div className="mb-10 flex items-center justify-between">
-          <Button variant="ghost" onClick={() => navigate('/jornada')} className="gap-2 -ml-2 text-muted-foreground hover:text-foreground">
-            <ArrowLeft className="h-4 w-4" /> Voltar para Jornada
-          </Button>
+          {" "}
+          <Button
+            variant="ghost"
+            onClick={() => navigate("/jornada")}
+            className="gap-2 -ml-2 text-muted-foreground hover:text-foreground"
+          >
+            {" "}
+            <ArrowLeft className="spiritual-icon" /> Voltar para Jornada{" "}
+          </Button>{" "}
           <div className="text-right">
-            <p className="text-[10px] font-black uppercase tracking-widest text-primary mb-1">{fase.titulo}</p>
-            <h1 className="text-xl font-heading font-bold">{sessao.titulo}</h1>
-          </div>
-        </div>
-
+            {" "}
+            <p className="text-[10px] font-black uppercase tracking-widest text-primary mb-1">
+              {fase.titulo}
+            </p>{" "}
+            <h1 className="text-xl font-heading font-bold">
+              {sessao.titulo}
+            </h1>{" "}
+          </div>{" "}
+        </div>{" "}
         <div className="mb-8">
+          {" "}
           <div className="flex justify-between text-[10px] font-bold uppercase tracking-tighter mb-2 text-muted-foreground">
-            <span>Exercício {currentExIdx + 1} de {totalEx}</span>
-            <span>{Math.round(progress)}%</span>
-          </div>
-          <Progress value={progress} className="h-1" />
-        </div>
-
+            {" "}
+            <span>
+              Exercício {currentExIdx + 1}
+              de {totalEx}
+            </span>{" "}
+            <span>{Math.round(progress)}%</span>{" "}
+          </div>{" "}
+          <Progress value={progress} className="h-1" />{" "}
+        </div>{" "}
         <AnimatePresence mode="wait">
+          {" "}
           <motion.div
             key={currentEx.id}
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -10 }}
-            transition={{ duration: 0.3 }}
+            initial={{
+              opacity: 0,
+              y: 10,
+            }}
+            animate={{
+              opacity: 1,
+              y: 0,
+            }}
+            exit={{
+              opacity: 0,
+              y: -10,
+            }}
+            transition={{
+              duration: 0.3,
+            }}
           >
+            {" "}
             <Card className="border-primary/10 shadow-xl bg-card/50 backdrop-blur-sm">
+              {" "}
               <CardHeader className="pb-4">
+                {" "}
                 <div className="flex items-center gap-3 mb-4">
+                  {" "}
                   <div className="w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center text-primary">
-                    <Sparkles className="h-5 w-5" />
-                  </div>
+                    {" "}
+                    <Sparkles className="spiritual-icon spiritual-icon-lg" />{" "}
+                  </div>{" "}
                   <div>
-                    <CardTitle className="text-xl font-heading">{currentEx.titulo}</CardTitle>
-                    <p className="text-xs text-muted-foreground">{currentEx.descricao}</p>
-                  </div>
-                </div>
+                    {" "}
+                    <CardTitle className="text-xl font-heading">
+                      {currentEx.titulo}
+                    </CardTitle>{" "}
+                    <p className="text-xs text-muted-foreground">
+                      {currentEx.descricao}
+                    </p>{" "}
+                  </div>{" "}
+                </div>{" "}
                 <div className="p-4 rounded-xl bg-primary/5 border border-primary/10">
+                  {" "}
                   <p className="text-sm italic leading-relaxed text-foreground/90">
-                    "{currentEx.instrucao}"
-                  </p>
-                </div>
-              </CardHeader>
+                    "{currentEx.instrucao}"{" "}
+                  </p>{" "}
+                </div>{" "}
+              </CardHeader>{" "}
               <CardContent>
-                <Textarea 
+                {" "}
+                <Textarea
                   value={response}
                   onChange={(e) => setResponse(e.target.value)}
                   placeholder={currentEx.placeholder || "Sua resposta..."}
                   className="min-h-[200px] bg-background/50 border-primary/10 focus-visible:ring-primary/20 resize-none text-base leading-relaxed"
-                />
-              </CardContent>
+                />{" "}
+              </CardContent>{" "}
               <CardFooter className="flex justify-between border-t border-primary/5 pt-6">
-                <Button 
-                  variant="ghost" 
+                {" "}
+                <Button
+                  variant="ghost"
                   onClick={handlePrev}
                   disabled={currentExIdx === 0}
                   className="gap-2"
                 >
-                  <ChevronLeft className="h-4 w-4" /> Anterior
-                </Button>
-                
-                <Button 
+                  {" "}
+                  <ChevronLeft className="spiritual-icon" /> Anterior{" "}
+                </Button>{" "}
+                <Button
                   onClick={handleNext}
                   className="gap-2 px-8"
                   disabled={!response.trim()}
                 >
-                  {isLast ? 'Concluir Sessão' : 'Próximo'} 
-                  {isLast ? <CheckCircle2 className="h-4 w-4" /> : <ChevronRight className="h-4 w-4" />}
-                </Button>
-              </CardFooter>
-            </Card>
-          </motion.div>
-        </AnimatePresence>
-      </div>
+                  {" "}
+                  {isLast ? "Concluir Sessão" : "Próximo"}
+                  {isLast ? (
+                    <CheckCircle2 className="spiritual-icon" />
+                  ) : (
+                    <ChevronRight className="spiritual-icon" />
+                  )}
+                </Button>{" "}
+              </CardFooter>{" "}
+            </Card>{" "}
+          </motion.div>{" "}
+        </AnimatePresence>{" "}
+      </div>{" "}
     </PageLayout>
   );
 };
-
 export default SessaoView;
