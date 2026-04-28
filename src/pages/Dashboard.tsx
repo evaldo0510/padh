@@ -213,6 +213,82 @@ const Dashboard = () => {
     };
   }, [isAuthenticated, user, loadProgress]);
 
+  // Favorites: load + realtime sync
+  const loadFavorites = React.useCallback(async () => {
+    if (!isAuthenticated || !user) {
+      setFavorites(new Set());
+      return;
+    }
+    const { data, error } = await supabase
+      .from("episode_favorites")
+      .select("session_id")
+      .eq("user_id", user.id);
+    if (!error && data) {
+      setFavorites(new Set(data.map((d: any) => d.session_id as string)));
+    }
+  }, [isAuthenticated, user]);
+
+  useEffect(() => {
+    loadFavorites();
+  }, [loadFavorites]);
+
+  useEffect(() => {
+    if (!isAuthenticated || !user) return;
+    const channel = supabase
+      .channel(`dashboard-favorites-${user.id}`)
+      .on(
+        "postgres_changes",
+        { event: "*", schema: "public", table: "episode_favorites", filter: `user_id=eq.${user.id}` },
+        () => loadFavorites(),
+      )
+      .subscribe();
+    return () => {
+      supabase.removeChannel(channel);
+    };
+  }, [isAuthenticated, user, loadFavorites]);
+
+  const toggleFavorite = React.useCallback(
+    async (sessionId: string) => {
+      if (!isAuthenticated || !user) {
+        toast.error("Faça login para salvar favoritos.");
+        return;
+      }
+      const isFav = favorites.has(sessionId);
+      // optimistic
+      setFavorites((prev) => {
+        const next = new Set(prev);
+        if (isFav) next.delete(sessionId);
+        else next.add(sessionId);
+        return next;
+      });
+      try {
+        if (isFav) {
+          const { error } = await supabase
+            .from("episode_favorites")
+            .delete()
+            .eq("user_id", user.id)
+            .eq("session_id", sessionId);
+          if (error) throw error;
+        } else {
+          const { error } = await supabase
+            .from("episode_favorites")
+            .insert({ user_id: user.id, session_id: sessionId });
+          if (error) throw error;
+        }
+      } catch (e: any) {
+        // rollback
+        setFavorites((prev) => {
+          const next = new Set(prev);
+          if (isFav) next.add(sessionId);
+          else next.delete(sessionId);
+          return next;
+        });
+        toast.error("Não foi possível atualizar favorito.");
+      }
+    },
+    [favorites, isAuthenticated, user],
+  );
+
   const handleReload = async () => {
     setReloading(true);
     await loadProgress(true);
