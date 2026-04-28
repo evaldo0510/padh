@@ -230,7 +230,7 @@ export const BibliotecaDigital = () => {
                 <div className="flex items-start justify-between mb-2">
                   <div className="flex items-center gap-2">
                     {typeIcons[item.type]}
-                    <Badge className={`text-xs ${typeColors[item.type]}`}>
+                    <Badge variant="spiritual" className={`text-xs ${typeColors[item.type]}`}>
                       {typeNames[item.type]}
                     </Badge>
                   </div>
