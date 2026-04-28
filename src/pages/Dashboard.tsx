@@ -846,6 +846,8 @@ const EpisodeHistorySection: React.FC<EpisodeHistoryProps> = ({
     { key: "completed", label: "Concluídos", count: summary.completed },
     { key: "in_progress", label: "Em andamento", count: summary.in_progress },
     { key: "not_started", label: "Pendentes", count: summary.not_started },
+    { key: "recent", label: "Recentes (24h)", count: recentCount },
+    { key: "favorites", label: "Favoritos", count: favorites.size },
   ];
 
   return (
