@@ -585,6 +585,13 @@ const Dashboard = () => {
              ))}
           </NetflixCarousel>
 
+          {/* Ranking — episodes with biggest recent progress */}
+          <RecentImpactRanking
+            remoteProgress={remoteProgress}
+            navigate={navigate}
+            isAuthenticated={isAuthenticated}
+          />
+
           {/* Episode History — per-episode status & last response */}
           <EpisodeHistorySection
             navigate={navigate}
@@ -604,8 +611,9 @@ const Dashboard = () => {
             lastSyncAt={lastSyncAt}
             recentlyChanged={recentlyChanged}
             totalRemote={totalRemote}
+            favorites={favorites}
+            onToggleFavorite={toggleFavorite}
           />
-
           {/* User Stats & Info Section (Bottom) */}
           <section className="container mx-auto px-6 md:px-12 py-12 grid grid-cols-1 md:grid-cols-3 gap-8">
              <div className="space-y-4">
