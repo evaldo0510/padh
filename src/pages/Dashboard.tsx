@@ -801,14 +801,36 @@ const EpisodeHistorySection: React.FC<EpisodeHistoryProps> = ({
         if (!b.lastActivity) return -1;
         return a.lastActivity < b.lastActivity ? 1 : -1;
       });
+    } else if (sort === "impact") {
+      // Highest "impact": completed > in_progress, with most recent activity weighted higher
+      const score = (e: typeof list[number]) => {
+        const base = e.status === "completed" ? 100 : e.status === "in_progress" ? 50 : 0;
+        if (!e.lastActivity) return base;
+        const ageH = Math.max(1, (Date.now() - new Date(e.lastActivity).getTime()) / 3_600_000);
+        return base + Math.max(0, 50 - ageH); // newer activity = bigger boost
+      };
+      list.sort((a, b) => score(b) - score(a));
     }
     return list;
   }, [allEpisodes, sort]);
 
-  const filtered = useMemo(
-    () => (filter === "all" ? sorted : sorted.filter((e) => e.status === filter)),
-    [sorted, filter],
+  const recentCount = useMemo(
+    () =>
+      allEpisodes.filter(
+        (e) => e.lastActivity && Date.now() - new Date(e.lastActivity).getTime() <= RECENT_WINDOW_MS,
+      ).length,
+    [allEpisodes],
   );
+
+  const filtered = useMemo(() => {
+    if (filter === "all") return sorted;
+    if (filter === "favorites") return sorted.filter((e) => favorites.has(e.sessao.id));
+    if (filter === "recent")
+      return sorted.filter(
+        (e) => e.lastActivity && Date.now() - new Date(e.lastActivity).getTime() <= RECENT_WINDOW_MS,
+      );
+    return sorted.filter((e) => e.status === filter);
+  }, [sorted, filter, favorites]);
 
   const visible = filtered.slice(0, visibleCount);
   // Server-side pagination: more rows exist on the server
