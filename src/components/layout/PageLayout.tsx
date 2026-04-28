@@ -17,6 +17,8 @@ interface PageLayoutProps {
   currentPage?: string;
   showBackButton?: boolean;
   loadingDelay?: number;
+  hideHeader?: boolean;
+  hideFooter?: boolean;
 }
 
 const PageLayout: React.FC<PageLayoutProps> = ({
