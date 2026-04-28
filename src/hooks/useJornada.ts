@@ -1,8 +1,9 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { toast } from "sonner";
-import { supabase, hasSupabaseConfig } from "@/integrations/supabase/client";
+import { supabase } from "@/integrations/supabase/client";
 import { useOfflineMode } from "./useOfflineMode";
 import { reportSyncStatus } from "./useSyncStatus";
+import { JORNADA_DATA } from "@/lib/jornada-data";
 
 export interface RespostaExercicio {
   exerciseId: string;
@@ -12,10 +13,10 @@ export interface RespostaExercicio {
 
 export interface JornadaProgress {
   currentPhaseId: string;
-  completedExercises: string[]; // exerciseId[]
-  completedSessions: string[]; // sessionId[]
+  completedExercises: string[];
+  completedSessions: string[];
   responses: RespostaExercicio[];
-  favorites?: string[]; // IDs of sessions, modules or tools
+  favorites?: string[];
   last_updated?: string;
 }
 
@@ -29,6 +30,24 @@ const INITIAL_JORNADA: JornadaProgress = {
   favorites: [],
 };
 
+// Helper to find phase_id from session_id (lookup in static data)
+const findPhaseForSession = (sessionId: string): string | undefined => {
+  for (const fase of JORNADA_DATA) {
+    if (fase.sessoes.some((s) => s.id === sessionId)) return fase.id;
+  }
+  return undefined;
+};
+const findPhaseForExercise = (exerciseId: string): { phaseId?: string; sessionId?: string } => {
+  for (const fase of JORNADA_DATA) {
+    for (const sessao of fase.sessoes) {
+      if (sessao.exercicios.some((e) => e.id === exerciseId)) {
+        return { phaseId: fase.id, sessionId: sessao.id };
+      }
+    }
+  }
+  return {};
+};
+
 export const useJornada = () => {
   const { isOffline } = useOfflineMode();
   const [jornada, setJornada] = useState<JornadaProgress>(() => {
@@ -37,114 +56,174 @@ export const useJornada = () => {
   });
 
   const [isSyncing, setIsSyncing] = useState(false);
+  const [userId, setUserId] = useState<string | null>(null);
 
-  // Initial Sync from DB
+  // Track current user
   useEffect(() => {
-    const fetchProgress = async () => {
-      if (isOffline || !hasSupabaseConfig()) return;
-
-      const {
-        data: { user },
-      } = await supabase.auth.getUser();
-      if (!user) return;
-
-      setIsSyncing(true);
-      const { data, error } = await supabase
-        .from("user_progress")
-        .select("progress_data")
-        .eq("user_id", user.id)
-        .single();
-
-      if (data && !error) {
-        setJornada(data.progress_data);
-      }
-      setIsSyncing(false);
-    };
-
-    fetchProgress();
+    const { data: sub } = supabase.auth.onAuthStateChange((_e, session) => {
+      setUserId(session?.user?.id ?? null);
+    });
+    supabase.auth.getSession().then(({ data: { session } }) => {
+      setUserId(session?.user?.id ?? null);
+    });
+    return () => sub.subscription.unsubscribe();
   }, []);
 
-  // Save to LocalStorage and DB
+  // Initial sync from DB when user logs in
   useEffect(() => {
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(jornada));
+    const fetchProgress = async () => {
+      if (isOffline || !userId) return;
+      setIsSyncing(true);
+      try {
+        const [progressRes, responsesRes] = await Promise.all([
+          supabase
+            .from("episode_progress")
+            .select("session_id,phase_id,status")
+            .eq("user_id", userId),
+          supabase
+            .from("exercise_responses")
+            .select("exercise_id,response,updated_at")
+            .eq("user_id", userId),
+        ]);
 
-    // Notify about data change for sync indicator
-    window.dispatchEvent(new Event("padh_data_change"));
+        const completedSessions: string[] = (progressRes.data || [])
+          .filter((p) => p.status === "completed")
+          .map((p) => p.session_id);
 
-    const syncToDB = async () => {
-      if (isOffline || !hasSupabaseConfig()) {
-        reportSyncStatus("blocked");
-        return;
-      }
+        const responses: RespostaExercicio[] = (responsesRes.data || []).map((r) => ({
+          exerciseId: r.exercise_id,
+          response: r.response,
+          date: r.updated_at,
+        }));
 
-      const {
-        data: { user },
-      } = await supabase.auth.getUser();
-      if (!user) {
-        reportSyncStatus("blocked");
-        return;
-      }
+        const completedExercises = responses
+          .filter((r) => r.response && r.response.trim().length > 0)
+          .map((r) => r.exerciseId);
 
-      reportSyncStatus("pending");
-      const { error } = await supabase.from("user_progress").upsert({
-        user_id: user.id,
-        progress_data: jornada,
-        updated_at: new Date().toISOString(),
-      });
-
-      if (error) {
-        console.error("Sync error:", error);
-        reportSyncStatus("error");
-      } else {
+        setJornada((prev) => {
+          const merged: JornadaProgress = {
+            ...prev,
+            completedSessions: Array.from(
+              new Set([...(prev.completedSessions || []), ...completedSessions]),
+            ),
+            completedExercises: Array.from(
+              new Set([...(prev.completedExercises || []), ...completedExercises]),
+            ),
+            responses: [
+              ...prev.responses.filter(
+                (r) => !responses.some((rr) => rr.exerciseId === r.exerciseId),
+              ),
+              ...responses,
+            ],
+          };
+          localStorage.setItem(STORAGE_KEY, JSON.stringify(merged));
+          return merged;
+        });
         reportSyncStatus("ok");
+      } catch (e) {
+        console.error("Sync fetch error", e);
+        reportSyncStatus("error");
+      } finally {
+        setIsSyncing(false);
       }
     };
+    fetchProgress();
+  }, [userId, isOffline]);
 
-    syncToDB();
-  }, [jornada, isOffline]);
+  // Persist locally on every change
+  useEffect(() => {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(jornada));
+    window.dispatchEvent(new Event("padh_data_change"));
+  }, [jornada]);
 
-  const saveResponse = (exerciseId: string, response: string) => {
-    setJornada((prev) => {
-      const otherResponses = prev.responses.filter(
-        (r) => r.exerciseId !== exerciseId,
-      );
-      const newResponse = {
-        exerciseId,
-        response,
-        date: new Date().toISOString(),
-      };
-
-      return {
-        ...prev,
-        responses: [...otherResponses, newResponse],
-        completedExercises: prev.completedExercises.includes(exerciseId)
-          ? prev.completedExercises
-          : [...prev.completedExercises, exerciseId],
-      };
-    });
-
-    toast.success("Resposta salva", {
-      description: "Seu progresso foi sincronizado.",
-    });
-  };
-
-  const completeSession = (sessionId: string) => {
-    if (!jornada.completedSessions.includes(sessionId)) {
-      setJornada((prev) => ({
-        ...prev,
-        completedSessions: [...prev.completedSessions, sessionId],
-      }));
-      toast.success("Sessão Concluída!", {
-        description: "Mais um passo na sua jornada.",
+  const saveResponse = useCallback(
+    async (exerciseId: string, response: string) => {
+      setJornada((prev) => {
+        const otherResponses = prev.responses.filter(
+          (r) => r.exerciseId !== exerciseId,
+        );
+        const newResponse = {
+          exerciseId,
+          response,
+          date: new Date().toISOString(),
+        };
+        return {
+          ...prev,
+          responses: [...otherResponses, newResponse],
+          completedExercises: prev.completedExercises.includes(exerciseId)
+            ? prev.completedExercises
+            : [...prev.completedExercises, exerciseId],
+        };
       });
-    }
-  };
+
+      if (userId && !isOffline) {
+        const { phaseId, sessionId } = findPhaseForExercise(exerciseId);
+        reportSyncStatus("pending");
+        const { error } = await supabase
+          .from("exercise_responses")
+          .upsert(
+            {
+              user_id: userId,
+              exercise_id: exerciseId,
+              response,
+              phase_id: phaseId ?? null,
+              session_id: sessionId ?? null,
+            },
+            { onConflict: "user_id,exercise_id" },
+          );
+        if (error) {
+          console.error("saveResponse error", error);
+          reportSyncStatus("error");
+        } else {
+          reportSyncStatus("ok");
+        }
+      } else {
+        reportSyncStatus("blocked");
+      }
+
+      toast.success("Resposta salva", {
+        description: userId
+          ? "Sincronizada com sua conta."
+          : "Salva localmente. Faça login para sincronizar.",
+      });
+    },
+    [userId, isOffline],
+  );
+
+  const completeSession = useCallback(
+    async (sessionId: string) => {
+      if (!jornada.completedSessions.includes(sessionId)) {
+        setJornada((prev) => ({
+          ...prev,
+          completedSessions: [...prev.completedSessions, sessionId],
+        }));
+        toast.success("Sessão Concluída!", {
+          description: "Mais um passo na sua jornada.",
+        });
+      }
+      if (userId && !isOffline) {
+        const phaseId = findPhaseForSession(sessionId);
+        if (!phaseId) return;
+        const { error } = await supabase
+          .from("episode_progress")
+          .upsert(
+            {
+              user_id: userId,
+              session_id: sessionId,
+              phase_id: phaseId,
+              status: "completed",
+              completed_at: new Date().toISOString(),
+            },
+            { onConflict: "user_id,session_id" },
+          );
+        if (error) console.error("completeSession error", error);
+      }
+    },
+    [jornada.completedSessions, userId, isOffline],
+  );
 
   const setPhase = (phaseId: string) => {
-    setJornada((prev) => ({
-      ...prev,
-      currentPhaseId: phaseId,
-    }));
+    setJornada((prev) => ({ ...prev, currentPhaseId: phaseId }));
   };
 
   const getResponse = (exerciseId: string) => {
@@ -160,17 +239,11 @@ export const useJornada = () => {
       const newFavs = isFav
         ? currentFavs.filter((f) => f !== id)
         : [...currentFavs, id];
-
-      return {
-        ...prev,
-        favorites: newFavs,
-      };
+      return { ...prev, favorites: newFavs };
     });
   };
 
-  const isFavorite = (id: string) => {
-    return (jornada.favorites || []).includes(id);
-  };
+  const isFavorite = (id: string) => (jornada.favorites || []).includes(id);
 
   return {
     jornada,
@@ -181,6 +254,6 @@ export const useJornada = () => {
     toggleFavorite,
     isFavorite,
     isSyncing,
-    hasConfig: hasSupabaseConfig(),
+    hasConfig: true,
   };
 };

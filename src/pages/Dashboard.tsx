@@ -27,7 +27,8 @@ import SupabaseConfigBanner from "@/components/dashboard/SupabaseConfigBanner";
 import SyncStatusIndicator from "@/components/dashboard/SyncStatusIndicator";
 import NotificationCenter from "@/components/dashboard/NotificationCenter";
 import { toast } from "sonner";
-import { supabase, supabaseConfig } from "@/integrations/supabase/client";
+import { supabase } from "@/integrations/supabase/client";
+import { supabaseConfig } from "@/integrations/supabase/config";
 import { Progress } from "@/components/ui/progress";
 
 const Dashboard = () => {

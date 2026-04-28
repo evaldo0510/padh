@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { toast } from "sonner";
-import { supabase, hasSupabaseConfig } from "@/integrations/supabase/client";
+import { supabase } from "@/integrations/supabase/client";
+import { hasSupabaseConfig } from "@/integrations/supabase/config";
 import { useOfflineMode } from "./useOfflineMode";
 import { reportSyncStatus } from "./useSyncStatus";
 
@@ -42,67 +43,11 @@ export const useCourseProgress = () => {
     return INITIAL_PROGRESS;
   });
 
-  // Initial Sync from DB
-  useEffect(() => {
-    const fetchProgress = async () => {
-      if (isOffline || !hasSupabaseConfig()) return;
-      const {
-        data: { user },
-      } = await supabase.auth.getUser();
-      if (!user) return;
-
-      const { data, error } = await supabase
-        .from("course_progress")
-        .select("progress_data")
-        .eq("user_id", user.id)
-        .single();
-
-      if (data && !error) {
-        setProgress(data.progress_data);
-      }
-    };
-
-    fetchProgress();
-  }, []);
-
-  // Save to LocalStorage and DB
+  // Persist locally only — episode/exercise data lives in dedicated tables now.
   useEffect(() => {
     localStorage.setItem(STORAGE_KEY, JSON.stringify(progress));
-
-    // Notify about data change for sync indicator
     window.dispatchEvent(new Event("padh_data_change"));
-
-    const syncToDB = async () => {
-      if (isOffline || !hasSupabaseConfig()) {
-        reportSyncStatus("blocked");
-        return;
-      }
-
-      const {
-        data: { user },
-      } = await supabase.auth.getUser();
-      if (!user) {
-        reportSyncStatus("blocked");
-        return;
-      }
-
-      reportSyncStatus("pending");
-      const { error } = await supabase.from("course_progress").upsert({
-        user_id: user.id,
-        progress_data: progress,
-        updated_at: new Date().toISOString(),
-      });
-
-      if (error) {
-        console.error("Sync error:", error);
-        reportSyncStatus("error");
-      } else {
-        reportSyncStatus("ok");
-      }
-    };
-
-    syncToDB();
-  }, [progress, isOffline]);
+  }, [progress]);
 
   const addNotification = (title: string, message: string) => {
     const newNotif = {

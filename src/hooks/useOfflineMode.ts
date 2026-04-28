@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { hasSupabaseConfig } from "@/integrations/supabase/client";
+import { hasSupabaseConfig } from "@/integrations/supabase/config";
 
 const OFFLINE_KEY = "padh_force_offline";
 const OFFLINE_EVENT = "padh_offline_change";
