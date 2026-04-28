@@ -1,8 +1,8 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import PageLayout from "@/components/layout/PageLayout";
 import { useCourseProgress } from "@/hooks/useCourseProgress";
 import { MODULOS } from "@/lib/dados-clinicos";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import {
   Play,
   Info,
@@ -20,6 +20,8 @@ import {
   ShoppingBag,
   CheckCircle2,
   Lock,
+  CircleDashed,
+  Circle,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -32,40 +34,87 @@ import SyncStatusIndicator from "@/components/dashboard/SyncStatusIndicator";
 import NotificationCenter from "@/components/dashboard/NotificationCenter";
 import { toast } from "sonner";
 import { supabase } from "@/integrations/supabase/client";
-import { supabaseConfig } from "@/integrations/supabase/config";
 import { Progress } from "@/components/ui/progress";
+import { useAuth } from "@/hooks/useAuth";
+
+type EpisodeProgressRow = {
+  session_id: string;
+  phase_id: string;
+  status: string;
+  completed_at: string | null;
+};
+
+type FilterMode = "all" | "completed" | "in_progress" | "not_started";
+const PAGE_SIZE = 8;
 
 const Dashboard = () => {
   const { jornada } = useJornada();
   const { progress, isModuleUnlocked } = useCourseProgress();
   const navigate = useNavigate();
+  const location = useLocation();
+  const { user, isAuthenticated, signOut } = useAuth();
+
   const [scrolled, setScrolled] = useState(false);
-  const [isAuthed, setIsAuthed] = useState(false);
   const [navigatingTo, setNavigatingTo] = useState<string | null>(null);
+  const [remoteProgress, setRemoteProgress] = useState<EpisodeProgressRow[]>([]);
+  const [filter, setFilter] = useState<FilterMode>("all");
+  const [visibleCount, setVisibleCount] = useState(PAGE_SIZE);
 
   useEffect(() => {
-    const handleScroll = () => {
-      setScrolled(window.scrollY > 50);
-    };
+    const handleScroll = () => setScrolled(window.scrollY > 50);
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
+  // Clear "navigating" state whenever the user lands back on this route
   useEffect(() => {
-    const sim = !!localStorage.getItem("padh_simulated_user");
-    setIsAuthed(sim);
-    const { data: sub } = supabase.auth.onAuthStateChange((_e, session) => {
-      setIsAuthed(!!session || !!localStorage.getItem("padh_simulated_user"));
-    });
-    supabase.auth.getSession().then(({ data: { session } }) => {
-      setIsAuthed(!!session || !!localStorage.getItem("padh_simulated_user"));
-    });
-    return () => sub.subscription.unsubscribe();
-  }, []);
+    setNavigatingTo(null);
+    toast.dismiss("nav-toast");
+  }, [location.pathname]);
+
+  // Fetch episode_progress from Supabase for the authenticated user
+  useEffect(() => {
+    if (!isAuthenticated || !user) {
+      setRemoteProgress([]);
+      return;
+    }
+    let cancelled = false;
+    (async () => {
+      const { data, error } = await supabase
+        .from("episode_progress")
+        .select("session_id,phase_id,status,completed_at")
+        .eq("user_id", user.id);
+      if (!cancelled && !error && data) {
+        setRemoteProgress(data as EpisodeProgressRow[]);
+      }
+    })();
+
+    const channel = supabase
+      .channel(`dashboard-progress-${user.id}`)
+      .on(
+        "postgres_changes",
+        { event: "*", schema: "public", table: "episode_progress", filter: `user_id=eq.${user.id}` },
+        async () => {
+          const { data } = await supabase
+            .from("episode_progress")
+            .select("session_id,phase_id,status,completed_at")
+            .eq("user_id", user.id);
+          if (data) setRemoteProgress(data as EpisodeProgressRow[]);
+        },
+      )
+      .subscribe();
+
+    return () => {
+      cancelled = true;
+      supabase.removeChannel(channel);
+    };
+  }, [isAuthenticated, user]);
 
   const goTo = (path: string, label: string) => {
     setNavigatingTo(path);
-    toast.loading(`Abrindo ${label}...`, { id: "nav-toast", duration: 1500 });
+    toast.loading(`Abrindo ${label}...`, { id: "nav-toast", duration: 1200 });
+    // Safety: clear flag if route doesn't change for any reason
+    window.setTimeout(() => setNavigatingTo(null), 1500);
     navigate(path);
   };
 
@@ -74,10 +123,7 @@ const Dashboard = () => {
   };
 
   const handleLogout = async () => {
-    localStorage.removeItem("padh_simulated_user");
-    if (supabaseConfig.isConfigured) {
-      await supabase.auth.signOut();
-    }
+    await signOut();
     toast.success("Sessão encerrada.");
     navigate("/");
   };
@@ -200,7 +246,7 @@ const Dashboard = () => {
               >
                 <CreditCard className="w-4 h-4" /> Planos
               </Button>
-              {isAuthed ? (
+              {isAuthenticated ? (
                 <Button
                   variant="ghost"
                   size="sm"
@@ -220,7 +266,7 @@ const Dashboard = () => {
                   <ShoppingBag className="w-4 h-4" /> Entrar
                 </Button>
               )}
-              {isAuthed && (
+              {isAuthenticated && (
                 <Button variant="ghost" size="sm" className="gap-2 text-muted-foreground hover:text-destructive" onClick={handleLogout}>
                   <LogOut className="w-4 h-4" /> Sair
                 </Button>
@@ -354,67 +400,16 @@ const Dashboard = () => {
           </NetflixCarousel>
 
           {/* Episode History — per-episode status & last response */}
-          <section id="episode-history" className="container mx-auto px-6 md:px-12 py-8 scroll-mt-32">
-            <div className="flex items-center justify-between mb-6">
-              <h2 className="text-2xl md:text-3xl font-heading font-black flex items-center gap-3">
-                <Clock className="w-6 h-6 text-primary" /> Histórico por Episódio
-              </h2>
-              <Button asChild variant="link" className="text-primary">
-                <Link to="/meu-produto">Ver tudo <ChevronRight className="w-4 h-4 ml-1" /></Link>
-              </Button>
-            </div>
-            <div className="grid gap-3">
-              {JORNADA_DATA.flatMap((fase) =>
-                fase.sessoes.map((s, idx) => {
-                  const done = jornada.completedSessions.includes(s.id);
-                  const sessionResponses = s.exercicios.filter((ex) =>
-                    jornada.responses.some((r) => r.exerciseId === ex.id),
-                  );
-                  const inProgress = !done && sessionResponses.length > 0;
-                  const lastResp = jornada.responses
-                    .filter((r) => s.exercicios.some((ex) => ex.id === r.exerciseId))
-                    .sort((a, b) => (a.date < b.date ? 1 : -1))[0];
-
-                  return (
-                    <div
-                      key={`${fase.id}-${s.id}`}
-                      className="bg-card/50 hover:bg-card border border-white/5 rounded-xl p-4 flex items-start gap-4 transition-colors cursor-pointer"
-                      onClick={() => navigate(`/jornada/${fase.id}/${s.id}`)}
-                    >
-                      <div className="text-xl font-heading font-black text-primary/40 w-10 text-center shrink-0">
-                        {String(idx + 1).padStart(2, "0")}
-                      </div>
-                      <div className="flex-1 min-w-0">
-                        <div className="flex items-center gap-2 flex-wrap">
-                          <span className="text-xs uppercase tracking-wider text-muted-foreground">
-                            {fase.titulo}
-                          </span>
-                          {done ? (
-                            <Badge className="bg-primary/10 text-primary border-primary/20 text-[10px]">
-                              <CheckCircle2 className="w-3 h-3 mr-1" /> Concluído
-                            </Badge>
-                          ) : inProgress ? (
-                            <Badge variant="outline" className="text-[10px]">Em andamento</Badge>
-                          ) : (
-                            <Badge variant="outline" className="text-[10px] text-muted-foreground">
-                              <Lock className="w-3 h-3 mr-1" /> Não iniciado
-                            </Badge>
-                          )}
-                        </div>
-                        <h3 className="font-bold mt-1 truncate">{s.titulo}</h3>
-                        {lastResp && (
-                          <p className="mt-2 text-xs text-muted-foreground italic line-clamp-2">
-                            "{lastResp.response}"
-                          </p>
-                        )}
-                      </div>
-                      <ChevronRight className="w-5 h-5 text-muted-foreground shrink-0 mt-1" />
-                    </div>
-                  );
-                }),
-              )}
-            </div>
-          </section>
+          <EpisodeHistorySection
+            navigate={navigate}
+            jornada={jornada}
+            remoteProgress={remoteProgress}
+            isAuthenticated={isAuthenticated}
+            filter={filter}
+            setFilter={setFilter}
+            visibleCount={visibleCount}
+            setVisibleCount={setVisibleCount}
+          />
 
           {/* User Stats & Info Section (Bottom) */}
           <section className="container mx-auto px-6 md:px-12 py-12 grid grid-cols-1 md:grid-cols-3 gap-8">
@@ -459,6 +454,211 @@ const Dashboard = () => {
         </div>
       </div>
     </PageLayout>
+  );
+};
+
+// ===== Episode History (with summary, filters & pagination) =====
+interface EpisodeHistoryProps {
+  navigate: ReturnType<typeof useNavigate>;
+  jornada: ReturnType<typeof useJornada>["jornada"];
+  remoteProgress: EpisodeProgressRow[];
+  isAuthenticated: boolean;
+  filter: FilterMode;
+  setFilter: (f: FilterMode) => void;
+  visibleCount: number;
+  setVisibleCount: (n: number) => void;
+}
+
+const EpisodeHistorySection: React.FC<EpisodeHistoryProps> = ({
+  navigate,
+  jornada,
+  remoteProgress,
+  isAuthenticated,
+  filter,
+  setFilter,
+  visibleCount,
+  setVisibleCount,
+}) => {
+  // Build a flat list of all episodes with their computed status
+  const allEpisodes = useMemo(() => {
+    const remoteByid = new Map<string, EpisodeProgressRow>();
+    remoteProgress.forEach((r) => remoteByid.set(r.session_id, r));
+
+    return JORNADA_DATA.flatMap((fase, fi) =>
+      fase.sessoes.map((s, idx) => {
+        const remote = remoteByid.get(s.id);
+        const localDone = jornada.completedSessions.includes(s.id);
+        const done = remote?.status === "completed" || localDone;
+
+        const sessionResponses = s.exercicios.filter((ex) =>
+          jornada.responses.some((r) => r.exerciseId === ex.id),
+        );
+        const inProgress =
+          !done &&
+          (remote?.status === "in_progress" || sessionResponses.length > 0);
+
+        const lastResp = jornada.responses
+          .filter((r) => s.exercicios.some((ex) => ex.id === r.exerciseId))
+          .sort((a, b) => (a.date < b.date ? 1 : -1))[0];
+
+        const status: FilterMode = done
+          ? "completed"
+          : inProgress
+            ? "in_progress"
+            : "not_started";
+
+        return { fase, fi, sessao: s, idx, status, done, inProgress, lastResp };
+      }),
+    );
+  }, [jornada, remoteProgress]);
+
+  const summary = useMemo(() => {
+    const total = allEpisodes.length;
+    const completed = allEpisodes.filter((e) => e.status === "completed").length;
+    const in_progress = allEpisodes.filter((e) => e.status === "in_progress").length;
+    const not_started = total - completed - in_progress;
+    return { total, completed, in_progress, not_started };
+  }, [allEpisodes]);
+
+  const filtered = useMemo(
+    () => (filter === "all" ? allEpisodes : allEpisodes.filter((e) => e.status === filter)),
+    [allEpisodes, filter],
+  );
+
+  const visible = filtered.slice(0, visibleCount);
+  const hasMore = visible.length < filtered.length;
+
+  const filters: { key: FilterMode; label: string; count: number }[] = [
+    { key: "all", label: "Todos", count: summary.total },
+    { key: "completed", label: "Concluídos", count: summary.completed },
+    { key: "in_progress", label: "Em andamento", count: summary.in_progress },
+    { key: "not_started", label: "Pendentes", count: summary.not_started },
+  ];
+
+  return (
+    <section id="episode-history" className="container mx-auto px-6 md:px-12 py-8 scroll-mt-32">
+      <div className="flex items-center justify-between mb-4 flex-wrap gap-3">
+        <h2 className="text-2xl md:text-3xl font-heading font-black flex items-center gap-3">
+          <Clock className="w-6 h-6 text-primary" /> Histórico por Episódio
+        </h2>
+        <Button asChild variant="link" className="text-primary">
+          <Link to="/meu-produto">
+            Ver tudo <ChevronRight className="w-4 h-4 ml-1" />
+          </Link>
+        </Button>
+      </div>
+
+      {/* Summary cards */}
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mb-5">
+        <SummaryCard icon={<CheckCircle2 className="w-4 h-4" />} label="Concluídos" value={summary.completed} accent="primary" />
+        <SummaryCard icon={<CircleDashed className="w-4 h-4" />} label="Em andamento" value={summary.in_progress} accent="amber" />
+        <SummaryCard icon={<Circle className="w-4 h-4" />} label="Pendentes" value={summary.not_started} accent="muted" />
+        <SummaryCard icon={<Trophy className="w-4 h-4" />} label="Total" value={summary.total} accent="muted" />
+      </div>
+
+      {!isAuthenticated && (
+        <div className="text-xs text-muted-foreground bg-muted/30 rounded-lg p-3 mb-4">
+          Você está vendo dados locais. Faça login para sincronizar seu progresso na nuvem.
+        </div>
+      )}
+
+      {/* Filter chips */}
+      <div className="flex flex-wrap gap-2 mb-5">
+        {filters.map((f) => (
+          <button
+            key={f.key}
+            onClick={() => {
+              setFilter(f.key);
+              setVisibleCount(PAGE_SIZE);
+            }}
+            className={`px-3 py-1.5 rounded-full text-xs font-bold transition-colors border ${
+              filter === f.key
+                ? "bg-primary text-primary-foreground border-primary"
+                : "bg-card/50 text-muted-foreground border-white/5 hover:border-primary/30"
+            }`}
+          >
+            {f.label} <span className="opacity-70 ml-1">({f.count})</span>
+          </button>
+        ))}
+      </div>
+
+      {filtered.length === 0 ? (
+        <div className="text-sm text-muted-foreground text-center py-8 bg-card/30 rounded-xl">
+          Nenhum episódio neste filtro.
+        </div>
+      ) : (
+        <div className="grid gap-3">
+          {visible.map(({ fase, sessao, idx, done, inProgress, lastResp }) => (
+            <div
+              key={`${fase.id}-${sessao.id}`}
+              className="bg-card/50 hover:bg-card border border-white/5 rounded-xl p-4 flex items-start gap-4 transition-colors cursor-pointer"
+              onClick={() => navigate(`/jornada/${fase.id}/${sessao.id}`)}
+            >
+              <div className="text-xl font-heading font-black text-primary/40 w-10 text-center shrink-0">
+                {String(idx + 1).padStart(2, "0")}
+              </div>
+              <div className="flex-1 min-w-0">
+                <div className="flex items-center gap-2 flex-wrap">
+                  <span className="text-xs uppercase tracking-wider text-muted-foreground">
+                    {fase.titulo}
+                  </span>
+                  {done ? (
+                    <Badge className="bg-primary/10 text-primary border-primary/20 text-[10px]">
+                      <CheckCircle2 className="w-3 h-3 mr-1" /> Concluído
+                    </Badge>
+                  ) : inProgress ? (
+                    <Badge variant="outline" className="text-[10px]">
+                      Em andamento
+                    </Badge>
+                  ) : (
+                    <Badge variant="outline" className="text-[10px] text-muted-foreground">
+                      <Lock className="w-3 h-3 mr-1" /> Não iniciado
+                    </Badge>
+                  )}
+                </div>
+                <h3 className="font-bold mt-1 truncate">{sessao.titulo}</h3>
+                {lastResp && (
+                  <p className="mt-2 text-xs text-muted-foreground italic line-clamp-2">
+                    "{lastResp.response}"
+                  </p>
+                )}
+              </div>
+              <ChevronRight className="w-5 h-5 text-muted-foreground shrink-0 mt-1" />
+            </div>
+          ))}
+        </div>
+      )}
+
+      {hasMore && (
+        <div className="flex justify-center mt-6">
+          <Button variant="outline" onClick={() => setVisibleCount(visibleCount + PAGE_SIZE)}>
+            Carregar mais ({filtered.length - visible.length})
+          </Button>
+        </div>
+      )}
+    </section>
+  );
+};
+
+const SummaryCard: React.FC<{
+  icon: React.ReactNode;
+  label: string;
+  value: number;
+  accent: "primary" | "amber" | "muted";
+}> = ({ icon, label, value, accent }) => {
+  const accentClass =
+    accent === "primary"
+      ? "text-primary"
+      : accent === "amber"
+        ? "text-amber-400"
+        : "text-muted-foreground";
+  return (
+    <div className="bg-card/50 border border-white/5 rounded-xl p-4">
+      <div className={`flex items-center gap-2 text-xs uppercase tracking-wider ${accentClass}`}>
+        {icon} {label}
+      </div>
+      <div className="text-2xl font-black mt-2">{value}</div>
+    </div>
   );
 };
 
