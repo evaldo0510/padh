@@ -115,7 +115,7 @@ const SupabaseConfigBanner = () => {
                   disabled={isReconnecting}
                   className="bg-background h-8 text-xs font-medium"
                 >
-                  <RefreshCw className={`h-3 w-3 mr-1.5 ${isReconnecting ? 'animate-spin' : ''}`} /> 
+                  <RefreshCw className={`h-3 w-3 mr-1.5 spiritual-icon ${isReconnecting ? 'animate-spin' : ''}`} /> 
                   Tentar reconectar
                 </Button>
 
