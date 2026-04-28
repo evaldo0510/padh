@@ -354,17 +354,15 @@ const ExerciseStep = ({
             <div className="mt-8 flex flex-wrap gap-3 justify-center">
               {" "}
               <Button asChild variant="outline" className="gap-2">
-                {" "}
                 <Link to="/recursos-clinicos">
                   <FileText className="spiritual-icon" /> Hub de Recursos
                   Clínicos
-                </Link>{" "}
+                </Link>
               </Button>{" "}
               <Button asChild variant="outline" className="gap-2">
-                {" "}
                 <Link to="/prontuario-pch">
                   <FileText className="spiritual-icon" /> Prontuário de Sessão
-                </Link>{" "}
+                </Link>
               </Button>{" "}
             </div>{" "}
           </div>{" "}

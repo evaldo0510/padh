@@ -74,11 +74,8 @@ const SyncStatusIndicator = () => {
   const config = getStatusConfig();
   return (
     <TooltipProvider>
-      {" "}
       <Tooltip>
-        {" "}
         <TooltipTrigger asChild>
-          {" "}
           <div className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-background/50 border border-border/50 backdrop-blur-sm cursor-help transition-all hover:bg-background/80">
             {" "}
             {config.icon}
@@ -89,7 +86,7 @@ hidden xs:inline`}
               {" "}
               {config.text}
             </span>{" "}
-          </div>{" "}
+          </div>
         </TooltipTrigger>{" "}
         <TooltipContent side="bottom" className="text-xs">
           {" "}

@@ -337,11 +337,10 @@ const FluxogramaDecisao: React.FC = () => {
           <div className="mt-5 pt-5 border-t border-border/50">
             {" "}
             <Button asChild size="sm" className="gap-2">
-              {" "}
               <Link to={resultado.link}>
                 {" "}
                 <BookOpen className="spiritual-icon" /> Abrir {resultado.modulo}
-              </Link>{" "}
+              </Link>
             </Button>{" "}
           </div>{" "}
         </div>

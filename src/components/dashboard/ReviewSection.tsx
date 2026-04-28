@@ -47,11 +47,10 @@ const ReviewSection = () => {
                 </div>{" "}
               </div>{" "}
               <Button variant="ghost" size="sm" asChild>
-                {" "}
                 <Link to="/curso-padh" className="p-0 h-auto">
                   {" "}
                   <ChevronRight className="spiritual-icon spiritual-icon-lg" />{" "}
-                </Link>{" "}
+                </Link>
               </Button>{" "}
             </CardContent>{" "}
           </Card>

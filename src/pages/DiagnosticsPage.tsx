@@ -164,10 +164,9 @@ const DiagnosticsPage = () => {
                     asChild
                     className="p-0 h-auto text-primary text-xs"
                   >
-                    {" "}
                     <Link to="/configurar-supabase">
                       Ver guia de configuração
-                    </Link>{" "}
+                    </Link>
                   </Button>
                 )}
               </div>{" "}

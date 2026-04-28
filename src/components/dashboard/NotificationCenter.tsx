@@ -13,16 +13,14 @@ const NotificationCenter = () => {
   const unreadCount = progress.notifications.filter((n) => !n.read).length;
   return (
     <Popover>
-      {" "}
       <PopoverTrigger asChild>
-        {" "}
         <Button variant="ghost" size="icon" className="relative">
           {" "}
           <Bell className="spiritual-icon spiritual-icon-lg" />{" "}
           {unreadCount > 0 && (
             <span className="absolute top-1 right-1 w-2 h-2 bg-destructive rounded-full" />
           )}
-        </Button>{" "}
+        </Button>
       </PopoverTrigger>{" "}
       <PopoverContent className="w-80 p-0 border-primary/10" align="end">
         {" "}

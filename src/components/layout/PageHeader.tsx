@@ -36,11 +36,10 @@ const PageHeader: React.FC<PageHeaderProps> = ({
           <BreadcrumbItem>
             {" "}
             <BreadcrumbLink asChild>
-              {" "}
               <Link to="/" className="flex items-center gap-1">
                 {" "}
                 <Home className="spiritual-icon" /> Início{" "}
-              </Link>{" "}
+              </Link>
             </BreadcrumbLink>{" "}
           </BreadcrumbItem>{" "}
           <BreadcrumbSeparator />{" "}
