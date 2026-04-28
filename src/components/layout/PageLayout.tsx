@@ -27,6 +27,8 @@ const PageLayout: React.FC<PageLayoutProps> = ({
   currentPage,
   showBackButton = true,
   loadingDelay = 150,
+  hideHeader = false,
+  hideFooter = false,
 }) => {
   const isLoading = usePageLoading(loadingDelay);
 
