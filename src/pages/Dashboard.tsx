@@ -208,7 +208,7 @@ const Dashboard = () => {
         {/* Learning Path */}
         <div className="mb-12">
           <h2 className="text-2xl font-heading font-bold mb-6 flex items-center gap-2">
-            <BookOpen className="h-6 w-6 text-primary" />
+            <BookOpen className="h-6 w-6 spiritual-icon" />
             Trilha de Aprendizado
           </h2>
           <div className="space-y-4">
