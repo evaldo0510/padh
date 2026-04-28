@@ -950,6 +950,7 @@ const EpisodeHistorySection: React.FC<EpisodeHistoryProps> = ({
             <option value="default">Padrão (jornada)</option>
             <option value="status">Por status</option>
             <option value="recent">Última resposta</option>
+            <option value="impact">Maior impacto</option>
           </select>
         </div>
       </div>
