@@ -710,7 +710,6 @@ const EpisodeHistorySection: React.FC<EpisodeHistoryProps> = ({
         <h2 className="text-2xl md:text-3xl font-heading font-black flex items-center gap-3">
           <Clock className="w-6 h-6 text-primary" /> Histórico por Episódio
         </h2>
-        <div className="flex items-center gap-2">
         <div className="flex items-center gap-2 flex-wrap">
           {lastSyncAt && (
             <span className="text-[11px] text-muted-foreground bg-muted/30 rounded-full px-3 py-1 inline-flex items-center gap-1.5">
