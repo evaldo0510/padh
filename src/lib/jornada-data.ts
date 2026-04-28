@@ -130,4 +130,174 @@ export const JORNADA_DATA: FaseJornada[] = [
       },
     ],
   },
+  {
+    id: "fase-prisao-interior",
+    numero: 5,
+    titulo: "Prisão Interior: o começo da libertação",
+    descricao:
+      "Uma jornada poética em 5 episódios pelos cárceres invisíveis da alma — do reconhecimento das grades internas ao primeiro respiro de liberdade.",
+    cor: "amber",
+    sessoes: [
+      {
+        id: "s1-fpi",
+        titulo: "Episódio 1 — As Grades Invisíveis",
+        descricao:
+          "Reconhecer as prisões silenciosas que carregamos sem perceber.",
+        exercicios: [
+          {
+            id: "ex1-s1-fpi",
+            titulo: "O Inventário das Correntes",
+            descricao: "Identificando o que te aprisiona hoje.",
+            instrucao:
+              "Liste 3 situações, pessoas ou pensamentos que funcionam como 'celas' na sua vida atual. Não julgue — apenas observe.",
+            placeholder: "1. ... \n2. ... \n3. ...",
+          },
+          {
+            id: "ex2-s1-fpi",
+            titulo: "O Espelho Honesto",
+            descricao: "Encontrando-se com a própria imagem.",
+            instrucao:
+              "Olhe no espelho por 1 minuto em silêncio. Depois escreva: o que é que você vê? O que mora do outro lado de você?",
+            placeholder: "Quando me olhei, vi...",
+          },
+          {
+            id: "ex3-s1-fpi",
+            titulo: "A Primeira Verdade",
+            descricao: "Nomeando a prisão central.",
+            instrucao:
+              "Complete em uma frase: 'Minha maior prisão interior se chama ______ e ela me mantém presa(o) porque ______.'",
+            placeholder: "Minha maior prisão interior se chama...",
+          },
+        ],
+      },
+      {
+        id: "s2-fpi",
+        titulo: "Episódio 2 — A Voz do Carcereiro",
+        descricao:
+          "Conhecer o crítico interno que mantém as portas trancadas.",
+        exercicios: [
+          {
+            id: "ex1-s2-fpi",
+            titulo: "Dando Rosto à Voz",
+            descricao: "Personificando o crítico interno.",
+            instrucao:
+              "Se a voz que mais te julga fosse uma pessoa, quem ela seria? Descreva sua aparência, idade, tom de voz e a frase que ela mais repete dentro de você.",
+            placeholder: "Essa voz se parece com...",
+          },
+          {
+            id: "ex2-s2-fpi",
+            titulo: "A Origem do Carcereiro",
+            descricao: "Investigando de onde veio essa voz.",
+            instrucao:
+              "Quando foi a primeira vez que você ouviu essa voz? Quem na sua história disse algo parecido? Escreva sem censura.",
+            placeholder: "A primeira vez foi quando...",
+          },
+          {
+            id: "ex3-s2-fpi",
+            titulo: "Carta ao Carcereiro",
+            descricao: "Dialogando com o que aprisiona.",
+            instrucao:
+              "Escreva uma carta curta para essa voz interna. Não para destruí-la — para entendê-la. Comece com: 'Eu te escuto, mas...'",
+            placeholder: "Eu te escuto, mas...",
+          },
+        ],
+      },
+      {
+        id: "s3-fpi",
+        titulo: "Episódio 3 — A Fenda na Parede",
+        descricao:
+          "Descobrir as pequenas frestas por onde a luz já entra.",
+        exercicios: [
+          {
+            id: "ex1-s3-fpi",
+            titulo: "Os Momentos de Liberdade",
+            descricao: "Resgatando memórias de leveza.",
+            instrucao:
+              "Lembre-se de 3 momentos da sua vida (recentes ou antigos) em que você se sentiu genuinamente livre. Descreva um deles em detalhe — cheiros, sons, sensações.",
+            placeholder: "Eu me senti livre quando...",
+          },
+          {
+            id: "ex2-s3-fpi",
+            titulo: "A Pequena Rebelião",
+            descricao: "Identificando atos de coragem cotidianos.",
+            instrucao:
+              "Que pequeno gesto de liberdade você praticou nos últimos 7 dias? Pode ser dizer 'não', escolher um caminho diferente, silenciar quando todos falavam. Honre esse gesto.",
+            placeholder: "Meu pequeno ato de liberdade foi...",
+          },
+          {
+            id: "ex3-s3-fpi",
+            titulo: "O Verso da Fenda",
+            descricao: "Transformando a fresta em poesia.",
+            instrucao:
+              "Escreva 2 versos curtos que descrevam a fenda na sua parede interior — o lugar por onde a luz já consegue entrar.",
+            placeholder: "Há uma fenda em mim,\npor onde...",
+          },
+        ],
+      },
+      {
+        id: "s4-fpi",
+        titulo: "Episódio 4 — A Chave Esquecida",
+        descricao:
+          "Recuperar o poder pessoal que sempre esteve com você.",
+        exercicios: [
+          {
+            id: "ex1-s4-fpi",
+            titulo: "O Que Eu Já Sei",
+            descricao: "Reconhecendo a própria sabedoria.",
+            instrucao:
+              "Se você fosse seu próprio mentor sábio, que conselho daria a si mesmo agora, sobre a prisão que identificou no Episódio 1?",
+            placeholder: "Querido(a) eu, o que precisas ouvir é...",
+          },
+          {
+            id: "ex2-s4-fpi",
+            titulo: "O Recurso Invisível",
+            descricao: "Mapeando forças internas.",
+            instrucao:
+              "Liste 3 qualidades suas (coragem, humor, sensibilidade, teimosia...) que podem servir como chave para abrir a porta da sua cela interior.",
+            placeholder: "Minhas chaves são...",
+          },
+          {
+            id: "ex3-s4-fpi",
+            titulo: "O Ritual da Chave",
+            descricao: "Criando um símbolo de poder pessoal.",
+            instrucao:
+              "Descreva um pequeno gesto físico (tocar o peito, respirar fundo 3x, segurar um objeto) que de hoje em diante será seu lembrete de que a chave está em você.",
+            placeholder: "Meu ritual será...",
+          },
+        ],
+      },
+      {
+        id: "s5-fpi",
+        titulo: "Episódio 5 — O Primeiro Respiro Livre",
+        descricao:
+          "Atravessar a porta. Dar o primeiro passo do lado de fora.",
+        exercicios: [
+          {
+            id: "ex1-s5-fpi",
+            titulo: "A Porta Aberta",
+            descricao: "Visualizando a saída.",
+            instrucao:
+              "Feche os olhos por 2 minutos e imagine a porta da sua cela interior se abrindo lentamente. O que existe do lado de fora? Descreva a paisagem.",
+            placeholder: "Do outro lado da porta eu vejo...",
+          },
+          {
+            id: "ex2-s5-fpi",
+            titulo: "O Compromisso da Libertação",
+            descricao: "Definindo o primeiro passo concreto.",
+            instrucao:
+              "Que ação concreta, pequena e possível você vai realizar nas próximas 48 horas como primeiro gesto de libertação? Seja específico(a).",
+            placeholder: "Nas próximas 48h, eu irei...",
+          },
+          {
+            id: "ex3-s5-fpi",
+            titulo: "O Poema da Liberdade",
+            descricao: "Selando a jornada com a sua voz.",
+            instrucao:
+              "Escreva um poema curto (4 a 8 versos) que celebra esse novo começo. Esta é a sua voz livre falando.",
+            placeholder: "Hoje eu...",
+          },
+        ],
+      },
+    ],
+  },
 ];
