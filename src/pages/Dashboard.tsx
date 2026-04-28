@@ -1,8 +1,8 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import PageLayout from "@/components/layout/PageLayout";
 import { useCourseProgress } from "@/hooks/useCourseProgress";
 import { MODULOS } from "@/lib/dados-clinicos";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import {
   Play,
   Info,
@@ -20,6 +20,8 @@ import {
   ShoppingBag,
   CheckCircle2,
   Lock,
+  CircleDashed,
+  Circle,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -32,40 +34,87 @@ import SyncStatusIndicator from "@/components/dashboard/SyncStatusIndicator";
 import NotificationCenter from "@/components/dashboard/NotificationCenter";
 import { toast } from "sonner";
 import { supabase } from "@/integrations/supabase/client";
-import { supabaseConfig } from "@/integrations/supabase/config";
 import { Progress } from "@/components/ui/progress";
+import { useAuth } from "@/hooks/useAuth";
+
+type EpisodeProgressRow = {
+  session_id: string;
+  phase_id: string;
+  status: string;
+  completed_at: string | null;
+};
+
+type FilterMode = "all" | "completed" | "in_progress" | "not_started";
+const PAGE_SIZE = 8;
 
 const Dashboard = () => {
   const { jornada } = useJornada();
   const { progress, isModuleUnlocked } = useCourseProgress();
   const navigate = useNavigate();
+  const location = useLocation();
+  const { user, isAuthenticated, signOut } = useAuth();
+
   const [scrolled, setScrolled] = useState(false);
-  const [isAuthed, setIsAuthed] = useState(false);
   const [navigatingTo, setNavigatingTo] = useState<string | null>(null);
+  const [remoteProgress, setRemoteProgress] = useState<EpisodeProgressRow[]>([]);
+  const [filter, setFilter] = useState<FilterMode>("all");
+  const [visibleCount, setVisibleCount] = useState(PAGE_SIZE);
 
   useEffect(() => {
-    const handleScroll = () => {
-      setScrolled(window.scrollY > 50);
-    };
+    const handleScroll = () => setScrolled(window.scrollY > 50);
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
+  // Clear "navigating" state whenever the user lands back on this route
   useEffect(() => {
-    const sim = !!localStorage.getItem("padh_simulated_user");
-    setIsAuthed(sim);
-    const { data: sub } = supabase.auth.onAuthStateChange((_e, session) => {
-      setIsAuthed(!!session || !!localStorage.getItem("padh_simulated_user"));
-    });
-    supabase.auth.getSession().then(({ data: { session } }) => {
-      setIsAuthed(!!session || !!localStorage.getItem("padh_simulated_user"));
-    });
-    return () => sub.subscription.unsubscribe();
-  }, []);
+    setNavigatingTo(null);
+    toast.dismiss("nav-toast");
+  }, [location.pathname]);
+
+  // Fetch episode_progress from Supabase for the authenticated user
+  useEffect(() => {
+    if (!isAuthenticated || !user) {
+      setRemoteProgress([]);
+      return;
+    }
+    let cancelled = false;
+    (async () => {
+      const { data, error } = await supabase
+        .from("episode_progress")
+        .select("session_id,phase_id,status,completed_at")
+        .eq("user_id", user.id);
+      if (!cancelled && !error && data) {
+        setRemoteProgress(data as EpisodeProgressRow[]);
+      }
+    })();
+
+    const channel = supabase
+      .channel(`dashboard-progress-${user.id}`)
+      .on(
+        "postgres_changes",
+        { event: "*", schema: "public", table: "episode_progress", filter: `user_id=eq.${user.id}` },
+        async () => {
+          const { data } = await supabase
+            .from("episode_progress")
+            .select("session_id,phase_id,status,completed_at")
+            .eq("user_id", user.id);
+          if (data) setRemoteProgress(data as EpisodeProgressRow[]);
+        },
+      )
+      .subscribe();
+
+    return () => {
+      cancelled = true;
+      supabase.removeChannel(channel);
+    };
+  }, [isAuthenticated, user]);
 
   const goTo = (path: string, label: string) => {
     setNavigatingTo(path);
-    toast.loading(`Abrindo ${label}...`, { id: "nav-toast", duration: 1500 });
+    toast.loading(`Abrindo ${label}...`, { id: "nav-toast", duration: 1200 });
+    // Safety: clear flag if route doesn't change for any reason
+    window.setTimeout(() => setNavigatingTo(null), 1500);
     navigate(path);
   };
 
@@ -74,10 +123,7 @@ const Dashboard = () => {
   };
 
   const handleLogout = async () => {
-    localStorage.removeItem("padh_simulated_user");
-    if (supabaseConfig.isConfigured) {
-      await supabase.auth.signOut();
-    }
+    await signOut();
     toast.success("Sessão encerrada.");
     navigate("/");
   };
