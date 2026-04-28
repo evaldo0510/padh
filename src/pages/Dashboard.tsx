@@ -50,9 +50,25 @@ type EpisodeProgressRow = {
   updated_at?: string | null;
 };
 
-type FilterMode = "all" | "completed" | "in_progress" | "not_started";
-type SortMode = "default" | "status" | "recent";
+type FilterMode = "all" | "completed" | "in_progress" | "not_started" | "favorites" | "recent";
+type SortMode = "default" | "status" | "recent" | "impact";
 const PAGE_SIZE = 8;
+const RECENT_WINDOW_MS = 24 * 60 * 60 * 1000;
+
+// Helper to find episode title by session id (used in toasts)
+const findSessionTitle = (sessionId: string): string => {
+  for (const fase of JORNADA_DATA) {
+    const s = fase.sessoes.find((x) => x.id === sessionId);
+    if (s) return s.titulo;
+  }
+  return sessionId;
+};
+
+const STATUS_LABEL: Record<string, string> = {
+  completed: "Concluído",
+  in_progress: "Em andamento",
+  not_started: "Não iniciado",
+};
 
 const Dashboard = () => {
   const { jornada } = useJornada();
