@@ -38,8 +38,8 @@ mas vive esperando voz,
 como semente no escuro da terra.`,
     variations: 'Poema-funil invertido para sessões de aterramento e retorno ao presente. Funil temático para trabalhar emoções específicas (medo, culpa, esperança, luto). Funil corporal focando em sensações físicas. Funil temporal explorando passado-presente-futuro.',
     exercise: 'Crie um poema-funil de 3 estrofes sobre um desafio pessoal atual. Comece com aspectos externos visíveis, avance para sensações internas e termine com insights profundos. Leia em voz alta e registre as mudanças de estado emocional.',
-    icon: <ArrowDown className="h-6 w-6" />,
-    color: 'text-primary'
+    icon: <ArrowDown className="h-6 w-6 spiritual-icon" />,
+    color: 'spiritual-icon'
   },
   {
     id: 'verso-gatilho',
