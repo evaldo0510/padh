@@ -15,6 +15,7 @@ export interface JornadaProgress {
   completedExercises: string[]; // exerciseId[]
   completedSessions: string[]; // sessionId[]
   responses: RespostaExercicio[];
+  favorites?: string[]; // IDs of sessions, modules or tools
   last_updated?: string;
 }
 
