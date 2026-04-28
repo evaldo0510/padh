@@ -8,6 +8,8 @@ import { Feather, Sparkles, ArrowRight, LogIn, ShieldAlert } from 'lucide-react'
 import { useNavigate, Link, useLocation } from 'react-router-dom';
 import { toast } from 'sonner';
 import { supabaseConfig, supabase } from '@/integrations/supabase/client';
+import { grantPurchase } from '@/hooks/useAuth';
+import { PRODUCT_PRISAO_INTERIOR } from '@/pages/venda/PrisaoInteriorVenda';
 
 const LoginPage = () => {
   const [email, setEmail] = useState('');
