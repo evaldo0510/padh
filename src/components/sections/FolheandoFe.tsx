@@ -808,9 +808,9 @@ export const FolheandoFe = () => {
                               <Calendar className="h-4 w-4" />
                               {new Date(selectedPoem.date).toLocaleDateString('pt-BR')}
                             </div>
-                            <Badge className={categoryColors[selectedPoem.category]}>
-                              {categoryNames[selectedPoem.category]}
-                            </Badge>
+                          <Badge variant="spiritual" className={categoryColors[selectedPoem.category]}>
+                            {categoryNames[selectedPoem.category]}
+                          </Badge>
                           </div>
                         </div>
                         <div className="flex gap-2">
