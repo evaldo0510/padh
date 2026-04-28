@@ -175,6 +175,26 @@ export const useJornada = () => {
           console.error("saveResponse error", error);
           reportSyncStatus("error");
         } else {
+          // Mark episode as in_progress (only if not already completed)
+          if (phaseId && sessionId) {
+            const { data: existing } = await supabase
+              .from("episode_progress")
+              .select("status")
+              .eq("user_id", userId)
+              .eq("session_id", sessionId)
+              .maybeSingle();
+            if (!existing || existing.status !== "completed") {
+              await supabase.from("episode_progress").upsert(
+                {
+                  user_id: userId,
+                  session_id: sessionId,
+                  phase_id: phaseId,
+                  status: "in_progress",
+                },
+                { onConflict: "user_id,session_id" },
+              );
+            }
+          }
           reportSyncStatus("ok");
         }
       } else {
