@@ -178,6 +178,8 @@ export const useJornada = () => {
     completeSession,
     setPhase,
     getResponse,
+    toggleFavorite,
+    isFavorite,
     isSyncing,
     hasConfig: hasSupabaseConfig(),
   };
