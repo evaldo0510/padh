@@ -66,6 +66,11 @@ const Dashboard = () => {
   const [visibleCount, setVisibleCount] = useState(PAGE_SIZE);
   const [loadingProgress, setLoadingProgress] = useState(true);
   const [reloading, setReloading] = useState(false);
+  const [progressError, setProgressError] = useState<string | null>(null);
+  const [totalRemote, setTotalRemote] = useState<number | null>(null);
+  const [lastSyncAt, setLastSyncAt] = useState<Date | null>(null);
+  const [recentlyChanged, setRecentlyChanged] = useState<Set<string>>(new Set());
+  const prevSnapshotRef = React.useRef<Map<string, string>>(new Map());
 
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 50);
@@ -79,27 +84,75 @@ const Dashboard = () => {
     toast.dismiss("nav-toast");
   }, [location.pathname]);
 
-  // Optimized fetch: only the columns/statuses we need given the active filter
+  // Optimized fetch — server-side filter, sort, and pagination
   const loadProgress = React.useCallback(
     async (silent = false) => {
       if (!isAuthenticated || !user) {
         setRemoteProgress([]);
+        setTotalRemote(null);
         setLoadingProgress(false);
+        setProgressError(null);
         return;
       }
       if (!silent) setLoadingProgress(true);
-      let query = supabase
-        .from("episode_progress")
-        .select("session_id,phase_id,status,completed_at,updated_at")
-        .eq("user_id", user.id);
-      // Server-side narrow when filter targets a specific status
-      if (filter === "completed") query = query.eq("status", "completed");
-      else if (filter === "in_progress") query = query.eq("status", "in_progress");
-      const { data, error } = await query;
-      if (!error && data) setRemoteProgress(data as EpisodeProgressRow[]);
-      setLoadingProgress(false);
+      setProgressError(null);
+      try {
+        let query = supabase
+          .from("episode_progress")
+          .select("session_id,phase_id,status,completed_at,updated_at", { count: "exact" })
+          .eq("user_id", user.id);
+        if (filter === "completed") query = query.eq("status", "completed");
+        else if (filter === "in_progress") query = query.eq("status", "in_progress");
+        // Sort server-side when possible
+        if (sort === "recent") query = query.order("updated_at", { ascending: false });
+        else if (sort === "status") query = query.order("status", { ascending: true });
+        else query = query.order("phase_id", { ascending: true }).order("session_id", { ascending: true });
+        // Server-side pagination only when filter targets remote-only statuses
+        const useServerPagination = filter === "completed" || filter === "in_progress";
+        if (useServerPagination) {
+          query = query.range(0, visibleCount - 1);
+        }
+        const { data, error, count } = await query;
+        if (error) throw error;
+        if (data) {
+          setRemoteProgress(data as EpisodeProgressRow[]);
+          setTotalRemote(typeof count === "number" ? count : null);
+
+          // Detect recently changed sessions (status diff vs previous snapshot)
+          const newChanged = new Set<string>();
+          const newSnap = new Map<string, string>();
+          (data as EpisodeProgressRow[]).forEach((r) => {
+            newSnap.set(r.session_id, r.status);
+            const prev = prevSnapshotRef.current.get(r.session_id);
+            if (prev !== undefined && prev !== r.status) newChanged.add(r.session_id);
+          });
+          prevSnapshotRef.current = newSnap;
+          if (newChanged.size > 0) {
+            setRecentlyChanged((prev) => {
+              const next = new Set(prev);
+              newChanged.forEach((id) => next.add(id));
+              return next;
+            });
+            // Auto-clear glow after 4s
+            window.setTimeout(() => {
+              setRecentlyChanged((prev) => {
+                const next = new Set(prev);
+                newChanged.forEach((id) => next.delete(id));
+                return next;
+              });
+            }, 4000);
+          }
+
+          setLastSyncAt(new Date());
+        }
+      } catch (e: any) {
+        console.error("loadProgress error", e);
+        setProgressError(e?.message || "Falha ao carregar progresso.");
+      } finally {
+        setLoadingProgress(false);
+      }
     },
-    [isAuthenticated, user, filter],
+    [isAuthenticated, user, filter, sort, visibleCount],
   );
 
   useEffect(() => {
