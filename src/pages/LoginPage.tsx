@@ -5,27 +5,39 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Feather, Sparkles, ArrowRight, LogIn, ShieldAlert } from 'lucide-react';
-import { useNavigate, Link } from 'react-router-dom';
+import { useNavigate, Link, useLocation } from 'react-router-dom';
 import { toast } from 'sonner';
 import { supabaseConfig, supabase } from '@/integrations/supabase/client';
+import { grantPurchase } from '@/hooks/useAuth';
+import { PRODUCT_PRISAO_INTERIOR } from '@/pages/venda/PrisaoInteriorVenda';
 
 const LoginPage = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
+  const location = useLocation();
+  const from = (location.state as any)?.from || '/dashboard';
+
+  // If user landed on login from a journey route, treat it as the purchase flow
+  // and grant access to the main product upon successful authentication.
+  const grantIfNeeded = () => {
+    if (typeof from === 'string' && from.startsWith('/jornada')) {
+      grantPurchase(PRODUCT_PRISAO_INTERIOR);
+    }
+  };
 
   useEffect(() => {
     // Check if already logged in (simulated)
     const simulatedUser = localStorage.getItem('padh_simulated_user');
     if (simulatedUser) {
-      navigate('/dashboard');
+      navigate(from);
     }
     
     // Check real supabase auth if configured
     if (supabaseConfig.isConfigured) {
       supabase.auth.getSession().then(({ data: { session } }) => {
-        if (session) navigate('/dashboard');
+        if (session) navigate(from);
       });
     }
   }, [navigate]);
@@ -54,7 +66,7 @@ const LoginPage = () => {
           });
           
           setIsLoading(false);
-          navigate('/dashboard');
+          navigate(from);
         }, 1500);
         return;
       }
@@ -70,7 +82,7 @@ const LoginPage = () => {
       toast.success("Bem-vindo de volta!", {
         description: "Você acessou sua conta com sucesso."
       });
-      navigate('/dashboard');
+      navigate(from);
     } catch (error: any) {
       toast.error("Erro ao entrar", {
         description: error.message || "Verifique suas credenciais."
