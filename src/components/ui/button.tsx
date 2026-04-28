@@ -10,19 +10,19 @@ const buttonVariants = cva(
     variants: {
       variant: {
         default:
-          "bg-primary text-primary-foreground hover:bg-primary/90 hover:shadow-primary/30",
+          "bg-primary text-primary-foreground hover:bg-primary/90 hover:shadow-primary/20 hover:shadow-xl",
         destructive:
-          "bg-destructive text-destructive-foreground hover:bg-destructive/90 hover:shadow-destructive/30",
+          "bg-destructive text-destructive-foreground hover:bg-destructive/90 hover:shadow-destructive/20",
         outline:
           "border border-primary/30 bg-background/50 text-foreground hover:bg-primary/10 hover:text-primary hover:border-primary/60",
         secondary:
-          "bg-secondary text-secondary-foreground hover:bg-secondary/80 hover:shadow-secondary/30",
+          "bg-secondary text-secondary-foreground hover:bg-secondary/80 hover:shadow-secondary/20",
         ghost: "text-foreground hover:bg-primary/10 hover:text-primary",
         link: "text-primary underline-offset-4 hover:underline",
         premium:
-          "bg-gradient-to-r from-primary via-secondary to-primary bg-[length:200%_100%] text-primary-foreground hover:bg-[position:100%_0] hover:shadow-xl hover:shadow-primary/40 hover:scale-105 transition-all duration-500",
+          "bg-gradient-to-r from-primary via-secondary to-primary bg-[length:200%_100%] text-primary-foreground hover:bg-[position:100%_0] hover:shadow-2xl hover:shadow-primary/30 hover:scale-[1.02] transition-all duration-500",
         glass:
-          "bg-background/10 backdrop-blur-md border border-primary/20 text-foreground hover:bg-background/20 hover:border-primary/50 hover:shadow-glow",
+          "bg-foreground/5 backdrop-blur-xl border border-foreground/10 text-foreground hover:bg-foreground/10 hover:border-primary/40 hover:shadow-glow",
       },
       size: {
         default: "h-11 px-4 py-2",

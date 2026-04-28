@@ -9,97 +9,97 @@
 @layer base {
   :root {
     /* Core — Roxo profundo/Azul escuro com destaque dourado suave */
-    --background: 262 47% 6%; /* Deep Purple Background */
-    --foreground: 210 20% 90%; /* Soft White Text */
+    --background: 260 45% 4%; /* Deep obsidian purple */
+    --foreground: 210 20% 92%; /* Soft off-white */
 
-    --card: 262 45% 9%;
-    --card-foreground: 210 20% 90%;
+    --card: 260 40% 7%;
+    --card-foreground: 210 20% 92%;
 
-    --popover: 262 45% 9%;
-    --popover-foreground: 210 20% 90%;
+    --popover: 260 40% 7%;
+    --popover-foreground: 210 20% 92%;
 
-    /* Primary — Dourado Âmbar suave (Destaque) */
-    --primary: 45 70% 60%;
-    --primary-foreground: 262 47% 6%;
-    --primary-light: 45 60% 75%;
-    --primary-dark: 45 80% 45%;
+    /* Primary — Soft Gold / Amber (Highlight) */
+    --primary: 42 65% 62%;
+    --primary-foreground: 260 45% 4%;
+    --primary-light: 42 55% 75%;
+    --primary-dark: 42 75% 45%;
 
-    /* Secondary — Lilás/Violeta (Secundária) */
-    --secondary: 270 50% 65%;
+    /* Secondary — Lilac / Violet (Secondary) */
+    --secondary: 265 45% 68%;
     --secondary-foreground: 0 0% 100%;
-    --secondary-light: 270 45% 75%;
-    --secondary-dark: 270 55% 50%;
+    --secondary-light: 265 40% 78%;
+    --secondary-dark: 265 55% 55%;
 
     /* Accent tones */
-    --accent-warm: 45 70% 60%;
-    --accent-sage: 160 25% 45%;
+    --accent-warm: 42 65% 62%;
+    --accent-sage: 162 20% 48%;
 
     /* Spiritual Palette - Refined for deep therapeutic feel */
-    --spiritual-gold: 45 70% 60%;
-    --spiritual-indigo: 240 40% 55%;
-    --spiritual-violet: 270 50% 65%;
-    --spiritual-rose: 330 40% 65%;
-    --spiritual-sage: 160 25% 45%;
-    --spiritual-amber: 40 75% 55%;
+    --spiritual-gold: 42 65% 62%;
+    --spiritual-indigo: 235 35% 58%;
+    --spiritual-violet: 265 45% 68%;
+    --spiritual-rose: 335 35% 68%;
+    --spiritual-sage: 162 20% 48%;
+    --spiritual-amber: 38 70% 58%;
 
     /* ─── Module Palette — Cores conectadas ao novo tema ─── */
-    --m1: 45 70% 60%; /* M1 · Âmbar suave */
-    --m2: 270 50% 65%; /* M2 · Lilás */
-    --m3: 240 40% 55%; /* M3 · Índigo */
-    --m4: 330 40% 65%; /* M4 · Rosa-malva suave */
-    --m5: 160 25% 45%; /* M5 · Esmeralda suave */
-    --m6: 25 60% 55%; /* M6 · Terracota suave */
-    --m7: 210 40% 50%; /* M7 · Azul profundo suave */
-    --m8: 45 65% 65%; /* M8 · Ouro-rosa */
+    --m1: 42 65% 62%; /* M1 · Âmbar suave */
+    --m2: 265 45% 68%; /* M2 · Lilás */
+    --m3: 235 35% 58%; /* M3 · Índigo */
+    --m4: 335 35% 68%; /* M4 · Rosa-malva suave */
+    --m5: 162 20% 48%; /* M5 · Esmeralda suave */
+    --m6: 28 55% 58%; /* M6 · Terracota suave */
+    --m7: 215 35% 52%; /* M7 · Azul profundo suave */
+    --m8: 42 60% 68%; /* M8 · Ouro-rosa */
 
     /* Neutrals */
-    --muted: 262 20% 14%;
-    --muted-foreground: 210 15% 65%;
+    --muted: 260 25% 12%;
+    --muted-foreground: 210 12% 70%;
 
-    --accent: 262 18% 17%;
-    --accent-foreground: 210 20% 95%;
+    --accent: 260 22% 15%;
+    --accent-foreground: 210 20% 96%;
 
-    --destructive: 0 65% 50%;
+    --destructive: 0 60% 45%;
     --destructive-foreground: 0 0% 100%;
 
-    --border: 262 15% 18%;
-    --input: 262 15% 18%;
-    --ring: 45 70% 60%;
+    --border: 260 20% 16%;
+    --input: 260 20% 16%;
+    --ring: 42 65% 62%;
 
-    --radius: 0.875rem;
+    --radius: 1rem; /* Slightly more rounded for a friendlier feel */
 
-    /* Gradients — Updated with new core colors */
+    /* Gradients — Refined for deep therapeutic ambiance */
     --gradient-hero: linear-gradient(
-      160deg,
-      hsl(262 47% 6%) 0%,
-      hsl(262 35% 12%) 40%,
-      hsl(270 30% 14%) 100%
+      165deg,
+      hsl(260 45% 4%) 0%,
+      hsl(260 38% 8%) 35%,
+      hsl(255 35% 12%) 100%
     );
     --gradient-card: linear-gradient(
       145deg,
-      hsl(262 40% 9%) 0%,
-      hsl(262 35% 12%) 100%
+      hsl(260 40% 7%) 0%,
+      hsl(260 35% 10%) 100%
     );
     --gradient-glow: radial-gradient(
-      ellipse at 50% 0%,
-      hsl(45 70% 60% / 0.08) 0%,
-      transparent 60%
+      circle at 50% 0%,
+      hsl(42 65% 62% / 0.12) 0%,
+      transparent 70%
     );
     --gradient-warm: radial-gradient(
-      ellipse at 30% 50%,
-      hsl(45 70% 60% / 0.06) 0%,
-      transparent 50%
+      circle at 20% 50%,
+      hsl(42 65% 62% / 0.08) 0%,
+      transparent 60%
     );
 
-    /* Shadows — Updated with new highlight colors */
-    --shadow-soft: 0 2px 12px -3px hsl(0 0% 0% / 0.4);
+    /* Shadows — Elegant and subtle */
+    --shadow-soft: 0 4px 20px -5px hsl(0 0% 0% / 0.5);
     --shadow-medium:
-      0 8px 30px -8px hsl(45 70% 60% / 0.15), 0 4px 20px -4px hsl(0 0% 0% / 0.3);
+      0 12px 40px -10px hsl(42 65% 62% / 0.1), 0 4px 25px -4px hsl(0 0% 0% / 0.4);
     --shadow-strong:
-      0 20px 50px -12px hsl(45 70% 60% / 0.2),
-      0 8px 40px -8px hsl(0 0% 0% / 0.4);
+      0 25px 60px -15px hsl(42 65% 62% / 0.15),
+      0 10px 45px -8px hsl(0 0% 0% / 0.5);
     --shadow-glow:
-      0 0 40px hsl(45 70% 60% / 0.15), 0 0 80px hsl(270 50% 65% / 0.08);
+      0 0 30px hsl(42 65% 62% / 0.12), 0 0 60px hsl(265 45% 68% / 0.06);
 
     /* Transitions */
     --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
@@ -221,8 +221,9 @@
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     background-image:
-      radial-gradient(at 0% 0%, hsl(270 50% 65% / 0.05) 0px, transparent 50%),
-      radial-gradient(at 100% 0%, hsl(45 70% 60% / 0.03) 0px, transparent 50%);
+      radial-gradient(at 0% 0%, hsl(265 45% 68% / 0.08) 0px, transparent 50%),
+      radial-gradient(at 100% 0%, hsl(42 65% 62% / 0.05) 0px, transparent 50%),
+      radial-gradient(at 50% 100%, hsl(235 35% 58% / 0.04) 0px, transparent 50%);
     background-attachment: fixed;
   }
 
@@ -420,20 +421,20 @@
   }
 
   .glass-morphism {
-    background: hsl(var(--background) / 0.85);
-    backdrop-filter: blur(20px) saturate(150%);
-    border: 1px solid hsl(var(--foreground) / 0.06);
+    background: hsl(var(--background) / 0.75);
+    backdrop-filter: blur(24px) saturate(160%);
+    border: 1px solid hsl(var(--foreground) / 0.08);
   }
 
   .glass-card {
     background: linear-gradient(
-      145deg,
-      hsl(var(--foreground) / 0.04) 0%,
-      hsl(var(--foreground) / 0.01) 100%
+      165deg,
+      hsl(var(--foreground) / 0.06) 0%,
+      hsl(var(--foreground) / 0.02) 100%
     );
-    backdrop-filter: blur(12px);
-    border: 1px solid hsl(var(--foreground) / 0.06);
-    border-radius: 1rem;
+    backdrop-filter: blur(16px);
+    border: 1px solid hsl(var(--foreground) / 0.08);
+    border-radius: 1.25rem;
   }
 
   .section-label {
