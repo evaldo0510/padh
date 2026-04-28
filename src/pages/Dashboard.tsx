@@ -1052,6 +1052,81 @@ const EpisodeHistorySection: React.FC<EpisodeHistoryProps> = ({
   );
 };
 
+// ===== Recent Impact Ranking =====
+const RecentImpactRanking: React.FC<{
+  remoteProgress: EpisodeProgressRow[];
+  navigate: ReturnType<typeof useNavigate>;
+  isAuthenticated: boolean;
+}> = ({ remoteProgress, navigate, isAuthenticated }) => {
+  const ranked = useMemo(() => {
+    const titleOf = (id: string) => findSessionTitle(id);
+    const phaseOf = (id: string) => {
+      const fase = JORNADA_DATA.find((f) => f.sessoes.some((s) => s.id === id));
+      return fase?.titulo ?? "";
+    };
+    // Score: completed > in_progress, recency boost (smaller hour delta = higher score)
+    const score = (r: EpisodeProgressRow) => {
+      const base = r.status === "completed" ? 100 : r.status === "in_progress" ? 50 : 10;
+      const ref = r.completed_at || r.updated_at;
+      if (!ref) return base;
+      const ageH = Math.max(0.1, (Date.now() - new Date(ref).getTime()) / 3_600_000);
+      return base + Math.max(0, 72 - ageH);
+    };
+    return [...remoteProgress]
+      .map((r) => ({ row: r, score: score(r), title: titleOf(r.session_id), phase: phaseOf(r.session_id) }))
+      .sort((a, b) => b.score - a.score)
+      .slice(0, 5);
+  }, [remoteProgress]);
+
+  if (!isAuthenticated || ranked.length === 0) return null;
+
+  return (
+    <section className="container mx-auto px-6 md:px-12 py-4">
+      <div className="flex items-center justify-between mb-3">
+        <h2 className="text-xl md:text-2xl font-heading font-black flex items-center gap-2">
+          <Flame className="w-5 h-5 text-amber-400" /> Maior avanço recente
+        </h2>
+        <span className="text-[11px] text-muted-foreground inline-flex items-center gap-1">
+          <TrendingUp className="w-3 h-3" /> Ordenado por impacto
+        </span>
+      </div>
+      <div className="grid gap-2">
+        {ranked.map(({ row, title, phase, score }, i) => {
+          const sessionId = row.session_id;
+          const fase = JORNADA_DATA.find((f) => f.sessoes.some((s) => s.id === sessionId));
+          return (
+            <button
+              key={sessionId}
+              onClick={() => fase && navigate(`/jornada/${fase.id}/${sessionId}`)}
+              className="w-full text-left bg-card/40 hover:bg-card border border-white/5 hover:border-amber-400/30 rounded-xl p-3 flex items-center gap-3 transition-colors"
+            >
+              <div className="w-8 h-8 rounded-full bg-amber-400/10 text-amber-400 font-black flex items-center justify-center text-sm shrink-0">
+                {i + 1}
+              </div>
+              <div className="flex-1 min-w-0">
+                <div className="text-[10px] uppercase tracking-wider text-muted-foreground">{phase}</div>
+                <div className="font-bold truncate">{title}</div>
+              </div>
+              <Badge
+                className={
+                  row.status === "completed"
+                    ? "bg-primary/15 text-primary border-primary/30 text-[10px]"
+                    : "bg-amber-400/15 text-amber-400 border-amber-400/30 text-[10px]"
+                }
+              >
+                {STATUS_LABEL[row.status] ?? row.status}
+              </Badge>
+              <span className="text-xs text-muted-foreground tabular-nums hidden sm:inline">
+                {Math.round(score)} pts
+              </span>
+            </button>
+          );
+        })}
+      </div>
+    </section>
+  );
+};
+
 const SummarySkeleton: React.FC = () => (
   <div className="bg-card/50 border border-white/5 rounded-xl p-4 animate-pulse">
     <div className="h-3 w-20 bg-muted/40 rounded" />
