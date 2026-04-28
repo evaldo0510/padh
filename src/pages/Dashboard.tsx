@@ -151,9 +151,15 @@ const Dashboard = () => {
               <SyncStatusIndicator />
               <NotificationCenter />
            </div>
-           <div className="flex gap-4">
+           <div className="flex gap-2 md:gap-4 flex-wrap">
               <Button asChild variant="ghost" size="sm" className="gap-2 text-muted-foreground hover:text-white">
                 <Link to="/recursos-clinicos"><Library className="w-4 h-4" /> Biblioteca</Link>
+              </Button>
+              <Button asChild variant="ghost" size="sm" className="gap-2 text-muted-foreground hover:text-primary">
+                <Link to="/planos"><CreditCard className="w-4 h-4" /> Planos</Link>
+              </Button>
+              <Button asChild variant="ghost" size="sm" className="gap-2 text-muted-foreground hover:text-primary">
+                <Link to="/meu-produto"><ShoppingBag className="w-4 h-4" /> Meu Produto</Link>
               </Button>
               <Button variant="ghost" size="sm" className="gap-2 text-muted-foreground hover:text-destructive" onClick={handleLogout}>
                 <LogOut className="w-4 h-4" /> Sair
