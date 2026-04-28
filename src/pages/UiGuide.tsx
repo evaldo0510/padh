@@ -39,7 +39,7 @@ const UiGuide = () => {
               <CardTitle>Padrões de Base</CardTitle>
               <CardDescription>Especificações técnicas compartilhadas entre componentes.</CardDescription>
             </CardHeader>
-            <CardContent className="grid sm:grid-cols-3 gap-6">
+            <CardContent className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
               <div className="space-y-2">
                 <span className="text-sm font-semibold text-primary uppercase tracking-wider">Altura Padrão</span>
                 <div className="text-2xl font-bold">44px (h-11)</div>
