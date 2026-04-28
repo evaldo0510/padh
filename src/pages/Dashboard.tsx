@@ -679,6 +679,8 @@ interface EpisodeHistoryProps {
   lastSyncAt: Date | null;
   recentlyChanged: Set<string>;
   totalRemote: number | null;
+  favorites: Set<string>;
+  onToggleFavorite: (sessionId: string) => void;
 }
 
 const STATUS_ORDER: Record<FilterMode, number> = {
