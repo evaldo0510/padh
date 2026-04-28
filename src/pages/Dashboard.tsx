@@ -31,6 +31,7 @@ import NotificationCenter from '@/components/dashboard/NotificationCenter';
 import ResponseHistory from '@/components/dashboard/ResponseHistory';
 import SupabaseConfigBanner from '@/components/dashboard/SupabaseConfigBanner';
 import SyncStatusIndicator from '@/components/dashboard/SyncStatusIndicator';
+import { Badge } from '@/components/ui/badge';
 import { supabase, supabaseConfig } from '@/integrations/supabase/client';
 import { toast } from 'sonner';
 
