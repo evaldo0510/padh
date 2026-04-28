@@ -969,6 +969,7 @@ const EpisodeHistorySection: React.FC<EpisodeHistoryProps> = ({
         <div className="grid gap-3">
           {visible.map(({ fase, sessao, idx, done, inProgress, lastResp }) => {
             const highlighted = recentlyChanged.has(sessao.id);
+            const isFav = favorites.has(sessao.id);
             return (
               <div
                 key={`${fase.id}-${sessao.id}`}
@@ -1013,6 +1014,22 @@ const EpisodeHistorySection: React.FC<EpisodeHistoryProps> = ({
                     </p>
                   )}
                 </div>
+                <button
+                  type="button"
+                  aria-label={isFav ? "Remover dos favoritos" : "Adicionar aos favoritos"}
+                  title={isFav ? "Remover dos favoritos" : "Adicionar aos favoritos"}
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    onToggleFavorite(sessao.id);
+                  }}
+                  className={`shrink-0 mt-1 p-1.5 rounded-md transition-colors ${
+                    isFav
+                      ? "text-amber-400 hover:text-amber-300"
+                      : "text-muted-foreground hover:text-amber-400"
+                  }`}
+                >
+                  <Star className={`w-4 h-4 ${isFav ? "fill-current" : ""}`} />
+                </button>
                 <ChevronRight className="w-5 h-5 text-muted-foreground shrink-0 mt-1" />
               </div>
             );
