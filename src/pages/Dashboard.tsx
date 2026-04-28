@@ -66,6 +66,11 @@ const Dashboard = () => {
   const [visibleCount, setVisibleCount] = useState(PAGE_SIZE);
   const [loadingProgress, setLoadingProgress] = useState(true);
   const [reloading, setReloading] = useState(false);
+  const [progressError, setProgressError] = useState<string | null>(null);
+  const [totalRemote, setTotalRemote] = useState<number | null>(null);
+  const [lastSyncAt, setLastSyncAt] = useState<Date | null>(null);
+  const [recentlyChanged, setRecentlyChanged] = useState<Set<string>>(new Set());
+  const prevSnapshotRef = React.useRef<Map<string, string>>(new Map());
 
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 50);
@@ -79,27 +84,75 @@ const Dashboard = () => {
     toast.dismiss("nav-toast");
   }, [location.pathname]);
 
-  // Optimized fetch: only the columns/statuses we need given the active filter
+  // Optimized fetch — server-side filter, sort, and pagination
   const loadProgress = React.useCallback(
     async (silent = false) => {
       if (!isAuthenticated || !user) {
         setRemoteProgress([]);
+        setTotalRemote(null);
         setLoadingProgress(false);
+        setProgressError(null);
         return;
       }
       if (!silent) setLoadingProgress(true);
-      let query = supabase
-        .from("episode_progress")
-        .select("session_id,phase_id,status,completed_at,updated_at")
-        .eq("user_id", user.id);
-      // Server-side narrow when filter targets a specific status
-      if (filter === "completed") query = query.eq("status", "completed");
-      else if (filter === "in_progress") query = query.eq("status", "in_progress");
-      const { data, error } = await query;
-      if (!error && data) setRemoteProgress(data as EpisodeProgressRow[]);
-      setLoadingProgress(false);
+      setProgressError(null);
+      try {
+        let query = supabase
+          .from("episode_progress")
+          .select("session_id,phase_id,status,completed_at,updated_at", { count: "exact" })
+          .eq("user_id", user.id);
+        if (filter === "completed") query = query.eq("status", "completed");
+        else if (filter === "in_progress") query = query.eq("status", "in_progress");
+        // Sort server-side when possible
+        if (sort === "recent") query = query.order("updated_at", { ascending: false });
+        else if (sort === "status") query = query.order("status", { ascending: true });
+        else query = query.order("phase_id", { ascending: true }).order("session_id", { ascending: true });
+        // Server-side pagination only when filter targets remote-only statuses
+        const useServerPagination = filter === "completed" || filter === "in_progress";
+        if (useServerPagination) {
+          query = query.range(0, visibleCount - 1);
+        }
+        const { data, error, count } = await query;
+        if (error) throw error;
+        if (data) {
+          setRemoteProgress(data as EpisodeProgressRow[]);
+          setTotalRemote(typeof count === "number" ? count : null);
+
+          // Detect recently changed sessions (status diff vs previous snapshot)
+          const newChanged = new Set<string>();
+          const newSnap = new Map<string, string>();
+          (data as EpisodeProgressRow[]).forEach((r) => {
+            newSnap.set(r.session_id, r.status);
+            const prev = prevSnapshotRef.current.get(r.session_id);
+            if (prev !== undefined && prev !== r.status) newChanged.add(r.session_id);
+          });
+          prevSnapshotRef.current = newSnap;
+          if (newChanged.size > 0) {
+            setRecentlyChanged((prev) => {
+              const next = new Set(prev);
+              newChanged.forEach((id) => next.add(id));
+              return next;
+            });
+            // Auto-clear glow after 4s
+            window.setTimeout(() => {
+              setRecentlyChanged((prev) => {
+                const next = new Set(prev);
+                newChanged.forEach((id) => next.delete(id));
+                return next;
+              });
+            }, 4000);
+          }
+
+          setLastSyncAt(new Date());
+        }
+      } catch (e: any) {
+        console.error("loadProgress error", e);
+        setProgressError(e?.message || "Falha ao carregar progresso.");
+      } finally {
+        setLoadingProgress(false);
+      }
     },
-    [isAuthenticated, user, filter],
+    [isAuthenticated, user, filter, sort, visibleCount],
   );
 
   useEffect(() => {
@@ -439,6 +492,10 @@ const Dashboard = () => {
             loading={loadingProgress}
             reloading={reloading}
             onReload={handleReload}
+            error={progressError}
+            lastSyncAt={lastSyncAt}
+            recentlyChanged={recentlyChanged}
+            totalRemote={totalRemote}
           />
 
           {/* User Stats & Info Section (Bottom) */}
@@ -502,6 +559,10 @@ interface EpisodeHistoryProps {
   loading: boolean;
   reloading: boolean;
   onReload: () => void;
+  error: string | null;
+  lastSyncAt: Date | null;
+  recentlyChanged: Set<string>;
+  totalRemote: number | null;
 }
 
 const STATUS_ORDER: Record<FilterMode, number> = {
@@ -509,6 +570,22 @@ const STATUS_ORDER: Record<FilterMode, number> = {
   not_started: 1,
   completed: 2,
   all: 3,
+};
+
+const useRelativeTime = (date: Date | null) => {
+  const [, setTick] = useState(0);
+  useEffect(() => {
+    if (!date) return;
+    const id = window.setInterval(() => setTick((t) => t + 1), 5000);
+    return () => window.clearInterval(id);
+  }, [date]);
+  if (!date) return null;
+  const sec = Math.max(1, Math.floor((Date.now() - date.getTime()) / 1000));
+  if (sec < 60) return `há ${sec}s`;
+  const min = Math.floor(sec / 60);
+  if (min < 60) return `há ${min} min`;
+  const hr = Math.floor(min / 60);
+  return `há ${hr} h`;
 };
 
 const EpisodeHistorySection: React.FC<EpisodeHistoryProps> = ({
@@ -525,7 +602,14 @@ const EpisodeHistorySection: React.FC<EpisodeHistoryProps> = ({
   loading,
   reloading,
   onReload,
+  error,
+  lastSyncAt,
+  recentlyChanged,
+  totalRemote,
 }) => {
+  const relative = useRelativeTime(lastSyncAt);
+  const useServerPagination = filter === "completed" || filter === "in_progress";
+
   // Build a flat list of all episodes with their computed status + last activity
   const allEpisodes = useMemo(() => {
     const remoteByid = new Map<string, EpisodeProgressRow>();
@@ -605,7 +689,13 @@ const EpisodeHistorySection: React.FC<EpisodeHistoryProps> = ({
   );
 
   const visible = filtered.slice(0, visibleCount);
-  const hasMore = visible.length < filtered.length;
+  // Server-side pagination: more rows exist on the server
+  const hasMore = useServerPagination
+    ? totalRemote !== null && remoteProgress.length < totalRemote
+    : visible.length < filtered.length;
+  const remainingCount = useServerPagination
+    ? (totalRemote ?? remoteProgress.length) - remoteProgress.length
+    : filtered.length - visible.length;
 
   const filters: { key: FilterMode; label: string; count: number }[] = [
     { key: "all", label: "Todos", count: summary.total },
@@ -620,7 +710,13 @@ const EpisodeHistorySection: React.FC<EpisodeHistoryProps> = ({
         <h2 className="text-2xl md:text-3xl font-heading font-black flex items-center gap-3">
           <Clock className="w-6 h-6 text-primary" /> Histórico por Episódio
         </h2>
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-2 flex-wrap">
+          {lastSyncAt && (
+            <span className="text-[11px] text-muted-foreground bg-muted/30 rounded-full px-3 py-1 inline-flex items-center gap-1.5">
+              <span className="w-1.5 h-1.5 rounded-full bg-primary animate-pulse" />
+              Atualizado {relative}
+            </span>
+          )}
           <Button
             variant="outline"
             size="sm"
@@ -658,7 +754,16 @@ const EpisodeHistorySection: React.FC<EpisodeHistoryProps> = ({
         )}
       </div>
 
-      {!isAuthenticated && !loading && (
+      {error && (
+        <div className="text-sm bg-destructive/10 border border-destructive/30 text-destructive rounded-lg p-4 mb-4 flex items-center justify-between gap-3 flex-wrap">
+          <span>Não foi possível carregar o progresso: {error}</span>
+          <Button variant="outline" size="sm" onClick={onReload} disabled={reloading} className="gap-2">
+            <RefreshCw className={`w-4 h-4 ${reloading ? "animate-spin" : ""}`} /> Tentar novamente
+          </Button>
+        </div>
+      )}
+
+      {!isAuthenticated && !loading && !error && (
         <div className="text-xs text-muted-foreground bg-muted/30 rounded-lg p-3 mb-4">
           Você está vendo dados locais. Faça login para sincronizar seu progresso na nuvem.
         </div>
@@ -709,57 +814,73 @@ const EpisodeHistorySection: React.FC<EpisodeHistoryProps> = ({
             <EpisodeRowSkeleton key={i} />
           ))}
         </div>
-      ) : filtered.length === 0 ? (
+      ) : error ? null : filtered.length === 0 ? (
         <div className="text-sm text-muted-foreground text-center py-8 bg-card/30 rounded-xl">
           Nenhum episódio neste filtro.
         </div>
       ) : (
         <div className="grid gap-3">
-          {visible.map(({ fase, sessao, idx, done, inProgress, lastResp }) => (
-            <div
-              key={`${fase.id}-${sessao.id}`}
-              className="bg-card/50 hover:bg-card border border-white/5 rounded-xl p-4 flex items-start gap-4 transition-colors cursor-pointer"
-              onClick={() => navigate(`/jornada/${fase.id}/${sessao.id}`)}
-            >
-              <div className="text-xl font-heading font-black text-primary/40 w-10 text-center shrink-0">
-                {String(idx + 1).padStart(2, "0")}
-              </div>
-              <div className="flex-1 min-w-0">
-                <div className="flex items-center gap-2 flex-wrap">
-                  <span className="text-xs uppercase tracking-wider text-muted-foreground">
-                    {fase.titulo}
-                  </span>
-                  {done ? (
-                    <Badge className="bg-primary/10 text-primary border-primary/20 text-[10px]">
-                      <CheckCircle2 className="w-3 h-3 mr-1" /> Concluído
-                    </Badge>
-                  ) : inProgress ? (
-                    <Badge variant="outline" className="text-[10px]">
-                      Em andamento
-                    </Badge>
-                  ) : (
-                    <Badge variant="outline" className="text-[10px] text-muted-foreground">
-                      <Lock className="w-3 h-3 mr-1" /> Não iniciado
-                    </Badge>
+          {visible.map(({ fase, sessao, idx, done, inProgress, lastResp }) => {
+            const highlighted = recentlyChanged.has(sessao.id);
+            return (
+              <div
+                key={`${fase.id}-${sessao.id}`}
+                className={`bg-card/50 hover:bg-card border rounded-xl p-4 flex items-start gap-4 transition-all cursor-pointer ${
+                  highlighted
+                    ? "border-primary shadow-[0_0_24px_-4px_hsl(var(--primary)/0.7)] ring-1 ring-primary/40 animate-fade-in"
+                    : "border-white/5"
+                }`}
+                onClick={() => navigate(`/jornada/${fase.id}/${sessao.id}`)}
+              >
+                <div className="text-xl font-heading font-black text-primary/40 w-10 text-center shrink-0">
+                  {String(idx + 1).padStart(2, "0")}
+                </div>
+                <div className="flex-1 min-w-0">
+                  <div className="flex items-center gap-2 flex-wrap">
+                    <span className="text-xs uppercase tracking-wider text-muted-foreground">
+                      {fase.titulo}
+                    </span>
+                    {done ? (
+                      <Badge className="bg-primary/10 text-primary border-primary/20 text-[10px]">
+                        <CheckCircle2 className="w-3 h-3 mr-1" /> Concluído
+                      </Badge>
+                    ) : inProgress ? (
+                      <Badge variant="outline" className="text-[10px]">
+                        Em andamento
+                      </Badge>
+                    ) : (
+                      <Badge variant="outline" className="text-[10px] text-muted-foreground">
+                        <Lock className="w-3 h-3 mr-1" /> Não iniciado
+                      </Badge>
+                    )}
+                    {highlighted && (
+                      <Badge className="bg-primary/20 text-primary border-primary/30 text-[10px] animate-pulse">
+                        Atualizado agora
+                      </Badge>
+                    )}
+                  </div>
+                  <h3 className="font-bold mt-1 truncate">{sessao.titulo}</h3>
+                  {lastResp && (
+                    <p className="mt-2 text-xs text-muted-foreground italic line-clamp-2">
+                      "{lastResp.response}"
+                    </p>
                   )}
                 </div>
-                <h3 className="font-bold mt-1 truncate">{sessao.titulo}</h3>
-                {lastResp && (
-                  <p className="mt-2 text-xs text-muted-foreground italic line-clamp-2">
-                    "{lastResp.response}"
-                  </p>
-                )}
+                <ChevronRight className="w-5 h-5 text-muted-foreground shrink-0 mt-1" />
               </div>
-              <ChevronRight className="w-5 h-5 text-muted-foreground shrink-0 mt-1" />
-            </div>
-          ))}
+            );
+          })}
         </div>
       )}
 
-      {!loading && hasMore && (
+      {!loading && !error && hasMore && (
         <div className="flex justify-center mt-6">
-          <Button variant="outline" onClick={() => setVisibleCount(visibleCount + PAGE_SIZE)}>
-            Carregar mais ({filtered.length - visible.length})
+          <Button
+            variant="outline"
+            onClick={() => setVisibleCount(visibleCount + PAGE_SIZE)}
+            disabled={reloading}
+          >
+            Carregar mais{remainingCount > 0 ? ` (${remainingCount})` : ""}
           </Button>
         </div>
       )}
