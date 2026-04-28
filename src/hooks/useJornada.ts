@@ -26,6 +26,7 @@ const INITIAL_JORNADA: JornadaProgress = {
   completedExercises: [],
   completedSessions: [],
   responses: [],
+  favorites: [],
 };
 
 export const useJornada = () => {
