@@ -35,7 +35,7 @@ const Logo: React.FC<LogoProps> = ({ className = "", size = "md" }) => {
       <div className="absolute inset-0 rounded-xl bg-gradient-to-br from-primary/20 to-primary/5 border border-primary/20 rotate-3 transition-all duration-700 ease-in-out group-hover:rotate-12 group-hover:border-primary/40 group-hover:from-primary/30 group-hover:to-primary/10" />
       
       {/* Inner square - smoother behavior */}
-      <div className="absolute inset-0 rounded-xl bg-background dark:bg-zinc-900 border border-primary/30 -rotate-3 transition-all duration-700 ease-in-out group-hover:rotate-0 flex items-center justify-center shadow-sm group-hover:shadow-lg group-hover:shadow-primary/10 group-hover:border-primary/60 overflow-hidden">
+      <div className="absolute inset-0 rounded-xl bg-background border border-primary/30 -rotate-3 transition-all duration-700 ease-in-out group-hover:rotate-0 flex items-center justify-center shadow-sm group-hover:shadow-lg group-hover:shadow-primary/10 group-hover:border-primary/60 overflow-hidden">
         {/* SVG Fallback & Texture - Recognizable even if icons don't load */}
         <svg className="absolute inset-0 w-full h-full opacity-[0.05] pointer-events-none transition-opacity duration-500 group-hover:opacity-[0.1]" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
           {/* Subtle quill shape as fallback */}

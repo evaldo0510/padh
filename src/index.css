@@ -87,42 +87,42 @@
 
   /* Light mode adjusted but consistent with new identity */
   .light {
-    --background: 210 20% 97%;
-    --foreground: 262 40% 12%;
+    --background: 262 25% 98%; /* Very light lilac background */
+    --foreground: 262 45% 10%; /* Very dark purple text */
 
     --card: 0 0% 100%;
-    --card-foreground: 262 40% 12%;
+    --card-foreground: 262 45% 10%;
 
     --popover: 0 0% 100%;
-    --popover-foreground: 262 40% 12%;
+    --popover-foreground: 262 45% 10%;
 
-    --primary: 45 65% 45%;
+    --primary: 45 75% 35%; /* Darker gold for better contrast on light */
     --primary-foreground: 0 0% 100%;
-    --primary-light: 45 55% 65%;
-    --primary-dark: 45 70% 35%;
+    --primary-light: 45 60% 55%;
+    --primary-dark: 45 85% 25%;
 
-    --secondary: 270 45% 55%;
+    --secondary: 270 50% 50%; /* More saturated lilac */
     --secondary-foreground: 0 0% 100%;
-    --secondary-light: 270 40% 70%;
-    --secondary-dark: 270 50% 40%;
+    --secondary-light: 270 45% 65%;
+    --secondary-dark: 270 60% 35%;
 
-    --muted: 210 15% 92%;
-    --muted-foreground: 262 15% 45%;
+    --muted: 262 20% 94%;
+    --muted-foreground: 262 15% 40%;
 
-    --accent: 210 15% 94%;
-    --accent-foreground: 262 30% 15%;
+    --accent: 262 15% 96%;
+    --accent-foreground: 262 40% 15%;
 
-    --destructive: 0 65% 50%;
+    --destructive: 0 75% 45%;
     --destructive-foreground: 0 0% 100%;
 
-    --border: 210 15% 88%;
-    --input: 210 15% 88%;
-    --ring: 45 65% 45%;
+    --border: 262 20% 90%;
+    --input: 262 20% 90%;
+    --ring: 45 75% 35%;
 
-    --shadow-soft: 0 2px 12px -3px hsl(262 30% 20% / 0.08);
-    --shadow-medium: 0 8px 30px -8px hsl(262 30% 20% / 0.12);
-    --shadow-strong: 0 20px 50px -12px hsl(262 30% 20% / 0.15);
-    --shadow-glow: 0 0 40px hsl(45 65% 45% / 0.1);
+    --shadow-soft: 0 2px 12px -3px hsl(262 45% 10% / 0.05);
+    --shadow-medium: 0 8px 30px -8px hsl(262 45% 10% / 0.08);
+    --shadow-strong: 0 20px 50px -12px hsl(262 45% 10% / 0.1);
+    --shadow-glow: 0 0 40px hsl(45 75% 35% / 0.08);
   }
 }
 
