@@ -183,15 +183,48 @@ const Dashboard = () => {
               <Button asChild variant="ghost" size="sm" className="gap-2 text-muted-foreground hover:text-white">
                 <Link to="/recursos-clinicos"><Library className="w-4 h-4" /> Biblioteca</Link>
               </Button>
-              <Button asChild variant="ghost" size="sm" className="gap-2 text-muted-foreground hover:text-primary">
-                <Link to="/planos"><CreditCard className="w-4 h-4" /> Planos</Link>
+              <Button
+                variant="ghost"
+                size="sm"
+                className="gap-2 text-muted-foreground hover:text-primary"
+                onClick={scrollToHistory}
+              >
+                <Clock className="w-4 h-4" /> Episódios
               </Button>
-              <Button asChild variant="ghost" size="sm" className="gap-2 text-muted-foreground hover:text-primary">
-                <Link to="/meu-produto"><ShoppingBag className="w-4 h-4" /> Meu Produto</Link>
+              <Button
+                variant="ghost"
+                size="sm"
+                disabled={navigatingTo === "/planos"}
+                className="gap-2 text-muted-foreground hover:text-primary"
+                onClick={() => goTo("/planos", "Planos")}
+              >
+                <CreditCard className="w-4 h-4" /> Planos
               </Button>
-              <Button variant="ghost" size="sm" className="gap-2 text-muted-foreground hover:text-destructive" onClick={handleLogout}>
-                <LogOut className="w-4 h-4" /> Sair
-              </Button>
+              {isAuthed ? (
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  disabled={navigatingTo === "/meu-produto"}
+                  className="gap-2 text-muted-foreground hover:text-primary"
+                  onClick={() => goTo("/meu-produto", "Meu Produto")}
+                >
+                  <ShoppingBag className="w-4 h-4" /> Meu Produto
+                </Button>
+              ) : (
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  className="gap-2 text-muted-foreground hover:text-primary"
+                  onClick={() => goTo("/login", "Entrar")}
+                >
+                  <ShoppingBag className="w-4 h-4" /> Entrar
+                </Button>
+              )}
+              {isAuthed && (
+                <Button variant="ghost" size="sm" className="gap-2 text-muted-foreground hover:text-destructive" onClick={handleLogout}>
+                  <LogOut className="w-4 h-4" /> Sair
+                </Button>
+              )}
            </div>
         </div>
 
