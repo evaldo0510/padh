@@ -10,6 +10,7 @@ import PageTransition from "./components/layout/PageTransition";
 import { PageSkeleton } from "./components/ui/page-skeleton";
 import PWAPrompt from "./components/layout/PWAPrompt";
 import SupabaseErrorBoundary from "./components/layout/SupabaseErrorBoundary";
+import ProtectedRoute from "./components/auth/ProtectedRoute";
 
 const Index = lazy(() => import("./pages/Index"));
 const NotFound = lazy(() => import("./pages/NotFound"));
@@ -76,6 +77,7 @@ const LoginPage = lazy(() => import("./pages/LoginPage"));
 const DiagnosticsPage = lazy(() => import("./pages/DiagnosticsPage"));
 const ConfigGuidePage = lazy(() => import("./pages/ConfigGuidePage"));
 const UiGuide = lazy(() => import("./pages/UiGuide"));
+const PrisaoInteriorVenda = lazy(() => import("./pages/venda/PrisaoInteriorVenda"));
 
 const queryClient = new QueryClient();
 
@@ -327,10 +329,20 @@ const AnimatedRoutes = () => {
             }
           />
           <Route
+            path="/prisao-interior"
+            element={
+              <PageTransition>
+                <PrisaoInteriorVenda />
+              </PageTransition>
+            }
+          />
+          <Route
             path="/jornada"
             element={
               <PageTransition>
-                <JornadaHome />
+                <ProtectedRoute>
+                  <JornadaHome />
+                </ProtectedRoute>
               </PageTransition>
             }
           />
@@ -338,7 +350,9 @@ const AnimatedRoutes = () => {
             path="/jornada/:phaseId/:sessionId"
             element={
               <PageTransition>
-                <SessaoView />
+                <ProtectedRoute>
+                  <SessaoView />
+                </ProtectedRoute>
               </PageTransition>
             }
           />
@@ -370,7 +384,9 @@ const AnimatedRoutes = () => {
             path="/dashboard"
             element={
               <PageTransition>
-                <Dashboard />
+                <ProtectedRoute>
+                  <Dashboard />
+                </ProtectedRoute>
               </PageTransition>
             }
           />
