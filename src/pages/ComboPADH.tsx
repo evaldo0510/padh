@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Check, Sparkles, BookOpen, GraduationCap, Target, ArrowRight, Gift, Shield, Clock, Star, Send } from 'lucide-react';
 import { Card, CardContent } from '@/components/ui/card';
+import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
@@ -78,10 +79,10 @@ const ComboPADH = () => {
           }`}
         >
           <div className="max-w-4xl mx-auto">
-            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-primary/30 bg-primary/10 text-primary text-sm font-medium mb-8">
+            <Badge variant="spiritual" className="spiritual-chip-amber mb-8 gap-2 px-4 py-2 text-sm">
               <Gift className="h-4 w-4" />
               Pacote Exclusivo
-            </div>
+            </Badge>
             <h1 className="text-4xl md:text-6xl lg:text-7xl font-heading font-bold mb-6 text-foreground">
               Combo <span className="text-primary italic">P.A.D.H.</span>
             </h1>
@@ -115,7 +116,7 @@ const ComboPADH = () => {
                     <div className="flex flex-col md:flex-row gap-8">
                       <div className="md:w-1/2">
                         <div className="flex items-center gap-3 mb-4">
-                          <div className="p-2 rounded-lg bg-primary/10 text-primary">{pillar.icon}</div>
+                          <div className="p-2 rounded-lg bg-primary/10 text-primary spiritual-icon">{pillar.icon}</div>
                           <div>
                             <h3 className="text-2xl font-heading font-bold text-foreground">{pillar.title}</h3>
                             <p className="text-primary text-sm font-medium">{pillar.subtitle}</p>

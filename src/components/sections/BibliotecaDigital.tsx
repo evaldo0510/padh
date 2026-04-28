@@ -65,10 +65,10 @@ const libraryItems: LibraryItem[] = [
 ];
 
 const typeColors = {
-  chapter: 'bg-primary/10 text-primary border-primary/20',
-  tool: 'bg-spiritual-violet/10 text-spiritual-violet border-spiritual-violet/20',
-  poem: 'bg-secondary/10 text-secondary border-secondary/20',
-  reflection: 'bg-spiritual-indigo/10 text-spiritual-indigo border-spiritual-indigo/20'
+  chapter: 'spiritual-chip-amber',
+  tool: 'spiritual-chip-violet',
+  poem: 'spiritual-chip-violet',
+  reflection: 'spiritual-chip-muted'
 };
 
 const typeNames = {
@@ -230,7 +230,7 @@ export const BibliotecaDigital = () => {
                 <div className="flex items-start justify-between mb-2">
                   <div className="flex items-center gap-2">
                     {typeIcons[item.type]}
-                    <Badge className={`text-xs ${typeColors[item.type]}`}>
+                    <Badge variant="spiritual" className={`text-xs ${typeColors[item.type]}`}>
                       {typeNames[item.type]}
                     </Badge>
                   </div>
@@ -287,7 +287,7 @@ export const BibliotecaDigital = () => {
                     <div className="space-y-3">
                       <div className="flex items-center gap-2">
                         {typeIcons[selectedItem.type]}
-                        <Badge className={`${typeColors[selectedItem.type]}`}>
+                        <Badge variant="spiritual" className={typeColors[selectedItem.type]}>
                           {typeNames[selectedItem.type]}
                         </Badge>
                         <span className="text-sm text-muted-foreground">{selectedItem.category}</span>

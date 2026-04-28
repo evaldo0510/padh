@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { AlertCircle, Database, Settings, ShieldAlert, Wifi, WifiOff, RefreshCw, HelpCircle, CheckCircle2, Clock } from 'lucide-react';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
+import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { supabaseConfig } from '@/integrations/supabase/client';
 import { Link } from 'react-router-dom';
@@ -38,13 +39,13 @@ const SupabaseConfigBanner = () => {
   };
 
   const getSyncBadge = () => {
-    if (!configStatus || isOffline) return { label: "BLOQUEADO", color: "bg-muted text-muted-foreground border-border", icon: <Clock className="h-3 w-3" /> };
+    if (!configStatus || isOffline) return { label: "BLOQUEADO", variant: "spiritual" as const, className: "spiritual-chip-muted", icon: <Clock className="h-3 w-3" /> };
     
     switch (syncStatus) {
-      case 'ok': return { label: "SYNC: OK", color: "bg-primary/10 text-primary border-primary/20", icon: <CheckCircle2 className="h-3 w-3" /> };
-      case 'pending': return { label: "SYNC: PENDENTE", color: "bg-secondary/10 text-secondary border-secondary/20", icon: <RefreshCw className="h-3 w-3 animate-spin" /> };
-      case 'error': return { label: "SYNC: ERRO", color: "bg-destructive/10 text-destructive border-destructive/20", icon: <AlertCircle className="h-3 w-3" /> };
-      default: return { label: "SYNC: OK", color: "bg-primary/10 text-primary border-primary/20", icon: <CheckCircle2 className="h-3 w-3" /> };
+      case 'ok': return { label: "SYNC: OK", variant: "spiritual" as const, className: "spiritual-chip-amber", icon: <CheckCircle2 className="h-3 w-3" /> };
+      case 'pending': return { label: "SYNC: PENDENTE", variant: "spiritual" as const, className: "spiritual-chip-violet", icon: <RefreshCw className="h-3 w-3 animate-spin" /> };
+      case 'error': return { label: "SYNC: ERRO", variant: "destructive" as const, className: "", icon: <AlertCircle className="h-3 w-3" /> };
+      default: return { label: "SYNC: OK", variant: "spiritual" as const, className: "spiritual-chip-amber", icon: <CheckCircle2 className="h-3 w-3" /> };
     }
   };
 
@@ -74,14 +75,12 @@ const SupabaseConfigBanner = () => {
               Status do Sistema: {isOffline ? "Modo Offline" : "Modo Online"}
             </span>
             <div className="flex gap-2">
-              <span className={`text-[10px] font-bold px-2 py-0.5 rounded-full border flex items-center gap-1 ${syncBadge.color}`}>
+              <Badge variant={syncBadge.variant} className={`text-[10px] font-bold px-2 py-0.5 gap-1 ${syncBadge.className}`}>
                 {syncBadge.icon} {syncBadge.label}
-              </span>
-              <span className={`text-[10px] font-bold px-2 py-0.5 rounded-full border ${
-                configStatus ? "bg-primary/10 text-primary border-primary/20" : "bg-destructive/10 text-destructive border-destructive/20"
-              }`}>
+              </Badge>
+              <Badge variant={configStatus ? "spiritual" : "destructive"} className={`text-[10px] font-bold px-2 py-0.5 ${configStatus ? "spiritual-chip-amber" : ""}`}>
                 Config: {configStatus ? "OK" : "PENDENTE"}
-              </span>
+              </Badge>
             </div>
           </AlertTitle>
           

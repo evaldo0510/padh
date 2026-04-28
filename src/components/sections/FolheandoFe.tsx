@@ -652,10 +652,10 @@ Em presente sereno.`,
 ];
 
 const categoryColors = {
-  faith: 'bg-primary/10 text-primary',
-  hope: 'bg-spiritual-indigo/10 text-spiritual-indigo',
-  love: 'bg-spiritual-rose/10 text-spiritual-rose',
-  reflection: 'bg-secondary/10 text-secondary'
+  faith: 'spiritual-chip-amber',
+  hope: 'spiritual-chip-violet',
+  love: 'spiritual-chip-violet',
+  reflection: 'spiritual-chip-muted'
 };
 
 const categoryNames = {
@@ -775,9 +775,9 @@ export const FolheandoFe = () => {
                     <h4 className="font-heading font-semibold text-sm mb-1">{poem.title}</h4>
                     <p className="text-xs text-muted-foreground mb-2">Por {poem.author}</p>
                     <div className="flex items-center justify-between">
-                      <Badge className={`text-xs ${categoryColors[poem.category]}`}>
-                        {categoryNames[poem.category]}
-                      </Badge>
+                    <Badge variant="spiritual" className={`text-xs ${categoryColors[poem.category]}`}>
+                      {categoryNames[poem.category]}
+                    </Badge>
                       <span className="text-xs text-muted-foreground flex items-center gap-1">
                         <Calendar className="h-3 w-3" />
                         {new Date(poem.date).toLocaleDateString('pt-BR')}
@@ -808,9 +808,9 @@ export const FolheandoFe = () => {
                               <Calendar className="h-4 w-4" />
                               {new Date(selectedPoem.date).toLocaleDateString('pt-BR')}
                             </div>
-                            <Badge className={categoryColors[selectedPoem.category]}>
-                              {categoryNames[selectedPoem.category]}
-                            </Badge>
+                          <Badge variant="spiritual" className={categoryColors[selectedPoem.category]}>
+                            {categoryNames[selectedPoem.category]}
+                          </Badge>
                           </div>
                         </div>
                         <div className="flex gap-2">
