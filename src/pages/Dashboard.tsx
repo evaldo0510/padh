@@ -89,7 +89,9 @@ const Dashboard = () => {
   const [totalRemote, setTotalRemote] = useState<number | null>(null);
   const [lastSyncAt, setLastSyncAt] = useState<Date | null>(null);
   const [recentlyChanged, setRecentlyChanged] = useState<Set<string>>(new Set());
+  const [favorites, setFavorites] = useState<Set<string>>(new Set());
   const prevSnapshotRef = React.useRef<Map<string, string>>(new Map());
+  const prevRowsRef = React.useRef<Map<string, EpisodeProgressRow>>(new Map());
 
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 50);
