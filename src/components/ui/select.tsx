@@ -10,22 +10,14 @@ const SelectGroup = SelectPrimitive.Group;
 
 const SelectValue = SelectPrimitive.Value;
 
-export interface SelectTriggerProps extends React.ComponentPropsWithoutRef<typeof SelectPrimitive.Trigger> {
-  error?: boolean;
-  success?: boolean;
-}
-
 const SelectTrigger = React.forwardRef<
   React.ElementRef<typeof SelectPrimitive.Trigger>,
-  SelectTriggerProps
->(({ className, children, error, success, ...props }, ref) => (
+  React.ComponentPropsWithoutRef<typeof SelectPrimitive.Trigger>
+>(({ className, children, ...props }, ref) => (
   <SelectPrimitive.Trigger
     ref={ref}
     className={cn(
-      "flex h-11 w-full items-center justify-between rounded-xl border bg-background/50 px-4 py-2 text-sm text-foreground ring-offset-background placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 [&>span]:line-clamp-1 transition-all duration-200",
-      !error && !success && "border-primary/20 focus:ring-primary/40 focus:border-primary/50",
-      error && "border-destructive/50 focus:ring-destructive/30 focus:border-destructive shadow-[0_0_10px_rgba(239,68,68,0.1)]",
-      success && "border-spiritual-sage/50 focus:ring-spiritual-sage/30 focus:border-spiritual-sage shadow-[0_0_10px_rgba(45,212,191,0.1)]",
+      "flex h-11 w-full items-center justify-between rounded-xl border border-primary/20 bg-background/50 px-4 py-2 text-sm text-foreground ring-offset-background placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 [&>span]:line-clamp-1 transition-all duration-200 focus:border-primary/50",
       className,
     )}
     {...props}
