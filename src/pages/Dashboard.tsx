@@ -814,57 +814,73 @@ const EpisodeHistorySection: React.FC<EpisodeHistoryProps> = ({
             <EpisodeRowSkeleton key={i} />
           ))}
         </div>
-      ) : filtered.length === 0 ? (
+      ) : error ? null : filtered.length === 0 ? (
         <div className="text-sm text-muted-foreground text-center py-8 bg-card/30 rounded-xl">
           Nenhum episódio neste filtro.
         </div>
       ) : (
         <div className="grid gap-3">
-          {visible.map(({ fase, sessao, idx, done, inProgress, lastResp }) => (
-            <div
-              key={`${fase.id}-${sessao.id}`}
-              className="bg-card/50 hover:bg-card border border-white/5 rounded-xl p-4 flex items-start gap-4 transition-colors cursor-pointer"
-              onClick={() => navigate(`/jornada/${fase.id}/${sessao.id}`)}
-            >
-              <div className="text-xl font-heading font-black text-primary/40 w-10 text-center shrink-0">
-                {String(idx + 1).padStart(2, "0")}
-              </div>
-              <div className="flex-1 min-w-0">
-                <div className="flex items-center gap-2 flex-wrap">
-                  <span className="text-xs uppercase tracking-wider text-muted-foreground">
-                    {fase.titulo}
-                  </span>
-                  {done ? (
-                    <Badge className="bg-primary/10 text-primary border-primary/20 text-[10px]">
-                      <CheckCircle2 className="w-3 h-3 mr-1" /> Concluído
-                    </Badge>
-                  ) : inProgress ? (
-                    <Badge variant="outline" className="text-[10px]">
-                      Em andamento
-                    </Badge>
-                  ) : (
-                    <Badge variant="outline" className="text-[10px] text-muted-foreground">
-                      <Lock className="w-3 h-3 mr-1" /> Não iniciado
-                    </Badge>
+          {visible.map(({ fase, sessao, idx, done, inProgress, lastResp }) => {
+            const highlighted = recentlyChanged.has(sessao.id);
+            return (
+              <div
+                key={`${fase.id}-${sessao.id}`}
+                className={`bg-card/50 hover:bg-card border rounded-xl p-4 flex items-start gap-4 transition-all cursor-pointer ${
+                  highlighted
+                    ? "border-primary shadow-[0_0_24px_-4px_hsl(var(--primary)/0.7)] ring-1 ring-primary/40 animate-fade-in"
+                    : "border-white/5"
+                }`}
+                onClick={() => navigate(`/jornada/${fase.id}/${sessao.id}`)}
+              >
+                <div className="text-xl font-heading font-black text-primary/40 w-10 text-center shrink-0">
+                  {String(idx + 1).padStart(2, "0")}
+                </div>
+                <div className="flex-1 min-w-0">
+                  <div className="flex items-center gap-2 flex-wrap">
+                    <span className="text-xs uppercase tracking-wider text-muted-foreground">
+                      {fase.titulo}
+                    </span>
+                    {done ? (
+                      <Badge className="bg-primary/10 text-primary border-primary/20 text-[10px]">
+                        <CheckCircle2 className="w-3 h-3 mr-1" /> Concluído
+                      </Badge>
+                    ) : inProgress ? (
+                      <Badge variant="outline" className="text-[10px]">
+                        Em andamento
+                      </Badge>
+                    ) : (
+                      <Badge variant="outline" className="text-[10px] text-muted-foreground">
+                        <Lock className="w-3 h-3 mr-1" /> Não iniciado
+                      </Badge>
+                    )}
+                    {highlighted && (
+                      <Badge className="bg-primary/20 text-primary border-primary/30 text-[10px] animate-pulse">
+                        Atualizado agora
+                      </Badge>
+                    )}
+                  </div>
+                  <h3 className="font-bold mt-1 truncate">{sessao.titulo}</h3>
+                  {lastResp && (
+                    <p className="mt-2 text-xs text-muted-foreground italic line-clamp-2">
+                      "{lastResp.response}"
+                    </p>
                   )}
                 </div>
-                <h3 className="font-bold mt-1 truncate">{sessao.titulo}</h3>
-                {lastResp && (
-                  <p className="mt-2 text-xs text-muted-foreground italic line-clamp-2">
-                    "{lastResp.response}"
-                  </p>
-                )}
+                <ChevronRight className="w-5 h-5 text-muted-foreground shrink-0 mt-1" />
               </div>
-              <ChevronRight className="w-5 h-5 text-muted-foreground shrink-0 mt-1" />
-            </div>
-          ))}
+            );
+          })}
         </div>
       )}
 
-      {!loading && hasMore && (
+      {!loading && !error && hasMore && (
         <div className="flex justify-center mt-6">
-          <Button variant="outline" onClick={() => setVisibleCount(visibleCount + PAGE_SIZE)}>
-            Carregar mais ({filtered.length - visible.length})
+          <Button
+            variant="outline"
+            onClick={() => setVisibleCount(visibleCount + PAGE_SIZE)}
+            disabled={reloading}
+          >
+            Carregar mais{remainingCount > 0 ? ` (${remainingCount})` : ""}
           </Button>
         </div>
       )}
