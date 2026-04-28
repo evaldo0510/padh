@@ -39,13 +39,13 @@ const SupabaseConfigBanner = () => {
   };
 
   const getSyncBadge = () => {
-    if (!configStatus || isOffline) return { label: "BLOQUEADO", color: "bg-muted text-muted-foreground border-border", icon: <Clock className="h-3 w-3" /> };
+    if (!configStatus || isOffline) return { label: "BLOQUEADO", variant: "spiritual" as const, className: "spiritual-chip-muted", icon: <Clock className="h-3 w-3" /> };
     
     switch (syncStatus) {
-      case 'ok': return { label: "SYNC: OK", color: "bg-primary/10 text-primary border-primary/20", icon: <CheckCircle2 className="h-3 w-3" /> };
-      case 'pending': return { label: "SYNC: PENDENTE", color: "bg-secondary/10 text-secondary border-secondary/20", icon: <RefreshCw className="h-3 w-3 animate-spin" /> };
-      case 'error': return { label: "SYNC: ERRO", color: "bg-destructive/10 text-destructive border-destructive/20", icon: <AlertCircle className="h-3 w-3" /> };
-      default: return { label: "SYNC: OK", color: "bg-primary/10 text-primary border-primary/20", icon: <CheckCircle2 className="h-3 w-3" /> };
+      case 'ok': return { label: "SYNC: OK", variant: "spiritual" as const, className: "spiritual-chip-amber", icon: <CheckCircle2 className="h-3 w-3" /> };
+      case 'pending': return { label: "SYNC: PENDENTE", variant: "spiritual" as const, className: "spiritual-chip-violet", icon: <RefreshCw className="h-3 w-3 animate-spin" /> };
+      case 'error': return { label: "SYNC: ERRO", variant: "destructive" as const, className: "", icon: <AlertCircle className="h-3 w-3" /> };
+      default: return { label: "SYNC: OK", variant: "spiritual" as const, className: "spiritual-chip-amber", icon: <CheckCircle2 className="h-3 w-3" /> };
     }
   };
 
