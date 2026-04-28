@@ -326,7 +326,9 @@ const AnimatedRoutes = () => {
             path="/recursos-clinicos"
             element={
               <PageTransition>
-                <RecursosClinicos />
+                <ProtectedRoute authMessage="Faça login para acessar os recursos clínicos.">
+                  <RecursosClinicos />
+                </ProtectedRoute>
               </PageTransition>
             }
           />
