@@ -1,6 +1,6 @@
 import React from "react";
 import { Navigate, useLocation } from "react-router-dom";
-import { useAuth } from "@/hooks/useAuth";
+import { useAuth, hasPurchase } from "@/hooks/useAuth";
 import { PageSkeleton } from "@/components/ui/page-skeleton";
 
 interface ProtectedRouteProps {
@@ -34,12 +34,8 @@ const ProtectedRoute: React.FC<ProtectedRouteProps> = ({
     );
   }
 
-  if (requireProduct) {
-    // Lazy import to avoid circulars
-    const { hasPurchase } = require("@/hooks/useAuth");
-    if (!hasPurchase(requireProduct)) {
-      return <Navigate to={salesRedirect} replace />;
-    }
+  if (requireProduct && !hasPurchase(requireProduct)) {
+    return <Navigate to={salesRedirect} replace />;
   }
 
   return <>{children}</>;
