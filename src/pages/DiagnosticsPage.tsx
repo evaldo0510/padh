@@ -21,7 +21,8 @@ import {
   User,
   Trash2,
 } from "lucide-react";
-import { supabaseConfig, supabase } from "@/integrations/supabase/client";
+import { supabase } from "@/integrations/supabase/client";
+import { supabaseConfig } from "@/integrations/supabase/config";
 import { toast } from "sonner";
 import { useOfflineMode } from "@/hooks/useOfflineMode";
 import { useNavigate, Link } from "react-router-dom";

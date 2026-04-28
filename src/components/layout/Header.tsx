@@ -5,7 +5,8 @@ import { Button } from '@/components/ui/button';
 import { ThemeToggle } from '@/components/ui/theme-toggle';
 import PrefetchLink from './PrefetchLink';
 import Logo from '@/components/ui/Logo';
-import { supabase, supabaseConfig } from '@/integrations/supabase/client';
+import { supabase } from "@/integrations/supabase/client";
+import { supabaseConfig } from "@/integrations/supabase/config";
 import { toast } from 'sonner';
 
 const Header = () => {

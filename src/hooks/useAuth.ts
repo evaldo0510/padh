@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
-import { supabase, supabaseConfig } from "@/integrations/supabase/client";
+import { supabase } from "@/integrations/supabase/client";
+import { supabaseConfig } from "@/integrations/supabase/config";
 
 export interface AuthUser {
   id: string;

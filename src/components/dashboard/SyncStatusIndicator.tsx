@@ -7,7 +7,7 @@ import {
   AlertCircle,
 } from "lucide-react";
 import { useOfflineMode } from "@/hooks/useOfflineMode";
-import { supabaseConfig } from "@/integrations/supabase/client";
+import { supabaseConfig } from "@/integrations/supabase/config";
 import {
   Tooltip,
   TooltipContent,

@@ -14,7 +14,7 @@ import {
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
-import { supabaseConfig } from '@/integrations/supabase/client';
+import { supabaseConfig } from "@/integrations/supabase/config";
 import { Link } from 'react-router-dom';
 import { useOfflineMode } from '@/hooks/useOfflineMode';
 import { useSyncStatus } from '@/hooks/useSyncStatus';
