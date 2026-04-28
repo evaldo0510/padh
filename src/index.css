@@ -351,16 +351,11 @@
     transition-all hover:border-primary/50 hover:bg-background/90;
   }
 
-  .spiritual-chip-amber {
-    @apply bg-primary/10 text-primary border-primary/30;
-  }
-
-  .spiritual-chip-violet {
-    @apply bg-secondary/10 text-secondary border-secondary/30;
-  }
-
+  /* Standardized variants that now follow the same scheme */
+  .spiritual-chip-amber,
+  .spiritual-chip-violet,
   .spiritual-chip-muted {
-    @apply bg-muted/30 text-muted-foreground border-border/50;
+    @apply bg-background/80 text-foreground border-primary/30;
   }
 
   /* Editorial divider */
