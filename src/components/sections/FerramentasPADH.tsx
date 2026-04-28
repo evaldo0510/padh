@@ -38,8 +38,8 @@ mas vive esperando voz,
 como semente no escuro da terra.`,
     variations: 'Poema-funil invertido para sessões de aterramento e retorno ao presente. Funil temático para trabalhar emoções específicas (medo, culpa, esperança, luto). Funil corporal focando em sensações físicas. Funil temporal explorando passado-presente-futuro.',
     exercise: 'Crie um poema-funil de 3 estrofes sobre um desafio pessoal atual. Comece com aspectos externos visíveis, avance para sensações internas e termine com insights profundos. Leia em voz alta e registre as mudanças de estado emocional.',
-    icon: <ArrowDown className="h-6 w-6" />,
-    color: 'text-primary'
+    icon: <ArrowDown className="h-6 w-6 spiritual-icon" />,
+    color: 'spiritual-icon'
   },
   {
     id: 'verso-gatilho',
@@ -58,7 +58,7 @@ para o que ainda não nasceu."`,
     variations: 'Versos para ansiedade ("Respiro calma, solto a pressa"). Versos para autoestima ("Sou completo em minha imperfeição"). Versos para coragem ("O medo é apenas amor disfarçado"). Versos visuais associados a imagens mentais específicas.',
     exercise: 'Identifique um padrão emocional limitante que se repete em sua vida. Crie um verso-gatilho de 2 linhas que contradiga esse padrão. Repita 5 vezes ao acordar e 5 vezes antes de dormir por uma semana. Documente mudanças percebidas.',
     icon: <Zap className="h-6 w-6" />,
-    color: 'text-spiritual-indigo'
+    color: 'text-primary'
   },
   {
     id: 'poemadiagnostico',
@@ -85,7 +85,7 @@ para o que ainda não nasceu."`,
     variations: 'Poemadiagnóstico temático (relacionamentos, carreira, família). Versão para crianças com linguagem adaptada. Poemas sazonais conectados aos ciclos naturais. Diagnóstico corporal com poemas focados em sensações físicas.',
     exercise: 'Monte seu próprio conjunto de 5 poemas sobre temas que considera importantes. Ofereça para um amigo escolher um e peça para explicar a escolha. Observe padrões entre a escolha e o momento de vida da pessoa.',
     icon: <Eye className="h-6 w-6" />,
-    color: 'text-spiritual-violet'
+    color: 'text-primary'
   },
   {
     id: 'metafora-terapeutica',
@@ -104,7 +104,7 @@ a compaixão é seu sol."`,
     variations: 'Metáforas da natureza (sementes, estações, rios). Metáforas arquitetônicas (construir, reformar, habitar). Metáforas de viagem (caminho, destino, bagagem). Metáforas artísticas (pintura, música, dança).',
     exercise: 'Pense em um desafio pessoal atual. Crie uma metáfora que o represente usando elementos da natureza. Desenvolva a metáfora explorando diferentes aspectos: clima, estações, crescimento, transformação.',
     icon: <Lightbulb className="h-6 w-6" />,
-    color: 'text-spiritual-rose'
+    color: 'text-primary'
   },
   {
     id: 'ritual-poetico',
@@ -125,7 +125,7 @@ a compaixão é seu sol."`,
     variations: 'Ritual de passagem (aniversários, mudanças). Ritual de cura (após perdas, traumas). Ritual de gratidão (conquistas, celebrações). Ritual sazonal (conectar com ciclos naturais). Ritual em grupo para fortalecer vínculos.',
     exercise: 'Identifique algo que deseja transformar em sua vida. Crie um ritual poético simples com três etapas: reconhecimento (o que é), transformação (ação simbólica) e integração (nova intenção). Execute em local significativo para você.',
     icon: <Sparkles className="h-6 w-6" />,
-    color: 'text-secondary'
+    color: 'text-primary'
   },
   {
     id: 'dialogo-poetico',
@@ -174,7 +174,7 @@ suficiente, pleno"`,
     variations: 'Haicai das emoções (um para cada sentimento). Haicai sazonal (conectado às estações). Haicai corporal (sobre sensações físicas). Haicai relacional (sobre vínculos). Haicai de gratidão diária.',
     exercise: 'Durante uma semana, escreva um haicai por dia sobre seu estado emocional matinal. Observe se o ato de sintetizar em 17 sílabas muda sua relação com as emoções. Compile numa sequência e observe padrões.',
     icon: <BookOpen className="h-6 w-6" />,
-    color: 'text-spiritual-indigo'
+    color: 'text-primary'
   }
 ];
 
@@ -183,29 +183,29 @@ const methodology = [
     title: 'Poesia',
     description: 'A base simbólica da nossa metodologia. O uso da palavra como ferramenta de acesso ao inconsciente.',
     details: 'Uso de linguagem metafórica e rítmica para contornar defesas conscientes e estabelecer rapport profundo com o simbólico.',
-    icon: <Target className="h-8 w-8" />,
+    icon: <Target className="h-8 w-8 spiritual-icon" />,
     color: 'bg-primary/10 text-primary'
   },
   {
     title: 'Aplicada',
     description: 'Uso estratégico das ferramentas P.A.D.H. com timing adequado e flexibilidade responsiva.',
     details: 'Seleção da ferramenta ideal (como Poema-Funil ou Verso-Gatilho) para o momento específico da sessão e necessidade do cliente.',
-    icon: <Wand2 className="h-8 w-8" />,
-    color: 'bg-spiritual-violet/10 text-spiritual-violet'
+    icon: <Wand2 className="h-8 w-8 spiritual-icon" />,
+    color: 'bg-primary/10 text-primary'
   },
   {
     title: 'Desenvolvimento',
     description: 'Aprofundamento da experiência poética e ancoragem dos novos significados alcançados.',
     details: 'Observação da ressonância das palavras e como novos mapas mentais começam a surgir a partir da experiência vivida.',
-    icon: <Sparkles className="h-8 w-8" />,
-    color: 'bg-secondary/10 text-secondary'
+    icon: <Sparkles className="h-8 w-8 spiritual-icon" />,
+    color: 'bg-primary/10 text-primary'
   },
   {
     title: 'Humano',
     description: 'Foco na evolução integral do ser e integração das mudanças à identidade e ao cotidiano.',
     details: 'Consolidação da autonomia emocional e garantia de que as transformações se tornem parte integrante da vida do cliente.',
-    icon: <BookOpen className="h-8 w-8" />,
-    color: 'bg-spiritual-indigo/10 text-spiritual-indigo'
+    icon: <BookOpen className="h-8 w-8 spiritual-icon" />,
+    color: 'bg-primary/10 text-primary'
   }
 ];
 
@@ -234,7 +234,7 @@ export const FerramentasPADH = () => {
       <Card className="shadow-medium">
         <CardHeader>
           <CardTitle className="text-2xl font-heading flex items-center gap-2">
-            <BookOpen className="h-6 w-6 text-spiritual-indigo" />
+            <BookOpen className="h-6 w-6 spiritual-icon" />
             Fundamentação Teórica
           </CardTitle>
         </CardHeader>
@@ -247,19 +247,19 @@ export const FerramentasPADH = () => {
               </p>
             </div>
             <div className="space-y-2">
-              <h4 className="font-semibold text-lg text-spiritual-violet">Hipnose Ericksoniana</h4>
+              <h4 className="font-semibold text-lg text-primary">Hipnose Ericksoniana</h4>
               <p className="text-sm text-muted-foreground">
                 Abordagem indireta e metafórica, terreno fértil para a transformação através da poesia.
               </p>
             </div>
             <div className="space-y-2">
-              <h4 className="font-semibold text-lg text-spiritual-indigo">Terapia Narrativa</h4>
+              <h4 className="font-semibold text-lg text-primary">Terapia Narrativa</h4>
               <p className="text-sm text-muted-foreground">
-                Resgata o poder das histórias pessoais, transformando relatos em poesia curativa.
+                Resgata o poder das histórias pessoais, transformando relatos de vida em poesia curativa.
               </p>
             </div>
             <div className="space-y-2">
-              <h4 className="font-semibold text-lg text-secondary">Linguística</h4>
+              <h4 className="font-semibold text-lg text-primary">Linguística</h4>
               <p className="text-sm text-muted-foreground">
                 Signos, símbolos e metáforas como gatilhos cognitivos e emocionais profundos.
               </p>
@@ -296,7 +296,7 @@ export const FerramentasPADH = () => {
         <Card className="lg:col-span-1 glass-morphism border-primary/20">
           <CardHeader>
             <CardTitle className="text-xl font-heading flex items-center gap-2">
-              <Lightbulb className="h-5 w-5 text-spiritual-violet" />
+              <Lightbulb className="h-5 w-5 text-primary" />
               Ferramentas
             </CardTitle>
           </CardHeader>
@@ -350,33 +350,33 @@ export const FerramentasPADH = () => {
 
               {/* Fundamentação */}
               <div className="space-y-3">
-                <h4 className="text-lg font-semibold text-spiritual-indigo flex items-center gap-2">
+                <h4 className="text-lg font-semibold text-primary flex items-center gap-2">
                   <Brain className="h-5 w-5" />
                   Fundamentação
                 </h4>
-                <p className="text-muted-foreground bg-spiritual-indigo/5 p-4 rounded-lg border-l-4 border-spiritual-indigo">
+                <p className="text-muted-foreground bg-primary/5 p-4 rounded-lg border-l-4 border-primary">
                   {selectedTool.foundation}
                 </p>
               </div>
 
               {/* Modo de Uso */}
               <div className="space-y-3">
-                <h4 className="text-lg font-semibold text-spiritual-violet flex items-center gap-2">
+                <h4 className="text-lg font-semibold text-primary flex items-center gap-2">
                   <Wand2 className="h-5 w-5" />
                   Modo de Uso
                 </h4>
-                <p className="text-muted-foreground bg-spiritual-violet/5 p-4 rounded-lg border-l-4 border-spiritual-violet">
+                <p className="text-muted-foreground bg-primary/5 p-4 rounded-lg border-l-4 border-primary">
                   {selectedTool.usage}
                 </p>
               </div>
 
               {/* Exemplo */}
               <div className="space-y-3">
-                <h4 className="text-lg font-semibold text-secondary flex items-center gap-2">
+                <h4 className="text-lg font-semibold text-primary flex items-center gap-2">
                   <Sparkles className="h-5 w-5" />
                   Exemplo Prático
                 </h4>
-                <div className="bg-secondary/5 p-6 rounded-lg border-l-4 border-secondary">
+                <div className="bg-primary/5 p-6 rounded-lg border-l-4 border-primary">
                   <blockquote className="poem-text text-foreground">
                     {selectedTool.example}
                   </blockquote>
@@ -385,11 +385,11 @@ export const FerramentasPADH = () => {
 
               {/* Variações */}
               <div className="space-y-3">
-                <h4 className="text-lg font-semibold text-spiritual-rose flex items-center gap-2">
+                <h4 className="text-lg font-semibold text-primary flex items-center gap-2">
                   <Users className="h-5 w-5" />
                   Variações
                 </h4>
-                <p className="text-muted-foreground bg-spiritual-rose/5 p-4 rounded-lg border-l-4 border-spiritual-rose">
+                <p className="text-muted-foreground bg-primary/5 p-4 rounded-lg border-l-4 border-primary">
                   {selectedTool.variations}
                 </p>
               </div>

@@ -26,7 +26,7 @@ const Sobre = () => {
         <div className="relative container mx-auto px-6 z-10">
           <div className="max-w-4xl mx-auto text-center space-y-6 animate-fade-in-up">
             <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-primary/20 bg-primary/5 text-primary text-sm font-medium">
-              <Star className="h-3.5 w-3.5" />
+              <Star className="h-3.5 w-3.5 spiritual-icon" />
               A origem de uma metodologia transformadora
             </div>
 
@@ -184,7 +184,7 @@ const Sobre = () => {
                     Quando a poesia limpa o vidro,<br />
                     o reflexo finalmente nos reconhece.
                   </p>
-                  <cite className="text-sm text-primary/70 mt-3 block not-italic">— Prisão Interior</cite>
+                  <cite className="text-sm text-primary/70 mt-3 block not-italic">— Evaldo de Jesus Santana, Prisão Interior</cite>
                 </blockquote>
 
                 <div className="flex flex-wrap gap-3 pt-2">
@@ -254,7 +254,7 @@ const Sobre = () => {
                 },
               ].map((item, i) => (
                 <div key={i} className="flex gap-5 p-6 rounded-xl border border-border/50 bg-card/30 group hover:border-primary/20 transition-all duration-300">
-                  <div className="w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center text-primary flex-shrink-0 group-hover:bg-primary/15 transition-colors">
+                  <div className="w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center text-primary flex-shrink-0 group-hover:bg-primary/15 transition-colors spiritual-icon">
                     {item.icon}
                   </div>
                   <div>
@@ -341,32 +341,32 @@ const Sobre = () => {
             <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
               {[
                 {
-                  icon: <Heart className="h-6 w-6 text-spiritual-rose" />,
+                  icon: <Heart className="h-6 w-6 spiritual-icon" />,
                   title: 'A Dor como Portal',
                   desc: 'O sofrimento não é um inimigo a ser eliminado, mas um mensageiro que carrega convites de transformação. A PCH ensina a escutar esses convites.',
                 },
                 {
-                  icon: <Sparkles className="h-6 w-6 text-primary" />,
+                  icon: <Sparkles className="h-6 w-6 spiritual-icon" />,
                   title: 'Beleza como Cura',
                   desc: 'A experiência estética reorganiza o sistema nervoso. A beleza da poesia não é acessório — é o princípio ativo da intervenção terapêutica.',
                 },
                 {
-                  icon: <Brain className="h-6 w-6 text-spiritual-indigo" />,
+                  icon: <Brain className="h-6 w-6 spiritual-icon" />,
                   title: 'Ciência e Alma',
                   desc: 'Rigor científico e sensibilidade espiritual não são opostos. A PCH navega com pés na neurociência e olhos na transcendência.',
                 },
                 {
-                  icon: <BookOpen className="h-6 w-6 text-spiritual-sage" />,
+                  icon: <BookOpen className="h-6 w-6 spiritual-icon" />,
                   title: 'Palavra como Remédio',
                   desc: 'Cada palavra carrega uma frequência, uma intenção, um potencial de cura. A escolha precisa de cada termo é um ato de responsabilidade terapêutica.',
                 },
                 {
-                  icon: <Users className="h-6 w-6 text-spiritual-violet" />,
+                  icon: <Users className="h-6 w-6 spiritual-icon" />,
                   title: 'Democratizar a Profundidade',
                   desc: 'A transformação interior não deve ser privilégio de poucos. A PCH cria pontes para que qualquer pessoa possa acessar seu potencial mais profundo.',
                 },
                 {
-                  icon: <Feather className="h-6 w-6 text-spiritual-amber" />,
+                  icon: <Feather className="h-6 w-6 spiritual-icon" />,
                   title: 'O Inconsciente como Coautor',
                   desc: 'O terapeuta-poeta não impõe — convida. O inconsciente do leitor é coautor da experiência, completando os sentidos que os versos sugerem.',
                 },

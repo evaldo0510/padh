@@ -79,10 +79,10 @@ const typeNames = {
 };
 
 const typeIcons = {
-  chapter: <BookOpen className="h-4 w-4" />,
-  tool: <Star className="h-4 w-4" />,
-  poem: <Heart className="h-4 w-4" />,
-  reflection: <Bookmark className="h-4 w-4" />
+  chapter: <BookOpen className="h-4 w-4 spiritual-icon" />,
+  tool: <Star className="h-4 w-4 spiritual-icon" />,
+  poem: <Heart className="h-4 w-4 spiritual-icon" />,
+  reflection: <Bookmark className="h-4 w-4 spiritual-icon" />
 };
 
 export const BibliotecaDigital = () => {
