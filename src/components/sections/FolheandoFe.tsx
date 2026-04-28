@@ -775,9 +775,9 @@ export const FolheandoFe = () => {
                     <h4 className="font-heading font-semibold text-sm mb-1">{poem.title}</h4>
                     <p className="text-xs text-muted-foreground mb-2">Por {poem.author}</p>
                     <div className="flex items-center justify-between">
-                      <Badge className={`text-xs ${categoryColors[poem.category]}`}>
-                        {categoryNames[poem.category]}
-                      </Badge>
+                    <Badge variant="spiritual" className={`text-xs ${categoryColors[poem.category]}`}>
+                      {categoryNames[poem.category]}
+                    </Badge>
                       <span className="text-xs text-muted-foreground flex items-center gap-1">
                         <Calendar className="h-3 w-3" />
                         {new Date(poem.date).toLocaleDateString('pt-BR')}
