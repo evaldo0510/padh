@@ -29,7 +29,7 @@ const Index = () => {
 
   const ferramentas = [
       {
-        icon: <BookOpen className="h-5 w-5" />,
+        icon: <BookOpen className="spiritual-icon spiritual-icon-lg" />,
         title: 'Livro-Curso',
         desc: 'Mergulhe na teoria e prática da P.A.D.H. com exercícios guiados que transformam a leitura em experiência terapêutica.',
         link: '/livro-curso',
