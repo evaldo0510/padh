@@ -652,10 +652,10 @@ Em presente sereno.`,
 ];
 
 const categoryColors = {
-  faith: 'bg-primary/10 text-primary',
-  hope: 'bg-spiritual-indigo/10 text-spiritual-indigo',
-  love: 'bg-spiritual-rose/10 text-spiritual-rose',
-  reflection: 'bg-secondary/10 text-secondary'
+  faith: 'spiritual-chip-amber',
+  hope: 'spiritual-chip-violet',
+  love: 'spiritual-chip-violet',
+  reflection: 'spiritual-chip-muted'
 };
 
 const categoryNames = {
