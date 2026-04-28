@@ -142,12 +142,23 @@ const Dashboard = () => {
           // Detect recently changed sessions (status diff vs previous snapshot)
           const newChanged = new Set<string>();
           const newSnap = new Map<string, string>();
+          const newRows = new Map<string, EpisodeProgressRow>();
           (data as EpisodeProgressRow[]).forEach((r) => {
             newSnap.set(r.session_id, r.status);
+            newRows.set(r.session_id, r);
             const prev = prevSnapshotRef.current.get(r.session_id);
-            if (prev !== undefined && prev !== r.status) newChanged.add(r.session_id);
+            if (prev !== undefined && prev !== r.status) {
+              newChanged.add(r.session_id);
+              // Toast when status changes via realtime refresh (skip first load)
+              if (!silent) return;
+              toast.success(
+                `${findSessionTitle(r.session_id)} → ${STATUS_LABEL[r.status] ?? r.status}`,
+                { id: `ep-${r.session_id}`, duration: 3500 },
+              );
+            }
           });
           prevSnapshotRef.current = newSnap;
+          prevRowsRef.current = newRows;
           if (newChanged.size > 0) {
             setRecentlyChanged((prev) => {
               const next = new Set(prev);
