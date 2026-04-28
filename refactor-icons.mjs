@@ -17,31 +17,31 @@ function walk(dir, callback) {
   });
 }
 
-const replacements = [
+const cleanups = [
   {
-    // Exact h-4 w-4 match within className
-    pattern: /className=["']([^"']*\b)h-4 w-4(\b[^"']*)["']/g,
-    replacement: 'className="$1spiritual-icon$2"'
+    // Remove text-primary if spiritual-icon is present
+    pattern: /className=["']([^"']*\b)spiritual-icon([^"']*\b)text-primary(\b[^"']*)["']/g,
+    replacement: 'className="$1spiritual-icon$2$3"'
   },
   {
-    // Exact w-4 h-4 match within className
-    pattern: /className=["']([^"']*\b)w-4 h-4(\b[^"']*)["']/g,
-    replacement: 'className="$1spiritual-icon$2"'
+    // Remove text-amber-500 if spiritual-icon is present (standardizing to primary)
+    pattern: /className=["']([^"']*\b)spiritual-icon([^"']*\b)text-amber-500(\b[^"']*)["']/g,
+    replacement: 'className="$1spiritual-icon$2$3"'
   },
   {
-    // h-5 w-5 match
-    pattern: /className=["']([^"']*\b)h-5 w-5(\b[^"']*)["']/g,
-    replacement: 'className="$1spiritual-icon spiritual-icon-lg$2"'
+      // Cleanup whitespace
+      pattern: /className=["']\s+([^"']+)["']/g,
+      replacement: 'className="$1"'
   },
   {
-    // h-3.5 w-3.5 match
-    pattern: /className=["']([^"']*\b)h-3\.5 w-3\.5(\b[^"']*)["']/g,
-    replacement: 'className="$1spiritual-icon spiritual-icon-sm$2"'
+      // Cleanup whitespace
+      pattern: /className=["']([^"']+)\s+["']/g,
+      replacement: 'className="$1"'
   },
   {
-    // h-6 w-6 match
-    pattern: /className=["']([^"']*\b)h-6 w-6(\b[^"']*)["']/g,
-    replacement: 'className="$1spiritual-icon spiritual-icon-xl$2"'
+      // Cleanup multiple spaces
+      pattern: /className=["']([^"']+)["']/g,
+      replacement: (match, p1) => `className="${p1.replace(/\s+/g, ' ').trim()}"`
   }
 ];
 
@@ -49,24 +49,23 @@ walk('./src', (filepath) => {
   let content = fs.readFileSync(filepath, 'utf8');
   let changed = false;
 
-  replacements.forEach(({ pattern, replacement }) => {
-    if (pattern.test(content)) {
-      content = content.replace(pattern, replacement);
-      changed = true;
+  cleanups.forEach(({ pattern, replacement }) => {
+    if (typeof replacement === 'function') {
+        if (pattern.test(content)) {
+            content = content.replace(pattern, replacement);
+            changed = true;
+        }
+    } else {
+        if (pattern.test(content)) {
+            content = content.replace(pattern, replacement);
+            changed = true;
+        }
     }
   });
 
   if (changed) {
-    // Clean up double spaces or spaces next to quotes that might have been introduced
-    content = content.replace(/className="\s+/g, 'className="');
-    content = content.replace(/\s+"/g, '"');
-    content = content.replace(/\s+/g, ' '); // This might be too aggressive for code, let's be careful.
-    // Better cleanup:
-    content = content.replace(/className=" /g, 'className="');
-    content = content.replace(/ "/g, '"');
-    content = content.replace(/  /g, ' ');
-
     fs.writeFileSync(filepath, content);
-    console.log(`Updated ${filepath}`);
+    console.log(`Cleaned up ${filepath}`);
   }
 });
+
