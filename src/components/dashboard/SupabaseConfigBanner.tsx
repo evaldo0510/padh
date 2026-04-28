@@ -121,13 +121,13 @@ const SupabaseConfigBanner = () => {
 
                 <Button variant="outline" size="sm" asChild className="bg-background h-8 text-xs font-medium">
                   <Link to="/diagnosticos">
-                    <Settings className="h-3 w-3 mr-1.5" /> Diagnósticos
+                    <Settings className="h-3 w-3 mr-1.5 spiritual-icon" /> Diagnósticos
                   </Link>
                 </Button>
                 
                 <Button variant="ghost" size="sm" asChild className="h-8 text-xs text-primary hover:text-primary/80 hover:bg-primary/5">
                   <Link to="/configurar-supabase">
-                    <HelpCircle className="h-3 w-3 mr-1.5" /> Como configurar
+                    <HelpCircle className="h-3 w-3 mr-1.5 spiritual-icon" /> Como configurar
                   </Link>
                 </Button>
                 
