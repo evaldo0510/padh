@@ -589,6 +589,8 @@ const STATUS_ORDER: Record<FilterMode, number> = {
   not_started: 1,
   completed: 2,
   all: 3,
+  favorites: 4,
+  recent: 5,
 };
 
 const useRelativeTime = (date: Date | null) => {
