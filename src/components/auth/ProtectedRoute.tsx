@@ -1,17 +1,27 @@
 import React from "react";
 import { Navigate, useLocation } from "react-router-dom";
-import { useAuth, hasPurchase } from "@/hooks/useAuth";
+import { useAuth } from "@/hooks/useAuth";
+import { usePurchase } from "@/hooks/usePurchase";
 import { PageSkeleton } from "@/components/ui/page-skeleton";
 
 interface ProtectedRouteProps {
   children: React.ReactNode;
   /** Optional: require having purchased this product id */
   requireProduct?: string;
-  /** Where to send unauthenticated users */
   redirectTo?: string;
-  /** Where to send authenticated users without the required product */
   salesRedirect?: string;
 }
+
+const ProductGate: React.FC<{
+  productId: string;
+  salesRedirect: string;
+  children: React.ReactNode;
+}> = ({ productId, salesRedirect, children }) => {
+  const { hasAccess, loading } = usePurchase(productId);
+  if (loading) return <PageSkeleton />;
+  if (!hasAccess) return <Navigate to={salesRedirect} replace />;
+  return <>{children}</>;
+};
 
 const ProtectedRoute: React.FC<ProtectedRouteProps> = ({
   children,
@@ -34,8 +44,12 @@ const ProtectedRoute: React.FC<ProtectedRouteProps> = ({
     );
   }
 
-  if (requireProduct && !hasPurchase(requireProduct)) {
-    return <Navigate to={salesRedirect} replace />;
+  if (requireProduct) {
+    return (
+      <ProductGate productId={requireProduct} salesRedirect={salesRedirect}>
+        {children}
+      </ProductGate>
+    );
   }
 
   return <>{children}</>;
