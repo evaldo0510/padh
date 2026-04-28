@@ -166,7 +166,7 @@ const Dashboard = () => {
           <Card className="border-primary/10">
             <CardHeader className="pb-2">
               <CardDescription className="flex items-center gap-2">
-                <Clock className="h-4 w-4 text-primary" /> Último Acesso
+                <Clock className="h-4 w-4 spiritual-icon" /> Último Acesso
               </CardDescription>
               <CardTitle className="text-xl font-bold">
                 {progress.lastAccessedModule ? MODULOS.find(m => m.id === progress.lastAccessedModule)?.titulo : "Hoje"}
@@ -183,7 +183,7 @@ const Dashboard = () => {
           <Card className="border-primary/10 bg-primary/5">
             <CardHeader className="pb-2">
               <CardDescription className="flex items-center gap-2">
-                <Compass className="h-4 w-4 text-primary" /> Jornada Terapêutica
+                <Compass className="h-4 w-4 spiritual-icon" /> Jornada Terapêutica
               </CardDescription>
               <CardTitle className="text-xl font-bold">
                 {JORNADA_DATA.find(f => f.id === jornada.currentPhaseId)?.titulo || "Não iniciada"}
