@@ -689,7 +689,13 @@ const EpisodeHistorySection: React.FC<EpisodeHistoryProps> = ({
   );
 
   const visible = filtered.slice(0, visibleCount);
-  const hasMore = visible.length < filtered.length;
+  // Server-side pagination: more rows exist on the server
+  const hasMore = useServerPagination
+    ? totalRemote !== null && remoteProgress.length < totalRemote
+    : visible.length < filtered.length;
+  const remainingCount = useServerPagination
+    ? (totalRemote ?? remoteProgress.length) - remoteProgress.length
+    : filtered.length - visible.length;
 
   const filters: { key: FilterMode; label: string; count: number }[] = [
     { key: "all", label: "Todos", count: summary.total },
@@ -705,6 +711,13 @@ const EpisodeHistorySection: React.FC<EpisodeHistoryProps> = ({
           <Clock className="w-6 h-6 text-primary" /> Histórico por Episódio
         </h2>
         <div className="flex items-center gap-2">
+        <div className="flex items-center gap-2 flex-wrap">
+          {lastSyncAt && (
+            <span className="text-[11px] text-muted-foreground bg-muted/30 rounded-full px-3 py-1 inline-flex items-center gap-1.5">
+              <span className="w-1.5 h-1.5 rounded-full bg-primary animate-pulse" />
+              Atualizado {relative}
+            </span>
+          )}
           <Button
             variant="outline"
             size="sm"
