@@ -65,10 +65,10 @@ const libraryItems: LibraryItem[] = [
 ];
 
 const typeColors = {
-  chapter: 'bg-primary/10 text-primary border-primary/20',
-  tool: 'bg-spiritual-violet/10 text-spiritual-violet border-spiritual-violet/20',
-  poem: 'bg-secondary/10 text-secondary border-secondary/20',
-  reflection: 'bg-spiritual-indigo/10 text-spiritual-indigo border-spiritual-indigo/20'
+  chapter: 'spiritual-chip-amber',
+  tool: 'spiritual-chip-violet',
+  poem: 'spiritual-chip-violet',
+  reflection: 'spiritual-chip-muted'
 };
 
 const typeNames = {
