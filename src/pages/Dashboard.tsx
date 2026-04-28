@@ -559,6 +559,10 @@ interface EpisodeHistoryProps {
   loading: boolean;
   reloading: boolean;
   onReload: () => void;
+  error: string | null;
+  lastSyncAt: Date | null;
+  recentlyChanged: Set<string>;
+  totalRemote: number | null;
 }
 
 const STATUS_ORDER: Record<FilterMode, number> = {
@@ -566,6 +570,22 @@ const STATUS_ORDER: Record<FilterMode, number> = {
   not_started: 1,
   completed: 2,
   all: 3,
+};
+
+const useRelativeTime = (date: Date | null) => {
+  const [, setTick] = useState(0);
+  useEffect(() => {
+    if (!date) return;
+    const id = window.setInterval(() => setTick((t) => t + 1), 5000);
+    return () => window.clearInterval(id);
+  }, [date]);
+  if (!date) return null;
+  const sec = Math.max(1, Math.floor((Date.now() - date.getTime()) / 1000));
+  if (sec < 60) return `há ${sec}s`;
+  const min = Math.floor(sec / 60);
+  if (min < 60) return `há ${min} min`;
+  const hr = Math.floor(min / 60);
+  return `há ${hr} h`;
 };
 
 const EpisodeHistorySection: React.FC<EpisodeHistoryProps> = ({
@@ -582,7 +602,14 @@ const EpisodeHistorySection: React.FC<EpisodeHistoryProps> = ({
   loading,
   reloading,
   onReload,
+  error,
+  lastSyncAt,
+  recentlyChanged,
+  totalRemote,
 }) => {
+  const relative = useRelativeTime(lastSyncAt);
+  const useServerPagination = filter === "completed" || filter === "in_progress";
+
   // Build a flat list of all episodes with their computed status + last activity
   const allEpisodes = useMemo(() => {
     const remoteByid = new Map<string, EpisodeProgressRow>();
