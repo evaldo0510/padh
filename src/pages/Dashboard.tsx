@@ -726,6 +726,8 @@ const EpisodeHistorySection: React.FC<EpisodeHistoryProps> = ({
   lastSyncAt,
   recentlyChanged,
   totalRemote,
+  favorites,
+  onToggleFavorite,
 }) => {
   const relative = useRelativeTime(lastSyncAt);
   const useServerPagination = filter === "completed" || filter === "in_progress";
