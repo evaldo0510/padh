@@ -40,6 +40,8 @@ const Dashboard = () => {
   const { progress, isModuleUnlocked } = useCourseProgress();
   const navigate = useNavigate();
   const [scrolled, setScrolled] = useState(false);
+  const [isAuthed, setIsAuthed] = useState(false);
+  const [navigatingTo, setNavigatingTo] = useState<string | null>(null);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -48,6 +50,28 @@ const Dashboard = () => {
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
+
+  useEffect(() => {
+    const sim = !!localStorage.getItem("padh_simulated_user");
+    setIsAuthed(sim);
+    const { data: sub } = supabase.auth.onAuthStateChange((_e, session) => {
+      setIsAuthed(!!session || !!localStorage.getItem("padh_simulated_user"));
+    });
+    supabase.auth.getSession().then(({ data: { session } }) => {
+      setIsAuthed(!!session || !!localStorage.getItem("padh_simulated_user"));
+    });
+    return () => sub.subscription.unsubscribe();
+  }, []);
+
+  const goTo = (path: string, label: string) => {
+    setNavigatingTo(path);
+    toast.loading(`Abrindo ${label}...`, { id: "nav-toast", duration: 1500 });
+    navigate(path);
+  };
+
+  const scrollToHistory = () => {
+    document.getElementById("episode-history")?.scrollIntoView({ behavior: "smooth", block: "start" });
+  };
 
   const handleLogout = async () => {
     localStorage.removeItem("padh_simulated_user");
@@ -159,15 +183,48 @@ const Dashboard = () => {
               <Button asChild variant="ghost" size="sm" className="gap-2 text-muted-foreground hover:text-white">
                 <Link to="/recursos-clinicos"><Library className="w-4 h-4" /> Biblioteca</Link>
               </Button>
-              <Button asChild variant="ghost" size="sm" className="gap-2 text-muted-foreground hover:text-primary">
-                <Link to="/planos"><CreditCard className="w-4 h-4" /> Planos</Link>
+              <Button
+                variant="ghost"
+                size="sm"
+                className="gap-2 text-muted-foreground hover:text-primary"
+                onClick={scrollToHistory}
+              >
+                <Clock className="w-4 h-4" /> Episódios
               </Button>
-              <Button asChild variant="ghost" size="sm" className="gap-2 text-muted-foreground hover:text-primary">
-                <Link to="/meu-produto"><ShoppingBag className="w-4 h-4" /> Meu Produto</Link>
+              <Button
+                variant="ghost"
+                size="sm"
+                disabled={navigatingTo === "/planos"}
+                className="gap-2 text-muted-foreground hover:text-primary"
+                onClick={() => goTo("/planos", "Planos")}
+              >
+                <CreditCard className="w-4 h-4" /> Planos
               </Button>
-              <Button variant="ghost" size="sm" className="gap-2 text-muted-foreground hover:text-destructive" onClick={handleLogout}>
-                <LogOut className="w-4 h-4" /> Sair
-              </Button>
+              {isAuthed ? (
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  disabled={navigatingTo === "/meu-produto"}
+                  className="gap-2 text-muted-foreground hover:text-primary"
+                  onClick={() => goTo("/meu-produto", "Meu Produto")}
+                >
+                  <ShoppingBag className="w-4 h-4" /> Meu Produto
+                </Button>
+              ) : (
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  className="gap-2 text-muted-foreground hover:text-primary"
+                  onClick={() => goTo("/login", "Entrar")}
+                >
+                  <ShoppingBag className="w-4 h-4" /> Entrar
+                </Button>
+              )}
+              {isAuthed && (
+                <Button variant="ghost" size="sm" className="gap-2 text-muted-foreground hover:text-destructive" onClick={handleLogout}>
+                  <LogOut className="w-4 h-4" /> Sair
+                </Button>
+              )}
            </div>
         </div>
 
@@ -297,7 +354,7 @@ const Dashboard = () => {
           </NetflixCarousel>
 
           {/* Episode History — per-episode status & last response */}
-          <section className="container mx-auto px-6 md:px-12 py-8">
+          <section id="episode-history" className="container mx-auto px-6 md:px-12 py-8 scroll-mt-32">
             <div className="flex items-center justify-between mb-6">
               <h2 className="text-2xl md:text-3xl font-heading font-black flex items-center gap-3">
                 <Clock className="w-6 h-6 text-primary" /> Histórico por Episódio
