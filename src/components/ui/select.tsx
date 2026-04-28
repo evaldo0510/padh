@@ -1,31 +1,47 @@
 import * as React from "react";
 import * as SelectPrimitive from "@radix-ui/react-select";
 import { Check, ChevronDown, ChevronUp } from "lucide-react";
+import { cva, type VariantProps } from "class-variance-authority";
 import { cn } from "@/lib/utils";
+
+const selectTriggerVariants = cva(
+  "flex w-full items-center justify-between border border-primary/20 bg-background/50 text-sm text-foreground ring-offset-background placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 [&>span]:line-clamp-1 transition-all duration-300 hover:border-primary/40 hover:bg-background/60 focus:border-primary/50",
+  {
+    variants: {
+      selectSize: {
+        default: "h-11 px-4 py-2 rounded-xl",
+        sm: "h-9 px-3 py-1 rounded-lg",
+        lg: "h-12 px-6 py-3 rounded-2xl",
+      },
+    },
+    defaultVariants: {
+      selectSize: "default",
+    },
+  }
+);
+
 const Select = SelectPrimitive.Root;
 const SelectGroup = SelectPrimitive.Group;
 const SelectValue = SelectPrimitive.Value;
+
 const SelectTrigger = React.forwardRef<
   React.ElementRef<typeof SelectPrimitive.Trigger>,
-  React.ComponentPropsWithoutRef<typeof SelectPrimitive.Trigger>
->(({ className, children, ...props }, ref) => (
+  React.ComponentPropsWithoutRef<typeof SelectPrimitive.Trigger> & 
+  VariantProps<typeof selectTriggerVariants>
+>(({ className, children, selectSize, ...props }, ref) => (
   <SelectPrimitive.Trigger
     ref={ref}
-    className={cn(
-      "flex h-11 w-full items-center justify-between rounded-xl border border-primary/20 bg-background/50 px-4 py-2 text-sm text-foreground ring-offset-background placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 [&>span]:line-clamp-1 transition-all duration-300 hover:border-primary/40 hover:bg-background/60 focus:border-primary/50",
-      className,
-    )}
+    className={cn(selectTriggerVariants({ selectSize, className }))}
     {...props}
   >
-    {" "}
     {children}
     <SelectPrimitive.Icon asChild>
-      {" "}
-      <ChevronDown className="spiritual-icon opacity-50" />{" "}
-    </SelectPrimitive.Icon>{" "}
+      <ChevronDown className="spiritual-icon opacity-50" />
+    </SelectPrimitive.Icon>
   </SelectPrimitive.Trigger>
 ));
 SelectTrigger.displayName = SelectPrimitive.Trigger.displayName;
+
 const SelectScrollUpButton = React.forwardRef<
   React.ElementRef<typeof SelectPrimitive.ScrollUpButton>,
   React.ComponentPropsWithoutRef<typeof SelectPrimitive.ScrollUpButton>
@@ -38,11 +54,11 @@ const SelectScrollUpButton = React.forwardRef<
     )}
     {...props}
   >
-    {" "}
-    <ChevronUp className="spiritual-icon" />{" "}
+    <ChevronUp className="spiritual-icon" />
   </SelectPrimitive.ScrollUpButton>
 ));
 SelectScrollUpButton.displayName = SelectPrimitive.ScrollUpButton.displayName;
+
 const SelectScrollDownButton = React.forwardRef<
   React.ElementRef<typeof SelectPrimitive.ScrollDownButton>,
   React.ComponentPropsWithoutRef<typeof SelectPrimitive.ScrollDownButton>
@@ -55,18 +71,17 @@ const SelectScrollDownButton = React.forwardRef<
     )}
     {...props}
   >
-    {" "}
-    <ChevronDown className="spiritual-icon" />{" "}
+    <ChevronDown className="spiritual-icon" />
   </SelectPrimitive.ScrollDownButton>
 ));
 SelectScrollDownButton.displayName =
   SelectPrimitive.ScrollDownButton.displayName;
+
 const SelectContent = React.forwardRef<
   React.ElementRef<typeof SelectPrimitive.Content>,
   React.ComponentPropsWithoutRef<typeof SelectPrimitive.Content>
 >(({ className, children, position = "popper", ...props }, ref) => (
   <SelectPrimitive.Portal>
-    {" "}
     <SelectPrimitive.Content
       ref={ref}
       className={cn(
@@ -78,8 +93,7 @@ const SelectContent = React.forwardRef<
       position={position}
       {...props}
     >
-      {" "}
-      <SelectScrollUpButton />{" "}
+      <SelectScrollUpButton />
       <SelectPrimitive.Viewport
         className={cn(
           "p-2",
@@ -87,14 +101,14 @@ const SelectContent = React.forwardRef<
             "h-[var(--radix-select-trigger-height)] w-full min-w-[var(--radix-select-trigger-width)]",
         )}
       >
-        {" "}
         {children}
-      </SelectPrimitive.Viewport>{" "}
-      <SelectScrollDownButton />{" "}
-    </SelectPrimitive.Content>{" "}
+      </SelectPrimitive.Viewport>
+      <SelectScrollDownButton />
+    </SelectPrimitive.Content>
   </SelectPrimitive.Portal>
 ));
 SelectContent.displayName = SelectPrimitive.Content.displayName;
+
 const SelectLabel = React.forwardRef<
   React.ElementRef<typeof SelectPrimitive.Label>,
   React.ComponentPropsWithoutRef<typeof SelectPrimitive.Label>
@@ -106,6 +120,7 @@ const SelectLabel = React.forwardRef<
   />
 ));
 SelectLabel.displayName = SelectPrimitive.Label.displayName;
+
 const SelectItem = React.forwardRef<
   React.ElementRef<typeof SelectPrimitive.Item>,
   React.ComponentPropsWithoutRef<typeof SelectPrimitive.Item>
@@ -118,18 +133,16 @@ const SelectItem = React.forwardRef<
     )}
     {...props}
   >
-    {" "}
     <span className="absolute left-3 flex spiritual-icon spiritual-icon-sm items-center justify-center">
-      {" "}
       <SelectPrimitive.ItemIndicator>
-        {" "}
-        <Check className="spiritual-icon" />{" "}
-      </SelectPrimitive.ItemIndicator>{" "}
-    </span>{" "}
-    <SelectPrimitive.ItemText>{children}</SelectPrimitive.ItemText>{" "}
+        <Check className="spiritual-icon" />
+      </SelectPrimitive.ItemIndicator>
+    </span>
+    <SelectPrimitive.ItemText>{children}</SelectPrimitive.ItemText>
   </SelectPrimitive.Item>
 ));
 SelectItem.displayName = SelectPrimitive.Item.displayName;
+
 const SelectSeparator = React.forwardRef<
   React.ElementRef<typeof SelectPrimitive.Separator>,
   React.ComponentPropsWithoutRef<typeof SelectPrimitive.Separator>
@@ -141,6 +154,7 @@ const SelectSeparator = React.forwardRef<
   />
 ));
 SelectSeparator.displayName = SelectPrimitive.Separator.displayName;
+
 export {
   Select,
   SelectGroup,
