@@ -112,11 +112,10 @@ const Dashboard = () => {
             {" "}
             <SyncStatusIndicator /> <NotificationCenter />{" "}
             <Button asChild variant="outline" className="gap-2">
-              {" "}
               <Link to="/recursos-clinicos">
                 <Library className="spiritual-icon" /> Biblioteca
-              </Link>{" "}
-            </Button>{" "}
+              </Link>
+            </Button>
             <Button
               variant="ghost"
               className="gap-2 text-muted-foreground hover:text-destructive transition-colors hidden md:flex"
@@ -126,11 +125,10 @@ const Dashboard = () => {
               <LogOut className="spiritual-icon" /> Sair{" "}
             </Button>{" "}
             <Button asChild className="gap-2 shadow-glow">
-              {" "}
               <Link to="/jornada">
                 <PlayCircle className="spiritual-icon" /> Continuar
-              </Link>{" "}
-            </Button>{" "}
+              </Link>
+            </Button>
           </div>{" "}
         </div>{" "}
         {/* Export and Schedule Row */}
@@ -392,12 +390,10 @@ const Dashboard = () => {
                         asChild
                         className="w-full md:w-auto"
                       >
-                        {" "}
                         <Link to="/curso-padh">
-                          {" "}
                           {isCompleted ? "Revisar" : "Continuar"}
-                          <ChevronRight className="spiritual-icon ml-1" />{" "}
-                        </Link>{" "}
+                          <ChevronRight className="spiritual-icon ml-1" />
+                        </Link>
                       </Button>
                     ) : (
                       <span className="text-xs font-medium text-muted-foreground px-3 py-1 bg-muted rounded-full w-full md:w-auto text-center">
