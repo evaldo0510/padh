@@ -73,10 +73,10 @@ const Dashboard = () => {
         {/* Welcome Header */}
         <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-6 mb-12">
           <div>
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/10 text-primary text-xs font-bold uppercase tracking-wider mb-4">
+            <Badge variant="spiritual" className="spiritual-chip-amber mb-4 gap-2 px-3 py-1">
               <LayoutDashboard className="h-3 w-3" />
               Painel do Aluno
-            </div>
+            </Badge>
             <h1 className="text-3xl md:text-4xl font-heading font-bold text-foreground">
               Sua Jornada <span className="text-primary italic">P.A.D.H.</span>
             </h1>
