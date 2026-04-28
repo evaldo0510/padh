@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { AlertCircle, Database, Settings, ShieldAlert, Wifi, WifiOff, RefreshCw, HelpCircle, CheckCircle2, Clock } from 'lucide-react';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
+import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { supabaseConfig } from '@/integrations/supabase/client';
 import { Link } from 'react-router-dom';
