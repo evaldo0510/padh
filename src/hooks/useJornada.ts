@@ -153,6 +153,25 @@ export const useJornada = () => {
     );
   };
 
+  const toggleFavorite = (id: string) => {
+    setJornada((prev) => {
+      const currentFavs = prev.favorites || [];
+      const isFav = currentFavs.includes(id);
+      const newFavs = isFav
+        ? currentFavs.filter((f) => f !== id)
+        : [...currentFavs, id];
+
+      return {
+        ...prev,
+        favorites: newFavs,
+      };
+    });
+  };
+
+  const isFavorite = (id: string) => {
+    return (jornada.favorites || []).includes(id);
+  };
+
   return {
     jornada,
     saveResponse,
