@@ -19,6 +19,14 @@ const LoginPage = () => {
   const location = useLocation();
   const from = (location.state as any)?.from || '/dashboard';
 
+  // If user landed on login from a journey route, treat it as the purchase flow
+  // and grant access to the main product upon successful authentication.
+  const grantIfNeeded = () => {
+    if (typeof from === 'string' && from.startsWith('/jornada')) {
+      grantPurchase(PRODUCT_PRISAO_INTERIOR);
+    }
+  };
+
   useEffect(() => {
     // Check if already logged in (simulated)
     const simulatedUser = localStorage.getItem('padh_simulated_user');
