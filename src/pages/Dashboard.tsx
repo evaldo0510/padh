@@ -246,7 +246,7 @@ const Dashboard = () => {
               >
                 <CreditCard className="w-4 h-4" /> Planos
               </Button>
-              {isAuthed ? (
+              {isAuthenticated ? (
                 <Button
                   variant="ghost"
                   size="sm"
@@ -266,7 +266,7 @@ const Dashboard = () => {
                   <ShoppingBag className="w-4 h-4" /> Entrar
                 </Button>
               )}
-              {isAuthed && (
+              {isAuthenticated && (
                 <Button variant="ghost" size="sm" className="gap-2 text-muted-foreground hover:text-destructive" onClick={handleLogout}>
                   <LogOut className="w-4 h-4" /> Sair
                 </Button>
