@@ -79,10 +79,10 @@ const ComboPADH = () => {
           }`}
         >
           <div className="max-w-4xl mx-auto">
-            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-primary/30 bg-primary/10 text-primary text-sm font-medium mb-8">
+            <Badge variant="spiritual" className="spiritual-chip-amber mb-8 gap-2 px-4 py-2 text-sm">
               <Gift className="h-4 w-4" />
               Pacote Exclusivo
-            </div>
+            </Badge>
             <h1 className="text-4xl md:text-6xl lg:text-7xl font-heading font-bold mb-6 text-foreground">
               Combo <span className="text-primary italic">P.A.D.H.</span>
             </h1>
