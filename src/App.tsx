@@ -78,6 +78,8 @@ const DiagnosticsPage = lazy(() => import("./pages/DiagnosticsPage"));
 const ConfigGuidePage = lazy(() => import("./pages/ConfigGuidePage"));
 const UiGuide = lazy(() => import("./pages/UiGuide"));
 const PrisaoInteriorVenda = lazy(() => import("./pages/venda/PrisaoInteriorVenda"));
+const PlanosPage = lazy(() => import("./pages/PlanosPage"));
+const MeuProduto = lazy(() => import("./pages/MeuProduto"));
 
 const queryClient = new QueryClient();
 
@@ -333,6 +335,24 @@ const AnimatedRoutes = () => {
             element={
               <PageTransition>
                 <PrisaoInteriorVenda />
+              </PageTransition>
+            }
+          />
+          <Route
+            path="/planos"
+            element={
+              <PageTransition>
+                <PlanosPage />
+              </PageTransition>
+            }
+          />
+          <Route
+            path="/meu-produto"
+            element={
+              <PageTransition>
+                <ProtectedRoute>
+                  <MeuProduto />
+                </ProtectedRoute>
               </PageTransition>
             }
           />
