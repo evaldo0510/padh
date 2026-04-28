@@ -55,6 +55,11 @@ const UiGuide = () => {
                 <div className="text-2xl font-bold">16px (px-4)</div>
                 <p className="text-xs text-muted-foreground">Padding horizontal consistente.</p>
               </div>
+              <div className="space-y-2">
+                <span className="text-sm font-semibold text-primary uppercase tracking-wider">Ícones</span>
+                <div className="text-2xl font-bold">Classe spiritual-icon</div>
+                <p className="text-xs text-muted-foreground">Padronização de tamanho e cor dos ícones.</p>
+              </div>
             </CardContent>
           </Card>
 
