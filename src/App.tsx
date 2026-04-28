@@ -399,6 +399,14 @@ const AnimatedRoutes = () => {
             }
           />
           <Route
+            path="/ui-guide"
+            element={
+              <PageTransition>
+                <UiGuide />
+              </PageTransition>
+            }
+          />
+          <Route
             path="*"
             element={
               <PageTransition>
