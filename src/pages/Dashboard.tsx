@@ -487,7 +487,7 @@ const Dashboard = () => {
   );
 };
 
-// ===== Episode History (with summary, filters & pagination) =====
+// ===== Episode History (with summary, filters, sort, pagination) =====
 interface EpisodeHistoryProps {
   navigate: ReturnType<typeof useNavigate>;
   jornada: ReturnType<typeof useJornada>["jornada"];
@@ -495,9 +495,21 @@ interface EpisodeHistoryProps {
   isAuthenticated: boolean;
   filter: FilterMode;
   setFilter: (f: FilterMode) => void;
+  sort: SortMode;
+  setSort: (s: SortMode) => void;
   visibleCount: number;
   setVisibleCount: (n: number) => void;
+  loading: boolean;
+  reloading: boolean;
+  onReload: () => void;
 }
+
+const STATUS_ORDER: Record<FilterMode, number> = {
+  in_progress: 0,
+  not_started: 1,
+  completed: 2,
+  all: 3,
+};
 
 const EpisodeHistorySection: React.FC<EpisodeHistoryProps> = ({
   navigate,
@@ -506,10 +518,15 @@ const EpisodeHistorySection: React.FC<EpisodeHistoryProps> = ({
   isAuthenticated,
   filter,
   setFilter,
+  sort,
+  setSort,
   visibleCount,
   setVisibleCount,
+  loading,
+  reloading,
+  onReload,
 }) => {
-  // Build a flat list of all episodes with their computed status
+  // Build a flat list of all episodes with their computed status + last activity
   const allEpisodes = useMemo(() => {
     const remoteByid = new Map<string, EpisodeProgressRow>();
     remoteProgress.forEach((r) => remoteByid.set(r.session_id, r));
@@ -537,7 +554,24 @@ const EpisodeHistorySection: React.FC<EpisodeHistoryProps> = ({
             ? "in_progress"
             : "not_started";
 
-        return { fase, fi, sessao: s, idx, status, done, inProgress, lastResp };
+        // Last activity: prefer remote completed_at/updated_at, then local response date
+        const lastActivity =
+          remote?.completed_at ||
+          remote?.updated_at ||
+          lastResp?.date ||
+          null;
+
+        return {
+          fase,
+          fi,
+          sessao: s,
+          idx,
+          status,
+          done,
+          inProgress,
+          lastResp,
+          lastActivity,
+        };
       }),
     );
   }, [jornada, remoteProgress]);
@@ -550,9 +584,24 @@ const EpisodeHistorySection: React.FC<EpisodeHistoryProps> = ({
     return { total, completed, in_progress, not_started };
   }, [allEpisodes]);
 
+  const sorted = useMemo(() => {
+    const list = [...allEpisodes];
+    if (sort === "status") {
+      list.sort((a, b) => STATUS_ORDER[a.status] - STATUS_ORDER[b.status]);
+    } else if (sort === "recent") {
+      list.sort((a, b) => {
+        if (!a.lastActivity && !b.lastActivity) return 0;
+        if (!a.lastActivity) return 1;
+        if (!b.lastActivity) return -1;
+        return a.lastActivity < b.lastActivity ? 1 : -1;
+      });
+    }
+    return list;
+  }, [allEpisodes, sort]);
+
   const filtered = useMemo(
-    () => (filter === "all" ? allEpisodes : allEpisodes.filter((e) => e.status === filter)),
-    [allEpisodes, filter],
+    () => (filter === "all" ? sorted : sorted.filter((e) => e.status === filter)),
+    [sorted, filter],
   );
 
   const visible = filtered.slice(0, visibleCount);
@@ -571,48 +620,96 @@ const EpisodeHistorySection: React.FC<EpisodeHistoryProps> = ({
         <h2 className="text-2xl md:text-3xl font-heading font-black flex items-center gap-3">
           <Clock className="w-6 h-6 text-primary" /> Histórico por Episódio
         </h2>
-        <Button asChild variant="link" className="text-primary">
-          <Link to="/meu-produto">
-            Ver tudo <ChevronRight className="w-4 h-4 ml-1" />
-          </Link>
-        </Button>
+        <div className="flex items-center gap-2">
+          <Button
+            variant="outline"
+            size="sm"
+            onClick={onReload}
+            disabled={reloading || loading}
+            className="gap-2"
+          >
+            <RefreshCw className={`w-4 h-4 ${reloading ? "animate-spin" : ""}`} />
+            Recarregar progresso
+          </Button>
+          <Button asChild variant="link" className="text-primary">
+            <Link to="/meu-produto">
+              Ver tudo <ChevronRight className="w-4 h-4 ml-1" />
+            </Link>
+          </Button>
+        </div>
       </div>
 
       {/* Summary cards */}
       <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mb-5">
-        <SummaryCard icon={<CheckCircle2 className="w-4 h-4" />} label="Concluídos" value={summary.completed} accent="primary" />
-        <SummaryCard icon={<CircleDashed className="w-4 h-4" />} label="Em andamento" value={summary.in_progress} accent="amber" />
-        <SummaryCard icon={<Circle className="w-4 h-4" />} label="Pendentes" value={summary.not_started} accent="muted" />
-        <SummaryCard icon={<Trophy className="w-4 h-4" />} label="Total" value={summary.total} accent="muted" />
+        {loading ? (
+          <>
+            <SummarySkeleton />
+            <SummarySkeleton />
+            <SummarySkeleton />
+            <SummarySkeleton />
+          </>
+        ) : (
+          <>
+            <SummaryCard icon={<CheckCircle2 className="w-4 h-4" />} label="Concluídos" value={summary.completed} accent="primary" />
+            <SummaryCard icon={<CircleDashed className="w-4 h-4" />} label="Em andamento" value={summary.in_progress} accent="amber" />
+            <SummaryCard icon={<Circle className="w-4 h-4" />} label="Pendentes" value={summary.not_started} accent="muted" />
+            <SummaryCard icon={<Trophy className="w-4 h-4" />} label="Total" value={summary.total} accent="muted" />
+          </>
+        )}
       </div>
 
-      {!isAuthenticated && (
+      {!isAuthenticated && !loading && (
         <div className="text-xs text-muted-foreground bg-muted/30 rounded-lg p-3 mb-4">
           Você está vendo dados locais. Faça login para sincronizar seu progresso na nuvem.
         </div>
       )}
 
-      {/* Filter chips */}
-      <div className="flex flex-wrap gap-2 mb-5">
-        {filters.map((f) => (
-          <button
-            key={f.key}
-            onClick={() => {
-              setFilter(f.key);
+      {/* Filter chips + Sort */}
+      <div className="flex flex-wrap items-center justify-between gap-3 mb-5">
+        <div className="flex flex-wrap gap-2">
+          {filters.map((f) => (
+            <button
+              key={f.key}
+              onClick={() => {
+                setFilter(f.key);
+                setVisibleCount(PAGE_SIZE);
+              }}
+              className={`px-3 py-1.5 rounded-full text-xs font-bold transition-colors border ${
+                filter === f.key
+                  ? "bg-primary text-primary-foreground border-primary"
+                  : "bg-card/50 text-muted-foreground border-white/5 hover:border-primary/30"
+              }`}
+            >
+              {f.label} <span className="opacity-70 ml-1">({f.count})</span>
+            </button>
+          ))}
+        </div>
+        <div className="flex items-center gap-2 text-xs">
+          <ArrowDownUp className="w-3.5 h-3.5 text-muted-foreground" />
+          <label htmlFor="ep-sort" className="text-muted-foreground">Ordenar:</label>
+          <select
+            id="ep-sort"
+            value={sort}
+            onChange={(e) => {
+              setSort(e.target.value as SortMode);
               setVisibleCount(PAGE_SIZE);
             }}
-            className={`px-3 py-1.5 rounded-full text-xs font-bold transition-colors border ${
-              filter === f.key
-                ? "bg-primary text-primary-foreground border-primary"
-                : "bg-card/50 text-muted-foreground border-white/5 hover:border-primary/30"
-            }`}
+            className="bg-card/50 border border-white/10 rounded-md px-2 py-1 text-foreground focus:outline-none focus:ring-1 focus:ring-primary"
           >
-            {f.label} <span className="opacity-70 ml-1">({f.count})</span>
-          </button>
-        ))}
+            <option value="default">Padrão (jornada)</option>
+            <option value="status">Por status</option>
+            <option value="recent">Última resposta</option>
+          </select>
+        </div>
       </div>
 
-      {filtered.length === 0 ? (
+      {loading ? (
+        <div className="grid gap-3">
+          {Array.from({ length: 4 }).map((_, i) => (
+            <EpisodeRowSkeleton key={i} />
+          ))}
+        </div>
+      ) : filtered.length === 0 ? (
         <div className="text-sm text-muted-foreground text-center py-8 bg-card/30 rounded-xl">
           Nenhum episódio neste filtro.
         </div>
@@ -659,7 +756,7 @@ const EpisodeHistorySection: React.FC<EpisodeHistoryProps> = ({
         </div>
       )}
 
-      {hasMore && (
+      {!loading && hasMore && (
         <div className="flex justify-center mt-6">
           <Button variant="outline" onClick={() => setVisibleCount(visibleCount + PAGE_SIZE)}>
             Carregar mais ({filtered.length - visible.length})
@@ -669,6 +766,24 @@ const EpisodeHistorySection: React.FC<EpisodeHistoryProps> = ({
     </section>
   );
 };
+
+const SummarySkeleton: React.FC = () => (
+  <div className="bg-card/50 border border-white/5 rounded-xl p-4 animate-pulse">
+    <div className="h-3 w-20 bg-muted/40 rounded" />
+    <div className="h-7 w-10 bg-muted/40 rounded mt-3" />
+  </div>
+);
+
+const EpisodeRowSkeleton: React.FC = () => (
+  <div className="bg-card/40 border border-white/5 rounded-xl p-4 flex items-start gap-4 animate-pulse">
+    <div className="w-10 h-7 bg-muted/40 rounded shrink-0" />
+    <div className="flex-1 space-y-2">
+      <div className="h-3 w-1/3 bg-muted/40 rounded" />
+      <div className="h-4 w-2/3 bg-muted/40 rounded" />
+      <div className="h-3 w-full bg-muted/30 rounded" />
+    </div>
+  </div>
+);
 
 const SummaryCard: React.FC<{
   icon: React.ReactNode;
