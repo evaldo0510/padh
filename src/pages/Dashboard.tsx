@@ -24,6 +24,9 @@ import {
   Circle,
   RefreshCw,
   ArrowDownUp,
+  Star,
+  Flame,
+  TrendingUp,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -47,9 +50,25 @@ type EpisodeProgressRow = {
   updated_at?: string | null;
 };
 
-type FilterMode = "all" | "completed" | "in_progress" | "not_started";
-type SortMode = "default" | "status" | "recent";
+type FilterMode = "all" | "completed" | "in_progress" | "not_started" | "favorites" | "recent";
+type SortMode = "default" | "status" | "recent" | "impact";
 const PAGE_SIZE = 8;
+const RECENT_WINDOW_MS = 24 * 60 * 60 * 1000;
+
+// Helper to find episode title by session id (used in toasts)
+const findSessionTitle = (sessionId: string): string => {
+  for (const fase of JORNADA_DATA) {
+    const s = fase.sessoes.find((x) => x.id === sessionId);
+    if (s) return s.titulo;
+  }
+  return sessionId;
+};
+
+const STATUS_LABEL: Record<string, string> = {
+  completed: "Concluído",
+  in_progress: "Em andamento",
+  not_started: "Não iniciado",
+};
 
 const Dashboard = () => {
   const { jornada } = useJornada();
@@ -70,7 +89,9 @@ const Dashboard = () => {
   const [totalRemote, setTotalRemote] = useState<number | null>(null);
   const [lastSyncAt, setLastSyncAt] = useState<Date | null>(null);
   const [recentlyChanged, setRecentlyChanged] = useState<Set<string>>(new Set());
+  const [favorites, setFavorites] = useState<Set<string>>(new Set());
   const prevSnapshotRef = React.useRef<Map<string, string>>(new Map());
+  const prevRowsRef = React.useRef<Map<string, EpisodeProgressRow>>(new Map());
 
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 50);
@@ -121,12 +142,23 @@ const Dashboard = () => {
           // Detect recently changed sessions (status diff vs previous snapshot)
           const newChanged = new Set<string>();
           const newSnap = new Map<string, string>();
+          const newRows = new Map<string, EpisodeProgressRow>();
           (data as EpisodeProgressRow[]).forEach((r) => {
             newSnap.set(r.session_id, r.status);
+            newRows.set(r.session_id, r);
             const prev = prevSnapshotRef.current.get(r.session_id);
-            if (prev !== undefined && prev !== r.status) newChanged.add(r.session_id);
+            if (prev !== undefined && prev !== r.status) {
+              newChanged.add(r.session_id);
+              // Toast when status changes via realtime refresh (skip first load)
+              if (!silent) return;
+              toast.success(
+                `${findSessionTitle(r.session_id)} → ${STATUS_LABEL[r.status] ?? r.status}`,
+                { id: `ep-${r.session_id}`, duration: 3500 },
+              );
+            }
           });
           prevSnapshotRef.current = newSnap;
+          prevRowsRef.current = newRows;
           if (newChanged.size > 0) {
             setRecentlyChanged((prev) => {
               const next = new Set(prev);
@@ -180,6 +212,82 @@ const Dashboard = () => {
       supabase.removeChannel(channel);
     };
   }, [isAuthenticated, user, loadProgress]);
+
+  // Favorites: load + realtime sync
+  const loadFavorites = React.useCallback(async () => {
+    if (!isAuthenticated || !user) {
+      setFavorites(new Set());
+      return;
+    }
+    const { data, error } = await supabase
+      .from("episode_favorites")
+      .select("session_id")
+      .eq("user_id", user.id);
+    if (!error && data) {
+      setFavorites(new Set(data.map((d: any) => d.session_id as string)));
+    }
+  }, [isAuthenticated, user]);
+
+  useEffect(() => {
+    loadFavorites();
+  }, [loadFavorites]);
+
+  useEffect(() => {
+    if (!isAuthenticated || !user) return;
+    const channel = supabase
+      .channel(`dashboard-favorites-${user.id}`)
+      .on(
+        "postgres_changes",
+        { event: "*", schema: "public", table: "episode_favorites", filter: `user_id=eq.${user.id}` },
+        () => loadFavorites(),
+      )
+      .subscribe();
+    return () => {
+      supabase.removeChannel(channel);
+    };
+  }, [isAuthenticated, user, loadFavorites]);
+
+  const toggleFavorite = React.useCallback(
+    async (sessionId: string) => {
+      if (!isAuthenticated || !user) {
+        toast.error("Faça login para salvar favoritos.");
+        return;
+      }
+      const isFav = favorites.has(sessionId);
+      // optimistic
+      setFavorites((prev) => {
+        const next = new Set(prev);
+        if (isFav) next.delete(sessionId);
+        else next.add(sessionId);
+        return next;
+      });
+      try {
+        if (isFav) {
+          const { error } = await supabase
+            .from("episode_favorites")
+            .delete()
+            .eq("user_id", user.id)
+            .eq("session_id", sessionId);
+          if (error) throw error;
+        } else {
+          const { error } = await supabase
+            .from("episode_favorites")
+            .insert({ user_id: user.id, session_id: sessionId });
+          if (error) throw error;
+        }
+      } catch (e: any) {
+        // rollback
+        setFavorites((prev) => {
+          const next = new Set(prev);
+          if (isFav) next.add(sessionId);
+          else next.delete(sessionId);
+          return next;
+        });
+        toast.error("Não foi possível atualizar favorito.");
+      }
+    },
+    [favorites, isAuthenticated, user],
+  );
 
   const handleReload = async () => {
     setReloading(true);
@@ -477,6 +585,13 @@ const Dashboard = () => {
              ))}
           </NetflixCarousel>
 
+          {/* Ranking — episodes with biggest recent progress */}
+          <RecentImpactRanking
+            remoteProgress={remoteProgress}
+            navigate={navigate}
+            isAuthenticated={isAuthenticated}
+          />
+
           {/* Episode History — per-episode status & last response */}
           <EpisodeHistorySection
             navigate={navigate}
@@ -496,8 +611,9 @@ const Dashboard = () => {
             lastSyncAt={lastSyncAt}
             recentlyChanged={recentlyChanged}
             totalRemote={totalRemote}
+            favorites={favorites}
+            onToggleFavorite={toggleFavorite}
           />
-
           {/* User Stats & Info Section (Bottom) */}
           <section className="container mx-auto px-6 md:px-12 py-12 grid grid-cols-1 md:grid-cols-3 gap-8">
              <div className="space-y-4">
@@ -563,6 +679,8 @@ interface EpisodeHistoryProps {
   lastSyncAt: Date | null;
   recentlyChanged: Set<string>;
   totalRemote: number | null;
+  favorites: Set<string>;
+  onToggleFavorite: (sessionId: string) => void;
 }
 
 const STATUS_ORDER: Record<FilterMode, number> = {
@@ -570,6 +688,8 @@ const STATUS_ORDER: Record<FilterMode, number> = {
   not_started: 1,
   completed: 2,
   all: 3,
+  favorites: 4,
+  recent: 5,
 };
 
 const useRelativeTime = (date: Date | null) => {
@@ -606,6 +726,8 @@ const EpisodeHistorySection: React.FC<EpisodeHistoryProps> = ({
   lastSyncAt,
   recentlyChanged,
   totalRemote,
+  favorites,
+  onToggleFavorite,
 }) => {
   const relative = useRelativeTime(lastSyncAt);
   const useServerPagination = filter === "completed" || filter === "in_progress";
@@ -679,14 +801,36 @@ const EpisodeHistorySection: React.FC<EpisodeHistoryProps> = ({
         if (!b.lastActivity) return -1;
         return a.lastActivity < b.lastActivity ? 1 : -1;
       });
+    } else if (sort === "impact") {
+      // Highest "impact": completed > in_progress, with most recent activity weighted higher
+      const score = (e: typeof list[number]) => {
+        const base = e.status === "completed" ? 100 : e.status === "in_progress" ? 50 : 0;
+        if (!e.lastActivity) return base;
+        const ageH = Math.max(1, (Date.now() - new Date(e.lastActivity).getTime()) / 3_600_000);
+        return base + Math.max(0, 50 - ageH); // newer activity = bigger boost
+      };
+      list.sort((a, b) => score(b) - score(a));
     }
     return list;
   }, [allEpisodes, sort]);
 
-  const filtered = useMemo(
-    () => (filter === "all" ? sorted : sorted.filter((e) => e.status === filter)),
-    [sorted, filter],
+  const recentCount = useMemo(
+    () =>
+      allEpisodes.filter(
+        (e) => e.lastActivity && Date.now() - new Date(e.lastActivity).getTime() <= RECENT_WINDOW_MS,
+      ).length,
+    [allEpisodes],
   );
+
+  const filtered = useMemo(() => {
+    if (filter === "all") return sorted;
+    if (filter === "favorites") return sorted.filter((e) => favorites.has(e.sessao.id));
+    if (filter === "recent")
+      return sorted.filter(
+        (e) => e.lastActivity && Date.now() - new Date(e.lastActivity).getTime() <= RECENT_WINDOW_MS,
+      );
+    return sorted.filter((e) => e.status === filter);
+  }, [sorted, filter, favorites]);
 
   const visible = filtered.slice(0, visibleCount);
   // Server-side pagination: more rows exist on the server
@@ -702,6 +846,8 @@ const EpisodeHistorySection: React.FC<EpisodeHistoryProps> = ({
     { key: "completed", label: "Concluídos", count: summary.completed },
     { key: "in_progress", label: "Em andamento", count: summary.in_progress },
     { key: "not_started", label: "Pendentes", count: summary.not_started },
+    { key: "recent", label: "Recentes (24h)", count: recentCount },
+    { key: "favorites", label: "Favoritos", count: favorites.size },
   ];
 
   return (
@@ -804,6 +950,7 @@ const EpisodeHistorySection: React.FC<EpisodeHistoryProps> = ({
             <option value="default">Padrão (jornada)</option>
             <option value="status">Por status</option>
             <option value="recent">Última resposta</option>
+            <option value="impact">Maior impacto</option>
           </select>
         </div>
       </div>
@@ -822,6 +969,7 @@ const EpisodeHistorySection: React.FC<EpisodeHistoryProps> = ({
         <div className="grid gap-3">
           {visible.map(({ fase, sessao, idx, done, inProgress, lastResp }) => {
             const highlighted = recentlyChanged.has(sessao.id);
+            const isFav = favorites.has(sessao.id);
             return (
               <div
                 key={`${fase.id}-${sessao.id}`}
@@ -866,6 +1014,22 @@ const EpisodeHistorySection: React.FC<EpisodeHistoryProps> = ({
                     </p>
                   )}
                 </div>
+                <button
+                  type="button"
+                  aria-label={isFav ? "Remover dos favoritos" : "Adicionar aos favoritos"}
+                  title={isFav ? "Remover dos favoritos" : "Adicionar aos favoritos"}
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    onToggleFavorite(sessao.id);
+                  }}
+                  className={`shrink-0 mt-1 p-1.5 rounded-md transition-colors ${
+                    isFav
+                      ? "text-amber-400 hover:text-amber-300"
+                      : "text-muted-foreground hover:text-amber-400"
+                  }`}
+                >
+                  <Star className={`w-4 h-4 ${isFav ? "fill-current" : ""}`} />
+                </button>
                 <ChevronRight className="w-5 h-5 text-muted-foreground shrink-0 mt-1" />
               </div>
             );
@@ -884,6 +1048,81 @@ const EpisodeHistorySection: React.FC<EpisodeHistoryProps> = ({
           </Button>
         </div>
       )}
+    </section>
+  );
+};
+
+// ===== Recent Impact Ranking =====
+const RecentImpactRanking: React.FC<{
+  remoteProgress: EpisodeProgressRow[];
+  navigate: ReturnType<typeof useNavigate>;
+  isAuthenticated: boolean;
+}> = ({ remoteProgress, navigate, isAuthenticated }) => {
+  const ranked = useMemo(() => {
+    const titleOf = (id: string) => findSessionTitle(id);
+    const phaseOf = (id: string) => {
+      const fase = JORNADA_DATA.find((f) => f.sessoes.some((s) => s.id === id));
+      return fase?.titulo ?? "";
+    };
+    // Score: completed > in_progress, recency boost (smaller hour delta = higher score)
+    const score = (r: EpisodeProgressRow) => {
+      const base = r.status === "completed" ? 100 : r.status === "in_progress" ? 50 : 10;
+      const ref = r.completed_at || r.updated_at;
+      if (!ref) return base;
+      const ageH = Math.max(0.1, (Date.now() - new Date(ref).getTime()) / 3_600_000);
+      return base + Math.max(0, 72 - ageH);
+    };
+    return [...remoteProgress]
+      .map((r) => ({ row: r, score: score(r), title: titleOf(r.session_id), phase: phaseOf(r.session_id) }))
+      .sort((a, b) => b.score - a.score)
+      .slice(0, 5);
+  }, [remoteProgress]);
+
+  if (!isAuthenticated || ranked.length === 0) return null;
+
+  return (
+    <section className="container mx-auto px-6 md:px-12 py-4">
+      <div className="flex items-center justify-between mb-3">
+        <h2 className="text-xl md:text-2xl font-heading font-black flex items-center gap-2">
+          <Flame className="w-5 h-5 text-amber-400" /> Maior avanço recente
+        </h2>
+        <span className="text-[11px] text-muted-foreground inline-flex items-center gap-1">
+          <TrendingUp className="w-3 h-3" /> Ordenado por impacto
+        </span>
+      </div>
+      <div className="grid gap-2">
+        {ranked.map(({ row, title, phase, score }, i) => {
+          const sessionId = row.session_id;
+          const fase = JORNADA_DATA.find((f) => f.sessoes.some((s) => s.id === sessionId));
+          return (
+            <button
+              key={sessionId}
+              onClick={() => fase && navigate(`/jornada/${fase.id}/${sessionId}`)}
+              className="w-full text-left bg-card/40 hover:bg-card border border-white/5 hover:border-amber-400/30 rounded-xl p-3 flex items-center gap-3 transition-colors"
+            >
+              <div className="w-8 h-8 rounded-full bg-amber-400/10 text-amber-400 font-black flex items-center justify-center text-sm shrink-0">
+                {i + 1}
+              </div>
+              <div className="flex-1 min-w-0">
+                <div className="text-[10px] uppercase tracking-wider text-muted-foreground">{phase}</div>
+                <div className="font-bold truncate">{title}</div>
+              </div>
+              <Badge
+                className={
+                  row.status === "completed"
+                    ? "bg-primary/15 text-primary border-primary/30 text-[10px]"
+                    : "bg-amber-400/15 text-amber-400 border-amber-400/30 text-[10px]"
+                }
+              >
+                {STATUS_LABEL[row.status] ?? row.status}
+              </Badge>
+              <span className="text-xs text-muted-foreground tabular-nums hidden sm:inline">
+                {Math.round(score)} pts
+              </span>
+            </button>
+          );
+        })}
+      </div>
     </section>
   );
 };
