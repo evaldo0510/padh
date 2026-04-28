@@ -22,6 +22,9 @@ import {
   Lock,
   CircleDashed,
   Circle,
+  RefreshCw,
+  ArrowDownUp,
+} from "lucide-react";
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -42,6 +45,7 @@ type EpisodeProgressRow = {
   phase_id: string;
   status: string;
   completed_at: string | null;
+  updated_at?: string | null;
 };
 
 type FilterMode = "all" | "completed" | "in_progress" | "not_started";
