@@ -1,8 +1,9 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Navigate, useLocation } from "react-router-dom";
 import { useAuth } from "@/hooks/useAuth";
 import { usePurchase } from "@/hooks/usePurchase";
 import { PageSkeleton } from "@/components/ui/page-skeleton";
+import { toast } from "sonner";
 
 interface ProtectedRouteProps {
   children: React.ReactNode;
@@ -10,6 +11,8 @@ interface ProtectedRouteProps {
   requireProduct?: string;
   redirectTo?: string;
   salesRedirect?: string;
+  /** Custom message shown when redirecting unauthenticated users */
+  authMessage?: string;
 }
 
 const ProductGate: React.FC<{
@@ -23,11 +26,23 @@ const ProductGate: React.FC<{
   return <>{children}</>;
 };
 
+const AuthRedirect: React.FC<{ to: string; from: string; message: string }> = ({
+  to,
+  from,
+  message,
+}) => {
+  useEffect(() => {
+    toast.error(message, { id: "auth-required" });
+  }, [message]);
+  return <Navigate to={to} replace state={{ from, message }} />;
+};
+
 const ProtectedRoute: React.FC<ProtectedRouteProps> = ({
   children,
   requireProduct,
   redirectTo = "/login",
   salesRedirect = "/prisao-interior",
+  authMessage = "Você precisa estar logado para acessar essa área.",
 }) => {
   const { isAuthenticated, loading } = useAuth();
   const location = useLocation();
@@ -36,10 +51,10 @@ const ProtectedRoute: React.FC<ProtectedRouteProps> = ({
 
   if (!isAuthenticated) {
     return (
-      <Navigate
+      <AuthRedirect
         to={redirectTo}
-        replace
-        state={{ from: location.pathname + location.search }}
+        from={location.pathname + location.search}
+        message={authMessage}
       />
     );
   }
