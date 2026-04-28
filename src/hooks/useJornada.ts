@@ -1,8 +1,8 @@
-import { useState, useEffect } from 'react';
-import { toast } from 'sonner';
-import { supabase, hasSupabaseConfig } from '@/integrations/supabase/client';
-import { useOfflineMode } from './useOfflineMode';
-import { reportSyncStatus } from './useSyncStatus';
+import { useState, useEffect } from "react";
+import { toast } from "sonner";
+import { supabase, hasSupabaseConfig } from "@/integrations/supabase/client";
+import { useOfflineMode } from "./useOfflineMode";
+import { reportSyncStatus } from "./useSyncStatus";
 
 export interface RespostaExercicio {
   exerciseId: string;
@@ -18,10 +18,10 @@ export interface JornadaProgress {
   last_updated?: string;
 }
 
-const STORAGE_KEY = 'padh_jornada_progress';
+const STORAGE_KEY = "padh_jornada_progress";
 
 const INITIAL_JORNADA: JornadaProgress = {
-  currentPhaseId: 'fase-1',
+  currentPhaseId: "fase-1",
   completedExercises: [],
   completedSessions: [],
   responses: [],
@@ -40,15 +40,17 @@ export const useJornada = () => {
   useEffect(() => {
     const fetchProgress = async () => {
       if (isOffline || !hasSupabaseConfig()) return;
-      
-      const { data: { user } } = await supabase.auth.getUser();
+
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
       if (!user) return;
 
       setIsSyncing(true);
       const { data, error } = await supabase
-        .from('user_progress')
-        .select('progress_data')
-        .eq('user_id', user.id)
+        .from("user_progress")
+        .select("progress_data")
+        .eq("user_id", user.id)
         .single();
 
       if (data && !error) {
@@ -63,36 +65,36 @@ export const useJornada = () => {
   // Save to LocalStorage and DB
   useEffect(() => {
     localStorage.setItem(STORAGE_KEY, JSON.stringify(jornada));
-    
+
     // Notify about data change for sync indicator
-    window.dispatchEvent(new Event('padh_data_change'));
-    
+    window.dispatchEvent(new Event("padh_data_change"));
+
     const syncToDB = async () => {
       if (isOffline || !hasSupabaseConfig()) {
-        reportSyncStatus('blocked');
-        return;
-      }
-      
-      const { data: { user } } = await supabase.auth.getUser();
-      if (!user) {
-        reportSyncStatus('blocked');
+        reportSyncStatus("blocked");
         return;
       }
 
-      reportSyncStatus('pending');
-      const { error } = await supabase
-        .from('user_progress')
-        .upsert({ 
-          user_id: user.id, 
-          progress_data: jornada,
-          updated_at: new Date().toISOString()
-        });
-      
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
+      if (!user) {
+        reportSyncStatus("blocked");
+        return;
+      }
+
+      reportSyncStatus("pending");
+      const { error } = await supabase.from("user_progress").upsert({
+        user_id: user.id,
+        progress_data: jornada,
+        updated_at: new Date().toISOString(),
+      });
+
       if (error) {
         console.error("Sync error:", error);
-        reportSyncStatus('error');
+        reportSyncStatus("error");
       } else {
-        reportSyncStatus('ok');
+        reportSyncStatus("ok");
       }
     };
 
@@ -100,8 +102,10 @@ export const useJornada = () => {
   }, [jornada, isOffline]);
 
   const saveResponse = (exerciseId: string, response: string) => {
-    setJornada(prev => {
-      const otherResponses = prev.responses.filter(r => r.exerciseId !== exerciseId);
+    setJornada((prev) => {
+      const otherResponses = prev.responses.filter(
+        (r) => r.exerciseId !== exerciseId,
+      );
       const newResponse = {
         exerciseId,
         response,
@@ -111,38 +115,40 @@ export const useJornada = () => {
       return {
         ...prev,
         responses: [...otherResponses, newResponse],
-        completedExercises: prev.completedExercises.includes(exerciseId) 
-          ? prev.completedExercises 
+        completedExercises: prev.completedExercises.includes(exerciseId)
+          ? prev.completedExercises
           : [...prev.completedExercises, exerciseId],
       };
     });
-    
+
     toast.success("Resposta salva", {
-      description: "Seu progresso foi sincronizado."
+      description: "Seu progresso foi sincronizado.",
     });
   };
 
   const completeSession = (sessionId: string) => {
     if (!jornada.completedSessions.includes(sessionId)) {
-      setJornada(prev => ({
+      setJornada((prev) => ({
         ...prev,
         completedSessions: [...prev.completedSessions, sessionId],
       }));
       toast.success("Sessão Concluída!", {
-        description: "Mais um passo na sua jornada."
+        description: "Mais um passo na sua jornada.",
       });
     }
   };
 
   const setPhase = (phaseId: string) => {
-    setJornada(prev => ({
+    setJornada((prev) => ({
       ...prev,
       currentPhaseId: phaseId,
     }));
   };
 
   const getResponse = (exerciseId: string) => {
-    return jornada.responses.find(r => r.exerciseId === exerciseId)?.response || '';
+    return (
+      jornada.responses.find((r) => r.exerciseId === exerciseId)?.response || ""
+    );
   };
 
   return {
@@ -152,6 +158,6 @@ export const useJornada = () => {
     setPhase,
     getResponse,
     isSyncing,
-    hasConfig: hasSupabaseConfig()
+    hasConfig: hasSupabaseConfig(),
   };
 };

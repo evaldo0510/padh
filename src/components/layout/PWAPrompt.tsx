@@ -1,1 +1,46 @@
-import { useRegisterSW } from 'virtual:pwa-register/react'; import { Button } from"@/components/ui/button"; import { toast } from"sonner"; import { useEffect } from 'react'; import { RefreshCw } from 'lucide-react'; const PWAPrompt = () => { const { offlineReady: [offlineReady, setOfflineReady], needRefresh: [needRefresh, setNeedRefresh], updateServiceWorker, } = useRegisterSW({ onRegistered(r) { console.log('SW Registered: ' + r); }, onRegisterError(error) { console.log('SW registration error', error); }, }); const close = () => { setOfflineReady(false); setNeedRefresh(false); }; useEffect(() => { if (offlineReady) { toast.success("App pronto para uso offline!", { duration: 5000, }); } }, [offlineReady]); useEffect(() => { if (needRefresh) { toast("Nova versão disponível!", { description:"Clique em atualizar para obter as melhorias mais recentes.", action: { label:"Atualizar", onClick: () => updateServiceWorker(true), }, duration: Infinity, icon: <RefreshCw className="spiritual-icon animate-spin-slow" />, }); } }, [needRefresh, updateServiceWorker]); return null; }; export default PWAPrompt; 
+import { useRegisterSW } from "virtual:pwa-register/react";
+import { Button } from "@/components/ui/button";
+import { toast } from "sonner";
+import { useEffect } from "react";
+import { RefreshCw } from "lucide-react";
+const PWAPrompt = () => {
+  const {
+    offlineReady: [offlineReady, setOfflineReady],
+    needRefresh: [needRefresh, setNeedRefresh],
+    updateServiceWorker,
+  } = useRegisterSW({
+    onRegistered(r) {
+      console.log("SW Registered: " + r);
+    },
+    onRegisterError(error) {
+      console.log("SW registration error", error);
+    },
+  });
+  const close = () => {
+    setOfflineReady(false);
+    setNeedRefresh(false);
+  };
+  useEffect(() => {
+    if (offlineReady) {
+      toast.success("App pronto para uso offline!", {
+        duration: 5000,
+      });
+    }
+  }, [offlineReady]);
+  useEffect(() => {
+    if (needRefresh) {
+      toast("Nova versão disponível!", {
+        description:
+          "Clique em atualizar para obter as melhorias mais recentes.",
+        action: {
+          label: "Atualizar",
+          onClick: () => updateServiceWorker(true),
+        },
+        duration: Infinity,
+        icon: <RefreshCw className="spiritual-icon animate-spin-slow" />,
+      });
+    }
+  }, [needRefresh, updateServiceWorker]);
+  return null;
+};
+export default PWAPrompt;

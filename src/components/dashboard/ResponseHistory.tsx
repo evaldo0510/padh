@@ -1,8 +1,8 @@
-import React from 'react';
-import { useJornada } from '@/hooks/useJornada';
-import { JORNADA_DATA } from '@/lib/jornada-data';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { History, Calendar } from 'lucide-react';
+import React from "react";
+import { useJornada } from "@/hooks/useJornada";
+import { JORNADA_DATA } from "@/lib/jornada-data";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { History, Calendar } from "lucide-react";
 
 const ResponseHistory = () => {
   const { jornada } = useJornada();
@@ -16,30 +16,36 @@ const ResponseHistory = () => {
         Histórico de Reflexões
       </h2>
       <div className="space-y-4">
-        {jornada.responses.slice().reverse().map((resp, i) => {
-          // Find exercise details
-          const details = JORNADA_DATA.flatMap(f => f.sessoes.flatMap(s => s.exercicios))
-            .find(ex => ex.id === resp.exerciseId);
+        {jornada.responses
+          .slice()
+          .reverse()
+          .map((resp, i) => {
+            // Find exercise details
+            const details = JORNADA_DATA.flatMap((f) =>
+              f.sessoes.flatMap((s) => s.exercicios),
+            ).find((ex) => ex.id === resp.exerciseId);
 
-          return (
-            <Card key={i} className="border-primary/5 bg-card/50">
-              <CardHeader className="pb-2">
-                <div className="flex justify-between items-start">
-                  <CardTitle className="text-sm font-heading">{details?.titulo || 'Exercício'}</CardTitle>
-                  <span className="text-[9px] text-muted-foreground flex items-center gap-1">
-                    <Calendar className="h-2 w-2" />
-                    {new Date(resp.date).toLocaleDateString()}
-                  </span>
-                </div>
-              </CardHeader>
-              <CardContent>
-                <p className="text-xs text-muted-foreground italic line-clamp-3">
-                  "{resp.response}"
-                </p>
-              </CardContent>
-            </Card>
-          );
-        })}
+            return (
+              <Card key={i} className="border-primary/5 bg-card/50">
+                <CardHeader className="pb-2">
+                  <div className="flex justify-between items-start">
+                    <CardTitle className="text-sm font-heading">
+                      {details?.titulo || "Exercício"}
+                    </CardTitle>
+                    <span className="text-[9px] text-muted-foreground flex items-center gap-1">
+                      <Calendar className="h-2 w-2" />
+                      {new Date(resp.date).toLocaleDateString()}
+                    </span>
+                  </div>
+                </CardHeader>
+                <CardContent>
+                  <p className="text-xs text-muted-foreground italic line-clamp-3">
+                    "{resp.response}"
+                  </p>
+                </CardContent>
+              </Card>
+            );
+          })}
       </div>
     </div>
   );

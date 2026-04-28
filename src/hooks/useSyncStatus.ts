@@ -1,18 +1,18 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect } from "react";
 
-export type SyncState = 'ok' | 'pending' | 'error' | 'blocked';
+export type SyncState = "ok" | "pending" | "error" | "blocked";
 
-const SYNC_EVENT = 'padh_sync_status_change';
-const SYNC_KEY = 'padh_last_sync_status';
+const SYNC_EVENT = "padh_sync_status_change";
+const SYNC_KEY = "padh_last_sync_status";
 
 export const useSyncStatus = () => {
   const [status, setStatus] = useState<SyncState>(() => {
-    return (localStorage.getItem(SYNC_KEY) as SyncState) || 'ok';
+    return (localStorage.getItem(SYNC_KEY) as SyncState) || "ok";
   });
 
   useEffect(() => {
     const handleSyncChange = () => {
-      setStatus((localStorage.getItem(SYNC_KEY) as SyncState) || 'ok');
+      setStatus((localStorage.getItem(SYNC_KEY) as SyncState) || "ok");
     };
 
     window.addEventListener(SYNC_EVENT, handleSyncChange);

@@ -1,1 +1,762 @@
-import React, { useState } from 'react'; import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'; import { Button } from '@/components/ui/button'; import { Input } from '@/components/ui/input'; import { Textarea } from '@/components/ui/textarea'; import { Badge } from '@/components/ui/badge'; import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'; import { Feather, PlusCircle, BookOpen, Heart, Share2, Calendar, User, Copy, Download } from 'lucide-react'; import { toast } from 'sonner'; interface Poem { id: string; title: string; content: string; author: string; date: string; category: 'faith' | 'hope' | 'love' | 'reflection'; } const samplePoems: Poem[] = [ { id: '1', title: 'Deixe sua luz brilhar', content: `Deixe sua luz brilhar você precisará acender o que está te impedindo terá que logo resolver.`, author: 'Evaldo Poeta', date: '2024-05-10', category: 'hope' }, { id: '2', title: 'Nunca Pare de Lutar', content: `Alguém me tocou... Senti uma força sair, Manifestei minha Palavra — A mulher hemorroísa foi curada por não desistir. Encontrar-se com Jesus é um marco para nos salvar, É sair do nosso mundo e do pecado se libertar. Deus nos escolheu, neste mundo nos colocou, Preparou em nossa mãe, que com amor nos cuidou. Por amor à humanidade, Jesus morreu e ressuscitou. Não queira controlar a graça do Senhor — Se entregue em oração, Ele já manifestou! A fonte de salvação, Espere firme, meu irmão! Éramos escravos do pecado, Mas tudo muda com a decisão. Nunca perca a esperança, Guarde Jesus no coração. Pare de reclamar agora, Busque firme a salvação. Faça como a mulher que tocou o Senhor, Nunca pare de lutar com fé e fervor. É certeza: um dia, iremos festejar Com o Salvador — no céu — a nos esperar.`, author: 'Evaldo Poeta', date: '2024-05-12', category: 'faith' }, { id: '3', title: 'A Voz do Céu', content: `As portas do céu se abriram, Ouvi a voz ressoar. Como o som da trombeta, O Senhor veio falar. Bendito e louvado seja, Ó Deus dos nossos pais! Que Teu nome seja eterno, Glorioso pelos séculos a mais. Em justiça e retidão, Sempre age o Criador. Na oração, enviou o anjo, Trazendo ao fogo o Seu calor.`, author: 'Evaldo Poeta', date: '2024-05-14', category: 'faith' }, { id: '4', title: 'Sinta o Fogo que Queima', content: `Ele está confirmando, Derramando o Seu amor. Escute bem esta voz, Pois quem fala é o Senhor. Entregue-se a Ele, Todo dia, sem temer. Ouça a voz que te chama, Sinta Deus em teu viver. O medo tenta impedir, Mas não pode te parar. O fogo segue ardendo, E jamais deixará de queimar.`, author: 'Evaldo Poeta', date: '2024-05-15', category: 'faith' }, { id: '5', title: 'Ouro e Incenso', content: `Deus nos reuniu hoje Para algo te falar. Filho, eu te amo, Pare um pouco para escutar. Eu vim ao mundo em amor, Para a liberdade dar. Deixa as prisões para trás, Venha agora me encontrar. Foram sábios, obedientes, E no sonho Deus falou. Ofertaram ao Menino Ouro e incenso em Seu louvor.`, author: 'Evaldo Poeta', date: '2024-05-18', category: 'love' }, { id: '6', title: 'A Paz Que Você Procura', content: `A paz que você procura está no silêncio que você não faz. Na esperança do perdão, gloriamos na presença do Senhor. Ao ouvir a voz, sinto a paz brotar no interior. A palavra ressoa suave, quase que não percebo o amor. Vejo uma luz brilhando, me mostrando o que não via dentro de mim. Ah, será assim que eu vou viver a partir dessa experiência interior?`, author: 'Evaldo Poeta', date: '2024-05-20', category: 'faith' }, { id: '7', title: 'O Controle da Alma', content: `Este é o controle da alma, no profundo do teu ser, O bálsamo que acalma, já parou pra perceber? Vim curar suas feridas, pois filho amado és, Entreguei por ti minha vida, sempre estou de pé. Recebe agora a cura, que Eu trouxe pra você, Abre o coração em graça, está na hora de crer. Faça agora a sua parte, confie e vá além, Pois o milagre acontece, quando a fé diz: Amém!`, author: 'Evaldo Poeta', date: '2024-05-22', category: 'reflection' }, { id: '8', title: 'Despertar para a Luz', content: `Desperta agora, meu amigo, ouve a voz do Senhor. Levanta-te dentre os mortos, que Cristo já te iluminou. Ele te chama para a luz, para a ação e o amor, Pois a vontade d'Ele é que conheças o Senhor. Você é filho da luz, das trevas pode sair; Aceite a graça divina, deixe-se conduzir. O Espírito te guia, mostrando o caminho a trilhar; Siga suas orientações, não deixe de escutar.`, author: 'Evaldo Poeta', date: '2024-06-05', category: 'love' }, { id: '9', title: 'A Bússola do Cristão', content: `A bússola do cristão É a Palavra do Senhor, Direciona o seu caminho Mesmo em meio à dor. Paulo nos exorta sempre Com coragem pra viver: A esperança está em Cristo Se você quiser vencer. Alegrai-vos, todo o tempo, No Espírito do Senhor. Não se entregue à tristeza, Se entregue ao Criador.`, author: 'Evaldo Poeta', date: '2024-06-10', category: 'love' }, { id: '10', title: 'Comece a Levantar', content: `Neste dia de alegria, A Jesus Cristo é de altar. De repente, brota uma força, E começamos a cantar. Lança fora a tristeza, Ansiedade, depressão. Sinta a chuva, desta água, Se coloque em oração. Abra o seu coração, Deixa a graça e a luz entrar. Sinto com a Virgem Maria, Do Espírito Santo clamar.`, author: 'Evaldo Poeta', date: '2024-06-12', category: 'hope' }, { id: '11', title: 'Pura Graça', content: `Jesus, fonte de toda graça, Vivo Sua paz que me abraça, Que se derrama sobre mim. Sua misericórdia sem fim, Todos os dias me alcança, Trazendo luz e esperança, Recarregando minha energia Com o Teu Espírito, dia após dia. Na minha alma, ouço o Teu chamado, Que vem suave, ao meu lado, Ajudando-me a me entender, E meu coração, a aquecer.`, author: 'Evaldo Poeta', date: '2024-06-13', category: 'reflection' }, { id: '12', title: 'Sopro de Paz', content: `Soprou sobre nós teu Espírito, a paz com ele chegou. todo medo se desfez, a dúvida se dissipou. o Espírito desceu, trouxe paz neste lugar. como o Pai me enviou, eu vos envio a anunciar. acalme seu coração, toda manhã, por favor, pare agora, sinta o ar, comece a orar com o Senhor.`, author: 'Evaldo Poeta', date: '2024-06-14', category: 'hope' }, { id: '13', title: 'Pensamento Libertador', content: `Acredite ou não, saiba que você não é obrigado a nada. Não é porque as pessoas te pedem algo Que você deve atender sem questionar. É necessário aprender a indagar, fazer as perguntas certas. O pensamento liberta. Até quando vai permanecer preso sem pensar Ou acorrentado ao pensamento sem buscar a liberdade? Nosso pensamento deve estar bem alinhado Com aquilo que desejamos ou pretendemos realizar. Devemos pensar com o pensamento Daquele que nos deu a capacidade de pensar, Deus. Agora você se concentra nesse pensamento Enquanto entra em profundo relaxamento. O pensamento que faz refletir te leva a relaxar E a resolver o que antes parecia impossível.`, author: 'Evaldo Poeta', date: '2024-06-15', category: 'reflection' }, { id: '14', title: 'O Grito de Aflição', content: `Eu ouvi o grito de aflição do meu povo, Senti a ferida em seus corações. Hoje, venho para curar e salvar. Assim diz o Senhor, que vem sarar todas as feridas. Não busque apenas a cura física, Mas procure Aquele que é a fonte da vida. O Senhor te oferece a verdadeira felicidade Para que possas ser salvo e viver plenamente. Converse sempre com Ele, Ouve-O com devoção e busque entender o que Ele deseja de ti. Pois Deus te fez à Sua imagem e semelhança, Infundindo vida em ti pelo sopro do Espírito.`, author: 'Evaldo Poeta', date: '2024-06-16', category: 'faith' }, { id: '15', title: 'Parei de Ficar Parado', content: `Ah! Parei de ficar parado, Com o medo ao meu lado querendo me atrapalhar. Parei com toda vergonha, O monstro que é medonho queria me controlar. Nunca mais vou permitir que me mantenham aprisionado, Pois eu nasci para brilhar. Parei, pois agora eu mudei e aceitei a coragem. Ninguém me segura mais. Parei de ficar parado esperando acontecer. Vou continuar andando e fazer o que é certo. Pareci para perceber que depende só de mim. Jesus Cristo manda embora De dentro de mim o sofrimento.`, author: 'Evaldo Poeta', date: '2024-06-17', category: 'reflection' }, { id: '16', title: 'Transformação: Um Processo Necessário', content: `Para ocorrer transformação, o objeto deve passar por moldação. Tu lembras da borboleta no casulo apertado? Ela passa um tempo ali, sendo transformado. O ouro, em sua essência, é pedra bruta, precisa paciência. Do sólido ao líquido, o fogo faz derreter, não pode mais voltar ao que era, precisa crescer. Como no exemplo de Jesus, entregue como uma ovelha, sem reluz, não reclamou, aceitou o sofrimento. Para que a transformação ocorra, o objeto deve estar pronto para sofrer agora.`, author: 'Evaldo Poeta', date: '2024-06-18', category: 'reflection' }, { id: '17', title: 'Do Escondido ao Palco: A Jornada da Luz Interior', content: `Eu sou luz, nasci para brilhar, As dificuldades da vida querem me apagar, Querem me tirar do palco onde nasci para estar. Ninguém pode apagar a luz, Se você não deixar, ou desligar o"interruptor". Diga comigo: eu sou luz, Vim brilhar entre as trevas, Pois Jesus me tirou da escuridão. A luz é Jesus, E foi colocada em você desde o ventre materno. Você foi preparado, ninguém pode apagar, A luz que dentro de você começou a brilhar.`, author: 'Evaldo Poeta', date: '2024-06-19', category: 'reflection' }, { id: '18', title: 'O Poder da Mente e do Amor Próprio', content: `Quem pensa enriquece, Pois o Senhor não esquece. Daquele que prometeu: 'Se queres, farão obras maiores que eu.' Sua mente é poderosa, Mas se não souber usar, Pensará que não vai vencer, Hoje, não vai conseguir triunfar. Para viver uma vida de sucesso, Uma coisa só te peço: Nunca se esqueça de você, Pois é o amor próprio que deve florescer.`, author: 'Evaldo Poeta', date: '2024-06-22', category: 'reflection' }, { id: '19', title: 'A Semeadura da Vida', content: `O sentido da vida você precisa encontrar, Sirva com alegria — isso é o verdadeiro amar. É mais fácil amar quem está longe de você, Pois quem está perto faz você se conhecer. A vida não é fácil, é preciso aprender, Depois vem a caridade, e com ela, o florescer. Seja forte e corajoso, o Senhor já te salvou, Um semeia, outro rega — e no tempo certo, colheu. Seja assertivo na semente que você lançou, Pois o que sai da boca molda quem você se tornou.`, author: 'Evaldo Poeta', date: '2024-06-26', category: 'love' }, { id: '20', title: 'Semeie a Fé e Colherá Milagres', content: `Se você plantar a fé, colherá milagres de verdade. Jesus Cristo é o Senhor — essa é a eternidade."Frater" quer dizer irmão, cuidar uns dos outros, Como o Pai Nosso ensina: perdoar com o coração pronto. Mas afinal, o que é a caridade? É amor em ação, paciência e bondade. Devemos viver essas virtudes com sinceridade, E contar com a ajuda de quem nos traz saudade. Lembre-se de Abraão, pai da fé verdadeira, Que entregou Isaque, com confiança inteira. Plante fé com o coração, mesmo sem ver, E milagres do céu você vai colher.`, author: 'Evaldo Poeta', date: '2024-06-27', category: 'faith' }, { id: '21', title: 'O Novo Começo', content: `A nova história começou em primeiro de janeiro, Pois no dia derradeiro, o passado foi inteiro. Tudo aquilo que antes me fez desabar, Ficou para trás — já não pode mais me parar. Que Deus fale bem de você — é o que desejo, Que esteja ao seu lado com graça e com beijo. Hoje, recebi um livro em branco para escrever: A história da minha vida, que um dia você vai ler. Resolvi deixar no passado minhas antigas prisões, Enterrei as culpas e confusas convicções. Hoje, na mente, trago paz e emoção, Porque vivo com Deus dentro do meu coração.`, author: 'Evaldo Poeta', date: '2024-06-28', category: 'reflection' }, { id: '22', title: 'Escolhidos para Anunciar', content: `Nós fomos escolhidos para orar e anunciar, O Espírito Divino veio para nos guiar. Abra o seu coração, deixe Deus nele morar, No livro de Hebreus, o Senhor veio ensinar. Lembre-se daquele dia em que foste iluminado, A glória do Senhor está sempre ao teu lado. A luz de Deus entrou, dissipou a escuridão, Não viva como escravo — o Senhor te dá a mão. Jesus é a ponte entre o homem e o Pai, É o amor que nos resgata, nos levanta e nunca cai. Não somos dos que recuam ou vivem a se arruinar, Somos os que creem com fé: Deus vai nos salvar.`, author: 'Evaldo Poeta', date: '2024-06-29', category: 'love' }, { id: '23', title: 'Pedido de Intimidade', content: `Senhor, eu te peço neste instante, Ajuda para entender a diferença, Entre intimidade e relacionamento, Já tenho experiência, mas algo falta, com lamento. Quero aprender, falar e ouvir todos os dias, E nesse processo, alcançar uma intimidade que nos guia. Quanto mais te conhecer, Senhor, Mais intimidade contigo vou alcançar, com fervor. Para ter intimidade, o caminho é profundo, Mas requer convivência, é preciso ser fecundo. Senhor, me ajude a viver esta verdade, A conviver e te buscar com sinceridade.`, author: 'Evaldo Poeta', date: '2024-06-24', category: 'faith' }, { id: '24', title: 'Oração de Entrega e Adoração', content: `Na missão de desvendar os mistérios da tua vida, Agora vou contemplar, junto com a Virgem Maria. Ao Senhor, vou entregar minha vida, sem hesitar, No início da oração, pelo Santo Terço, vou clamar. Ó Senhor, eu não mereço, Mas todo dia, venho e peço: vem me amar. Minha vida em tua vida hoje quero depositar, Santa Mãe de Deus, Maria. Como Jó, que caiu, mas foi levantado, Toda depressão se dissolva, todo vício seja quebrado. O amor de Deus cura, transforma e vai libertar, A tua alma o Senhor hoje vem resgatar.`, author: 'Evaldo Poeta', date: '2024-06-25', category: 'faith' }, { id: '25', title: 'O Tempo e a Transformação', content: `O tempo está passando como o vento a soprar, Não espera por ninguém, não pare de avançar. Achando que o tempo vai te levar além, Toda noite, o tempo te dá 24 horas, um novo amanhecer. Algumas pessoas reclamam, dizendo não ter tempo, Para a academia ou um alimento saudável, é um lamento. O passado já passou, o futuro não chegou, É no presente que está, é nele que você deve atuar. São apenas 24 horas que Deus te dá, Para refletir, mudar e se transformar. Depois vem mais 24 para ajudar, Para pensar e crescer, para sua vida mudar.`, author: 'Evaldo Poeta', date: '2024-06-21', category: 'reflection' }, { id: '26', title: 'Reflexões Sobre o Passado e o Futuro', content: `Para construir um futuro, É preciso olhar para o passado, Analisar o que é bom e o que é ruim, Deixando o que não presta de lado. Use o passado para um novo começo, Para criar uma vida, o amor é o alicerce. Para uma casa, você precisa de materiais, Para realizar um sonho, esperança e fé são essenciais. Quando você conquista algo impossível, Ele vai correr até você e perguntar, acessível:"Como conseguiu? Me ensina, por favor?" E você responde com sinceridade e amor.`, author: 'Evaldo Poeta', date: '2024-06-23', category: 'reflection' }, { id: '27', title: 'Caminho da Humildade', content: `Jesus Cristo se humilhou, E obediente se tornou. Mesmo sendo em forma de Deus, A si mesmo se esvaziou. A humildade é o caminho, Para quem quer se aproximar. Do trono da graça divina, E a paz do céu alcançar. Quem se exalta será humilhado, Mas quem se humilha será exaltado. Esta é a lei do Reino, Por Cristo proclamado.`, author: 'Evaldo Poeta', date: '2024-07-01', category: 'love' }, { id: '28', title: 'A Força da Oração', content: `Na oração encontro força, Para enfrentar mais um dia. Deus me escuta e me responde, Com amor e sabedoria. Quando as lutas me cercam, E o desânimo me invade, Busco o silêncio sagrado, E encontro serenidade. A oração é ponte, Entre o céu e a terra. É caminho de paz, Que toda angústia enterra.`, author: 'Evaldo Poeta', date: '2024-07-05', category: 'faith' }, { id: '29', title: 'Esperança no Amanhã', content: `Mesmo quando tudo parece perdido, E o horizonte se esconde, A esperança permanece, Como estrela que responde. Deus tem planos de bem, Para cada um de nós. Planos de esperança e futuro, Que Ele sussurra em Sua voz. O amanhã trará flores, Onde hoje só há dor. Pois quem confia no Senhor, Jamais perde o Seu amor.`, author: 'Evaldo Poeta', date: '2024-07-10', category: 'hope' }, { id: '30', title: 'Gratidão do Coração', content: `Por cada manhã que desponta, Por cada sol que nasce, Meu coração transborda, De gratidão que não se desfaça. Pelas mãos que me sustentam, Pelos olhos que me veem, Pela vida que me foi dada, Bendito seja quem a mantém. A gratidão transforma, O que parece pequeno, Em tesouro precioso, Em presente sereno.`, author: 'Evaldo Poeta', date: '2024-07-15', category: 'love' } ]; const categoryColors = { faith: 'spiritual-chip-amber', hope: 'spiritual-chip-violet', love: 'spiritual-chip-violet', reflection: 'spiritual-chip-muted' }; const categoryNames = { faith: 'Fé', hope: 'Esperança', love: 'Amor', reflection: 'Reflexão' }; export const FolheandoFe = () => { const [poems] = useState<Poem[]>(samplePoems); const [selectedPoem, setSelectedPoem] = useState<Poem | null>(poems[0]); const [newPoem, setNewPoem] = useState({ title: '', content: '', author: '', category: 'faith' as const }); const [diaryEntry, setDiaryEntry] = useState(''); const [reflectionPrompts] = useState([ 'O que este poema desperta em meu coração?', 'Que memórias ou sentimentos surgem ao ler estas palavras?', 'Como posso aplicar esta mensagem em minha vida hoje?', 'Que oração nasce desta reflexão?' ]); const handleCopyPoem = (poem: Poem) => { navigator.clipboard.writeText(`${poem.title}\n\n${poem.content}\n\n- ${poem.author}`); toast.success('Poema copiado para a área de transferência!'); }; const handleSavePoem = () => { if (!newPoem.title || !newPoem.content) { toast.error('Por favor, preencha pelo menos o título e o conteúdo do poema.'); return; } toast.success('Poema salvo com sucesso!'); setNewPoem({ title: '', content: '', author: '', category: 'faith' }); }; const handleSaveDiary = () => { if (!diaryEntry.trim()) { toast.error('Escreva algo em seu diário antes de salvar.'); return; } toast.success('Entrada do diário salva!'); setDiaryEntry(''); }; return ( <div className="space-y-8"> {/* Header */} <Card className="gradient-secondary text-secondary-foreground border-0 shadow-strong"> <CardHeader className="text-center pb-8"> <div className="flex justify-center mb-4"> <Feather className="h-12 w-12 animate-gentle-bounce" /> </div> <CardTitle className="text-4xl md:text-5xl font-heading font-bold mb-4"> Folheando Fé </CardTitle> <p className="text-xl opacity-90 max-w-3xl mx-auto"> Espaço sagrado para criação, reflexão e contemplação através da poesia inspiradora </p> </CardHeader> </Card> <Tabs defaultValue="reading" className="w-full"> <TabsList className="grid w-full grid-cols-3 h-auto p-2 bg-muted/50"> <TabsTrigger value="reading" className="flex flex-col items-center gap-2 py-4 data-[state=active]:bg-primary data-[state=active]:text-primary-foreground" > <BookOpen className="spiritual-icon spiritual-icon-lg" /> Leitura & Reflexão </TabsTrigger> <TabsTrigger value="writing" className="flex flex-col items-center gap-2 py-4 data-[state=active]:bg-spiritual-violet data-[state=active]:text-white" > <PlusCircle className="spiritual-icon spiritual-icon-lg" /> Criação Poética </TabsTrigger> <TabsTrigger value="diary" className="flex flex-col items-center gap-2 py-4 data-[state=active]:bg-secondary data-[state=active]:text-secondary-foreground" > <Heart className="spiritual-icon spiritual-icon-lg" /> Diário Espiritual </TabsTrigger> </TabsList> {/* Reading & Reflection Tab */} <TabsContent value="reading" className="mt-8"> <div className="grid lg:grid-cols-3 gap-8"> {/* Poems List */} <Card className="glass-morphism border-primary/20"> <CardHeader> <CardTitle className="text-xl font-heading flex items-center gap-2"> <BookOpen className="spiritual-icon spiritual-icon-lg text-primary" /> Biblioteca de Fé </CardTitle> </CardHeader> <CardContent className="space-y-3"> {poems.map((poem) => ( <div key={poem.id} className={`p-4 rounded-lg cursor-pointer transition-smooth border ${ selectedPoem?.id === poem.id ? 'bg-primary/10 border-primary' : 'bg-muted/30 border-transparent hover:bg-muted/50' }`} onClick={() => setSelectedPoem(poem)} > <h4 className="font-heading font-semibold text-sm mb-1">{poem.title}</h4> <p className="text-xs text-muted-foreground mb-2">Por {poem.author}</p> <div className="flex items-center justify-between"> <Badge variant="spiritual" className={`text-xs ${categoryColors[poem.category]}`}> {categoryNames[poem.category]} </Badge> <span className="text-xs text-muted-foreground flex items-center gap-1"> <Calendar className="h-3 w-3" /> {new Date(poem.date).toLocaleDateString('pt-BR')} </span> </div> </div> ))} </CardContent> </Card> {/* Poem Display */} <div className="lg:col-span-2 space-y-6"> {selectedPoem && ( <> <Card className="shadow-medium"> <CardHeader> <div className="flex items-start justify-between"> <div className="space-y-2"> <CardTitle className="text-2xl font-heading text-primary"> {selectedPoem.title} </CardTitle> <div className="flex items-center gap-4 text-sm text-muted-foreground"> <div className="flex items-center gap-1"> <User className="spiritual-icon" /> {selectedPoem.author} </div> <div className="flex items-center gap-1"> <Calendar className="spiritual-icon" /> {new Date(selectedPoem.date).toLocaleDateString('pt-BR')} </div> <Badge variant="spiritual" className={categoryColors[selectedPoem.category]}> {categoryNames[selectedPoem.category]} </Badge> </div> </div> <div className="flex gap-2"> <Button variant="outline" size="sm" onClick={() => handleCopyPoem(selectedPoem)} > <Copy className="spiritual-icon" /> </Button> <Button variant="outline" size="sm"> <Share2 className="spiritual-icon" /> </Button> </div> </div> </CardHeader> <CardContent> <div className="bg-gradient-to-br from-primary/5 to-spiritual-violet/5 border-l-4 border-primary rounded-lg p-6"> <blockquote className="poem-text text-foreground whitespace-pre-line"> {selectedPoem.content} </blockquote> </div> </CardContent> </Card> {/* Reflection Panel */} <Card className="shadow-soft"> <CardHeader> <CardTitle className="text-xl font-heading text-spiritual-violet flex items-center gap-2"> <Heart className="spiritual-icon spiritual-icon-lg" /> Espaço de Reflexão </CardTitle> </CardHeader> <CardContent className="space-y-6"> <div className="grid md:grid-cols-2 gap-4"> {reflectionPrompts.map((prompt, index) => ( <div key={index} className="p-4 bg-spiritual-violet/5 rounded-lg border-l-4 border-spiritual-violet"> <p className="text-sm font-medium text-spiritual-violet">{prompt}</p> </div> ))} </div> <div> <label className="block text-sm font-medium mb-2">Suas reflexões:</label> <Textarea placeholder="Deixe suas reflexões sobre este poema fluirem aqui..." className="min-h-[120px] resize-none" /> <Button className="mt-4" size="sm"> Salvar Reflexão </Button> </div> </CardContent> </Card> </> )} </div> </div> </TabsContent> {/* Writing Tab */} <TabsContent value="writing" className="mt-8"> <Card className="max-w-4xl mx-auto shadow-medium"> <CardHeader> <CardTitle className="text-2xl font-heading text-spiritual-violet flex items-center gap-2"> <Feather className="spiritual-icon spiritual-icon-xl" /> Criação Poética </CardTitle> <p className="text-muted-foreground"> Deixe sua inspiração fluir e crie poemas que toquem corações </p> </CardHeader> <CardContent className="space-y-6"> <div className="grid md:grid-cols-2 gap-6"> <div className="space-y-4"> <div> <label className="block text-sm font-medium mb-2">Título do Poema</label> <Input value={newPoem.title} onChange={(e) => setNewPoem({...newPoem, title: e.target.value})} placeholder="Dê um nome ao seu poema..." /> </div> <div> <label className="block text-sm font-medium mb-2">Autor</label> <Input value={newPoem.author} onChange={(e) => setNewPoem({...newPoem, author: e.target.value})} placeholder="Seu nome ou pseudônimo" /> </div> <div> <label className="block text-sm font-medium mb-2">Categoria</label> <select className="w-full px-3 py-2 border rounded-md" value={newPoem.category} onChange={(e) => setNewPoem({...newPoem, category: e.target.value as any})} > <option value="faith">Fé</option> <option value="hope">Esperança</option> <option value="love">Amor</option> <option value="reflection">Reflexão</option> </select> </div> </div> <div> <label className="block text-sm font-medium mb-2">Conteúdo do Poema</label> <Textarea value={newPoem.content} onChange={(e) => setNewPoem({...newPoem, content: e.target.value})} placeholder="Escreva seu poema aqui..." className="min-h-[200px] resize-none font-heading" /> </div> </div> {/* Preview */} {newPoem.title && newPoem.content && ( <div className="mt-8 p-6 bg-gradient-to-br from-spiritual-violet/5 to-spiritual-violet/10 border-l-4 border-spiritual-violet rounded-lg"> <h4 className="text-lg font-heading font-bold mb-2">{newPoem.title}</h4> <blockquote className="poem-text text-foreground whitespace-pre-line mb-4"> {newPoem.content} </blockquote> {newPoem.author && ( <p className="text-right font-heading italic text-muted-foreground"> - {newPoem.author} </p> )} </div> )} <div className="flex justify-end gap-4"> <Button variant="outline" onClick={() => setNewPoem({title: '', content: '', author: '', category: 'faith'})}> Limpar </Button> <Button onClick={handleSavePoem} className="gradient-spiritual text-white"> Salvar Poema </Button> </div> </CardContent> </Card> </TabsContent> {/* Diary Tab */} <TabsContent value="diary" className="mt-8"> <Card className="max-w-4xl mx-auto shadow-medium"> <CardHeader> <CardTitle className="text-2xl font-heading text-secondary flex items-center gap-2"> <Heart className="spiritual-icon spiritual-icon-xl" /> Diário Espiritual </CardTitle> <p className="text-muted-foreground"> Um espaço íntimo para registrar sua jornada de fé e crescimento pessoal </p> </CardHeader> <CardContent className="space-y-6"> <div className="bg-gradient-to-br from-secondary/5 to-secondary/10 border-l-4 border-secondary rounded-lg p-6"> <h4 className="font-heading font-semibold text-lg mb-4 text-secondary"> Reflexões de hoje - {new Date().toLocaleDateString('pt-BR', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })} </h4> <div className="grid md:grid-cols-3 gap-4 mb-6 text-sm"> <div className="bg-white/50 p-3 rounded"> <strong>Gratidão:</strong> Pelo que sou grato hoje? </div> <div className="bg-white/50 p-3 rounded"> <strong>Aprendizado:</strong> O que aprendi sobre mim ou sobre Deus? </div> <div className="bg-white/50 p-3 rounded"> <strong>Oração:</strong> Que oração nasce do meu coração? </div> </div> <Textarea value={diaryEntry} onChange={(e) => setDiaryEntry(e.target.value)} placeholder="Escreva aqui seus pensamentos, gratidões, reflexões e orações do dia..." className="min-h-[300px] resize-none" /> <div className="flex justify-end gap-4 mt-6"> <Button variant="outline" onClick={() => setDiaryEntry('')}> Limpar </Button> <Button onClick={handleSaveDiary} className="gradient-secondary text-secondary-foreground"> Salvar no Diário </Button> </div> </div> </CardContent> </Card> </TabsContent> </Tabs> </div> ); };
+import React, { useState } from "react";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
+import { Badge } from "@/components/ui/badge";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import {
+  Feather,
+  PlusCircle,
+  BookOpen,
+  Heart,
+  Share2,
+  Calendar,
+  User,
+  Copy,
+  Download,
+} from "lucide-react";
+import { toast } from "sonner";
+interface Poem {
+  id: string;
+  title: string;
+  content: string;
+  author: string;
+  date: string;
+  category: "faith" | "hope" | "love" | "reflection";
+}
+const samplePoems: Poem[] = [
+  {
+    id: "1",
+    title: "Deixe sua luz brilhar",
+    content: `Deixe sua luz brilhar você precisará acender o que está te impedindo terá que logo resolver.`,
+    author: "Evaldo Poeta",
+    date: "2024-05-10",
+    category: "hope",
+  },
+  {
+    id: "2",
+    title: "Nunca Pare de Lutar",
+    content: `Alguém me tocou... Senti uma força sair, Manifestei minha Palavra — A mulher hemorroísa foi curada por não desistir. Encontrar-se com Jesus é um marco para nos salvar, É sair do nosso mundo e do pecado se libertar. Deus nos escolheu, neste mundo nos colocou, Preparou em nossa mãe, que com amor nos cuidou. Por amor à humanidade, Jesus morreu e ressuscitou. Não queira controlar a graça do Senhor — Se entregue em oração, Ele já manifestou! A fonte de salvação, Espere firme, meu irmão! Éramos escravos do pecado, Mas tudo muda com a decisão. Nunca perca a esperança, Guarde Jesus no coração. Pare de reclamar agora, Busque firme a salvação. Faça como a mulher que tocou o Senhor, Nunca pare de lutar com fé e fervor. É certeza: um dia, iremos festejar Com o Salvador — no céu — a nos esperar.`,
+    author: "Evaldo Poeta",
+    date: "2024-05-12",
+    category: "faith",
+  },
+  {
+    id: "3",
+    title: "A Voz do Céu",
+    content: `As portas do céu se abriram, Ouvi a voz ressoar. Como o som da trombeta, O Senhor veio falar. Bendito e louvado seja, Ó Deus dos nossos pais! Que Teu nome seja eterno, Glorioso pelos séculos a mais. Em justiça e retidão, Sempre age o Criador. Na oração, enviou o anjo, Trazendo ao fogo o Seu calor.`,
+    author: "Evaldo Poeta",
+    date: "2024-05-14",
+    category: "faith",
+  },
+  {
+    id: "4",
+    title: "Sinta o Fogo que Queima",
+    content: `Ele está confirmando, Derramando o Seu amor. Escute bem esta voz, Pois quem fala é o Senhor. Entregue-se a Ele, Todo dia, sem temer. Ouça a voz que te chama, Sinta Deus em teu viver. O medo tenta impedir, Mas não pode te parar. O fogo segue ardendo, E jamais deixará de queimar.`,
+    author: "Evaldo Poeta",
+    date: "2024-05-15",
+    category: "faith",
+  },
+  {
+    id: "5",
+    title: "Ouro e Incenso",
+    content: `Deus nos reuniu hoje Para algo te falar. Filho, eu te amo, Pare um pouco para escutar. Eu vim ao mundo em amor, Para a liberdade dar. Deixa as prisões para trás, Venha agora me encontrar. Foram sábios, obedientes, E no sonho Deus falou. Ofertaram ao Menino Ouro e incenso em Seu louvor.`,
+    author: "Evaldo Poeta",
+    date: "2024-05-18",
+    category: "love",
+  },
+  {
+    id: "6",
+    title: "A Paz Que Você Procura",
+    content: `A paz que você procura está no silêncio que você não faz. Na esperança do perdão, gloriamos na presença do Senhor. Ao ouvir a voz, sinto a paz brotar no interior. A palavra ressoa suave, quase que não percebo o amor. Vejo uma luz brilhando, me mostrando o que não via dentro de mim. Ah, será assim que eu vou viver a partir dessa experiência interior?`,
+    author: "Evaldo Poeta",
+    date: "2024-05-20",
+    category: "faith",
+  },
+  {
+    id: "7",
+    title: "O Controle da Alma",
+    content: `Este é o controle da alma, no profundo do teu ser, O bálsamo que acalma, já parou pra perceber? Vim curar suas feridas, pois filho amado és, Entreguei por ti minha vida, sempre estou de pé. Recebe agora a cura, que Eu trouxe pra você, Abre o coração em graça, está na hora de crer. Faça agora a sua parte, confie e vá além, Pois o milagre acontece, quando a fé diz: Amém!`,
+    author: "Evaldo Poeta",
+    date: "2024-05-22",
+    category: "reflection",
+  },
+  {
+    id: "8",
+    title: "Despertar para a Luz",
+    content: `Desperta agora, meu amigo, ouve a voz do Senhor. Levanta-te dentre os mortos, que Cristo já te iluminou. Ele te chama para a luz, para a ação e o amor, Pois a vontade d'Ele é que conheças o Senhor. Você é filho da luz, das trevas pode sair;
+Aceite a graça divina, deixe-se conduzir. O Espírito te guia, mostrando o caminho a trilhar;
+Siga suas orientações, não deixe de escutar.`,
+    author: "Evaldo Poeta",
+    date: "2024-06-05",
+    category: "love",
+  },
+  {
+    id: "9",
+    title: "A Bússola do Cristão",
+    content: `A bússola do cristão É a Palavra do Senhor, Direciona o seu caminho Mesmo em meio à dor. Paulo nos exorta sempre Com coragem pra viver: A esperança está em Cristo Se você quiser vencer. Alegrai-vos, todo o tempo, No Espírito do Senhor. Não se entregue à tristeza, Se entregue ao Criador.`,
+    author: "Evaldo Poeta",
+    date: "2024-06-10",
+    category: "love",
+  },
+  {
+    id: "10",
+    title: "Comece a Levantar",
+    content: `Neste dia de alegria, A Jesus Cristo é de altar. De repente, brota uma força, E começamos a cantar. Lança fora a tristeza, Ansiedade, depressão. Sinta a chuva, desta água, Se coloque em oração. Abra o seu coração, Deixa a graça e a luz entrar. Sinto com a Virgem Maria, Do Espírito Santo clamar.`,
+    author: "Evaldo Poeta",
+    date: "2024-06-12",
+    category: "hope",
+  },
+  {
+    id: "11",
+    title: "Pura Graça",
+    content: `Jesus, fonte de toda graça, Vivo Sua paz que me abraça, Que se derrama sobre mim. Sua misericórdia sem fim, Todos os dias me alcança, Trazendo luz e esperança, Recarregando minha energia Com o Teu Espírito, dia após dia. Na minha alma, ouço o Teu chamado, Que vem suave, ao meu lado, Ajudando-me a me entender, E meu coração, a aquecer.`,
+    author: "Evaldo Poeta",
+    date: "2024-06-13",
+    category: "reflection",
+  },
+  {
+    id: "12",
+    title: "Sopro de Paz",
+    content: `Soprou sobre nós teu Espírito, a paz com ele chegou. todo medo se desfez, a dúvida se dissipou. o Espírito desceu, trouxe paz neste lugar. como o Pai me enviou, eu vos envio a anunciar. acalme seu coração, toda manhã, por favor, pare agora, sinta o ar, comece a orar com o Senhor.`,
+    author: "Evaldo Poeta",
+    date: "2024-06-14",
+    category: "hope",
+  },
+  {
+    id: "13",
+    title: "Pensamento Libertador",
+    content: `Acredite ou não, saiba que você não é obrigado a nada. Não é porque as pessoas te pedem algo Que você deve atender sem questionar. É necessário aprender a indagar, fazer as perguntas certas. O pensamento liberta. Até quando vai permanecer preso sem pensar Ou acorrentado ao pensamento sem buscar a liberdade? Nosso pensamento deve estar bem alinhado Com aquilo que desejamos ou pretendemos realizar. Devemos pensar com o pensamento Daquele que nos deu a capacidade de pensar, Deus. Agora você se concentra nesse pensamento Enquanto entra em profundo relaxamento. O pensamento que faz refletir te leva a relaxar E a resolver o que antes parecia impossível.`,
+    author: "Evaldo Poeta",
+    date: "2024-06-15",
+    category: "reflection",
+  },
+  {
+    id: "14",
+    title: "O Grito de Aflição",
+    content: `Eu ouvi o grito de aflição do meu povo, Senti a ferida em seus corações. Hoje, venho para curar e salvar. Assim diz o Senhor, que vem sarar todas as feridas. Não busque apenas a cura física, Mas procure Aquele que é a fonte da vida. O Senhor te oferece a verdadeira felicidade Para que possas ser salvo e viver plenamente. Converse sempre com Ele, Ouve-O com devoção e busque entender o que Ele deseja de ti. Pois Deus te fez à Sua imagem e semelhança, Infundindo vida em ti pelo sopro do Espírito.`,
+    author: "Evaldo Poeta",
+    date: "2024-06-16",
+    category: "faith",
+  },
+  {
+    id: "15",
+    title: "Parei de Ficar Parado",
+    content: `Ah! Parei de ficar parado, Com o medo ao meu lado querendo me atrapalhar. Parei com toda vergonha, O monstro que é medonho queria me controlar. Nunca mais vou permitir que me mantenham aprisionado, Pois eu nasci para brilhar. Parei, pois agora eu mudei e aceitei a coragem. Ninguém me segura mais. Parei de ficar parado esperando acontecer. Vou continuar andando e fazer o que é certo. Pareci para perceber que depende só de mim. Jesus Cristo manda embora De dentro de mim o sofrimento.`,
+    author: "Evaldo Poeta",
+    date: "2024-06-17",
+    category: "reflection",
+  },
+  {
+    id: "16",
+    title: "Transformação: Um Processo Necessário",
+    content: `Para ocorrer transformação, o objeto deve passar por moldação. Tu lembras da borboleta no casulo apertado? Ela passa um tempo ali, sendo transformado. O ouro, em sua essência, é pedra bruta, precisa paciência. Do sólido ao líquido, o fogo faz derreter, não pode mais voltar ao que era, precisa crescer. Como no exemplo de Jesus, entregue como uma ovelha, sem reluz, não reclamou, aceitou o sofrimento. Para que a transformação ocorra, o objeto deve estar pronto para sofrer agora.`,
+    author: "Evaldo Poeta",
+    date: "2024-06-18",
+    category: "reflection",
+  },
+  {
+    id: "17",
+    title: "Do Escondido ao Palco: A Jornada da Luz Interior",
+    content: `Eu sou luz, nasci para brilhar, As dificuldades da vida querem me apagar, Querem me tirar do palco onde nasci para estar. Ninguém pode apagar a luz, Se você não deixar, ou desligar o"interruptor". Diga comigo: eu sou luz, Vim brilhar entre as trevas, Pois Jesus me tirou da escuridão. A luz é Jesus, E foi colocada em você desde o ventre materno. Você foi preparado, ninguém pode apagar, A luz que dentro de você começou a brilhar.`,
+    author: "Evaldo Poeta",
+    date: "2024-06-19",
+    category: "reflection",
+  },
+  {
+    id: "18",
+    title: "O Poder da Mente e do Amor Próprio",
+    content: `Quem pensa enriquece, Pois o Senhor não esquece. Daquele que prometeu: 'Se queres, farão obras maiores que eu.' Sua mente é poderosa, Mas se não souber usar, Pensará que não vai vencer, Hoje, não vai conseguir triunfar. Para viver uma vida de sucesso, Uma coisa só te peço: Nunca se esqueça de você, Pois é o amor próprio que deve florescer.`,
+    author: "Evaldo Poeta",
+    date: "2024-06-22",
+    category: "reflection",
+  },
+  {
+    id: "19",
+    title: "A Semeadura da Vida",
+    content: `O sentido da vida você precisa encontrar, Sirva com alegria — isso é o verdadeiro amar. É mais fácil amar quem está longe de você, Pois quem está perto faz você se conhecer. A vida não é fácil, é preciso aprender, Depois vem a caridade, e com ela, o florescer. Seja forte e corajoso, o Senhor já te salvou, Um semeia, outro rega — e no tempo certo, colheu. Seja assertivo na semente que você lançou, Pois o que sai da boca molda quem você se tornou.`,
+    author: "Evaldo Poeta",
+    date: "2024-06-26",
+    category: "love",
+  },
+  {
+    id: "20",
+    title: "Semeie a Fé e Colherá Milagres",
+    content: `Se você plantar a fé, colherá milagres de verdade. Jesus Cristo é o Senhor — essa é a eternidade."Frater" quer dizer irmão, cuidar uns dos outros, Como o Pai Nosso ensina: perdoar com o coração pronto. Mas afinal, o que é a caridade? É amor em ação, paciência e bondade. Devemos viver essas virtudes com sinceridade, E contar com a ajuda de quem nos traz saudade. Lembre-se de Abraão, pai da fé verdadeira, Que entregou Isaque, com confiança inteira. Plante fé com o coração, mesmo sem ver, E milagres do céu você vai colher.`,
+    author: "Evaldo Poeta",
+    date: "2024-06-27",
+    category: "faith",
+  },
+  {
+    id: "21",
+    title: "O Novo Começo",
+    content: `A nova história começou em primeiro de janeiro, Pois no dia derradeiro, o passado foi inteiro. Tudo aquilo que antes me fez desabar, Ficou para trás — já não pode mais me parar. Que Deus fale bem de você — é o que desejo, Que esteja ao seu lado com graça e com beijo. Hoje, recebi um livro em branco para escrever: A história da minha vida, que um dia você vai ler. Resolvi deixar no passado minhas antigas prisões, Enterrei as culpas e confusas convicções. Hoje, na mente, trago paz e emoção, Porque vivo com Deus dentro do meu coração.`,
+    author: "Evaldo Poeta",
+    date: "2024-06-28",
+    category: "reflection",
+  },
+  {
+    id: "22",
+    title: "Escolhidos para Anunciar",
+    content: `Nós fomos escolhidos para orar e anunciar, O Espírito Divino veio para nos guiar. Abra o seu coração, deixe Deus nele morar, No livro de Hebreus, o Senhor veio ensinar. Lembre-se daquele dia em que foste iluminado, A glória do Senhor está sempre ao teu lado. A luz de Deus entrou, dissipou a escuridão, Não viva como escravo — o Senhor te dá a mão. Jesus é a ponte entre o homem e o Pai, É o amor que nos resgata, nos levanta e nunca cai. Não somos dos que recuam ou vivem a se arruinar, Somos os que creem com fé: Deus vai nos salvar.`,
+    author: "Evaldo Poeta",
+    date: "2024-06-29",
+    category: "love",
+  },
+  {
+    id: "23",
+    title: "Pedido de Intimidade",
+    content: `Senhor, eu te peço neste instante, Ajuda para entender a diferença, Entre intimidade e relacionamento, Já tenho experiência, mas algo falta, com lamento. Quero aprender, falar e ouvir todos os dias, E nesse processo, alcançar uma intimidade que nos guia. Quanto mais te conhecer, Senhor, Mais intimidade contigo vou alcançar, com fervor. Para ter intimidade, o caminho é profundo, Mas requer convivência, é preciso ser fecundo. Senhor, me ajude a viver esta verdade, A conviver e te buscar com sinceridade.`,
+    author: "Evaldo Poeta",
+    date: "2024-06-24",
+    category: "faith",
+  },
+  {
+    id: "24",
+    title: "Oração de Entrega e Adoração",
+    content: `Na missão de desvendar os mistérios da tua vida, Agora vou contemplar, junto com a Virgem Maria. Ao Senhor, vou entregar minha vida, sem hesitar, No início da oração, pelo Santo Terço, vou clamar. Ó Senhor, eu não mereço, Mas todo dia, venho e peço: vem me amar. Minha vida em tua vida hoje quero depositar, Santa Mãe de Deus, Maria. Como Jó, que caiu, mas foi levantado, Toda depressão se dissolva, todo vício seja quebrado. O amor de Deus cura, transforma e vai libertar, A tua alma o Senhor hoje vem resgatar.`,
+    author: "Evaldo Poeta",
+    date: "2024-06-25",
+    category: "faith",
+  },
+  {
+    id: "25",
+    title: "O Tempo e a Transformação",
+    content: `O tempo está passando como o vento a soprar, Não espera por ninguém, não pare de avançar. Achando que o tempo vai te levar além, Toda noite, o tempo te dá 24 horas, um novo amanhecer. Algumas pessoas reclamam, dizendo não ter tempo, Para a academia ou um alimento saudável, é um lamento. O passado já passou, o futuro não chegou, É no presente que está, é nele que você deve atuar. São apenas 24 horas que Deus te dá, Para refletir, mudar e se transformar. Depois vem mais 24 para ajudar, Para pensar e crescer, para sua vida mudar.`,
+    author: "Evaldo Poeta",
+    date: "2024-06-21",
+    category: "reflection",
+  },
+  {
+    id: "26",
+    title: "Reflexões Sobre o Passado e o Futuro",
+    content: `Para construir um futuro, É preciso olhar para o passado, Analisar o que é bom e o que é ruim, Deixando o que não presta de lado. Use o passado para um novo começo, Para criar uma vida, o amor é o alicerce. Para uma casa, você precisa de materiais, Para realizar um sonho, esperança e fé são essenciais. Quando você conquista algo impossível, Ele vai correr até você e perguntar, acessível:"Como conseguiu? Me ensina, por favor?" E você responde com sinceridade e amor.`,
+    author: "Evaldo Poeta",
+    date: "2024-06-23",
+    category: "reflection",
+  },
+  {
+    id: "27",
+    title: "Caminho da Humildade",
+    content: `Jesus Cristo se humilhou, E obediente se tornou. Mesmo sendo em forma de Deus, A si mesmo se esvaziou. A humildade é o caminho, Para quem quer se aproximar. Do trono da graça divina, E a paz do céu alcançar. Quem se exalta será humilhado, Mas quem se humilha será exaltado. Esta é a lei do Reino, Por Cristo proclamado.`,
+    author: "Evaldo Poeta",
+    date: "2024-07-01",
+    category: "love",
+  },
+  {
+    id: "28",
+    title: "A Força da Oração",
+    content: `Na oração encontro força, Para enfrentar mais um dia. Deus me escuta e me responde, Com amor e sabedoria. Quando as lutas me cercam, E o desânimo me invade, Busco o silêncio sagrado, E encontro serenidade. A oração é ponte, Entre o céu e a terra. É caminho de paz, Que toda angústia enterra.`,
+    author: "Evaldo Poeta",
+    date: "2024-07-05",
+    category: "faith",
+  },
+  {
+    id: "29",
+    title: "Esperança no Amanhã",
+    content: `Mesmo quando tudo parece perdido, E o horizonte se esconde, A esperança permanece, Como estrela que responde. Deus tem planos de bem, Para cada um de nós. Planos de esperança e futuro, Que Ele sussurra em Sua voz. O amanhã trará flores, Onde hoje só há dor. Pois quem confia no Senhor, Jamais perde o Seu amor.`,
+    author: "Evaldo Poeta",
+    date: "2024-07-10",
+    category: "hope",
+  },
+  {
+    id: "30",
+    title: "Gratidão do Coração",
+    content: `Por cada manhã que desponta, Por cada sol que nasce, Meu coração transborda, De gratidão que não se desfaça. Pelas mãos que me sustentam, Pelos olhos que me veem, Pela vida que me foi dada, Bendito seja quem a mantém. A gratidão transforma, O que parece pequeno, Em tesouro precioso, Em presente sereno.`,
+    author: "Evaldo Poeta",
+    date: "2024-07-15",
+    category: "love",
+  },
+];
+const categoryColors = {
+  faith: "spiritual-chip-amber",
+  hope: "spiritual-chip-violet",
+  love: "spiritual-chip-violet",
+  reflection: "spiritual-chip-muted",
+};
+const categoryNames = {
+  faith: "Fé",
+  hope: "Esperança",
+  love: "Amor",
+  reflection: "Reflexão",
+};
+export const FolheandoFe = () => {
+  const [poems] = useState<Poem[]>(samplePoems);
+  const [selectedPoem, setSelectedPoem] = useState<Poem | null>(poems[0]);
+  const [newPoem, setNewPoem] = useState({
+    title: "",
+    content: "",
+    author: "",
+    category: "faith" as const,
+  });
+  const [diaryEntry, setDiaryEntry] = useState("");
+  const [reflectionPrompts] = useState([
+    "O que este poema desperta em meu coração?",
+    "Que memórias ou sentimentos surgem ao ler estas palavras?",
+    "Como posso aplicar esta mensagem em minha vida hoje?",
+    "Que oração nasce desta reflexão?",
+  ]);
+  const handleCopyPoem = (poem: Poem) => {
+    navigator.clipboard.writeText(
+      `${poem.title}\n\n${poem.content}\n\n- ${poem.author}`,
+    );
+    toast.success("Poema copiado para a área de transferência!");
+  };
+  const handleSavePoem = () => {
+    if (!newPoem.title || !newPoem.content) {
+      toast.error(
+        "Por favor, preencha pelo menos o título e o conteúdo do poema.",
+      );
+      return;
+    }
+    toast.success("Poema salvo com sucesso!");
+    setNewPoem({
+      title: "",
+      content: "",
+      author: "",
+      category: "faith",
+    });
+  };
+  const handleSaveDiary = () => {
+    if (!diaryEntry.trim()) {
+      toast.error("Escreva algo em seu diário antes de salvar.");
+      return;
+    }
+    toast.success("Entrada do diário salva!");
+    setDiaryEntry("");
+  };
+  return (
+    <div className="space-y-8">
+      {" "}
+      {/* Header */}
+      <Card className="gradient-secondary text-secondary-foreground border-0 shadow-strong">
+        {" "}
+        <CardHeader className="text-center pb-8">
+          {" "}
+          <div className="flex justify-center mb-4">
+            {" "}
+            <Feather className="h-12 w-12 animate-gentle-bounce" />{" "}
+          </div>{" "}
+          <CardTitle className="text-4xl md:text-5xl font-heading font-bold mb-4">
+            {" "}
+            Folheando Fé{" "}
+          </CardTitle>{" "}
+          <p className="text-xl opacity-90 max-w-3xl mx-auto">
+            {" "}
+            Espaço sagrado para criação, reflexão e contemplação através da
+            poesia inspiradora{" "}
+          </p>{" "}
+        </CardHeader>{" "}
+      </Card>{" "}
+      <Tabs defaultValue="reading" className="w-full">
+        {" "}
+        <TabsList className="grid w-full grid-cols-3 h-auto p-2 bg-muted/50">
+          {" "}
+          <TabsTrigger
+            value="reading"
+            className="flex flex-col items-center gap-2 py-4 data-[state=active]:bg-primary data-[state=active]:text-primary-foreground"
+          >
+            {" "}
+            <BookOpen className="spiritual-icon spiritual-icon-lg" /> Leitura &
+            Reflexão{" "}
+          </TabsTrigger>{" "}
+          <TabsTrigger
+            value="writing"
+            className="flex flex-col items-center gap-2 py-4 data-[state=active]:bg-spiritual-violet data-[state=active]:text-white"
+          >
+            {" "}
+            <PlusCircle className="spiritual-icon spiritual-icon-lg" /> Criação
+            Poética{" "}
+          </TabsTrigger>{" "}
+          <TabsTrigger
+            value="diary"
+            className="flex flex-col items-center gap-2 py-4 data-[state=active]:bg-secondary data-[state=active]:text-secondary-foreground"
+          >
+            {" "}
+            <Heart className="spiritual-icon spiritual-icon-lg" /> Diário
+            Espiritual{" "}
+          </TabsTrigger>{" "}
+        </TabsList>{" "}
+        {/* Reading & Reflection Tab */}
+        <TabsContent value="reading" className="mt-8">
+          {" "}
+          <div className="grid lg:grid-cols-3 gap-8">
+            {" "}
+            {/* Poems List */}
+            <Card className="glass-morphism border-primary/20">
+              {" "}
+              <CardHeader>
+                {" "}
+                <CardTitle className="text-xl font-heading flex items-center gap-2">
+                  {" "}
+                  <BookOpen className="spiritual-icon spiritual-icon-lg text-primary" />{" "}
+                  Biblioteca de Fé{" "}
+                </CardTitle>{" "}
+              </CardHeader>{" "}
+              <CardContent className="space-y-3">
+                {" "}
+                {poems.map((poem) => (
+                  <div
+                    key={poem.id}
+                    className={`p-4 rounded-lg cursor-pointer transition-smooth border ${
+                      selectedPoem?.id === poem.id
+                        ? "bg-primary/10 border-primary"
+                        : "bg-muted/30 border-transparent hover:bg-muted/50"
+                    }`}
+                    onClick={() => setSelectedPoem(poem)}
+                  >
+                    {" "}
+                    <h4 className="font-heading font-semibold text-sm mb-1">
+                      {poem.title}
+                    </h4>{" "}
+                    <p className="text-xs text-muted-foreground mb-2">
+                      Por {poem.author}
+                    </p>{" "}
+                    <div className="flex items-center justify-between">
+                      {" "}
+                      <Badge
+                        variant="spiritual"
+                        className={`text-xs ${categoryColors[poem.category]}`}
+                      >
+                        {" "}
+                        {categoryNames[poem.category]}
+                      </Badge>{" "}
+                      <span className="text-xs text-muted-foreground flex items-center gap-1">
+                        {" "}
+                        <Calendar className="h-3 w-3" />{" "}
+                        {new Date(poem.date).toLocaleDateString("pt-BR")}
+                      </span>{" "}
+                    </div>{" "}
+                  </div>
+                ))}
+              </CardContent>{" "}
+            </Card>{" "}
+            {/* Poem Display */}
+            <div className="lg:col-span-2 space-y-6">
+              {" "}
+              {selectedPoem && (
+                <>
+                  {" "}
+                  <Card className="shadow-medium">
+                    {" "}
+                    <CardHeader>
+                      {" "}
+                      <div className="flex items-start justify-between">
+                        {" "}
+                        <div className="space-y-2">
+                          {" "}
+                          <CardTitle className="text-2xl font-heading text-primary">
+                            {" "}
+                            {selectedPoem.title}
+                          </CardTitle>{" "}
+                          <div className="flex items-center gap-4 text-sm text-muted-foreground">
+                            {" "}
+                            <div className="flex items-center gap-1">
+                              {" "}
+                              <User className="spiritual-icon" />{" "}
+                              {selectedPoem.author}
+                            </div>{" "}
+                            <div className="flex items-center gap-1">
+                              {" "}
+                              <Calendar className="spiritual-icon" />{" "}
+                              {new Date(selectedPoem.date).toLocaleDateString(
+                                "pt-BR",
+                              )}
+                            </div>{" "}
+                            <Badge
+                              variant="spiritual"
+                              className={categoryColors[selectedPoem.category]}
+                            >
+                              {" "}
+                              {categoryNames[selectedPoem.category]}
+                            </Badge>{" "}
+                          </div>{" "}
+                        </div>{" "}
+                        <div className="flex gap-2">
+                          {" "}
+                          <Button
+                            variant="outline"
+                            size="sm"
+                            onClick={() => handleCopyPoem(selectedPoem)}
+                          >
+                            {" "}
+                            <Copy className="spiritual-icon" />{" "}
+                          </Button>{" "}
+                          <Button variant="outline" size="sm">
+                            {" "}
+                            <Share2 className="spiritual-icon" />{" "}
+                          </Button>{" "}
+                        </div>{" "}
+                      </div>{" "}
+                    </CardHeader>{" "}
+                    <CardContent>
+                      {" "}
+                      <div className="bg-gradient-to-br from-primary/5 to-spiritual-violet/5 border-l-4 border-primary rounded-lg p-6">
+                        {" "}
+                        <blockquote className="poem-text text-foreground whitespace-pre-line">
+                          {" "}
+                          {selectedPoem.content}
+                        </blockquote>{" "}
+                      </div>{" "}
+                    </CardContent>{" "}
+                  </Card>{" "}
+                  {/* Reflection Panel */}
+                  <Card className="shadow-soft">
+                    {" "}
+                    <CardHeader>
+                      {" "}
+                      <CardTitle className="text-xl font-heading text-spiritual-violet flex items-center gap-2">
+                        {" "}
+                        <Heart className="spiritual-icon spiritual-icon-lg" />{" "}
+                        Espaço de Reflexão{" "}
+                      </CardTitle>{" "}
+                    </CardHeader>{" "}
+                    <CardContent className="space-y-6">
+                      {" "}
+                      <div className="grid md:grid-cols-2 gap-4">
+                        {" "}
+                        {reflectionPrompts.map((prompt, index) => (
+                          <div
+                            key={index}
+                            className="p-4 bg-spiritual-violet/5 rounded-lg border-l-4 border-spiritual-violet"
+                          >
+                            {" "}
+                            <p className="text-sm font-medium text-spiritual-violet">
+                              {prompt}
+                            </p>{" "}
+                          </div>
+                        ))}
+                      </div>{" "}
+                      <div>
+                        {" "}
+                        <label className="block text-sm font-medium mb-2">
+                          Suas reflexões:
+                        </label>{" "}
+                        <Textarea
+                          placeholder="Deixe suas reflexões sobre este poema fluirem aqui..."
+                          className="min-h-[120px] resize-none"
+                        />{" "}
+                        <Button className="mt-4" size="sm">
+                          {" "}
+                          Salvar Reflexão{" "}
+                        </Button>{" "}
+                      </div>{" "}
+                    </CardContent>{" "}
+                  </Card>{" "}
+                </>
+              )}
+            </div>{" "}
+          </div>{" "}
+        </TabsContent>{" "}
+        {/* Writing Tab */}
+        <TabsContent value="writing" className="mt-8">
+          {" "}
+          <Card className="max-w-4xl mx-auto shadow-medium">
+            {" "}
+            <CardHeader>
+              {" "}
+              <CardTitle className="text-2xl font-heading text-spiritual-violet flex items-center gap-2">
+                {" "}
+                <Feather className="spiritual-icon spiritual-icon-xl" /> Criação
+                Poética{" "}
+              </CardTitle>{" "}
+              <p className="text-muted-foreground">
+                {" "}
+                Deixe sua inspiração fluir e crie poemas que toquem
+                corações{" "}
+              </p>{" "}
+            </CardHeader>{" "}
+            <CardContent className="space-y-6">
+              {" "}
+              <div className="grid md:grid-cols-2 gap-6">
+                {" "}
+                <div className="space-y-4">
+                  {" "}
+                  <div>
+                    {" "}
+                    <label className="block text-sm font-medium mb-2">
+                      Título do Poema
+                    </label>{" "}
+                    <Input
+                      value={newPoem.title}
+                      onChange={(e) =>
+                        setNewPoem({ ...newPoem, title: e.target.value })
+                      }
+                      placeholder="Dê um nome ao seu poema..."
+                    />{" "}
+                  </div>{" "}
+                  <div>
+                    {" "}
+                    <label className="block text-sm font-medium mb-2">
+                      Autor
+                    </label>{" "}
+                    <Input
+                      value={newPoem.author}
+                      onChange={(e) =>
+                        setNewPoem({ ...newPoem, author: e.target.value })
+                      }
+                      placeholder="Seu nome ou pseudônimo"
+                    />{" "}
+                  </div>{" "}
+                  <div>
+                    {" "}
+                    <label className="block text-sm font-medium mb-2">
+                      Categoria
+                    </label>{" "}
+                    <select
+                      className="w-full px-3 py-2 border rounded-md"
+                      value={newPoem.category}
+                      onChange={(e) =>
+                        setNewPoem({
+                          ...newPoem,
+                          category: e.target.value as any,
+                        })
+                      }
+                    >
+                      {" "}
+                      <option value="faith">Fé</option>{" "}
+                      <option value="hope">Esperança</option>{" "}
+                      <option value="love">Amor</option>{" "}
+                      <option value="reflection">Reflexão</option>{" "}
+                    </select>{" "}
+                  </div>{" "}
+                </div>{" "}
+                <div>
+                  {" "}
+                  <label className="block text-sm font-medium mb-2">
+                    Conteúdo do Poema
+                  </label>{" "}
+                  <Textarea
+                    value={newPoem.content}
+                    onChange={(e) =>
+                      setNewPoem({ ...newPoem, content: e.target.value })
+                    }
+                    placeholder="Escreva seu poema aqui..."
+                    className="min-h-[200px] resize-none font-heading"
+                  />{" "}
+                </div>{" "}
+              </div>{" "}
+              {/* Preview */}
+              {newPoem.title && newPoem.content && (
+                <div className="mt-8 p-6 bg-gradient-to-br from-spiritual-violet/5 to-spiritual-violet/10 border-l-4 border-spiritual-violet rounded-lg">
+                  {" "}
+                  <h4 className="text-lg font-heading font-bold mb-2">
+                    {newPoem.title}
+                  </h4>{" "}
+                  <blockquote className="poem-text text-foreground whitespace-pre-line mb-4">
+                    {" "}
+                    {newPoem.content}
+                  </blockquote>{" "}
+                  {newPoem.author && (
+                    <p className="text-right font-heading italic text-muted-foreground">
+                      {" "}
+                      - {newPoem.author}
+                    </p>
+                  )}
+                </div>
+              )}
+              <div className="flex justify-end gap-4">
+                {" "}
+                <Button
+                  variant="outline"
+                  onClick={() =>
+                    setNewPoem({
+                      title: "",
+                      content: "",
+                      author: "",
+                      category: "faith",
+                    })
+                  }
+                >
+                  {" "}
+                  Limpar{" "}
+                </Button>{" "}
+                <Button
+                  onClick={handleSavePoem}
+                  className="gradient-spiritual text-white"
+                >
+                  {" "}
+                  Salvar Poema{" "}
+                </Button>{" "}
+              </div>{" "}
+            </CardContent>{" "}
+          </Card>{" "}
+        </TabsContent>{" "}
+        {/* Diary Tab */}
+        <TabsContent value="diary" className="mt-8">
+          {" "}
+          <Card className="max-w-4xl mx-auto shadow-medium">
+            {" "}
+            <CardHeader>
+              {" "}
+              <CardTitle className="text-2xl font-heading text-secondary flex items-center gap-2">
+                {" "}
+                <Heart className="spiritual-icon spiritual-icon-xl" /> Diário
+                Espiritual{" "}
+              </CardTitle>{" "}
+              <p className="text-muted-foreground">
+                {" "}
+                Um espaço íntimo para registrar sua jornada de fé e crescimento
+                pessoal{" "}
+              </p>{" "}
+            </CardHeader>{" "}
+            <CardContent className="space-y-6">
+              {" "}
+              <div className="bg-gradient-to-br from-secondary/5 to-secondary/10 border-l-4 border-secondary rounded-lg p-6">
+                {" "}
+                <h4 className="font-heading font-semibold text-lg mb-4 text-secondary">
+                  {" "}
+                  Reflexões de hoje -{" "}
+                  {new Date().toLocaleDateString("pt-BR", {
+                    weekday: "long",
+                    year: "numeric",
+                    month: "long",
+                    day: "numeric",
+                  })}
+                </h4>{" "}
+                <div className="grid md:grid-cols-3 gap-4 mb-6 text-sm">
+                  {" "}
+                  <div className="bg-white/50 p-3 rounded">
+                    {" "}
+                    <strong>Gratidão:</strong> Pelo que sou grato hoje?{" "}
+                  </div>{" "}
+                  <div className="bg-white/50 p-3 rounded">
+                    {" "}
+                    <strong>Aprendizado:</strong> O que aprendi sobre mim ou
+                    sobre Deus?{" "}
+                  </div>{" "}
+                  <div className="bg-white/50 p-3 rounded">
+                    {" "}
+                    <strong>Oração:</strong> Que oração nasce do meu
+                    coração?{" "}
+                  </div>{" "}
+                </div>{" "}
+                <Textarea
+                  value={diaryEntry}
+                  onChange={(e) => setDiaryEntry(e.target.value)}
+                  placeholder="Escreva aqui seus pensamentos, gratidões, reflexões e orações do dia..."
+                  className="min-h-[300px] resize-none"
+                />{" "}
+                <div className="flex justify-end gap-4 mt-6">
+                  {" "}
+                  <Button variant="outline" onClick={() => setDiaryEntry("")}>
+                    {" "}
+                    Limpar{" "}
+                  </Button>{" "}
+                  <Button
+                    onClick={handleSaveDiary}
+                    className="gradient-secondary text-secondary-foreground"
+                  >
+                    {" "}
+                    Salvar no Diário{" "}
+                  </Button>{" "}
+                </div>{" "}
+              </div>{" "}
+            </CardContent>{" "}
+          </Card>{" "}
+        </TabsContent>{" "}
+      </Tabs>{" "}
+    </div>
+  );
+};

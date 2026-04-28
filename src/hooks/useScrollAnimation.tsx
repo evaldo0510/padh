@@ -1,11 +1,11 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from "react";
 
 export const useScrollAnimation = (threshold = 0.1) => {
   const ref = useRef<HTMLDivElement>(null);
   const [isVisible, setIsVisible] = useState(false);
 
   useEffect(() => {
-    if (typeof window === 'undefined') {
+    if (typeof window === "undefined") {
       setIsVisible(true);
       return;
     }
@@ -16,16 +16,18 @@ export const useScrollAnimation = (threshold = 0.1) => {
       return;
     }
 
-    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
       setIsVisible(true);
       return;
     }
 
     const revealIfNearViewport = () => {
       const rect = currentRef.getBoundingClientRect();
-      const viewportHeight = window.innerHeight || document.documentElement.clientHeight;
+      const viewportHeight =
+        window.innerHeight || document.documentElement.clientHeight;
       const revealOffset = Math.min(120, viewportHeight * 0.12);
-      const shouldReveal = rect.top <= viewportHeight - revealOffset && rect.bottom >= 0;
+      const shouldReveal =
+        rect.top <= viewportHeight - revealOffset && rect.bottom >= 0;
 
       if (shouldReveal) {
         setIsVisible(true);
@@ -38,22 +40,25 @@ export const useScrollAnimation = (threshold = 0.1) => {
       return;
     }
 
-    const supportsIntersectionObserver = typeof IntersectionObserver !== 'undefined';
+    const supportsIntersectionObserver =
+      typeof IntersectionObserver !== "undefined";
 
     if (!supportsIntersectionObserver) {
       const handleFallbackReveal = () => {
         if (revealIfNearViewport()) {
-          window.removeEventListener('scroll', handleFallbackReveal);
-          window.removeEventListener('resize', handleFallbackReveal);
+          window.removeEventListener("scroll", handleFallbackReveal);
+          window.removeEventListener("resize", handleFallbackReveal);
         }
       };
 
-      window.addEventListener('scroll', handleFallbackReveal, { passive: true });
-      window.addEventListener('resize', handleFallbackReveal);
+      window.addEventListener("scroll", handleFallbackReveal, {
+        passive: true,
+      });
+      window.addEventListener("resize", handleFallbackReveal);
 
       return () => {
-        window.removeEventListener('scroll', handleFallbackReveal);
-        window.removeEventListener('resize', handleFallbackReveal);
+        window.removeEventListener("scroll", handleFallbackReveal);
+        window.removeEventListener("resize", handleFallbackReveal);
       };
     }
 
@@ -66,8 +71,8 @@ export const useScrollAnimation = (threshold = 0.1) => {
       },
       {
         threshold,
-        rootMargin: '0px 0px -100px 0px',
-      }
+        rootMargin: "0px 0px -100px 0px",
+      },
     );
 
     observer.observe(currentRef);
@@ -78,10 +83,10 @@ export const useScrollAnimation = (threshold = 0.1) => {
       }
     };
 
-    window.addEventListener('resize', handleResize);
+    window.addEventListener("resize", handleResize);
 
     return () => {
-      window.removeEventListener('resize', handleResize);
+      window.removeEventListener("resize", handleResize);
       observer.disconnect();
     };
   }, [threshold]);

@@ -1,6 +1,6 @@
-import React from 'react';
-import { Printer } from 'lucide-react';
-import { Button } from '@/components/ui/button';
+import React from "react";
+import { Printer } from "lucide-react";
+import { Button } from "@/components/ui/button";
 
 /**
  * Botão flutuante para acionar o modo imprimir.
@@ -9,9 +9,11 @@ import { Button } from '@/components/ui/button';
 const BotaoModoImprimir: React.FC = () => {
   const handlePrint = () => {
     // Abre todos os accordions antes de imprimir, para que o conteúdo apareça
-    document.querySelectorAll<HTMLButtonElement>('[data-state="closed"]').forEach((el) => {
-      if (el.tagName === 'BUTTON') el.click();
-    });
+    document
+      .querySelectorAll<HTMLButtonElement>('[data-state="closed"]')
+      .forEach((el) => {
+        if (el.tagName === "BUTTON") el.click();
+      });
     // Pequeno delay para o DOM atualizar
     window.setTimeout(() => window.print(), 250);
   };
