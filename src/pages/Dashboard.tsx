@@ -754,7 +754,16 @@ const EpisodeHistorySection: React.FC<EpisodeHistoryProps> = ({
         )}
       </div>
 
-      {!isAuthenticated && !loading && (
+      {error && (
+        <div className="text-sm bg-destructive/10 border border-destructive/30 text-destructive rounded-lg p-4 mb-4 flex items-center justify-between gap-3 flex-wrap">
+          <span>Não foi possível carregar o progresso: {error}</span>
+          <Button variant="outline" size="sm" onClick={onReload} disabled={reloading} className="gap-2">
+            <RefreshCw className={`w-4 h-4 ${reloading ? "animate-spin" : ""}`} /> Tentar novamente
+          </Button>
+        </div>
+      )}
+
+      {!isAuthenticated && !loading && !error && (
         <div className="text-xs text-muted-foreground bg-muted/30 rounded-lg p-3 mb-4">
           Você está vendo dados locais. Faça login para sincronizar seu progresso na nuvem.
         </div>
