@@ -21,13 +21,13 @@ const LoginPage = () => {
     // Check if already logged in (simulated)
     const simulatedUser = localStorage.getItem('padh_simulated_user');
     if (simulatedUser) {
-      navigate('/dashboard');
+      navigate(from);
     }
     
     // Check real supabase auth if configured
     if (supabaseConfig.isConfigured) {
       supabase.auth.getSession().then(({ data: { session } }) => {
-        if (session) navigate('/dashboard');
+        if (session) navigate(from);
       });
     }
   }, [navigate]);
@@ -56,7 +56,7 @@ const LoginPage = () => {
           });
           
           setIsLoading(false);
-          navigate('/dashboard');
+          navigate(from);
         }, 1500);
         return;
       }
@@ -72,7 +72,7 @@ const LoginPage = () => {
       toast.success("Bem-vindo de volta!", {
         description: "Você acessou sua conta com sucesso."
       });
-      navigate('/dashboard');
+      navigate(from);
     } catch (error: any) {
       toast.error("Erro ao entrar", {
         description: error.message || "Verifique suas credenciais."
