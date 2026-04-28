@@ -354,7 +354,7 @@ const Dashboard = () => {
           </NetflixCarousel>
 
           {/* Episode History — per-episode status & last response */}
-          <section className="container mx-auto px-6 md:px-12 py-8">
+          <section id="episode-history" className="container mx-auto px-6 md:px-12 py-8 scroll-mt-32">
             <div className="flex items-center justify-between mb-6">
               <h2 className="text-2xl md:text-3xl font-heading font-black flex items-center gap-3">
                 <Clock className="w-6 h-6 text-primary" /> Histórico por Episódio
