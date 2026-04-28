@@ -26,7 +26,7 @@ const Sobre = () => {
         <div className="relative container mx-auto px-6 z-10">
           <div className="max-w-4xl mx-auto text-center space-y-6 animate-fade-in-up">
             <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-primary/20 bg-primary/5 text-primary text-sm font-medium">
-              <Star className="h-3.5 w-3.5" />
+              <Star className="h-3.5 w-3.5 spiritual-icon" />
               A origem de uma metodologia transformadora
             </div>
 
