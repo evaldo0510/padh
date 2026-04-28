@@ -111,40 +111,85 @@ const UiGuide = () => {
               <span className="w-8 h-8 rounded-lg bg-primary/10 flex items-center justify-center text-primary text-sm font-bold">02</span>
               Campos de Formulário
             </h2>
-            <div className="grid md:grid-cols-3 gap-6">
+            <div className="grid gap-6">
               <Card>
                 <CardHeader>
-                  <CardTitle className="text-base">Input</CardTitle>
-                  <CardDescription>h-11, px-4, rounded-xl</CardDescription>
+                  <CardTitle className="text-base">Tamanhos de Input, Select e Textarea</CardTitle>
+                  <CardDescription>Consistência de altura e arredondamento entre todos os campos.</CardDescription>
                 </CardHeader>
-                <CardContent>
-                  <Input placeholder="Digite algo..." />
-                </CardContent>
-              </Card>
-              <Card>
-                <CardHeader>
-                  <CardTitle className="text-base">Select</CardTitle>
-                  <CardDescription>h-11, px-4, rounded-xl</CardDescription>
-                </CardHeader>
-                <CardContent>
-                  <Select>
-                    <SelectTrigger>
-                      <SelectValue placeholder="Selecione..." />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="1">Opção 1</SelectItem>
-                      <SelectItem value="2">Opção 2</SelectItem>
-                    </SelectContent>
-                  </Select>
-                </CardContent>
-              </Card>
-              <Card>
-                <CardHeader>
-                  <CardTitle className="text-base">Textarea</CardTitle>
-                  <CardDescription>min-h-20, py-2, rounded-xl</CardDescription>
-                </CardHeader>
-                <CardContent>
-                  <Textarea placeholder="Mensagem longa..." />
+                <CardContent className="space-y-8">
+                  {/* Inputs */}
+                  <div className="grid md:grid-cols-3 gap-6 items-end">
+                    <div className="space-y-2">
+                      <Badge variant="outline" className="font-mono text-[10px]">sm (h-9, rounded-lg)</Badge>
+                      <Input inputSize="sm" placeholder="Input pequeno" />
+                    </div>
+                    <div className="space-y-2">
+                      <Badge variant="outline" className="font-mono text-[10px]">default (h-11, rounded-xl)</Badge>
+                      <Input inputSize="default" placeholder="Input padrão" />
+                    </div>
+                    <div className="space-y-2">
+                      <Badge variant="outline" className="font-mono text-[10px]">lg (h-12, rounded-2xl)</Badge>
+                      <Input inputSize="lg" placeholder="Input grande" />
+                    </div>
+                  </div>
+
+                  <Separator />
+
+                  {/* Selects */}
+                  <div className="grid md:grid-cols-3 gap-6 items-end">
+                    <div className="space-y-2">
+                      <Badge variant="outline" className="font-mono text-[10px]">sm (h-9, rounded-lg)</Badge>
+                      <Select>
+                        <SelectTrigger selectSize="sm">
+                          <SelectValue placeholder="Select pequeno" />
+                        </SelectTrigger>
+                        <SelectContent>
+                          <SelectItem value="1">Opção 1</SelectItem>
+                        </SelectContent>
+                      </Select>
+                    </div>
+                    <div className="space-y-2">
+                      <Badge variant="outline" className="font-mono text-[10px]">default (h-11, rounded-xl)</Badge>
+                      <Select>
+                        <SelectTrigger selectSize="default">
+                          <SelectValue placeholder="Select padrão" />
+                        </SelectTrigger>
+                        <SelectContent>
+                          <SelectItem value="1">Opção 1</SelectItem>
+                        </SelectContent>
+                      </Select>
+                    </div>
+                    <div className="space-y-2">
+                      <Badge variant="outline" className="font-mono text-[10px]">lg (h-12, rounded-2xl)</Badge>
+                      <Select>
+                        <SelectTrigger selectSize="lg">
+                          <SelectValue placeholder="Select grande" />
+                        </SelectTrigger>
+                        <SelectContent>
+                          <SelectItem value="1">Opção 1</SelectItem>
+                        </SelectContent>
+                      </Select>
+                    </div>
+                  </div>
+
+                  <Separator />
+
+                  {/* Textareas */}
+                  <div className="grid md:grid-cols-3 gap-6 items-start">
+                    <div className="space-y-2">
+                      <Badge variant="outline" className="font-mono text-[10px]">sm (min-h-60, rounded-lg)</Badge>
+                      <Textarea textareaSize="sm" placeholder="Textarea pequena" />
+                    </div>
+                    <div className="space-y-2">
+                      <Badge variant="outline" className="font-mono text-[10px]">default (min-h-80, rounded-xl)</Badge>
+                      <Textarea textareaSize="default" placeholder="Textarea padrão" />
+                    </div>
+                    <div className="space-y-2">
+                      <Badge variant="outline" className="font-mono text-[10px]">lg (min-h-120, rounded-2xl)</Badge>
+                      <Textarea textareaSize="lg" placeholder="Textarea grande" />
+                    </div>
+                  </div>
                 </CardContent>
               </Card>
             </div>
