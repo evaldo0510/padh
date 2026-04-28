@@ -16,6 +16,10 @@ import {
   Trophy,
   Target,
   Clock,
+  CreditCard,
+  ShoppingBag,
+  CheckCircle2,
+  Lock,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
