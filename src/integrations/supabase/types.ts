@@ -14,6 +14,27 @@ export type Database = {
   }
   public: {
     Tables: {
+      episode_favorites: {
+        Row: {
+          created_at: string
+          id: string
+          session_id: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          session_id: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          session_id?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
       episode_progress: {
         Row: {
           completed_at: string | null
