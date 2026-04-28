@@ -40,6 +40,8 @@ const Dashboard = () => {
   const { progress, isModuleUnlocked } = useCourseProgress();
   const navigate = useNavigate();
   const [scrolled, setScrolled] = useState(false);
+  const [isAuthed, setIsAuthed] = useState(false);
+  const [navigatingTo, setNavigatingTo] = useState<string | null>(null);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -48,6 +50,28 @@ const Dashboard = () => {
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
+
+  useEffect(() => {
+    const sim = !!localStorage.getItem("padh_simulated_user");
+    setIsAuthed(sim);
+    const { data: sub } = supabase.auth.onAuthStateChange((_e, session) => {
+      setIsAuthed(!!session || !!localStorage.getItem("padh_simulated_user"));
+    });
+    supabase.auth.getSession().then(({ data: { session } }) => {
+      setIsAuthed(!!session || !!localStorage.getItem("padh_simulated_user"));
+    });
+    return () => sub.subscription.unsubscribe();
+  }, []);
+
+  const goTo = (path: string, label: string) => {
+    setNavigatingTo(path);
+    toast.loading(`Abrindo ${label}...`, { id: "nav-toast", duration: 1500 });
+    navigate(path);
+  };
+
+  const scrollToHistory = () => {
+    document.getElementById("episode-history")?.scrollIntoView({ behavior: "smooth", block: "start" });
+  };
 
   const handleLogout = async () => {
     localStorage.removeItem("padh_simulated_user");
