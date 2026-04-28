@@ -16,6 +16,10 @@ import {
   Trophy,
   Target,
   Clock,
+  CreditCard,
+  ShoppingBag,
+  CheckCircle2,
+  Lock,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -151,9 +155,15 @@ const Dashboard = () => {
               <SyncStatusIndicator />
               <NotificationCenter />
            </div>
-           <div className="flex gap-4">
+           <div className="flex gap-2 md:gap-4 flex-wrap">
               <Button asChild variant="ghost" size="sm" className="gap-2 text-muted-foreground hover:text-white">
                 <Link to="/recursos-clinicos"><Library className="w-4 h-4" /> Biblioteca</Link>
+              </Button>
+              <Button asChild variant="ghost" size="sm" className="gap-2 text-muted-foreground hover:text-primary">
+                <Link to="/planos"><CreditCard className="w-4 h-4" /> Planos</Link>
+              </Button>
+              <Button asChild variant="ghost" size="sm" className="gap-2 text-muted-foreground hover:text-primary">
+                <Link to="/meu-produto"><ShoppingBag className="w-4 h-4" /> Meu Produto</Link>
               </Button>
               <Button variant="ghost" size="sm" className="gap-2 text-muted-foreground hover:text-destructive" onClick={handleLogout}>
                 <LogOut className="w-4 h-4" /> Sair
@@ -285,6 +295,69 @@ const Dashboard = () => {
                />
              ))}
           </NetflixCarousel>
+
+          {/* Episode History — per-episode status & last response */}
+          <section className="container mx-auto px-6 md:px-12 py-8">
+            <div className="flex items-center justify-between mb-6">
+              <h2 className="text-2xl md:text-3xl font-heading font-black flex items-center gap-3">
+                <Clock className="w-6 h-6 text-primary" /> Histórico por Episódio
+              </h2>
+              <Button asChild variant="link" className="text-primary">
+                <Link to="/meu-produto">Ver tudo <ChevronRight className="w-4 h-4 ml-1" /></Link>
+              </Button>
+            </div>
+            <div className="grid gap-3">
+              {JORNADA_DATA.flatMap((fase) =>
+                fase.sessoes.map((s, idx) => {
+                  const done = jornada.completedSessions.includes(s.id);
+                  const sessionResponses = s.exercicios.filter((ex) =>
+                    jornada.responses.some((r) => r.exerciseId === ex.id),
+                  );
+                  const inProgress = !done && sessionResponses.length > 0;
+                  const lastResp = jornada.responses
+                    .filter((r) => s.exercicios.some((ex) => ex.id === r.exerciseId))
+                    .sort((a, b) => (a.date < b.date ? 1 : -1))[0];
+
+                  return (
+                    <div
+                      key={`${fase.id}-${s.id}`}
+                      className="bg-card/50 hover:bg-card border border-white/5 rounded-xl p-4 flex items-start gap-4 transition-colors cursor-pointer"
+                      onClick={() => navigate(`/jornada/${fase.id}/${s.id}`)}
+                    >
+                      <div className="text-xl font-heading font-black text-primary/40 w-10 text-center shrink-0">
+                        {String(idx + 1).padStart(2, "0")}
+                      </div>
+                      <div className="flex-1 min-w-0">
+                        <div className="flex items-center gap-2 flex-wrap">
+                          <span className="text-xs uppercase tracking-wider text-muted-foreground">
+                            {fase.titulo}
+                          </span>
+                          {done ? (
+                            <Badge className="bg-primary/10 text-primary border-primary/20 text-[10px]">
+                              <CheckCircle2 className="w-3 h-3 mr-1" /> Concluído
+                            </Badge>
+                          ) : inProgress ? (
+                            <Badge variant="outline" className="text-[10px]">Em andamento</Badge>
+                          ) : (
+                            <Badge variant="outline" className="text-[10px] text-muted-foreground">
+                              <Lock className="w-3 h-3 mr-1" /> Não iniciado
+                            </Badge>
+                          )}
+                        </div>
+                        <h3 className="font-bold mt-1 truncate">{s.titulo}</h3>
+                        {lastResp && (
+                          <p className="mt-2 text-xs text-muted-foreground italic line-clamp-2">
+                            "{lastResp.response}"
+                          </p>
+                        )}
+                      </div>
+                      <ChevronRight className="w-5 h-5 text-muted-foreground shrink-0 mt-1" />
+                    </div>
+                  );
+                }),
+              )}
+            </div>
+          </section>
 
           {/* User Stats & Info Section (Bottom) */}
           <section className="container mx-auto px-6 md:px-12 py-12 grid grid-cols-1 md:grid-cols-3 gap-8">

@@ -62,6 +62,8 @@ const Header = () => {
     { name: 'Início', path: '/' },
     { name: 'Dashboard', path: '/dashboard' },
     { name: 'Jornada', path: '/jornada' },
+    { name: 'Planos', path: '/planos' },
+    { name: 'Meu Produto', path: '/meu-produto' },
     { name: 'Sobre', path: '/sobre' },
     { name: 'Livro-Curso', path: '/livro-curso' },
     { name: 'Formação P.A.D.H.', path: '/formacao' },
