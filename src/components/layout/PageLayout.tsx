@@ -17,6 +17,8 @@ interface PageLayoutProps {
   currentPage?: string;
   showBackButton?: boolean;
   loadingDelay?: number;
+  hideHeader?: boolean;
+  hideFooter?: boolean;
 }
 
 const PageLayout: React.FC<PageLayoutProps> = ({
@@ -25,6 +27,8 @@ const PageLayout: React.FC<PageLayoutProps> = ({
   currentPage,
   showBackButton = true,
   loadingDelay = 150,
+  hideHeader = false,
+  hideFooter = false,
 }) => {
   const isLoading = usePageLoading(loadingDelay);
 
@@ -38,12 +42,12 @@ const PageLayout: React.FC<PageLayoutProps> = ({
         path={seo.path}
         jsonLd={seo.jsonLd}
       />
-      <Header />
+      {!hideHeader && <Header />}
       {currentPage && (
         <PageHeader currentPage={currentPage} showBackButton={showBackButton} />
       )}
       <main className="flex-1">{children}</main>
-      <Footer />
+      {!hideFooter && <Footer />}
     </div>
   );
 };

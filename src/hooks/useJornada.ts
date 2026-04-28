@@ -15,6 +15,7 @@ export interface JornadaProgress {
   completedExercises: string[]; // exerciseId[]
   completedSessions: string[]; // sessionId[]
   responses: RespostaExercicio[];
+  favorites?: string[]; // IDs of sessions, modules or tools
   last_updated?: string;
 }
 
@@ -25,6 +26,7 @@ const INITIAL_JORNADA: JornadaProgress = {
   completedExercises: [],
   completedSessions: [],
   responses: [],
+  favorites: [],
 };
 
 export const useJornada = () => {
@@ -151,12 +153,33 @@ export const useJornada = () => {
     );
   };
 
+  const toggleFavorite = (id: string) => {
+    setJornada((prev) => {
+      const currentFavs = prev.favorites || [];
+      const isFav = currentFavs.includes(id);
+      const newFavs = isFav
+        ? currentFavs.filter((f) => f !== id)
+        : [...currentFavs, id];
+
+      return {
+        ...prev,
+        favorites: newFavs,
+      };
+    });
+  };
+
+  const isFavorite = (id: string) => {
+    return (jornada.favorites || []).includes(id);
+  };
+
   return {
     jornada,
     saveResponse,
     completeSession,
     setPhase,
     getResponse,
+    toggleFavorite,
+    isFavorite,
     isSyncing,
     hasConfig: hasSupabaseConfig(),
   };
