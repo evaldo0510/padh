@@ -492,6 +492,10 @@ const Dashboard = () => {
             loading={loadingProgress}
             reloading={reloading}
             onReload={handleReload}
+            error={progressError}
+            lastSyncAt={lastSyncAt}
+            recentlyChanged={recentlyChanged}
+            totalRemote={totalRemote}
           />
 
           {/* User Stats & Info Section (Bottom) */}
