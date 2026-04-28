@@ -145,7 +145,7 @@ const Dashboard = () => {
           <Card className="border-primary/10">
             <CardHeader className="pb-2">
               <CardDescription className="flex items-center gap-2">
-                <Target className="h-4 w-4 text-primary" /> Próximo Módulo
+                <Target className="h-4 w-4 spiritual-icon" /> Próximo Módulo
               </CardDescription>
               <CardTitle className="text-xl font-bold truncate">
                 {nextModule ? nextModule.titulo : "Tudo concluído!"}
