@@ -287,7 +287,7 @@ export const BibliotecaDigital = () => {
                     <div className="space-y-3">
                       <div className="flex items-center gap-2">
                         {typeIcons[selectedItem.type]}
-                        <Badge className={`${typeColors[selectedItem.type]}`}>
+                        <Badge variant="spiritual" className={typeColors[selectedItem.type]}>
                           {typeNames[selectedItem.type]}
                         </Badge>
                         <span className="text-sm text-muted-foreground">{selectedItem.category}</span>
