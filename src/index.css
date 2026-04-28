@@ -342,7 +342,23 @@
 
   /* Icon & Chip Standardized Styles */
   .spiritual-icon {
-    @apply text-primary transition-colors duration-300;
+    @apply w-4 h-4 text-primary transition-all duration-300;
+  }
+
+  .spiritual-icon-sm {
+    @apply w-3.5 h-3.5;
+  }
+
+  .spiritual-icon-lg {
+    @apply w-5 h-5;
+  }
+
+  .spiritual-icon-xl {
+    @apply w-6 h-6;
+  }
+
+  .spiritual-icon-2xl {
+    @apply w-8 h-8;
   }
 
   .spiritual-chip {
