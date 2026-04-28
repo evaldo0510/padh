@@ -116,7 +116,7 @@ const ComboPADH = () => {
                     <div className="flex flex-col md:flex-row gap-8">
                       <div className="md:w-1/2">
                         <div className="flex items-center gap-3 mb-4">
-                          <div className="p-2 rounded-lg bg-primary/10 text-primary">{pillar.icon}</div>
+                          <div className="p-2 rounded-lg bg-primary/10 text-primary spiritual-icon">{pillar.icon}</div>
                           <div>
                             <h3 className="text-2xl font-heading font-bold text-foreground">{pillar.title}</h3>
                             <p className="text-primary text-sm font-medium">{pillar.subtitle}</p>
