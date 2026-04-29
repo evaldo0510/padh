@@ -13,7 +13,7 @@ export interface SessaoJornada {
   titulo: string;
   descricao: string;
   exercicios: Exercicio[];
-  objetivos?: string[];
+  objetivos?: PCHObjectiveId[];
 }
 
 export interface FaseJornada {
