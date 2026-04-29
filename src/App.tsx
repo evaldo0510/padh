@@ -85,6 +85,8 @@ const PlanosPage = lazy(() => import("./pages/PlanosPage"));
 const MeuProduto = lazy(() => import("./pages/MeuProduto"));
 const Explorar = lazy(() => import("./pages/Explorar"));
 const ConscienciaHistorico = lazy(() => import("./pages/ConscienciaHistorico"));
+const Changelog = lazy(() => import("./pages/Changelog"));
+const Offline = lazy(() => import("./pages/Offline"));
 
 const queryClient = new QueryClient();
 
