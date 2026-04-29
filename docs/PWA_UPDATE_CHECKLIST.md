@@ -54,7 +54,23 @@ recebem a versão mais recente sem precisar limpar cache manualmente.
 | UI continua antiga após atualizar | Confirmar que `cleanupOutdatedCaches: true` está ativo no Workbox |
 | Update banner em iframe Lovable | O guard em `main.tsx` deveria suprimir — checar `isPreviewHost` |
 
-## Smoke test rápido (1 min)
+## Smoke test automatizado (CLI)
+
+Rode após cada deploy para validar headers, SW e manifest:
+
+```bash
+node scripts/pwa-smoke-test.mjs https://padhpoesia.lovable.app
+# ou validando versão específica:
+EXPECTED_VERSION=1.2.0 node scripts/pwa-smoke-test.mjs https://padhpoesia.lovable.app
+```
+
+Verifica:
+- `/` retorna 200 e não está cacheado de forma agressiva
+- `/sw.js` existe, é Workbox e chama `skipWaiting()`
+- `/manifest.webmanifest` é JSON válido com `display: standalone` e ícones
+- (opcional) versão exibida bate com `EXPECTED_VERSION`
+
+## Smoke test manual rápido (1 min)
 
 1. Abra produção → DevTools → Application → Service Workers → "Update on reload" OFF
 2. Faça um deploy trivial (mude um texto visível)
