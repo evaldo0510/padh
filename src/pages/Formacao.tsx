@@ -44,7 +44,7 @@ const Formacao = () => {
     },
     {
       numero: 3,
-      titulo: "A Estrutura P.A.D.H.",
+      titulo: "A Estrutura PCH",
       duracao: "60 min",
       descricao:
         "O mapa da atuação terapêutica poética: Poesia – Aplicada – Desenvolvimento – Humano.",
