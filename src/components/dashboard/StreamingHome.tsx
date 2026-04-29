@@ -249,7 +249,3 @@ const StreamingHome = () => {
 };
 
 export default StreamingHome;
-  );
-};
-
-export default StreamingHome;
