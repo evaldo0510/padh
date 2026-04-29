@@ -30,18 +30,22 @@ const steps = [
 
 const PCHWelcome: React.FC<{ onComplete?: () => void }> = ({ onComplete }) => {
   const [step, setStep] = useState(0);
+  const [objective, setObjective] = useState<string | null>(null);
   const navigate = useNavigate();
 
   const finish = () => {
     try {
       localStorage.setItem(STORAGE_KEY, "1");
+      if (objective) {
+        localStorage.setItem("pch_user_objective", objective);
+      }
     } catch {}
     onComplete?.();
     navigate("/jornada");
   };
 
   const next = () => {
-    if (step < steps.length - 1) setStep(step + 1);
+    if (step < steps.length) setStep(step + 1);
     else finish();
   };
 
