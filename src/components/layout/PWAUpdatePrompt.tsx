@@ -77,28 +77,38 @@ const PWAUpdatePrompt = () => {
           role="status"
           aria-live="polite"
         >
-          <div className="flex items-center gap-4 px-5 py-4 rounded-2xl border border-primary/20 bg-slate-900/95 backdrop-blur-xl shadow-2xl shadow-primary/10">
-            <div className="w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center shrink-0">
-              <RefreshCw className="w-5 h-5 text-primary" />
+          <div className="flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-4 px-5 py-4 rounded-2xl border border-primary/20 bg-slate-900/95 backdrop-blur-xl shadow-2xl shadow-primary/10">
+            <div className="flex items-center gap-3 flex-1 min-w-0">
+              <div className="w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center shrink-0">
+                <RefreshCw className="w-5 h-5 text-primary" />
+              </div>
+              <div className="flex-1 min-w-0">
+                <p className="text-sm font-bold text-white">Nova versão disponível</p>
+                <Link
+                  to="/changelog"
+                  onClick={() => setNeedRefresh(false)}
+                  className="text-xs text-primary/80 hover:text-primary inline-flex items-center gap-1.5 underline-offset-2 hover:underline"
+                >
+                  <FileText className="w-3 h-3" /> Ver o que mudou ({APP_VERSION})
+                </Link>
+              </div>
             </div>
-            <div className="flex-1 min-w-0">
-              <p className="text-sm font-bold text-white">Nova versão disponível</p>
-              <p className="text-xs text-white/50">Atualize para receber as últimas melhorias.</p>
+            <div className="flex items-center gap-2 shrink-0">
+              <Button
+                size="sm"
+                onClick={handleUpdate}
+                className="btn-primary h-9 px-4 text-xs font-bold uppercase tracking-wider"
+              >
+                Atualizar
+              </Button>
+              <button
+                onClick={() => setNeedRefresh(false)}
+                className="text-white/30 hover:text-white/70 transition-colors p-1"
+                aria-label="Dispensar"
+              >
+                <X className="w-4 h-4" />
+              </button>
             </div>
-            <Button
-              size="sm"
-              onClick={handleUpdate}
-              className="btn-primary h-9 px-4 text-xs font-bold uppercase tracking-wider shrink-0"
-            >
-              Atualizar
-            </Button>
-            <button
-              onClick={() => setNeedRefresh(false)}
-              className="text-white/30 hover:text-white/70 transition-colors shrink-0"
-              aria-label="Dispensar"
-            >
-              <X className="w-4 h-4" />
-            </button>
           </div>
         </motion.div>
       )}
