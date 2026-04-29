@@ -151,19 +151,24 @@ const JornadaHome = () => {
                   <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                      {fase.sessoes.map((sessao, sIdx) => {
                        const isCompleted = jornada.completedSessions.includes(sessao.id);
+                       const isRecommended = sessao.objetivo === userObjective && completedSessionsCount === 0;
+                       const sessionUnlocked = isUnlocked || isRecommended;
                        
                        return (
                          <motion.div 
                           key={sessao.id}
-                          whileHover={isUnlocked ? { y: -8 } : {}}
-                          className={`group relative aspect-video bg-white/5 rounded-2xl border border-white/10 overflow-hidden cursor-pointer ${!isUnlocked && 'cursor-not-allowed'}`}
-                          onClick={() => isUnlocked && navigate(`/jornada/${fase.id}/${sessao.id}`)}
+                          whileHover={sessionUnlocked ? { y: -8 } : {}}
+                          className={`group relative aspect-video bg-white/5 rounded-2xl border border-white/10 overflow-hidden cursor-pointer ${!sessionUnlocked && 'cursor-not-allowed'} ${isRecommended ? 'ring-2 ring-primary border-primary' : ''}`}
+                          onClick={() => sessionUnlocked && navigate(`/jornada/${fase.id}/${sessao.id}`)}
                          >
                             <div className="absolute inset-0 bg-gradient-to-t from-black via-black/20 to-transparent" />
                             
                             <div className="absolute inset-0 p-6 flex flex-col justify-end gap-2">
                                <div className="flex items-center justify-between">
-                                  <span className="text-[10px] font-bold text-primary uppercase tracking-widest">Episódio {sIdx + 1}</span>
+                                  <div className="flex gap-2">
+                                    <span className="text-[10px] font-bold text-primary uppercase tracking-widest">Episódio {sIdx + 1}</span>
+                                    {isRecommended && <Badge className="bg-primary text-primary-foreground text-[8px] h-4">Sugerido</Badge>}
+                                  </div>
                                   {isCompleted && <CheckCircle2 className="w-5 h-5 text-primary" />}
                                </div>
                                <h3 className="text-xl font-bold">{sessao.titulo}</h3>
