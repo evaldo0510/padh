@@ -109,10 +109,10 @@ const Header = () => {
             <Logo size="md" className="w-9 h-9 md:w-11 md:h-11" />
             <div className="flex flex-col justify-center min-w-0">
               <span className="text-lg md:text-2xl font-heading font-black text-foreground leading-none tracking-tighter group-hover:text-primary transition-colors truncate">
-                P.A.D.H.
+                PCH
               </span>
               <span className="text-[8px] md:text-[10px] text-primary/80 leading-none font-bold uppercase tracking-wider mt-0.5 md:mt-1 whitespace-nowrap overflow-hidden text-ellipsis max-w-[120px] xs:max-w-[160px] md:max-w-none">
-                Poesia Aplicada ao Desenvolvimento Humano
+                Poesia Cognitiva Hipnótica
               </span>
             </div>
           </PrefetchLink>
