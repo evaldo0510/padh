@@ -1,10 +1,9 @@
 import * as React from "react";
 import { cva, type VariantProps } from "class-variance-authority";
-
 import { cn } from "@/lib/utils";
 
 const textareaVariants = cva(
-  "flex w-full border border-primary/20 bg-background/50 text-base text-foreground ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 md:text-sm transition-all duration-300 hover:border-primary/40 hover:bg-background/60 focus-visible:border-primary/50",
+  "flex w-full border border-white/10 bg-white/5 text-base text-foreground ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:border-primary/50 disabled:cursor-not-allowed disabled:opacity-50 md:text-sm transition-all duration-300 hover:border-white/20",
   {
     variants: {
       textareaSize: {

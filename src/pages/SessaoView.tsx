@@ -5,7 +5,6 @@ import { JORNADA_DATA } from "@/lib/jornada-data";
 import { useJornada } from "@/hooks/useJornada";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { Textarea } from "@/components/ui/textarea";
 import {
   X,
   ChevronLeft,
@@ -14,33 +13,34 @@ import {
   Sparkles,
   ArrowLeft,
   FastForward,
+  Loader2
 } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Progress } from "@/components/ui/progress";
 
 const SessaoView = () => {
   const { phaseId, sessionId } = useParams();
   const navigate = useNavigate();
-  const { jornada, saveResponse, completeSession, getResponse } = useJornada();
+  const { saveResponse, completeSession, getResponse } = useJornada();
   
   const fase = JORNADA_DATA.find((f) => f.id === phaseId);
   const sessao = fase?.sessoes.find((s) => s.id === sessionId);
   
   const [currentExIdx, setCurrentExIdx] = useState(0);
   const [response, setResponse] = useState("");
+  const [isTransitioning, setIsTransitioning] = useState(false);
 
   useEffect(() => {
     if (sessao) {
       const saved = getResponse(sessao.exercicios[currentExIdx].id);
       setResponse(saved || "");
     }
-  }, [currentExIdx, sessao]);
+  }, [currentExIdx, sessao, getResponse]);
 
   if (!sessao || !fase) return (
     <div className="min-h-screen bg-background flex items-center justify-center">
-       <div className="text-center space-y-4">
-          <p className="text-muted-foreground">Sessão não encontrada</p>
-          <Button onClick={() => navigate("/dashboard")}>Voltar ao Início</Button>
+       <div className="text-center space-y-4 animate-fade-in">
+          <p className="text-muted-foreground font-light text-lg">Episódio não disponível no momento.</p>
+          <Button variant="outline" onClick={() => navigate("/dashboard")} className="rounded-full px-8">Voltar ao Início</Button>
        </div>
     </div>
   );
@@ -50,13 +50,21 @@ const SessaoView = () => {
   const progressPercent = ((currentExIdx + 1) / totalEx) * 100;
   const isLast = currentExIdx === totalEx - 1;
 
-  const handleNext = () => {
+  const handleNext = async () => {
+    if (isTransitioning) return;
+    
+    setIsTransitioning(true);
     saveResponse(currentEx.id, response);
+    
+    // Smooth transition delay
+    await new Promise(r => setTimeout(r, 800));
+    
     if (isLast) {
       completeSession(sessao.id);
       navigate("/dashboard");
     } else {
       setCurrentExIdx(currentExIdx + 1);
+      setIsTransitioning(false);
     }
   };
 
@@ -69,7 +77,7 @@ const SessaoView = () => {
   return (
     <PageLayout
       seo={{
-        title: `${sessao.titulo} — P.A.D.H. Streaming`,
+        title: `${sessao.titulo} — PCH Player`,
         description: sessao.descricao,
         path: `/jornada/${phaseId}/${sessionId}`,
       }}
@@ -77,33 +85,51 @@ const SessaoView = () => {
       hideFooter
     >
       <div className="min-h-screen bg-background text-foreground flex flex-col relative overflow-hidden">
-        {/* Cinematic Progress Bar */}
+        {/* Cinematic Loader Overlay */}
+        <AnimatePresence>
+          {isTransitioning && (
+            <motion.div 
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              className="absolute inset-0 z-[100] bg-background/80 backdrop-blur-xl flex flex-col items-center justify-center gap-6"
+            >
+               <div className="relative">
+                  <Loader2 className="w-16 h-16 text-primary animate-spin" />
+                  <Sparkles className="w-6 h-6 text-primary absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2" />
+               </div>
+               <p className="text-sm font-black uppercase tracking-[0.4em] text-primary animate-pulse">Processando Insight</p>
+            </motion.div>
+          )}
+        </AnimatePresence>
+
+        {/* Top Progress Bar */}
         <div className="absolute top-0 left-0 right-0 h-1.5 z-50 bg-white/5">
            <motion.div 
             className="h-full bg-primary shadow-glow shadow-primary/40"
             initial={{ width: 0 }}
             animate={{ width: `${progressPercent}%` }}
-            transition={{ duration: 0.8, ease: "circOut" }}
+            transition={{ duration: 1, ease: [0.22, 1, 0.36, 1] }}
            />
         </div>
 
-        {/* Minimal Player Navigation */}
-        <header className="px-8 py-6 flex justify-between items-center z-40">
+        {/* Minimal Header */}
+        <header className="px-8 py-8 flex justify-between items-center z-40">
            <div className="flex items-center gap-6">
               <Button 
                 variant="ghost" 
                 size="icon" 
                 onClick={() => navigate("/dashboard")}
-                className="rounded-2xl hover:bg-white/5 transition-all text-white/40 hover:text-white"
+                className="rounded-2xl h-12 w-12 hover:bg-white/5 transition-all text-white/30 hover:text-white"
               >
                 <ArrowLeft className="w-6 h-6" />
               </Button>
-              <div className="h-8 w-px bg-white/10 hidden md:block" />
+              <div className="h-10 w-px bg-white/10 hidden md:block" />
               <div className="hidden md:block">
-                 <p className="text-[10px] font-black uppercase tracking-[0.3em] text-primary/80 mb-0.5">
-                    {fase.titulo} · EPISÓDIO {currentExIdx + 1}
+                 <p className="text-[10px] font-black uppercase tracking-[0.4em] text-primary/60 mb-1">
+                    {fase.titulo} · ATIVIDADE {currentExIdx + 1}
                  </p>
-                 <h2 className="text-xl font-bold tracking-tight text-white leading-none">{sessao.titulo}</h2>
+                 <h2 className="text-2xl font-bold tracking-tighter text-white leading-none">{sessao.titulo}</h2>
               </div>
            </div>
 
@@ -111,105 +137,108 @@ const SessaoView = () => {
             variant="ghost" 
             size="icon" 
             onClick={() => navigate("/dashboard")}
-            className="rounded-2xl hover:bg-destructive/10 text-white/30 hover:text-destructive transition-all"
+            className="rounded-2xl h-12 w-12 hover:bg-destructive/10 text-white/20 hover:text-destructive transition-all"
            >
               <X className="w-6 h-6" />
            </Button>
         </header>
 
-        {/* Focused Therapeutic Space */}
-        <main className="flex-1 streaming-container flex flex-col justify-center items-center pb-24 relative z-20">
+        {/* Central Workspace */}
+        <main className="flex-1 streaming-container flex flex-col justify-center items-center pb-32 relative z-20">
            <AnimatePresence mode="wait">
-              <motion.div
-                key={currentEx.id}
-                initial={{ opacity: 0, scale: 0.98, y: 10 }}
-                animate={{ opacity: 1, scale: 1, y: 0 }}
-                exit={{ opacity: 0, scale: 1.02, y: -10 }}
-                transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-                className="w-full max-w-3xl space-y-12"
-              >
-                 <div className="space-y-8 text-center">
-                    <Badge variant="spiritual" className="bg-primary/10 text-primary border-primary/20 px-5 py-1.5 rounded-full font-black uppercase tracking-widest text-[10px] animate-fade-in">
-                       <Sparkles className="w-3.5 h-3.5 mr-2" /> Atividade {currentExIdx + 1} de {totalEx}
-                    </Badge>
-                    
-                    <div className="space-y-4">
-                      <h1 className="text-4xl md:text-6xl font-bold leading-tight tracking-tighter text-white">
-                         {currentEx.titulo}
-                      </h1>
-                      <p className="text-xl md:text-2xl text-white/50 font-light italic max-w-2xl mx-auto leading-relaxed">
-                         "{currentEx.instrucao}"
-                      </p>
-                    </div>
-                 </div>
+              {!isTransitioning && (
+                <motion.div
+                  key={currentEx.id}
+                  initial={{ opacity: 0, scale: 0.98, y: 15 }}
+                  animate={{ opacity: 1, scale: 1, y: 0 }}
+                  exit={{ opacity: 0, scale: 1.02, y: -15 }}
+                  transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
+                  className="w-full max-w-3xl space-y-12"
+                >
+                   <div className="space-y-8 text-center">
+                      <Badge className="bg-primary/10 text-primary border-primary/20 px-6 py-2 rounded-full font-black uppercase tracking-widest text-[10px] shadow-lg shadow-primary/5">
+                         <Sparkles className="w-3.5 h-3.5 mr-2" /> Desafio poético {currentExIdx + 1} de {totalEx}
+                      </Badge>
+                      
+                      <div className="space-y-6">
+                        <h1 className="text-4xl md:text-7xl font-bold leading-[0.9] tracking-tighter text-white">
+                           {currentEx.titulo}
+                        </h1>
+                        <p className="text-xl md:text-3xl text-white/50 font-light italic max-w-2xl mx-auto leading-relaxed">
+                           "{currentEx.instrucao}"
+                        </p>
+                      </div>
+                   </div>
 
-                 <div className="relative group w-full">
-                    <textarea
-                      value={response}
-                      onChange={(e) => setResponse(e.target.value)}
-                      placeholder={currentEx.placeholder || "Mergulhe na palavra..."}
-                      className="focus-input shadow-[0_32px_64px_-12px_rgba(0,0,0,0.5)] group-focus-within:shadow-primary/5 group-focus-within:border-primary/20 group-hover:border-white/10"
-                    />
-                    <div className="absolute bottom-6 left-1/2 -translate-x-1/2 opacity-0 group-focus-within:opacity-100 transition-opacity duration-1000 pointer-events-none">
-                       <div className="flex items-center gap-2 text-[10px] font-black uppercase tracking-[0.4em] text-primary/40">
-                          <div className="w-1 h-1 rounded-full bg-primary animate-pulse" />
-                          Ambiente de Foco Ativo
-                       </div>
-                    </div>
-                 </div>
-              </motion.div>
+                   <div className="relative group w-full">
+                      <textarea
+                        value={response}
+                        onChange={(e) => setResponse(e.target.value)}
+                        placeholder={currentEx.placeholder || "Suas palavras aqui..."}
+                        className="focus-input shadow-2xl group-focus-within:border-primary/30 group-focus-within:bg-card/60 transition-all duration-700"
+                        autoFocus
+                      />
+                      <div className="absolute bottom-8 left-1/2 -translate-x-1/2 opacity-0 group-focus-within:opacity-100 transition-opacity duration-1000 pointer-events-none">
+                         <div className="flex items-center gap-3 text-[10px] font-black uppercase tracking-[0.5em] text-primary/30">
+                            <div className="w-1.5 h-1.5 rounded-full bg-primary animate-pulse shadow-glow" />
+                            Estado de Escrita Ativo
+                         </div>
+                      </div>
+                   </div>
+                </motion.div>
+              )}
            </AnimatePresence>
         </main>
 
-        {/* Player Controller Bar */}
-        <footer className="px-8 md:px-12 py-10 flex flex-col md:flex-row items-center justify-between gap-8 z-40 bg-background/80 backdrop-blur-xl border-t border-white/5">
-           <div className="flex items-center gap-8">
+        {/* Bottom Navigation Player Style */}
+        <footer className="px-12 py-12 flex flex-col md:flex-row items-center justify-between gap-10 z-40 bg-background/90 backdrop-blur-2xl border-t border-white/5">
+           <div className="flex items-center gap-10">
               <Button
                 variant="ghost"
                 onClick={handlePrev}
-                disabled={currentExIdx === 0}
-                className="text-white/40 hover:text-white transition-all rounded-xl font-bold uppercase tracking-widest text-[10px]"
+                disabled={currentExIdx === 0 || isTransitioning}
+                className="text-white/40 hover:text-white transition-all rounded-xl font-bold uppercase tracking-[0.2em] text-[10px]"
               >
-                <ChevronLeft className="w-4 h-4 mr-2" /> Voltar
+                <ChevronLeft className="w-4 h-4 mr-2" /> Anterior
               </Button>
-              <div className="flex gap-1.5">
+              <div className="flex gap-2">
                  {Array.from({ length: totalEx }).map((_, i) => (
-                    <motion.div 
+                    <div 
                       key={i} 
-                      className={`h-1 w-10 rounded-full transition-all duration-500 ${i === currentExIdx ? 'bg-primary shadow-glow shadow-primary/20' : i < currentExIdx ? 'bg-primary/40' : 'bg-white/10'}`} 
-                      layoutId={`indicator-${i}`}
+                      className={`h-1.5 w-12 rounded-full transition-all duration-700 ${i === currentExIdx ? 'bg-primary shadow-glow shadow-primary/40' : i < currentExIdx ? 'bg-primary/30' : 'bg-white/5'}`} 
                     />
                  ))}
               </div>
            </div>
 
-           <div className="flex items-center gap-6">
+           <div className="flex items-center gap-8">
               <Button
                 variant="ghost"
-                onClick={() => setResponse("Pular exercício...")}
-                className="text-white/20 hover:text-white/60 transition-all text-[10px] uppercase font-black tracking-[0.2em]"
+                onClick={() => setResponse("Insight processado em silêncio...")}
+                disabled={isTransitioning}
+                className="text-white/20 hover:text-white/60 transition-all text-[10px] uppercase font-black tracking-[0.3em]"
               >
-                 <FastForward className="w-3.5 h-3.5 mr-2" /> Pular
+                 <FastForward className="w-4 h-4 mr-2" /> Pular
               </Button>
               
               <Button
                 onClick={handleNext}
-                disabled={!response.trim()}
-                className="btn-primary h-14 min-w-[240px] text-lg shadow-primary/20"
+                disabled={!response.trim() || isTransitioning}
+                className="btn-primary h-16 min-w-[280px] text-xl shadow-2xl group shadow-primary/20"
               >
-                {isLast ? "Concluir e Salvar" : "Concluir e Avançar"}
+                {isLast ? "Concluir Vivência" : "Próximo Passo"}
                 {isLast ? (
-                  <CheckCircle2 className="w-6 h-6 ml-3 text-white" />
+                  <CheckCircle2 className="w-7 h-7 ml-4 text-white" />
                 ) : (
-                  <ChevronRight className="w-6 h-6 ml-3 group-hover:translate-x-1 transition-transform" />
+                  <ChevronRight className="w-7 h-7 ml-4 group-hover:translate-x-2 transition-transform duration-500" />
                 )}
               </Button>
            </div>
         </footer>
 
-        {/* Dynamic Bloom background */}
-        <div className="absolute -bottom-[10%] -right-[10%] w-[600px] h-[600px] bg-primary/10 rounded-full blur-[120px] pointer-events-none animate-pulse" />
-        <div className="absolute -top-[10%] -left-[10%] w-[500px] h-[500px] bg-secondary/5 rounded-full blur-[100px] pointer-events-none" />
+        {/* Atmosphere */}
+        <div className="absolute -bottom-20 -right-20 w-[800px] h-[800px] bg-primary/5 rounded-full blur-[140px] pointer-events-none animate-pulse" />
+        <div className="absolute top-0 left-0 w-full h-full bg-[radial-gradient(circle_at_50%_50%,hsl(var(--primary)/0.03)_0%,transparent_100%)] pointer-events-none" />
       </div>
     </PageLayout>
   );

@@ -110,7 +110,7 @@ const Dashboard = () => {
     toast.dismiss("nav-toast");
   }, [location.pathname]);
 
-  const completedSessionsCount = jornada.completedSessions.length;
+  const completedSessionsCount = jornada.completedSessions?.length || 0;
   const totalSessionsCount = JORNADA_DATA.reduce((acc, f) => acc + f.sessoes.length, 0);
   const totalProgress = Math.round((completedSessionsCount / totalSessionsCount) * 100);
 

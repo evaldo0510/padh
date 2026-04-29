@@ -6,6 +6,7 @@
 
 @layer base {
   :root {
+    /* Color Tokens */
     --background: 222 47% 11%; /* #0F172A */
     --foreground: 210 32% 91%; /* #E5E7EB */
 
@@ -36,7 +37,20 @@
     --input: 215 20% 25%;
     --ring: 258 90% 66%;
 
+    /* Geometry Tokens */
     --radius: 1rem; /* 16px */
+    
+    /* Spacing Tokens (Scale of 8px) */
+    --space-1: 0.5rem;   /* 8px */
+    --space-2: 1rem;     /* 16px */
+    --space-3: 1.5rem;   /* 24px */
+    --space-4: 2rem;     /* 32px */
+    --space-6: 3rem;     /* 48px */
+    --space-8: 4rem;     /* 64px */
+    --space-12: 6rem;    /* 96px */
+
+    /* Typography Tokens */
+    --font-inter: 'Inter', sans-serif;
   }
 }
 
@@ -44,40 +58,42 @@
   * {
     @apply border-border;
     box-sizing: border-box;
+    transition: background-color 0.3s ease, border-color 0.3s ease, color 0.3s ease;
   }
+  
   body {
     @apply bg-background text-foreground;
-    font-family: 'Inter', sans-serif;
+    font-family: var(--font-inter);
     -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
   }
+  
   h1, h2, h3, h4, h5, h6 {
     @apply font-bold tracking-tight text-foreground;
   }
 }
 
 @layer components {
+  /* Layout Tokens */
   .streaming-container {
-    @apply w-full max-w-[1920px] mx-auto px-6 md:px-12;
+    @apply w-full max-w-[1920px] mx-auto px-[var(--space-3)] md:px-[var(--space-6)];
   }
   
   .glass-card {
-    @apply bg-card/60 backdrop-blur-xl border border-white/10 rounded-2xl transition-all duration-300;
+    @apply bg-card/60 backdrop-blur-xl border border-white/10 rounded-[var(--radius)] transition-all duration-300;
   }
   
+  /* Component Presets */
   .btn-primary {
-    @apply bg-primary text-primary-foreground font-bold rounded-2xl px-8 py-3 transition-all duration-300 hover:scale-105 active:scale-95 shadow-lg shadow-primary/20;
+    @apply bg-primary text-primary-foreground font-bold rounded-[var(--radius)] px-[var(--space-4)] py-[var(--space-2)] transition-all duration-300 hover:scale-105 active:scale-95 shadow-lg shadow-primary/20;
   }
   
   .btn-secondary {
-    @apply bg-white/10 text-white font-semibold rounded-2xl px-8 py-3 transition-all duration-300 hover:bg-white/20 active:scale-95 backdrop-blur-md border border-white/5;
-  }
-
-  .netflix-carousel-container {
-    @apply py-8 space-y-4;
+    @apply bg-white/10 text-white font-semibold rounded-[var(--radius)] px-[var(--space-4)] py-[var(--space-2)] transition-all duration-300 hover:bg-white/20 active:scale-95 backdrop-blur-md border border-white/5;
   }
 
   .focus-input {
-    @apply w-full bg-card/40 border-2 border-white/5 rounded-2xl p-8 text-xl text-foreground placeholder:text-muted-foreground focus:outline-none focus:border-primary/50 transition-all duration-500 min-h-[300px] resize-none leading-relaxed;
+    @apply w-full bg-card/40 border-2 border-white/5 rounded-[var(--radius)] p-[var(--space-4)] text-xl text-foreground placeholder:text-muted-foreground focus:outline-none focus:border-primary/50 transition-all duration-500 min-h-[300px] resize-none leading-relaxed;
   }
 
   .progress-bar-thin {
@@ -89,21 +105,59 @@
   }
 }
 
-/* Custom animations */
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: hsl(var(--background));
+}
+
+::-webkit-scrollbar-thumb {
+  background: hsl(var(--muted));
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: hsl(var(--border));
+}
+
+/* Animations */
 .animate-fade-in {
-  animation: fadeIn 0.8s ease-out forwards;
+  animation: fadeIn 0.8s cubic-bezier(0.22, 1, 0.36, 1) forwards;
 }
 
 .animate-scale-in {
   animation: scaleIn 0.6s cubic-bezier(0.22, 1, 0.36, 1) forwards;
 }
 
+.animate-slide-up {
+  animation: slideUp 0.6s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
 @keyframes fadeIn {
-  from { opacity: 0; transform: translateY(10px); }
-  to { opacity: 1; transform: translateY(0); }
+  from { opacity: 0; }
+  to { opacity: 1; }
 }
 
 @keyframes scaleIn {
   from { opacity: 0; transform: scale(0.95); }
   to { opacity: 1; transform: scale(1); }
+}
+
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Hide scrollbar utility */
+.scrollbar-hide {
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
+}
+
+.scrollbar-hide::-webkit-scrollbar {
+  display: none; /* Chrome, Safari and Opera */
 }
