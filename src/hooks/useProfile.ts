@@ -44,26 +44,28 @@ export const useProfile = () => {
 
       if (data) {
         const dbProfile = data as Profile;
-        
         setProfile(dbProfile);
+        setLastSync(new Date());
         
         // SYNC LOGIC:
         if (dbProfile.objective && validatedLocal && dbProfile.objective !== validatedLocal) {
-          // Conflict: Inform user that DB will be used, but they can change it
           toast.info("Objetivos diferentes encontrados", {
             description: `Mantendo "${dbProfile.objective}" da sua conta. Você pode alterar nas configurações.`,
           });
           localStorage.setItem(STORAGE_KEY, dbProfile.objective);
+          setSource("database");
         } else if (dbProfile.objective) {
           localStorage.setItem(STORAGE_KEY, dbProfile.objective);
+          setSource("database");
         } else if (validatedLocal) {
           await supabase
             .from("profiles")
             .update({ objective: validatedLocal })
             .eq("user_id", user.id);
           setProfile({ ...dbProfile, objective: validatedLocal });
+          setSource("database");
         } else {
-          setProfile(dbProfile);
+          setSource("database");
         }
       } else {
         // Create profile if it doesn't exist (initial sync)
@@ -78,9 +80,16 @@ export const useProfile = () => {
 
         if (insertError) throw insertError;
         setProfile(newProfile as Profile);
+        setSource("database");
+        setLastSync(new Date());
+      }
+
+      if (isManual) {
+        toast.success("Dados sincronizados com sucesso.");
       }
     } catch (err) {
       console.error("Error fetching/creating profile:", err);
+      if (isManual) toast.error("Falha ao sincronizar dados.");
     } finally {
       setLoading(false);
     }
@@ -101,10 +110,12 @@ export const useProfile = () => {
 
     if (!user) {
       setProfile(prev => prev ? { ...prev, objective } : null);
+      setSource("local");
       return;
     }
 
     try {
+      setSource("syncing");
       const { error } = await supabase
         .from("profiles")
         .upsert({ user_id: user.id, objective }, { onConflict: "user_id" });
@@ -112,14 +123,18 @@ export const useProfile = () => {
       if (error) throw error;
       
       setProfile(prev => prev ? { ...prev, objective } : null);
+      setSource("database");
+      setLastSync(new Date());
+      
       toast.success("Objetivo atualizado", {
         description: "Sua jornada foi personalizada para o seu novo foco."
       });
     } catch (err) {
       console.error("Error updating objective:", err);
       toast.error("Erro ao salvar objetivo");
+      setSource("database");
     }
   };
 
-  return { profile, loading, updateObjective, refreshProfile: fetchProfile };
+  return { profile, loading, updateObjective, forceSync: () => fetchProfile(true), source, lastSync };
 };
