@@ -371,6 +371,16 @@ const AnimatedRoutes = () => {
             }
           />
           <Route
+            path="/consciencia/historico"
+            element={
+              <PageTransition>
+                <ProtectedRoute>
+                  <ConscienciaHistorico />
+                </ProtectedRoute>
+              </PageTransition>
+            }
+          />
+          <Route
             path="/jornada"
             element={
               <PageTransition>
