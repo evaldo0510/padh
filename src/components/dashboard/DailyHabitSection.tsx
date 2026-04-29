@@ -177,6 +177,25 @@ const DailyHabitSection: React.FC = () => {
           </div>
         </div>
 
+        <div className="absolute bottom-0 right-0 p-6 flex gap-3">
+          <Button 
+            variant="ghost" 
+            size="sm" 
+            className="text-white/40 hover:text-primary gap-2"
+            onClick={() => setShowSettings(true)}
+          >
+            <Bell className="w-4 h-4" />
+          </Button>
+          <Button 
+            variant="ghost" 
+            size="sm" 
+            className="text-white/40 hover:text-primary gap-2"
+            onClick={() => navigate('/consciencia/historico')}
+          >
+            <History className="w-4 h-4" />
+          </Button>
+        </div>
+
         <div className="space-y-6 max-w-2xl">
           <div className="space-y-2">
             <p className="text-[10px] font-black uppercase tracking-[0.4em] text-primary">Seu dia de consciência</p>
