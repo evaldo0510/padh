@@ -15,10 +15,11 @@ import {
   Sparkles,
   Info,
   TrendingUp,
-  Clock
+  Clock,
+  Loader2
 } from 'lucide-react';
 import { Link, useNavigate } from 'react-router-dom';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import { PCHObjectiveId } from '@/types/objectives';
 
 const STORAGE_KEY = "pch_user_objectives";
