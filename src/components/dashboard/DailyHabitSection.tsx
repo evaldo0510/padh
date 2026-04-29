@@ -35,10 +35,67 @@ const DailyHabitSection: React.FC = () => {
   const todayKey = new Date().toISOString().slice(0, 10);
   const isCompletedToday = jornada.responses.some(r => r.date?.startsWith(todayKey));
 
+  useEffect(() => {
+    const fetchReminderSettings = async () => {
+      const { data: { user } } = await supabase.auth.getUser();
+      if (user) {
+        const { data } = await supabase
+          .from("profiles")
+          .select("reminder_enabled, reminder_time")
+          .eq("user_id", user.id)
+          .single();
+        if (data) {
+          setReminderEnabled(data.reminder_enabled || false);
+          setReminderTime(data.reminder_time?.slice(0, 5) || "09:00");
+        }
+      }
+    };
+    fetchReminderSettings();
+  }, []);
+
+  const saveReminderSettings = async (enabled: boolean, time: string) => {
+    const { data: { user } } = await supabase.auth.getUser();
+    if (user) {
+      await supabase
+        .from("profiles")
+        .update({ reminder_enabled: enabled, reminder_time: time })
+        .eq("user_id", user.id);
+      toast.success("Configurações de lembrete atualizadas.");
+    }
+  };
+
   const handleStart = () => {
     setStep("mood");
     setShowCheckin(true);
   };
+
+  const getEmotionalFeedback = (userResponse: string) => {
+    const text = userResponse.toLowerCase();
+    if (text.includes("calma") || text.includes("paz") || text.includes("tranquilo")) {
+      return {
+        title: "Calma Profunda",
+        message: "O silêncio que você encontrou hoje é o seu porto seguro. Leve essa serenidade para o resto do seu dia."
+      };
+    }
+    if (text.includes("medo") || text.includes("coragem") || text.includes("forte") || text.includes("enfrentar")) {
+      return {
+        title: "Sua Coragem é Poesia",
+        message: "Enfrentar o que nos assusta é o ato mais sublime da alma. Você é mais forte do que imagina."
+      };
+    }
+    if (text.includes("triste") || text.includes("sozinho") || text.includes("dor") || text.includes("difícil")) {
+      return {
+        title: "Acolhimento Sincero",
+        message: "Honrar sua dor é o primeiro passo da cura. Sinta-se abraçado por sua própria consciência hoje."
+      };
+    }
+    return {
+      title: "Presença Confirmada",
+      message: "Cada palavra escrita é um passo em direção à sua verdade. Sua jornada continua florescendo."
+    };
+  };
+
+  const personalizedFeedback = useMemo(() => getEmotionalFeedback(response), [response, step]);
 
   const submitMood = async () => {
     if (!mood) {
