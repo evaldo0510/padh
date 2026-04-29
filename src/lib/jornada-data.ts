@@ -36,6 +36,7 @@ export const JORNADA_DATA: FaseJornada[] = [
         id: "s1-f1",
         titulo: "Mapeando o Agora",
         descricao: "Identificando onde você está emocionalmente.",
+        objetivo: "ansiedade",
         exercicios: [
           {
             id: "ex1-s1-f1",
