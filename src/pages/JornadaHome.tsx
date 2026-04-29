@@ -80,10 +80,14 @@ const JornadaHome = () => {
   if (profileLoading && completedSessionsCount === 0) {
     return (
       <PageLayout seo={{ title: "Carregando Jornada...", description: "", path: "/jornada" }} hideHeader>
-        <div className="min-h-screen bg-background flex items-center justify-center">
-          <div className="flex flex-col items-center gap-4">
-             <div className="w-12 h-12 border-4 border-primary border-t-transparent rounded-full animate-spin" />
-             <p className="text-muted-foreground animate-pulse uppercase tracking-[0.2em] text-xs">Calibrando Jornada</p>
+        <div className="min-h-screen bg-background flex items-center justify-center relative overflow-hidden">
+          <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_30%,hsl(265_45%_18%/0.6),transparent_60%)]" />
+          <div className="relative z-10 flex flex-col items-center gap-6">
+             <div className="relative">
+                <div className="w-16 h-16 border-4 border-primary/20 border-t-primary rounded-full animate-spin" />
+                <Sparkles className="w-6 h-6 text-primary absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 animate-pulse" />
+             </div>
+             <p className="text-muted-foreground animate-pulse uppercase tracking-[0.3em] text-[10px] font-bold">Sincronizando sua trilha</p>
           </div>
         </div>
       </PageLayout>
