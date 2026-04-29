@@ -13,12 +13,16 @@ import { supabase } from "@/integrations/supabase/client";
 import { useNavigate } from "react-router-dom";
 
 const DailyHabitSection: React.FC = () => {
+  const navigate = useNavigate();
   const { jornada, saveResponse } = useJornada();
   const [showCheckin, setShowCheckin] = useState(false);
   const [step, setStep] = useState<"mood" | "exercise" | "feedback">("mood");
   const [mood, setMood] = useState("");
   const [response, setResponse] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [reminderEnabled, setReminderEnabled] = useState(false);
+  const [reminderTime, setReminderTime] = useState("09:00");
+  const [showSettings, setShowSettings] = useState(false);
 
   // Get a daily exercise based on the date
   const getDailyExercise = () => {
