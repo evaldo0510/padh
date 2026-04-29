@@ -1,3 +1,5 @@
+import { PCHObjectiveId } from "@/types/objectives";
+
 export interface Exercicio {
   id: string;
   titulo: string;
