@@ -375,7 +375,7 @@ const Dashboard = () => {
              <div className="absolute inset-0 bg-gradient-to-t from-background via-transparent to-transparent z-10" />
              <div className="absolute inset-0 bg-primary/5 animate-pulse" />
              <div className="w-full h-full bg-gradient-to-br from-primary/20 via-background to-secondary/10 flex items-center justify-center opacity-40">
-                <div className="text-[20vw] font-heading font-black opacity-5 select-none tracking-tighter">P.A.D.H.</div>
+                <div className="text-[20vw] font-heading font-black opacity-5 select-none tracking-tighter">PCH</div>
              </div>
           </div>
 
