@@ -361,7 +361,7 @@ const Dashboard = () => {
   return (
     <PageLayout
       seo={{
-        title: "Home — P.A.D.H. Streaming",
+        title: "Home — PCH Streaming",
         description: "Explore sua jornada terapêutica como uma série de transformação.",
         path: "/dashboard",
       }}
