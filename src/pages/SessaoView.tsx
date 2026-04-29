@@ -75,33 +75,34 @@ const SessaoView = () => {
       hideHeader
       hideFooter
     >
-      <div className="min-h-screen bg-[#050505] text-white flex flex-col relative overflow-hidden">
-        {/* Progress Bar (Netflix style top) */}
-        <div className="absolute top-0 left-0 right-0 h-1 z-50 bg-white/5">
+      <div className="min-h-screen bg-background text-foreground flex flex-col relative overflow-hidden">
+        {/* Cinematic Progress Bar */}
+        <div className="absolute top-0 left-0 right-0 h-1.5 z-50 bg-white/5">
            <motion.div 
-            className="h-full bg-primary shadow-[0_0_15px_rgba(var(--primary),0.6)]"
+            className="h-full bg-primary shadow-glow shadow-primary/40"
             initial={{ width: 0 }}
             animate={{ width: `${progressPercent}%` }}
-            transition={{ duration: 0.5 }}
+            transition={{ duration: 0.8, ease: "circOut" }}
            />
         </div>
 
-        {/* Top Controls */}
-        <header className="p-6 flex justify-between items-center z-40">
-           <div className="flex items-center gap-4">
+        {/* Minimal Player Navigation */}
+        <header className="px-8 py-6 flex justify-between items-center z-40">
+           <div className="flex items-center gap-6">
               <Button 
                 variant="ghost" 
                 size="icon" 
                 onClick={() => navigate("/dashboard")}
-                className="rounded-full hover:bg-white/10 transition-colors"
+                className="rounded-2xl hover:bg-white/5 transition-all text-white/40 hover:text-white"
               >
                 <ArrowLeft className="w-6 h-6" />
               </Button>
+              <div className="h-8 w-px bg-white/10 hidden md:block" />
               <div className="hidden md:block">
-                 <p className="text-[10px] font-bold uppercase tracking-[0.3em] text-primary">
-                    {fase.titulo} — Episódio {sessao.id.split('-')[0].replace('s', '')}
+                 <p className="text-[10px] font-black uppercase tracking-[0.3em] text-primary/80 mb-0.5">
+                    {fase.titulo} · EPISÓDIO {currentExIdx + 1}
                  </p>
-                 <h2 className="text-lg font-bold">{sessao.titulo}</h2>
+                 <h2 className="text-xl font-bold tracking-tight text-white leading-none">{sessao.titulo}</h2>
               </div>
            </div>
 
@@ -109,87 +110,95 @@ const SessaoView = () => {
             variant="ghost" 
             size="icon" 
             onClick={() => navigate("/dashboard")}
-            className="rounded-full hover:bg-white/10 transition-colors"
+            className="rounded-2xl hover:bg-destructive/10 text-white/30 hover:text-destructive transition-all"
            >
               <X className="w-6 h-6" />
            </Button>
         </header>
 
-        {/* Main Content (Episode Screen) */}
-        <main className="flex-1 container mx-auto px-6 max-w-4xl flex flex-col justify-center pb-20">
+        {/* Focused Therapeutic Space */}
+        <main className="flex-1 streaming-container flex flex-col justify-center items-center pb-24 relative z-20">
            <AnimatePresence mode="wait">
               <motion.div
                 key={currentEx.id}
-                initial={{ opacity: 0, scale: 0.95 }}
-                animate={{ opacity: 1, scale: 1 }}
-                exit={{ opacity: 0, scale: 1.05 }}
-                transition={{ duration: 0.4 }}
-                className="space-y-12"
+                initial={{ opacity: 0, scale: 0.98, y: 10 }}
+                animate={{ opacity: 1, scale: 1, y: 0 }}
+                exit={{ opacity: 0, scale: 1.02, y: -10 }}
+                transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+                className="w-full max-w-3xl space-y-12"
               >
-                 <div className="space-y-6 text-center md:text-left">
-                    <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/10 border border-primary/20 text-primary text-[10px] font-bold uppercase tracking-widest">
-                       <Sparkles className="w-3 h-3" /> Exercício {currentExIdx + 1} de {totalEx}
+                 <div className="space-y-8 text-center">
+                    <Badge variant="spiritual" className="bg-primary/10 text-primary border-primary/20 px-5 py-1.5 rounded-full font-black uppercase tracking-widest text-[10px] animate-fade-in">
+                       <Sparkles className="w-3.5 h-3.5 mr-2" /> Atividade {currentExIdx + 1} de {totalEx}
+                    </Badge>
+                    
+                    <div className="space-y-4">
+                      <h1 className="text-4xl md:text-6xl font-bold leading-tight tracking-tighter text-white">
+                         {currentEx.titulo}
+                      </h1>
+                      <p className="text-xl md:text-2xl text-white/50 font-light italic max-w-2xl mx-auto leading-relaxed">
+                         "{currentEx.instrucao}"
+                      </p>
                     </div>
-                    <h1 className="text-3xl md:text-5xl font-heading font-black leading-tight tracking-tighter">
-                       {currentEx.titulo}
-                    </h1>
-                    <p className="text-xl md:text-2xl text-white/60 font-medium italic max-w-2xl leading-relaxed">
-                       "{currentEx.instrucao}"
-                    </p>
                  </div>
 
-                 <div className="relative group">
-                    <Textarea
+                 <div className="relative group w-full">
+                    <textarea
                       value={response}
                       onChange={(e) => setResponse(e.target.value)}
-                      placeholder={currentEx.placeholder || "Escreva sua resposta poética aqui..."}
-                      className="min-h-[250px] md:min-h-[300px] bg-white/5 border-white/10 focus-visible:ring-primary/40 focus-visible:border-primary/40 text-xl leading-relaxed rounded-2xl resize-none p-8 shadow-2xl transition-all group-focus-within:bg-white/[0.08]"
+                      placeholder={currentEx.placeholder || "Mergulhe na palavra..."}
+                      className="focus-input shadow-[0_32px_64px_-12px_rgba(0,0,0,0.5)] group-focus-within:shadow-primary/5 group-focus-within:border-primary/20 group-hover:border-white/10"
                     />
-                    <div className="absolute bottom-4 right-6 text-[10px] font-bold text-white/20 uppercase tracking-widest">
-                       Modo Foco Ativado
+                    <div className="absolute bottom-6 left-1/2 -translate-x-1/2 opacity-0 group-focus-within:opacity-100 transition-opacity duration-1000 pointer-events-none">
+                       <div className="flex items-center gap-2 text-[10px] font-black uppercase tracking-[0.4em] text-primary/40">
+                          <div className="w-1 h-1 rounded-full bg-primary animate-pulse" />
+                          Ambiente de Foco Ativo
+                       </div>
                     </div>
                  </div>
               </motion.div>
            </AnimatePresence>
         </main>
 
-        {/* Bottom Controls (Player Bar) */}
-        <footer className="p-8 md:p-12 flex flex-col md:flex-row items-center justify-between gap-6 z-40 bg-gradient-to-t from-black to-transparent">
-           <div className="flex items-center gap-6">
+        {/* Player Controller Bar */}
+        <footer className="px-8 md:px-12 py-10 flex flex-col md:flex-row items-center justify-between gap-8 z-40 bg-background/80 backdrop-blur-xl border-t border-white/5">
+           <div className="flex items-center gap-8">
               <Button
                 variant="ghost"
                 onClick={handlePrev}
                 disabled={currentExIdx === 0}
-                className="text-white/40 hover:text-white transition-colors"
+                className="text-white/40 hover:text-white transition-all rounded-xl font-bold uppercase tracking-widest text-[10px]"
               >
-                <ChevronLeft className="w-5 h-5 mr-2" /> Anterior
+                <ChevronLeft className="w-4 h-4 mr-2" /> Voltar
               </Button>
-              <div className="flex gap-1">
+              <div className="flex gap-1.5">
                  {Array.from({ length: totalEx }).map((_, i) => (
-                    <div 
+                    <motion.div 
                       key={i} 
-                      className={`h-1 w-8 rounded-full transition-all duration-300 ${i === currentExIdx ? 'bg-primary' : i < currentExIdx ? 'bg-white/40' : 'bg-white/10'}`} 
+                      className={`h-1 w-10 rounded-full transition-all duration-500 ${i === currentExIdx ? 'bg-primary shadow-glow shadow-primary/20' : i < currentExIdx ? 'bg-primary/40' : 'bg-white/10'}`} 
+                      layoutId={`indicator-${i}`}
                     />
                  ))}
               </div>
            </div>
 
-           <div className="flex items-center gap-4">
+           <div className="flex items-center gap-6">
               <Button
                 variant="ghost"
                 onClick={() => setResponse("Pular exercício...")}
-                className="text-white/20 hover:text-white/60 transition-colors text-xs uppercase font-bold tracking-widest"
+                className="text-white/20 hover:text-white/60 transition-all text-[10px] uppercase font-black tracking-[0.2em]"
               >
-                 <FastForward className="w-4 h-4 mr-2" /> Pular
+                 <FastForward className="w-3.5 h-3.5 mr-2" /> Pular
               </Button>
+              
               <Button
                 onClick={handleNext}
                 disabled={!response.trim()}
-                className="h-14 px-10 rounded-full text-lg font-bold shadow-2xl group"
+                className="btn-primary h-14 min-w-[240px] text-lg shadow-primary/20"
               >
-                {isLast ? "Concluir e Finalizar" : "Concluir e Próximo"}
+                {isLast ? "Concluir e Salvar" : "Concluir e Avançar"}
                 {isLast ? (
-                  <CheckCircle2 className="w-6 h-6 ml-3" />
+                  <CheckCircle2 className="w-6 h-6 ml-3 text-white" />
                 ) : (
                   <ChevronRight className="w-6 h-6 ml-3 group-hover:translate-x-1 transition-transform" />
                 )}
@@ -197,9 +206,9 @@ const SessaoView = () => {
            </div>
         </footer>
 
-        {/* Ambient Effects */}
-        <div className="absolute -bottom-1/4 -right-1/4 w-[600px] h-[600px] bg-primary/5 rounded-full blur-[120px] pointer-events-none" />
-        <div className="absolute -top-1/4 -left-1/4 w-[600px] h-[600px] bg-secondary/5 rounded-full blur-[120px] pointer-events-none" />
+        {/* Dynamic Bloom background */}
+        <div className="absolute -bottom-[10%] -right-[10%] w-[600px] h-[600px] bg-primary/10 rounded-full blur-[120px] pointer-events-none animate-pulse" />
+        <div className="absolute -top-[10%] -left-[10%] w-[500px] h-[500px] bg-secondary/5 rounded-full blur-[100px] pointer-events-none" />
       </div>
     </PageLayout>
   );
