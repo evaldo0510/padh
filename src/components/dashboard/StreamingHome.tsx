@@ -8,10 +8,13 @@ import { useNavigate, Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import NetflixCarousel from "@/components/ui/NetflixCarousel";
 import StreamingCard from "@/components/ui/StreamingCard";
+import { StreamingSkeleton } from "./StreamingSkeleton";
 
 const StreamingHome = () => {
   const navigate = useNavigate();
-  const { jornada } = useJornada();
+  const { jornada, isSyncing } = useJornada();
+
+  if (isSyncing) return <StreamingSkeleton />;
 
   const findNextSession = () => {
     for (const fase of JORNADA_DATA) {
