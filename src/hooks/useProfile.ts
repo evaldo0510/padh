@@ -36,7 +36,10 @@ export const useProfile = () => {
         // Create profile if it doesn't exist
         const { data: newProfile, error: insertError } = await supabase
           .from("profiles")
-          .insert({ user_id: user.id })
+          .insert({ 
+            user_id: user.id,
+            objective: localStorage.getItem("pch_user_objective") 
+          })
           .select()
           .single();
 
