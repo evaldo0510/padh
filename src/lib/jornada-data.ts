@@ -160,6 +160,7 @@ export const JORNADA_DATA: FaseJornada[] = [
         id: "s1-f3",
         titulo: "Novas Narrativas",
         descricao: "Reescrevendo a história que você conta para si mesmo.",
+        objetivo: "escrita",
         exercicios: [
           {
             id: "ex1-s1-f3",
