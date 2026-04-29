@@ -183,9 +183,9 @@ const ExerciseStep = ({
             </div>{" "}
             <h1 className="text-4xl md:text-6xl font-heading font-bold text-foreground mb-4">
               {" "}
-              Poesia Aplicada ao{" "}
+              Poesia Cognitiva{" "}
               <span className="text-primary italic">
-                Desenvolvimento Humano
+                Hipnótica
               </span>{" "}
             </h1>{" "}
             <p className="text-muted-foreground text-lg md:text-xl max-w-2xl mx-auto">
