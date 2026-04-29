@@ -43,13 +43,24 @@ const NetflixCarousel: React.FC<NetflixCarouselProps> = ({ title, subtitle, chil
     }
   };
 
+  const handleKeyDown = (e: React.KeyboardEvent) => {
+    if (e.key === "ArrowLeft") scroll("left");
+    if (e.key === "ArrowRight") scroll("right");
+  };
+
   return (
-    <div className={cn("space-y-6 py-8 relative group/carousel overflow-visible", className)}>
+    <div 
+      className={cn("space-y-6 py-8 relative group/carousel overflow-visible outline-none", className)}
+      onKeyDown={handleKeyDown}
+      tabIndex={0}
+      role="region"
+      aria-label={`Carrossel: ${title}`}
+    >
       <div className="flex flex-col gap-1 px-6 md:px-12">
-        <h2 className="text-3xl font-bold text-white tracking-tight leading-none">
+        <h2 className="text-3xl font-bold text-foreground tracking-tight leading-none">
           {title}
         </h2>
-        {subtitle && <p className="text-sm text-white/40 font-light">{subtitle}</p>}
+        {subtitle && <p className="text-sm text-muted-foreground font-light">{subtitle}</p>}
       </div>
       
       <div className="relative overflow-visible">
@@ -64,8 +75,9 @@ const NetflixCarousel: React.FC<NetflixCarouselProps> = ({ title, subtitle, chil
               <Button
                 variant="ghost"
                 size="icon"
-                className="h-full w-14 bg-background/40 backdrop-blur-md rounded-r-3xl border-none text-white hover:bg-background/80 hover:w-16 transition-all shadow-2xl"
+                className="h-full w-14 bg-background/40 backdrop-blur-md rounded-r-3xl border-none text-foreground hover:bg-background/80 hover:w-16 transition-all shadow-2xl focus:ring-primary focus:ring-inset"
                 onClick={() => scroll("left")}
+                aria-label="Rolar para esquerda"
               >
                 <ChevronLeft className="h-8 w-8" />
               </Button>
@@ -79,7 +91,7 @@ const NetflixCarousel: React.FC<NetflixCarouselProps> = ({ title, subtitle, chil
           style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
         >
           {React.Children.map(children, (child) => (
-            <div className="snap-start snap-always first:pl-0 last:pr-12">
+            <div className="snap-start snap-always first:pl-0 last:pr-12 outline-none focus-within:ring-2 focus-within:ring-primary focus-within:ring-offset-4 focus-within:ring-offset-background rounded-2xl">
               {child}
             </div>
           ))}
@@ -96,8 +108,9 @@ const NetflixCarousel: React.FC<NetflixCarouselProps> = ({ title, subtitle, chil
               <Button
                 variant="ghost"
                 size="icon"
-                className="h-full w-14 bg-background/40 backdrop-blur-md rounded-l-3xl border-none text-white hover:bg-background/80 hover:w-16 transition-all shadow-2xl"
+                className="h-full w-14 bg-background/40 backdrop-blur-md rounded-l-3xl border-none text-foreground hover:bg-background/80 hover:w-16 transition-all shadow-2xl focus:ring-primary focus:ring-inset"
                 onClick={() => scroll("right")}
+                aria-label="Rolar para direita"
               >
                 <ChevronRight className="h-8 w-8" />
               </Button>
