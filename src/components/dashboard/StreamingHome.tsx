@@ -10,6 +10,7 @@ import NetflixCarousel from "@/components/ui/NetflixCarousel";
 import StreamingCard from "@/components/ui/StreamingCard";
 import { StreamingSkeleton } from "./StreamingSkeleton";
 import GlobalProgressBar from "./GlobalProgressBar";
+import DailyHabitSection from "./DailyHabitSection";
 
 const StreamingHome = () => {
   const navigate = useNavigate();
@@ -117,8 +118,11 @@ const StreamingHome = () => {
         </div>
       </section>
 
-      <div className="streaming-container -mt-48 relative z-30 space-y-20 md:space-y-32">
-        {/* Progresso global + sequência diária */}
+      <div className="streaming-container -mt-48 relative z-30 space-y-20 md:space-y-32 pb-32">
+        {/* Daily Consciousness Section */}
+        <DailyHabitSection />
+
+        {/* Global Journey Progress */}
         <GlobalProgressBar />
         {/* Continuar Assistindo Section */}
         {nextSession && (
