@@ -102,9 +102,11 @@ export const ProfileProvider: React.FC<{ children: React.ReactNode }> = ({ child
         if (isManual && hasLocalObjectives) {
           // Merge logic
           const merged = Array.from(new Set([...(dbProfile.objectives || []), ...validatedLocal]));
-          const changed = JSON.stringify(merged.sort()) !== JSON.stringify((dbProfile.objectives || []).sort());
-          
-          if (changed) {
+          const dbString = JSON.stringify((dbProfile.objectives || []).sort());
+          const mergedString = JSON.stringify(merged.sort());
+          const localString = JSON.stringify(validatedLocal.sort());
+
+          if (mergedString !== dbString) {
             finalObjectives = merged;
             finalSource = "merged";
             await supabase
@@ -112,8 +114,12 @@ export const ProfileProvider: React.FC<{ children: React.ReactNode }> = ({ child
               .update({ objectives: merged })
               .eq("user_id", user.id);
             toast.success("Dados mesclados", { description: "Objetivos locais e da nuvem unidos." });
+          } else if (dbString === localString) {
+            finalSource = "database";
+            toast.info("Em sincronia", { description: "Seus dados já estão idênticos." });
           } else {
-            toast.info("Sincronizado", { description: "Os dados da nuvem já estão atualizados." });
+            finalSource = "database"; // DB already had everything local had
+            toast.info("Nuvem atualizada", { description: "Os dados da nuvem já contêm suas preferências locais." });
           }
         }
 
