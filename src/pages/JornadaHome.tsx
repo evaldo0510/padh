@@ -11,42 +11,42 @@ import {
   Lock,
   CheckCircle2,
   Library,
-  Compass,
   ChevronRight,
-  Info,
-  Clock,
   Sparkles,
+  Info,
+  TrendingUp,
+  Clock
 } from 'lucide-react';
 import { Link, useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { PCHObjectiveId, isValidObjective } from '@/types/objectives';
+import { PCHObjectiveId } from '@/types/objectives';
+
+const STORAGE_KEY = "pch_user_objectives";
 
 const JornadaHome = () => {
   const navigate = useNavigate();
   const { jornada } = useJornada();
-  const { profile } = useProfile();
+  const { profile, loading: profileLoading } = useProfile();
 
   const completedSessionsCount = jornada.completedSessions.length;
   const totalSessionsCount = JORNADA_DATA.reduce((acc, f) => acc + f.sessoes.length, 0);
   const totalProgress = Math.round((completedSessionsCount / totalSessionsCount) * 100);
   
-  // Sync profile objective to localStorage if it exists and differs
-  const dbObjective = profile?.objective;
-  const localObjective = localStorage.getItem("pch_user_objective");
-  const userObjective = (dbObjective || localObjective) as PCHObjectiveId | null;
+  const dbObjectives = profile?.objectives || [];
+  const localRaw = localStorage.getItem(STORAGE_KEY);
+  let localObjectives: PCHObjectiveId[] = [];
+  try {
+    if (localRaw) localObjectives = JSON.parse(localRaw);
+  } catch (e) {}
 
-  useEffect(() => {
-    if (dbObjective && dbObjective !== localObjective) {
-      localStorage.setItem("pch_user_objective", dbObjective);
-    }
-  }, [dbObjective, localObjective]);
+  const userObjectives = dbObjectives.length > 0 ? dbObjectives : localObjectives;
 
   const findNextSession = () => {
-    // If progress is 0, try to find a session that matches user objective
-    if (completedSessionsCount === 0 && userObjective) {
+    // If progress is 0, try to find a session that matches ANY user objective
+    if (completedSessionsCount === 0 && userObjectives.length > 0) {
       for (const fase of JORNADA_DATA) {
         for (const sessao of fase.sessoes) {
-          if (sessao.objetivos?.includes(userObjective)) {
+          if (sessao.objetivos?.some(obj => userObjectives.includes(obj as PCHObjectiveId))) {
             return {
               faseId: fase.id,
               sessaoId: sessao.id,
@@ -77,10 +77,23 @@ const JornadaHome = () => {
 
   const nextSession = findNextSession();
 
+  if (profileLoading && completedSessionsCount === 0) {
+    return (
+      <PageLayout seo={{ title: "Carregando Jornada...", description: "", path: "/jornada" }} hideHeader>
+        <div className="min-h-screen bg-background flex items-center justify-center">
+          <div className="flex flex-col items-center gap-4">
+             <div className="w-12 h-12 border-4 border-primary border-t-transparent rounded-full animate-spin" />
+             <p className="text-muted-foreground animate-pulse uppercase tracking-[0.2em] text-xs">Calibrando Jornada</p>
+          </div>
+        </div>
+      </PageLayout>
+    );
+  }
+
   return (
     <PageLayout
       seo={{
-        title: 'Jornada de Transformação — P.A.D.H.',
+        title: 'Jornada de Transformação — PCH',
         description: 'Sua trilha estruturada de desenvolvimento pessoal e exercícios terapêuticos.',
         path: '/jornada',
       }}
@@ -113,7 +126,7 @@ const JornadaHome = () => {
                       <Button 
                         size="lg" 
                         onClick={() => navigate(`/jornada/${nextSession.faseId}/${nextSession.sessaoId}`)}
-                        className="h-14 px-10 text-lg font-bold gap-3 rounded-full"
+                        className="h-14 px-10 text-lg font-bold gap-3 rounded-full shadow-2xl shadow-primary/20"
                       >
                          <Play className="w-6 h-6 fill-current" /> 
                          {(nextSession as any).isRecommended ? `Sugerido: ${nextSession.titulo}` : `Continuar: ${nextSession.titulo}`}
@@ -164,7 +177,7 @@ const JornadaHome = () => {
                   <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                      {fase.sessoes.map((sessao, sIdx) => {
                        const isCompleted = jornada.completedSessions.includes(sessao.id);
-                       const isRecommended = !!(userObjective && sessao.objetivos?.includes(userObjective)) && completedSessionsCount === 0;
+                       const isRecommended = !!(userObjectives.length > 0 && sessao.objetivos?.some(o => userObjectives.includes(o as PCHObjectiveId))) && completedSessionsCount === 0;
                        const sessionUnlocked = isUnlocked || isRecommended;
                        
                        return (
@@ -198,7 +211,7 @@ const JornadaHome = () => {
                             <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity bg-black/40">
                                <div className="w-16 h-16 rounded-full border-2 border-white/20 flex items-center justify-center backdrop-blur-sm">
                                   <Play className="w-8 h-8 fill-current ml-1" />
-                               </div>
+                                </div>
                             </div>
                          </motion.div>
                        );
