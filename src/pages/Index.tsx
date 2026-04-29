@@ -146,31 +146,22 @@ const Index = () => {
               {" "}
               <img
                 src={heroImage}
-                alt="P.A.D.H. — Pena dourada transformando-se em conexões neurais"
-                className="w-full h-full object-contain drop-shadow-lg"
-              />{" "}
-            </div>{" "}
-            {/* Tagline */}
-            <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-primary/20 bg-primary/5 text-primary text-sm font-medium">
-              {" "}
-              <Feather className="spiritual-icon spiritual-icon-sm" /> Poesia
-              como ciência da transformação{" "}
-            </div>{" "}
-            {/* Title */}
+                alt="PCH — Pena dourada transformando-se em conexões neurais"
+...
             <h1 className="text-5xl sm:text-6xl md:text-8xl font-heading font-bold leading-[0.95] tracking-tight">
               {" "}
               <span className="text-foreground">
-                Poesia Aplicada ao
+                Poesia Cognitiva
               </span> <br />{" "}
               <span className="text-primary italic">
-                Desenvolvimento Humano
+                Hipnótica (PCH)
               </span>{" "}
             </h1>{" "}
             {/* Subtitle */}
             <p className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto leading-relaxed">
               {" "}
               A metodologia{" "}
-              <strong className="text-foreground">P.A.D.H.</strong> une
+              <strong className="text-foreground">PCH</strong> une
               neurociência, hipnose ericksoniana e linguagem simbólica para
               criar intervenções terapêuticas que transformam o inconsciente
               através da beleza da palavra.{" "}
