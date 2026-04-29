@@ -37,10 +37,12 @@ import StreamingCard from "@/components/ui/StreamingCard";
 import SupabaseConfigBanner from "@/components/dashboard/SupabaseConfigBanner";
 import SyncStatusIndicator from "@/components/dashboard/SyncStatusIndicator";
 import NotificationCenter from "@/components/dashboard/NotificationCenter";
+import { ObjectiveSettings } from "@/components/dashboard/ObjectiveSettings";
 import { toast } from "sonner";
 import { supabase } from "@/integrations/supabase/client";
 import { Progress } from "@/components/ui/progress";
 import { useAuth } from "@/hooks/useAuth";
+import { useProfile } from "@/hooks/useProfile";
 
 type EpisodeProgressRow = {
   session_id: string;
