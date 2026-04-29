@@ -195,15 +195,22 @@ const StreamingHome = () => {
           title="Experiências Sugeridas" 
           subtitle="Sessões baseadas no seu perfil e progresso atual."
         >
-          {sessions.map((sessao) => (
-            <StreamingCard 
-              key={sessao.id}
-              title={sessao.titulo}
-              subtitle={sessao.faseTitulo}
-              onClick={() => navigate(`/jornada/${sessao.faseId}/${sessao.id}`)}
-              type="episode"
-            />
-          ))}
+          {sessions.map((sessao, index) => {
+            const isCompleted = jornada.completedSessions.includes(sessao.id);
+            const isLocked = index > 0 && !jornada.completedSessions.includes(sessions[index - 1].id);
+            
+            return (
+              <StreamingCard 
+                key={sessao.id}
+                title={sessao.titulo}
+                subtitle={sessao.faseTitulo}
+                isCompleted={isCompleted}
+                isLocked={isLocked}
+                onClick={() => navigate(`/jornada/${sessao.faseId}/${sessao.id}`)}
+                type="episode"
+              />
+            );
+          })}
         </NetflixCarousel>
 
         {/* Quick Exercises Grid - Explore Style */}
