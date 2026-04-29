@@ -267,6 +267,16 @@ const DailyHabitSection: React.FC = () => {
                 exit={{ opacity: 0, x: -20 }}
                 className="p-8 space-y-8"
               >
+                <div className="flex items-center justify-between">
+                  <Button 
+                    variant="ghost" 
+                    size="sm" 
+                    className="text-white/40 hover:text-white -ml-2"
+                    onClick={() => setStep("mood")}
+                  >
+                    <ArrowLeft className="w-4 h-4 mr-2" /> Editar Check-in
+                  </Button>
+                </div>
                 <DialogHeader>
                   <div className="flex items-center gap-2 mb-2">
                     <Sparkles className="text-primary w-5 h-5" />
@@ -286,13 +296,26 @@ const DailyHabitSection: React.FC = () => {
                     value={response}
                     onChange={(e) => setResponse(e.target.value)}
                   />
-                  <Button 
-                    onClick={submitDailyChallenge} 
-                    disabled={isSubmitting}
-                    className="w-full btn-primary h-12 text-lg"
-                  >
-                    {isSubmitting ? "Sincronizando..." : "Concluir Dia"}
-                  </Button>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <Button 
+                      onClick={submitDailyChallenge} 
+                      disabled={isSubmitting}
+                      className="btn-primary h-12 text-lg"
+                    >
+                      {isSubmitting ? "Sincronizando..." : "Concluir Dia"}
+                    </Button>
+                    <Button 
+                      variant="ghost"
+                      onClick={() => {
+                        if (!response) setResponse("Presença confirmada.");
+                        submitDailyChallenge();
+                      }}
+                      disabled={isSubmitting}
+                      className="text-white/40 hover:text-white h-12"
+                    >
+                      Concluir Rápido
+                    </Button>
+                  </div>
                 </div>
               </motion.div>
             )}
