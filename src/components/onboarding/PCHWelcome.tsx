@@ -6,6 +6,8 @@ import { Card } from "@/components/ui/card";
 import PCHSymbol from "@/components/ui/PCHSymbol";
 import { Helmet } from "react-helmet-async";
 import { Sparkles, Brain, PenTool, Wind } from "lucide-react";
+import { useProfile } from "@/hooks/useProfile";
+import { useAuth } from "@/hooks/useAuth";
 
 const STORAGE_KEY = "pch_onboarding_seen_v1";
 
@@ -34,12 +36,14 @@ const PCHWelcome: React.FC<{ onComplete?: () => void }> = ({ onComplete }) => {
   const [step, setStep] = useState(0);
   const [objective, setObjective] = useState<string | null>(null);
   const navigate = useNavigate();
+  const { updateObjective } = useProfile();
+  const { user } = useAuth();
 
-  const finish = () => {
+  const finish = async () => {
     try {
       localStorage.setItem(STORAGE_KEY, "1");
       if (objective) {
-        localStorage.setItem("pch_user_objective", objective);
+        await updateObjective(objective);
       }
     } catch {}
     onComplete?.();
@@ -187,11 +191,27 @@ const PCHWelcome: React.FC<{ onComplete?: () => void }> = ({ onComplete }) => {
 /** Hook + auto-mount wrapper that shows the welcome only on first visit. */
 export const PCHWelcomeGate: React.FC = () => {
   const [show, setShow] = useState(false);
+  const { user, loading: authLoading } = useAuth();
+  const { profile, loading: profileLoading } = useProfile();
+
   useEffect(() => {
+    if (authLoading || profileLoading) return;
+
     try {
-      if (!localStorage.getItem(STORAGE_KEY)) setShow(true);
+      const seen = localStorage.getItem(STORAGE_KEY);
+      const hasDbObjective = profile?.objective;
+      
+      // If user is logged in and has a saved objective, they've clearly been through this or similar
+      if (hasDbObjective && !seen) {
+        localStorage.setItem(STORAGE_KEY, "1");
+        localStorage.setItem("pch_user_objective", hasDbObjective);
+        return;
+      }
+
+      if (!seen) setShow(true);
     } catch {}
-  }, []);
+  }, [authLoading, profileLoading, profile]);
+
   if (!show) return null;
   return <PCHWelcome onComplete={() => setShow(false)} />;
 };

@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import PageLayout from '@/components/layout/PageLayout';
 import { useJornada } from '@/hooks/useJornada';
 import { JORNADA_DATA } from '@/lib/jornada-data';
+import { useProfile } from '@/hooks/useProfile';
 import { Progress } from '@/components/ui/progress';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
@@ -22,11 +23,22 @@ import { motion } from 'framer-motion';
 const JornadaHome = () => {
   const navigate = useNavigate();
   const { jornada } = useJornada();
+  const { profile } = useProfile();
 
   const completedSessionsCount = jornada.completedSessions.length;
   const totalSessionsCount = JORNADA_DATA.reduce((acc, f) => acc + f.sessoes.length, 0);
   const totalProgress = Math.round((completedSessionsCount / totalSessionsCount) * 100);
-  const userObjective = localStorage.getItem("pch_user_objective");
+  
+  // Sync profile objective to localStorage if it exists and differs
+  const dbObjective = profile?.objective;
+  const localObjective = localStorage.getItem("pch_user_objective");
+  const userObjective = dbObjective || localObjective;
+
+  useEffect(() => {
+    if (dbObjective && dbObjective !== localObjective) {
+      localStorage.setItem("pch_user_objective", dbObjective);
+    }
+  }, [dbObjective, localObjective]);
 
   const findNextSession = () => {
     // If progress is 0, try to find a session that matches user objective
