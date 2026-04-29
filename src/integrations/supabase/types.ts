@@ -47,6 +47,30 @@ export type Database = {
         }
         Relationships: []
       }
+      daily_checkins: {
+        Row: {
+          checkin_date: string
+          created_at: string | null
+          id: string
+          mood: string
+          user_id: string
+        }
+        Insert: {
+          checkin_date?: string
+          created_at?: string | null
+          id?: string
+          mood: string
+          user_id: string
+        }
+        Update: {
+          checkin_date?: string
+          created_at?: string | null
+          id?: string
+          mood?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
       episode_favorites: {
         Row: {
           created_at: string
