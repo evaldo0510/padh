@@ -4,8 +4,8 @@ import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import PCHSymbol from "@/components/ui/PCHSymbol";
-import { Sparkles, Brain, PenTool, Wind } from "lucide-react";
 import { Helmet } from "react-helmet-async";
+import { Sparkles, Brain, PenTool, Wind } from "lucide-react";
 
 const STORAGE_KEY = "pch_onboarding_seen_v1";
 
@@ -90,32 +90,71 @@ const PCHWelcome: React.FC<{ onComplete?: () => void }> = ({ onComplete }) => {
       {/* Content */}
       <div className="relative h-full w-full flex flex-col items-center justify-center px-6 text-center">
         <AnimatePresence mode="wait">
-          <motion.div
-            key={step}
-            initial={{ opacity: 0, y: 20, filter: "blur(8px)" }}
-            animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
-            exit={{ opacity: 0, y: -20, filter: "blur(8px)" }}
-            transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1] }}
-            className="flex flex-col items-center max-w-xl"
-          >
-            <div className="mb-10">
-              <PCHSymbol variant={current.variant} size="xl" animated />
-            </div>
-            <p className="text-[11px] uppercase tracking-[0.4em] text-primary/80 mb-4">
-              {current.eyebrow}
-            </p>
-            <h1 className="font-heading text-4xl md:text-5xl text-foreground leading-tight mb-6">
-              {current.title}
-            </h1>
-            <p className="text-base md:text-lg text-muted-foreground leading-relaxed font-light">
-              {current.body}
-            </p>
-          </motion.div>
+          {!isObjectiveStep ? (
+            <motion.div
+              key={step}
+              initial={{ opacity: 0, y: 20, filter: "blur(8px)" }}
+              animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+              exit={{ opacity: 0, y: -20, filter: "blur(8px)" }}
+              transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1] }}
+              className="flex flex-col items-center max-w-xl"
+            >
+              <div className="mb-10">
+                <PCHSymbol variant={current.variant} size="xl" animated />
+              </div>
+              <p className="text-[11px] uppercase tracking-[0.4em] text-primary/80 mb-4">
+                {current.eyebrow}
+              </p>
+              <h1 className="font-heading text-4xl md:text-5xl text-foreground leading-tight mb-6">
+                {current.title}
+              </h1>
+              <p className="text-base md:text-lg text-muted-foreground leading-relaxed font-light">
+                {current.body}
+              </p>
+            </motion.div>
+          ) : (
+            <motion.div
+              key="objectives"
+              initial={{ opacity: 0, scale: 0.95 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.8 }}
+              className="flex flex-col items-center w-full max-w-2xl"
+            >
+              <PCHSymbol variant="feather" size="lg" className="mb-8" />
+              <h2 className="font-heading text-3xl md:text-4xl text-foreground mb-4">
+                Qual o seu objetivo hoje?
+              </h2>
+              <p className="text-muted-foreground mb-10 max-w-md">
+                Isso nos ajuda a sugerir a melhor prática para o seu momento.
+              </p>
+
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 w-full text-left">
+                {objectives.map((obj) => (
+                  <Card
+                    key={obj.id}
+                    onClick={() => setObjective(obj.id)}
+                    className={`p-6 bg-white/5 border-white/10 cursor-pointer transition-all duration-300 hover:bg-white/10 hover:border-primary/50 group ${
+                      objective === obj.id ? "ring-2 ring-primary border-primary bg-white/10" : ""
+                    }`}
+                  >
+                    <div className="flex items-center gap-4">
+                      <div className={`p-3 rounded-xl bg-background/50 ${obj.color}`}>
+                        <obj.icon className="w-6 h-6" />
+                      </div>
+                      <span className="font-medium text-lg text-foreground group-hover:text-primary transition-colors">
+                        {obj.label}
+                      </span>
+                    </div>
+                  </Card>
+                ))}
+              </div>
+            </motion.div>
+          )}
         </AnimatePresence>
 
         {/* Progress dots */}
         <div className="absolute bottom-28 flex items-center gap-2">
-          {steps.map((_, i) => (
+          {[...steps, { id: 'obj' }].map((_, i) => (
             <button
               key={i}
               onClick={() => setStep(i)}
@@ -135,8 +174,9 @@ const PCHWelcome: React.FC<{ onComplete?: () => void }> = ({ onComplete }) => {
             onClick={next}
             size="lg"
             className="min-w-[220px] tracking-wide"
+            disabled={isObjectiveStep && !objective}
           >
-            {step < steps.length - 1 ? "Continuar" : "Iniciar minha jornada"}
+            {isObjectiveStep ? "Finalizar" : step < steps.length - 1 ? "Continuar" : "Escolher Objetivo"}
           </Button>
         </div>
       </div>
