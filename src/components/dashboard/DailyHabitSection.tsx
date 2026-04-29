@@ -331,9 +331,11 @@ const DailyHabitSection: React.FC = () => {
                   <CheckCircle2 className="w-12 h-12 text-primary" />
                 </div>
                 <div className="space-y-4">
-                  <h3 className="text-3xl font-bold text-white tracking-tight">Presença Confirmada!</h3>
+                  <h3 className="text-3xl font-bold text-white tracking-tight">
+                    {personalizedFeedback.title}
+                  </h3>
                   <p className="text-white/60 text-lg italic max-w-sm mx-auto">
-                    Você deu o passo mais importante: o primeiro do dia. Sua consciência agradece.
+                    {personalizedFeedback.message}
                   </p>
                 </div>
                 <div className="flex flex-col items-center gap-4">
@@ -342,7 +344,7 @@ const DailyHabitSection: React.FC = () => {
                     <span>{streak} dias de clareza</span>
                   </div>
                   <Button onClick={() => setShowCheckin(false)} variant="outline" className="border-white/10 hover:bg-white/5 text-white/50 px-10">
-                    Voltar para a Home
+                    Continuar meu Dia
                   </Button>
                 </div>
               </motion.div>
