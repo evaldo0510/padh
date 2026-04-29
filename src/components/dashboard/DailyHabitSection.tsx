@@ -1,0 +1,251 @@
+import React, { useState, useEffect, useMemo } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import { Flame, Sparkles, CheckCircle2, ChevronRight, MessageSquare } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { useJornada } from "@/hooks/useJornada";
+import { JORNADA_DATA } from "@/lib/jornada-data";
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
+import { Textarea } from "@/components/ui/textarea";
+import { toast } from "sonner";
+import { supabase } from "@/integrations/supabase/client";
+
+const DailyHabitSection: React.FC = () => {
+  const { jornada, saveResponse } = useJornada();
+  const [showCheckin, setShowCheckin] = useState(false);
+  const [step, setStep] = useState<"mood" | "exercise" | "feedback">("mood");
+  const [mood, setMood] = useState("");
+  const [response, setResponse] = useState("");
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
+  // Get a daily exercise based on the date
+  const getDailyExercise = () => {
+    const allExercises = JORNADA_DATA.flatMap(f => f.sessoes.flatMap(s => s.exercicios));
+    const dayOfYear = Math.floor((new Date().getTime() - new Date(new Date().getFullYear(), 0, 0).getTime()) / 86400000);
+    return allExercises[dayOfYear % allExercises.length];
+  };
+
+  const dailyExercise = getDailyExercise();
+  const todayKey = new Date().toISOString().slice(0, 10);
+  const isCompletedToday = jornada.responses.some(r => r.date?.startsWith(todayKey));
+
+  const handleStart = () => {
+    setStep("mood");
+    setShowCheckin(true);
+  };
+
+  const submitMood = async () => {
+    if (!mood) {
+      toast.error("Por favor, compartilhe como você está se sentindo.");
+      return;
+    }
+    setStep("exercise");
+  };
+
+  const submitDailyChallenge = async () => {
+    if (!response) {
+      toast.error("O exercício é fundamental para o seu progresso.");
+      return;
+    }
+    
+    setIsSubmitting(true);
+    try {
+      // Save the check-in mood to the new table
+      const { data: { user } } = await supabase.auth.getUser();
+      if (user) {
+        await supabase.from("daily_checkins").upsert({
+          user_id: user.id,
+          mood: mood,
+          checkin_date: todayKey
+        }, { onConflict: "user_id,checkin_date" });
+      }
+
+      // Save exercise response
+      await saveResponse(dailyExercise.id, response);
+      
+      setStep("feedback");
+    } catch (error) {
+      console.error("Error submitting daily challenge:", error);
+      toast.error("Erro ao salvar seu progresso.");
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
+  const streak = useMemo(() => {
+    const days = new Set(
+      (jornada.responses || [])
+        .map((r) => (r.date ? r.date.slice(0, 10) : null))
+        .filter(Boolean) as string[],
+    );
+    let s = 0;
+    const d = new Date();
+    while (true) {
+      const key = d.toISOString().slice(0, 10);
+      if (days.has(key)) {
+        s++;
+        d.setDate(d.getDate() - 1);
+      } else {
+        if (s === 0) {
+          d.setDate(d.getDate() - 1);
+          if (days.has(d.toISOString().slice(0, 10))) {
+            s++;
+            d.setDate(d.getDate() - 1);
+            continue;
+          }
+        }
+        break;
+      }
+    }
+    return s;
+  }, [jornada.responses]);
+
+  return (
+    <div className="w-full space-y-6">
+      <motion.div 
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        className="glass-card overflow-hidden border-primary/20 bg-primary/5 p-8 md:p-10 relative"
+      >
+        <div className="absolute top-0 right-0 p-6">
+          <div className="flex items-center gap-2 bg-accent-warm/10 border border-accent-warm/20 px-4 py-2 rounded-full">
+            <Flame className={`w-5 h-5 ${streak > 0 ? "text-accent-warm animate-pulse" : "text-white/20"}`} />
+            <span className="text-sm font-bold text-white">{streak} dias</span>
+          </div>
+        </div>
+
+        <div className="space-y-6 max-w-2xl">
+          <div className="space-y-2">
+            <p className="text-[10px] font-black uppercase tracking-[0.4em] text-primary">Seu dia de consciência</p>
+            <h2 className="text-4xl md:text-5xl font-bold tracking-tighter text-white italic">
+              {isCompletedToday ? "Concluído com Sucesso" : "O Desafio de Hoje"}
+            </h2>
+          </div>
+
+          <p className="text-lg text-white/60 font-light leading-relaxed italic">
+            {isCompletedToday 
+              ? "Você já dedicou um momento para si hoje. O silêncio que você cultivou continua ressoando."
+              : "Uma pequena prática para ancorar sua presença e transformar seu estado emocional em 2 minutos."
+            }
+          </p>
+
+          {!isCompletedToday ? (
+            <Button 
+              onClick={handleStart}
+              className="btn-primary h-14 px-10 text-lg gap-3 group"
+            >
+              Iniciar Desafio <ChevronRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+            </Button>
+          ) : (
+            <div className="flex items-center gap-3 text-primary font-bold">
+              <CheckCircle2 className="w-6 h-6" />
+              <span>Sua sequência está segura. Até amanhã!</span>
+            </div>
+          )}
+        </div>
+      </motion.div>
+
+      <Dialog open={showCheckin} onOpenChange={setShowCheckin}>
+        <DialogContent className="sm:max-w-[600px] bg-slate-900 border-white/10 p-0 overflow-hidden">
+          <AnimatePresence mode="wait">
+            {step === "mood" && (
+              <motion.div 
+                key="mood"
+                initial={{ opacity: 0, x: 20 }}
+                animate={{ opacity: 1, x: 0 }}
+                exit={{ opacity: 0, x: -20 }}
+                className="p-8 space-y-8"
+              >
+                <DialogHeader>
+                  <DialogTitle className="text-3xl font-bold tracking-tight text-white flex items-center gap-3">
+                    <MessageSquare className="text-primary w-8 h-8" />
+                    Como você está hoje?
+                  </DialogTitle>
+                </DialogHeader>
+                <div className="space-y-4">
+                  <p className="text-white/50 italic">Dê um nome ao seu estado interno neste momento.</p>
+                  <Textarea 
+                    placeholder="Ex: Me sinto um pouco ansioso, mas presente..."
+                    className="bg-white/5 border-white/10 min-h-[120px] text-lg focus:border-primary/50 transition-all"
+                    value={mood}
+                    onChange={(e) => setMood(e.target.value)}
+                  />
+                  <Button onClick={submitMood} className="w-full btn-primary h-12 text-lg">
+                    Continuar
+                  </Button>
+                </div>
+              </motion.div>
+            )}
+
+            {step === "exercise" && (
+              <motion.div 
+                key="exercise"
+                initial={{ opacity: 0, x: 20 }}
+                animate={{ opacity: 1, x: 0 }}
+                exit={{ opacity: 0, x: -20 }}
+                className="p-8 space-y-8"
+              >
+                <DialogHeader>
+                  <div className="flex items-center gap-2 mb-2">
+                    <Sparkles className="text-primary w-5 h-5" />
+                    <span className="text-[10px] font-black uppercase tracking-widest text-primary/60">Micro Exercício</span>
+                  </div>
+                  <DialogTitle className="text-3xl font-bold tracking-tight text-white leading-tight">
+                    {dailyExercise.titulo}
+                  </DialogTitle>
+                </DialogHeader>
+                <div className="space-y-6">
+                  <p className="text-white/70 text-lg leading-relaxed font-light italic bg-white/5 p-6 rounded-2xl border border-white/5">
+                    "{dailyExercise.instrucao}"
+                  </p>
+                  <Textarea 
+                    placeholder={dailyExercise.placeholder || "Sua reflexão..."}
+                    className="bg-white/5 border-white/10 min-h-[150px] text-lg focus:border-primary/50 transition-all"
+                    value={response}
+                    onChange={(e) => setResponse(e.target.value)}
+                  />
+                  <Button 
+                    onClick={submitDailyChallenge} 
+                    disabled={isSubmitting}
+                    className="w-full btn-primary h-12 text-lg"
+                  >
+                    {isSubmitting ? "Sincronizando..." : "Concluir Dia"}
+                  </Button>
+                </div>
+              </motion.div>
+            )}
+
+            {step === "feedback" && (
+              <motion.div 
+                key="feedback"
+                initial={{ opacity: 0, scale: 0.95 }}
+                animate={{ opacity: 1, scale: 1 }}
+                className="p-12 text-center space-y-8"
+              >
+                <div className="w-24 h-24 bg-primary/20 rounded-full flex items-center justify-center mx-auto shadow-glow shadow-primary/20">
+                  <CheckCircle2 className="w-12 h-12 text-primary" />
+                </div>
+                <div className="space-y-4">
+                  <h3 className="text-3xl font-bold text-white tracking-tight">Presença Confirmada!</h3>
+                  <p className="text-white/60 text-lg italic max-w-sm mx-auto">
+                    Você deu o passo mais importante: o primeiro do dia. Sua consciência agradece.
+                  </p>
+                </div>
+                <div className="flex flex-col items-center gap-4">
+                  <div className="flex items-center gap-2 text-accent-warm text-xl font-bold">
+                    <Flame className="w-6 h-6" />
+                    <span>{streak} dias de clareza</span>
+                  </div>
+                  <Button onClick={() => setShowCheckin(false)} variant="outline" className="border-white/10 hover:bg-white/5 text-white/50 px-10">
+                    Voltar para a Home
+                  </Button>
+                </div>
+              </motion.div>
+            )}
+          </AnimatePresence>
+        </DialogContent>
+      </Dialog>
+    </div>
+  );
+};
+
+export default DailyHabitSection;

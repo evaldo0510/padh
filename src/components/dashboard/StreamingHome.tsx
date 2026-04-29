@@ -10,6 +10,7 @@ import NetflixCarousel from "@/components/ui/NetflixCarousel";
 import StreamingCard from "@/components/ui/StreamingCard";
 import { StreamingSkeleton } from "./StreamingSkeleton";
 import GlobalProgressBar from "./GlobalProgressBar";
+import DailyHabitSection from "./DailyHabitSection";
 
 const StreamingHome = () => {
   const navigate = useNavigate();
@@ -87,38 +88,37 @@ const StreamingHome = () => {
             
             <div className="space-y-6">
               <h1 className="text-7xl md:text-9xl font-bold tracking-tighter leading-[0.85] text-white">
-                Sua <br />
-                <span className="text-primary italic animate-pulse">Jornada</span>
+                Seu dia de <br />
+                <span className="text-primary italic animate-pulse">Consciência</span>
               </h1>
               <p className="text-xl md:text-3xl text-white/70 leading-relaxed max-w-xl font-light italic opacity-80">
-                Você começou algo importante. <br />
-                Permita que o silêncio guie suas palavras.
+                Uma pequena prática para ancorar sua presença <br />
+                e transformar seu estado emocional hoje.
               </p>
             </div>
 
             <div className="flex flex-wrap items-center gap-6 pt-4">
-              {nextSession ? (
-                <Button 
-                  onClick={() => navigate(`/jornada/${nextSession.faseId}/${nextSession.sessaoId}`)}
-                  className="btn-primary h-16 min-w-[320px] text-xl gap-4 shadow-2xl shadow-primary/20"
-                >
-                  <Play className="w-7 h-7 fill-current" /> Continuar de onde parei
-                </Button>
-              ) : (
-                <Button 
-                  onClick={() => navigate(`/jornada`)}
-                  className="btn-primary h-16 min-w-[320px] text-xl gap-4 shadow-2xl shadow-primary/20"
-                >
-                  <Play className="w-7 h-7 fill-current" /> Começar sua jornada
-                </Button>
-              )}
+              <Button 
+                onClick={() => {
+                  const element = document.getElementById('daily-challenge');
+                  if (element) element.scrollIntoView({ behavior: 'smooth' });
+                }}
+                className="btn-primary h-16 min-w-[320px] text-xl gap-4 shadow-2xl shadow-primary/20"
+              >
+                <Play className="w-7 h-7 fill-current" /> Começar Prática do Dia
+              </Button>
             </div>
           </motion.div>
         </div>
       </section>
 
-      <div className="streaming-container -mt-48 relative z-30 space-y-20 md:space-y-32">
-        {/* Progresso global + sequência diária */}
+      <div className="streaming-container -mt-48 relative z-30 space-y-20 md:space-y-32 pb-32">
+        {/* Daily Consciousness Section */}
+        <div id="daily-challenge">
+          <DailyHabitSection />
+        </div>
+
+        {/* Global Journey Progress */}
         <GlobalProgressBar />
         {/* Continuar Assistindo Section */}
         {nextSession && (
