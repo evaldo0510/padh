@@ -5,9 +5,9 @@ import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import PCHSymbol from "@/components/ui/PCHSymbol";
 import { Helmet } from "react-helmet-async";
-import { Sparkles, Brain, PenTool, Wind } from "lucide-react";
 import { useProfile } from "@/hooks/useProfile";
 import { useAuth } from "@/hooks/useAuth";
+import { PCH_OBJECTIVES, PCHObjectiveId } from "@/types/objectives";
 
 const STORAGE_KEY = "pch_onboarding_seen_v1";
 
@@ -34,10 +34,9 @@ const steps = [
 
 const PCHWelcome: React.FC<{ onComplete?: () => void }> = ({ onComplete }) => {
   const [step, setStep] = useState(0);
-  const [objective, setObjective] = useState<string | null>(null);
+  const [objective, setObjective] = useState<PCHObjectiveId | null>(null);
   const navigate = useNavigate();
   const { updateObjective } = useProfile();
-  const { user } = useAuth();
 
   const finish = async () => {
     try {
@@ -59,13 +58,6 @@ const PCHWelcome: React.FC<{ onComplete?: () => void }> = ({ onComplete }) => {
 
   const current = steps[step];
   const isObjectiveStep = step === steps.length;
-
-  const objectives = [
-    { id: "ansiedade", label: "Aliviar Ansiedade", icon: Wind, color: "text-blue-400" },
-    { id: "foco", label: "Mais Foco e Presença", icon: Brain, color: "text-amber-400" },
-    { id: "escrita", label: "Expressão pela Escrita", icon: PenTool, color: "text-purple-400" },
-    { id: "reprogramacao", label: "Reprogramação Mental", icon: Sparkles, color: "text-emerald-400" },
-  ];
 
   return (
     <div className="fixed inset-0 z-[100] bg-background overflow-hidden">
@@ -133,7 +125,7 @@ const PCHWelcome: React.FC<{ onComplete?: () => void }> = ({ onComplete }) => {
               </p>
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4 w-full text-left">
-                {objectives.map((obj) => (
+                {PCH_OBJECTIVES.map((obj) => (
                   <Card
                     key={obj.id}
                     onClick={() => setObjective(obj.id)}
@@ -188,10 +180,9 @@ const PCHWelcome: React.FC<{ onComplete?: () => void }> = ({ onComplete }) => {
   );
 };
 
-/** Hook + auto-mount wrapper that shows the welcome only on first visit. */
 export const PCHWelcomeGate: React.FC = () => {
   const [show, setShow] = useState(false);
-  const { user, loading: authLoading } = useAuth();
+  const { loading: authLoading } = useAuth();
   const { profile, loading: profileLoading } = useProfile();
 
   useEffect(() => {
@@ -201,7 +192,6 @@ export const PCHWelcomeGate: React.FC = () => {
       const seen = localStorage.getItem(STORAGE_KEY);
       const hasDbObjective = profile?.objective;
       
-      // If user is logged in and has a saved objective, they've clearly been through this or similar
       if (hasDbObjective && !seen) {
         localStorage.setItem(STORAGE_KEY, "1");
         localStorage.setItem("pch_user_objective", hasDbObjective);

@@ -19,6 +19,7 @@ import {
 } from 'lucide-react';
 import { Link, useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
+import { PCHObjectiveId, isValidObjective } from '@/types/objectives';
 
 const JornadaHome = () => {
   const navigate = useNavigate();
@@ -32,7 +33,7 @@ const JornadaHome = () => {
   // Sync profile objective to localStorage if it exists and differs
   const dbObjective = profile?.objective;
   const localObjective = localStorage.getItem("pch_user_objective");
-  const userObjective = dbObjective || localObjective;
+  const userObjective = (dbObjective || localObjective) as PCHObjectiveId | null;
 
   useEffect(() => {
     if (dbObjective && dbObjective !== localObjective) {
@@ -163,7 +164,7 @@ const JornadaHome = () => {
                   <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                      {fase.sessoes.map((sessao, sIdx) => {
                        const isCompleted = jornada.completedSessions.includes(sessao.id);
-                       const isRecommended = !!(sessao.objetivos?.includes(userObjective || "")) && completedSessionsCount === 0;
+                       const isRecommended = !!(userObjective && sessao.objetivos?.includes(userObjective)) && completedSessionsCount === 0;
                        const sessionUnlocked = isUnlocked || isRecommended;
                        
                        return (

@@ -1,3 +1,5 @@
+import { PCHObjectiveId } from "@/types/objectives";
+
 export interface Exercicio {
   id: string;
   titulo: string;
@@ -11,7 +13,7 @@ export interface SessaoJornada {
   titulo: string;
   descricao: string;
   exercicios: Exercicio[];
-  objetivos?: string[];
+  objetivos?: PCHObjectiveId[];
 }
 
 export interface FaseJornada {
