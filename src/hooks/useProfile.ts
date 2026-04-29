@@ -21,11 +21,14 @@ export const useProfile = () => {
   const [source, setSource] = useState<"local" | "database" | "syncing">("local");
   const [lastSync, setLastSync] = useState<Date | null>(null);
 
-  const fetchProfile = async () => {
+  const fetchProfile = async (isManual = false) => {
     if (!user) {
       setLoading(false);
+      setSource("local");
       return;
     }
+
+    if (isManual) setSource("syncing");
 
     try {
       const { data, error } = await supabase
