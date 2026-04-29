@@ -19,6 +19,7 @@ import {
 } from 'lucide-react';
 import { Link, useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
+import { PCHObjectiveId, isValidObjective } from '@/types/objectives';
 
 const JornadaHome = () => {
   const navigate = useNavigate();
