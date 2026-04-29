@@ -468,10 +468,12 @@ const App = () => (
         <Sonner />
         <PWAPrompt />
         <BrowserRouter>
-          <PCHWelcomeGate />
-          <SupabaseErrorBoundary>
-            <AnimatedRoutes />
-          </SupabaseErrorBoundary>
+          <ProfileProvider>
+            <PCHWelcomeGate />
+            <SupabaseErrorBoundary>
+              <AnimatedRoutes />
+            </SupabaseErrorBoundary>
+          </ProfileProvider>
         </BrowserRouter>
       </TooltipProvider>
     </QueryClientProvider>
