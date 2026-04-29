@@ -53,10 +53,26 @@ export default defineConfig(({ mode }) => ({
         cleanupOutdatedCaches: true,
         skipWaiting: true,
         clientsClaim: true,
-        // Never serve index.html / app shell from cache — always revalidate.
+        // Public routes allowed to use the offline fallback shell.
+        // Anything else (private/journey routes) just fails when offline.
         runtimeCaching: [
           {
-            // HTML navigations: always try network first, very short timeout, fallback to cache.
+            // HTML navigations on public routes only — offline-friendly.
+            urlPattern: ({ request, url }) => {
+              if (request.mode !== 'navigate' && request.destination !== 'document') return false;
+              const allowed = [/^\/$/, /^\/sobre/, /^\/contato/, /^\/livro-curso/, /^\/changelog/, /^\/offline/];
+              return allowed.some((re) => re.test(url.pathname));
+            },
+            handler: 'NetworkFirst',
+            options: {
+              cacheName: 'html-public',
+              networkTimeoutSeconds: 3,
+              expiration: { maxEntries: 20, maxAgeSeconds: 60 * 60 * 24 },
+              cacheableResponse: { statuses: [0, 200] },
+            },
+          },
+          {
+            // All other navigations: network-first, no offline fallback.
             urlPattern: ({ request }) => request.mode === 'navigate' || request.destination === 'document',
             handler: 'NetworkFirst',
             options: {
