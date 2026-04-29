@@ -23,6 +23,8 @@ const buttonVariants = cva(
           "bg-gradient-to-r from-primary to-secondary text-white font-bold hover:scale-[1.02] shadow-xl shadow-primary/10 transition-transform duration-500",
         streaming:
           "bg-white text-black font-black uppercase tracking-widest hover:bg-primary hover:text-white rounded-full px-10 h-14 text-lg shadow-2xl transition-all duration-500",
+        glass:
+          "bg-white/5 backdrop-blur-md border border-white/5 text-foreground hover:bg-white/10 hover:border-white/10",
       },
       size: {
         default: "h-11 px-6",
