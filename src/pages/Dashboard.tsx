@@ -383,7 +383,7 @@ const Dashboard = () => {
              <div className="max-w-2xl space-y-6 animate-fade-in-up">
                 <div className="flex items-center gap-3">
                    <Badge variant="spiritual" className="spiritual-chip-amber px-3 py-1 gap-2">
-                      <Sparkles className="w-3 h-3" /> Original P.A.D.H.
+                      <Sparkles className="w-3 h-3" /> Metodologia PCH
                    </Badge>
                    {featured.faseTitulo && (
                      <span className="text-sm font-bold text-primary tracking-widest uppercase">
