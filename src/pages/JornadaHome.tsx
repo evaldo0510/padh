@@ -15,10 +15,11 @@ import {
   Sparkles,
   Info,
   TrendingUp,
-  Clock
+  Clock,
+  Loader2
 } from 'lucide-react';
 import { Link, useNavigate } from 'react-router-dom';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import { PCHObjectiveId } from '@/types/objectives';
 
 const STORAGE_KEY = "pch_user_objectives";
@@ -26,7 +27,7 @@ const STORAGE_KEY = "pch_user_objectives";
 const JornadaHome = () => {
   const navigate = useNavigate();
   const { jornada } = useJornada();
-  const { profile, loading: profileLoading } = useProfile();
+  const { profile, loading: profileLoading, isUpdating } = useProfile();
 
   const completedSessionsCount = jornada.completedSessions.length;
   const totalSessionsCount = JORNADA_DATA.reduce((acc, f) => acc + f.sessoes.length, 0);
@@ -114,6 +115,23 @@ const JornadaHome = () => {
            </div>
 
            <div className="relative z-20 container mx-auto px-6 md:px-12 mt-20">
+              {/* Transition Overlay for Recommended Section */}
+              <AnimatePresence>
+                {isUpdating && (
+                  <motion.div 
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    exit={{ opacity: 0 }}
+                    className="absolute inset-0 z-50 bg-[#050505]/60 backdrop-blur-sm rounded-3xl flex items-center justify-center"
+                  >
+                     <div className="flex flex-col items-center gap-4">
+                        <Loader2 className="w-10 h-10 text-primary animate-spin" />
+                        <span className="text-[10px] font-black uppercase tracking-[0.2em] text-primary">Ajustando Trilha</span>
+                     </div>
+                  </motion.div>
+                )}
+              </AnimatePresence>
+
               <div className="max-w-3xl space-y-6">
                  <Badge variant="spiritual" className="spiritual-chip-amber px-3 py-1 gap-2">
                     <Sparkles className="w-3 h-3" /> Série Original
