@@ -104,6 +104,25 @@ const SessaoView = () => {
     }, 800);
   };
 
+  // Encontra a próxima sessão (em qualquer fase) para encadear automaticamente
+  const findNextSession = () => {
+    const all: { phaseId: string; sessionId: string }[] = [];
+    JORNADA_DATA.forEach((f) =>
+      f.sessoes.forEach((s) => all.push({ phaseId: f.id, sessionId: s.id })),
+    );
+    const idx = all.findIndex((s) => s.sessionId === sessionId);
+    return idx >= 0 && idx < all.length - 1 ? all[idx + 1] : null;
+  };
+
+  const goToNextSessionOrDashboard = () => {
+    const next = findNextSession();
+    if (next) {
+      navigate(`/jornada/${next.phaseId}/${next.sessionId}`);
+    } else {
+      navigate("/dashboard");
+    }
+  };
+
   const handleNext = () => {
     if (isTransitioning) return;
     
@@ -112,7 +131,7 @@ const SessaoView = () => {
     startTransition(isLast ? "finish" : "next", () => {
       if (isLast) {
         completeSession(sessao.id);
-        navigate("/dashboard");
+        goToNextSessionOrDashboard();
       } else {
         setCurrentExIdx(prev => prev + 1);
       }
@@ -133,7 +152,7 @@ const SessaoView = () => {
       startTransition("skip", () => {
         if (isLast) {
           completeSession(sessao.id);
-          navigate("/dashboard");
+          goToNextSessionOrDashboard();
         } else {
           setCurrentExIdx(prev => prev + 1);
         }
@@ -146,7 +165,10 @@ const SessaoView = () => {
       case "next": return "Preparando próximo passo...";
       case "prev": return "Retornando...";
       case "skip": return "Avançando vivência...";
-      case "finish": return "Concluindo sua obra...";
+      case "finish":
+        return findNextSession()
+          ? "Próximo episódio em instantes..."
+          : "Concluindo sua jornada...";
       default: return "Processando Insight...";
     }
   };
