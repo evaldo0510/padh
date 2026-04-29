@@ -88,12 +88,12 @@ const StreamingHome = () => {
             
             <div className="space-y-6">
               <h1 className="text-7xl md:text-9xl font-bold tracking-tighter leading-[0.85] text-white">
-                Sua <br />
-                <span className="text-primary italic animate-pulse">Jornada</span>
+                Seu dia de <br />
+                <span className="text-primary italic animate-pulse">Consciência</span>
               </h1>
               <p className="text-xl md:text-3xl text-white/70 leading-relaxed max-w-xl font-light italic opacity-80">
-                Você começou algo importante. <br />
-                Permita que o silêncio guie suas palavras.
+                Uma pequena prática para ancorar sua presença <br />
+                e transformar seu estado emocional hoje.
               </p>
             </div>
 
