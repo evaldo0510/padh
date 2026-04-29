@@ -37,7 +37,7 @@ const StreamingCard: React.FC<StreamingCardProps> = ({
       )}
     >
       {/* Background Image / Placeholder */}
-      <div className="absolute inset-0 rounded-lg overflow-hidden border border-white/5 bg-muted/20 shadow-lg group-hover:shadow-primary/10 transition-shadow">
+      <div className="absolute inset-0 rounded-2xl overflow-hidden border border-white/5 bg-card/40 shadow-xl group-hover:shadow-primary/10 transition-all duration-500">
         {image ? (
           <img
             src={image}

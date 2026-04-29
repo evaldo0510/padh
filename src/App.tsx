@@ -82,6 +82,7 @@ const UiGuide = lazy(() => import("./pages/UiGuide"));
 const PrisaoInteriorVenda = lazy(() => import("./pages/venda/PrisaoInteriorVenda"));
 const PlanosPage = lazy(() => import("./pages/PlanosPage"));
 const MeuProduto = lazy(() => import("./pages/MeuProduto"));
+const Explorar = lazy(() => import("./pages/Explorar"));
 
 const queryClient = new QueryClient();
 
@@ -357,6 +358,14 @@ const AnimatedRoutes = () => {
                 <ProtectedRoute>
                   <MeuProduto />
                 </ProtectedRoute>
+              </PageTransition>
+            }
+          />
+          <Route
+            path="/explorar"
+            element={
+              <PageTransition>
+                <Explorar />
               </PageTransition>
             }
           />
