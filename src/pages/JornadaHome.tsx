@@ -33,7 +33,7 @@ const JornadaHome = () => {
     if (completedSessionsCount === 0 && userObjective) {
       for (const fase of JORNADA_DATA) {
         for (const sessao of fase.sessoes) {
-          if (sessao.objetivo === userObjective) {
+          if (sessao.objetivos?.includes(userObjective)) {
             return {
               faseId: fase.id,
               sessaoId: sessao.id,
@@ -151,7 +151,7 @@ const JornadaHome = () => {
                   <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                      {fase.sessoes.map((sessao, sIdx) => {
                        const isCompleted = jornada.completedSessions.includes(sessao.id);
-                       const isRecommended = sessao.objetivo === userObjective && completedSessionsCount === 0;
+                       const isRecommended = !!(sessao.objetivos?.includes(userObjective || "")) && completedSessionsCount === 0;
                        const sessionUnlocked = isUnlocked || isRecommended;
                        
                        return (
