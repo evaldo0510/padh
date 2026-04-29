@@ -8,6 +8,7 @@ import { Helmet } from "react-helmet-async";
 import { useProfile } from "@/hooks/useProfile";
 import { useAuth } from "@/hooks/useAuth";
 import { PCH_OBJECTIVES, PCHObjectiveId } from "@/types/objectives";
+import { Check } from "lucide-react";
 
 const STORAGE_KEY = "pch_onboarding_seen_v1";
 
@@ -34,15 +35,22 @@ const steps = [
 
 const PCHWelcome: React.FC<{ onComplete?: () => void }> = ({ onComplete }) => {
   const [step, setStep] = useState(0);
-  const [objective, setObjective] = useState<PCHObjectiveId | null>(null);
+  const [selectedObjectives, setSelectedObjectives] = useState<PCHObjectiveId[]>([]);
   const navigate = useNavigate();
-  const { updateObjective } = useProfile();
+  const { toggleObjective } = useProfile();
+
+  const handleToggle = (id: PCHObjectiveId) => {
+    setSelectedObjectives(prev => 
+      prev.includes(id) ? prev.filter(o => o !== id) : [...prev, id]
+    );
+  };
 
   const finish = async () => {
     try {
       localStorage.setItem(STORAGE_KEY, "1");
-      if (objective) {
-        await updateObjective(objective);
+      // Save all selected objectives
+      for (const obj of selectedObjectives) {
+        await toggleObjective(obj);
       }
     } catch {}
     onComplete?.();
@@ -118,31 +126,39 @@ const PCHWelcome: React.FC<{ onComplete?: () => void }> = ({ onComplete }) => {
             >
               <PCHSymbol variant="feather" size="lg" className="mb-8" />
               <h2 className="font-heading text-3xl md:text-4xl text-foreground mb-4">
-                Qual o seu objetivo hoje?
+                Quais seus objetivos?
               </h2>
               <p className="text-muted-foreground mb-10 max-w-md">
-                Isso nos ajuda a sugerir a melhor prática para o seu momento.
+                Você pode escolher mais de um para personalizar sua jornada.
               </p>
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4 w-full text-left">
-                {PCH_OBJECTIVES.map((obj) => (
-                  <Card
-                    key={obj.id}
-                    onClick={() => setObjective(obj.id)}
-                    className={`p-6 bg-white/5 border-white/10 cursor-pointer transition-all duration-300 hover:bg-white/10 hover:border-primary/50 group ${
-                      objective === obj.id ? "ring-2 ring-primary border-primary bg-white/10" : ""
-                    }`}
-                  >
-                    <div className="flex items-center gap-4">
-                      <div className={`p-3 rounded-xl bg-background/50 ${obj.color}`}>
-                        <obj.icon className="w-6 h-6" />
+                {PCH_OBJECTIVES.map((obj) => {
+                  const isActive = selectedObjectives.includes(obj.id);
+                  return (
+                    <Card
+                      key={obj.id}
+                      onClick={() => handleToggle(obj.id)}
+                      className={`p-6 bg-white/5 border-white/10 cursor-pointer transition-all duration-300 hover:bg-white/10 hover:border-primary/50 group relative ${
+                        isActive ? "ring-2 ring-primary border-primary bg-white/10" : ""
+                      }`}
+                    >
+                      <div className="flex items-center gap-4">
+                        <div className={`p-3 rounded-xl bg-background/50 ${obj.color}`}>
+                          <obj.icon className="w-6 h-6" />
+                        </div>
+                        <span className="font-medium text-lg text-foreground group-hover:text-primary transition-colors">
+                          {obj.label}
+                        </span>
+                        {isActive && (
+                          <div className="ml-auto bg-primary rounded-full p-1">
+                            <Check className="w-4 h-4 text-primary-foreground" />
+                          </div>
+                        )}
                       </div>
-                      <span className="font-medium text-lg text-foreground group-hover:text-primary transition-colors">
-                        {obj.label}
-                      </span>
-                    </div>
-                  </Card>
-                ))}
+                    </Card>
+                  );
+                })}
               </div>
             </motion.div>
           )}
@@ -170,9 +186,9 @@ const PCHWelcome: React.FC<{ onComplete?: () => void }> = ({ onComplete }) => {
             onClick={next}
             size="lg"
             className="min-w-[220px] tracking-wide"
-            disabled={isObjectiveStep && !objective}
+            disabled={isObjectiveStep && selectedObjectives.length === 0}
           >
-            {isObjectiveStep ? "Finalizar" : step < steps.length - 1 ? "Continuar" : "Escolher Objetivo"}
+            {isObjectiveStep ? "Finalizar" : step < steps.length - 1 ? "Continuar" : "Escolher Objetivos"}
           </Button>
         </div>
       </div>
@@ -190,11 +206,10 @@ export const PCHWelcomeGate: React.FC = () => {
 
     try {
       const seen = localStorage.getItem(STORAGE_KEY);
-      const hasDbObjective = profile?.objective;
+      const hasDbObjectives = profile?.objectives && profile.objectives.length > 0;
       
-      if (hasDbObjective && !seen) {
+      if (hasDbObjectives && !seen) {
         localStorage.setItem(STORAGE_KEY, "1");
-        localStorage.setItem("pch_user_objective", hasDbObjective);
         return;
       }
 
