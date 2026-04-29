@@ -105,6 +105,20 @@ const Dashboard = () => {
     toast.dismiss("nav-toast");
   }, [location.pathname]);
 
+  const completedSessionsCount = jornada.completedSessions.length;
+  const totalSessionsCount = JORNADA_DATA.reduce((acc, f) => acc + f.sessoes.length, 0);
+  const totalProgress = Math.round((completedSessionsCount / totalSessionsCount) * 100);
+
+  const findCurrentPhase = () => {
+    for (const fase of JORNADA_DATA) {
+      const allCompleted = fase.sessoes.every(s => jornada.completedSessions.includes(s.id));
+      if (!allCompleted) return fase;
+    }
+    return JORNADA_DATA[JORNADA_DATA.length - 1];
+  };
+
+  const currentPhase = findCurrentPhase();
+
   // Optimized fetch — server-side filter, sort, and pagination
   const loadProgress = React.useCallback(
     async (silent = false) => {
@@ -186,6 +200,7 @@ const Dashboard = () => {
     },
     [isAuthenticated, user, filter, sort, visibleCount],
   );
+
 
   useEffect(() => {
     let cancelled = false;

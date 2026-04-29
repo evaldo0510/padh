@@ -54,93 +54,9 @@ export const JORNADA_DATA: FaseJornada[] = [
           },
         ],
       },
-    ],
-  },
-  {
-    id: "fase-2",
-    numero: 2,
-    titulo: "Encontro com a Sombra",
-    descricao:
-      "Explorando as partes negadas de si mesmo. Integrando o que foi excluído.",
-    cor: "indigo",
-    sessoes: [
-      {
-        id: "s1-f2",
-        titulo: "As Vozes Críticas",
-        descricao: "Conhecendo seu crítico interno.",
-        exercicios: [
-          {
-            id: "ex1-s1-f2",
-            titulo: "Dando Nome ao Crítico",
-            descricao: "Personificando a voz que julga.",
-            instrucao:
-              "Se o seu crítico interno fosse um personagem de um livro, como ele seria? Qual o nome dele?",
-            placeholder: "Descrição do personagem...",
-          },
-        ],
-      },
-    ],
-  },
-  {
-    id: "fase-3",
-    numero: 3,
-    titulo: "Reprogramação",
-    descricao:
-      "Criando novos caminhos neurais e emocionais através da intenção poética.",
-    cor: "emerald",
-    sessoes: [
-      {
-        id: "s1-f3",
-        titulo: "Novas Narrativas",
-        descricao: "Reescrevendo a história que você conta para si mesmo.",
-        exercicios: [
-          {
-            id: "ex1-s1-f3",
-            titulo: "O Verso de Poder",
-            descricao: "Criando uma afirmação poética.",
-            instrucao: "Transforme um medo seu em uma metáfora de força.",
-            placeholder:
-              "Ex: Meu medo é um muro, minha coragem é a hera que o escala.",
-          },
-        ],
-      },
-    ],
-  },
-  {
-    id: "fase-4",
-    numero: 4,
-    titulo: "Expansão",
-    descricao: "Manifestando sua verdade no mundo. O florescimento da jornada.",
-    cor: "rose",
-    sessoes: [
-      {
-        id: "s1-f4",
-        titulo: "Viver em Fluxo",
-        descricao: "Integrando o aprendizado ao cotidiano.",
-        exercicios: [
-          {
-            id: "ex1-s1-f4",
-            titulo: "A Visão do Futuro",
-            descricao: "Projetando sua essência expandida.",
-            instrucao:
-              "Descreva como seria um dia comum vivendo totalmente a partir da sua nova consciência.",
-            placeholder: "Ao acordar, eu sinto...",
-          },
-        ],
-      },
-    ],
-  },
-  {
-    id: "fase-prisao-interior",
-    numero: 5,
-    titulo: "Prisão Interior: o começo da libertação",
-    descricao:
-      "Uma jornada poética em 5 episódios pelos cárceres invisíveis da alma — do reconhecimento das grades internas ao primeiro respiro de liberdade.",
-    cor: "amber",
-    sessoes: [
       {
         id: "s1-fpi",
-        titulo: "Episódio 1 — As Grades Invisíveis",
+        titulo: "As Grades Invisíveis",
         descricao:
           "Reconhecer as prisões silenciosas que carregamos sem perceber.",
         exercicios: [
@@ -170,9 +86,34 @@ export const JORNADA_DATA: FaseJornada[] = [
           },
         ],
       },
+    ],
+  },
+  {
+    id: "fase-2",
+    numero: 2,
+    titulo: "Encontro com a Sombra",
+    descricao:
+      "Explorando as partes negadas de si mesmo. Integrando o que foi excluído.",
+    cor: "indigo",
+    sessoes: [
+      {
+        id: "s1-f2",
+        titulo: "As Vozes Críticas",
+        descricao: "Conhecendo seu crítico interno.",
+        exercicios: [
+          {
+            id: "ex1-s1-f2",
+            titulo: "Dando Nome ao Crítico",
+            descricao: "Personificando a voz que julga.",
+            instrucao:
+              "Se o seu crítico interno fosse um personagem de um livro, como ele seria? Qual o nome dele?",
+            placeholder: "Descrição do personagem...",
+          },
+        ],
+      },
       {
         id: "s2-fpi",
-        titulo: "Episódio 2 — A Voz do Carcereiro",
+        titulo: "A Voz do Carcereiro",
         descricao:
           "Conhecer o crítico interno que mantém as portas trancadas.",
         exercicios: [
@@ -202,9 +143,34 @@ export const JORNADA_DATA: FaseJornada[] = [
           },
         ],
       },
+    ],
+  },
+  {
+    id: "fase-3",
+    numero: 3,
+    titulo: "Reprogramação",
+    descricao:
+      "Criando novos caminhos neurais e emocionais através da intenção poética.",
+    cor: "emerald",
+    sessoes: [
+      {
+        id: "s1-f3",
+        titulo: "Novas Narrativas",
+        descricao: "Reescrevendo a história que você conta para si mesmo.",
+        exercicios: [
+          {
+            id: "ex1-s1-f3",
+            titulo: "O Verso de Poder",
+            descricao: "Criando uma afirmação poética.",
+            instrucao: "Transforme um medo seu em uma metáfora de força.",
+            placeholder:
+              "Ex: Meu medo é um muro, minha coragem é a hera que o escala.",
+          },
+        ],
+      },
       {
         id: "s3-fpi",
-        titulo: "Episódio 3 — A Fenda na Parede",
+        titulo: "A Fenda na Parede",
         descricao:
           "Descobrir as pequenas frestas por onde a luz já entra.",
         exercicios: [
@@ -236,7 +202,7 @@ export const JORNADA_DATA: FaseJornada[] = [
       },
       {
         id: "s4-fpi",
-        titulo: "Episódio 4 — A Chave Esquecida",
+        titulo: "A Chave Esquecida",
         descricao:
           "Recuperar o poder pessoal que sempre esteve com você.",
         exercicios: [
@@ -266,9 +232,33 @@ export const JORNADA_DATA: FaseJornada[] = [
           },
         ],
       },
+    ],
+  },
+  {
+    id: "fase-4",
+    numero: 4,
+    titulo: "Expansão",
+    descricao: "Manifestando sua verdade no mundo. O florescimento da jornada.",
+    cor: "rose",
+    sessoes: [
+      {
+        id: "s1-f4",
+        titulo: "Viver em Fluxo",
+        descricao: "Integrando o aprendizado ao cotidiano.",
+        exercicios: [
+          {
+            id: "ex1-s1-f4",
+            titulo: "A Visão do Futuro",
+            descricao: "Projetando sua essência expandida.",
+            instrucao:
+              "Descreva como seria um dia comum vivendo totalmente a partir da sua nova consciência.",
+            placeholder: "Ao acordar, eu sinto...",
+          },
+        ],
+      },
       {
         id: "s5-fpi",
-        titulo: "Episódio 5 — O Primeiro Respiro Livre",
+        titulo: "O Primeiro Respiro Livre",
         descricao:
           "Atravessar a porta. Dar o primeiro passo do lado de fora.",
         exercicios: [

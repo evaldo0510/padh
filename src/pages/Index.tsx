@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {
   scientificStudies,
   getAllCategories,
@@ -19,7 +19,7 @@ import {
   Target,
 } from "lucide-react";
 import PoemadiagnosticoInterativo from "@/components/sections/PoemadiagnosticoInterativo";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import heroImage from "@/assets/hero-padh.png";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -32,8 +32,28 @@ import { PageSkeleton } from "@/components/ui/page-skeleton";
 import SEOHead from "@/components/seo/SEOHead";
 import { pagesSEO } from "@/lib/seo-config";
 import TextReader from "@/components/ui/text-reader";
+import StreamingHome from "@/components/dashboard/StreamingHome";
+import { supabase } from "@/integrations/supabase/client";
+
 const Index = () => {
+  const [session, setSession] = useState<any>(null);
+  const [checkingSession, setCheckingSession] = useState(true);
+  
+  useEffect(() => {
+    supabase.auth.getSession().then(({ data: { session } }) => {
+      setSession(session);
+      setCheckingSession(false);
+    });
+
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
+      setSession(session);
+    });
+
+    return () => subscription.unsubscribe();
+  }, []);
+
   const aboutSection = useScrollAnimation(0.15);
+
   const toolsSection = useScrollAnimation(0.15);
   const pchSection = useScrollAnimation(0.15);
   const scienceSection = useScrollAnimation(0.15);
@@ -79,8 +99,26 @@ const Index = () => {
       link: "/aula-exclusiva",
     },
   ];
+  if (isLoading || checkingSession) return <PageSkeleton />;
+
+  if (session) {
+    return (
+      <div className="min-h-screen bg-[#050505]">
+        <SEOHead
+          title="Home — Jornada P.A.D.H."
+          description="Sua jornada contínua de transformação."
+          path="/"
+        />
+        <Header />
+        <StreamingHome />
+        <Footer />
+      </div>
+    );
+  }
+
   return (
     <div className="min-h-screen bg-background">
+
       {" "}
       <SEOHead
         title={pagesSEO.home.title}
