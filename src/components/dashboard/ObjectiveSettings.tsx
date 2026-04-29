@@ -5,7 +5,7 @@ import { useProfile } from "@/hooks/useProfile";
 import { 
   Target, Check, RefreshCw, Database, Monitor, 
   HelpCircle, Loader2, History, Trash2, 
-  ArrowRight, Settings2, Zap, Hand
+  ArrowRight, Settings2, Zap, Hand, Sparkles
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
