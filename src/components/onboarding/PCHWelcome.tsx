@@ -36,12 +36,14 @@ const PCHWelcome: React.FC<{ onComplete?: () => void }> = ({ onComplete }) => {
   const [step, setStep] = useState(0);
   const [objective, setObjective] = useState<string | null>(null);
   const navigate = useNavigate();
+  const { updateObjective } = useProfile();
+  const { user } = useAuth();
 
-  const finish = () => {
+  const finish = async () => {
     try {
       localStorage.setItem(STORAGE_KEY, "1");
       if (objective) {
-        localStorage.setItem("pch_user_objective", objective);
+        await updateObjective(objective);
       }
     } catch {}
     onComplete?.();
