@@ -31,7 +31,7 @@ const SessaoView = () => {
   const [isTransitioning, setIsTransitioning] = useState(false);
   const [loadingType, setLoadingType] = useState<"next" | "prev" | "skip" | "finish">("next");
   
-  const transitionTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+  const transitionTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   useEffect(() => {
     if (sessao) {
