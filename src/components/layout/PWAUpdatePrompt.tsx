@@ -1,0 +1,107 @@
+import { useEffect, useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import { RefreshCw, X } from "lucide-react";
+import { Button } from "@/components/ui/button";
+
+/**
+ * Detects new service worker versions and shows a non-blocking banner
+ * inviting the user to refresh. Skips activation in Lovable preview iframes.
+ */
+const PWAUpdatePrompt = () => {
+  const [needRefresh, setNeedRefresh] = useState(false);
+  const [registration, setRegistration] = useState<ServiceWorkerRegistration | null>(null);
+
+  useEffect(() => {
+    if (typeof window === "undefined" || !("serviceWorker" in navigator)) return;
+
+    // Skip in iframes / preview hosts (already unregistered in main.tsx).
+    let inIframe = false;
+    try { inIframe = window.self !== window.top; } catch { inIframe = true; }
+    const isPreview =
+      window.location.hostname.includes("id-preview--") ||
+      window.location.hostname.includes("lovableproject.com");
+    if (inIframe || isPreview) return;
+
+    const onControllerChange = () => {
+      // The new SW has taken control — reload to get fresh assets.
+      window.location.reload();
+    };
+    navigator.serviceWorker.addEventListener("controllerchange", onControllerChange);
+
+    navigator.serviceWorker.getRegistration().then((reg) => {
+      if (!reg) return;
+      setRegistration(reg);
+
+      // If a waiting worker is already there, prompt immediately.
+      if (reg.waiting) setNeedRefresh(true);
+
+      reg.addEventListener("updatefound", () => {
+        const newWorker = reg.installing;
+        if (!newWorker) return;
+        newWorker.addEventListener("statechange", () => {
+          if (newWorker.state === "installed" && navigator.serviceWorker.controller) {
+            setNeedRefresh(true);
+          }
+        });
+      });
+
+      // Periodically check for updates (every 60s while tab is open).
+      const interval = setInterval(() => reg.update().catch(() => {}), 60_000);
+      return () => clearInterval(interval);
+    });
+
+    return () => {
+      navigator.serviceWorker.removeEventListener("controllerchange", onControllerChange);
+    };
+  }, []);
+
+  const handleUpdate = () => {
+    if (registration?.waiting) {
+      registration.waiting.postMessage({ type: "SKIP_WAITING" });
+    } else {
+      window.location.reload();
+    }
+  };
+
+  return (
+    <AnimatePresence>
+      {needRefresh && (
+        <motion.div
+          initial={{ y: 80, opacity: 0 }}
+          animate={{ y: 0, opacity: 1 }}
+          exit={{ y: 80, opacity: 0 }}
+          transition={{ type: "spring", damping: 22, stiffness: 240 }}
+          className="fixed bottom-6 left-1/2 -translate-x-1/2 z-[100] max-w-md w-[92%] md:w-auto"
+          role="status"
+          aria-live="polite"
+        >
+          <div className="flex items-center gap-4 px-5 py-4 rounded-2xl border border-primary/20 bg-slate-900/95 backdrop-blur-xl shadow-2xl shadow-primary/10">
+            <div className="w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center shrink-0">
+              <RefreshCw className="w-5 h-5 text-primary" />
+            </div>
+            <div className="flex-1 min-w-0">
+              <p className="text-sm font-bold text-white">Nova versão disponível</p>
+              <p className="text-xs text-white/50">Atualize para receber as últimas melhorias.</p>
+            </div>
+            <Button
+              size="sm"
+              onClick={handleUpdate}
+              className="btn-primary h-9 px-4 text-xs font-bold uppercase tracking-wider shrink-0"
+            >
+              Atualizar
+            </Button>
+            <button
+              onClick={() => setNeedRefresh(false)}
+              className="text-white/30 hover:text-white/70 transition-colors shrink-0"
+              aria-label="Dispensar"
+            >
+              <X className="w-4 h-4" />
+            </button>
+          </div>
+        </motion.div>
+      )}
+    </AnimatePresence>
+  );
+};
+
+export default PWAUpdatePrompt;
