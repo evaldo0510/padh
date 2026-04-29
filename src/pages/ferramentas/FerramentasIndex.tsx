@@ -104,7 +104,7 @@ const FerramentasIndex = () => {
     },
   ];
   return (
-    <PageLayout seo={pagesSEO.ferramentas} currentPage="Ferramentas P.A.D.H.">
+    <PageLayout seo={pagesSEO.ferramentas} currentPage="Ferramentas PCH">
       {" "}
       {/* Hero */}
       <section className="relative overflow-hidden">
@@ -120,7 +120,7 @@ const FerramentasIndex = () => {
             <h1 className="text-4xl md:text-6xl font-heading font-bold mb-4 text-foreground">
               {" "}
               Ferramentas{" "}
-              <span className="text-primary italic">P.A.D.H.</span>{" "}
+              <span className="text-primary italic">PCH</span>{" "}
             </h1>{" "}
             <p className="text-lg text-muted-foreground leading-relaxed max-w-2xl mx-auto mb-6">
               {" "}
