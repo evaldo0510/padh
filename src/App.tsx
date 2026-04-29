@@ -11,6 +11,7 @@ import { PageSkeleton } from "./components/ui/page-skeleton";
 import PWAPrompt from "./components/layout/PWAPrompt";
 import SupabaseErrorBoundary from "./components/layout/SupabaseErrorBoundary";
 import ProtectedRoute from "./components/auth/ProtectedRoute";
+import { PCHWelcomeGate } from "./components/onboarding/PCHWelcome";
 
 const Index = lazy(() => import("./pages/Index"));
 const NotFound = lazy(() => import("./pages/NotFound"));
@@ -466,6 +467,7 @@ const App = () => (
         <Sonner />
         <PWAPrompt />
         <BrowserRouter>
+          <PCHWelcomeGate />
           <SupabaseErrorBoundary>
             <AnimatedRoutes />
           </SupabaseErrorBoundary>
