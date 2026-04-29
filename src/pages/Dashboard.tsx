@@ -515,7 +515,7 @@ const Dashboard = () => {
                           <span className="text-[10px] uppercase tracking-wider text-muted-foreground">Sessões</span>
                        </div>
                        <div className="p-4 rounded-xl bg-white/5 border border-white/5">
-                          <span className="block text-2xl font-black text-white">{progress.responsesCount || 0}</span>
+                          <span className="block text-2xl font-black text-white">{responsesCount}</span>
                           <span className="text-[10px] uppercase tracking-wider text-muted-foreground">Insights</span>
                        </div>
                     </div>
