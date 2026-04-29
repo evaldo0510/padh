@@ -194,6 +194,13 @@ const Dashboard = () => {
           }
 
           setLastSyncAt(new Date());
+
+          // Also fetch exercise responses count
+          const { count: respCount } = await supabase
+            .from("exercise_responses")
+            .select("*", { count: "exact", head: true })
+            .eq("user_id", user.id);
+          setResponsesCount(respCount || 0);
         }
       } catch (e: any) {
         console.error("loadProgress error", e);
