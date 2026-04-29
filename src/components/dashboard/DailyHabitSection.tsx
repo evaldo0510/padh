@@ -1,13 +1,16 @@
 import React, { useState, useEffect, useMemo } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Flame, Sparkles, CheckCircle2, ChevronRight, MessageSquare } from "lucide-react";
+import { Flame, Sparkles, CheckCircle2, ChevronRight, MessageSquare, ArrowLeft, History, Bell, BellOff, Clock } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useJornada } from "@/hooks/useJornada";
 import { JORNADA_DATA } from "@/lib/jornada-data";
-import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from "@/components/ui/dialog";
 import { Textarea } from "@/components/ui/textarea";
+import { Switch } from "@/components/ui/switch";
+import { Input } from "@/components/ui/input";
 import { toast } from "sonner";
 import { supabase } from "@/integrations/supabase/client";
+import { useNavigate } from "react-router-dom";
 
 const DailyHabitSection: React.FC = () => {
   const { jornada, saveResponse } = useJornada();
