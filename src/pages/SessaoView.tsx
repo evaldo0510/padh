@@ -21,7 +21,7 @@ import { motion, AnimatePresence } from "framer-motion";
 const SessaoView = () => {
   const { phaseId, sessionId } = useParams();
   const navigate = useNavigate();
-  const { saveResponse, completeSession, getResponse } = useJornada();
+  const { saveResponse, completeSession, getResponse, jornada } = useJornada();
   
   const fase = JORNADA_DATA.find((f) => f.id === phaseId);
   const sessao = fase?.sessoes.find((s) => s.id === sessionId);
