@@ -4,6 +4,7 @@ import { useParams, useNavigate } from "react-router-dom";
 import { JORNADA_DATA } from "@/lib/jornada-data";
 import { useJornada } from "@/hooks/useJornada";
 import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
 import { Textarea } from "@/components/ui/textarea";
 import {
   X,
