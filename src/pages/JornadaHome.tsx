@@ -187,7 +187,7 @@ const JornadaHome = () => {
         </div>
 
         {/* Seasons (Fases) List */}
-        <div className="container mx-auto px-6 md:px-12 py-12 space-y-24">
+        <div className="streaming-container py-24 space-y-32">
            {JORNADA_DATA.map((fase, idx) => {
              const prevFase = JORNADA_DATA[idx - 1];
              const isUnlocked = idx === 0 || 
@@ -195,20 +195,23 @@ const JornadaHome = () => {
                                 (nextSession && nextSession.faseId === fase.id && (nextSession as any).isRecommended);
              
              return (
-               <section key={fase.id} className={`space-y-8 ${!isUnlocked && 'opacity-40 grayscale'}`}>
-                  <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 border-b border-white/10 pb-4">
-                     <div>
-                        <h2 className="text-3xl font-heading font-black tracking-tight">Fase {fase.numero}: {fase.titulo}</h2>
-                        <p className="text-white/60 mt-2 max-w-2xl">{fase.descricao}</p>
+               <section key={fase.id} className={`space-y-12 transition-all duration-700 ${!isUnlocked && 'opacity-30 grayscale blur-[2px]'}`}>
+                  <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 border-b border-white/5 pb-8">
+                     <div className="space-y-2">
+                        <div className="flex items-center gap-3">
+                           <span className="text-[11px] font-black uppercase tracking-[0.4em] text-primary">Temporada {fase.numero}</span>
+                        </div>
+                        <h2 className="text-4xl md:text-5xl font-bold tracking-tight">{fase.titulo}</h2>
+                        <p className="text-white/40 max-w-2xl font-light text-lg">{fase.descricao}</p>
                      </div>
                      {!isUnlocked && (
-                       <div className="flex items-center gap-2 text-primary font-bold text-xs uppercase tracking-widest bg-primary/10 px-4 py-2 rounded-full border border-primary/20">
-                          <Lock className="w-4 h-4" /> Temporada Bloqueada
+                       <div className="flex items-center gap-2 text-white/50 font-bold text-[10px] uppercase tracking-widest bg-white/5 px-6 py-3 rounded-full border border-white/10 backdrop-blur-sm">
+                          <Lock className="w-3.5 h-3.5" /> Episódios Bloqueados
                        </div>
                      )}
                   </div>
 
-                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                      {fase.sessoes.map((sessao, sIdx) => {
                        const isCompleted = jornada.completedSessions.includes(sessao.id);
                        const isRecommended = !!(userObjectives.length > 0 && sessao.objetivos?.some(o => userObjectives.includes(o as PCHObjectiveId))) && completedSessionsCount === 0;
@@ -217,34 +220,38 @@ const JornadaHome = () => {
                        return (
                          <motion.div 
                           key={sessao.id}
-                          whileHover={sessionUnlocked ? { y: -8 } : {}}
-                          className={`group relative aspect-video bg-white/5 rounded-2xl border border-white/10 overflow-hidden cursor-pointer ${!sessionUnlocked && 'cursor-not-allowed'} ${isRecommended ? 'ring-2 ring-primary border-primary' : ''}`}
+                          whileHover={sessionUnlocked ? { scale: 1.03, y: -8 } : {}}
+                          className={`group relative aspect-video glass-card overflow-hidden cursor-pointer shadow-xl ${!sessionUnlocked && 'cursor-not-allowed opacity-50'} ${isRecommended ? 'ring-2 ring-primary ring-offset-4 ring-offset-background' : ''}`}
                           onClick={() => sessionUnlocked && navigate(`/jornada/${fase.id}/${sessao.id}`)}
                          >
-                            <div className="absolute inset-0 bg-gradient-to-t from-black via-black/20 to-transparent" />
+                            <div className="absolute inset-0 bg-gradient-to-t from-background/90 via-background/40 to-transparent z-10" />
                             
-                            <div className="absolute inset-0 p-6 flex flex-col justify-end gap-2">
+                            <div className="absolute inset-0 p-8 flex flex-col justify-end gap-2 z-20">
                                <div className="flex items-center justify-between">
-                                  <div className="flex gap-2">
-                                    <span className="text-[10px] font-bold text-primary uppercase tracking-widest">Episódio {sIdx + 1}</span>
-                                    {isRecommended && <Badge className="bg-primary text-primary-foreground text-[8px] h-4">Sugerido</Badge>}
+                                  <div className="flex gap-3 items-center">
+                                    <span className="text-[10px] font-black text-primary uppercase tracking-[0.2em]">Episódio {sIdx + 1}</span>
+                                    {isRecommended && <Badge className="bg-primary text-white text-[8px] h-4 font-black tracking-widest px-2">RECOMENDADO</Badge>}
                                   </div>
-                                  {isCompleted && <CheckCircle2 className="w-5 h-5 text-primary" />}
+                                  {isCompleted && (
+                                    <div className="w-7 h-7 rounded-full bg-emerald-500/20 border border-emerald-500/30 flex items-center justify-center">
+                                       <CheckCircle2 className="w-4 h-4 text-emerald-400" />
+                                    </div>
+                                  )}
                                </div>
-                               <h3 className="text-xl font-bold">{sessao.titulo}</h3>
-                               <p className="text-sm text-white/40 line-clamp-1">{sessao.descricao}</p>
+                               <h3 className="text-2xl font-bold tracking-tight leading-none mb-1">{sessao.titulo}</h3>
+                               <p className="text-xs text-white/40 line-clamp-1 font-light italic">{sessao.descricao}</p>
                                
-                               <div className="pt-4 flex items-center gap-3 opacity-0 group-hover:opacity-100 transition-opacity">
-                                  <Button size="sm" className="rounded-full gap-2">
-                                     <Play className="w-3 h-3 fill-current" /> Assistir
+                               <div className="pt-4 flex items-center gap-3 opacity-0 group-hover:opacity-100 transition-all duration-500 translate-y-2 group-hover:translate-y-0">
+                                  <Button size="sm" className="rounded-full gap-2 px-6 h-9 font-bold text-[10px] uppercase tracking-widest bg-white text-black hover:bg-primary hover:text-white transition-colors">
+                                     <Play className="w-3.5 h-3.5 fill-current" /> Assistir
                                   </Button>
                                </div>
                             </div>
 
-                            {/* Hover Play Button Overlay */}
-                            <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity bg-black/40">
-                               <div className="w-16 h-16 rounded-full border-2 border-white/20 flex items-center justify-center backdrop-blur-sm">
-                                  <Play className="w-8 h-8 fill-current ml-1" />
+                            {/* Hover Status Overlay */}
+                            <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-500 bg-background/20 backdrop-blur-[2px] z-30">
+                               <div className="w-20 h-20 rounded-full border-2 border-white/20 flex items-center justify-center backdrop-blur-md bg-white/5 shadow-2xl">
+                                  <Play className="w-10 h-10 text-white fill-current ml-1.5" />
                                 </div>
                             </div>
                          </motion.div>
