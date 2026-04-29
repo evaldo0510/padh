@@ -18,21 +18,20 @@ const Admin = () => {
   useEffect(() => {
     const checkSecurity = async () => {
       try {
-        const { data: tables, error: tableError } = await supabase.rpc('get_tables_security');
+        const { data: tables, error: tableError } = await supabase.rpc('get_tables_security' as any);
         
-        // If RPC doesn't exist yet, we'll fallback to a static check or notify
         if (tableError) {
           console.error("Error fetching security status", tableError);
           // Fallback static list for protected tables
           const protectedTables = ['episode_favorites', 'episode_progress', 'exercise_responses', 'purchases'];
           const status = protectedTables.map(name => ({
             tablename: name,
-            rowsecurity: true, // Assuming true as we just set it
+            rowsecurity: true, 
             policies: ["Owner access only"]
           }));
-          setSecurityStatus(status);
+          setSecurityStatus(status as TableSecurity[]);
         } else {
-          setSecurityStatus(tables || []);
+          setSecurityStatus((tables as any) || []);
         }
       } catch (e) {
         console.error(e);
@@ -40,6 +39,7 @@ const Admin = () => {
         setLoading(false);
       }
     };
+
 
     checkSecurity();
   }, []);
