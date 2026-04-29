@@ -33,6 +33,7 @@ import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { useJornada } from "@/hooks/useJornada";
 import { JORNADA_DATA } from "@/lib/jornada-data";
+import { motion, AnimatePresence } from "framer-motion";
 import NetflixCarousel from "@/components/ui/NetflixCarousel";
 import StreamingCard from "@/components/ui/StreamingCard";
 import SupabaseConfigBanner from "@/components/dashboard/SupabaseConfigBanner";
