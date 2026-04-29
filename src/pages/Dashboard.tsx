@@ -557,7 +557,7 @@ const Dashboard = () => {
           </NetflixCarousel>
 
           {/* Row: Módulos de Formação (Educação) */}
-          <NetflixCarousel title="Formação P.A.D.H. (Expertise)">
+          <NetflixCarousel title="Formação PCH (Expertise)">
              {MODULOS.map((modulo, idx) => {
                const isUnlocked = isModuleUnlocked(idx);
                const isCompleted = progress.completedModules.includes(modulo.id);
