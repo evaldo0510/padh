@@ -1,7 +1,9 @@
 import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { RefreshCw, X } from "lucide-react";
+import { RefreshCw, X, FileText } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { Link } from "react-router-dom";
+import { APP_VERSION } from "@/lib/changelog";
 
 /**
  * Detects new service worker versions and shows a non-blocking banner

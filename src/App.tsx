@@ -384,6 +384,22 @@ const AnimatedRoutes = () => {
             }
           />
           <Route
+            path="/changelog"
+            element={
+              <PageTransition>
+                <Changelog />
+              </PageTransition>
+            }
+          />
+          <Route
+            path="/offline"
+            element={
+              <PageTransition>
+                <Offline />
+              </PageTransition>
+            }
+          />
+          <Route
             path="/jornada"
             element={
               <PageTransition>
