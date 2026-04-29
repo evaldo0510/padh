@@ -29,6 +29,15 @@ if (typeof navigator !== "undefined" && "serviceWorker" in navigator) {
     if ("caches" in window) {
       caches.keys().then((keys) => keys.forEach((k) => caches.delete(k)));
     }
+  } else {
+    // Production: listen for SKIP_WAITING messages from the update banner.
+    navigator.serviceWorker.addEventListener("message", (event) => {
+      if (event.data?.type === "SKIP_WAITING") {
+        navigator.serviceWorker.getRegistration().then((reg) => {
+          reg?.waiting?.postMessage({ type: "SKIP_WAITING" });
+        });
+      }
+    });
   }
 }
 

@@ -9,6 +9,7 @@ import { lazy, Suspense } from "react";
 import PageTransition from "./components/layout/PageTransition";
 import { PageSkeleton } from "./components/ui/page-skeleton";
 import PWAPrompt from "./components/layout/PWAPrompt";
+import PWAUpdatePrompt from "./components/layout/PWAUpdatePrompt";
 import SupabaseErrorBoundary from "./components/layout/SupabaseErrorBoundary";
 import ProtectedRoute from "./components/auth/ProtectedRoute";
 import { PCHWelcomeGate } from "./components/onboarding/PCHWelcome";
@@ -487,6 +488,7 @@ const App = () => (
         <Toaster />
         <Sonner />
         <PWAPrompt />
+        <PWAUpdatePrompt />
         <BrowserRouter>
           <ProfileProvider>
             <PCHWelcomeGate />
