@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import PageLayout from "@/components/layout/PageLayout";
 import { useParams, useNavigate } from "react-router-dom";
 import { JORNADA_DATA } from "@/lib/jornada-data";
@@ -13,7 +13,8 @@ import {
   Sparkles,
   ArrowLeft,
   FastForward,
-  Loader2
+  Loader2,
+  Lock
 } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 
@@ -28,11 +29,20 @@ const SessaoView = () => {
   const [currentExIdx, setCurrentExIdx] = useState(0);
   const [response, setResponse] = useState("");
   const [isTransitioning, setIsTransitioning] = useState(false);
+  const [loadingType, setLoadingType] = useState<"next" | "prev" | "skip" | "finish">("next");
+  
+  const transitionTimeoutRef = useRef<NodeJS.Timeout | null>(null);
 
   useEffect(() => {
     if (sessao) {
       const saved = getResponse(sessao.exercicios[currentExIdx].id);
       setResponse(saved || "");
+    }
+    
+    // Clear any existing transition if we change episode
+    if (transitionTimeoutRef.current) {
+      clearTimeout(transitionTimeoutRef.current);
+      setIsTransitioning(false);
     }
   }, [currentExIdx, sessao, getResponse]);
 
@@ -50,27 +60,66 @@ const SessaoView = () => {
   const progressPercent = ((currentExIdx + 1) / totalEx) * 100;
   const isLast = currentExIdx === totalEx - 1;
 
-  const handleNext = async () => {
+  const startTransition = async (type: "next" | "prev" | "skip" | "finish", action: () => void) => {
+    // Cancel any previous transition
+    if (transitionTimeoutRef.current) {
+      clearTimeout(transitionTimeoutRef.current);
+    }
+    
+    setLoadingType(type);
+    setIsTransitioning(true);
+    
+    transitionTimeoutRef.current = setTimeout(() => {
+      action();
+      setIsTransitioning(false);
+      transitionTimeoutRef.current = null;
+    }, 800);
+  };
+
+  const handleNext = () => {
     if (isTransitioning) return;
     
-    setIsTransitioning(true);
     saveResponse(currentEx.id, response);
     
-    // Smooth transition delay
-    await new Promise(r => setTimeout(r, 800));
-    
-    if (isLast) {
-      completeSession(sessao.id);
-      navigate("/dashboard");
-    } else {
-      setCurrentExIdx(currentExIdx + 1);
-      setIsTransitioning(false);
-    }
+    startTransition(isLast ? "finish" : "next", () => {
+      if (isLast) {
+        completeSession(sessao.id);
+        navigate("/dashboard");
+      } else {
+        setCurrentExIdx(prev => prev + 1);
+      }
+    });
   };
 
   const handlePrev = () => {
-    if (currentExIdx > 0) {
-      setCurrentExIdx(currentExIdx - 1);
+    if (currentExIdx > 0 && !isTransitioning) {
+      startTransition("prev", () => {
+        setCurrentExIdx(prev => prev - 1);
+      });
+    }
+  };
+
+  const handleSkip = () => {
+    if (!isTransitioning) {
+      setResponse("Insight processado em silêncio...");
+      startTransition("skip", () => {
+        if (isLast) {
+          completeSession(sessao.id);
+          navigate("/dashboard");
+        } else {
+          setCurrentExIdx(prev => prev + 1);
+        }
+      });
+    }
+  };
+
+  const getLoadingMessage = () => {
+    switch (loadingType) {
+      case "next": return "Preparando próximo passo...";
+      case "prev": return "Retornando...";
+      case "skip": return "Avançando vivência...";
+      case "finish": return "Concluindo sua obra...";
+      default: return "Processando Insight...";
     }
   };
 
@@ -98,7 +147,9 @@ const SessaoView = () => {
                   <Loader2 className="w-16 h-16 text-primary animate-spin" />
                   <Sparkles className="w-6 h-6 text-primary absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2" />
                </div>
-               <p className="text-sm font-black uppercase tracking-[0.4em] text-primary animate-pulse">Processando Insight</p>
+               <p className="text-sm font-black uppercase tracking-[0.4em] text-primary animate-pulse">
+                {getLoadingMessage()}
+               </p>
             </motion.div>
           )}
         </AnimatePresence>
@@ -121,6 +172,7 @@ const SessaoView = () => {
                 size="icon" 
                 onClick={() => navigate("/dashboard")}
                 className="rounded-2xl h-12 w-12 hover:bg-white/5 transition-all text-white/30 hover:text-white"
+                aria-label="Voltar para o Dashboard"
               >
                 <ArrowLeft className="w-6 h-6" />
               </Button>
@@ -138,6 +190,7 @@ const SessaoView = () => {
             size="icon" 
             onClick={() => navigate("/dashboard")}
             className="rounded-2xl h-12 w-12 hover:bg-destructive/10 text-white/20 hover:text-destructive transition-all"
+            aria-label="Fechar player"
            >
               <X className="w-6 h-6" />
            </Button>
@@ -214,7 +267,7 @@ const SessaoView = () => {
            <div className="flex items-center gap-8">
               <Button
                 variant="ghost"
-                onClick={() => setResponse("Insight processado em silêncio...")}
+                onClick={handleSkip}
                 disabled={isTransitioning}
                 className="text-white/20 hover:text-white/60 transition-all text-[10px] uppercase font-black tracking-[0.3em]"
               >
