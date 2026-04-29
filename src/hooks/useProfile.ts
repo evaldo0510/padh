@@ -40,14 +40,18 @@ export const useProfile = () => {
       if (data) {
         const dbProfile = data as Profile;
         
+        setProfile(dbProfile);
+        
         // SYNC LOGIC:
-        // 1. If DB has objective, it wins and updates local
-        if (dbProfile.objective) {
+        if (dbProfile.objective && validatedLocal && dbProfile.objective !== validatedLocal) {
+          // Conflict: Inform user that DB will be used, but they can change it
+          toast.info("Objetivos diferentes encontrados", {
+            description: `Mantendo "${dbProfile.objective}" da sua conta. Você pode alterar nas configurações.`,
+          });
           localStorage.setItem(STORAGE_KEY, dbProfile.objective);
-          setProfile(dbProfile);
-        } 
-        // 2. If DB is empty but local has one, sync local to DB
-        else if (validatedLocal) {
+        } else if (dbProfile.objective) {
+          localStorage.setItem(STORAGE_KEY, dbProfile.objective);
+        } else if (validatedLocal) {
           await supabase
             .from("profiles")
             .update({ objective: validatedLocal })
