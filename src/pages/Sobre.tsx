@@ -344,8 +344,8 @@ const Sobre = () => {
                 },
                 {
                   icon: <Award className="spiritual-icon spiritual-icon-lg" />,
-                  title: "Criação do P.A.D.H.",
-                  desc: "Desenvolvimento da Poesia Aplicada ao Desenvolvimento Humano em suas 4 fases fundamentais.",
+                  title: "Consolidação da Metodologia",
+                  desc: "Desenvolvimento da Poesia Cognitiva Hipnótica em suas fases fundamentais de transformação.",
                 },
                 {
                   icon: <Users className="spiritual-icon spiritual-icon-lg" />,
