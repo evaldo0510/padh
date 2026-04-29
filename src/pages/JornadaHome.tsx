@@ -33,7 +33,7 @@ const JornadaHome = () => {
   // Sync profile objective to localStorage if it exists and differs
   const dbObjective = profile?.objective;
   const localObjective = localStorage.getItem("pch_user_objective");
-  const userObjective = dbObjective || localObjective;
+  const userObjective = (dbObjective || localObjective) as PCHObjectiveId | null;
 
   useEffect(() => {
     if (dbObjective && dbObjective !== localObjective) {
