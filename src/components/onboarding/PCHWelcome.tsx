@@ -6,6 +6,8 @@ import { Card } from "@/components/ui/card";
 import PCHSymbol from "@/components/ui/PCHSymbol";
 import { Helmet } from "react-helmet-async";
 import { Sparkles, Brain, PenTool, Wind } from "lucide-react";
+import { useProfile } from "@/hooks/useProfile";
+import { useAuth } from "@/hooks/useAuth";
 
 const STORAGE_KEY = "pch_onboarding_seen_v1";
 
