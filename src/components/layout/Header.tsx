@@ -13,8 +13,18 @@ const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isToolsOpen, setIsToolsOpen] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
   const location = useLocation();
   const navigate = useNavigate();
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setScrolled(window.scrollY > 20);
+    };
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
 
   useEffect(() => {
     const checkAuth = async () => {
