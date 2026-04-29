@@ -173,8 +173,10 @@ const StreamingHome = () => {
                   <span className="text-[10px] font-bold text-white/40 uppercase tracking-widest mb-1">Temporada {fase.numero}</span>
                   <h3 className="text-xl font-bold">{fase.titulo}</h3>
                 </div>
-              </motion.div>
-            ))}
+                </motion.div>
+              );
+            })}
+
           </div>
         </section>
 
