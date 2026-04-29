@@ -90,6 +90,7 @@ const Dashboard = () => {
   const [reloading, setReloading] = useState(false);
   const [progressError, setProgressError] = useState<string | null>(null);
   const [totalRemote, setTotalRemote] = useState<number | null>(null);
+  const [responsesCount, setResponsesCount] = useState(0);
   const [lastSyncAt, setLastSyncAt] = useState<Date | null>(null);
   const [recentlyChanged, setRecentlyChanged] = useState<Set<string>>(new Set());
   const [favorites, setFavorites] = useState<Set<string>>(new Set());
