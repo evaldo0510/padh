@@ -61,6 +61,7 @@ export const JORNADA_DATA: FaseJornada[] = [
         titulo: "As Grades Invisíveis",
         descricao:
           "Reconhecer as prisões silenciosas que carregamos sem perceber.",
+        objetivo: "reprogramacao",
         exercicios: [
           {
             id: "ex1-s1-fpi",
