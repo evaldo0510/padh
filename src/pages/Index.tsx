@@ -65,24 +65,24 @@ const Index = () => {
     {
       icon: <BookOpen className="spiritual-icon spiritual-icon-lg" />,
       title: "Livro-Curso",
-      desc: "Mergulhe na teoria e prática da P.A.D.H. com exercícios guiados que transformam a leitura em experiência terapêutica.",
+      desc: "Mergulhe na teoria e prática da PCH com exercícios guiados que transformam a leitura em experiência terapêutica.",
       link: "/livro-curso",
     },
     {
       icon: <GraduationCap className="spiritual-icon spiritual-icon-lg" />,
-      title: "Formação P.A.D.H.",
-      desc: "Capacitação completa para terapeutas e educadores que desejam usar a Poesia Aplicada ao Desenvolvimento Humano.",
+      title: "Formação PCH",
+      desc: "Capacitação completa para terapeutas e educadores que desejam usar a Poesia Cognitiva Hipnótica.",
       link: "/formacao",
     },
     {
       icon: <Target className="spiritual-icon spiritual-icon-lg" />,
-      title: "Curso P.A.D.H.",
-      desc: "O manual técnico completo da metodologia: base teórica, neurociência e os 4 pilares estruturais.",
+      title: "Curso PCH",
+      desc: "O manual técnico completo da metodologia: base teórica, neurociência e os pilares estruturais.",
       link: "/curso-padh",
     },
     {
       icon: <Feather className="spiritual-icon spiritual-icon-lg" />,
-      title: "8 Ferramentas P.A.D.H.",
+      title: "8 Ferramentas PCH",
       desc: "Do Poema-Funil à Poesia Hipnótica — 8 instrumentos vivos para transformação interior através da poesia.",
       link: "/ferramentas",
     },
@@ -95,7 +95,7 @@ const Index = () => {
     {
       icon: <Star className="spiritual-icon spiritual-icon-lg" />,
       title: "Aula Exclusiva",
-      desc: "Uma aula teórico-vivencial sobre a neurociência da leitura terapêutica e a abordagem P.A.D.H.",
+      desc: "Uma aula teórico-vivencial sobre a neurociência da leitura terapêutica e a abordagem PCH.",
       link: "/aula-exclusiva",
     },
   ];
