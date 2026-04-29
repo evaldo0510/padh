@@ -209,7 +209,7 @@ const ExerciseStep = ({
               </div>{" "}
               <h2 className="text-3xl md:text-4xl font-heading font-bold text-foreground mb-4">
                 {" "}
-                PCH no <span className="text-primary italic">P.A.D.H.</span> —
+                Metodologia <span className="text-primary italic">PCH</span> —
                 Como Usar na Prática{" "}
               </h2>{" "}
               <p className="text-muted-foreground max-w-2xl mx-auto leading-relaxed">
