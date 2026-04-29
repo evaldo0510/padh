@@ -150,14 +150,24 @@ const StreamingHome = () => {
             </Link>
           </div>
           <div className="flex gap-6 overflow-x-auto pb-6 scrollbar-hide">
-            {JORNADA_DATA.map((fase) => (
-              <motion.div 
-                key={fase.id}
-                whileHover={{ scale: 1.05 }}
-                className="flex-shrink-0 w-72 md:w-80 h-48 relative rounded-xl border border-white/10 overflow-hidden cursor-pointer group"
-                onClick={() => navigate(`/jornada`)}
-              >
-                <div className={`absolute inset-0 opacity-20 bg-${fase.cor}-500`} />
+            {JORNADA_DATA.map((fase) => {
+              const colorMap: Record<string, string> = {
+                amber: "bg-amber-500",
+                indigo: "bg-indigo-500",
+                emerald: "bg-emerald-500",
+                rose: "bg-rose-500",
+              };
+              const bgColorClass = colorMap[fase.cor] || "bg-primary";
+              
+              return (
+                <motion.div 
+                  key={fase.id}
+                  whileHover={{ scale: 1.05 }}
+                  className="flex-shrink-0 w-72 md:w-80 h-48 relative rounded-xl border border-white/10 overflow-hidden cursor-pointer group"
+                  onClick={() => navigate(`/jornada`)}
+                >
+                  <div className={`absolute inset-0 opacity-20 ${bgColorClass}`} />
+
                 <div className="absolute inset-0 bg-gradient-to-t from-black to-transparent" />
                 <div className="absolute inset-0 p-6 flex flex-col justify-end">
                   <span className="text-[10px] font-bold text-white/40 uppercase tracking-widest mb-1">Temporada {fase.numero}</span>
