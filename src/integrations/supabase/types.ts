@@ -179,6 +179,14 @@ export type Database = {
     }
     Functions: {
       audit_policy_check: { Args: { target_user_id: string }; Returns: boolean }
+      get_tables_security: {
+        Args: never
+        Returns: {
+          policies: string[]
+          rowsecurity: boolean
+          tablename: string
+        }[]
+      }
     }
     Enums: {
       [_ in never]: never
