@@ -477,6 +477,45 @@ const Dashboard = () => {
            </div>
         </div>
 
+        {/* Dynamic Journey Section */}
+        <section className="container mx-auto px-6 md:px-12 py-12">
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+            <div className="lg:col-span-2 space-y-8">
+               <ObjectiveSettings />
+               {/* Existing rows could go here */}
+            </div>
+            
+            <div className="space-y-8">
+               {/* Side panel for stats/progress */}
+               <Card className="bg-white/5 border-white/10 p-6">
+                  <h3 className="text-xl font-bold mb-4 flex items-center gap-2">
+                    <TrendingUp className="w-5 h-5 text-primary" /> Seu Impacto
+                  </h3>
+                  <div className="space-y-6">
+                    <div className="space-y-2">
+                      <div className="flex justify-between text-sm">
+                        <span className="text-muted-foreground">Progresso Total</span>
+                        <span className="font-bold text-primary">{totalProgress}%</span>
+                      </div>
+                      <Progress value={totalProgress} className="h-1" />
+                    </div>
+                    
+                    <div className="grid grid-cols-2 gap-4">
+                       <div className="p-4 rounded-xl bg-white/5 border border-white/5">
+                          <span className="block text-2xl font-black text-white">{completedSessionsCount}</span>
+                          <span className="text-[10px] uppercase tracking-wider text-muted-foreground">Sessões</span>
+                       </div>
+                       <div className="p-4 rounded-xl bg-white/5 border border-white/5">
+                          <span className="block text-2xl font-black text-white">{progress.responsesCount || 0}</span>
+                          <span className="text-[10px] uppercase tracking-wider text-muted-foreground">Insights</span>
+                       </div>
+                    </div>
+                  </div>
+               </Card>
+            </div>
+          </div>
+        </section>
+
         {/* Content Rows */}
         <div className="space-y-8 pb-20 -mt-20 md:-mt-32 relative z-30">
           
