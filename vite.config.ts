@@ -53,23 +53,31 @@ export default defineConfig(({ mode }) => ({
         cleanupOutdatedCaches: true,
         skipWaiting: true,
         clientsClaim: true,
+        // Never serve index.html / app shell from cache — always revalidate.
         runtimeCaching: [
           {
-            urlPattern: ({ request }) => request.mode === 'navigate',
+            // HTML navigations: always try network first, very short timeout, fallback to cache.
+            urlPattern: ({ request }) => request.mode === 'navigate' || request.destination === 'document',
             handler: 'NetworkFirst',
             options: {
-              cacheName: 'pages-cache',
+              cacheName: 'html-shell',
               networkTimeoutSeconds: 3,
-              expiration: { maxEntries: 50 },
+              expiration: { maxEntries: 10, maxAgeSeconds: 60 * 60 * 24 },
+              cacheableResponse: { statuses: [0, 200] },
             },
           },
           {
-            urlPattern: /\.(?:js|css)$/,
+            // JS + CSS: NetworkFirst so deploys are picked up immediately.
+            urlPattern: ({ request }) =>
+              request.destination === 'script' ||
+              request.destination === 'style' ||
+              request.destination === 'worker',
             handler: 'NetworkFirst',
             options: {
-              cacheName: 'assets-cache',
+              cacheName: 'app-bundles',
               networkTimeoutSeconds: 3,
-              expiration: { maxEntries: 100 },
+              expiration: { maxEntries: 60, maxAgeSeconds: 60 * 60 * 24 * 7 },
+              cacheableResponse: { statuses: [0, 200] },
             },
           },
           {
@@ -91,11 +99,13 @@ export default defineConfig(({ mode }) => ({
             },
           },
           {
-            urlPattern: /\.(?:png|jpg|jpeg|svg|gif|webp)$/,
+            // Static assets (images/fonts) — cache with TTL.
+            urlPattern: /\.(?:png|jpg|jpeg|svg|gif|webp|woff2?|ttf|otf)$/i,
             handler: 'StaleWhileRevalidate',
             options: {
-              cacheName: 'images',
-              expiration: { maxEntries: 50 },
+              cacheName: 'static-assets',
+              expiration: { maxEntries: 80, maxAgeSeconds: 60 * 60 * 24 * 30 },
+              cacheableResponse: { statuses: [0, 200] },
             },
           },
         ],
