@@ -2,18 +2,18 @@ import React from "react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { PCH_OBJECTIVES } from "@/types/objectives";
 import { useProfile } from "@/hooks/useProfile";
-import { Target, Check, RefreshCw, Database, Monitor, HelpCircle } from "lucide-react";
+import { Target, Check, RefreshCw, Database, Monitor, HelpCircle, Loader2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 import { format } from "date-fns";
 import { ptBR } from "date-fns/locale";
 
 export const ObjectiveSettings: React.FC = () => {
-  const { profile, updateObjective, loading, forceSync, source, lastSync } = useProfile();
+  const { profile, toggleObjective, loading, isUpdating, forceSync, source, lastSync } = useProfile();
 
   if (loading) return <div className="animate-pulse h-48 bg-white/5 rounded-2xl" />;
 
-  const isSyncing = source === "syncing";
+  const isSyncing = source === "syncing" || isUpdating;
 
   return (
     <Card className="bg-white/5 border-white/10 overflow-hidden">
@@ -26,7 +26,7 @@ export const ObjectiveSettings: React.FC = () => {
             <CardTitle className="text-xl">Foco da Jornada</CardTitle>
           </div>
           <CardDescription>
-            Escolha o objetivo principal da sua prática para personalizar as recomendações.
+            Escolha um ou mais objetivos principais para personalizar sua trilha.
           </CardDescription>
         </div>
         
@@ -85,13 +85,19 @@ export const ObjectiveSettings: React.FC = () => {
           </Button>
         </div>
       </CardHeader>
-      <CardContent className="grid grid-cols-1 md:grid-cols-2 gap-4">
+      <CardContent className="grid grid-cols-1 md:grid-cols-2 gap-4 relative">
+        {isUpdating && (
+          <div className="absolute inset-0 z-10 bg-background/20 backdrop-blur-[1px] flex items-center justify-center rounded-xl">
+             <Loader2 className="w-8 h-8 text-primary animate-spin" />
+          </div>
+        )}
+        
         {PCH_OBJECTIVES.map((obj) => {
-          const isActive = profile?.objective === obj.id;
+          const isActive = profile?.objectives?.includes(obj.id);
           return (
             <div
               key={obj.id}
-              onClick={() => !isSyncing && updateObjective(obj.id)}
+              onClick={() => !isSyncing && toggleObjective(obj.id)}
               className={`relative p-5 rounded-xl border transition-all duration-300 cursor-pointer flex flex-col gap-2 group ${
                 isActive 
                   ? "bg-primary/10 border-primary ring-1 ring-primary" 
