@@ -11,7 +11,7 @@ export interface SessaoJornada {
   titulo: string;
   descricao: string;
   exercicios: Exercicio[];
-  objetivo?: string;
+  objetivos?: string[];
 }
 
 export interface FaseJornada {
