@@ -117,7 +117,9 @@ const StreamingHome = () => {
         </div>
       </section>
 
-      <div className="streaming-container -mt-48 relative z-30 space-y-32">
+      <div className="streaming-container -mt-48 relative z-30 space-y-20 md:space-y-32">
+        {/* Progresso global + sequência diária */}
+        <GlobalProgressBar />
         {/* Continuar Assistindo Section */}
         {nextSession && (
           <section className="space-y-8 animate-slide-up">
@@ -183,7 +185,7 @@ const StreamingHome = () => {
 
         {/* Sessões Carousel */}
         <NetflixCarousel 
-          title="Experiências Sugeridas" 
+          title="Experiências Rápidas" 
           subtitle="Sessões baseadas no seu perfil e progresso atual."
         >
           {sessions.map((sessao, index) => {
