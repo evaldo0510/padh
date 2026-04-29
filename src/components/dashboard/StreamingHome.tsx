@@ -43,73 +43,73 @@ const StreamingHome = () => {
   const sessions = getAllSessions();
 
   return (
-    <div className="min-h-screen bg-[#050505] text-white pb-20">
-      {/* Featured Banner */}
-      <section className="relative h-[80vh] w-full overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-t from-[#050505] via-transparent to-black/20 z-10" />
-        <div className="absolute inset-0 bg-gradient-to-r from-[#050505] via-transparent to-transparent z-10" />
+    <div className="min-h-screen bg-background text-foreground pb-20">
+      {/* Featured Hero Banner - Modern, Full Width */}
+      <section className="relative h-[85vh] w-full overflow-hidden flex items-center">
+        {/* Background Gradients */}
+        <div className="absolute inset-0 bg-gradient-to-t from-background via-background/20 to-transparent z-10" />
+        <div className="absolute inset-0 bg-gradient-to-r from-background via-background/40 to-transparent z-10" />
         
-        {/* Abstract Background Element */}
-        <div className="absolute inset-0 z-0">
-          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[120%] h-[120%] bg-primary/5 rounded-full blur-[120px] animate-pulse" />
+        {/* Ambient Bloom Background */}
+        <div className="absolute inset-0 z-0 opacity-40">
+          <div className="absolute top-[20%] right-[10%] w-[500px] h-[500px] bg-primary/20 rounded-full blur-[120px] animate-pulse" />
+          <div className="absolute bottom-[20%] left-[5%] w-[400px] h-[400px] bg-secondary/10 rounded-full blur-[100px]" />
         </div>
 
-        <div className="relative z-20 container mx-auto px-6 h-full flex flex-col justify-center pt-20">
+        <div className="relative z-20 streaming-container pt-20">
           <motion.div 
-            initial={{ opacity: 0, x: -20 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.8 }}
-            className="max-w-2xl space-y-6"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 1, ease: [0.22, 1, 0.36, 1] }}
+            className="max-w-3xl space-y-8"
           >
-            <div className="flex items-center gap-3">
-              <Badge className="bg-primary/20 text-primary border-primary/30 py-1 px-3">
-                <Sparkles className="w-3 h-3 mr-2" />
-                Original P.A.D.H.
+            <div className="flex items-center gap-4">
+              <Badge className="bg-primary/20 text-primary border-primary/30 py-1.5 px-4 rounded-full text-xs font-bold tracking-widest uppercase">
+                <Sparkles className="w-3.5 h-3.5 mr-2" />
+                Original PCH
               </Badge>
               {nextSession && (
-                <span className="text-white/40 text-sm font-medium tracking-wider uppercase">
-                  Fase: {nextSession.faseTitulo}
-                </span>
+                <div className="flex items-center gap-2 text-white/50 text-xs font-bold tracking-[0.2em] uppercase">
+                  <ChevronRight className="w-4 h-4 text-primary" />
+                  Temporada {nextSession.faseTitulo}
+                </div>
               )}
             </div>
             
-            <h1 className="text-6xl md:text-8xl font-heading font-black tracking-tighter leading-tight">
-              A Jornada de <br />
-              <span className="text-primary italic">Transformação</span>
-            </h1>
-            
-            <p className="text-xl text-white/60 leading-relaxed max-w-xl">
-              Mergulhe em uma experiência contínua de despertar e expansão. 
-              Sua evolução não é um destino, é o caminho que você trilha agora.
-            </p>
+            <div className="space-y-4">
+              <h1 className="text-6xl md:text-9xl font-bold tracking-tighter leading-[0.85] text-white">
+                Continue sua <br />
+                <span className="text-primary animate-pulse">jornada</span>
+              </h1>
+              <p className="text-lg md:text-2xl text-white/70 leading-relaxed max-w-xl font-light">
+                Você começou algo importante. Siga o fluxo da sua transformação interior.
+              </p>
+            </div>
 
             <div className="flex flex-wrap gap-4 pt-4">
               {nextSession ? (
                 <Button 
-                  size="lg" 
                   onClick={() => navigate(`/jornada/${nextSession.faseId}/${nextSession.sessaoId}`)}
-                  className="h-16 px-10 text-xl font-bold gap-3 rounded-full hover:scale-105 transition-transform"
+                  className="btn-primary h-16 min-w-[240px] text-lg"
                 >
-                  <Play className="w-6 h-6 fill-current" /> Continuar
+                  <Play className="w-6 h-6 fill-current" /> Continuar Assistindo
                 </Button>
               ) : (
                 <Button 
-                  size="lg" 
                   onClick={() => navigate(`/jornada`)}
-                  className="h-16 px-10 text-xl font-bold gap-3 rounded-full"
+                  className="btn-primary h-16 min-w-[240px] text-lg"
                 >
-                  <Play className="w-6 h-6 fill-current" /> Recomeçar
+                  <Play className="w-6 h-6 fill-current" /> Recomeçar Série
                 </Button>
               )}
               
               <Button 
                 variant="outline" 
-                size="lg" 
                 asChild
-                className="h-16 px-10 text-xl font-bold gap-3 rounded-full bg-white/5 border-white/10 hover:bg-white/10"
+                className="btn-secondary h-16 min-w-[200px] text-lg"
               >
                 <Link to="/biblioteca-exercicios">
-                  <BookOpen className="w-6 h-6" /> Biblioteca
+                  <BookOpen className="w-6 h-6" /> Explorar Extras
                 </Link>
               </Button>
             </div>
