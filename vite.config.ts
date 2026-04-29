@@ -49,47 +49,57 @@ export default defineConfig(({ mode }) => ({
       workbox: {
         globPatterns: ['**/*.{js,css,html,ico,png,svg,woff,woff2}'],
         navigateFallback: 'index.html',
+        navigateFallbackDenylist: [/^\/~oauth/, /^\/api/],
+        cleanupOutdatedCaches: true,
+        skipWaiting: true,
+        clientsClaim: true,
         runtimeCaching: [
+          {
+            urlPattern: ({ request }) => request.mode === 'navigate',
+            handler: 'NetworkFirst',
+            options: {
+              cacheName: 'pages-cache',
+              networkTimeoutSeconds: 3,
+              expiration: { maxEntries: 50 },
+            },
+          },
+          {
+            urlPattern: /\.(?:js|css)$/,
+            handler: 'NetworkFirst',
+            options: {
+              cacheName: 'assets-cache',
+              networkTimeoutSeconds: 3,
+              expiration: { maxEntries: 100 },
+            },
+          },
           {
             urlPattern: /^https:\/\/fonts\.googleapis\.com\/.*/i,
             handler: 'CacheFirst',
             options: {
               cacheName: 'google-fonts-cache',
-              expiration: {
-                maxEntries: 10,
-                maxAgeSeconds: 60 * 60 * 24 * 365
-              },
-              cacheableResponse: {
-                statuses: [0, 200]
-              }
-            }
+              expiration: { maxEntries: 10, maxAgeSeconds: 60 * 60 * 24 * 365 },
+              cacheableResponse: { statuses: [0, 200] },
+            },
           },
           {
             urlPattern: /^https:\/\/fonts\.gstatic\.com\/.*/i,
             handler: 'CacheFirst',
             options: {
               cacheName: 'gstatic-fonts-cache',
-              expiration: {
-                maxEntries: 10,
-                maxAgeSeconds: 60 * 60 * 24 * 365
-              },
-              cacheableResponse: {
-                statuses: [0, 200]
-              }
-            }
+              expiration: { maxEntries: 10, maxAgeSeconds: 60 * 60 * 24 * 365 },
+              cacheableResponse: { statuses: [0, 200] },
+            },
           },
           {
             urlPattern: /\.(?:png|jpg|jpeg|svg|gif|webp)$/,
             handler: 'StaleWhileRevalidate',
             options: {
               cacheName: 'images',
-              expiration: {
-                maxEntries: 50
-              }
-            }
-          }
-        ]
-      }
+              expiration: { maxEntries: 50 },
+            },
+          },
+        ],
+      },
     })
   ].filter(Boolean),
   optimizeDeps: {
