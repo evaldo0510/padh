@@ -166,7 +166,7 @@ const ExerciseStep = ({
             "O manual técnico completo da metodologia PCH (Poesia Cognitiva Hipnótica). Aprenda a base científica e os pilares estruturais da transformação.",
           path: "/curso-padh",
         }}
-        currentPage="Curso P.A.D.H."
+        currentPage="Curso PCH"
       >
         {" "}
         <NavegacaoModulos /> <BotaoModoImprimir /> {/* Hero */}
