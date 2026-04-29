@@ -26,8 +26,27 @@ const JornadaHome = () => {
   const completedSessionsCount = jornada.completedSessions.length;
   const totalSessionsCount = JORNADA_DATA.reduce((acc, f) => acc + f.sessoes.length, 0);
   const totalProgress = Math.round((completedSessionsCount / totalSessionsCount) * 100);
+  const userObjective = localStorage.getItem("pch_user_objective");
 
   const findNextSession = () => {
+    // If progress is 0, try to find a session that matches user objective
+    if (completedSessionsCount === 0 && userObjective) {
+      for (const fase of JORNADA_DATA) {
+        for (const sessao of fase.sessoes) {
+          if (sessao.objetivo === userObjective) {
+            return {
+              faseId: fase.id,
+              sessaoId: sessao.id,
+              titulo: sessao.titulo,
+              faseTitulo: fase.titulo,
+              isRecommended: true,
+            };
+          }
+        }
+      }
+    }
+
+    // Default sequential logic
     for (const fase of JORNADA_DATA) {
       for (const sessao of fase.sessoes) {
         if (!jornada.completedSessions.includes(sessao.id)) {
