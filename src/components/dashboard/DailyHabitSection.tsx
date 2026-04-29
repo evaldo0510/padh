@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useMemo } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Flame, Sparkles, CheckCircle2, ChevronRight, MessageSquare } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -248,5 +248,4 @@ const DailyHabitSection: React.FC = () => {
   );
 };
 
-import { useMemo } from "react"; // Added missing import
 export default DailyHabitSection;
