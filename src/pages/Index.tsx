@@ -99,8 +99,26 @@ const Index = () => {
       link: "/aula-exclusiva",
     },
   ];
+  if (isLoading || checkingSession) return <PageSkeleton />;
+
+  if (session) {
+    return (
+      <div className="min-h-screen bg-[#050505]">
+        <SEOHead
+          title="Home — Jornada P.A.D.H."
+          description="Sua jornada contínua de transformação."
+          path="/"
+        />
+        <Header />
+        <StreamingHome />
+        <Footer />
+      </div>
+    );
+  }
+
   return (
     <div className="min-h-screen bg-background">
+
       {" "}
       <SEOHead
         title={pagesSEO.home.title}
