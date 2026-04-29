@@ -121,10 +121,13 @@ export const ObjectiveSettings: React.FC = () => {
             <Button
               variant="outline"
               size="sm"
-              className="h-9 w-9 rounded-lg p-0"
+              className="h-9 w-9 rounded-lg p-0 relative"
               onClick={() => setShowHistory(!showHistory)}
             >
               <History className="w-4 h-4 text-muted-foreground" />
+              {history.length > 0 && (
+                <span className="absolute -top-1 -right-1 w-2 h-2 bg-primary rounded-full border border-background" />
+              )}
             </Button>
             <Button
               variant="outline"
