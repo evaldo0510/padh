@@ -2,7 +2,9 @@ import React, { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
+import { Card } from "@/components/ui/card";
 import PCHSymbol from "@/components/ui/PCHSymbol";
+import { Sparkles, Brain, PenTool, Wind } from "lucide-react";
 import { Helmet } from "react-helmet-async";
 
 const STORAGE_KEY = "pch_onboarding_seen_v1";
@@ -52,6 +54,14 @@ const PCHWelcome: React.FC<{ onComplete?: () => void }> = ({ onComplete }) => {
   const skip = () => finish();
 
   const current = steps[step];
+  const isObjectiveStep = step === steps.length;
+
+  const objectives = [
+    { id: "ansiedade", label: "Aliviar Ansiedade", icon: Wind, color: "text-blue-400" },
+    { id: "foco", label: "Mais Foco e Presença", icon: Brain, color: "text-amber-400" },
+    { id: "escrita", label: "Expressão pela Escrita", icon: PenTool, color: "text-purple-400" },
+    { id: "reprogramacao", label: "Reprogramação Mental", icon: Sparkles, color: "text-emerald-400" },
+  ];
 
   return (
     <div className="fixed inset-0 z-[100] bg-background overflow-hidden">
