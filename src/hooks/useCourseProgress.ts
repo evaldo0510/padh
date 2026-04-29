@@ -18,6 +18,7 @@ export interface ProgressData {
     date: string;
     read: boolean;
   }>;
+  responsesCount?: number;
 }
 
 const STORAGE_KEY = "padh_course_progress";
