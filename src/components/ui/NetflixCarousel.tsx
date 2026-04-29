@@ -1,16 +1,39 @@
-import React, { useRef } from "react";
+import React, { useRef, useState, useEffect } from "react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Button } from "./button";
+import { motion, AnimatePresence } from "framer-motion";
 
 interface NetflixCarouselProps {
   title: string;
   children: React.ReactNode;
   className?: string;
+  subtitle?: string;
 }
 
-const NetflixCarousel: React.FC<NetflixCarouselProps> = ({ title, children, className }) => {
+const NetflixCarousel: React.FC<NetflixCarouselProps> = ({ title, subtitle, children, className }) => {
   const scrollRef = useRef<HTMLDivElement>(null);
+  const [showLeftArrow, setShowLeftArrow] = useState(false);
+  const [showRightArrow, setShowRightArrow] = useState(true);
+
+  const checkScroll = () => {
+    if (scrollRef.current) {
+      const { scrollLeft, scrollWidth, clientWidth } = scrollRef.current;
+      setShowLeftArrow(scrollLeft > 20);
+      setShowRightArrow(scrollLeft < scrollWidth - clientWidth - 20);
+    }
+  };
+
+  useEffect(() => {
+    checkScroll();
+    const current = scrollRef.current;
+    current?.addEventListener("scroll", checkScroll);
+    window.addEventListener("resize", checkScroll);
+    return () => {
+      current?.removeEventListener("scroll", checkScroll);
+      window.removeEventListener("resize", checkScroll);
+    };
+  }, []);
 
   const scroll = (direction: "left" | "right") => {
     if (scrollRef.current) {
@@ -21,38 +44,66 @@ const NetflixCarousel: React.FC<NetflixCarouselProps> = ({ title, children, clas
   };
 
   return (
-    <div className={cn("space-y-4 py-4 relative group/carousel", className)}>
-      <h2 className="text-xl md:text-2xl font-heading font-bold px-6 md:px-12 text-foreground/90 tracking-tight">
-        {title}
-      </h2>
+    <div className={cn("space-y-6 py-8 relative group/carousel overflow-visible", className)}>
+      <div className="flex flex-col gap-1 px-6 md:px-12">
+        <h2 className="text-3xl font-bold text-white tracking-tight leading-none">
+          {title}
+        </h2>
+        {subtitle && <p className="text-sm text-white/40 font-light">{subtitle}</p>}
+      </div>
       
-      <div className="relative">
-        {/* Navigation Buttons */}
-        <Button
-          variant="ghost"
-          size="icon"
-          className="absolute left-0 top-1/2 -translate-y-1/2 z-20 h-full w-12 bg-background/20 hover:bg-background/60 rounded-none border-none opacity-0 group-hover/carousel:opacity-100 transition-opacity hidden md:flex"
-          onClick={() => scroll("left")}
-        >
-          <ChevronLeft className="h-8 w-8 text-white" />
-        </Button>
+      <div className="relative overflow-visible">
+        <AnimatePresence>
+          {showLeftArrow && (
+            <motion.div
+              initial={{ opacity: 0, x: -10 }}
+              animate={{ opacity: 1, x: 0 }}
+              exit={{ opacity: 0, x: -10 }}
+              className="absolute left-0 top-0 bottom-0 z-30 flex items-center"
+            >
+              <Button
+                variant="ghost"
+                size="icon"
+                className="h-full w-14 bg-background/40 backdrop-blur-md rounded-r-3xl border-none text-white hover:bg-background/80 hover:w-16 transition-all shadow-2xl"
+                onClick={() => scroll("left")}
+              >
+                <ChevronLeft className="h-8 w-8" />
+              </Button>
+            </motion.div>
+          )}
+        </AnimatePresence>
 
         <div
           ref={scrollRef}
-          className="flex gap-4 overflow-x-auto scrollbar-hide snap-x snap-mandatory px-6 md:px-12 pb-6"
+          className="flex gap-6 overflow-x-auto scrollbar-hide snap-x snap-mandatory px-6 md:px-12 pb-4 pt-2"
           style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
         >
-          {children}
+          {React.Children.map(children, (child) => (
+            <div className="snap-start snap-always first:pl-0 last:pr-12">
+              {child}
+            </div>
+          ))}
         </div>
 
-        <Button
-          variant="ghost"
-          size="icon"
-          className="absolute right-0 top-1/2 -translate-y-1/2 z-20 h-full w-12 bg-background/20 hover:bg-background/60 rounded-none border-none opacity-0 group-hover/carousel:opacity-100 transition-opacity hidden md:flex"
-          onClick={() => scroll("right")}
-        >
-          <ChevronRight className="h-8 w-8 text-white" />
-        </Button>
+        <AnimatePresence>
+          {showRightArrow && (
+            <motion.div
+              initial={{ opacity: 0, x: 10 }}
+              animate={{ opacity: 1, x: 0 }}
+              exit={{ opacity: 0, x: 10 }}
+              className="absolute right-0 top-0 bottom-0 z-30 flex items-center"
+            >
+              <Button
+                variant="ghost"
+                size="icon"
+                className="h-full w-14 bg-background/40 backdrop-blur-md rounded-l-3xl border-none text-white hover:bg-background/80 hover:w-16 transition-all shadow-2xl"
+                onClick={() => scroll("right")}
+              >
+                <ChevronRight className="h-8 w-8" />
+              </Button>
+            </motion.div>
+          )}
+        </AnimatePresence>
       </div>
     </div>
   );
