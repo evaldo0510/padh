@@ -114,7 +114,9 @@ const StreamingHome = () => {
 
       <div className="streaming-container -mt-48 relative z-30 space-y-20 md:space-y-32 pb-32">
         {/* Daily Consciousness Section */}
-        <DailyHabitSection />
+        <div id="daily-challenge">
+          <DailyHabitSection />
+        </div>
 
         {/* Global Journey Progress */}
         <GlobalProgressBar />
