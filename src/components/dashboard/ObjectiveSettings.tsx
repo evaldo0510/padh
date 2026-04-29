@@ -32,19 +32,24 @@ export const ObjectiveSettings: React.FC = () => {
 
   return (
     <Card className="bg-white/5 border-white/10 overflow-hidden relative">
-      <AnimatePresence>
+      <AnimatePresence mode="wait">
         {isUpdating && (
           <motion.div 
+            key="loading-overlay"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="absolute inset-0 z-50 bg-background/60 backdrop-blur-md flex flex-col items-center justify-center gap-4"
+            transition={{ duration: 0.4 }}
+            className="absolute inset-0 z-50 bg-background/70 backdrop-blur-md flex flex-col items-center justify-center gap-6"
           >
              <div className="relative">
-                <Loader2 className="w-12 h-12 text-primary animate-spin" />
-                <Target className="w-6 h-6 text-primary absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2" />
+                <Loader2 className="w-16 h-16 text-primary animate-spin" />
+                <Sparkles className="w-6 h-6 text-primary absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 animate-pulse" />
              </div>
-             <p className="text-sm font-bold uppercase tracking-[0.2em] text-primary animate-pulse">Recalibrando Jornada...</p>
+             <div className="text-center space-y-2">
+                <p className="text-sm font-bold uppercase tracking-[0.3em] text-primary animate-pulse">Recalibrando Jornada...</p>
+                <p className="text-[10px] text-muted-foreground uppercase tracking-widest">Sincronizando preferências</p>
+             </div>
           </motion.div>
         )}
       </AnimatePresence>
