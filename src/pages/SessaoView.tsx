@@ -46,11 +46,39 @@ const SessaoView = () => {
     }
   }, [currentExIdx, sessao, getResponse]);
 
+  // Lock logic
+  const isLocked = () => {
+    if (!sessao || !fase) return true;
+    // Find all sessions before this one
+    const allSessions: any[] = [];
+    JORNADA_DATA.forEach(f => f.sessoes.forEach(s => allSessions.push(s)));
+    const currentIndex = allSessions.findIndex(s => s.id === sessionId);
+    if (currentIndex > 0) {
+      return !jornada.completedSessions.includes(allSessions[currentIndex - 1].id);
+    }
+    return false;
+  };
+
   if (!sessao || !fase) return (
     <div className="min-h-screen bg-background flex items-center justify-center">
        <div className="text-center space-y-4 animate-fade-in">
           <p className="text-muted-foreground font-light text-lg">Episódio não disponível no momento.</p>
           <Button variant="outline" onClick={() => navigate("/dashboard")} className="rounded-full px-8">Voltar ao Início</Button>
+       </div>
+    </div>
+  );
+
+  if (isLocked()) return (
+    <div className="min-h-screen bg-background flex items-center justify-center">
+       <div className="text-center space-y-6 animate-fade-in px-6">
+          <div className="w-20 h-20 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4">
+            <Lock className="w-10 h-10 text-primary" />
+          </div>
+          <div className="space-y-2">
+            <h2 className="text-2xl font-bold text-white">Episódio Bloqueado</h2>
+            <p className="text-muted-foreground font-light max-w-xs mx-auto">Você precisa concluir os episódios anteriores para liberar esta vivência.</p>
+          </div>
+          <Button variant="default" onClick={() => navigate("/dashboard")} className="btn-primary px-8">Voltar ao Dashboard</Button>
        </div>
     </div>
   );
