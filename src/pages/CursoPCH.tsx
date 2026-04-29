@@ -264,8 +264,6 @@ const ExerciseStep = ({
                   </p>
                 </div>
               ))}
-            </div>
-              ))}
             </div>{" "}
             {/* Como identificar problemas mentais e emocionais */}
             <div className="rounded-xl border border-primary/15 bg-card p-6 md:p-8">
