@@ -130,7 +130,9 @@ const JornadaHome = () => {
         <div className="container mx-auto px-6 md:px-12 py-12 space-y-24">
            {JORNADA_DATA.map((fase, idx) => {
              const prevFase = JORNADA_DATA[idx - 1];
-             const isUnlocked = idx === 0 || prevFase.sessoes.every(s => jornada.completedSessions.includes(s.id));
+             const isUnlocked = idx === 0 || 
+                                prevFase.sessoes.every(s => jornada.completedSessions.includes(s.id)) ||
+                                (nextSession && nextSession.faseId === fase.id && (nextSession as any).isRecommended);
              
              return (
                <section key={fase.id} className={`space-y-8 ${!isUnlocked && 'opacity-40 grayscale'}`}>
