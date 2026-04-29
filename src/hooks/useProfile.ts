@@ -32,6 +32,14 @@ export const useProfile = () => {
 
       if (data) {
         setProfile(data as Profile);
+        // Sync local objective to DB if DB is empty
+        const localObj = localStorage.getItem("pch_user_objective");
+        if (!data.objective && localObj) {
+          await supabase
+            .from("profiles")
+            .update({ objective: localObj })
+            .eq("user_id", user.id);
+        }
       } else {
         // Create profile if it doesn't exist
         const { data: newProfile, error: insertError } = await supabase
