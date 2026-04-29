@@ -1,20 +1,20 @@
 import { Helmet } from "react-helmet-async";
 
 const SITE_URL = "https://padhpoesia.lovable.app";
-const SITE_NAME = "P.A.D.H. — Poesia Aplicada ao Desenvolvimento Humano";
+const SITE_NAME = "PCH — Poesia Cognitiva Hipnótica";
 const DEFAULT_IMAGE = `${SITE_URL}/og-image.png`;
 
 const breadcrumbLabels: Record<string, string> = {
   "/": "Início",
-  "/livro-curso": "Livro-Curso P.A.D.H.",
-  "/formacao": "Formação P.A.D.H.",
+  "/livro-curso": "Livro-Curso PCH",
+  "/formacao": "Formação PCH",
   "/mapa-cerebral": "Mapa Cerebral",
   "/aula-exclusiva": "Aula Exclusiva",
   "/sobre": "Sobre",
   "/contato": "Contato",
-  "/curso-padh": "Curso P.A.D.H.",
-  "/combo-padh": "Combo P.A.D.H.",
-  "/ferramentas": "8 Ferramentas P.A.D.H.",
+  "/curso-padh": "Curso PCH",
+  "/combo-padh": "Combo PCH",
+  "/ferramentas": "8 Ferramentas PCH",
   "/ferramentas/poema-funil": "Poema-Funil",
   "/ferramentas/verso-gatilho": "Verso-Gatilho",
   "/ferramentas/poemadiagnostico": "Poemadiagnóstico",
@@ -71,16 +71,16 @@ interface SEOHeadProps {
 
 const SEOHead = ({
   title,
-  description = "Metodologia P.A.D.H. (Poesia Aplicada ao Desenvolvimento Humano) — Os 4 Pilares da transformação interior através da neurociência e da linguagem poética.",
+  description = "Metodologia PCH (Poesia Cognitiva Hipnótica) — Transformação interior através da neurociência, hipnose e da linguagem poética.",
   path = "/",
   type = "website",
   jsonLd,
 }: SEOHeadProps) => {
   const fullTitle = title
-    ? title.includes("P.A.D.H.")
+    ? title.includes("PCH")
       ? title
-      : `${title} | P.A.D.H.`
-    : "P.A.D.H. — Poesia Aplicada ao Desenvolvimento Humano | Evaldo de Jesus Santana";
+      : `${title} | PCH`
+    : "PCH — Poesia Cognitiva Hipnótica | Evaldo de Jesus Santana";
   const url = path === "/" ? SITE_URL : `${SITE_URL}${path}`;
 
   const defaultJsonLd = {
@@ -95,7 +95,7 @@ const SEOHead = ({
     },
     publisher: {
       "@type": "Organization",
-      name: "P.A.D.H.",
+      name: "PCH",
     },
   };
 
