@@ -377,150 +377,202 @@ const Dashboard = () => {
         path: "/dashboard",
       }}
     >
-      <div className="flex flex-col min-h-screen bg-background -mt-16">
-        {/* Hero Banner */}
-        <section className="relative w-full aspect-[21/9] min-h-[500px] flex items-center overflow-hidden">
-          {/* Background Image / Gradient */}
+      <div className="flex flex-col min-h-screen bg-background -mt-16 overflow-x-hidden">
+        {/* Cinematic Hero Banner */}
+        <section className="relative w-full h-[60vh] md:h-[70vh] flex items-center overflow-hidden">
+          {/* Enhanced Background with Depth */}
           <div className="absolute inset-0 z-0">
              <div className="absolute inset-0 bg-gradient-to-r from-background via-background/60 to-transparent z-10" />
              <div className="absolute inset-0 bg-gradient-to-t from-background via-transparent to-transparent z-10" />
-             <div className="absolute inset-0 bg-primary/5 animate-pulse" />
-             <div className="w-full h-full bg-gradient-to-br from-primary/20 via-background to-secondary/10 flex items-center justify-center opacity-40">
-                <div className="text-[20vw] font-heading font-black opacity-5 select-none tracking-tighter">PCH</div>
+             
+             {/* Dynamic Ambient Bloom */}
+             <div className="absolute top-[15%] left-[5%] w-[600px] h-[600px] bg-primary/10 rounded-full blur-[140px] animate-pulse" />
+             <div className="absolute bottom-[10%] right-[10%] w-[500px] h-[500px] bg-accent-warm/5 rounded-full blur-[120px]" />
+             
+             <div className="w-full h-full flex items-center justify-center opacity-5 select-none pointer-events-none">
+                <div className="text-[25vw] font-black tracking-tighter">PCH</div>
              </div>
           </div>
 
-          <div className="relative z-20 container mx-auto px-6 md:px-12 pt-20">
-             <div className="max-w-2xl space-y-6 animate-fade-in-up">
-                <div className="flex items-center gap-3">
-                   <Badge variant="spiritual" className="spiritual-chip-amber px-3 py-1 gap-2">
-                      <Sparkles className="w-3 h-3" /> Metodologia PCH
+          <div className="relative z-20 streaming-container pt-20">
+             <motion.div 
+               initial={{ opacity: 0, x: -30 }}
+               animate={{ opacity: 1, x: 0 }}
+               transition={{ duration: 1, ease: [0.22, 1, 0.36, 1] }}
+               className="max-w-3xl space-y-8"
+             >
+                <div className="flex items-center gap-4">
+                   <Badge className="bg-primary/20 text-primary border-primary/30 px-4 py-1.5 rounded-full font-black uppercase tracking-widest text-[10px]">
+                      <Sparkles className="w-3.5 h-3.5 mr-2" /> Original PCH
                    </Badge>
-                   {featured.faseTitulo && (
-                     <span className="text-sm font-bold text-primary tracking-widest uppercase">
-                        {featured.faseTitulo}
-                     </span>
-                   )}
+                   <div className="h-px w-10 bg-white/10" />
+                   <span className="text-[10px] font-black uppercase tracking-[0.3em] text-white/40">Série em Exibição</span>
                 </div>
                 
-                <h1 className="text-4xl md:text-7xl font-heading font-black text-white leading-[0.9] tracking-tighter">
-                   {featured.titulo}
-                </h1>
-                
-                <p className="text-lg text-muted-foreground line-clamp-3 max-w-lg leading-relaxed">
-                   {featured.descricao}
-                </p>
+                <div className="space-y-4">
+                  <h1 className="text-5xl md:text-8xl font-bold text-white leading-none tracking-tighter">
+                     {featured.titulo}
+                  </h1>
+                  <p className="text-xl text-white/60 line-clamp-2 max-w-xl font-light leading-relaxed italic">
+                     "{featured.descricao}"
+                  </p>
+                </div>
 
-                <div className="flex items-center gap-4 pt-4">
+                <div className="flex flex-wrap items-center gap-6 pt-6">
                    <Button 
                     size="lg" 
-                    className="gap-2 px-8 h-12 text-lg shadow-xl"
+                    className="btn-primary h-16 min-w-[260px] text-xl"
                     onClick={() => featured.faseId && navigate(`/jornada/${featured.faseId}/${featured.sessaoId}`)}
                    >
-                      <Play className="w-5 h-5 fill-current" /> Assistir Agora
+                      <Play className="w-7 h-7 fill-current" /> Assistir Agora
                    </Button>
                    <Button 
                     size="lg" 
                     variant="outline" 
-                    className="gap-2 px-8 h-12 text-lg bg-white/5 backdrop-blur-md border-white/20 hover:bg-white/10"
+                    className="btn-secondary h-16 px-10 text-xl"
                    >
-                      <Info className="w-5 h-5" /> Mais Informações
+                      <Info className="w-7 h-7" /> Mais Detalhes
                    </Button>
                 </div>
-             </div>
+             </motion.div>
           </div>
         </section>
 
-        {/* Floating Toolbar (Discreet) */}
-        <div className="sticky top-16 z-40 w-full px-6 md:px-12 py-4 flex justify-between items-center bg-background/0 transition-all duration-300">
-           <div className="flex gap-4 items-center">
-              <SyncStatusIndicator />
-              <NotificationCenter />
-           </div>
-           <div className="flex gap-2 md:gap-4 flex-wrap">
-              <Button asChild variant="ghost" size="sm" className="gap-2 text-muted-foreground hover:text-white">
-                <Link to="/recursos-clinicos"><Library className="w-4 h-4" /> Biblioteca</Link>
-              </Button>
-              <Button
-                variant="ghost"
-                size="sm"
-                className="gap-2 text-muted-foreground hover:text-primary"
-                onClick={scrollToHistory}
-              >
-                <Clock className="w-4 h-4" /> Episódios
-              </Button>
-              <Button
-                variant="ghost"
-                size="sm"
-                disabled={navigatingTo === "/planos"}
-                className="gap-2 text-muted-foreground hover:text-primary"
-                onClick={() => goTo("/planos", "Planos")}
-              >
-                <CreditCard className="w-4 h-4" /> Planos
-              </Button>
-              {isAuthenticated ? (
-                <Button
-                  variant="ghost"
-                  size="sm"
-                  disabled={navigatingTo === "/meu-produto"}
-                  className="gap-2 text-muted-foreground hover:text-primary"
-                  onClick={() => goTo("/meu-produto", "Meu Produto")}
-                >
-                  <ShoppingBag className="w-4 h-4" /> Meu Produto
-                </Button>
-              ) : (
-                <Button
-                  variant="ghost"
-                  size="sm"
-                  className="gap-2 text-muted-foreground hover:text-primary"
-                  onClick={() => goTo("/login", "Entrar")}
-                >
-                  <ShoppingBag className="w-4 h-4" /> Entrar
-                </Button>
-              )}
-              {isAuthenticated && (
-                <Button variant="ghost" size="sm" className="gap-2 text-muted-foreground hover:text-destructive" onClick={handleLogout}>
-                  <LogOut className="w-4 h-4" /> Sair
-                </Button>
-              )}
+        {/* Global Toolbar */}
+        <div className="sticky top-16 z-40 w-full bg-background/0 backdrop-blur-0 py-6 transition-all duration-500">
+           <div className="streaming-container flex flex-wrap justify-between items-center gap-6">
+              <div className="flex gap-6 items-center">
+                 <SyncStatusIndicator />
+                 <NotificationCenter />
+              </div>
+              
+              <div className="flex flex-wrap gap-2 md:gap-3">
+                 {[
+                   { to: "/recursos-clinicos", label: "Biblioteca", icon: Library },
+                   { onClick: scrollToHistory, label: "Episódios", icon: Clock },
+                   { to: "/planos", label: "Planos", icon: CreditCard },
+                 ].map((btn, i) => (
+                   <Button 
+                    key={i}
+                    asChild={!!btn.to}
+                    variant="ghost" 
+                    size="sm" 
+                    className="rounded-xl h-10 px-4 gap-2 text-white/50 hover:text-primary hover:bg-primary/5 transition-all font-bold uppercase tracking-widest text-[10px]"
+                    onClick={btn.onClick as any}
+                   >
+                     {btn.to ? <Link to={btn.to}><btn.icon className="w-3.5 h-3.5" /> {btn.label}</Link> : <><btn.icon className="w-3.5 h-3.5" /> {btn.label}</>}
+                   </Button>
+                 ))}
+                 
+                 {isAuthenticated ? (
+                   <Button
+                     variant="ghost"
+                     size="sm"
+                     className="rounded-xl h-10 px-4 gap-2 text-white/50 hover:text-primary hover:bg-primary/5 transition-all font-bold uppercase tracking-widest text-[10px]"
+                     onClick={() => goTo("/meu-produto", "Meu Produto")}
+                   >
+                     <ShoppingBag className="w-3.5 h-3.5" /> Meu Produto
+                   </Button>
+                 ) : (
+                   <Button
+                     variant="ghost"
+                     size="sm"
+                     className="rounded-xl h-10 px-4 gap-2 text-primary hover:bg-primary/5 transition-all font-bold uppercase tracking-widest text-[10px]"
+                     onClick={() => goTo("/login", "Entrar")}
+                   >
+                     <ShoppingBag className="w-3.5 h-3.5" /> Entrar
+                   </Button>
+                 )}
+              </div>
            </div>
         </div>
 
-        {/* Dynamic Journey Section */}
-        <section className="container mx-auto px-6 md:px-12 py-12">
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-            <div className="lg:col-span-2 space-y-8">
+        {/* Dashboard Dynamic Section */}
+        <section className="streaming-container py-12 mb-24">
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-12">
+            <div className="lg:col-span-2 space-y-12">
+               {/* Objectives with modern UI */}
                <ObjectiveSettings />
-               {/* Existing rows could go here */}
+               
+               {/* Motivational Insight Card */}
+               <motion.div 
+                 whileHover={{ y: -5 }}
+                 className="glass-card p-10 bg-gradient-to-br from-primary/10 via-background/40 to-accent-warm/5 relative overflow-hidden group border-white/5"
+               >
+                  <div className="absolute top-0 right-0 p-8 opacity-5 group-hover:opacity-10 transition-opacity duration-1000">
+                     <Target className="w-48 h-48 text-primary" />
+                  </div>
+                  <div className="relative z-10 space-y-4">
+                     <div className="flex items-center gap-3">
+                        <div className="w-1.5 h-8 bg-primary rounded-full" />
+                        <h3 className="text-3xl font-bold tracking-tight">Você está avançando</h3>
+                     </div>
+                     <p className="text-xl text-white/60 font-light max-w-xl leading-relaxed">
+                        Cada palavra escrita na sua jornada é um passo para fora de uma prisão que você nem sabia que existia. Siga o fluxo.
+                     </p>
+                  </div>
+               </motion.div>
             </div>
             
             <div className="space-y-8">
-               {/* Side panel for stats/progress */}
-               <Card className="bg-white/5 border-white/10 p-6">
-                  <h3 className="text-xl font-bold mb-4 flex items-center gap-2">
-                    <TrendingUp className="w-5 h-5 text-primary" /> Seu Impacto
+               {/* Stats Overview */}
+               <Card className="glass-card p-10 border-white/5 bg-card/40">
+                  <h3 className="text-xl font-bold mb-8 flex items-center justify-between">
+                    <div className="flex items-center gap-3">
+                      <TrendingUp className="w-5 h-5 text-primary" /> Seu Impacto
+                    </div>
+                    <Badge variant="outline" className="border-emerald-500/20 text-emerald-400 text-[10px]">Ativo</Badge>
                   </h3>
-                  <div className="space-y-6">
-                    <div className="space-y-2">
-                      <div className="flex justify-between text-sm">
-                        <span className="text-muted-foreground">Progresso Total</span>
-                        <span className="font-bold text-primary">{totalProgress}%</span>
+                  
+                  <div className="space-y-10">
+                    <div className="space-y-4">
+                      <div className="flex justify-between items-end">
+                        <span className="text-[10px] font-black uppercase tracking-[0.2em] text-white/40">Progresso Geral</span>
+                        <span className="text-3xl font-black text-primary">{totalProgress}%</span>
                       </div>
-                      <Progress value={totalProgress} className="h-1" />
+                      <div className="progress-bar-thin">
+                         <div className="progress-fill" style={{ width: `${totalProgress}%` }} />
+                      </div>
                     </div>
                     
-                    <div className="grid grid-cols-2 gap-4">
-                       <div className="p-4 rounded-xl bg-white/5 border border-white/5">
-                          <span className="block text-2xl font-black text-white">{completedSessionsCount}</span>
-                          <span className="text-[10px] uppercase tracking-wider text-muted-foreground">Sessões</span>
+                    <div className="grid grid-cols-1 gap-6">
+                       <div className="p-6 rounded-2xl bg-white/5 border border-white/5 flex items-center justify-between group hover:bg-white/10 transition-colors">
+                          <div className="space-y-1">
+                             <span className="text-[10px] font-black uppercase tracking-widest text-white/30">Fase Atual</span>
+                             <span className="block text-lg font-bold text-white leading-none">{currentPhase.titulo}</span>
+                          </div>
+                          <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center">
+                             <span className="text-primary font-black text-xs">{currentPhase.numero}</span>
+                          </div>
                        </div>
-                       <div className="p-4 rounded-xl bg-white/5 border border-white/5">
-                          <span className="block text-2xl font-black text-white">{responsesCount}</span>
-                          <span className="text-[10px] uppercase tracking-wider text-muted-foreground">Insights</span>
+                       
+                       <div className="grid grid-cols-2 gap-4">
+                          <div className="p-6 rounded-2xl bg-white/5 border border-white/5 space-y-2">
+                             <span className="block text-4xl font-black text-white">{completedSessionsCount}</span>
+                             <span className="text-[9px] font-black uppercase tracking-[0.3em] text-white/20 leading-none">Episódios</span>
+                          </div>
+                          <div className="p-6 rounded-2xl bg-white/5 border border-white/5 space-y-2">
+                             <span className="block text-4xl font-black text-white">{responsesCount}</span>
+                             <span className="text-[9px] font-black uppercase tracking-[0.3em] text-white/20 leading-none">Insights</span>
+                          </div>
                        </div>
                     </div>
                   </div>
                </Card>
+
+               {/* Quick Access Grid */}
+               <div className="grid grid-cols-2 gap-4">
+                  {[
+                    { id: 'ansiedade', label: 'Ansiedade' },
+                    { id: 'foco', label: 'Foco' },
+                    { id: 'escrita', label: 'Escrita' },
+                    { id: 'identidade', label: 'Identidade' }
+                  ].map(cat => (
+                    <button key={cat.id} className="p-4 rounded-xl border border-white/5 bg-white/5 text-[10px] font-black uppercase tracking-[0.3em] text-white/40 hover:bg-primary/10 hover:text-primary hover:border-primary/20 transition-all">
+                       {cat.label}
+                    </button>
+                  ))}
+               </div>
             </div>
           </div>
         </section>
