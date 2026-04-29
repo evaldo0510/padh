@@ -12,6 +12,7 @@ import PWAPrompt from "./components/layout/PWAPrompt";
 import SupabaseErrorBoundary from "./components/layout/SupabaseErrorBoundary";
 import ProtectedRoute from "./components/auth/ProtectedRoute";
 import { PCHWelcomeGate } from "./components/onboarding/PCHWelcome";
+import { ProfileProvider } from "./providers/ProfileProvider";
 
 const Index = lazy(() => import("./pages/Index"));
 const NotFound = lazy(() => import("./pages/NotFound"));
