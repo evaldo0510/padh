@@ -26,7 +26,7 @@ const STORAGE_KEY = "pch_user_objectives";
 const JornadaHome = () => {
   const navigate = useNavigate();
   const { jornada } = useJornada();
-  const { profile, loading: profileLoading } = useProfile();
+  const { profile, loading: profileLoading, isUpdating } = useProfile();
 
   const completedSessionsCount = jornada.completedSessions.length;
   const totalSessionsCount = JORNADA_DATA.reduce((acc, f) => acc + f.sessoes.length, 0);
