@@ -18,6 +18,8 @@ export const useProfile = () => {
   const { user } = useAuth();
   const [profile, setProfile] = useState<Profile | null>(null);
   const [loading, setLoading] = useState(true);
+  const [source, setSource] = useState<"local" | "database" | "syncing">("local");
+  const [lastSync, setLastSync] = useState<Date | null>(null);
 
   const fetchProfile = async () => {
     if (!user) {
