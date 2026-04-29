@@ -377,7 +377,7 @@ const Sobre = () => {
           </div>{" "}
         </div>{" "}
       </section>{" "}
-      {/* O Método P.A.D.H. */}
+      {/* Metodologia PCH */}
       <section className="section-padding border-t border-border/20 bg-primary/[0.01]">
         {" "}
         <div className="container mx-auto px-6 md:px-8">
@@ -387,14 +387,14 @@ const Sobre = () => {
             <div className="section-header">
               {" "}
               <p className="section-label">Metodologia</p>{" "}
-              <h2 className="section-title"> O Protocolo P.A.D.H. </h2>{" "}
+              <h2 className="section-title"> A Essência PCH </h2>{" "}
               <p className="section-subtitle italic">
-                "Poesia Aplicada ao Desenvolvimento Humano" — uma jornada
-                estruturada em quatro pilares fundamentais para a transformação
-                inconsciente.{" "}
+                "Poesia Cognitiva Hipnótica" — uma jornada
+                estruturada em três pilares fundamentais para a transformação
+                da consciência.{" "}
               </p>{" "}
             </div>{" "}
-            <div className="grid md:grid-cols-2 gap-6">
+            <div className="grid md:grid-cols-3 gap-6">
               {" "}
               {[
                 {
@@ -403,19 +403,14 @@ const Sobre = () => {
                   desc: "O uso da palavra como som, ritmo e imagem para acessar o sentir. Através de poemas de 'aterramento', preparamos o terreno da consciência para receber a mudança, contornando as defesas racionais.",
                 },
                 {
-                  phase: "A: Aplicada",
-                  title: "A Metodologia Prática",
-                  desc: "A transição da arte pura para a ferramenta prática de intervenção. Uso das técnicas como o Poema-Funil ou Verso-Gatilho como vetores de mudança intencional no sistema emocional.",
+                  phase: "C: Cognitiva",
+                  title: "A Racionalidade Poética",
+                  desc: "A transição da arte pura para a reestruturação mental. O foco na expansão da consciência e na resiliência, onde novos significados brotam a partir das metáforas instaladas no inconsciente.",
                 },
                 {
-                  phase: "D: Desenvolvimento",
-                  title: "A Evolução Contínua",
-                  desc: "O foco na expansão da consciência e na resiliência. Observamos como o mapa cerebral se reorganiza e como novos significados brotam a partir das metáforas instaladas no inconsciente.",
-                },
-                {
-                  phase: "H: Humano",
-                  title: "A Pessoa Integral",
-                  desc: "A centralidade no ser humano, na sua inteireza e singularidade. A fase final de integração onde a nova percepção é incorporada à identidade, promovendo autonomia e evolução pessoal.",
+                  phase: "H: Hipnótica",
+                  title: "A Libertação Integral",
+                  desc: "O estado de fluxo e a hipnose ericksoniana a serviço da cura. A fase de integração onde a nova percepção é incorporada à identidade, promovendo autonomia e evolução pessoal.",
                 },
               ].map((step, i) => (
                 <div
