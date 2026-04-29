@@ -161,9 +161,9 @@ const ExerciseStep = ({
     return (
       <PageLayout
         seo={{
-          title: "Curso P.A.D.H. — Domínio Técnico dos 4 Pilares",
+          title: "Curso PCH — Domínio Técnico da Metodologia",
           description:
-            "O manual técnico completo da metodologia P.A.D.H. (Poesia Aplicada ao Desenvolvimento Humano). Aprenda a base científica e os 4 pilares estruturais.",
+            "O manual técnico completo da metodologia PCH (Poesia Cognitiva Hipnótica). Aprenda a base científica e os pilares estruturais da transformação.",
           path: "/curso-padh",
         }}
         currentPage="Curso P.A.D.H."
