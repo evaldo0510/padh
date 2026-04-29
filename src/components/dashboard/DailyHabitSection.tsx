@@ -352,6 +352,53 @@ const DailyHabitSection: React.FC = () => {
           </AnimatePresence>
         </DialogContent>
       </Dialog>
+
+      <Dialog open={showSettings} onOpenChange={setShowSettings}>
+        <DialogContent className="sm:max-w-[400px] bg-slate-900 border-white/10 p-8">
+          <DialogHeader>
+            <DialogTitle className="text-2xl font-bold text-white flex items-center gap-3">
+              <Bell className="text-primary w-6 h-6" />
+              Lembretes Diários
+            </DialogTitle>
+          </DialogHeader>
+          <div className="py-6 space-y-8">
+            <div className="flex items-center justify-between">
+              <div className="space-y-1">
+                <p className="text-white font-medium">Ativar Notificações</p>
+                <p className="text-white/40 text-sm">Receba um lembrete no celular.</p>
+              </div>
+              <Switch 
+                checked={reminderEnabled} 
+                onCheckedChange={(checked) => {
+                  setReminderEnabled(checked);
+                  saveReminderSettings(checked, reminderTime);
+                }} 
+              />
+            </div>
+
+            <div className={`space-y-4 transition-opacity ${reminderEnabled ? 'opacity-100' : 'opacity-30 pointer-events-none'}`}>
+              <div className="flex items-center gap-2">
+                <Clock className="w-4 h-4 text-primary" />
+                <p className="text-sm font-bold text-white/60 uppercase tracking-widest">Horário do Lembrete</p>
+              </div>
+              <Input 
+                type="time" 
+                value={reminderTime} 
+                onChange={(e) => {
+                  setReminderTime(e.target.value);
+                  saveReminderSettings(reminderEnabled, e.target.value);
+                }}
+                className="bg-white/5 border-white/10 text-white text-lg h-12"
+              />
+            </div>
+          </div>
+          <DialogFooter>
+            <Button onClick={() => setShowSettings(false)} className="w-full btn-primary h-12">
+              Salvar e Fechar
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 };
