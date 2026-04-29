@@ -163,6 +163,8 @@ export type Database = {
           created_at: string
           id: string
           objectives: string[]
+          reminder_enabled: boolean | null
+          reminder_time: string | null
           updated_at: string
           user_id: string
         }
@@ -170,6 +172,8 @@ export type Database = {
           created_at?: string
           id?: string
           objectives?: string[]
+          reminder_enabled?: boolean | null
+          reminder_time?: string | null
           updated_at?: string
           user_id: string
         }
@@ -177,6 +181,8 @@ export type Database = {
           created_at?: string
           id?: string
           objectives?: string[]
+          reminder_enabled?: boolean | null
+          reminder_time?: string | null
           updated_at?: string
           user_id?: string
         }
