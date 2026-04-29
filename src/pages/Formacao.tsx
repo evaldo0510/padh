@@ -12,14 +12,14 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import PageLayout from "@/components/layout/PageLayout";
 import { pagesSEO } from "@/lib/seo-config";
+
 const Formacao = () => {
   const modulos = [
     {
       numero: 1,
       titulo: "Poema-Funil: A Jornada do Olhar ao Invisível",
       duracao: "60 min",
-      descricao:
-        "Aulão teórico-vivencial com metáforas, imagens mentais, exemplos poéticos e vivência guiada.",
+      descricao: "Aulão teórico-vivencial com metáforas, imagens mentais, exemplos poéticos e vivência guiada.",
       topicos: [
         "Fundamento teórico do Poema-Funil",
         "Base neuropsicológica",
@@ -32,8 +32,7 @@ const Formacao = () => {
       numero: 2,
       titulo: "Neurociência, Emoção e Hipnose",
       duracao: "60 min",
-      descricao:
-        "Como o cérebro dança com a metáfora — da ativação neural ao transe leve.",
+      descricao: "Como o cérebro dança com a metáfora — da ativação neural ao transe leve.",
       topicos: [
         "Ativação neural pela poesia",
         "Estados de transe leve e profundidade emocional",
@@ -44,10 +43,9 @@ const Formacao = () => {
     },
     {
       numero: 3,
-      titulo: "A Estrutura P.A.D.H.",
+      titulo: "A Estrutura PCH",
       duracao: "60 min",
-      descricao:
-        "O mapa da atuação terapêutica poética: Poesia – Aplicada – Desenvolvimento – Humano.",
+      descricao: "O mapa da atuação terapêutica poética: Poesia – Cognitiva – Hipnótica.",
       topicos: [
         "O poder da palavra e ressignificação",
         "Aplicação estratégica das ferramentas",
@@ -58,10 +56,9 @@ const Formacao = () => {
     },
     {
       numero: 4,
-      titulo: "As Ferramentas da P.A.D.H. — Parte 1",
+      titulo: "As Ferramentas da PCH — Parte 1",
       duracao: "60 min",
-      descricao:
-        "Poemas como técnicas: Poema-funil, Verso-gatilho e Poemadiagnóstico.",
+      descricao: "Poemas como técnicas: Poema-funil, Verso-gatilho e Poemadiagnóstico.",
       topicos: [
         "Poema-funil (imersão gradual)",
         "Verso-gatilho (âncoras emocionais)",
@@ -71,10 +68,9 @@ const Formacao = () => {
     },
     {
       numero: 5,
-      titulo: "As Ferramentas da P.A.D.H. — Parte 2",
+      titulo: "As Ferramentas da PCH — Parte 2",
       duracao: "60 min",
-      descricao:
-        "Escrita terapêutica profunda e técnicas avançadas de intervenção poética.",
+      descricao: "Escrita terapêutica profunda e técnicas avançadas de intervenção poética.",
       topicos: [
         "Caderno de Voz Interna Poética",
         "Encenação Poética Interna",
@@ -86,8 +82,7 @@ const Formacao = () => {
       numero: 6,
       titulo: "Finalização, Ritualização e Acompanhamento",
       duracao: "60 min",
-      descricao:
-        "Encerramentos terapêuticos, integração e continuidade do trabalho com P.A.D.H.",
+      descricao: "Encerramentos terapêuticos, integração e continuidade do trabalho com PCH.",
       topicos: [
         "Ritual do Silêncio Poético",
         "Séries de atendimento com PCH",
@@ -96,272 +91,101 @@ const Formacao = () => {
       ],
     },
   ];
+
   return (
-    <PageLayout seo={pagesSEO.formacao} currentPage="Formação em P.A.D.H.">
-      {" "}
-      {/* Hero */}
-      <section className="relative overflow-hidden">
-        {" "}
-        <div className="absolute inset-0 gradient-glow" />{" "}
-        <div className="relative container mx-auto px-6 py-20 text-center">
-          {" "}
-          <div className="animate-fade-in-up max-w-3xl mx-auto">
-            {" "}
-            <p className="text-sm uppercase tracking-[0.2em] text-primary mb-4 font-medium">
-              Formação Profissional
-            </p>{" "}
-            <h1 className="text-4xl md:text-6xl font-heading font-bold mb-4 text-foreground">
-              {" "}
-              Formação em{" "}
-              <span className="text-primary italic">P.A.D.H.</span>{" "}
-            </h1>{" "}
-            <p className="text-xl text-primary font-heading font-medium mb-4 italic">
-              Poesia Aplicada ao Desenvolvimento Humano
-            </p>{" "}
-            <p className="text-lg text-muted-foreground mb-6 leading-relaxed max-w-2xl mx-auto">
-              {" "}
-              Capacitação completa para terapeutas, psicólogos e educadores que
-              desejam utilizar a poesia como ferramenta de intervenção emocional
-              e cognitiva.{" "}
-            </p>{" "}
-            <div className="poem-block max-w-sm mx-auto mb-8">
-              {" "}
-              <p className="poem-text text-sm text-muted-foreground">
-                {" "}
-                A arte de transformar palavras
-                <br /> em portais de liberdade interior.{" "}
-              </p>{" "}
-            </div>{" "}
-          </div>{" "}
-        </div>{" "}
-      </section>{" "}
-      {/* Info cards */}
-      <section className="container mx-auto px-6 py-12">
-        {" "}
-        <div className="max-w-4xl mx-auto">
-          {" "}
-          <div className="grid sm:grid-cols-3 gap-4 mb-16">
-            {" "}
-            {[
-              {
-                icon: (
-                  <Clock className="spiritual-icon spiritual-icon-xl text-primary" />
-                ),
-                label: "Duração",
-                value: "6 semanas — 30 horas",
-              },
-              {
-                icon: (
-                  <Users className="spiritual-icon spiritual-icon-xl text-primary" />
-                ),
-                label: "Público",
-                value: "Terapeutas, psicólogos, artistas e cuidadores",
-              },
-              {
-                icon: (
-                  <GraduationCap className="spiritual-icon spiritual-icon-xl text-primary" />
-                ),
-                label: "Certificação",
-                value: "Formador em P.A.D.H.",
-              },
-            ].map((item, i) => (
-              <Card key={i} className="border-border/50">
-                {" "}
-                <CardContent className="p-5 text-center space-y-2">
-                  {" "}
-                  <div className="flex justify-center">{item.icon}</div>{" "}
-                  <h3 className="font-heading font-semibold text-foreground">
-                    {item.label}
-                  </h3>{" "}
-                  <p className="text-sm text-muted-foreground">
-                    {item.value}
-                  </p>{" "}
-                </CardContent>{" "}
+    <PageLayout seo={pagesSEO.formacao} currentPage="Formação em PCH">
+      <section className="py-20 md:py-28 overflow-hidden">
+        <div className="container mx-auto px-6 relative z-10 text-center max-w-4xl">
+          <Badge variant="outline" className="mb-6 border-primary/30 text-primary bg-primary/5">
+            Certificação Profissional
+          </Badge>
+          <h1 className="text-4xl md:text-6xl font-heading font-bold text-foreground mb-4">
+            Formação em <span className="text-primary italic">PCH</span>
+          </h1>
+          <p className="text-muted-foreground text-lg md:text-xl max-w-2xl mx-auto mb-10">
+            Capacitação completa para terapeutas, psicólogos e educadores que desejam dominar a Poesia Cognitiva Hipnótica.
+          </p>
+          <div className="flex flex-wrap justify-center gap-6 text-sm">
+            <div className="flex items-center gap-2">
+              <Clock className="spiritual-icon spiritual-icon-sm text-primary" />
+              <span>Carga horária: 12h</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <Users className="spiritual-icon spiritual-icon-sm text-primary" />
+              <span>Aulas em grupo e supervisão</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <GraduationCap className="spiritual-icon spiritual-icon-sm text-primary" />
+              <span>Certificado incluso</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section className="py-16 bg-muted/30">
+        <div className="container mx-auto px-6 max-w-5xl">
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {modulos.map((modulo) => (
+              <Card key={modulo.numero} className="border-border/50 hover:border-primary/30 transition-all duration-300">
+                <CardHeader className="pb-2">
+                  <div className="flex justify-between items-start mb-2">
+                    <Badge variant="secondary" className="bg-primary/10 text-primary border-none">
+                      Módulo {modulo.numero}
+                    </Badge>
+                    <span className="text-xs text-muted-foreground">{modulo.duracao}</span>
+                  </div>
+                  <CardTitle className="text-xl font-heading">{modulo.titulo}</CardTitle>
+                </CardHeader>
+                <CardContent className="space-y-4">
+                  <p className="text-sm text-muted-foreground">{modulo.descricao}</p>
+                  <div className="pt-4 border-t border-border/30">
+                    <p className="text-xs font-semibold text-foreground uppercase tracking-widest mb-3">Tópicos principais:</p>
+                    <ul className="space-y-2">
+                      {modulo.topicos.map((topico, index) => (
+                        <li key={index} className="text-xs text-muted-foreground flex items-center gap-2">
+                          <Target className="spiritual-icon spiritual-icon-xs text-primary" />
+                          {topico}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                </CardContent>
               </Card>
             ))}
-          </div>{" "}
-          {/* Objetivo */}
-          <Card className="mb-16 border-border/50">
-            {" "}
-            <CardHeader>
-              {" "}
-              <CardTitle className="text-2xl font-heading">
-                Objetivo da Formação
-              </CardTitle>{" "}
-            </CardHeader>{" "}
-            <CardContent>
-              {" "}
-              <p className="text-muted-foreground leading-relaxed">
-                {" "}
-                Capacitar profissionais a utilizar a poesia como ferramenta
-                hipnótica de intervenção emocional e cognitiva, unindo
-                metáforas, técnicas de hipnose leve e práticas narrativas. Ao
-                final, o aluno será capaz de planejar e conduzir sessões
-                terapêuticas completas usando o protocolo P.A.D.H., criando
-                poemas terapêuticos personalizados e aplicando as 8 ferramentas
-                da P.A.D.H. com segurança e sensibilidade.{" "}
-              </p>{" "}
-            </CardContent>{" "}
-          </Card>{" "}
-          {/* Módulos */}
-          <div className="mb-16">
-            {" "}
-            <div className="text-center mb-10">
-              {" "}
-              <p className="text-sm uppercase tracking-[0.2em] text-primary mb-2 font-medium">
-                Programa
-              </p>{" "}
-              <h2 className="text-3xl font-heading font-bold text-foreground">
-                Módulos da Formação
-              </h2>{" "}
-            </div>{" "}
-            <div className="space-y-4">
-              {" "}
-              {modulos.map((modulo) => (
-                <Card
-                  key={modulo.numero}
-                  className="border-border/50 hover:border-primary/20 transition-colors"
-                >
-                  {" "}
-                  <CardContent className="p-6">
-                    {" "}
-                    <div className="flex items-start gap-4">
-                      {" "}
-                      <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center text-primary font-heading text-lg font-bold flex-shrink-0">
-                        {" "}
-                        {modulo.numero}
-                      </div>{" "}
-                      <div className="flex-1">
-                        {" "}
-                        <div className="flex items-center gap-2 mb-1">
-                          {" "}
-                          <h3 className="font-heading font-semibold text-foreground">
-                            {modulo.titulo}
-                          </h3>{" "}
-                          <Badge
-                            variant="outline"
-                            className="text-xs border-primary/20 text-muted-foreground"
-                          >
-                            {" "}
-                            {modulo.duracao}
-                          </Badge>{" "}
-                        </div>{" "}
-                        <p className="text-sm text-muted-foreground mb-3">
-                          {modulo.descricao}
-                        </p>{" "}
-                        <div className="flex flex-wrap gap-2">
-                          {" "}
-                          {modulo.topicos.map((topico, j) => (
-                            <span
-                              key={j}
-                              className="text-xs px-2 py-1 rounded-md bg-muted/50 text-muted-foreground"
-                            >
-                              {" "}
-                              {topico}
-                            </span>
-                          ))}
-                        </div>{" "}
-                      </div>{" "}
-                    </div>{" "}
-                  </CardContent>{" "}
-                </Card>
-              ))}
-            </div>{" "}
-          </div>{" "}
-          {/* Materiais */}
-          <div className="grid md:grid-cols-2 gap-6 mb-16">
-            {" "}
-            <Card className="border-border/50">
-              {" "}
-              <CardHeader>
-                {" "}
-                <CardTitle className="text-xl font-heading">
-                  Materiais Incluídos
-                </CardTitle>{" "}
-              </CardHeader>{" "}
-              <CardContent>
-                {" "}
-                <ul className="space-y-2.5">
-                  {" "}
-                  {[
-                    "Apostila completa com espaço para reflexão",
-                    "Áudios guiados com leitura de indução poética",
-                    "Cartas poéticas — mini baralho simbólico",
-                    "Diário de Poesia Terapêutica",
-                    "Certificado de Formação em P.A.D.H.",
-                  ].map((item, i) => (
-                    <li
-                      key={i}
-                      className="flex items-start gap-2 text-sm text-muted-foreground"
-                    >
-                      {" "}
-                      <BookOpen className="spiritual-icon text-primary mt-0.5 flex-shrink-0" />{" "}
-                      {item}
-                    </li>
-                  ))}
-                </ul>{" "}
-              </CardContent>{" "}
-            </Card>{" "}
-            <Card className="border-border/50">
-              {" "}
-              <CardHeader>
-                {" "}
-                <CardTitle className="text-xl font-heading">
-                  Formato
-                </CardTitle>{" "}
-              </CardHeader>{" "}
-              <CardContent>
-                {" "}
-                <ul className="space-y-2.5">
-                  {" "}
-                  {[
-                    {
-                      icon: <Brain className="spiritual-icon" />,
-                      text: "Aulas síncronas + grupo de suporte",
-                    },
-                    {
-                      icon: <Target className="spiritual-icon" />,
-                      text: "Exercícios práticos entre encontros",
-                    },
-                    {
-                      icon: <Users className="spiritual-icon" />,
-                      text: "Plantões poéticos para dúvidas e prática",
-                    },
-                    {
-                      icon: <GraduationCap className="spiritual-icon" />,
-                      text: "Sessão de leitura pública final",
-                    },
-                  ].map((item, i) => (
-                    <li
-                      key={i}
-                      className="flex items-start gap-2 text-sm text-muted-foreground"
-                    >
-                      {" "}
-                      <span className="text-primary mt-0.5">
-                        {item.icon}
-                      </span>{" "}
-                      {item.text}
-                    </li>
-                  ))}
-                </ul>{" "}
-              </CardContent>{" "}
-            </Card>{" "}
-          </div>{" "}
-          {/* CTA */}
-          <div className="text-center">
-            {" "}
-            <Button
-              size="lg"
-              className="bg-primary text-primary-foreground hover:bg-primary-dark px-8"
-            >
-              {" "}
-              <GraduationCap className="mr-2 spiritual-icon spiritual-icon-lg" />{" "}
-              Inscrever-se na Formação{" "}
-            </Button>{" "}
-          </div>{" "}
-        </div>{" "}
-      </section>{" "}
+          </div>
+        </div>
+      </section>
+
+      <section className="py-20">
+        <div className="container mx-auto px-6 text-center max-w-3xl">
+          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-primary/20 bg-primary/5 text-primary text-sm font-medium mb-6">
+            <Brain className="spiritual-icon spiritual-icon-sm" /> Público-Alvo
+          </div>
+          <h2 className="text-3xl md:text-4xl font-heading font-bold mb-8">Quem pode se tornar um Terapeuta PCH?</h2>
+          <div className="grid sm:grid-cols-2 gap-4 text-left mb-12">
+            {[
+              "Psicólogos e Psicanalistas",
+              "Terapeutas Holísticos",
+              "Educadores e Pedagogos",
+              "Profissionais de RH e Coaching",
+              "Arteterapeutas",
+              "Buscadores de Autoconhecimento",
+            ].map((p, i) => (
+              <div key={i} className="flex items-center gap-3 p-4 rounded-xl border border-border/50 bg-card">
+                <div className="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center text-primary">
+                  <BookOpen className="spiritual-icon spiritual-icon-sm" />
+                </div>
+                <span className="text-sm font-medium">{p}</span>
+              </div>
+            ))}
+          </div>
+          <Button size="lg" className="px-12 bg-primary hover:bg-primary-dark">
+            Fazer Inscrição Agora
+          </Button>
+        </div>
+      </section>
     </PageLayout>
   );
 };
+
 export default Formacao;

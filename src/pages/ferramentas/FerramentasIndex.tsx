@@ -97,14 +97,14 @@ const FerramentasIndex = () => {
       titulo: "Poesia Hipnótica",
       subtitulo: "O Poder das Palavras",
       descricao:
-        "A P.A.D.H. combina linguagem sugestiva, metáforas e afirmações para reformular padrões mentais limitantes e estimular mudanças emocionais positivas.",
+        "A PCH combina linguagem sugestiva, metáforas e afirmações para reformular padrões mentais limitantes e estimular mudanças emocionais positivas.",
       verso:
         '"Combinando a palavra com intenção e ritmo, criamos um espaço para o florescimento de novas possibilidades."',
       link: "/ferramentas/poesia-hipnotica",
     },
   ];
   return (
-    <PageLayout seo={pagesSEO.ferramentas} currentPage="Ferramentas P.A.D.H.">
+    <PageLayout seo={pagesSEO.ferramentas} currentPage="Ferramentas PCH">
       {" "}
       {/* Hero */}
       <section className="relative overflow-hidden">
@@ -120,7 +120,7 @@ const FerramentasIndex = () => {
             <h1 className="text-4xl md:text-6xl font-heading font-bold mb-4 text-foreground">
               {" "}
               Ferramentas{" "}
-              <span className="text-primary italic">P.A.D.H.</span>{" "}
+              <span className="text-primary italic">PCH</span>{" "}
             </h1>{" "}
             <p className="text-lg text-muted-foreground leading-relaxed max-w-2xl mx-auto mb-6">
               {" "}

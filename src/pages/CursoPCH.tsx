@@ -161,12 +161,12 @@ const ExerciseStep = ({
     return (
       <PageLayout
         seo={{
-          title: "Curso P.A.D.H. — Domínio Técnico dos 4 Pilares",
+          title: "Curso PCH — Domínio Técnico da Metodologia",
           description:
-            "O manual técnico completo da metodologia P.A.D.H. (Poesia Aplicada ao Desenvolvimento Humano). Aprenda a base científica e os 4 pilares estruturais.",
+            "O manual técnico completo da metodologia PCH (Poesia Cognitiva Hipnótica). Aprenda a base científica e os pilares estruturais da transformação.",
           path: "/curso-padh",
         }}
-        currentPage="Curso P.A.D.H."
+        currentPage="Curso PCH"
       >
         {" "}
         <NavegacaoModulos /> <BotaoModoImprimir /> {/* Hero */}
@@ -183,9 +183,9 @@ const ExerciseStep = ({
             </div>{" "}
             <h1 className="text-4xl md:text-6xl font-heading font-bold text-foreground mb-4">
               {" "}
-              Poesia Aplicada ao{" "}
+              Poesia Cognitiva{" "}
               <span className="text-primary italic">
-                Desenvolvimento Humano
+                Hipnótica
               </span>{" "}
             </h1>{" "}
             <p className="text-muted-foreground text-lg md:text-xl max-w-2xl mx-auto">
@@ -209,7 +209,7 @@ const ExerciseStep = ({
               </div>{" "}
               <h2 className="text-3xl md:text-4xl font-heading font-bold text-foreground mb-4">
                 {" "}
-                PCH no <span className="text-primary italic">P.A.D.H.</span> —
+                Metodologia <span className="text-primary italic">PCH</span> —
                 Como Usar na Prática{" "}
               </h2>{" "}
               <p className="text-muted-foreground max-w-2xl mx-auto leading-relaxed">
@@ -222,56 +222,46 @@ const ExerciseStep = ({
               </p>{" "}
             </div>{" "}
             {/* Fluxo geral em 4 etapas */}
-            <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
-              {" "}
+            <div className="grid sm:grid-cols-3 gap-4 mb-8">
               {[
                 {
                   pillar: "P",
                   name: "Poesia",
                   action:
-                    "Escutar a linguagem do paciente para mapear seu mundo simbólico.",
-                  tool: "Módulo 1",
+                    "Escutar a linguagem do paciente para mapear seu mundo simbólico e emocional.",
+                  tool: "Módulos 1-2",
                 },
                 {
-                  pillar: "A",
-                  name: "Aplicada",
+                  pillar: "C",
+                  name: "Cognitiva",
                   action:
-                    "Aplicar técnicas (Poemadiagnóstico, Verso-Gatilho, indução leve).",
-                  tool: "Módulos 2-4",
-                },
-                {
-                  pillar: "D",
-                  name: "Desenvolvimento",
-                  action:
-                    "Aprofundar e instalar metáforas curativas que reorganizam crenças.",
-                  tool: "Módulos 5-6",
+                    "Ressignificar crenças e padrões mentais através da metáfora e da ciência.",
+                  tool: "Módulos 3-5",
                 },
                 {
                   pillar: "H",
-                  name: "Humano",
+                  name: "Hipnótica",
                   action:
-                    "Integrar mudanças à identidade e sustentar autonomia psíquica.",
-                  tool: "Módulos 7-8",
+                    "Conduzir à libertação emocional e ao estado de fluxo transformador.",
+                  tool: "Módulos 6-8",
                 },
               ].map((p, i) => (
                 <div
                   key={i}
                   className="rounded-xl border border-primary/15 bg-card p-5 text-center"
                 >
-                  {" "}
                   <div className="w-12 h-12 mx-auto rounded-full bg-primary/10 flex items-center justify-center text-primary font-heading font-bold text-xl mb-3">
-                    {" "}
                     {p.pillar}
-                  </div>{" "}
+                  </div>
                   <h3 className="font-heading font-semibold text-foreground mb-2">
                     {p.name}
-                  </h3>{" "}
+                  </h3>
                   <p className="text-xs text-muted-foreground leading-relaxed mb-3">
                     {p.action}
-                  </p>{" "}
+                  </p>
                   <p className="text-xs text-primary font-medium uppercase tracking-wider">
                     {p.tool}
-                  </p>{" "}
+                  </p>
                 </div>
               ))}
             </div>{" "}

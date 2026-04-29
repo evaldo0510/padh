@@ -361,7 +361,7 @@ const Dashboard = () => {
   return (
     <PageLayout
       seo={{
-        title: "Home — P.A.D.H. Streaming",
+        title: "Home — PCH Streaming",
         description: "Explore sua jornada terapêutica como uma série de transformação.",
         path: "/dashboard",
       }}
@@ -375,7 +375,7 @@ const Dashboard = () => {
              <div className="absolute inset-0 bg-gradient-to-t from-background via-transparent to-transparent z-10" />
              <div className="absolute inset-0 bg-primary/5 animate-pulse" />
              <div className="w-full h-full bg-gradient-to-br from-primary/20 via-background to-secondary/10 flex items-center justify-center opacity-40">
-                <div className="text-[20vw] font-heading font-black opacity-5 select-none tracking-tighter">P.A.D.H.</div>
+                <div className="text-[20vw] font-heading font-black opacity-5 select-none tracking-tighter">PCH</div>
              </div>
           </div>
 
@@ -383,7 +383,7 @@ const Dashboard = () => {
              <div className="max-w-2xl space-y-6 animate-fade-in-up">
                 <div className="flex items-center gap-3">
                    <Badge variant="spiritual" className="spiritual-chip-amber px-3 py-1 gap-2">
-                      <Sparkles className="w-3 h-3" /> Original P.A.D.H.
+                      <Sparkles className="w-3 h-3" /> Metodologia PCH
                    </Badge>
                    {featured.faseTitulo && (
                      <span className="text-sm font-bold text-primary tracking-widest uppercase">
@@ -557,7 +557,7 @@ const Dashboard = () => {
           </NetflixCarousel>
 
           {/* Row: Módulos de Formação (Educação) */}
-          <NetflixCarousel title="Formação P.A.D.H. (Expertise)">
+          <NetflixCarousel title="Formação PCH (Expertise)">
              {MODULOS.map((modulo, idx) => {
                const isUnlocked = isModuleUnlocked(idx);
                const isCompleted = progress.completedModules.includes(modulo.id);

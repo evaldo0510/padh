@@ -42,7 +42,7 @@ function header(
   doc.text("P.A.D.H.", PAGE.margin, 11);
   doc.setFont("helvetica", "normal");
   doc.setFontSize(8);
-  doc.text("Poesia Aplicada ao Desenvolvimento Humano", PAGE.margin, 17);
+  doc.text("Poesia Cognitiva Hipnótica (PCH)", PAGE.margin, 17);
 
   doc.setFont("helvetica", "bold");
   doc.setFontSize(9);
