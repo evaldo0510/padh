@@ -25,7 +25,7 @@ export type Database = {
           created_at?: string
           id?: string
           session_id: string
-          user_id: string
+          user_id?: string
         }
         Update: {
           created_at?: string
@@ -54,7 +54,7 @@ export type Database = {
           session_id: string
           status?: string
           updated_at?: string
-          user_id: string
+          user_id?: string
         }
         Update: {
           completed_at?: string | null
@@ -87,7 +87,7 @@ export type Database = {
           response?: string
           session_id?: string | null
           updated_at?: string
-          user_id: string
+          user_id?: string
         }
         Update: {
           created_at?: string
@@ -124,7 +124,7 @@ export type Database = {
           product_id: string
           status?: string
           updated_at?: string
-          user_id: string
+          user_id?: string
         }
         Update: {
           amount_cents?: number
