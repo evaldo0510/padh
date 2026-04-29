@@ -97,7 +97,7 @@ const FerramentasIndex = () => {
       titulo: "Poesia Hipnótica",
       subtitulo: "O Poder das Palavras",
       descricao:
-        "A P.A.D.H. combina linguagem sugestiva, metáforas e afirmações para reformular padrões mentais limitantes e estimular mudanças emocionais positivas.",
+        "A PCH combina linguagem sugestiva, metáforas e afirmações para reformular padrões mentais limitantes e estimular mudanças emocionais positivas.",
       verso:
         '"Combinando a palavra com intenção e ritmo, criamos um espaço para o florescimento de novas possibilidades."',
       link: "/ferramentas/poesia-hipnotica",
