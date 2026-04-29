@@ -19,11 +19,11 @@ const Footer = () => {
       path: "/livro-curso",
     },
     {
-      name: "Formação P.A.D.H.",
+      name: "Formação PCH",
       path: "/formacao",
     },
     {
-      name: "Ferramentas P.A.D.H.",
+      name: "Ferramentas PCH",
       path: "/ferramentas",
     },
     {
@@ -31,7 +31,7 @@ const Footer = () => {
       path: "/mapa-cerebral",
     },
     {
-      name: "Curso P.A.D.H.",
+      name: "Curso PCH",
       path: "/curso-padh",
     },
     {
