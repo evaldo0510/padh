@@ -102,7 +102,8 @@ const JornadaHome = () => {
                         onClick={() => navigate(`/jornada/${nextSession.faseId}/${nextSession.sessaoId}`)}
                         className="h-14 px-10 text-lg font-bold gap-3 rounded-full"
                       >
-                         <Play className="w-6 h-6 fill-current" /> Continuar: {nextSession.titulo}
+                         <Play className="w-6 h-6 fill-current" /> 
+                         {(nextSession as any).isRecommended ? `Sugerido: ${nextSession.titulo}` : `Continuar: ${nextSession.titulo}`}
                       </Button>
                     )}
                     <Button 
