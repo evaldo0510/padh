@@ -222,57 +222,49 @@ const ExerciseStep = ({
               </p>{" "}
             </div>{" "}
             {/* Fluxo geral em 4 etapas */}
-            <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
-              {" "}
+            <div className="grid sm:grid-cols-3 gap-4 mb-8">
               {[
                 {
                   pillar: "P",
                   name: "Poesia",
                   action:
-                    "Escutar a linguagem do paciente para mapear seu mundo simbólico.",
-                  tool: "Módulo 1",
+                    "Escutar a linguagem do paciente para mapear seu mundo simbólico e emocional.",
+                  tool: "Módulos 1-2",
                 },
                 {
-                  pillar: "A",
-                  name: "Aplicada",
+                  pillar: "C",
+                  name: "Cognitiva",
                   action:
-                    "Aplicar técnicas (Poemadiagnóstico, Verso-Gatilho, indução leve).",
-                  tool: "Módulos 2-4",
-                },
-                {
-                  pillar: "D",
-                  name: "Desenvolvimento",
-                  action:
-                    "Aprofundar e instalar metáforas curativas que reorganizam crenças.",
-                  tool: "Módulos 5-6",
+                    "Ressignificar crenças e padrões mentais através da metáfora e da ciência.",
+                  tool: "Módulos 3-5",
                 },
                 {
                   pillar: "H",
-                  name: "Humano",
+                  name: "Hipnótica",
                   action:
-                    "Integrar mudanças à identidade e sustentar autonomia psíquica.",
-                  tool: "Módulos 7-8",
+                    "Conduzir à libertação emocional e ao estado de fluxo transformador.",
+                  tool: "Módulos 6-8",
                 },
               ].map((p, i) => (
                 <div
                   key={i}
                   className="rounded-xl border border-primary/15 bg-card p-5 text-center"
                 >
-                  {" "}
                   <div className="w-12 h-12 mx-auto rounded-full bg-primary/10 flex items-center justify-center text-primary font-heading font-bold text-xl mb-3">
-                    {" "}
                     {p.pillar}
-                  </div>{" "}
+                  </div>
                   <h3 className="font-heading font-semibold text-foreground mb-2">
                     {p.name}
-                  </h3>{" "}
+                  </h3>
                   <p className="text-xs text-muted-foreground leading-relaxed mb-3">
                     {p.action}
-                  </p>{" "}
+                  </p>
                   <p className="text-xs text-primary font-medium uppercase tracking-wider">
                     {p.tool}
-                  </p>{" "}
+                  </p>
                 </div>
+              ))}
+            </div>
               ))}
             </div>{" "}
             {/* Como identificar problemas mentais e emocionais */}
