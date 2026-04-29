@@ -26,8 +26,27 @@ const JornadaHome = () => {
   const completedSessionsCount = jornada.completedSessions.length;
   const totalSessionsCount = JORNADA_DATA.reduce((acc, f) => acc + f.sessoes.length, 0);
   const totalProgress = Math.round((completedSessionsCount / totalSessionsCount) * 100);
+  const userObjective = localStorage.getItem("pch_user_objective");
 
   const findNextSession = () => {
+    // If progress is 0, try to find a session that matches user objective
+    if (completedSessionsCount === 0 && userObjective) {
+      for (const fase of JORNADA_DATA) {
+        for (const sessao of fase.sessoes) {
+          if (sessao.objetivos?.includes(userObjective)) {
+            return {
+              faseId: fase.id,
+              sessaoId: sessao.id,
+              titulo: sessao.titulo,
+              faseTitulo: fase.titulo,
+              isRecommended: true,
+            };
+          }
+        }
+      }
+    }
+
+    // Default sequential logic
     for (const fase of JORNADA_DATA) {
       for (const sessao of fase.sessoes) {
         if (!jornada.completedSessions.includes(sessao.id)) {
@@ -83,7 +102,8 @@ const JornadaHome = () => {
                         onClick={() => navigate(`/jornada/${nextSession.faseId}/${nextSession.sessaoId}`)}
                         className="h-14 px-10 text-lg font-bold gap-3 rounded-full"
                       >
-                         <Play className="w-6 h-6 fill-current" /> Continuar: {nextSession.titulo}
+                         <Play className="w-6 h-6 fill-current" /> 
+                         {(nextSession as any).isRecommended ? `Sugerido: ${nextSession.titulo}` : `Continuar: ${nextSession.titulo}`}
                       </Button>
                     )}
                     <Button 
@@ -110,7 +130,9 @@ const JornadaHome = () => {
         <div className="container mx-auto px-6 md:px-12 py-12 space-y-24">
            {JORNADA_DATA.map((fase, idx) => {
              const prevFase = JORNADA_DATA[idx - 1];
-             const isUnlocked = idx === 0 || prevFase.sessoes.every(s => jornada.completedSessions.includes(s.id));
+             const isUnlocked = idx === 0 || 
+                                prevFase.sessoes.every(s => jornada.completedSessions.includes(s.id)) ||
+                                (nextSession && nextSession.faseId === fase.id && (nextSession as any).isRecommended);
              
              return (
                <section key={fase.id} className={`space-y-8 ${!isUnlocked && 'opacity-40 grayscale'}`}>
@@ -129,19 +151,24 @@ const JornadaHome = () => {
                   <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                      {fase.sessoes.map((sessao, sIdx) => {
                        const isCompleted = jornada.completedSessions.includes(sessao.id);
+                       const isRecommended = !!(sessao.objetivos?.includes(userObjective || "")) && completedSessionsCount === 0;
+                       const sessionUnlocked = isUnlocked || isRecommended;
                        
                        return (
                          <motion.div 
                           key={sessao.id}
-                          whileHover={isUnlocked ? { y: -8 } : {}}
-                          className={`group relative aspect-video bg-white/5 rounded-2xl border border-white/10 overflow-hidden cursor-pointer ${!isUnlocked && 'cursor-not-allowed'}`}
-                          onClick={() => isUnlocked && navigate(`/jornada/${fase.id}/${sessao.id}`)}
+                          whileHover={sessionUnlocked ? { y: -8 } : {}}
+                          className={`group relative aspect-video bg-white/5 rounded-2xl border border-white/10 overflow-hidden cursor-pointer ${!sessionUnlocked && 'cursor-not-allowed'} ${isRecommended ? 'ring-2 ring-primary border-primary' : ''}`}
+                          onClick={() => sessionUnlocked && navigate(`/jornada/${fase.id}/${sessao.id}`)}
                          >
                             <div className="absolute inset-0 bg-gradient-to-t from-black via-black/20 to-transparent" />
                             
                             <div className="absolute inset-0 p-6 flex flex-col justify-end gap-2">
                                <div className="flex items-center justify-between">
-                                  <span className="text-[10px] font-bold text-primary uppercase tracking-widest">Episódio {sIdx + 1}</span>
+                                  <div className="flex gap-2">
+                                    <span className="text-[10px] font-bold text-primary uppercase tracking-widest">Episódio {sIdx + 1}</span>
+                                    {isRecommended && <Badge className="bg-primary text-primary-foreground text-[8px] h-4">Sugerido</Badge>}
+                                  </div>
                                   {isCompleted && <CheckCircle2 className="w-5 h-5 text-primary" />}
                                </div>
                                <h3 className="text-xl font-bold">{sessao.titulo}</h3>

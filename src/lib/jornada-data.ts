@@ -11,6 +11,7 @@ export interface SessaoJornada {
   titulo: string;
   descricao: string;
   exercicios: Exercicio[];
+  objetivos?: string[];
 }
 
 export interface FaseJornada {
@@ -35,6 +36,7 @@ export const JORNADA_DATA: FaseJornada[] = [
         id: "s1-f1",
         titulo: "Mapeando o Agora",
         descricao: "Identificando onde você está emocionalmente.",
+        objetivos: ["ansiedade", "foco"],
         exercicios: [
           {
             id: "ex1-s1-f1",
@@ -59,6 +61,7 @@ export const JORNADA_DATA: FaseJornada[] = [
         titulo: "As Grades Invisíveis",
         descricao:
           "Reconhecer as prisões silenciosas que carregamos sem perceber.",
+        objetivos: ["reprogramacao"],
         exercicios: [
           {
             id: "ex1-s1-fpi",
@@ -157,6 +160,7 @@ export const JORNADA_DATA: FaseJornada[] = [
         id: "s1-f3",
         titulo: "Novas Narrativas",
         descricao: "Reescrevendo a história que você conta para si mesmo.",
+        objetivos: ["escrita"],
         exercicios: [
           {
             id: "ex1-s1-f3",
