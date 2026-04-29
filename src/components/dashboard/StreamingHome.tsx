@@ -3,12 +3,13 @@ import { useJornada } from "@/hooks/useJornada";
 import { JORNADA_DATA } from "@/lib/jornada-data";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { Play, ChevronRight, Clock, Sparkles, BookOpen } from "lucide-react";
-import { useNavigate, Link } from "react-router-dom";
+import { Play, ChevronRight, Clock, Sparkles } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import NetflixCarousel from "@/components/ui/NetflixCarousel";
 import StreamingCard from "@/components/ui/StreamingCard";
 import { StreamingSkeleton } from "./StreamingSkeleton";
+import GlobalProgressBar from "./GlobalProgressBar";
 
 const StreamingHome = () => {
   const navigate = useNavigate();
@@ -99,28 +100,18 @@ const StreamingHome = () => {
               {nextSession ? (
                 <Button 
                   onClick={() => navigate(`/jornada/${nextSession.faseId}/${nextSession.sessaoId}`)}
-                  className="btn-primary h-16 min-w-[280px] text-xl gap-4 shadow-2xl shadow-primary/20"
+                  className="btn-primary h-16 min-w-[320px] text-xl gap-4 shadow-2xl shadow-primary/20"
                 >
-                  <Play className="w-7 h-7 fill-current" /> Continuar Assistindo
+                  <Play className="w-7 h-7 fill-current" /> Continuar de onde parei
                 </Button>
               ) : (
                 <Button 
                   onClick={() => navigate(`/jornada`)}
-                  className="btn-primary h-16 min-w-[280px] text-xl gap-4 shadow-2xl shadow-primary/20"
+                  className="btn-primary h-16 min-w-[320px] text-xl gap-4 shadow-2xl shadow-primary/20"
                 >
-                  <Play className="w-7 h-7 fill-current" /> Começar do Início
+                  <Play className="w-7 h-7 fill-current" /> Começar sua jornada
                 </Button>
               )}
-              
-              <Button 
-                variant="outline" 
-                asChild
-                className="btn-secondary h-16 min-w-[220px] text-xl gap-4 shadow-xl"
-              >
-                <Link to="/biblioteca-exercicios">
-                  <BookOpen className="w-7 h-7" /> Biblioteca
-                </Link>
-              </Button>
             </div>
           </motion.div>
         </div>
