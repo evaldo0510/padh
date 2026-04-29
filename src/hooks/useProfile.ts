@@ -7,17 +7,18 @@ import { toast } from "sonner";
 export interface Profile {
   id: string;
   user_id: string;
-  objective: PCHObjectiveId | null;
+  objectives: PCHObjectiveId[];
   created_at: string;
   updated_at: string;
 }
 
-const STORAGE_KEY = "pch_user_objective";
+const STORAGE_KEY = "pch_user_objectives"; // Use plural now
 
 export const useProfile = () => {
   const { user } = useAuth();
   const [profile, setProfile] = useState<Profile | null>(null);
   const [loading, setLoading] = useState(true);
+  const [isUpdating, setIsUpdating] = useState(false);
   const [source, setSource] = useState<"local" | "database" | "syncing">("local");
   const [lastSync, setLastSync] = useState<Date | null>(null);
 
@@ -39,8 +40,26 @@ export const useProfile = () => {
 
       if (error) throw error;
 
-      const localObj = localStorage.getItem(STORAGE_KEY);
-      const validatedLocal = isValidObjective(localObj) ? localObj : null;
+      // Migrate old storage key if necessary or just use the new plural one
+      const localRaw = localStorage.getItem(STORAGE_KEY) || localStorage.getItem("pch_user_objective");
+      let validatedLocal: PCHObjectiveId[] = [];
+      
+      try {
+        if (localRaw) {
+          // If it starts with [ it's probably the new array format
+          if (localRaw.startsWith('[')) {
+            const parsed = JSON.parse(localRaw);
+            if (Array.isArray(parsed)) {
+              validatedLocal = parsed.filter(isValidObjective);
+            }
+          } else if (isValidObjective(localRaw)) {
+            // Backward compatibility for single string
+            validatedLocal = [localRaw];
+          }
+        }
+      } catch (e) {
+        console.error("Error parsing local objectives", e);
+      }
 
       if (data) {
         const dbProfile = data as Profile;
@@ -48,32 +67,32 @@ export const useProfile = () => {
         setLastSync(new Date());
         
         // SYNC LOGIC:
-        if (dbProfile.objective && validatedLocal && dbProfile.objective !== validatedLocal) {
-          toast.info("Objetivos diferentes encontrados", {
-            description: `Mantendo "${dbProfile.objective}" da sua conta. Você pode alterar nas configurações.`,
-          });
-          localStorage.setItem(STORAGE_KEY, dbProfile.objective);
+        const hasDbObjectives = dbProfile.objectives && dbProfile.objectives.length > 0;
+        const hasLocalObjectives = validatedLocal.length > 0;
+
+        if (hasDbObjectives) {
+          // Database wins
+          localStorage.setItem(STORAGE_KEY, JSON.stringify(dbProfile.objectives));
           setSource("database");
-        } else if (dbProfile.objective) {
-          localStorage.setItem(STORAGE_KEY, dbProfile.objective);
-          setSource("database");
-        } else if (validatedLocal) {
+        } 
+        else if (hasLocalObjectives) {
+          // Local wins because DB is empty
           await supabase
             .from("profiles")
-            .update({ objective: validatedLocal })
+            .update({ objectives: validatedLocal })
             .eq("user_id", user.id);
-          setProfile({ ...dbProfile, objective: validatedLocal });
+          setProfile({ ...dbProfile, objectives: validatedLocal });
           setSource("database");
         } else {
           setSource("database");
         }
       } else {
-        // Create profile if it doesn't exist (initial sync)
+        // Create profile if it doesn't exist
         const { data: newProfile, error: insertError } = await supabase
           .from("profiles")
           .insert({ 
             user_id: user.id,
-            objective: validatedLocal
+            objectives: validatedLocal
           })
           .select()
           .single();
@@ -99,42 +118,70 @@ export const useProfile = () => {
     fetchProfile();
   }, [user]);
 
-  const updateObjective = async (objective: PCHObjectiveId) => {
-    if (!isValidObjective(objective)) {
-      console.error("Invalid objective:", objective);
-      return;
+  const toggleObjective = async (objective: PCHObjectiveId) => {
+    const currentObjectives = profile?.objectives || [];
+    const isSelected = currentObjectives.includes(objective);
+    
+    let nextObjectives: PCHObjectiveId[];
+    if (isSelected) {
+      nextObjectives = currentObjectives.filter(o => o !== objective);
+    } else {
+      nextObjectives = [...currentObjectives, objective];
     }
 
-    // Always update local for instant UI feel
-    localStorage.setItem(STORAGE_KEY, objective);
+    // Validation
+    const validated = nextObjectives.filter(isValidObjective);
 
+    // Update local immediately
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(validated));
+    
     if (!user) {
-      setProfile(prev => prev ? { ...prev, objective } : null);
-      setSource("local");
+      // Just update state if guest
+      setProfile(prev => ({
+        ...prev,
+        id: 'guest',
+        user_id: 'guest',
+        objectives: validated,
+        created_at: new Date().toISOString(),
+        updated_at: new Date().toISOString()
+      }));
       return;
     }
 
     try {
+      setIsUpdating(true);
       setSource("syncing");
+      
       const { error } = await supabase
         .from("profiles")
-        .upsert({ user_id: user.id, objective }, { onConflict: "user_id" });
+        .upsert({ user_id: user.id, objectives: validated }, { onConflict: "user_id" });
 
       if (error) throw error;
       
-      setProfile(prev => prev ? { ...prev, objective } : null);
+      setProfile(prev => prev ? { ...prev, objectives: validated } : null);
       setSource("database");
       setLastSync(new Date());
       
-      toast.success("Objetivo atualizado", {
-        description: "Sua jornada foi personalizada para o seu novo foco."
+      toast.success(isSelected ? "Objetivo removido" : "Objetivo adicionado", {
+        description: "Sua jornada está sendo recalibrada."
       });
     } catch (err) {
-      console.error("Error updating objective:", err);
-      toast.error("Erro ao salvar objetivo");
+      console.error("Error updating objectives:", err);
+      toast.error("Erro ao salvar preferências");
       setSource("database");
+    } finally {
+      setIsUpdating(false);
     }
   };
 
-  return { profile, loading, updateObjective, forceSync: () => fetchProfile(true), source, lastSync };
+  return { 
+    profile, 
+    loading, 
+    isUpdating,
+    updateObjectives: toggleObjective, // Rename or keep for compatibility if needed
+    toggleObjective,
+    forceSync: () => fetchProfile(true), 
+    source, 
+    lastSync 
+  };
 };
