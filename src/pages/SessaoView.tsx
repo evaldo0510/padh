@@ -344,18 +344,30 @@ const SessaoView = () => {
                  <FastForward className="w-4 h-4 mr-2" /> Pular
               </Button>
               
-              <Button
-                onClick={handleNext}
-                disabled={!response.trim() || isTransitioning}
-                className="btn-primary h-16 min-w-[280px] text-xl shadow-2xl group shadow-primary/20"
-              >
-                {isLast ? "Concluir Vivência" : "Próximo Passo"}
-                {isLast ? (
-                  <CheckCircle2 className="w-7 h-7 ml-4 text-white" />
-                ) : (
-                  <ChevronRight className="w-7 h-7 ml-4 group-hover:translate-x-2 transition-transform duration-500" />
+              <div className="relative group">
+                <Button
+                  onClick={handleNext}
+                  disabled={isTransitioning}
+                  className={`btn-primary h-16 min-w-[280px] text-xl shadow-2xl group shadow-primary/20 transition-all duration-500 ${
+                    currentBlock.tipo === "exercise" && !response.trim() ? "opacity-50 grayscale cursor-not-allowed" : ""
+                  }`}
+                >
+                  {isLast ? "Concluir Módulo" : "Avançar Etapa"}
+                  {isLast ? (
+                    <CheckCircle2 className="w-7 h-7 ml-4 text-white" />
+                  ) : currentBlock.tipo === "exercise" && !response.trim() ? (
+                    <Lock className="w-5 h-5 ml-4 text-white/40" />
+                  ) : (
+                    <ChevronRight className="w-7 h-7 ml-4 group-hover:translate-x-2 transition-transform duration-500" />
+                  )}
+                </Button>
+                
+                {currentBlock.tipo === "exercise" && !response.trim() && (
+                  <div className="absolute -top-10 left-1/2 -translate-x-1/2 whitespace-nowrap bg-black/80 text-[10px] text-primary/60 px-3 py-1.5 rounded-lg border border-primary/20 backdrop-blur-sm opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none uppercase font-black tracking-widest">
+                    Escreva para liberar o avanço
+                  </div>
                 )}
-              </Button>
+              </div>
            </div>
         </footer>
 
