@@ -10,6 +10,7 @@ import { useJornada } from "@/hooks/useJornada";
 import { JORNADA_DATA } from "@/lib/jornada-data";
 import { format } from "date-fns";
 import { ptBR } from "date-fns/locale";
+import { Badge } from "@/components/ui/badge";
 
 interface CheckinHistory {
   checkin_date: string;
