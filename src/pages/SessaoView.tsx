@@ -236,9 +236,9 @@ const SessaoView = () => {
               <Button 
                 variant="ghost" 
                 size="icon" 
-                onClick={() => navigate("/dashboard")}
+                onClick={() => navigate(-1)}
                 className="rounded-2xl h-12 w-12 hover:bg-white/5 transition-all text-white/30 hover:text-white"
-                aria-label="Voltar para o Dashboard"
+                aria-label="Voltar"
               >
                 <ArrowLeft className="w-6 h-6" />
               </Button>
