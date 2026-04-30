@@ -43,12 +43,13 @@ const DailyHabitSection: React.FC = () => {
       if (user) {
         const { data } = await supabase
           .from("profiles")
-          .select("reminder_enabled, reminder_time")
+          .select("reminder_enabled, reminder_time, reminder_message")
           .eq("user_id", user.id)
           .single();
         if (data) {
           setReminderEnabled(data.reminder_enabled || false);
           setReminderTime(data.reminder_time?.slice(0, 5) || "09:00");
+          setCustomMessage(data.reminder_message || "Hora de reconectar consigo mesmo. Vamos praticar?");
         }
       }
     };
