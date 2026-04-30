@@ -35,8 +35,11 @@ const SessaoView = () => {
 
   useEffect(() => {
     if (sessao) {
-      const saved = getResponse(sessao.exercicios[currentExIdx].id);
-      setResponse(saved || "");
+      const currentBlock = sessao.blocos[currentExIdx];
+      if (currentBlock.tipo === "exercise") {
+        const saved = getResponse(currentBlock.id);
+        setResponse(saved || "");
+      }
     }
     
     // Clear any existing transition if we change episode
