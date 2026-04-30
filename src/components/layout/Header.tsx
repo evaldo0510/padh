@@ -202,84 +202,23 @@ const Header = () => {
             </div>
           </div>
 
-          {/* Mobile */}
+          {/* Mobile Header (Simplified for App Feel) */}
           <div className="lg:hidden flex items-center gap-2">
             <ThemeToggle />
-            <Button 
-              variant="ghost" 
-              size="sm" 
-              onClick={() => setIsMenuOpen(!isMenuOpen)}
-              className="h-8 w-8 p-0"
-            >
-              {isMenuOpen ? <X className="spiritual-icon" /> : <Menu className="spiritual-icon" />}
-            </Button>
+            {isLoggedIn && (
+               <Button 
+                variant="ghost" 
+                size="sm" 
+                className="h-8 w-8 p-0 rounded-full bg-primary/10"
+                asChild
+               >
+                 <Link to="/dashboard">
+                   <User className="w-4 h-4 text-primary" />
+                 </Link>
+               </Button>
+            )}
           </div>
         </div>
-
-        {/* Mobile Navigation */}
-        {isMenuOpen && (
-          <div className="lg:hidden border-t border-border/30 py-3 animate-fade-in-up max-h-[70vh] overflow-y-auto">
-            <nav className="flex flex-col gap-1">
-              {navItems.map((item) => (
-                <React.Fragment key={item.path}>
-                  <PrefetchLink
-                    to={item.path}
-                    className={`text-sm py-2 px-3 rounded-md transition-colors ${
-                      (item.hasDropdown ? isToolsActive : isActive(item.path))
-                        ? 'text-primary bg-primary/5 font-medium'
-                        : 'text-muted-foreground hover:text-foreground hover:bg-muted/50'
-                    }`}
-                    onClick={() => !item.hasDropdown && setIsMenuOpen(false)}
-                  >
-                    {item.name}
-                  </PrefetchLink>
-                  {item.hasDropdown && (
-                    <div className="pl-4 space-y-0.5">
-                      {toolLinks.map((tool) => (
-                        <PrefetchLink
-                          key={tool.path}
-                          to={tool.path}
-                          className={`block text-xs py-1.5 px-3 rounded-md transition-colors ${
-                            isActive(tool.path)
-                              ? 'text-primary bg-primary/5'
-                              : 'text-muted-foreground hover:text-foreground hover:bg-muted/50'
-                          }`}
-                          onClick={() => setIsMenuOpen(false)}
-                        >
-                          {tool.name}
-                        </PrefetchLink>
-                      ))}
-                    </div>
-                  )}
-                </React.Fragment>
-              ))}
-              <div className="mt-4 pt-4 border-t border-border/30 px-3">
-                {isLoggedIn ? (
-                  <div className="flex flex-col gap-2">
-                    <Button variant="outline" className="w-full justify-start gap-2" asChild onClick={() => setIsMenuOpen(false)}>
-                      <Link to="/dashboard"><User className="spiritual-icon" /> Minha Área</Link>
-                    </Button>
-                    <Button 
-                      variant="destructive" 
-                      className="w-full justify-start gap-2" 
-                      onClick={() => {
-                        handleLogout();
-                        setIsMenuOpen(false);
-                      }}
-                    >
-                      <LogOut className="spiritual-icon" />
-                      Sair
-                    </Button>
-                  </div>
-                ) : (
-                  <Button className="w-full justify-start gap-2" asChild onClick={() => setIsMenuOpen(false)}>
-                    <Link to="/login">Entrar na Plataforma</Link>
-                  </Button>
-                )}
-              </div>
-            </nav>
-          </div>
-        )}
       </div>
     </header>
   );
