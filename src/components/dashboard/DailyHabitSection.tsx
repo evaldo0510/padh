@@ -61,28 +61,54 @@ const DailyHabitSection: React.FC = () => {
     fetchReminderSettings();
   }, []);
 
-  // Effect to check and trigger local notifications if app is open
+  // Effect to check and trigger local notifications
   useEffect(() => {
     if (!reminderEnabled || notificationPermission !== "granted") return;
 
-    const checkInterval = setInterval(() => {
+    const checkNotification = () => {
       const now = new Date();
-      const currentTime = `${String(now.getHours()).padStart(2, '0')}:${String(now.getMinutes()).padStart(2, '0')}`;
+      // Use local date for "once a day" logic to avoid timezone jumps
+      const today = now.toLocaleDateString('sv'); // sv format is YYYY-MM-DD
+      const lastNotified = localStorage.getItem('padh_last_notified_date');
       
-      if (currentTime === reminderTime && !isCompletedToday) {
-        new Notification("Lembrete PADH", {
-          body: customMessage,
-          icon: "/pwa-192x192.png"
-        });
-        // Avoid repeated triggers in the same minute
-        clearInterval(checkInterval);
-        setTimeout(() => {
-           // Restart after 1 minute
-        }, 61000);
-      }
-    }, 30000);
+      // Check if already notified today
+      if (lastNotified === today) return;
 
-    return () => clearInterval(checkInterval);
+      const [targetHours, targetMinutes] = reminderTime.split(':').map(Number);
+      const currentHours = now.getHours();
+      const currentMinutes = now.getMinutes();
+
+      // Trigger if current time matches target time (exact minute)
+      if (currentHours === targetHours && currentMinutes === targetMinutes && !isCompletedToday) {
+        if ('serviceWorker' in navigator && navigator.serviceWorker.controller) {
+          // If SW is available, it's better to show via registration
+          navigator.serviceWorker.ready.then(registration => {
+            registration.showNotification("Lembrete PADH", {
+              body: customMessage,
+              icon: "/pwa-192x192.png",
+              tag: 'daily-reminder',
+              requireInteraction: true
+            });
+          });
+        } else {
+          // Fallback to simple notification
+          new Notification("Lembrete PADH", {
+            body: customMessage,
+            icon: "/pwa-192x192.png",
+            tag: 'daily-reminder',
+            requireInteraction: true
+          });
+        }
+        
+        localStorage.setItem('padh_last_notified_date', today);
+      }
+    };
+
+    // Check every 30 seconds to be precise enough but avoid battery drain
+    const interval = setInterval(checkNotification, 30000);
+    checkNotification(); // Initial check
+
+    return () => clearInterval(interval);
   }, [reminderEnabled, reminderTime, customMessage, notificationPermission, isCompletedToday]);
 
   const requestPermission = async () => {
@@ -95,6 +121,19 @@ const DailyHabitSection: React.FC = () => {
     setNotificationPermission(permission);
     
     if (permission === "granted") {
+      // Try to register periodic sync if supported
+      if ('serviceWorker' in navigator) {
+        const registration = await navigator.serviceWorker.ready;
+        if ('periodicSync' in registration) {
+          try {
+            await (registration as any).periodicSync.register('daily-reminder', {
+              minInterval: 24 * 60 * 60 * 1000, // Once a day
+            });
+          } catch (e) {
+            console.error("Periodic sync registration failed:", e);
+          }
+        }
+      }
       toast.success("Notificações ativadas!");
     } else {
       toast.error("Permissão de notificação negada.");
@@ -108,6 +147,17 @@ const DailyHabitSection: React.FC = () => {
         .from("profiles")
         .update({ reminder_enabled: enabled, reminder_time: time, reminder_message: message })
         .eq("user_id", user.id);
+      
+      // Notify Service Worker
+      if ('serviceWorker' in navigator && navigator.serviceWorker.controller) {
+        navigator.serviceWorker.controller.postMessage({
+          type: 'SET_REMINDER',
+          enabled,
+          time,
+          message
+        });
+      }
+      
       toast.success("Configurações de lembrete atualizadas.");
     }
   };
