@@ -232,11 +232,16 @@ const JornadaHome = () => {
                                     <span className="text-[10px] font-black text-primary uppercase tracking-[0.2em]">Episódio {sIdx + 1}</span>
                                     {isRecommended && <Badge className="bg-primary text-white text-[8px] h-4 font-black tracking-widest px-2">RECOMENDADO</Badge>}
                                   </div>
-                                  {isCompleted && (
-                                    <div className="w-7 h-7 rounded-full bg-emerald-500/20 border border-emerald-500/30 flex items-center justify-center">
-                                       <CheckCircle2 className="w-4 h-4 text-emerald-400" />
-                                    </div>
-                                  )}
+                                  <div className="flex items-center gap-2">
+                                     <span className="text-[9px] font-black text-white/30 uppercase tracking-tighter">
+                                        {jornada.completedSessions.includes(sessao.id) ? sessao.blocos.length : sessao.blocos.filter(b => jornada.completedExercises.includes(b.id)).length} / {sessao.blocos.length} ETAPAS
+                                     </span>
+                                     {isCompleted && (
+                                       <div className="w-5 h-5 rounded-full bg-emerald-500/20 border border-emerald-500/30 flex items-center justify-center">
+                                          <CheckCircle2 className="w-3 h-3 text-emerald-400" />
+                                       </div>
+                                     )}
+                                  </div>
                                </div>
                                <h3 className="text-2xl font-bold tracking-tight leading-none mb-1">{sessao.titulo}</h3>
                                <p className="text-xs text-white/40 line-clamp-1 font-light italic">{sessao.descricao}</p>
