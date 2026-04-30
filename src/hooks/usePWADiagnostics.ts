@@ -121,13 +121,36 @@ export const usePWADiagnostics = () => {
     return () => clearInterval(timer);
   }, []);
 
+  const recordOfflineTest = useCallback((entry: Omit<OfflineTestEntry, "timestamp">) => {
+    const next: OfflineTestEntry = { timestamp: new Date().toISOString(), ...entry };
+    setOfflineHistory(prev => {
+      const updated = [next, ...prev].slice(0, 50);
+      try { localStorage.setItem(OFFLINE_HISTORY_KEY, JSON.stringify(updated)); } catch {}
+      return updated;
+    });
+  }, []);
+
+  const recordRollback = useCallback((entry: Omit<RollbackEntry, "timestamp">) => {
+    const next: RollbackEntry = { timestamp: new Date().toISOString(), ...entry };
+    setRollbackHistory(prev => {
+      const updated = [next, ...prev].slice(0, 30);
+      try { localStorage.setItem(ROLLBACK_HISTORY_KEY, JSON.stringify(updated)); } catch {}
+      return updated;
+    });
+    logMessage({ direction: "in", type: "ROLLBACK_TRIGGERED", status: "success", payload: entry });
+  }, [logMessage]);
+
   const shouldRecommendRollback = counters.failuresInWindow >= ROLLBACK_THRESHOLD;
 
   return {
     counters,
     messageLog,
+    offlineHistory,
+    rollbackHistory,
     logMessage,
     recordFailure,
+    recordOfflineTest,
+    recordRollback,
     resetCounters,
     clearMessageLog,
     shouldRecommendRollback,
