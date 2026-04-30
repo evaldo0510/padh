@@ -25,6 +25,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
+import MobileNav from "@/components/layout/MobileNav";
 import { FloatingParticles } from "@/components/effects/FloatingParticles";
 import { useScrollAnimation } from "@/hooks/useScrollAnimation";
 import { usePageLoading } from "@/hooks/usePageLoading";
@@ -110,8 +111,13 @@ const Index = () => {
           path="/"
         />
         <Header />
-        <StreamingHome />
-        <Footer />
+        <main className="pb-20 lg:pb-0">
+          <StreamingHome />
+        </main>
+        <div className="hidden lg:block">
+          <Footer />
+        </div>
+        <MobileNav />
       </div>
     );
   }
@@ -402,7 +408,10 @@ const Index = () => {
         </div>
       </section>
 
-      <Footer />
+      <div className="hidden lg:block">
+        <Footer />
+      </div>
+      <MobileNav />
     </div>
   );
 };
