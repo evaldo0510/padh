@@ -215,7 +215,12 @@ const JornadaHome = () => {
                      {fase.sessoes.map((sessao, sIdx) => {
                        const isCompleted = jornada.completedSessions.includes(sessao.id);
                        const isRecommended = !!(userObjectives.length > 0 && sessao.objetivos?.some(o => userObjectives.includes(o as PCHObjectiveId))) && completedSessionsCount === 0;
-                       const sessionUnlocked = isUnlocked || isRecommended;
+                       
+                       // A session is unlocked if the phase is unlocked AND all previous sessions in the phase are completed, 
+                       // OR it's the very first session of an unlocked phase, OR it's recommended.
+                       const prevSessionsInFase = fase.sessoes.slice(0, sIdx);
+                       const allPrevSessionsDone = prevSessionsInFase.every(s => jornada.completedSessions.includes(s.id));
+                       const sessionUnlocked = (isUnlocked && allPrevSessionsDone) || isRecommended;
                        
                        return (
                          <motion.div 
