@@ -407,23 +407,28 @@ export const PWAManager: React.FC = () => {
     }
   };
 
-  const handleRollback = async () => {
-    if (!confirm("Reverter para a versão anterior do Service Worker? A página será recarregada e os caches atuais serão limpos.")) return;
+  const handleRollback = async (auto = false) => {
+    if (!auto && !confirm("Reverter para a versão anterior do Service Worker? A página será recarregada e os caches atuais serão limpos.")) return;
     setIsReverting(true);
+    const fromVersion = swVersion;
+    const toVersion = previousSnapshot?.version || null;
     try {
       const regs = await navigator.serviceWorker.getRegistrations();
       await Promise.all(regs.map(r => r.unregister()));
       const keys = await caches.keys();
       await Promise.all(keys.map(k => caches.delete(k)));
-      // Restore previous snapshot reference (for diagnostics)
       if (previousSnapshot) {
         localStorage.setItem(SNAPSHOT_KEY, JSON.stringify(previousSnapshot));
       } else {
         localStorage.removeItem(SNAPSHOT_KEY);
       }
-      reportPWAEvent("update_activated", "fail", { context: "rollback_triggered" });
-      toast.success("Service Worker desregistrado. Recarregando...");
-      setTimeout(() => window.location.reload(), 800);
+      recordRollback({ fromVersion, toVersion, reason: auto ? "auto_recommended" : "manual" });
+      reportPWAEvent("update_activated", "fail", { context: "rollback_triggered", fromVersion, toVersion, auto });
+      toast.success(`Rollback concluído · voltando para ${toVersion || "instalação fresca"}`, {
+        description: `Era: ${fromVersion || "—"} · Recarregando em 1s...`,
+        duration: 3000,
+      });
+      setTimeout(() => window.location.reload(), 1200);
     } catch (e: any) {
       toast.error("Falha ao reverter: " + (e?.message || "erro"));
       setIsReverting(false);
