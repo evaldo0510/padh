@@ -61,9 +61,11 @@ const DailyHabitSection: React.FC = () => {
         setReminderHistory(prev => [{date: new Date().toISOString(), type: `Continuous #${event.data.count}`}, ...prev].slice(0, 5));
       }
       if (event.data?.type === 'TECHNICAL_INFO_RESPONSE') {
+        setSwStatusInfo(event.data.info);
         const log = JSON.stringify(event.data.info, null, 2);
+        // We still copy to clipboard for convenience, but now we also show in UI
         navigator.clipboard.writeText(log);
-        toast.success("Log técnico copiado para a área de transferência!");
+        toast.success("Status do Service Worker atualizado!");
       }
     };
 
