@@ -137,6 +137,7 @@ const AdminPWAHealth = () => {
                   <Legend />
                   <Line type="monotone" dataKey="count" name="Total" stroke="#8B5CF6" strokeWidth={2} />
                   <Line type="monotone" dataKey="update_found" name="Updates" stroke="#F59E0B" strokeWidth={2} />
+                  <Line type="monotone" dataKey="update_trace" name="Traces" stroke="#10B981" strokeWidth={2} />
                 </LineChart>
               </ResponsiveContainer>
             </CardContent>
@@ -168,6 +169,27 @@ const AdminPWAHealth = () => {
                   />
                   <Legend />
                 </PieChart>
+              </ResponsiveContainer>
+            </CardContent>
+          </Card>
+
+          {/* Average Update Timing */}
+          <Card className="bg-card/50">
+            <CardHeader>
+              <CardTitle>Tempo Médio de Atualização (ms)</CardTitle>
+            </CardHeader>
+            <CardContent className="h-[300px]">
+              <ResponsiveContainer width="100%" height="100%">
+                <BarChart data={events?.filter(e => e.event_type === 'update_trace' && (e.details as any)?.trace?.total_duration_ms).slice(0, 20)}>
+                  <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="rgba(255,255,255,0.1)" />
+                  <XAxis dataKey="created_at" tickFormatter={(v) => new Date(v).toLocaleTimeString()} stroke="rgba(255,255,255,0.4)" fontSize={10} />
+                  <YAxis stroke="rgba(255,255,255,0.4)" fontSize={12} />
+                  <Tooltip 
+                    labelFormatter={(v) => new Date(v).toLocaleString()}
+                    contentStyle={{ backgroundColor: '#111', border: '1px solid rgba(255,255,255,0.1)' }}
+                  />
+                  <Bar dataKey="details.trace.total_duration_ms" name="Duração Total" fill="#10B981" radius={[4, 4, 0, 0]} />
+                </BarChart>
               </ResponsiveContainer>
             </CardContent>
           </Card>

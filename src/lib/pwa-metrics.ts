@@ -1,6 +1,21 @@
 import { APP_VERSION } from "./changelog";
 
-export type PWAEventType = "install" | "update_found" | "update_activated" | "error" | "offline";
+export type PWAEventType = 
+  | "install" 
+  | "update_found" 
+  | "update_activated" 
+  | "error" 
+  | "offline" 
+  | "update_trace";
+
+export interface PWAUpdateTrace {
+  download_start?: number;
+  install_completed?: number;
+  activation_start?: number;
+  reload_triggered?: number;
+  app_ready?: number;
+  total_duration_ms?: number;
+}
 
 export const reportPWAEvent = async (
   eventType: PWAEventType,
@@ -11,7 +26,6 @@ export const reportPWAEvent = async (
   if (import.meta.env.DEV) return;
   
   try {
-    // Dynamically import supabase to avoid circular dependencies if any
     const { supabase } = await import("@/integrations/supabase/client");
     const { data: { session } } = await supabase.auth.getSession();
     
@@ -28,7 +42,6 @@ export const reportPWAEvent = async (
       },
     });
   } catch (err) {
-    // Use standard console so it shows up in logs without circular dep issues
     console.warn("PWA Metrics: failed to report event", eventType, err);
   }
 };

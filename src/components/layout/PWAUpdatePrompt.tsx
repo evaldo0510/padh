@@ -1,10 +1,10 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { RefreshCw, X, FileText } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 import { APP_VERSION } from "@/lib/changelog";
-import { reportPWAEvent } from "@/lib/pwa-metrics";
+import { reportPWAEvent, PWAUpdateTrace } from "@/lib/pwa-metrics";
 
 /**
  * Detects new service worker versions and shows a non-blocking banner
@@ -13,12 +13,33 @@ import { reportPWAEvent } from "@/lib/pwa-metrics";
 const PWAUpdatePrompt = () => {
   const [needRefresh, setNeedRefresh] = useState(false);
   const [registration, setRegistration] = useState<ServiceWorkerRegistration | null>(null);
+  const traceRef = useRef<PWAUpdateTrace>({});
 
   useEffect(() => {
     if (typeof window === "undefined") return;
 
+    // Check if we just reloaded after an update
+    const pendingTrace = sessionStorage.getItem("pwa_pending_trace");
+    if (pendingTrace) {
+      try {
+        const trace = JSON.parse(pendingTrace) as PWAUpdateTrace;
+        trace.app_ready = Date.now();
+        if (trace.download_start) {
+          trace.total_duration_ms = trace.app_ready - trace.download_start;
+        }
+        reportPWAEvent("update_trace", "success", { trace });
+        sessionStorage.removeItem("pwa_pending_trace");
+        console.log("PWA: Update trace reported", trace);
+      } catch (e) {
+        console.error("PWA: Failed to parse pending trace", e);
+      }
+    }
+
     // Test mode
-    (window as any).__TRIGGER_PWA_UPDATE__ = () => setNeedRefresh(true);
+    (window as any).__TRIGGER_PWA_UPDATE__ = () => {
+      traceRef.current.download_start = Date.now();
+      setNeedRefresh(true);
+    };
 
     if (!("serviceWorker" in navigator)) return;
 
@@ -31,7 +52,8 @@ const PWAUpdatePrompt = () => {
     if (isPreview) return;
 
     const onControllerChange = () => {
-      // FORCE RELOAD immediately when a new SW takes control.
+      traceRef.current.reload_triggered = Date.now();
+      sessionStorage.setItem("pwa_pending_trace", JSON.stringify(traceRef.current));
       console.log("PWA: New Service Worker activated. Reloading...");
       window.location.reload();
     };
@@ -41,18 +63,20 @@ const PWAUpdatePrompt = () => {
       if (!reg) return;
       setRegistration(reg);
 
-      // Aggressive Update Check: If waiting, skip immediately.
       if (reg.waiting) {
+        traceRef.current.install_completed = Date.now();
         console.log("PWA: Found waiting worker. Skipping waiting phase...");
         reg.waiting.postMessage({ type: "SKIP_WAITING" });
         setNeedRefresh(true);
       }
 
       reg.addEventListener("updatefound", () => {
+        traceRef.current.download_start = Date.now();
         const newWorker = reg.installing;
         if (!newWorker) return;
         newWorker.addEventListener("statechange", () => {
           if (newWorker.state === "installed" && navigator.serviceWorker.controller) {
+            traceRef.current.install_completed = Date.now();
             console.log("PWA: New version installed. Activating now...");
             newWorker.postMessage({ type: "SKIP_WAITING" });
             setNeedRefresh(true);
@@ -61,7 +85,6 @@ const PWAUpdatePrompt = () => {
         });
       });
 
-      // Poll frequently (every 30s) for aggressive freshness.
       const interval = setInterval(() => reg.update().catch(() => {}), 30_000);
       return () => clearInterval(interval);
     });
@@ -72,6 +95,7 @@ const PWAUpdatePrompt = () => {
   }, []);
 
   const handleUpdate = () => {
+    traceRef.current.activation_start = Date.now();
     reportPWAEvent("update_activated", "success", { method: "manual_force" });
     if (registration?.waiting) {
       registration.waiting.postMessage({ type: "SKIP_WAITING" });
