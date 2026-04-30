@@ -44,13 +44,19 @@ const PWAUpdatePrompt = () => {
 
     if (!("serviceWorker" in navigator)) return;
 
-    const isPreview =
+    const isInIframe = (() => {
+      try {
+        return window.self !== window.top;
+      } catch {
+        return true;
+      }
+    })();
+    const isEditorPreview =
       window.location.hostname.includes("id-preview--") ||
       window.location.hostname.includes("lovableproject.com") ||
-      window.location.hostname.includes("lovable.app") ||
-      window.self !== window.top;
+      isInIframe;
 
-    if (isPreview) return;
+    if (isEditorPreview) return;
 
     const onControllerChange = () => {
       traceRef.current.reload_triggered = Date.now();

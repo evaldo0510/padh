@@ -1,12 +1,28 @@
 import { useRegisterSW } from "virtual:pwa-register/react";
-import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
 import { useEffect } from "react";
 import { RefreshCw } from "lucide-react";
-const PWAPrompt = () => {
+
+const isEditorPreview = () => {
+  if (typeof window === "undefined") return true;
+  const isInIframe = (() => {
+    try {
+      return window.self !== window.top;
+    } catch {
+      return true;
+    }
+  })();
+  return (
+    window.location.hostname.includes("id-preview--") ||
+    window.location.hostname.includes("lovableproject.com") ||
+    isInIframe
+  );
+};
+
+const PWAPromptRegistration = () => {
   const {
-    offlineReady: [offlineReady, setOfflineReady],
-    needRefresh: [needRefresh, setNeedRefresh],
+    offlineReady: [offlineReady],
+    needRefresh: [needRefresh],
     updateServiceWorker,
   } = useRegisterSW({
     onRegistered(r) {
@@ -16,10 +32,6 @@ const PWAPrompt = () => {
       console.log("SW registration error", error);
     },
   });
-  const close = () => {
-    setOfflineReady(false);
-    setNeedRefresh(false);
-  };
   useEffect(() => {
     if (offlineReady) {
       toast.success("App pronto para uso offline!", {
@@ -43,4 +55,10 @@ const PWAPrompt = () => {
   }, [needRefresh, updateServiceWorker]);
   return null;
 };
+
+const PWAPrompt = () => {
+  if (isEditorPreview()) return null;
+  return <PWAPromptRegistration />;
+};
+
 export default PWAPrompt;
