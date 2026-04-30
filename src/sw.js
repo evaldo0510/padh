@@ -104,6 +104,10 @@ const handleMessage = async (event) => {
   if (!event.data) return;
 
   switch (event.data.type) {
+    case 'SKIP_WAITING':
+      self.skipWaiting();
+      break;
+
     case 'SET_REMINDER':
       reminderConfig = event.data;
       await setSetting('reminder_config', reminderConfig);
