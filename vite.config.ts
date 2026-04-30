@@ -81,6 +81,16 @@ export default defineConfig(({ mode }) => ({
             },
           },
           {
+            // Stale-While-Revalidate for non-critical informational pages
+            urlPattern: ({ url }) => url.pathname === '/changelog' || url.pathname === '/sobre',
+            handler: 'StaleWhileRevalidate',
+            options: {
+              cacheName: 'informational-swr',
+              expiration: { maxEntries: 10, maxAgeSeconds: 60 * 60 * 24 },
+              cacheableResponse: { statuses: [0, 200] },
+            },
+          },
+          {
             // Static assets (images/fonts): Cache-First for performance.
             urlPattern: /\.(?:png|jpg|jpeg|svg|gif|webp|woff2?|ttf|otf)$/i,
             handler: 'CacheFirst',
