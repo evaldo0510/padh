@@ -36,8 +36,13 @@ const DailyHabitSection: React.FC = () => {
   const dailyExercise = getDailyExercise();
   const todayKey = new Date().toISOString().slice(0, 10);
   const isCompletedToday = jornada.responses.some(r => r.date?.startsWith(todayKey));
+  const [notificationPermission, setNotificationPermission] = useState<NotificationPermission>("default");
 
   useEffect(() => {
+    if ("Notification" in window) {
+      setNotificationPermission(Notification.permission);
+    }
+
     const fetchReminderSettings = async () => {
       const { data: { user } } = await supabase.auth.getUser();
       if (user) {
@@ -55,6 +60,46 @@ const DailyHabitSection: React.FC = () => {
     };
     fetchReminderSettings();
   }, []);
+
+  // Effect to check and trigger local notifications if app is open
+  useEffect(() => {
+    if (!reminderEnabled || notificationPermission !== "granted") return;
+
+    const checkInterval = setInterval(() => {
+      const now = new Date();
+      const currentTime = `${String(now.getHours()).padStart(2, '0')}:${String(now.getMinutes()).padStart(2, '0')}`;
+      
+      if (currentTime === reminderTime && !isCompletedToday) {
+        new Notification("Lembrete PADH", {
+          body: customMessage,
+          icon: "/pwa-192x192.png"
+        });
+        // Avoid repeated triggers in the same minute
+        clearInterval(checkInterval);
+        setTimeout(() => {
+           // Restart after 1 minute
+        }, 61000);
+      }
+    }, 30000);
+
+    return () => clearInterval(checkInterval);
+  }, [reminderEnabled, reminderTime, customMessage, notificationPermission, isCompletedToday]);
+
+  const requestPermission = async () => {
+    if (!("Notification" in window)) {
+      toast.error("Este navegador não suporta notificações.");
+      return;
+    }
+
+    const permission = await Notification.requestPermission();
+    setNotificationPermission(permission);
+    
+    if (permission === "granted") {
+      toast.success("Notificações ativadas!");
+    } else {
+      toast.error("Permissão de notificação negada.");
+    }
+  };
 
   const saveReminderSettings = async (enabled: boolean, time: string, message: string) => {
     const { data: { user } } = await supabase.auth.getUser();
