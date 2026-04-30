@@ -5,6 +5,7 @@ import { JORNADA_DATA } from "@/lib/jornada-data";
 import { useJornada } from "@/hooks/useJornada";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
+import { toast } from "sonner";
 import {
   X,
   ChevronLeft,
@@ -126,8 +127,17 @@ const SessaoView = () => {
     }
   };
 
+  const [showError, setShowError] = useState(false);
+
   const handleNext = () => {
     if (isTransitioning) return;
+    
+    if (currentBlock.tipo === "exercise" && !response.trim()) {
+      setShowError(true);
+      setTimeout(() => setShowError(false), 2000);
+      toast.error("Por favor, preencha o campo para avançar.");
+      return;
+    }
     
     if (currentBlock.tipo === "exercise") {
       saveResponse(currentBlock.id, response);
@@ -233,10 +243,18 @@ const SessaoView = () => {
               </Button>
               <div className="h-10 w-px bg-white/10 hidden md:block" />
               <div className="hidden md:block">
-                 <p className="text-[10px] font-black uppercase tracking-[0.4em] text-primary/60 mb-1">
-                    {fase.titulo} · ATIVIDADE {currentExIdx + 1}
-                 </p>
-                 <h2 className="text-2xl font-bold tracking-tighter text-white leading-none">{sessao.titulo}</h2>
+                 <div className="flex items-center gap-2 mb-1">
+                    <p className="text-[10px] font-black uppercase tracking-[0.4em] text-primary/60">
+                       {fase.titulo}
+                    </p>
+                    <ChevronRight className="w-3 h-3 text-white/10" />
+                    <p className="text-[10px] font-black uppercase tracking-[0.4em] text-white/40">
+                       Módulo {sessao.titulo}
+                    </p>
+                 </div>
+                 <h2 className="text-2xl font-bold tracking-tighter text-white leading-none">
+                    Etapa {currentExIdx + 1} de {totalSteps}
+                 </h2>
               </div>
            </div>
 
@@ -289,7 +307,9 @@ const SessaoView = () => {
                           value={response}
                           onChange={(e) => setResponse(e.target.value)}
                           placeholder={currentBlock.placeholder || "Suas palavras aqui..."}
-                          className="focus-input shadow-2xl group-focus-within:border-primary/30 group-focus-within:bg-card/60 transition-all duration-700"
+                          className={`focus-input shadow-2xl transition-all duration-700 ${
+                            showError ? "border-red-500/50 shadow-red-500/10" : "group-focus-within:border-primary/30 group-focus-within:bg-card/60"
+                          }`}
                           autoFocus
                         />
                         <div className="absolute bottom-8 left-1/2 -translate-x-1/2 opacity-0 group-focus-within:opacity-100 transition-opacity duration-1000 pointer-events-none">
@@ -317,12 +337,27 @@ const SessaoView = () => {
                 <ChevronLeft className="w-4 h-4 mr-2" /> Anterior
               </Button>
               <div className="flex gap-2">
-                 {Array.from({ length: totalSteps }).map((_, i) => (
-                    <div 
-                      key={i} 
-                      className={`h-1.5 w-12 rounded-full transition-all duration-700 ${i === currentExIdx ? 'bg-primary shadow-glow shadow-primary/40' : i < currentExIdx ? 'bg-primary/30' : 'bg-white/5'}`} 
-                    />
-                 ))}
+                 {Array.from({ length: totalSteps }).map((_, i) => {
+                    const isCurrent = i === currentExIdx;
+                    const isPast = i < currentExIdx;
+                    const blockType = sessao.blocos[i].tipo;
+                    
+                    return (
+                      <div 
+                        key={i} 
+                        className={`h-1.5 w-12 rounded-full transition-all duration-700 relative overflow-hidden ${isCurrent ? 'bg-primary shadow-glow shadow-primary/40' : isPast ? 'bg-primary/30' : 'bg-white/5'}`}
+                      >
+                         {isCurrent && blockType === "exercise" && !response.trim() && (
+                            <motion.div 
+                               initial={{ x: "-100%" }}
+                               animate={{ x: "0%" }}
+                               className="absolute inset-0 bg-white/10"
+                               transition={{ repeat: Infinity, duration: 1.5, ease: "linear" }}
+                            />
+                         )}
+                      </div>
+                    );
+                 })}
               </div>
            </div>
 
@@ -336,18 +371,30 @@ const SessaoView = () => {
                  <FastForward className="w-4 h-4 mr-2" /> Pular
               </Button>
               
-              <Button
-                onClick={handleNext}
-                disabled={!response.trim() || isTransitioning}
-                className="btn-primary h-16 min-w-[280px] text-xl shadow-2xl group shadow-primary/20"
-              >
-                {isLast ? "Concluir Vivência" : "Próximo Passo"}
-                {isLast ? (
-                  <CheckCircle2 className="w-7 h-7 ml-4 text-white" />
-                ) : (
-                  <ChevronRight className="w-7 h-7 ml-4 group-hover:translate-x-2 transition-transform duration-500" />
+              <div className="relative group">
+                <Button
+                  onClick={handleNext}
+                  disabled={isTransitioning}
+                  className={`btn-primary h-16 min-w-[280px] text-xl shadow-2xl group shadow-primary/20 transition-all duration-500 ${
+                    currentBlock.tipo === "exercise" && !response.trim() ? "opacity-50 grayscale cursor-not-allowed" : ""
+                  }`}
+                >
+                  {isLast ? "Concluir Módulo" : "Avançar Etapa"}
+                  {isLast ? (
+                    <CheckCircle2 className="w-7 h-7 ml-4 text-white" />
+                  ) : currentBlock.tipo === "exercise" && !response.trim() ? (
+                    <Lock className="w-5 h-5 ml-4 text-white/40" />
+                  ) : (
+                    <ChevronRight className="w-7 h-7 ml-4 group-hover:translate-x-2 transition-transform duration-500" />
+                  )}
+                </Button>
+                
+                {currentBlock.tipo === "exercise" && !response.trim() && (
+                  <div className="absolute -top-10 left-1/2 -translate-x-1/2 whitespace-nowrap bg-black/80 text-[10px] text-primary/60 px-3 py-1.5 rounded-lg border border-primary/20 backdrop-blur-sm opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none uppercase font-black tracking-widest">
+                    Escreva para liberar o avanço
+                  </div>
                 )}
-              </Button>
+              </div>
            </div>
         </footer>
 

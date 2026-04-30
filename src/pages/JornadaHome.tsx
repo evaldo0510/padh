@@ -215,13 +215,18 @@ const JornadaHome = () => {
                      {fase.sessoes.map((sessao, sIdx) => {
                        const isCompleted = jornada.completedSessions.includes(sessao.id);
                        const isRecommended = !!(userObjectives.length > 0 && sessao.objetivos?.some(o => userObjectives.includes(o as PCHObjectiveId))) && completedSessionsCount === 0;
-                       const sessionUnlocked = isUnlocked || isRecommended;
+                       
+                       // A session is unlocked if the phase is unlocked AND all previous sessions in the phase are completed, 
+                       // OR it's the very first session of an unlocked phase, OR it's recommended.
+                       const prevSessionsInFase = fase.sessoes.slice(0, sIdx);
+                       const allPrevSessionsDone = prevSessionsInFase.every(s => jornada.completedSessions.includes(s.id));
+                       const sessionUnlocked = (isUnlocked && allPrevSessionsDone) || isRecommended;
                        
                        return (
                          <motion.div 
                           key={sessao.id}
                           whileHover={sessionUnlocked ? { scale: 1.03, y: -8 } : {}}
-                          className={`group relative aspect-video glass-card overflow-hidden cursor-pointer shadow-xl ${!sessionUnlocked && 'cursor-not-allowed opacity-50'} ${isRecommended ? 'ring-2 ring-primary ring-offset-4 ring-offset-background' : ''}`}
+                          className={`group relative aspect-video glass-card overflow-hidden cursor-pointer shadow-xl ${!sessionUnlocked && 'cursor-not-allowed'} ${isRecommended ? 'ring-2 ring-primary ring-offset-4 ring-offset-background' : ''}`}
                           onClick={() => sessionUnlocked && navigate(`/jornada/${fase.id}/${sessao.id}`)}
                          >
                             <div className="absolute inset-0 bg-gradient-to-t from-background/90 via-background/40 to-transparent z-10" />
@@ -232,11 +237,16 @@ const JornadaHome = () => {
                                     <span className="text-[10px] font-black text-primary uppercase tracking-[0.2em]">Episódio {sIdx + 1}</span>
                                     {isRecommended && <Badge className="bg-primary text-white text-[8px] h-4 font-black tracking-widest px-2">RECOMENDADO</Badge>}
                                   </div>
-                                  {isCompleted && (
-                                    <div className="w-7 h-7 rounded-full bg-emerald-500/20 border border-emerald-500/30 flex items-center justify-center">
-                                       <CheckCircle2 className="w-4 h-4 text-emerald-400" />
-                                    </div>
-                                  )}
+                                  <div className="flex items-center gap-2">
+                                     <span className="text-[9px] font-black text-white/30 uppercase tracking-tighter">
+                                        {jornada.completedSessions.includes(sessao.id) ? sessao.blocos.length : sessao.blocos.filter(b => jornada.completedExercises.includes(b.id)).length} / {sessao.blocos.length} ETAPAS
+                                     </span>
+                                     {isCompleted && (
+                                       <div className="w-5 h-5 rounded-full bg-emerald-500/20 border border-emerald-500/30 flex items-center justify-center">
+                                          <CheckCircle2 className="w-3 h-3 text-emerald-400" />
+                                       </div>
+                                     )}
+                                  </div>
                                </div>
                                <h3 className="text-2xl font-bold tracking-tight leading-none mb-1">{sessao.titulo}</h3>
                                <p className="text-xs text-white/40 line-clamp-1 font-light italic">{sessao.descricao}</p>
@@ -249,9 +259,13 @@ const JornadaHome = () => {
                             </div>
 
                             {/* Hover Status Overlay */}
-                            <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-500 bg-background/20 backdrop-blur-[2px] z-30">
-                               <div className="w-20 h-20 rounded-full border-2 border-white/20 flex items-center justify-center backdrop-blur-md bg-white/5 shadow-2xl">
-                                  <Play className="w-10 h-10 text-white fill-current ml-1.5" />
+                            <div className={`absolute inset-0 flex items-center justify-center transition-all duration-500 z-30 ${sessionUnlocked ? 'opacity-0 group-hover:opacity-100 bg-background/20 backdrop-blur-[2px]' : 'bg-black/40 backdrop-blur-[1px]'}`}>
+                               <div className={`w-20 h-20 rounded-full border-2 border-white/20 flex items-center justify-center backdrop-blur-md bg-white/5 shadow-2xl`}>
+                                  {sessionUnlocked ? (
+                                    <Play className="w-10 h-10 text-white fill-current ml-1.5" />
+                                  ) : (
+                                    <Lock className="w-10 h-10 text-white/20" />
+                                  )}
                                 </div>
                             </div>
                          </motion.div>
