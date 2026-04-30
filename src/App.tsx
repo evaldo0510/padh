@@ -528,9 +528,9 @@ const App = () => (
       <TooltipProvider>
         <Toaster />
         <Sonner />
-        <PWAPrompt />
-        <PWAUpdatePrompt />
         <BrowserRouter>
+          <PWAPrompt />
+          <PWAUpdatePrompt />
           <ProfileProvider>
             <PCHWelcomeGate />
             <SupabaseErrorBoundary>
