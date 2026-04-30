@@ -515,9 +515,14 @@ const DailyHabitSection: React.FC = () => {
               variant="outline" 
               size="sm" 
               onClick={handleTestNotification}
-              className="border-primary/20 text-primary hover:bg-primary/10 h-8"
+              disabled={testStatus !== 'idle'}
+              className={`border-primary/20 text-primary hover:bg-primary/10 h-8 min-w-[100px] transition-all ${
+                testStatus === 'delivered' ? 'bg-emerald-500/20 text-emerald-400 border-emerald-500/20' : ''
+              }`}
             >
-              Testar Agora
+              {testStatus === 'idle' && "Testar Agora"}
+              {testStatus === 'sending' && "Enviando..."}
+              {testStatus === 'delivered' && "Recebido ✓"}
             </Button>
           </DialogHeader>
           <div className="py-6 space-y-8">
