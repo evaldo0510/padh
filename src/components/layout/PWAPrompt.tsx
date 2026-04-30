@@ -5,10 +5,17 @@ import { RefreshCw } from "lucide-react";
 
 const isEditorPreview = () => {
   if (typeof window === "undefined") return true;
+  const isInIframe = (() => {
+    try {
+      return window.self !== window.top;
+    } catch {
+      return true;
+    }
+  })();
   return (
     window.location.hostname.includes("id-preview--") ||
     window.location.hostname.includes("lovableproject.com") ||
-    window.self !== window.top
+    isInIframe
   );
 };
 
