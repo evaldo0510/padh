@@ -281,7 +281,6 @@ export const PWAManager: React.FC = () => {
   const handleOfflineTest = async () => {
     setOfflineTest({ status: "running" });
     try {
-      // Validate critical precached assets are reachable from cache
       const targets = ["/", "/index.html", "/offline"];
       const results: { url: string; ok: boolean }[] = [];
       for (const url of targets) {
@@ -291,14 +290,20 @@ export const PWAManager: React.FC = () => {
       const allOk = results.every(r => r.ok);
       const failed = results.filter(r => !r.ok).map(r => r.url);
       if (allOk) {
-        setOfflineTest({ status: "ok", message: `Todos os ${targets.length} ativos críticos estão em cache.` });
+        const msg = `Todos os ${targets.length} ativos críticos estão em cache.`;
+        setOfflineTest({ status: "ok", message: msg });
+        recordOfflineTest({ status: "ok", message: msg });
         toast.success("App pronto para uso offline.");
       } else {
-        setOfflineTest({ status: "fail", message: `Faltando em cache: ${failed.join(", ")}` });
+        const msg = `Faltando em cache: ${failed.join(", ")}`;
+        setOfflineTest({ status: "fail", message: msg });
+        recordOfflineTest({ status: "fail", message: msg, missing: failed });
         toast.warning("Alguns ativos críticos não estão em cache.");
       }
     } catch (e: any) {
-      setOfflineTest({ status: "fail", message: e?.message || "Erro" });
+      const msg = e?.message || "Erro";
+      setOfflineTest({ status: "fail", message: msg });
+      recordOfflineTest({ status: "fail", message: msg });
     }
   };
 
