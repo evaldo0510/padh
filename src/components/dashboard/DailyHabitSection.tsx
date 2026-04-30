@@ -52,6 +52,11 @@ const DailyHabitSection: React.FC = () => {
       if (event.data?.type === 'TEST_CONFIRMATION') {
         setTestStatus('delivered');
         setTimeout(() => setTestStatus('idle'), 3000);
+        setReminderHistory(prev => [{date: new Date().toISOString(), type: 'Test Single'}, ...prev].slice(0, 5));
+      }
+      if (event.data?.type === 'TEST_COUNT_UPDATE') {
+        setDeliveryCount(event.data.count);
+        setReminderHistory(prev => [{date: new Date().toISOString(), type: `Continuous #${event.data.count}`}, ...prev].slice(0, 5));
       }
     };
 
@@ -61,8 +66,10 @@ const DailyHabitSection: React.FC = () => {
 
     // Auto-open checkin if coming from notification
     const params = new URLSearchParams(window.location.search);
+    const rid = params.get('rid');
     if (params.get('from_notification') === 'true' && !isCompletedToday) {
        setShowCheckin(true);
+       if (rid) setFromReminderId(rid);
     }
 
     const fetchReminderSettings = async () => {
