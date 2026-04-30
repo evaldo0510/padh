@@ -24,6 +24,7 @@ const DailyHabitSection: React.FC = () => {
   const [reminderEnabled, setReminderEnabled] = useState(false);
   const [reminderTime, setReminderTime] = useState("09:00");
   const [showSettings, setShowSettings] = useState(false);
+  const [customMessage, setCustomMessage] = useState("Hora de reconectar consigo mesmo. Vamos praticar?");
 
   // Get a daily exercise based on the date
   const getDailyExercise = () => {
@@ -42,24 +43,25 @@ const DailyHabitSection: React.FC = () => {
       if (user) {
         const { data } = await supabase
           .from("profiles")
-          .select("reminder_enabled, reminder_time")
+          .select("reminder_enabled, reminder_time, reminder_message")
           .eq("user_id", user.id)
           .single();
         if (data) {
           setReminderEnabled(data.reminder_enabled || false);
           setReminderTime(data.reminder_time?.slice(0, 5) || "09:00");
+          setCustomMessage(data.reminder_message || "Hora de reconectar consigo mesmo. Vamos praticar?");
         }
       }
     };
     fetchReminderSettings();
   }, []);
 
-  const saveReminderSettings = async (enabled: boolean, time: string) => {
+  const saveReminderSettings = async (enabled: boolean, time: string, message: string) => {
     const { data: { user } } = await supabase.auth.getUser();
     if (user) {
       await supabase
         .from("profiles")
-        .update({ reminder_enabled: enabled, reminder_time: time })
+        .update({ reminder_enabled: enabled, reminder_time: time, reminder_message: message })
         .eq("user_id", user.id);
       toast.success("Configurações de lembrete atualizadas.");
     }
@@ -380,25 +382,43 @@ const DailyHabitSection: React.FC = () => {
                 checked={reminderEnabled} 
                 onCheckedChange={(checked) => {
                   setReminderEnabled(checked);
-                  saveReminderSettings(checked, reminderTime);
+                  saveReminderSettings(checked, reminderTime, customMessage);
                 }} 
               />
             </div>
 
-            <div className={`space-y-4 transition-opacity ${reminderEnabled ? 'opacity-100' : 'opacity-30 pointer-events-none'}`}>
-              <div className="flex items-center gap-2">
-                <Clock className="w-4 h-4 text-primary" />
-                <p className="text-sm font-bold text-white/60 uppercase tracking-widest">Horário do Lembrete</p>
+            <div className={`space-y-6 transition-opacity ${reminderEnabled ? 'opacity-100' : 'opacity-30 pointer-events-none'}`}>
+              <div className="space-y-3">
+                <div className="flex items-center gap-2">
+                  <Clock className="w-4 h-4 text-primary" />
+                  <p className="text-sm font-bold text-white/60 uppercase tracking-widest">Horário do Lembrete</p>
+                </div>
+                <Input 
+                  type="time" 
+                  value={reminderTime} 
+                  onChange={(e) => {
+                    setReminderTime(e.target.value);
+                    saveReminderSettings(reminderEnabled, e.target.value, customMessage);
+                  }}
+                  className="bg-white/5 border-white/10 text-white text-lg h-12"
+                />
               </div>
-              <Input 
-                type="time" 
-                value={reminderTime} 
-                onChange={(e) => {
-                  setReminderTime(e.target.value);
-                  saveReminderSettings(reminderEnabled, e.target.value);
-                }}
-                className="bg-white/5 border-white/10 text-white text-lg h-12"
-              />
+
+              <div className="space-y-3">
+                <div className="flex items-center gap-2">
+                  <MessageSquare className="w-4 h-4 text-primary" />
+                  <p className="text-sm font-bold text-white/60 uppercase tracking-widest">Mensagem Personalizada</p>
+                </div>
+                <Textarea 
+                  value={customMessage} 
+                  onChange={(e) => {
+                    setCustomMessage(e.target.value);
+                  }}
+                  onBlur={() => saveReminderSettings(reminderEnabled, reminderTime, customMessage)}
+                  className="bg-white/5 border-white/10 text-white min-h-[80px]"
+                  placeholder="Ex: Hora da sua dose diária de poesia..."
+                />
+              </div>
             </div>
           </div>
           <DialogFooter>

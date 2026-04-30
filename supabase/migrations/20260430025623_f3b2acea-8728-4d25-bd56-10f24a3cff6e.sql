@@ -1,0 +1,1 @@
+ALTER TABLE public.profiles ADD COLUMN IF NOT EXISTS reminder_message TEXT DEFAULT 'Hora de reconectar consigo mesmo. Vamos praticar?';
