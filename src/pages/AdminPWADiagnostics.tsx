@@ -122,6 +122,73 @@ const AdminPWADiagnostics: React.FC = () => {
           </CardContent>
         </Card>
 
+        {/* Latest offline + rollback history */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <Card>
+            <CardHeader>
+              <CardTitle className="text-lg flex items-center gap-2"><WifiOff className="w-5 h-5 text-emerald-500" /> Último Teste Offline</CardTitle>
+              <CardDescription>{offlineHistory.length} verificações registradas.</CardDescription>
+            </CardHeader>
+            <CardContent>
+              {offlineHistory.length === 0 ? (
+                <p className="text-sm text-muted-foreground italic">Nenhum teste offline executado ainda.</p>
+              ) : (
+                <>
+                  <div className={`p-3 rounded-lg border mb-3 ${offlineHistory[0].status === "ok" ? "bg-emerald-500/10 border-emerald-500/30" : "bg-red-500/10 border-red-500/30"}`}>
+                    <div className="flex items-center gap-2 mb-1">
+                      {offlineHistory[0].status === "ok"
+                        ? <CheckCircle2 className="w-4 h-4 text-emerald-500" />
+                        : <XCircle className="w-4 h-4 text-red-500" />}
+                      <span className="font-bold text-sm uppercase tracking-wider">{offlineHistory[0].status}</span>
+                      <span className="text-xs text-muted-foreground ml-auto">{new Date(offlineHistory[0].timestamp).toLocaleString()}</span>
+                    </div>
+                    <p className="text-xs text-muted-foreground">{offlineHistory[0].message}</p>
+                  </div>
+                  <ScrollArea className="h-32">
+                    <div className="space-y-1.5 text-xs">
+                      {offlineHistory.slice(1).map((e, i) => (
+                        <div key={i} className="flex items-center gap-2 p-1.5 border-b border-border/30">
+                          <Badge variant={e.status === "ok" ? "secondary" : "destructive"} className="text-[9px] h-4 px-1.5">{e.status}</Badge>
+                          <span className="text-muted-foreground text-[10px]">{new Date(e.timestamp).toLocaleString()}</span>
+                          <span className="truncate flex-1 text-muted-foreground">{e.message}</span>
+                        </div>
+                      ))}
+                    </div>
+                  </ScrollArea>
+                </>
+              )}
+            </CardContent>
+          </Card>
+
+          <Card>
+            <CardHeader>
+              <CardTitle className="text-lg flex items-center gap-2"><Undo2 className="w-5 h-5 text-amber-500" /> Histórico de Rollbacks</CardTitle>
+              <CardDescription>{rollbackHistory.length} reversões registradas.</CardDescription>
+            </CardHeader>
+            <CardContent>
+              {rollbackHistory.length === 0 ? (
+                <p className="text-sm text-muted-foreground italic">Nenhum rollback executado.</p>
+              ) : (
+                <ScrollArea className="h-48">
+                  <div className="space-y-2 text-xs">
+                    {rollbackHistory.map((r, i) => (
+                      <div key={i} className="p-2 rounded border bg-muted/20">
+                        <div className="flex items-center gap-2 mb-1">
+                          <Badge variant={r.reason === "auto_recommended" ? "destructive" : "secondary"} className="text-[9px] h-4 px-1.5">{r.reason}</Badge>
+                          <span className="text-muted-foreground text-[10px]">{new Date(r.timestamp).toLocaleString()}</span>
+                        </div>
+                        <div className="font-mono text-[10px] text-muted-foreground break-all">
+                          De: {r.fromVersion || "—"} → Para: {r.toVersion || "fresca"}
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </ScrollArea>
+              )}
+            </CardContent>
+          </Card>
+        </div>
+
         {/* Cache status */}
         <Card>
           <CardHeader>
