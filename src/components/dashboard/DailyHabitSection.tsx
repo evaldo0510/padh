@@ -121,6 +121,19 @@ const DailyHabitSection: React.FC = () => {
     setNotificationPermission(permission);
     
     if (permission === "granted") {
+      // Try to register periodic sync if supported
+      if ('serviceWorker' in navigator) {
+        const registration = await navigator.serviceWorker.ready;
+        if ('periodicSync' in registration) {
+          try {
+            await (registration as any).periodicSync.register('daily-reminder', {
+              minInterval: 24 * 60 * 60 * 1000, // Once a day
+            });
+          } catch (e) {
+            console.error("Periodic sync registration failed:", e);
+          }
+        }
+      }
       toast.success("Notificações ativadas!");
     } else {
       toast.error("Permissão de notificação negada.");
