@@ -227,6 +227,39 @@ export type Database = {
         }
         Relationships: []
       }
+      pwa_health_events: {
+        Row: {
+          created_at: string
+          details: Json | null
+          event_type: string
+          id: string
+          status: string | null
+          user_agent: string | null
+          user_id: string | null
+          version: string | null
+        }
+        Insert: {
+          created_at?: string
+          details?: Json | null
+          event_type: string
+          id?: string
+          status?: string | null
+          user_agent?: string | null
+          user_id?: string | null
+          version?: string | null
+        }
+        Update: {
+          created_at?: string
+          details?: Json | null
+          event_type?: string
+          id?: string
+          status?: string | null
+          user_agent?: string | null
+          user_id?: string | null
+          version?: string | null
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
