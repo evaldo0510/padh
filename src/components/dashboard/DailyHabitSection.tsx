@@ -120,6 +120,7 @@ const DailyHabitSection: React.FC = () => {
         await supabase.from("daily_checkins").upsert({
           user_id: user.id,
           mood: mood,
+          note: note,
           checkin_date: todayKey
         }, { onConflict: "user_id,checkin_date" });
       }
