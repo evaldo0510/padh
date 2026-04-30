@@ -404,7 +404,47 @@ export const PWAManager: React.FC = () => {
           </motion.div>
         )}
 
-        {/* Versions */}
+        {/* Rollback recommendation */}
+        {shouldRecommendRollback && (
+          <motion.div
+            initial={{ opacity: 0, scale: 0.97 }} animate={{ opacity: 1, scale: 1 }}
+            className="p-4 rounded-2xl border-2 border-amber-500/50 bg-amber-500/10 flex items-start gap-3 shadow-lg shadow-amber-500/10"
+            role="alert"
+          >
+            <AlertCircle className="w-5 h-5 text-amber-400 shrink-0 mt-0.5 animate-pulse" />
+            <div className="flex-1 space-y-2">
+              <p className="text-sm font-bold text-amber-300">
+                Rollback recomendado — {counters.failuresInWindow} falhas detectadas (limite: {threshold})
+              </p>
+              <p className="text-xs text-amber-200/80">
+                O Service Worker apresentou múltiplas falhas em curto período (comm: {counters.comm}, timeout: {counters.timeout}, ativação: {counters.activation}). Considere reverter para a versão anterior.
+              </p>
+              <div className="flex gap-2 mt-2">
+                <Button size="sm" className="h-8 bg-amber-500 hover:bg-amber-400 text-black font-bold" onClick={handleRollback}>
+                  <Undo2 className="w-3.5 h-3.5 mr-1.5" /> Reverter Agora
+                </Button>
+                <Button size="sm" variant="outline" className="h-8 border-amber-500/30 text-amber-300" onClick={resetCounters}>
+                  Ignorar e zerar
+                </Button>
+              </div>
+            </div>
+          </motion.div>
+        )}
+
+        {/* Failure counters */}
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+          {[
+            { label: "Falhas Comm", value: counters.comm, tone: "text-red-400" },
+            { label: "Timeouts", value: counters.timeout, tone: "text-amber-400" },
+            { label: "Ativação", value: counters.activation, tone: "text-orange-400" },
+            { label: "Janela 5min", value: counters.failuresInWindow, tone: counters.failuresInWindow >= threshold ? "text-red-500" : "text-emerald-400" },
+          ].map((s) => (
+            <div key={s.label} className="p-3 rounded-xl bg-white/5 border border-white/5">
+              <div className="text-[9px] font-black uppercase tracking-widest text-muted-foreground">{s.label}</div>
+              <div className={`text-2xl font-bold font-mono ${s.tone}`}>{s.value}</div>
+            </div>
+          ))}
+        </div>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div className="p-4 rounded-2xl bg-gradient-to-br from-primary/10 to-transparent border border-primary/20 space-y-2">
             <div className="flex items-center justify-between">
