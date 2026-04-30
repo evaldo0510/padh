@@ -49,6 +49,8 @@ const MobileNav = () => {
     <nav className="lg:hidden fixed bottom-0 left-0 right-0 z-50 bg-background/60 backdrop-blur-xl border-t border-white/5 pb-safe">
       <div className="absolute inset-0 bg-gradient-to-t from-background to-transparent opacity-50 pointer-events-none" />
       <div className="flex items-center justify-around h-16 px-2 max-w-md mx-auto relative z-10">
+        {navItems.map((item) => {
+          const active = isActive(item.path);
           return (
             <motion.div
               key={item.path}
