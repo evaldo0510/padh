@@ -259,9 +259,13 @@ const JornadaHome = () => {
                             </div>
 
                             {/* Hover Status Overlay */}
-                            <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-500 bg-background/20 backdrop-blur-[2px] z-30">
-                               <div className="w-20 h-20 rounded-full border-2 border-white/20 flex items-center justify-center backdrop-blur-md bg-white/5 shadow-2xl">
-                                  <Play className="w-10 h-10 text-white fill-current ml-1.5" />
+                            <div className={`absolute inset-0 flex items-center justify-center transition-all duration-500 z-30 ${sessionUnlocked ? 'opacity-0 group-hover:opacity-100 bg-background/20 backdrop-blur-[2px]' : 'bg-black/40 backdrop-blur-[1px]'}`}>
+                               <div className={`w-20 h-20 rounded-full border-2 border-white/20 flex items-center justify-center backdrop-blur-md bg-white/5 shadow-2xl`}>
+                                  {sessionUnlocked ? (
+                                    <Play className="w-10 h-10 text-white fill-current ml-1.5" />
+                                  ) : (
+                                    <Lock className="w-10 h-10 text-white/20" />
+                                  )}
                                 </div>
                             </div>
                          </motion.div>
