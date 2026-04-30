@@ -56,12 +56,12 @@ const DailyHabitSection: React.FC = () => {
     fetchReminderSettings();
   }, []);
 
-  const saveReminderSettings = async (enabled: boolean, time: string) => {
+  const saveReminderSettings = async (enabled: boolean, time: string, message: string) => {
     const { data: { user } } = await supabase.auth.getUser();
     if (user) {
       await supabase
         .from("profiles")
-        .update({ reminder_enabled: enabled, reminder_time: time })
+        .update({ reminder_enabled: enabled, reminder_time: time, reminder_message: message })
         .eq("user_id", user.id);
       toast.success("Configurações de lembrete atualizadas.");
     }
