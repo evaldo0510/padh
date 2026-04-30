@@ -86,8 +86,8 @@ const SessaoView = () => {
     </div>
   );
 
-  const currentEx = sessao.exercicios[currentExIdx];
-  const totalEx = sessao.exercicios.length;
+  const currentBlock = sessao.blocos[currentExIdx];
+  const totalSteps = sessao.blocos.length;
   const progressPercent = ((currentExIdx + 1) / totalEx) * 100;
   const isLast = currentExIdx === totalEx - 1;
 
