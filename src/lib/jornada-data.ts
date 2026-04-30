@@ -38,6 +38,31 @@ export const JORNADA_DATA: FaseJornada[] = [
     cor: "amber",
     sessoes: [
       {
+        id: "aula-exclusiva-modulo",
+        titulo: "Fundamentos PADH",
+        descricao: "A base técnica e científica da metodologia.",
+        blocos: [
+          {
+            id: "ae-b1",
+            tipo: "text",
+            titulo: "Anatomia Poética",
+            conteudo: "Imagine que cada verso que você lê é uma chave. Nesta aula, descobriremos como a poesia age como agente neuroplástico, redesenhando a mente com símbolos.",
+          },
+          {
+            id: "ae-b2",
+            tipo: "reflection",
+            titulo: "Reflexão Técnica",
+            conteudo: "Qual parte do seu cérebro você mais usa para se esconder de si mesmo? E se o verso for o bisturi mais gentil que o inconsciente aceita?",
+          },
+          {
+            id: "ae-b3",
+            tipo: "action",
+            titulo: "Aplicação Prática",
+            conteudo: "Assista à aula completa para entender como construir poemas com intenção terapêutica precisa.",
+          }
+        ],
+      },
+      {
         id: "percepcao-inicial",
         titulo: "O Portal da Percepção",
         descricao: "Mapeando onde você está e como seu cérebro processa a realidade.",
