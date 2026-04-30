@@ -18,6 +18,7 @@ const DailyHabitSection: React.FC = () => {
   const [showCheckin, setShowCheckin] = useState(false);
   const [step, setStep] = useState<"mood" | "exercise" | "feedback">("mood");
   const [mood, setMood] = useState("");
+  const [note, setNote] = useState("");
   const [response, setResponse] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [reminderEnabled, setReminderEnabled] = useState(false);
@@ -119,6 +120,7 @@ const DailyHabitSection: React.FC = () => {
         await supabase.from("daily_checkins").upsert({
           user_id: user.id,
           mood: mood,
+          note: note,
           checkin_date: todayKey
         }, { onConflict: "user_id,checkin_date" });
       }
@@ -248,9 +250,16 @@ const DailyHabitSection: React.FC = () => {
                   <p className="text-white/50 italic">Dê um nome ao seu estado interno neste momento.</p>
                   <Textarea 
                     placeholder="Ex: Me sinto um pouco ansioso, mas presente..."
-                    className="bg-white/5 border-white/10 min-h-[120px] text-lg focus:border-primary/50 transition-all"
+                    className="bg-white/5 border-white/10 min-h-[80px] text-lg focus:border-primary/50 transition-all mb-4"
                     value={mood}
                     onChange={(e) => setMood(e.target.value)}
+                  />
+                  <p className="text-white/30 text-xs uppercase tracking-widest font-black mb-2">Registro Detalhado (Opcional)</p>
+                  <Textarea 
+                    placeholder="O que mais está na sua mente agora?"
+                    className="bg-white/5 border-white/10 min-h-[100px] focus:border-primary/50 transition-all mb-4"
+                    value={note}
+                    onChange={(e) => setNote(e.target.value)}
                   />
                   <Button onClick={submitMood} className="w-full btn-primary h-12 text-lg">
                     Continuar

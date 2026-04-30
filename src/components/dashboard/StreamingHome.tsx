@@ -11,6 +11,7 @@ import StreamingCard from "@/components/ui/StreamingCard";
 import { StreamingSkeleton } from "./StreamingSkeleton";
 import GlobalProgressBar from "./GlobalProgressBar";
 import DailyHabitSection from "./DailyHabitSection";
+import ProgressPanel from "./ProgressPanel";
 
 const StreamingHome = () => {
   const navigate = useNavigate();
@@ -120,6 +121,9 @@ const StreamingHome = () => {
 
         {/* Global Journey Progress */}
         <GlobalProgressBar />
+
+        {/* Clinical Evolution Charts */}
+        <ProgressPanel />
         {/* Continuar Assistindo Section */}
         {nextSession && (
           <section className="space-y-8 animate-slide-up">
