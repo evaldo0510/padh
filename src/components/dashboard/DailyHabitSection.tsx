@@ -162,6 +162,27 @@ const DailyHabitSection: React.FC = () => {
     }
   };
 
+  const handleTestNotification = () => {
+    if (notificationPermission !== "granted") {
+      requestPermission();
+      return;
+    }
+
+    if ('serviceWorker' in navigator && navigator.serviceWorker.controller) {
+      navigator.serviceWorker.controller.postMessage({
+        type: 'TEST_NOTIFICATION',
+        message: customMessage
+      });
+      toast.success("Notificação de teste enviada!");
+    } else {
+      // Fallback
+      new Notification("Teste de Lembrete PADH", {
+        body: customMessage,
+        icon: "/pwa-192x192.png"
+      });
+    }
+  };
+
   const handleStart = () => {
     setStep("mood");
     setShowCheckin(true);
