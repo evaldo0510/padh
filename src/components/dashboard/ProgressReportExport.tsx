@@ -10,9 +10,22 @@ import { supabase } from "@/integrations/supabase/client";
 const ProgressReportExport = () => {
   const { progress } = useCourseProgress();
   const { jornada } = useJornada();
-  const handleExport = () => {
+  const handleExport = async () => {
     try {
-      gerarRelatorioProgresso(progress, MODULOS, jornada);
+      const { data: { user } } = await supabase.auth.getUser();
+      if (!user) {
+        toast.error("Você precisa estar logado.");
+        return;
+      }
+
+      const { data: checkins } = await supabase
+        .from("daily_checkins")
+        .select("*")
+        .eq("user_id", user.id)
+        .order("checkin_date", { ascending: false });
+
+      gerarRelatorioProgresso(progress, MODULOS, jornada, checkins || []);
+      
       toast.success("Relatório gerado com sucesso!", {
         description: "O download do seu progresso em PDF foi iniciado.",
       });
