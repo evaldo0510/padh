@@ -197,6 +197,7 @@ const SessaoView = () => {
       }}
       hideHeader
       hideFooter
+      hideMobileNav
     >
       <div className="min-h-screen bg-background text-foreground flex flex-col relative overflow-hidden">
         {/* Cinematic Loader Overlay */}
