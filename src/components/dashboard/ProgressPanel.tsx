@@ -17,12 +17,12 @@ import { format } from "date-fns";
 import { ptBR } from "date-fns/locale";
 
 const ProgressPanel: React.FC = () => {
+  const { jornada } = useJornada();
   const [checkinHistory, setCheckinHistory] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
   const [dateFilter, setDateFilter] = useState("all");
   const [phaseFilter, setPhaseFilter] = useState("all");
   const [statusFilter, setStatusFilter] = useState("all");
-  const [searchTerm, setSearchFilter] = useState("");
 
   useEffect(() => {
     const fetchStats = async () => {
