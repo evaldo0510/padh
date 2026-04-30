@@ -77,6 +77,7 @@ const LoginPage = () => {
     <PageLayout
       seo={{ title: 'Login — P.A.D.H.', description: 'Acesse sua área exclusiva.', path: '/login' }}
       currentPage="Acesso"
+      hideMobileNav
     >
       <div className="container mx-auto px-6 py-20 flex justify-center">
         <div className="w-full max-w-md">
