@@ -23,7 +23,7 @@ const isPreviewHost = (() => {
 })();
 
 if (typeof navigator !== "undefined" && "serviceWorker" in navigator) {
-  if (isPreviewHost || isInIframe) {
+  if (isPreviewHost) {
     // Unregister any existing SW + nuke caches so the preview always shows latest code.
     navigator.serviceWorker.getRegistrations().then((regs) => {
       regs.forEach((r) => r.unregister());
