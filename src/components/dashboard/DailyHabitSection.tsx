@@ -25,6 +25,7 @@ const DailyHabitSection: React.FC = () => {
   const [reminderTime, setReminderTime] = useState("09:00");
   const [showSettings, setShowSettings] = useState(false);
   const [customMessage, setCustomMessage] = useState("Hora de reconectar consigo mesmo. Vamos praticar?");
+  const [testStatus, setTestStatus] = useState<"idle" | "sending" | "delivered">("idle");
 
   // Get a daily exercise based on the date
   const getDailyExercise = () => {
