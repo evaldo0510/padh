@@ -173,35 +173,61 @@ export const PWAManager: React.FC = () => {
 
   const handleSimulateUpdate = async () => {
     setIsSimulating(true);
-    const startSnapshot = currentSnapshot?.version;
+    const startSnapshot = currentSnapshot;
+    const startVersion = startSnapshot?.version || null;
     toast.info("Simulando atualização do Service Worker...");
-    logMessage({ direction: "out", type: "SIMULATE_UPDATE" });
+    logMessage({ direction: "out", type: "SIMULATE_UPDATE", payload: { startVersion } });
 
     let controllerChanged = false;
     const onChange = () => { controllerChanged = true; };
     navigator.serviceWorker.addEventListener("controllerchange", onChange);
 
     try {
-      // 1. force update check
       const reg = await navigator.serviceWorker.getRegistration();
       if (!reg) throw new Error("Sem registration");
       await reg.update();
-
-      // 2. if new worker waiting -> skip waiting
       if (reg.waiting) reg.waiting.postMessage({ type: "SKIP_WAITING" });
 
-      // 3. wait up to 6s for controllerchange
+      // Wait up to 6s for controllerchange
       await new Promise((resolve) => setTimeout(resolve, 6000));
 
-      // 4. re-fetch precache and validate
+      // Re-fetch precache and validate critical files by URL+revision (hash)
       await loadPrecacheManifest();
       await loadSwVersion();
-      const endSnapshot = currentSnapshot?.version;
-      const versionChanged = startSnapshot && endSnapshot && startSnapshot !== endSnapshot;
+
+      // Wait one tick for state to settle, then diff
+      await new Promise(r => setTimeout(r, 100));
+      // We rebuild diff from localStorage (most up-to-date snapshot)
+      const stored = localStorage.getItem(SNAPSHOT_KEY);
+      const endSnapshot: PrecacheSnapshot | null = stored ? JSON.parse(stored) : null;
+
+      const startMap = new Map((startSnapshot?.files ?? []).map(f => [f.url, f.revision]));
+      const endMap = new Map((endSnapshot?.files ?? []).map(f => [f.url, f.revision]));
+      const criticalRegex = /\.(js|css|html)$|^\/(?:index\.html|sw\.js|manifest\.webmanifest)?$/i;
+      const criticalChanges: { url: string; from: string | null; to: string | null }[] = [];
+      endMap.forEach((rev, url) => {
+        if (criticalRegex.test(url) && startMap.get(url) !== rev) {
+          criticalChanges.push({ url, from: startMap.get(url) ?? null, to: rev });
+        }
+      });
+      const versionChanged = startVersion !== (endSnapshot?.version || null);
+
+      const summary = {
+        controllerChanged,
+        versionChanged,
+        startVersion,
+        endVersion: endSnapshot?.version || null,
+        criticalChanges,
+        criticalCount: criticalChanges.length,
+      };
+      logMessage({ direction: "in", type: "SIMULATE_UPDATE_RESULT", status: (controllerChanged || versionChanged) ? "success" : "fail", payload: summary });
 
       if (controllerChanged || versionChanged) {
-        toast.success(`Validação OK: ${controllerChanged ? "controller trocado" : ""}${versionChanged ? " · precache mudou" : ""}`);
-        reportPWAEvent("update_activated", "success", { context: "simulate_update" });
+        toast.success(`Validação OK · ${criticalChanges.length} arquivo(s) crítico(s) alterado(s)`, {
+          description: criticalChanges.slice(0, 3).map(c => c.url).join(", ") + (criticalChanges.length > 3 ? "..." : ""),
+          duration: 6000,
+        });
+        reportPWAEvent("update_activated", "success", { context: "simulate_update", ...summary });
       } else {
         toast.warning("Sem nova versão disponível no servidor — simulação completou sem trocas.");
       }
@@ -214,18 +240,22 @@ export const PWAManager: React.FC = () => {
     }
   };
 
+  const buildSupportPayload = () => ({
+    exportedAt: new Date().toISOString(),
+    appVersion: APP_VERSION,
+    swVersion,
+    swBuiltAt,
+    currentSnapshot,
+    previousSnapshot,
+    precacheDiff,
+    counters,
+    cacheKeys,
+    userAgent: navigator.userAgent,
+    url: window.location.href,
+  });
+
   const handleExportSnapshot = () => {
-    const payload = {
-      exportedAt: new Date().toISOString(),
-      appVersion: APP_VERSION,
-      swVersion,
-      swBuiltAt,
-      currentSnapshot,
-      previousSnapshot,
-      precacheDiff,
-      counters,
-      cacheKeys,
-    };
+    const payload = buildSupportPayload();
     const blob = new Blob([JSON.stringify(payload, null, 2)], { type: "application/json" });
     const url = URL.createObjectURL(blob);
     const a = document.createElement("a");
@@ -234,6 +264,18 @@ export const PWAManager: React.FC = () => {
     a.click();
     URL.revokeObjectURL(url);
     toast.success("Snapshot exportado.");
+  };
+
+  const handleCopySupport = async () => {
+    try {
+      const payload = JSON.stringify(buildSupportPayload(), null, 2);
+      await navigator.clipboard.writeText(payload);
+      toast.success("JSON de suporte copiado para a área de transferência.", {
+        description: `${(payload.length / 1024).toFixed(1)} KB · cole no chat de suporte.`,
+      });
+    } catch (e: any) {
+      toast.error("Falha ao copiar: " + (e?.message || "erro"));
+    }
   };
 
   const handleOfflineTest = async () => {
