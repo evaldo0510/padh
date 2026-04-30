@@ -377,6 +377,9 @@ const Dashboard = () => {
         description: "Explore sua jornada terapêutica como uma série de transformação.",
         path: "/dashboard",
       }}
+      currentPage="Minha Área"
+      showBackButton={false}
+      hideHeader
     >
       <div className="flex flex-col min-h-screen bg-background -mt-16 overflow-x-hidden">
         {/* Cinematic Hero Banner */}
