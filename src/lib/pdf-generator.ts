@@ -546,7 +546,27 @@ export function gerarRelatorioProgresso(
     y += 6;
   }
 
-  y = sectionTitle(doc, y, "4. PROGRESSO DO CURSO TÉCNICO");
+  if (checkins && checkins.length > 0) {
+    y = sectionTitle(doc, y, "4. HISTÓRICO DE CHECK-IN DIÁRIO");
+    const checkinBody = checkins.map(c => [
+      c.checkin_date,
+      c.mood,
+      c.note || "—"
+    ]);
+
+    autoTable(doc, {
+      startY: y,
+      head: [["Data", "Estado Emocional", "Anotação"]],
+      body: checkinBody,
+      theme: "striped",
+      headStyles: { fillColor: [79, 70, 229] }, // Slight variation for distinction
+      bodyStyles: { fontSize: 8.5 },
+      margin: { left: PAGE.margin, right: PAGE.margin },
+    });
+    y = (doc as any).lastAutoTable.finalY + 10;
+  }
+
+  y = sectionTitle(doc, y, "5. PROGRESSO DO CURSO TÉCNICO");
   const totalModulos = modulos.length;
   const concluidos = (progressData.completedModules || []).length;
   const percent = Math.round((concluidos / totalModulos) * 100);
