@@ -41,37 +41,37 @@ registerRoute(
 
 self.addEventListener('message', (event) => {
   if (event.data && event.data.type === 'SET_REMINDER') {
-    // Store reminder data in indexedDB or just variables if needed
-    // But for a simple background sync check:
-    console.log('SW: Reminder settings received', event.data);
+    // Store reminder config locally in SW memory (as fallback)
+    self.reminderConfig = event.data;
+    console.log('SW: Reminder settings updated', self.reminderConfig);
   }
 });
 
-// Periodic Sync (if supported by the browser)
+async function checkAndShowNotification() {
+  if (!self.reminderConfig || !self.reminderConfig.enabled) return;
+
+  const now = new Date();
+  const today = now.toLocaleDateString('sv');
+  
+  // We can't access localStorage directly, so we'd use IndexedDB for production persistence.
+  // For this version, we'll show a notification if the time matches.
+  const [targetHours, targetMinutes] = self.reminderConfig.time.split(':').map(Number);
+  
+  if (now.getHours() === targetHours && now.getMinutes() === targetMinutes) {
+    self.registration.showNotification("Lembrete PADH (PWA)", {
+      body: self.reminderConfig.message,
+      icon: "/pwa-192x192.png",
+      tag: 'daily-reminder'
+    });
+  }
+}
+
+// Periodic Sync (requires installation and high engagement score)
 self.addEventListener('periodicsync', (event) => {
   if (event.tag === 'daily-reminder') {
     event.waitUntil(checkAndShowNotification());
   }
 });
-
-// Fallback for browsers that don't support periodic sync but have the SW active
-// We can use a simple interval check while the SW is awake
-let checkInterval;
-if (!checkInterval) {
-  checkInterval = setInterval(() => {
-    checkAndShowNotification();
-  }, 1000 * 60 * 5); // Every 5 minutes
-}
-
-async function checkAndShowNotification() {
-  // Since SW doesn't have direct access to localStorage, 
-  // we would normally use IndexedDB. 
-  // For simplicity here, we'll try to get state via postMessage 
-  // or rely on a "last_notified" date stored in the SW (not persistent across restarts).
-  
-  // Note: SW is ephemeral. For production persistence, use IndexedDB.
-  // This is a basic implementation.
-}
 
 self.addEventListener('notificationclick', (event) => {
   event.notification.close();
