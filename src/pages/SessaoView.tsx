@@ -35,8 +35,11 @@ const SessaoView = () => {
 
   useEffect(() => {
     if (sessao) {
-      const saved = getResponse(sessao.exercicios[currentExIdx].id);
-      setResponse(saved || "");
+      const currentBlock = sessao.blocos[currentExIdx];
+      if (currentBlock.tipo === "exercise") {
+        const saved = getResponse(currentBlock.id);
+        setResponse(saved || "");
+      }
     }
     
     // Clear any existing transition if we change episode
@@ -83,10 +86,10 @@ const SessaoView = () => {
     </div>
   );
 
-  const currentEx = sessao.exercicios[currentExIdx];
-  const totalEx = sessao.exercicios.length;
-  const progressPercent = ((currentExIdx + 1) / totalEx) * 100;
-  const isLast = currentExIdx === totalEx - 1;
+  const currentBlock = sessao.blocos[currentExIdx];
+  const totalSteps = sessao.blocos.length;
+  const progressPercent = ((currentExIdx + 1) / totalSteps) * 100;
+  const isLast = currentExIdx === totalSteps - 1;
 
   const startTransition = async (type: "next" | "prev" | "skip" | "finish", action: () => void) => {
     // Cancel any previous transition
@@ -126,7 +129,9 @@ const SessaoView = () => {
   const handleNext = () => {
     if (isTransitioning) return;
     
-    saveResponse(currentEx.id, response);
+    if (currentBlock.tipo === "exercise") {
+      saveResponse(currentBlock.id, response);
+    }
     
     startTransition(isLast ? "finish" : "next", () => {
       if (isLast) {
@@ -248,10 +253,10 @@ const SessaoView = () => {
 
         {/* Central Workspace */}
         <main className="flex-1 streaming-container flex flex-col justify-center items-center pb-32 relative z-20">
-           <AnimatePresence mode="wait">
+            <AnimatePresence mode="wait">
               {!isTransitioning && (
                 <motion.div
-                  key={currentEx.id}
+                  key={currentBlock.id}
                   initial={{ opacity: 0, scale: 0.98, y: 15 }}
                   animate={{ opacity: 1, scale: 1, y: 0 }}
                   exit={{ opacity: 0, scale: 1.02, y: -15 }}
@@ -260,42 +265,49 @@ const SessaoView = () => {
                 >
                    <div className="space-y-8 text-center">
                       <Badge className="bg-primary/10 text-primary border-primary/20 px-6 py-2 rounded-full font-black uppercase tracking-widest text-[10px] shadow-lg shadow-primary/5">
-                         <Sparkles className="w-3.5 h-3.5 mr-2" /> Desafio poético {currentExIdx + 1} de {totalEx}
+                         <Sparkles className="w-3.5 h-3.5 mr-2" /> Passo {currentExIdx + 1} de {totalSteps}
                       </Badge>
                       
                       <div className="space-y-6">
                         <h1 className="text-4xl md:text-7xl font-bold leading-[0.9] tracking-tighter text-white">
-                           {currentEx.titulo}
+                           {currentBlock.titulo}
                         </h1>
                         <p className="text-xl md:text-3xl text-white/50 font-light italic max-w-2xl mx-auto leading-relaxed">
-                           "{currentEx.instrucao}"
+                           "{currentBlock.conteudo}"
                         </p>
+                        {currentBlock.instrucao && (
+                          <p className="text-lg text-primary/70 font-medium">
+                             {currentBlock.instrucao}
+                          </p>
+                        )}
                       </div>
                    </div>
 
-                   <div className="relative group w-full">
-                      <textarea
-                        value={response}
-                        onChange={(e) => setResponse(e.target.value)}
-                        placeholder={currentEx.placeholder || "Suas palavras aqui..."}
-                        className="focus-input shadow-2xl group-focus-within:border-primary/30 group-focus-within:bg-card/60 transition-all duration-700"
-                        autoFocus
-                      />
-                      <div className="absolute bottom-8 left-1/2 -translate-x-1/2 opacity-0 group-focus-within:opacity-100 transition-opacity duration-1000 pointer-events-none">
-                         <div className="flex items-center gap-3 text-[10px] font-black uppercase tracking-[0.5em] text-primary/30">
-                            <div className="w-1.5 h-1.5 rounded-full bg-primary animate-pulse shadow-glow" />
-                            Estado de Escrita Ativo
-                         </div>
-                      </div>
-                   </div>
+                   {currentBlock.tipo === "exercise" && (
+                     <div className="relative group w-full">
+                        <textarea
+                          value={response}
+                          onChange={(e) => setResponse(e.target.value)}
+                          placeholder={currentBlock.placeholder || "Suas palavras aqui..."}
+                          className="focus-input shadow-2xl group-focus-within:border-primary/30 group-focus-within:bg-card/60 transition-all duration-700"
+                          autoFocus
+                        />
+                        <div className="absolute bottom-8 left-1/2 -translate-x-1/2 opacity-0 group-focus-within:opacity-100 transition-opacity duration-1000 pointer-events-none">
+                           <div className="flex items-center gap-3 text-[10px] font-black uppercase tracking-[0.5em] text-primary/30">
+                              <div className="w-1.5 h-1.5 rounded-full bg-primary animate-pulse shadow-glow" />
+                              Estado de Escrita Ativo
+                           </div>
+                        </div>
+                     </div>
+                   )}
                 </motion.div>
               )}
-           </AnimatePresence>
+            </AnimatePresence>
         </main>
 
         {/* Bottom Navigation Player Style */}
         <footer className="px-12 py-12 flex flex-col md:flex-row items-center justify-between gap-10 z-40 bg-background/90 backdrop-blur-2xl border-t border-white/5">
-           <div className="flex items-center gap-10">
+            <div className="flex items-center gap-10">
               <Button
                 variant="ghost"
                 onClick={handlePrev}
@@ -305,7 +317,7 @@ const SessaoView = () => {
                 <ChevronLeft className="w-4 h-4 mr-2" /> Anterior
               </Button>
               <div className="flex gap-2">
-                 {Array.from({ length: totalEx }).map((_, i) => (
+                 {Array.from({ length: totalSteps }).map((_, i) => (
                     <div 
                       key={i} 
                       className={`h-1.5 w-12 rounded-full transition-all duration-700 ${i === currentExIdx ? 'bg-primary shadow-glow shadow-primary/40' : i < currentExIdx ? 'bg-primary/30' : 'bg-white/5'}`} 

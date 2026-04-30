@@ -861,7 +861,7 @@ const EpisodeHistorySection: React.FC<EpisodeHistoryProps> = ({
         const localDone = jornada.completedSessions.includes(s.id);
         const done = remote?.status === "completed" || localDone;
 
-        const sessionResponses = s.exercicios.filter((ex) =>
+        const sessionResponses = s.blocos.filter(b => b.tipo === 'exercise').filter((ex) =>
           jornada.responses.some((r) => r.exerciseId === ex.id),
         );
         const inProgress =
@@ -869,7 +869,7 @@ const EpisodeHistorySection: React.FC<EpisodeHistoryProps> = ({
           (remote?.status === "in_progress" || sessionResponses.length > 0);
 
         const lastResp = jornada.responses
-          .filter((r) => s.exercicios.some((ex) => ex.id === r.exerciseId))
+          .filter((r) => s.blocos.filter(b => b.tipo === 'exercise').some((ex) => ex.id === r.exerciseId))
           .sort((a, b) => (a.date < b.date ? 1 : -1))[0];
 
         const status: FilterMode = done

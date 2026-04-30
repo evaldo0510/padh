@@ -39,7 +39,7 @@ const ConscienciaHistorico: React.FC = () => {
         .order("checkin_date", { ascending: false });
 
       if (checkins) {
-        const allExercises = JORNADA_DATA.flatMap(f => f.sessoes.flatMap(s => s.exercicios));
+        const allExercises = JORNADA_DATA.flatMap(f => f.sessoes.flatMap(s => s.blocos.filter(b => b.tipo === 'exercise')));
         
         const historyData = checkins.map(c => {
           // Find the response for this date

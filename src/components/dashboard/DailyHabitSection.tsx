@@ -26,7 +26,7 @@ const DailyHabitSection: React.FC = () => {
 
   // Get a daily exercise based on the date
   const getDailyExercise = () => {
-    const allExercises = JORNADA_DATA.flatMap(f => f.sessoes.flatMap(s => s.exercicios));
+    const allExercises = JORNADA_DATA.flatMap(f => f.sessoes.flatMap(s => s.blocos.filter(b => b.tipo === 'exercise')));
     const dayOfYear = Math.floor((new Date().getTime() - new Date(new Date().getFullYear(), 0, 0).getTime()) / 86400000);
     return allExercises[dayOfYear % allExercises.length];
   };
