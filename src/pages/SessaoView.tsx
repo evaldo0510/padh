@@ -129,7 +129,9 @@ const SessaoView = () => {
   const handleNext = () => {
     if (isTransitioning) return;
     
-    saveResponse(currentEx.id, response);
+    if (currentBlock.tipo === "exercise") {
+      saveResponse(currentBlock.id, response);
+    }
     
     startTransition(isLast ? "finish" : "next", () => {
       if (isLast) {
