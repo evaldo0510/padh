@@ -11,6 +11,7 @@ import StreamingCard from "@/components/ui/StreamingCard";
 import { StreamingSkeleton } from "./StreamingSkeleton";
 import GlobalProgressBar from "./GlobalProgressBar";
 import DailyHabitSection from "./DailyHabitSection";
+import ProgressPanel from "./ProgressPanel";
 
 const StreamingHome = () => {
   const navigate = useNavigate();
