@@ -763,7 +763,6 @@ const DailyHabitSection: React.FC = () => {
             </Button>
           </DialogFooter>
         </DialogContent>
-        </DialogContent>
       </Dialog>
     </div>
   );
