@@ -382,25 +382,43 @@ const DailyHabitSection: React.FC = () => {
                 checked={reminderEnabled} 
                 onCheckedChange={(checked) => {
                   setReminderEnabled(checked);
-                  saveReminderSettings(checked, reminderTime);
+                  saveReminderSettings(checked, reminderTime, customMessage);
                 }} 
               />
             </div>
 
-            <div className={`space-y-4 transition-opacity ${reminderEnabled ? 'opacity-100' : 'opacity-30 pointer-events-none'}`}>
-              <div className="flex items-center gap-2">
-                <Clock className="w-4 h-4 text-primary" />
-                <p className="text-sm font-bold text-white/60 uppercase tracking-widest">Horário do Lembrete</p>
+            <div className={`space-y-6 transition-opacity ${reminderEnabled ? 'opacity-100' : 'opacity-30 pointer-events-none'}`}>
+              <div className="space-y-3">
+                <div className="flex items-center gap-2">
+                  <Clock className="w-4 h-4 text-primary" />
+                  <p className="text-sm font-bold text-white/60 uppercase tracking-widest">Horário do Lembrete</p>
+                </div>
+                <Input 
+                  type="time" 
+                  value={reminderTime} 
+                  onChange={(e) => {
+                    setReminderTime(e.target.value);
+                    saveReminderSettings(reminderEnabled, e.target.value, customMessage);
+                  }}
+                  className="bg-white/5 border-white/10 text-white text-lg h-12"
+                />
               </div>
-              <Input 
-                type="time" 
-                value={reminderTime} 
-                onChange={(e) => {
-                  setReminderTime(e.target.value);
-                  saveReminderSettings(reminderEnabled, e.target.value);
-                }}
-                className="bg-white/5 border-white/10 text-white text-lg h-12"
-              />
+
+              <div className="space-y-3">
+                <div className="flex items-center gap-2">
+                  <MessageSquare className="w-4 h-4 text-primary" />
+                  <p className="text-sm font-bold text-white/60 uppercase tracking-widest">Mensagem Personalizada</p>
+                </div>
+                <Textarea 
+                  value={customMessage} 
+                  onChange={(e) => {
+                    setCustomMessage(e.target.value);
+                  }}
+                  onBlur={() => saveReminderSettings(reminderEnabled, reminderTime, customMessage)}
+                  className="bg-white/5 border-white/10 text-white min-h-[80px]"
+                  placeholder="Ex: Hora da sua dose diária de poesia..."
+                />
+              </div>
             </div>
           </div>
           <DialogFooter>
