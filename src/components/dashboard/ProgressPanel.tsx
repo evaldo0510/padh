@@ -245,7 +245,7 @@ const ProgressPanel: React.FC = () => {
                   contentStyle={{ backgroundColor: '#0f172a', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '12px' }}
                 />
                 <Bar dataKey="percent" radius={[0, 4, 4, 0]} barSize={20}>
-                  {journeyProgressData.map((entry, index) => (
+                  {filteredJourneyData.map((entry, index) => (
                     <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
                   ))}
                 </Bar>
