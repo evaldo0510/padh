@@ -228,7 +228,7 @@ const ProgressPanel: React.FC = () => {
           </CardHeader>
           <CardContent className="p-0 h-[250px] w-full">
             <ResponsiveContainer width="100%" height="100%">
-              <BarChart data={journeyProgressData} layout="vertical">
+              <BarChart data={filteredJourneyData} layout="vertical">
                 <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.05)" horizontal={false} />
                 <XAxis type="number" hide />
                 <YAxis 
