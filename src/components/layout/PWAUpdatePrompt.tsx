@@ -65,6 +65,7 @@ const PWAUpdatePrompt = () => {
   }, []);
 
   const handleUpdate = () => {
+    reportPWAEvent("update_activated", "success", { method: registration?.waiting ? "skipWaiting" : "reload" });
     if (registration?.waiting) {
       registration.waiting.postMessage({ type: "SKIP_WAITING" });
     } else {
