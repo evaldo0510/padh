@@ -183,6 +183,35 @@ const handleMessage = async (event) => {
       }
       break;
     }
+
+    case 'GET_SW_VERSION': {
+      if (event.source) {
+        event.source.postMessage({
+          type: 'SW_VERSION_RESPONSE',
+          version: SW_VERSION,
+          builtAt: SW_BUILT_AT,
+          manifestCount: __MANIFEST__.length,
+        });
+      }
+      break;
+    }
+
+    case 'GET_PRECACHE_MANIFEST': {
+      // Return the list of precached files (url + revision)
+      const files = __MANIFEST__.map((entry) => {
+        if (typeof entry === 'string') return { url: entry, revision: null };
+        return { url: entry.url, revision: entry.revision || null };
+      });
+      if (event.source) {
+        event.source.postMessage({
+          type: 'PRECACHE_MANIFEST_RESPONSE',
+          files,
+          builtAt: SW_BUILT_AT,
+          version: SW_VERSION,
+        });
+      }
+      break;
+    }
   }
 };
 
