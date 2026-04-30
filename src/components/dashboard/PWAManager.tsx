@@ -2,7 +2,7 @@ import React, { useEffect, useState, useCallback } from "react";
 import {
   ShieldCheck, RefreshCw, Trash2, Activity,
   AlertCircle, Info, Smartphone, HardDrive,
-  Undo2, FileSearch, Tag, Clock,
+  Undo2, FileSearch, Tag, Clock, Download, Zap, WifiOff, Link as LinkIcon,
 } from "lucide-react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -10,8 +10,10 @@ import { Badge } from "@/components/ui/badge";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { toast } from "sonner";
 import { motion } from "framer-motion";
+import { Link } from "react-router-dom";
 import { APP_VERSION } from "@/lib/changelog";
 import { reportPWAEvent } from "@/lib/pwa-metrics";
+import { usePWADiagnostics } from "@/hooks/usePWADiagnostics";
 
 interface PWAEvent {
   eventType: string;
