@@ -487,7 +487,7 @@ export const PWAManager: React.FC = () => {
                 O Service Worker apresentou múltiplas falhas em curto período (comm: {counters.comm}, timeout: {counters.timeout}, ativação: {counters.activation}). Considere reverter para a versão anterior.
               </p>
               <div className="flex gap-2 mt-2">
-                <Button size="sm" className="h-8 bg-amber-500 hover:bg-amber-400 text-black font-bold" onClick={handleRollback}>
+                <Button size="sm" className="h-8 bg-amber-500 hover:bg-amber-400 text-black font-bold" onClick={() => handleRollback()}>
                   <Undo2 className="w-3.5 h-3.5 mr-1.5" /> Reverter Agora
                 </Button>
                 <Button size="sm" variant="outline" className="h-8 border-amber-500/30 text-amber-300" onClick={resetCounters}>
