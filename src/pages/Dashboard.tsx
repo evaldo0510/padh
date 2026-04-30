@@ -498,6 +498,7 @@ const Dashboard = () => {
             <div className="lg:col-span-2 space-y-12">
                {/* Objectives with modern UI */}
                <ObjectiveSettings />
+               <PWAManager />
                
                {/* Motivational Insight Card */}
                <motion.div 
