@@ -89,6 +89,7 @@ const Changelog = lazy(() => import("./pages/Changelog"));
 const Offline = lazy(() => import("./pages/Offline"));
 
 const AdminPWAHealth = lazy(() => import("./pages/AdminPWAHealth"));
+const AdminPWADiagnostics = lazy(() => import("./pages/AdminPWADiagnostics"));
 
 const queryClient = new QueryClient();
 
@@ -321,6 +322,16 @@ const AnimatedRoutes = () => {
               <PageTransition>
                 <ProtectedRoute>
                   <AdminPWAHealth />
+                </ProtectedRoute>
+              </PageTransition>
+            }
+          />
+          <Route
+            path="/admin/pwa-diagnostics"
+            element={
+              <PageTransition>
+                <ProtectedRoute>
+                  <AdminPWADiagnostics />
                 </ProtectedRoute>
               </PageTransition>
             }

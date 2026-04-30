@@ -2,7 +2,7 @@ import React, { useEffect, useState, useCallback } from "react";
 import {
   ShieldCheck, RefreshCw, Trash2, Activity,
   AlertCircle, Info, Smartphone, HardDrive,
-  Undo2, FileSearch, Tag, Clock,
+  Undo2, FileSearch, Tag, Clock, Download, Zap, WifiOff, Link as LinkIcon,
 } from "lucide-react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -10,8 +10,10 @@ import { Badge } from "@/components/ui/badge";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { toast } from "sonner";
 import { motion } from "framer-motion";
+import { Link } from "react-router-dom";
 import { APP_VERSION } from "@/lib/changelog";
 import { reportPWAEvent } from "@/lib/pwa-metrics";
+import { usePWADiagnostics } from "@/hooks/usePWADiagnostics";
 
 interface PWAEvent {
   eventType: string;
@@ -54,6 +56,10 @@ export const PWAManager: React.FC = () => {
   const [precacheDiff, setPrecacheDiff] = useState<PrecacheDiff | null>(null);
   const [previousSnapshot, setPreviousSnapshot] = useState<PrecacheSnapshot | null>(null);
   const [currentSnapshot, setCurrentSnapshot] = useState<PrecacheSnapshot | null>(null);
+  const [isSimulating, setIsSimulating] = useState(false);
+  const [offlineTest, setOfflineTest] = useState<{ status: "idle" | "running" | "ok" | "fail"; message?: string }>({ status: "idle" });
+
+  const { counters, recordFailure, resetCounters, shouldRecommendRollback, threshold, logMessage } = usePWADiagnostics();
 
   // Communicate with SW with timeout protection
   const askSW = useCallback(<T,>(type: string, responseType: string, timeoutMs = 5000): Promise<T> => {
@@ -135,15 +141,109 @@ export const PWAManager: React.FC = () => {
 
   const loadSwVersion = useCallback(async () => {
     try {
+      logMessage({ direction: "out", type: "GET_SW_VERSION" });
       const resp: any = await askSW("GET_SW_VERSION", "SW_VERSION_RESPONSE", 4000);
+      logMessage({ direction: "in", type: "SW_VERSION_RESPONSE", payload: { version: resp.version }, status: "success" });
       setSwVersion(resp.version);
       setSwBuiltAt(resp.builtAt);
       setCommError(null);
     } catch (e: any) {
-      setCommError(e?.message || "Falha na comunicação com o Service Worker");
-      reportPWAEvent("error", "fail", { context: "GET_SW_VERSION", message: e?.message });
+      const msg = e?.message || "Falha na comunicação com o Service Worker";
+      setCommError(msg);
+      const kind = msg.toLowerCase().includes("timeout") ? "timeout" : "comm";
+      recordFailure(kind, { context: "GET_SW_VERSION", message: msg });
+      reportPWAEvent("error", "fail", { context: "GET_SW_VERSION", message: msg });
     }
-  }, [askSW]);
+  }, [askSW, logMessage, recordFailure]);
+
+  const handleSimulateUpdate = async () => {
+    setIsSimulating(true);
+    const startSnapshot = currentSnapshot?.version;
+    toast.info("Simulando atualização do Service Worker...");
+    logMessage({ direction: "out", type: "SIMULATE_UPDATE" });
+
+    let controllerChanged = false;
+    const onChange = () => { controllerChanged = true; };
+    navigator.serviceWorker.addEventListener("controllerchange", onChange);
+
+    try {
+      // 1. force update check
+      const reg = await navigator.serviceWorker.getRegistration();
+      if (!reg) throw new Error("Sem registration");
+      await reg.update();
+
+      // 2. if new worker waiting -> skip waiting
+      if (reg.waiting) reg.waiting.postMessage({ type: "SKIP_WAITING" });
+
+      // 3. wait up to 6s for controllerchange
+      await new Promise((resolve) => setTimeout(resolve, 6000));
+
+      // 4. re-fetch precache and validate
+      await loadPrecacheManifest();
+      await loadSwVersion();
+      const endSnapshot = currentSnapshot?.version;
+      const versionChanged = startSnapshot && endSnapshot && startSnapshot !== endSnapshot;
+
+      if (controllerChanged || versionChanged) {
+        toast.success(`Validação OK: ${controllerChanged ? "controller trocado" : ""}${versionChanged ? " · precache mudou" : ""}`);
+        reportPWAEvent("update_activated", "success", { context: "simulate_update" });
+      } else {
+        toast.warning("Sem nova versão disponível no servidor — simulação completou sem trocas.");
+      }
+    } catch (e: any) {
+      toast.error("Falha na simulação: " + (e?.message || "erro"));
+      recordFailure("comm", { context: "simulate_update", message: e?.message });
+    } finally {
+      navigator.serviceWorker.removeEventListener("controllerchange", onChange);
+      setIsSimulating(false);
+    }
+  };
+
+  const handleExportSnapshot = () => {
+    const payload = {
+      exportedAt: new Date().toISOString(),
+      appVersion: APP_VERSION,
+      swVersion,
+      swBuiltAt,
+      currentSnapshot,
+      previousSnapshot,
+      precacheDiff,
+      counters,
+      cacheKeys,
+    };
+    const blob = new Blob([JSON.stringify(payload, null, 2)], { type: "application/json" });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = `padh-pwa-snapshot-${Date.now()}.json`;
+    a.click();
+    URL.revokeObjectURL(url);
+    toast.success("Snapshot exportado.");
+  };
+
+  const handleOfflineTest = async () => {
+    setOfflineTest({ status: "running" });
+    try {
+      // Validate critical precached assets are reachable from cache
+      const targets = ["/", "/index.html", "/offline"];
+      const results: { url: string; ok: boolean }[] = [];
+      for (const url of targets) {
+        const match = await caches.match(url);
+        results.push({ url, ok: !!match });
+      }
+      const allOk = results.every(r => r.ok);
+      const failed = results.filter(r => !r.ok).map(r => r.url);
+      if (allOk) {
+        setOfflineTest({ status: "ok", message: `Todos os ${targets.length} ativos críticos estão em cache.` });
+        toast.success("App pronto para uso offline.");
+      } else {
+        setOfflineTest({ status: "fail", message: `Faltando em cache: ${failed.join(", ")}` });
+        toast.warning("Alguns ativos críticos não estão em cache.");
+      }
+    } catch (e: any) {
+      setOfflineTest({ status: "fail", message: e?.message || "Erro" });
+    }
+  };
 
   useEffect(() => {
     if (typeof window === "undefined" || !("serviceWorker" in navigator)) {
@@ -204,6 +304,7 @@ export const PWAManager: React.FC = () => {
     const activationTimeout = setTimeout(() => {
       if (!activated) {
         toast.warning("A nova versão demorou para ativar. Tente recarregar a página manualmente.", { duration: 6000 });
+        recordFailure("activation", { context: "activation_timeout" });
         reportPWAEvent("error", "fail", { context: "activation_timeout" });
       }
     }, 8000);
@@ -219,6 +320,7 @@ export const PWAManager: React.FC = () => {
     } catch (e: any) {
       toast.error("Falha na comunicação com o Service Worker.");
       setCommError(e?.message || "Erro desconhecido");
+      recordFailure("comm", { context: "update_check", message: e?.message });
       reportPWAEvent("error", "fail", { context: "update_check", message: e?.message });
     } finally {
       setTimeout(() => {
@@ -302,7 +404,47 @@ export const PWAManager: React.FC = () => {
           </motion.div>
         )}
 
-        {/* Versions */}
+        {/* Rollback recommendation */}
+        {shouldRecommendRollback && (
+          <motion.div
+            initial={{ opacity: 0, scale: 0.97 }} animate={{ opacity: 1, scale: 1 }}
+            className="p-4 rounded-2xl border-2 border-amber-500/50 bg-amber-500/10 flex items-start gap-3 shadow-lg shadow-amber-500/10"
+            role="alert"
+          >
+            <AlertCircle className="w-5 h-5 text-amber-400 shrink-0 mt-0.5 animate-pulse" />
+            <div className="flex-1 space-y-2">
+              <p className="text-sm font-bold text-amber-300">
+                Rollback recomendado — {counters.failuresInWindow} falhas detectadas (limite: {threshold})
+              </p>
+              <p className="text-xs text-amber-200/80">
+                O Service Worker apresentou múltiplas falhas em curto período (comm: {counters.comm}, timeout: {counters.timeout}, ativação: {counters.activation}). Considere reverter para a versão anterior.
+              </p>
+              <div className="flex gap-2 mt-2">
+                <Button size="sm" className="h-8 bg-amber-500 hover:bg-amber-400 text-black font-bold" onClick={handleRollback}>
+                  <Undo2 className="w-3.5 h-3.5 mr-1.5" /> Reverter Agora
+                </Button>
+                <Button size="sm" variant="outline" className="h-8 border-amber-500/30 text-amber-300" onClick={resetCounters}>
+                  Ignorar e zerar
+                </Button>
+              </div>
+            </div>
+          </motion.div>
+        )}
+
+        {/* Failure counters */}
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+          {[
+            { label: "Falhas Comm", value: counters.comm, tone: "text-red-400" },
+            { label: "Timeouts", value: counters.timeout, tone: "text-amber-400" },
+            { label: "Ativação", value: counters.activation, tone: "text-orange-400" },
+            { label: "Janela 5min", value: counters.failuresInWindow, tone: counters.failuresInWindow >= threshold ? "text-red-500" : "text-emerald-400" },
+          ].map((s) => (
+            <div key={s.label} className="p-3 rounded-xl bg-white/5 border border-white/5">
+              <div className="text-[9px] font-black uppercase tracking-widest text-muted-foreground">{s.label}</div>
+              <div className={`text-2xl font-bold font-mono ${s.tone}`}>{s.value}</div>
+            </div>
+          ))}
+        </div>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div className="p-4 rounded-2xl bg-gradient-to-br from-primary/10 to-transparent border border-primary/20 space-y-2">
             <div className="flex items-center justify-between">
@@ -379,10 +521,33 @@ export const PWAManager: React.FC = () => {
           </Button>
 
           <Button variant="outline" size="sm"
+            className="h-11 px-6 gap-2 border-primary/30 text-primary hover:bg-primary/10 font-bold"
+            onClick={handleSimulateUpdate} disabled={isSimulating}>
+            <Zap className={`w-4 h-4 ${isSimulating ? "animate-pulse" : ""}`} />
+            {isSimulating ? "Simulando..." : "Simular Update"}
+          </Button>
+
+          <Button variant="outline" size="sm"
+            className="h-11 px-6 gap-2 border-emerald-500/30 text-emerald-400 hover:bg-emerald-500/10 font-bold"
+            onClick={handleOfflineTest} disabled={offlineTest.status === "running"}>
+            <WifiOff className="w-4 h-4" />
+            Testar Offline
+          </Button>
+
+          <Button variant="outline" size="sm"
+            className="h-11 px-6 gap-2 border-white/10 hover:bg-white/5 font-bold"
+            onClick={handleExportSnapshot}>
+          </Button>
+
+          <Button variant="outline" size="sm"
             className="h-11 px-6 gap-2 border-amber-500/30 text-amber-400 hover:bg-amber-500/10 font-bold"
             onClick={handleRollback} disabled={isReverting}>
             <Undo2 className={`w-4 h-4 ${isReverting ? "animate-spin" : ""}`} />
             Reverter SW
+          </Button>
+
+          <Button asChild variant="ghost" size="sm" className="h-11 px-4 gap-2 font-bold text-muted-foreground">
+            <Link to="/admin/pwa-diagnostics"><LinkIcon className="w-3.5 h-3.5" /> Diagnóstico avançado</Link>
           </Button>
 
           <Button variant="outline" size="sm"
@@ -392,6 +557,19 @@ export const PWAManager: React.FC = () => {
             Limpar Cache
           </Button>
         </div>
+
+        {/* Offline test result */}
+        {offlineTest.status !== "idle" && (
+          <div className={`p-3 rounded-xl border text-xs flex items-center gap-2 ${
+            offlineTest.status === "ok" ? "bg-emerald-500/10 border-emerald-500/30 text-emerald-300" :
+            offlineTest.status === "fail" ? "bg-red-500/10 border-red-500/30 text-red-300" :
+            "bg-white/5 border-white/10 text-muted-foreground"
+          }`}>
+            <WifiOff className="w-4 h-4" />
+            <span className="font-bold uppercase tracking-wider text-[10px]">Teste Offline:</span>
+            <span>{offlineTest.status === "running" ? "Verificando cache..." : offlineTest.message}</span>
+          </div>
+        )}
 
         {/* Precache Diff */}
         <div className="space-y-3">
