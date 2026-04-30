@@ -231,7 +231,7 @@ const SessaoView = () => {
         </div>
 
         {/* Minimal Header */}
-        <header className="px-8 py-8 flex justify-between items-center z-40">
+        <header className="px-4 md:px-8 pt-8 md:pt-8 pb-4 flex justify-between items-center z-40 pt-safe">
            <div className="flex items-center gap-6">
               <Button 
                 variant="ghost" 
