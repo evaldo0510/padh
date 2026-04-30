@@ -537,7 +537,13 @@ export const PWAManager: React.FC = () => {
           <Button variant="outline" size="sm"
             className="h-11 px-6 gap-2 border-white/10 hover:bg-white/5 font-bold"
             onClick={handleExportSnapshot}>
-            <Download className="w-4 h-4" /> Exportar JSON
+          </Button>
+
+          <Button variant="outline" size="sm"
+            className="h-11 px-6 gap-2 border-amber-500/30 text-amber-400 hover:bg-amber-500/10 font-bold"
+            onClick={handleRollback} disabled={isReverting}>
+            <Undo2 className={`w-4 h-4 ${isReverting ? "animate-spin" : ""}`} />
+            Reverter SW
           </Button>
 
           <Button asChild variant="ghost" size="sm" className="h-11 px-4 gap-2 font-bold text-muted-foreground">
