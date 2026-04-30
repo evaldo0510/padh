@@ -30,6 +30,8 @@ const DailyHabitSection: React.FC = () => {
   const [deliveryCount, setDeliveryCount] = useState(0);
   const [reminderHistory, setReminderHistory] = useState<{date: string, type: string}[]>([]);
   const [fromReminderId, setFromReminderId] = useState<string | null>(null);
+  const [swStatusInfo, setSwStatusInfo] = useState<any>(null);
+  const [activeTab, setActiveTab] = useState<"config" | "status">("config");
 
   // Get a daily exercise based on the date
   const getDailyExercise = () => {
