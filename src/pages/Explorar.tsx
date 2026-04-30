@@ -29,6 +29,9 @@ const Explorar = () => {
         description: "Descubra novas práticas e categorias terapêuticas.",
         path: "/explorar",
       }}
+      currentPage="Explorar"
+      showBackButton={false}
+      hideHeader
     >
       <div className="streaming-container py-24 space-y-16 min-h-screen">
         <header className="max-w-2xl space-y-6">
