@@ -29,6 +29,30 @@ test.describe('PWA Cache Strategies', () => {
     await expect(page.getByText(/Changelog/i)).toBeVisible();
   });
 
+  test('validate Stale-While-Revalidate for /sobre', async ({ page, context }) => {
+    // 1. Visit page to populate cache
+    await page.goto(`${targetUrl}/sobre`);
+    // Check for some content unique to /sobre
+    await expect(page.getByText(/Sobre/i)).toBeVisible();
+
+    // 2. Intercept and slow down the next request for /sobre
+    await context.route(`${targetUrl}/sobre`, async (route) => {
+      await new Promise(resolve => setTimeout(resolve, 3000));
+      await route.continue();
+    });
+
+    // 3. Reload the page
+    // Must load immediately from cache
+    const startTime = Date.now();
+    await page.reload();
+    const loadTime = Date.now() - startTime;
+
+    console.log(`Reload time with SWR (/sobre): ${loadTime}ms`);
+    expect(loadTime).toBeLessThan(2500); 
+
+    await expect(page.getByText(/Sobre/i)).toBeVisible();
+  });
+
   test('validate Network-First for main application', async ({ page, context }) => {
     // 1. Visit home
     await page.goto(targetUrl);
