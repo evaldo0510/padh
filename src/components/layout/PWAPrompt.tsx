@@ -3,7 +3,17 @@ import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
 import { useEffect } from "react";
 import { RefreshCw } from "lucide-react";
-const PWAPrompt = () => {
+
+const isEditorPreview = () => {
+  if (typeof window === "undefined") return true;
+  return (
+    window.location.hostname.includes("id-preview--") ||
+    window.location.hostname.includes("lovableproject.com") ||
+    window.self !== window.top
+  );
+};
+
+const PWAPromptRegistration = () => {
   const {
     offlineReady: [offlineReady, setOfflineReady],
     needRefresh: [needRefresh, setNeedRefresh],
@@ -43,4 +53,10 @@ const PWAPrompt = () => {
   }, [needRefresh, updateServiceWorker]);
   return null;
 };
+
+const PWAPrompt = () => {
+  if (isEditorPreview()) return null;
+  return <PWAPromptRegistration />;
+};
+
 export default PWAPrompt;
