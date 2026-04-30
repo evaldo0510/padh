@@ -105,7 +105,7 @@ const Index = () => {
     return (
       <div className="min-h-screen bg-[#050505]">
         <SEOHead
-          title="Home — Jornada PCH"
+          title="Home — Jornada PADH"
           description="Sua jornada contínua de transformação."
           path="/"
         />

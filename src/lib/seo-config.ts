@@ -8,13 +8,13 @@ export interface PageSEO {
 
 export const pagesSEO: Record<string, PageSEO> = {
   home: {
-    title: "PCH — Poesia Cognitiva Hipnótica | Transformação Interior",
+    title: "PADH — Poesia Aplicada ao Desenvolvimento Humano | Jornada PCH",
     description:
-      "Descubra a metodologia PCH — Poesia Cognitiva Hipnótica. Uma abordagem que une neurociência, hipnose ericksoniana e linguagem poética para a libertação emocional e consciência.",
+      "Descubra a metodologia PADH — Poesia Aplicada ao Desenvolvimento Humano. Uma abordagem que une neurociência, hipnose ericksoniana e linguagem poética para a libertação emocional e consciência.",
     path: "/",
   },
   livroCurso: {
-    title: "Livro-Curso PCH — Jornada da Consciência",
+    title: "Livro-Curso PADH — Jornada da Consciência",
     description:
       "Experimente a Poesia Cognitiva Hipnótica na prática. O Livro-Curso PCH traz exercícios guiados e poemas terapêuticos para sua transformação interior.",
     path: "/livro-curso",
@@ -116,7 +116,7 @@ export const pagesSEO: Record<string, PageSEO> = {
     path: "/ciencia-da-poesia",
   },
   comboPADH: {
-    title: "Combo PCH | A Jornada Integrada Completa",
+    title: "Combo PADH | A Jornada Integrada Completa",
     description:
       "Acesse o pacote completo da Poesia Cognitiva Hipnótica: Livro-Curso + Curso Técnico + Formação Profissional. Domine a arte da transformação.",
     path: "/combo-padh",
