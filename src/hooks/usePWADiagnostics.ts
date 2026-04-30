@@ -65,6 +65,12 @@ const saveMessageLog = (log: SWMessageLog[]) => {
 export const usePWADiagnostics = () => {
   const [counters, setCounters] = useState<FailCounters>(loadCounters);
   const [messageLog, setMessageLog] = useState<SWMessageLog[]>(loadMessageLog);
+  const [offlineHistory, setOfflineHistory] = useState<OfflineTestEntry[]>(() => {
+    try { return JSON.parse(localStorage.getItem(OFFLINE_HISTORY_KEY) || "[]"); } catch { return []; }
+  });
+  const [rollbackHistory, setRollbackHistory] = useState<RollbackEntry[]>(() => {
+    try { return JSON.parse(localStorage.getItem(ROLLBACK_HISTORY_KEY) || "[]"); } catch { return []; }
+  });
   const countersRef = useRef(counters);
   countersRef.current = counters;
 
