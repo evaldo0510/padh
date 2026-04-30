@@ -508,19 +508,24 @@ const DailyHabitSection: React.FC = () => {
                   <CheckCircle2 className="w-12 h-12 text-primary" />
                 </div>
                 <div className="space-y-4">
-                  <h3 className="text-3xl font-bold text-white tracking-tight">
+              <h3 className="text-3xl font-bold text-white tracking-tight">
                     {personalizedFeedback.title}
                   </h3>
                   <p className="text-white/60 text-lg italic max-w-sm mx-auto">
                     {personalizedFeedback.message}
                   </p>
+                  {fromReminderId && (
+                    <p className="text-[10px] font-black uppercase tracking-widest text-emerald-400 bg-emerald-500/10 py-1 px-3 rounded-full inline-block mt-2">
+                       ✓ Marcado do lembrete de hoje
+                    </p>
+                  )}
                 </div>
                 <div className="flex flex-col items-center gap-4">
                   <div className="flex items-center gap-2 text-accent-warm text-xl font-bold">
                     <Flame className="w-6 h-6" />
                     <span>{streak} dias de clareza</span>
                   </div>
-                  <Button onClick={() => setShowCheckin(false)} variant="outline" className="border-white/10 hover:bg-white/5 text-white/50 px-10">
+                  <Button onClick={() => { setShowCheckin(false); setFromReminderId(null); }} variant="outline" className="border-white/10 hover:bg-white/5 text-white/50 px-10">
                     Continuar meu Dia
                   </Button>
                 </div>
