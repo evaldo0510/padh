@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useMemo } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Flame, Sparkles, CheckCircle2, ChevronRight, MessageSquare, ArrowLeft, History, Bell, BellOff, Clock, Activity } from "lucide-react";
+import { Flame, Sparkles, CheckCircle2, ChevronRight, MessageSquare, ArrowLeft, History, Bell, BellOff, Clock, Activity, FileSpreadsheet, Terminal, Download } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useJornada } from "@/hooks/useJornada";
 import { JORNADA_DATA } from "@/lib/jornada-data";
@@ -57,6 +57,11 @@ const DailyHabitSection: React.FC = () => {
       if (event.data?.type === 'TEST_COUNT_UPDATE') {
         setDeliveryCount(event.data.count);
         setReminderHistory(prev => [{date: new Date().toISOString(), type: `Continuous #${event.data.count}`}, ...prev].slice(0, 5));
+      }
+      if (event.data?.type === 'TECHNICAL_INFO_RESPONSE') {
+        const log = JSON.stringify(event.data.info, null, 2);
+        navigator.clipboard.writeText(log);
+        toast.success("Log técnico copiado para a área de transferência!");
       }
     };
 
@@ -219,6 +224,34 @@ const DailyHabitSection: React.FC = () => {
     }
   };
 
+  const handleGetLog = () => {
+    if ('serviceWorker' in navigator && navigator.serviceWorker.controller) {
+      navigator.serviceWorker.controller.postMessage({ type: 'GET_TECHNICAL_INFO' });
+    } else {
+      toast.error("Service Worker não está ativo.");
+    }
+  };
+
+  const exportReminderHistory = () => {
+    if (reminderHistory.length === 0) {
+      toast.error("Nenhum histórico para exportar.");
+      return;
+    }
+
+    const headers = ["Data/Hora", "Tipo de Alerta"];
+    const rows = reminderHistory.map(h => [new Date(h.date).toLocaleString(), h.type]);
+    const csvContent = [headers, ...rows].map(e => e.join(",")).join("\n");
+    
+    const blob = new Blob([csvContent], { type: "text/csv;charset=utf-8;" });
+    const link = document.createElement("a");
+    const url = URL.createObjectURL(blob);
+    link.setAttribute("href", url);
+    link.setAttribute("download", `historico_alertas_${new Date().toISOString().split('T')[0]}.csv`);
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    toast.success("Histórico de alertas exportado (CSV).");
+  };
   const toggleContinuousTest = () => {
     const newState = !continuousTest;
     setContinuousTest(newState);
@@ -633,9 +666,19 @@ const DailyHabitSection: React.FC = () => {
 
               {reminderHistory.length > 0 && (
                 <div className="space-y-3 pt-4 border-t border-white/5">
-                  <div className="flex items-center gap-2">
-                    <History className="w-4 h-4 text-white/30" />
-                    <p className="text-[10px] font-black uppercase tracking-widest text-white/30">Histórico de Alertas</p>
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center gap-2">
+                      <History className="w-4 h-4 text-white/30" />
+                      <p className="text-[10px] font-black uppercase tracking-widest text-white/30">Histórico de Alertas</p>
+                    </div>
+                    <div className="flex gap-2">
+                      <Button variant="ghost" size="sm" onClick={handleGetLog} className="h-6 px-2 text-[8px] text-primary/60 hover:text-primary gap-1">
+                        <Terminal className="w-3 h-3" /> Log SW
+                      </Button>
+                      <Button variant="ghost" size="sm" onClick={exportReminderHistory} className="h-6 px-2 text-[8px] text-white/30 hover:text-white gap-1">
+                        <FileSpreadsheet className="w-3 h-3" /> Exportar
+                      </Button>
+                    </div>
                   </div>
                   <div className="space-y-2">
                     {reminderHistory.map((h, i) => (
