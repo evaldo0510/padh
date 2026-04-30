@@ -2,6 +2,7 @@ import { useEffect, useState, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { RefreshCw, X, FileText } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { toast } from "sonner";
 import { Link } from "react-router-dom";
 import { APP_VERSION } from "@/lib/changelog";
 import { reportPWAEvent, PWAUpdateTrace } from "@/lib/pwa-metrics";
@@ -55,7 +56,15 @@ const PWAUpdatePrompt = () => {
       traceRef.current.reload_triggered = Date.now();
       sessionStorage.setItem("pwa_pending_trace", JSON.stringify(traceRef.current));
       console.log("PWA: New Service Worker activated. Reloading...");
-      window.location.reload();
+      
+      // Notify user before reload
+      toast.success("Sistema atualizado! Recarregando para aplicar mudanças...", {
+        duration: 2000,
+      });
+      
+      setTimeout(() => {
+        window.location.reload();
+      }, 1000);
     };
     navigator.serviceWorker.addEventListener("controllerchange", onControllerChange);
 
