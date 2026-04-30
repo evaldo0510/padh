@@ -6,6 +6,7 @@ import { useJornada } from "@/hooks/useJornada";
 import { MODULOS } from "@/lib/dados-clinicos";
 import { gerarRelatorioProgresso } from "@/lib/pdf-generator";
 import { toast } from "sonner";
+import { supabase } from "@/integrations/supabase/client";
 const ProgressReportExport = () => {
   const { progress } = useCourseProgress();
   const { jornada } = useJornada();
