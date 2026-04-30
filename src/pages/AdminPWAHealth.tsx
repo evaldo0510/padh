@@ -180,7 +180,7 @@ const AdminPWAHealth = () => {
             </CardHeader>
             <CardContent className="h-[300px]">
               <ResponsiveContainer width="100%" height="100%">
-                <BarChart data={events?.filter(e => e.event_type === 'update_trace' && e.details?.trace?.total_duration_ms).slice(0, 20)}>
+                <BarChart data={events?.filter(e => e.event_type === 'update_trace' && (e.details as any)?.trace?.total_duration_ms).slice(0, 20)}>
                   <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="rgba(255,255,255,0.1)" />
                   <XAxis dataKey="created_at" tickFormatter={(v) => new Date(v).toLocaleTimeString()} stroke="rgba(255,255,255,0.4)" fontSize={10} />
                   <YAxis stroke="rgba(255,255,255,0.4)" fontSize={12} />
