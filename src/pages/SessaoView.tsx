@@ -307,7 +307,9 @@ const SessaoView = () => {
                           value={response}
                           onChange={(e) => setResponse(e.target.value)}
                           placeholder={currentBlock.placeholder || "Suas palavras aqui..."}
-                          className="focus-input shadow-2xl group-focus-within:border-primary/30 group-focus-within:bg-card/60 transition-all duration-700"
+                          className={`focus-input shadow-2xl transition-all duration-700 ${
+                            showError ? "border-red-500/50 shadow-red-500/10" : "group-focus-within:border-primary/30 group-focus-within:bg-card/60"
+                          }`}
                           autoFocus
                         />
                         <div className="absolute bottom-8 left-1/2 -translate-x-1/2 opacity-0 group-focus-within:opacity-100 transition-opacity duration-1000 pointer-events-none">
