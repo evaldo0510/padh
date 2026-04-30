@@ -233,10 +233,18 @@ const SessaoView = () => {
               </Button>
               <div className="h-10 w-px bg-white/10 hidden md:block" />
               <div className="hidden md:block">
-                 <p className="text-[10px] font-black uppercase tracking-[0.4em] text-primary/60 mb-1">
-                    {fase.titulo} · ATIVIDADE {currentExIdx + 1}
-                 </p>
-                 <h2 className="text-2xl font-bold tracking-tighter text-white leading-none">{sessao.titulo}</h2>
+                 <div className="flex items-center gap-2 mb-1">
+                    <p className="text-[10px] font-black uppercase tracking-[0.4em] text-primary/60">
+                       {fase.titulo}
+                    </p>
+                    <ChevronRight className="w-3 h-3 text-white/10" />
+                    <p className="text-[10px] font-black uppercase tracking-[0.4em] text-white/40">
+                       Módulo {sessao.titulo}
+                    </p>
+                 </div>
+                 <h2 className="text-2xl font-bold tracking-tighter text-white leading-none">
+                    Etapa {currentExIdx + 1} de {totalSteps}
+                 </h2>
               </div>
            </div>
 
