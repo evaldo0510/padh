@@ -59,7 +59,22 @@ export const PWAManager: React.FC = () => {
   const [isSimulating, setIsSimulating] = useState(false);
   const [offlineTest, setOfflineTest] = useState<{ status: "idle" | "running" | "ok" | "fail"; message?: string }>({ status: "idle" });
 
-  const { counters, recordFailure, resetCounters, shouldRecommendRollback, threshold, logMessage } = usePWADiagnostics();
+  const { counters, recordFailure, resetCounters, shouldRecommendRollback, threshold, logMessage, recordOfflineTest, recordRollback } = usePWADiagnostics();
+  const rollbackNotifiedRef = React.useRef(false);
+
+  // Notify once when rollback recommendation triggers
+  useEffect(() => {
+    if (shouldRecommendRollback && !rollbackNotifiedRef.current) {
+      rollbackNotifiedRef.current = true;
+      toast.warning(`Rollback recomendado: ${counters.failuresInWindow} falhas em 5min`, {
+        description: "Considere reverter para a versão anterior do Service Worker.",
+        duration: 8000,
+      });
+      logMessage({ direction: "in", type: "ROLLBACK_RECOMMENDED", status: "fail", payload: { ...counters } });
+      reportPWAEvent("error", "fail", { context: "rollback_recommended", ...counters });
+    }
+    if (!shouldRecommendRollback) rollbackNotifiedRef.current = false;
+  }, [shouldRecommendRollback, counters, logMessage]);
 
   // Communicate with SW with timeout protection
   const askSW = useCallback(<T,>(type: string, responseType: string, timeoutMs = 5000): Promise<T> => {
