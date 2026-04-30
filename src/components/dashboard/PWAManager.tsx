@@ -141,15 +141,109 @@ export const PWAManager: React.FC = () => {
 
   const loadSwVersion = useCallback(async () => {
     try {
+      logMessage({ direction: "out", type: "GET_SW_VERSION" });
       const resp: any = await askSW("GET_SW_VERSION", "SW_VERSION_RESPONSE", 4000);
+      logMessage({ direction: "in", type: "SW_VERSION_RESPONSE", payload: { version: resp.version }, status: "success" });
       setSwVersion(resp.version);
       setSwBuiltAt(resp.builtAt);
       setCommError(null);
     } catch (e: any) {
-      setCommError(e?.message || "Falha na comunicação com o Service Worker");
-      reportPWAEvent("error", "fail", { context: "GET_SW_VERSION", message: e?.message });
+      const msg = e?.message || "Falha na comunicação com o Service Worker";
+      setCommError(msg);
+      const kind = msg.toLowerCase().includes("timeout") ? "timeout" : "comm";
+      recordFailure(kind, { context: "GET_SW_VERSION", message: msg });
+      reportPWAEvent("error", "fail", { context: "GET_SW_VERSION", message: msg });
     }
-  }, [askSW]);
+  }, [askSW, logMessage, recordFailure]);
+
+  const handleSimulateUpdate = async () => {
+    setIsSimulating(true);
+    const startSnapshot = currentSnapshot?.version;
+    toast.info("Simulando atualização do Service Worker...");
+    logMessage({ direction: "out", type: "SIMULATE_UPDATE" });
+
+    let controllerChanged = false;
+    const onChange = () => { controllerChanged = true; };
+    navigator.serviceWorker.addEventListener("controllerchange", onChange);
+
+    try {
+      // 1. force update check
+      const reg = await navigator.serviceWorker.getRegistration();
+      if (!reg) throw new Error("Sem registration");
+      await reg.update();
+
+      // 2. if new worker waiting -> skip waiting
+      if (reg.waiting) reg.waiting.postMessage({ type: "SKIP_WAITING" });
+
+      // 3. wait up to 6s for controllerchange
+      await new Promise((resolve) => setTimeout(resolve, 6000));
+
+      // 4. re-fetch precache and validate
+      await loadPrecacheManifest();
+      await loadSwVersion();
+      const endSnapshot = currentSnapshot?.version;
+      const versionChanged = startSnapshot && endSnapshot && startSnapshot !== endSnapshot;
+
+      if (controllerChanged || versionChanged) {
+        toast.success(`Validação OK: ${controllerChanged ? "controller trocado" : ""}${versionChanged ? " · precache mudou" : ""}`);
+        reportPWAEvent("update_activated", "success", { context: "simulate_update" });
+      } else {
+        toast.warning("Sem nova versão disponível no servidor — simulação completou sem trocas.");
+      }
+    } catch (e: any) {
+      toast.error("Falha na simulação: " + (e?.message || "erro"));
+      recordFailure("comm", { context: "simulate_update", message: e?.message });
+    } finally {
+      navigator.serviceWorker.removeEventListener("controllerchange", onChange);
+      setIsSimulating(false);
+    }
+  };
+
+  const handleExportSnapshot = () => {
+    const payload = {
+      exportedAt: new Date().toISOString(),
+      appVersion: APP_VERSION,
+      swVersion,
+      swBuiltAt,
+      currentSnapshot,
+      previousSnapshot,
+      precacheDiff,
+      counters,
+      cacheKeys,
+    };
+    const blob = new Blob([JSON.stringify(payload, null, 2)], { type: "application/json" });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = `padh-pwa-snapshot-${Date.now()}.json`;
+    a.click();
+    URL.revokeObjectURL(url);
+    toast.success("Snapshot exportado.");
+  };
+
+  const handleOfflineTest = async () => {
+    setOfflineTest({ status: "running" });
+    try {
+      // Validate critical precached assets are reachable from cache
+      const targets = ["/", "/index.html", "/offline"];
+      const results: { url: string; ok: boolean }[] = [];
+      for (const url of targets) {
+        const match = await caches.match(url);
+        results.push({ url, ok: !!match });
+      }
+      const allOk = results.every(r => r.ok);
+      const failed = results.filter(r => !r.ok).map(r => r.url);
+      if (allOk) {
+        setOfflineTest({ status: "ok", message: `Todos os ${targets.length} ativos críticos estão em cache.` });
+        toast.success("App pronto para uso offline.");
+      } else {
+        setOfflineTest({ status: "fail", message: `Faltando em cache: ${failed.join(", ")}` });
+        toast.warning("Alguns ativos críticos não estão em cache.");
+      }
+    } catch (e: any) {
+      setOfflineTest({ status: "fail", message: e?.message || "Erro" });
+    }
+  };
 
   useEffect(() => {
     if (typeof window === "undefined" || !("serviceWorker" in navigator)) {
