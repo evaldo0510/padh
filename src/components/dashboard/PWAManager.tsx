@@ -56,6 +56,10 @@ export const PWAManager: React.FC = () => {
   const [precacheDiff, setPrecacheDiff] = useState<PrecacheDiff | null>(null);
   const [previousSnapshot, setPreviousSnapshot] = useState<PrecacheSnapshot | null>(null);
   const [currentSnapshot, setCurrentSnapshot] = useState<PrecacheSnapshot | null>(null);
+  const [isSimulating, setIsSimulating] = useState(false);
+  const [offlineTest, setOfflineTest] = useState<{ status: "idle" | "running" | "ok" | "fail"; message?: string }>({ status: "idle" });
+
+  const { counters, recordFailure, resetCounters, shouldRecommendRollback, threshold, logMessage } = usePWADiagnostics();
 
   // Communicate with SW with timeout protection
   const askSW = useCallback(<T,>(type: string, responseType: string, timeoutMs = 5000): Promise<T> => {
