@@ -1,7 +1,9 @@
 import React, { useState, useEffect, useMemo } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { motion } from "framer-motion";
-import { ChevronLeft, Calendar, MessageSquare, Sparkles, Flame } from "lucide-react";
+import { ChevronLeft, Calendar, MessageSquare, Sparkles, Flame, Search, Filter } from "lucide-react";
+import { Input } from "@/components/ui/input";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { useJornada } from "@/hooks/useJornada";
