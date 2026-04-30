@@ -4,7 +4,7 @@ import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/com
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import { Trash2, Download, RefreshCw, Database, MessageSquare, ArrowRight, ArrowLeft, FlaskConical } from "lucide-react";
+import { Trash2, Download, RefreshCw, Database, MessageSquare, ArrowRight, ArrowLeft, FlaskConical, WifiOff, Undo2, CheckCircle2, XCircle } from "lucide-react";
 import { toast } from "sonner";
 import { Link } from "react-router-dom";
 import { usePWADiagnostics } from "@/hooks/usePWADiagnostics";
@@ -12,7 +12,7 @@ import { usePWADiagnostics } from "@/hooks/usePWADiagnostics";
 const SNAPSHOT_KEY = "padh_precache_snapshot";
 
 const AdminPWADiagnostics: React.FC = () => {
-  const { messageLog, counters, clearMessageLog, resetCounters, threshold } = usePWADiagnostics();
+  const { messageLog, counters, clearMessageLog, resetCounters, threshold, offlineHistory, rollbackHistory } = usePWADiagnostics();
   const [cacheKeys, setCacheKeys] = useState<string[]>([]);
   const [cacheStats, setCacheStats] = useState<{ name: string; entries: number }[]>([]);
 
