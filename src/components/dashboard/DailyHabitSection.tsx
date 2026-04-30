@@ -18,6 +18,7 @@ const DailyHabitSection: React.FC = () => {
   const [showCheckin, setShowCheckin] = useState(false);
   const [step, setStep] = useState<"mood" | "exercise" | "feedback">("mood");
   const [mood, setMood] = useState("");
+  const [note, setNote] = useState("");
   const [response, setResponse] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [reminderEnabled, setReminderEnabled] = useState(false);
