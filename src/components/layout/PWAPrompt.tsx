@@ -1,5 +1,4 @@
 import { useRegisterSW } from "virtual:pwa-register/react";
-import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
 import { useEffect } from "react";
 import { RefreshCw } from "lucide-react";
@@ -26,10 +25,6 @@ const PWAPromptRegistration = () => {
       console.log("SW registration error", error);
     },
   });
-  const close = () => {
-    setOfflineReady(false);
-    setNeedRefresh(false);
-  };
   useEffect(() => {
     if (offlineReady) {
       toast.success("App pronto para uso offline!", {
