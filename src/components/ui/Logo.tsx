@@ -17,7 +17,7 @@ const Logo: React.FC<LogoProps> = ({ className = "", size = "md" }) => {
     <div
       className={`relative flex items-center justify-center shrink-0 transition-all duration-700 ease-in-out group ${sizeClasses[size]} ${className}`}
       role="img"
-      aria-label="PCH - Poesia Cognitiva Hipnótica Logo"
+      aria-label="PADH - Poesia Aplicada ao Desenvolvimento Humano Logo"
     >
       {/* Background Glow - Subtle violet aura */}
       <div className="absolute inset-0 bg-violet-600/10 blur-2xl rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-1000" />
@@ -112,7 +112,7 @@ const Logo: React.FC<LogoProps> = ({ className = "", size = "md" }) => {
           className="opacity-60 tracking-[0.2em] pointer-events-none uppercase"
           style={{ fontFamily: 'Inter, system-ui, sans-serif' }}
         >
-          PCH
+          PADH
         </text>
       </svg>
 

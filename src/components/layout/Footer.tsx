@@ -14,6 +14,7 @@ const Footer = () => {
     { name: "Ferramentas PCH", path: "/ferramentas" },
     { name: "Mapa Cerebral", path: "/mapa-cerebral" },
     { name: "Curso PCH", path: "/curso-padh" },
+    { name: "Combo PADH", path: "/combo-padh" },
     { name: "Aula Exclusiva", path: "/aula-exclusiva" },
     { name: "Ciência da Poesia", path: "/ciencia-da-poesia" },
     { name: "Contato", path: "/contato" },
@@ -54,15 +55,15 @@ const Footer = () => {
                 <Logo size="md" className="w-10 h-10" />
                 <div className="flex flex-col justify-center">
                   <span className="font-heading font-black text-foreground text-xl md:text-2xl tracking-tighter group-hover:text-primary transition-colors">
-                    PCH
+                    PADH
                   </span>
                   <span className="text-[10px] text-primary/80 leading-none font-bold uppercase tracking-wider mt-1 whitespace-nowrap">
-                    Poesia Cognitiva
+                    Poesia Aplicada
                   </span>
                 </div>
               </div>
               <p className="text-sm text-muted-foreground leading-relaxed mb-6 max-w-xs">
-                Poesia Cognitiva Hipnótica — neurociência, hipnose e linguagem simbólica a serviço da transformação interior.
+                Poesia Aplicada ao Desenvolvimento Humano — neurociência, hipnose e linguagem simbólica a serviço da transformação interior.
               </p>
               <div className="flex gap-2">
                 {socials.map((s) => (
@@ -145,7 +146,7 @@ const Footer = () => {
           </div>
           <div className="pt-8 border-t border-border/30 flex flex-col sm:flex-row items-center justify-between gap-4">
             <p className="text-xs text-muted-foreground">
-              © {new Date().getFullYear()} PCH — Evaldo de Jesus Santana. Todos os direitos reservados.
+              © {new Date().getFullYear()} PADH — Evaldo de Jesus Santana. Todos os direitos reservados.
             </p>
             <p className="text-xs text-muted-foreground">
               Desenvolvido por{" "}

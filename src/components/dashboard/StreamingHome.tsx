@@ -62,7 +62,7 @@ const StreamingHome = () => {
           <div className="absolute top-[20%] right-[10%] w-[500px] h-[500px] bg-primary/20 rounded-full blur-[140px] animate-pulse" />
           <div className="absolute bottom-[20%] left-[5%] w-[400px] h-[400px] bg-accent-warm/10 rounded-full blur-[120px]" />
           <div className="w-full h-full flex items-center justify-center opacity-[0.03] select-none pointer-events-none">
-             <div className="text-[30vw] font-black tracking-tighter italic">PCH</div>
+             <div className="text-[30vw] font-black tracking-tighter italic">PADH</div>
           </div>
         </div>
 
@@ -76,7 +76,7 @@ const StreamingHome = () => {
             <div className="flex items-center gap-4">
               <Badge className="bg-primary/20 text-primary border-primary/30 py-2 px-5 rounded-full text-[10px] font-black tracking-[0.3em] uppercase shadow-lg shadow-primary/10">
                 <Sparkles className="w-3.5 h-3.5 mr-2" />
-                Original PCH
+                Original PADH
               </Badge>
               {nextSession && (
                 <div className="flex items-center gap-3 text-white/50 text-[10px] font-black tracking-[0.3em] uppercase">
