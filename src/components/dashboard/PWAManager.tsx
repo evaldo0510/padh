@@ -521,10 +521,27 @@ export const PWAManager: React.FC = () => {
           </Button>
 
           <Button variant="outline" size="sm"
-            className="h-11 px-6 gap-2 border-amber-500/30 text-amber-400 hover:bg-amber-500/10 font-bold"
-            onClick={handleRollback} disabled={isReverting}>
-            <Undo2 className={`w-4 h-4 ${isReverting ? "animate-spin" : ""}`} />
-            Reverter SW
+            className="h-11 px-6 gap-2 border-primary/30 text-primary hover:bg-primary/10 font-bold"
+            onClick={handleSimulateUpdate} disabled={isSimulating}>
+            <Zap className={`w-4 h-4 ${isSimulating ? "animate-pulse" : ""}`} />
+            {isSimulating ? "Simulando..." : "Simular Update"}
+          </Button>
+
+          <Button variant="outline" size="sm"
+            className="h-11 px-6 gap-2 border-emerald-500/30 text-emerald-400 hover:bg-emerald-500/10 font-bold"
+            onClick={handleOfflineTest} disabled={offlineTest.status === "running"}>
+            <WifiOff className="w-4 h-4" />
+            Testar Offline
+          </Button>
+
+          <Button variant="outline" size="sm"
+            className="h-11 px-6 gap-2 border-white/10 hover:bg-white/5 font-bold"
+            onClick={handleExportSnapshot}>
+            <Download className="w-4 h-4" /> Exportar JSON
+          </Button>
+
+          <Button asChild variant="ghost" size="sm" className="h-11 px-4 gap-2 font-bold text-muted-foreground">
+            <Link to="/admin/pwa-diagnostics"><LinkIcon className="w-3.5 h-3.5" /> Diagnóstico avançado</Link>
           </Button>
 
           <Button variant="outline" size="sm"
