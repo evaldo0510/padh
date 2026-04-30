@@ -2,8 +2,24 @@ import { useEffect, useState, useCallback, useRef } from "react";
 
 const FAIL_KEY = "padh_sw_fail_counters";
 const MSG_LOG_KEY = "padh_sw_message_log";
+const OFFLINE_HISTORY_KEY = "padh_sw_offline_history";
+const ROLLBACK_HISTORY_KEY = "padh_sw_rollback_history";
 const ROLLBACK_THRESHOLD = 3; // failures within window
 const FAIL_WINDOW_MS = 5 * 60 * 1000; // 5 minutes
+
+export interface OfflineTestEntry {
+  timestamp: string;
+  status: "ok" | "fail";
+  message: string;
+  missing?: string[];
+}
+
+export interface RollbackEntry {
+  timestamp: string;
+  fromVersion: string | null;
+  toVersion: string | null;
+  reason: string;
+}
 
 export interface SWMessageLog {
   timestamp: string;
