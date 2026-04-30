@@ -261,7 +261,7 @@ const ProgressPanel: React.FC = () => {
           { label: 'Check-ins Totais', value: checkinHistory.length, icon: History, color: 'text-primary' },
           { label: 'Sessões Concluídas', value: jornada.completedSessions.length, icon: CheckCircle2, color: 'text-emerald-400' },
           { label: 'Exercícios Feitos', value: jornada.responses.length, icon: Activity, color: 'text-amber-400' },
-          { label: 'Fases Iniciadas', value: journeyProgressData.filter(f => f.completed > 0).length, icon: TrendingUp, color: 'text-rose-400' }
+          { label: 'Fases Iniciadas', value: filteredJourneyData.filter(f => f.completed > 0).length, icon: TrendingUp, color: 'text-rose-400' }
         ].map((stat, i) => (
           <motion.div 
             key={i}
