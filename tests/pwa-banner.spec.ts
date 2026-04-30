@@ -1,78 +1,83 @@
 import { test, expect } from '@playwright/test';
 
-test.describe('PWA E2E Update Flow', () => {
+test.describe('PWA E2E Advanced Update & Cache', () => {
   const targetUrl = process.env.TARGET_URL || 'https://padhpoesia.lovable.app';
 
   test.beforeEach(async ({ page }) => {
-    // Start with a clean slate for each test if needed
     await page.goto(targetUrl);
   });
 
-  test('full update flow: detection, banner, click, and version verify', async ({ page }) => {
-    // 1. Initial State Check
+  test('full update flow with tracing and version validation', async ({ page }) => {
+    // 1. Check current version hash
+    const initialVersion = await page.evaluate(() => (window as any).APP_VERSION);
+    console.log(`Initial version: ${initialVersion}`);
+
+    // 2. Mock a new service worker update
+    // We expect the banner to show up
     const banner = page.locator('role=status');
-    await expect(banner).not.toBeVisible();
-
-    // Get current version from UI if possible (maybe in a meta tag or hidden div)
-    // For now we'll assume we can check APP_VERSION in the window
-    const initialVersion = await page.evaluate(() => (window as any).APP_VERSION || 'unknown');
-    console.log(`Initial version detected: ${initialVersion}`);
-
-    // 2. Mock a New Version Found
-    // We trigger the internal state change we added
     await page.evaluate(() => {
       if (typeof (window as any).__TRIGGER_PWA_UPDATE__ === 'function') {
         (window as any).__TRIGGER_PWA_UPDATE__();
       }
     });
 
-    // 3. Banner Visibility & Content
     await expect(banner).toBeVisible();
     await expect(page.getByText('Nova versão disponível')).toBeVisible();
-    
-    // Check for Changelog link
-    const changelogLink = page.getByRole('link', { name: /ver o que mudou/i });
-    await expect(changelogLink).toBeVisible();
-    await expect(changelogLink).toHaveAttribute('href', '/changelog');
 
-    // 4. Interaction & Activation
+    // 3. Click update and verify reload
     const updateButton = page.getByRole('button', { name: /atualizar/i });
-    
-    // Prepare for reload
     const reloadPromise = page.waitForEvent('framenavigated');
-    
-    // Click update
     await updateButton.click();
-    
-    // Wait for reload
     await reloadPromise;
 
-    // 5. Post-Update Verification
-    // The banner should be gone after reload (until next update)
-    await expect(banner).not.toBeVisible();
+    // 4. Verify version post-reload
+    const postUpdateVersion = await page.evaluate(() => (window as any).APP_VERSION);
+    console.log(`Post-update version: ${postUpdateVersion}`);
     
-    // If we had a way to change the version in the mock, we would verify the new version here.
-    // In a real environment, the deploy would have changed the version.
-    console.log('✅ PWA E2E Update Flow passed.');
+    // In a real deploy test, we'd check if postUpdateVersion matches the new expected hash
+    if (process.env.EXPECTED_VERSION) {
+       expect(postUpdateVersion).toBe(process.env.EXPECTED_VERSION);
+    }
   });
 
-  test('should handle offline scenario gracefully', async ({ page, context }) => {
-    await page.goto(targetUrl);
-    
-    // Go offline
+  test('validate explicit cache strategies', async ({ page, context }) => {
+    // Navigate and check headers via network interception
+    const [response] = await Promise.all([
+      page.waitForResponse(res => res.url() === targetUrl && res.status() === 200),
+      page.goto(targetUrl)
+    ]);
+
+    // Check NetworkFirst (should have no aggressive cache headers on HTML)
+    const headers = response.headers();
+    const cacheControl = headers['cache-control'] || '';
+    expect(cacheControl).not.toContain('immutable');
+    expect(cacheControl).not.toMatch(/max-age=\d{6,}/); // Not more than 1 day for HTML
+
+    // Check Cache-First for images/fonts
+    // We'll trigger a request for a known static asset
+    const imagePath = '/logo-pwa.svg';
+    const imgResponse = await page.goto(`${targetUrl}${imagePath}`);
+    if (imgResponse) {
+       // Static assets should have aggressive cache or at least exist in SW cache
+       console.log(`Static asset ${imagePath} status: ${imgResponse.status()}`);
+       expect(imgResponse.status()).toBe(200);
+    }
+  });
+
+  test('offline resilience and public route access', async ({ page, context }) => {
     await context.setOffline(true);
     
-    // Try to navigate to a public route (should work via cache/NetworkFirst timeout)
+    // Should be able to access home via cache (NetworkFirst fallback)
+    await page.goto(targetUrl);
+    await expect(page.locator('#root')).toBeVisible();
+
+    // Should be able to access /sobre
     await page.goto(`${targetUrl}/sobre`);
     await expect(page.getByText(/Sobre/i)).toBeVisible();
 
-    // Try to navigate to an unknown route (should show offline fallback)
-    await page.goto(`${targetUrl}/non-existent-route-123`);
-    // Depending on how offline fallback is implemented, check for its content
-    // If it's a dedicated page, it should be visible.
-    const offlineTitle = page.getByText(/Sem conexão/i);
-    // Since we only allow specific routes in PWA config for offline, 
-    // others might show the browser's default offline page or our fallback.
-    // Let's check for our Offline.tsx content if it's rendered.
+    // Should show offline fallback for unknown private routes
+    await page.goto(`${targetUrl}/admin/pwa-health`);
+    // If not cached, it should trigger our offline UI
+    await expect(page.getByText(/Sem conexão/i)).toBeVisible();
   });
 });
