@@ -49,7 +49,9 @@ const PageLayout: React.FC<PageLayoutProps> = ({
       {currentPage && (
         <PageHeader currentPage={currentPage} showBackButton={showBackButton} />
       )}
-      <main className={`flex-1 ${!hideMobileNav ? "pb-20 lg:pb-0" : ""}`}>{children}</main>
+      <main className={`flex-1 ${!hideMobileNav ? "pb-20 lg:pb-0" : ""} ${currentPage ? "pt-16 md:pt-0" : ""}`}>
+        {children}
+      </main>
       {!hideFooter && <div className="hidden lg:block"><Footer /></div>}
       {!hideMobileNav && <MobileNav />}
     </div>
