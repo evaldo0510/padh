@@ -61,19 +61,34 @@ const ConscienciaHistorico: React.FC = () => {
         .order("checkin_date", { ascending: false });
 
       if (checkins) {
-        const allExercises = JORNADA_DATA.flatMap(f => f.sessoes.flatMap(s => s.blocos.filter(b => b.tipo === 'exercise')));
-        
         const historyData = checkins.map(c => {
-          // Find the response for this date
           const response = jornada.responses.find(r => r.date?.startsWith(c.checkin_date));
-          const exercise = allExercises.find(e => e.id === response?.exerciseId);
+          
+          let exercise: any = null;
+          let phase: any = null;
+          
+          if (response) {
+            for (const f of JORNADA_DATA) {
+              for (const s of f.sessoes) {
+                const found = s.blocos.find(b => b.id === response.exerciseId);
+                if (found) {
+                  exercise = found;
+                  phase = f;
+                  break;
+                }
+              }
+              if (exercise) break;
+            }
+          }
 
           return {
             checkin_date: c.checkin_date,
             mood: c.mood,
             exercise_id: response?.exerciseId,
             response: response?.response,
-            exercise_title: exercise?.titulo
+            exercise_title: exercise?.titulo,
+            phase_title: phase?.titulo,
+            phase_id: phase?.id
           };
         });
         setHistory(historyData);
@@ -102,21 +117,22 @@ const ConscienciaHistorico: React.FC = () => {
         </header>
 
         {/* Search and Filters */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 bg-white/5 p-6 rounded-2xl border border-white/5">
-          <div className="relative group">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 bg-white/5 p-6 rounded-2xl border border-white/5">
+          <div className="relative group md:col-span-1">
             <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-white/20 group-focus-within:text-primary transition-colors" />
             <Input 
-              placeholder="Buscar no histórico..." 
+              placeholder="Buscar..." 
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
               className="pl-11 bg-background/50 border-white/10 h-12"
             />
           </div>
+          
           <Select value={moodFilter} onValueChange={setMoodFilter}>
             <SelectTrigger className="bg-background/50 border-white/10 h-12">
               <div className="flex items-center gap-2">
                 <Filter className="w-4 h-4 text-white/20" />
-                <SelectValue placeholder="Filtrar por humor" />
+                <SelectValue placeholder="Humor" />
               </div>
             </SelectTrigger>
             <SelectContent>
@@ -125,6 +141,21 @@ const ConscienciaHistorico: React.FC = () => {
               <SelectItem value="calmo">Calma</SelectItem>
               <SelectItem value="feliz">Alegria</SelectItem>
               <SelectItem value="triste">Tristeza</SelectItem>
+            </SelectContent>
+          </Select>
+
+          <Select value={phaseFilter} onValueChange={setPhaseFilter}>
+            <SelectTrigger className="bg-background/50 border-white/10 h-12">
+              <div className="flex items-center gap-2">
+                <Filter className="w-4 h-4 text-white/20" />
+                <SelectValue placeholder="Fase" />
+              </div>
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="all">Todas as fases</SelectItem>
+              {JORNADA_DATA.map(f => (
+                <SelectItem key={f.id} value={f.id}>{f.titulo}</SelectItem>
+              ))}
             </SelectContent>
           </Select>
         </div>
@@ -139,8 +170,8 @@ const ConscienciaHistorico: React.FC = () => {
           <div className="glass-card p-12 text-center space-y-4">
             <Calendar className="w-12 h-12 text-white/20 mx-auto" />
             <h3 className="text-xl font-bold text-white">Nenhum registro encontrado</h3>
-            <p className="text-white/40 max-w-xs mx-auto">Tente ajustar seus filtros ou busca para encontrar o que procura.</p>
-            <Button onClick={() => { setSearchTerm(""); setMoodFilter("all"); }} variant="outline" className="border-white/10">Limpar Filtros</Button>
+            <p className="text-white/40 max-w-xs mx-auto">Ajuste os filtros para encontrar o que procura.</p>
+            <Button onClick={() => { setSearchTerm(""); setMoodFilter("all"); setPhaseFilter("all"); }} variant="outline" className="border-white/10">Limpar Filtros</Button>
           </div>
         ) : (
           <div className="grid gap-8">
@@ -159,12 +190,19 @@ const ConscienciaHistorico: React.FC = () => {
                       {format(new Date(item.checkin_date + 'T12:00:00'), "EEEE, d 'de' MMMM", { locale: ptBR })}
                     </span>
                   </div>
-                  {item.response && (
-                    <div className="flex items-center gap-1.5 bg-primary/10 px-2.5 py-1 rounded-full border border-primary/20">
-                      <Flame className="w-3.5 h-3.5 text-primary" />
-                      <span className="text-[10px] font-black text-primary uppercase tracking-wider">Concluído</span>
-                    </div>
-                  )}
+                  <div className="flex items-center gap-2">
+                    {item.phase_title && (
+                      <Badge variant="outline" className="text-[9px] border-primary/20 text-primary uppercase font-black tracking-widest">
+                        {item.phase_title}
+                      </Badge>
+                    )}
+                    {item.response && (
+                      <div className="flex items-center gap-1.5 bg-primary/10 px-2.5 py-1 rounded-full border border-primary/20">
+                        <Flame className="w-3.5 h-3.5 text-primary" />
+                        <span className="text-[10px] font-black text-primary uppercase tracking-wider">Concluído</span>
+                      </div>
+                    )}
+                  </div>
                 </div>
                 
                 <div className="p-8 grid md:grid-cols-2 gap-8">
