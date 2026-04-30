@@ -195,3 +195,16 @@
 .scrollbar-hide::-webkit-scrollbar {
   display: none; /* Chrome, Safari and Opera */
 }
+
+/* Safe areas */
+.pb-safe {
+  padding-bottom: env(safe-area-inset-bottom);
+}
+
+.pt-safe {
+  padding-top: env(safe-area-inset-top);
+}
+
+.min-h-screen-safe {
+  min-height: calc(100vh - env(safe-area-inset-bottom) - env(safe-area-inset-top));
+}
