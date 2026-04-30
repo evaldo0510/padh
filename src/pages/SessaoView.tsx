@@ -88,8 +88,8 @@ const SessaoView = () => {
 
   const currentBlock = sessao.blocos[currentExIdx];
   const totalSteps = sessao.blocos.length;
-  const progressPercent = ((currentExIdx + 1) / totalEx) * 100;
-  const isLast = currentExIdx === totalEx - 1;
+  const progressPercent = ((currentExIdx + 1) / totalSteps) * 100;
+  const isLast = currentExIdx === totalSteps - 1;
 
   const startTransition = async (type: "next" | "prev" | "skip" | "finish", action: () => void) => {
     // Cancel any previous transition
