@@ -21,6 +21,8 @@ interface PageLayoutProps {
   hideHeader?: boolean;
   hideFooter?: boolean;
   hideMobileNav?: boolean;
+  parentPage?: { name: string; path: string };
+  moduleName?: string;
 }
 
 const PageLayout: React.FC<PageLayoutProps> = ({
@@ -32,6 +34,8 @@ const PageLayout: React.FC<PageLayoutProps> = ({
   hideHeader = false,
   hideFooter = false,
   hideMobileNav = false,
+  parentPage,
+  moduleName,
 }) => {
   const isLoading = usePageLoading(loadingDelay);
 
