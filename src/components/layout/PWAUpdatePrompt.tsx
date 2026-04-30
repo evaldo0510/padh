@@ -4,6 +4,7 @@ import { RefreshCw, X, FileText } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 import { APP_VERSION } from "@/lib/changelog";
+import { reportPWAEvent } from "@/lib/pwa-metrics";
 
 /**
  * Detects new service worker versions and shows a non-blocking banner
@@ -48,6 +49,7 @@ const PWAUpdatePrompt = () => {
         newWorker.addEventListener("statechange", () => {
           if (newWorker.state === "installed" && navigator.serviceWorker.controller) {
             setNeedRefresh(true);
+            reportPWAEvent("update_found");
           }
         });
       });
@@ -63,6 +65,7 @@ const PWAUpdatePrompt = () => {
   }, []);
 
   const handleUpdate = () => {
+    reportPWAEvent("update_activated", "success", { method: registration?.waiting ? "skipWaiting" : "reload" });
     if (registration?.waiting) {
       registration.waiting.postMessage({ type: "SKIP_WAITING" });
     } else {

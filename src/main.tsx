@@ -2,6 +2,12 @@ import { createRoot } from "react-dom/client";
 import { ThemeProvider } from "next-themes";
 import App from "./App.tsx";
 import "./index.css";
+import { APP_VERSION } from "./lib/changelog";
+
+// Expose version for automated tests
+if (typeof window !== "undefined") {
+  (window as any).APP_VERSION = APP_VERSION;
+}
 
 // Guard: never run service workers inside Lovable editor preview / iframes.
 // They cause stale content and break preview navigation.
