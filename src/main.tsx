@@ -11,19 +11,19 @@ if (typeof window !== "undefined") {
 
 // Guard: never run service workers inside Lovable editor preview / iframes.
 // They cause stale content and break preview navigation.
-const isPreviewHost = (() => {
+// Published lovable.app domains must be allowed, otherwise the live PWA cannot update.
+const isEditorPreview = (() => {
   if (typeof window === "undefined") return false;
   const host = window.location.hostname;
   return (
     host.includes("id-preview--") ||
     host.includes("lovableproject.com") ||
-    host.includes("lovable.app") ||
     window.self !== window.top
   );
 })();
 
 if (typeof navigator !== "undefined" && "serviceWorker" in navigator) {
-  if (isPreviewHost) {
+  if (isEditorPreview) {
     // Unregister any existing SW + nuke caches so the preview always shows latest code.
     navigator.serviceWorker.getRegistrations().then((regs) => {
       regs.forEach((r) => r.unregister());
