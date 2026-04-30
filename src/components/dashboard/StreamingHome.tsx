@@ -121,6 +121,9 @@ const StreamingHome = () => {
 
         {/* Global Journey Progress */}
         <GlobalProgressBar />
+
+        {/* Clinical Evolution Charts */}
+        <ProgressPanel />
         {/* Continuar Assistindo Section */}
         {nextSession && (
           <section className="space-y-8 animate-slide-up">
