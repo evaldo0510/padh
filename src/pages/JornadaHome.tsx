@@ -102,6 +102,8 @@ const JornadaHome = () => {
         description: 'Sua trilha estruturada de desenvolvimento pessoal e exercícios terapêuticos.',
         path: '/jornada',
       }}
+      currentPage="Jornada"
+      showBackButton={false}
       hideHeader
     >
       <div className="min-h-screen bg-[#050505] text-white flex flex-col">
