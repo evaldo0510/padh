@@ -15,10 +15,17 @@ if (typeof window !== "undefined") {
 const isEditorPreview = (() => {
   if (typeof window === "undefined") return false;
   const host = window.location.hostname;
+  const isInIframe = (() => {
+    try {
+      return window.self !== window.top;
+    } catch {
+      return true;
+    }
+  })();
   return (
     host.includes("id-preview--") ||
     host.includes("lovableproject.com") ||
-    window.self !== window.top
+    isInIframe
   );
 })();
 
