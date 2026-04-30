@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useMemo } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Flame, Sparkles, CheckCircle2, ChevronRight, MessageSquare, ArrowLeft, History, Bell, BellOff, Clock, Activity } from "lucide-react";
+import { Flame, Sparkles, CheckCircle2, ChevronRight, MessageSquare, ArrowLeft, History, Bell, BellOff, Clock, Activity, FileSpreadsheet, Terminal, Download } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useJornada } from "@/hooks/useJornada";
 import { JORNADA_DATA } from "@/lib/jornada-data";
