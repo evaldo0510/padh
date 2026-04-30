@@ -84,6 +84,7 @@
     @apply border-border;
     box-sizing: border-box;
     transition: background-color 0.3s ease, border-color 0.3s ease, color 0.3s ease;
+    -webkit-tap-highlight-color: transparent;
   }
   
   body {
@@ -91,10 +92,18 @@
     font-family: var(--font-inter);
     -webkit-font-smoothing: antialiased;
     overflow-x: hidden;
+    /* App feel: disable bounce on iOS and prevent horizontal scroll */
+    overscroll-behavior-y: none;
+    width: 100%;
+    position: relative;
   }
   
   h1, h2, h3, h4, h5, h6 {
     @apply font-bold tracking-tight text-foreground;
+  }
+
+  button, a {
+    user-select: none;
   }
 }
 
@@ -185,4 +194,17 @@
 
 .scrollbar-hide::-webkit-scrollbar {
   display: none; /* Chrome, Safari and Opera */
+}
+
+/* Safe areas */
+.pb-safe {
+  padding-bottom: env(safe-area-inset-bottom);
+}
+
+.pt-safe {
+  padding-top: env(safe-area-inset-top);
+}
+
+.min-h-screen-safe {
+  min-height: calc(100vh - env(safe-area-inset-bottom) - env(safe-area-inset-top));
 }

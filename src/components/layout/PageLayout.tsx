@@ -1,6 +1,7 @@
 import React from "react";
 import Header from "./Header";
 import Footer from "./Footer";
+import MobileNav from "./MobileNav";
 import PageHeader from "./PageHeader";
 import { usePageLoading } from "@/hooks/usePageLoading";
 import { PageSkeleton } from "@/components/ui/page-skeleton";
@@ -19,6 +20,7 @@ interface PageLayoutProps {
   loadingDelay?: number;
   hideHeader?: boolean;
   hideFooter?: boolean;
+  hideMobileNav?: boolean;
 }
 
 const PageLayout: React.FC<PageLayoutProps> = ({
@@ -29,6 +31,7 @@ const PageLayout: React.FC<PageLayoutProps> = ({
   loadingDelay = 150,
   hideHeader = false,
   hideFooter = false,
+  hideMobileNav = false,
 }) => {
   const isLoading = usePageLoading(loadingDelay);
 
@@ -46,8 +49,9 @@ const PageLayout: React.FC<PageLayoutProps> = ({
       {currentPage && (
         <PageHeader currentPage={currentPage} showBackButton={showBackButton} />
       )}
-      <main className="flex-1">{children}</main>
-      {!hideFooter && <Footer />}
+      <main className={`flex-1 ${!hideMobileNav ? "pb-20 lg:pb-0" : ""}`}>{children}</main>
+      {!hideFooter && <div className="hidden lg:block"><Footer /></div>}
+      {!hideMobileNav && <MobileNav />}
     </div>
   );
 };
