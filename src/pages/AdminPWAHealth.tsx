@@ -137,6 +137,7 @@ const AdminPWAHealth = () => {
                   <Legend />
                   <Line type="monotone" dataKey="count" name="Total" stroke="#8B5CF6" strokeWidth={2} />
                   <Line type="monotone" dataKey="update_found" name="Updates" stroke="#F59E0B" strokeWidth={2} />
+                  <Line type="monotone" dataKey="update_trace" name="Traces" stroke="#10B981" strokeWidth={2} />
                 </LineChart>
               </ResponsiveContainer>
             </CardContent>
