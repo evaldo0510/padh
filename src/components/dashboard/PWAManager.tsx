@@ -8,7 +8,6 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import { Progress } from "@/components/ui/progress";
 import { toast } from "sonner";
 import { motion, AnimatePresence } from "framer-motion";
 
@@ -50,46 +49,50 @@ export const PWAManager: React.FC = () => {
 
     checkSW();
 
-    // Listen for state changes
-    const handleStateChange = () => checkSW();
-    navigator.serviceWorker.addEventListener("controllerchange", handleStateChange);
+    const handleControllerChange = () => {
+      console.log("PWAManager: Controller changed");
+      checkSW();
+    };
+    navigator.serviceWorker.addEventListener("controllerchange", handleControllerChange);
     
-    // Listen for custom PWA events from pwa-metrics
     const handlePWAEvent = (e: any) => {
       setLogs(prev => [e.detail, ...prev].slice(0, 50));
     };
     window.addEventListener("pwa-event", handlePWAEvent);
 
     const loadCaches = async () => {
-      const keys = await caches.keys();
-      setCacheKeys(keys);
+      try {
+        const keys = await caches.keys();
+        setCacheKeys(keys);
+      } catch (e) {
+        console.warn("PWAManager: Failed to load caches", e);
+      }
     };
     loadCaches();
 
     return () => {
-      navigator.serviceWorker.removeEventListener("controllerchange", handleStateChange);
+      navigator.serviceWorker.removeEventListener("controllerchange", handleControllerChange);
       window.removeEventListener("pwa-event", handlePWAEvent);
     };
   }, []);
 
-  const handleUpdateNow = async () => {
-    if (!registration?.waiting) {
-      setIsUpdating(true);
-      try {
-        await registration?.update();
-        toast.info("Buscando atualizações...");
-      } catch (e) {
-        toast.error("Falha ao buscar atualização.");
-      } finally {
-        setIsUpdating(false);
-      }
-      return;
-    }
-
+  const handleUpdateCheck = async () => {
+    if (!registration) return;
+    
     setIsUpdating(true);
-    registration.waiting.postMessage({ type: "SKIP_WAITING" });
-    toast.success("Forçando ativação da nova versão...");
-    // The controllerchange event will trigger a reload via PWAUpdatePrompt
+    try {
+      if (registration.waiting) {
+        registration.waiting.postMessage({ type: "SKIP_WAITING" });
+        toast.success("Forçando ativação da nova versão...");
+      } else {
+        await registration.update();
+        toast.info("Buscando atualizações no servidor...");
+      }
+    } catch (e) {
+      toast.error("Falha na comunicação com o Service Worker.");
+    } finally {
+      setIsUpdating(false);
+    }
   };
 
   const handleClearCaches = async () => {
@@ -98,10 +101,7 @@ export const PWAManager: React.FC = () => {
       const keys = await caches.keys();
       await Promise.all(keys.map(key => caches.delete(key)));
       setCacheKeys([]);
-      toast.success("Cache limpo com sucesso.");
-      
-      // Also unregister SW to force a clean slate if needed
-      // but usually just clearing cache is enough for "manual clear"
+      toast.success("Cache do navegador limpo.");
     } catch (e) {
       toast.error("Falha ao limpar cache.");
     } finally {
@@ -110,52 +110,52 @@ export const PWAManager: React.FC = () => {
   };
 
   return (
-    <Card className="bg-white/5 border-white/10 overflow-hidden">
-      <CardHeader className="flex flex-row items-center justify-between pb-2">
+    <Card className="bg-white/5 border-white/10 overflow-hidden shadow-2xl">
+      <CardHeader className="flex flex-row items-center justify-between pb-4 border-b border-white/5">
         <div className="space-y-1">
           <div className="flex items-center gap-2">
             <ShieldCheck className="w-5 h-5 text-primary" />
-            <CardTitle className="text-xl">Segurança & PWA</CardTitle>
+            <CardTitle className="text-xl font-bold tracking-tight">Painel de Integridade PWA</CardTitle>
           </div>
-          <CardDescription>Gerencie a integridade e atualizações do seu aplicativo.</CardDescription>
+          <CardDescription className="text-xs uppercase tracking-widest font-bold text-white/40">Status do Sistema & Versão</CardDescription>
         </div>
-        <Badge variant={swStatus === "Ativado" ? "secondary" : "outline"} className="gap-1.5 h-6">
-          <Activity className={`w-3 h-3 ${swStatus === "Ativado" ? "animate-pulse" : ""}`} />
+        <Badge variant={swStatus === "Ativado" ? "secondary" : "outline"} className="gap-1.5 h-7 px-3">
+          <Activity className={`w-3.5 h-3.5 ${swStatus === "Ativado" ? "animate-pulse" : ""}`} />
           {swStatus}
         </Badge>
       </CardHeader>
 
-      <CardContent className="space-y-6">
+      <CardContent className="space-y-6 pt-6">
         {/* Status Grid */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-          <div className="p-4 rounded-xl bg-black/20 border border-white/5 space-y-2">
+          <div className="p-4 rounded-2xl bg-white/5 border border-white/5 space-y-2 group hover:bg-white/10 transition-colors">
             <div className="flex items-center justify-between">
-              <span className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground">Estado</span>
-              <Smartphone className="w-3.5 h-3.5 text-primary/40" />
+              <span className="text-[10px] font-black uppercase tracking-widest text-muted-foreground">Service Worker</span>
+              <Smartphone className="w-4 h-4 text-primary/40 group-hover:text-primary transition-colors" />
             </div>
             <div className="flex items-center gap-2">
-              <div className={`w-2 h-2 rounded-full ${swState === 'activated' ? 'bg-emerald-500' : 'bg-amber-500'} animate-pulse`} />
-              <span className="text-sm font-medium capitalize">{swState || 'Detectando'}</span>
+              <div className={`w-2.5 h-2.5 rounded-full ${swState === 'activated' ? 'bg-emerald-500 shadow-[0_0_10px_rgba(16,185,129,0.5)]' : 'bg-amber-500 shadow-[0_0_10px_rgba(245,158,11,0.5)]'} animate-pulse`} />
+              <span className="text-sm font-bold capitalize">{swState || 'Detectando...'}</span>
             </div>
           </div>
 
-          <div className="p-4 rounded-xl bg-black/20 border border-white/5 space-y-2">
+          <div className="p-4 rounded-2xl bg-white/5 border border-white/5 space-y-2 group hover:bg-white/10 transition-colors">
             <div className="flex items-center justify-between">
-              <span className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground">Cache</span>
-              <HardDrive className="w-3.5 h-3.5 text-primary/40" />
+              <span className="text-[10px] font-black uppercase tracking-widest text-muted-foreground">Cache de Ativos</span>
+              <HardDrive className="w-4 h-4 text-primary/40 group-hover:text-primary transition-colors" />
             </div>
-            <div className="text-sm font-medium">
-              {cacheKeys.length} buckets ativos
+            <div className="text-sm font-bold flex items-center gap-2">
+              {cacheKeys.length} <span className="text-xs font-normal text-muted-foreground">buckets ativos</span>
             </div>
           </div>
 
-          <div className="p-4 rounded-xl bg-black/20 border border-white/5 space-y-2">
+          <div className="p-4 rounded-2xl bg-white/5 border border-white/5 space-y-2 group hover:bg-white/10 transition-colors">
             <div className="flex items-center justify-between">
-              <span className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground">Ação Pendente</span>
-              <Info className="w-3.5 h-3.5 text-primary/40" />
+              <span className="text-[10px] font-black uppercase tracking-widest text-muted-foreground">Status Global</span>
+              <Info className="w-4 h-4 text-primary/40 group-hover:text-primary transition-colors" />
             </div>
-            <div className="text-sm font-medium">
-              {registration?.waiting ? "Atualização pronta" : "Sistema em dia"}
+            <div className="text-sm font-bold">
+              {registration?.waiting ? "Update Pendente" : "Versão Recente"}
             </div>
           </div>
         </div>
@@ -165,18 +165,28 @@ export const PWAManager: React.FC = () => {
           <Button 
             variant="default" 
             size="sm" 
-            className="btn-primary gap-2 h-10 px-6"
-            onClick={handleUpdateNow}
+            className="btn-primary gap-2 h-11 px-6 font-bold shadow-lg shadow-primary/20"
+            onClick={handleUpdateCheck}
             disabled={isUpdating}
           >
             <RefreshCw className={`w-4 h-4 ${isUpdating ? "animate-spin" : ""}`} />
-            Atualizar Agora
+            {registration?.waiting ? "Atualizar Agora" : "Verificar Updates"}
           </Button>
           
           <Button 
             variant="outline" 
             size="sm" 
-            className="h-10 px-6 gap-2 border-destructive/20 text-destructive hover:bg-destructive/10 hover:border-destructive/30"
+            className="h-11 px-6 gap-2 border-white/10 hover:bg-white/5 font-bold"
+            onClick={() => window.location.reload()}
+          >
+            <RefreshCw className="w-4 h-4" />
+            Recarregar UI
+          </Button>
+
+          <Button 
+            variant="outline" 
+            size="sm" 
+            className="h-11 px-6 gap-2 border-destructive/20 text-destructive hover:bg-destructive/10 hover:border-destructive/30 font-bold ml-auto"
             onClick={handleClearCaches}
             disabled={isClearing}
           >
@@ -186,20 +196,20 @@ export const PWAManager: React.FC = () => {
         </div>
 
         {/* Event Logs */}
-        <div className="space-y-3 pt-2">
+        <div className="space-y-4">
           <div className="flex items-center justify-between">
-            <h4 className="text-[10px] font-black uppercase tracking-[0.2em] text-muted-foreground">Logs de Atividade</h4>
+            <h4 className="text-[10px] font-black uppercase tracking-[0.3em] text-muted-foreground">Fluxo de Eventos (Live Log)</h4>
             {logs.length > 0 && (
-               <Badge variant="outline" className="text-[8px] h-4">Live</Badge>
+               <Badge variant="outline" className="text-[9px] h-5 px-2 bg-primary/5 text-primary border-primary/20 font-bold">SISTEMA ATIVO</Badge>
             )}
           </div>
           
-          <ScrollArea className="h-48 w-full rounded-xl border border-white/5 bg-black/40 p-4">
+          <ScrollArea className="h-56 w-full rounded-2xl border border-white/5 bg-black/40 p-4 shadow-inner">
             <div className="space-y-4">
               {logs.length === 0 ? (
-                <div className="h-40 flex flex-col items-center justify-center gap-2 text-muted-foreground italic text-center">
-                  <Activity className="w-8 h-8 opacity-10" />
-                  <p className="text-[10px] uppercase tracking-widest">Aguardando eventos...</p>
+                <div className="h-44 flex flex-col items-center justify-center gap-4 text-muted-foreground italic text-center opacity-40">
+                  <Activity className="w-10 h-10 animate-pulse" />
+                  <p className="text-[10px] font-black uppercase tracking-[0.3em]">Aguardando interação do sistema...</p>
                 </div>
               ) : (
                 logs.map((log, i) => (
@@ -207,26 +217,28 @@ export const PWAManager: React.FC = () => {
                     initial={{ opacity: 0, x: -10 }}
                     animate={{ opacity: 1, x: 0 }}
                     key={`${log.timestamp}-${i}`} 
-                    className="flex gap-4 items-start text-[11px] group border-b border-white/5 pb-3 last:border-0"
+                    className="flex gap-4 items-start text-[11px] group border-b border-white/5 pb-4 last:border-0"
                   >
-                    <span className="text-white/20 whitespace-nowrap pt-1 font-mono">
+                    <span className="text-white/20 whitespace-nowrap pt-1 font-mono text-[10px]">
                       {new Date(log.timestamp).toLocaleTimeString()}
                     </span>
-                    <div className="space-y-1 flex-1">
+                    <div className="space-y-1.5 flex-1">
                       <div className="flex items-center gap-2">
-                        <span className={`font-bold transition-colors ${
+                        <span className={`font-black tracking-wider transition-colors ${
                           log.status === 'success' ? 'text-emerald-400' : 'text-amber-400'
                         }`}>
                           {log.eventType.replace('_', ' ').toUpperCase()}
                         </span>
-                        <Badge variant="outline" className="text-[8px] h-3.5 px-1 uppercase">
-                          {log.status}
+                        <Badge variant="outline" className={`text-[8px] h-4 px-1.5 font-bold border-none bg-white/5 ${
+                          log.status === 'success' ? 'text-emerald-500' : 'text-amber-500'
+                        }`}>
+                          {log.status.toUpperCase()}
                         </Badge>
                       </div>
                       {log.details && (
-                        <p className="text-[10px] text-muted-foreground leading-tight line-clamp-1">
+                        <div className="p-2 rounded-lg bg-white/5 border border-white/5 text-[9px] font-mono text-white/40 break-all leading-tight">
                           {JSON.stringify(log.details)}
-                        </p>
+                        </div>
                       )}
                     </div>
                   </motion.div>
