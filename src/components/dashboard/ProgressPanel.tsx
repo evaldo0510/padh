@@ -8,13 +8,10 @@ import { supabase } from "@/integrations/supabase/client";
 import { useJornada } from "@/hooks/useJornada";
 import { JORNADA_DATA } from "@/lib/jornada-data";
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
-import { TrendingUp, CheckCircle2, History, Activity, Download, Filter, Search, Calendar as CalendarIcon } from "lucide-react";
+import { TrendingUp, CheckCircle2, History, Activity, Download, Filter } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { toast } from "sonner";
-import { format } from "date-fns";
-import { ptBR } from "date-fns/locale";
+import ProgressReportExport from "./ProgressReportExport";
 
 const ProgressPanel: React.FC = () => {
   const { jornada } = useJornada();
@@ -84,35 +81,6 @@ const ProgressPanel: React.FC = () => {
     });
   }, [phaseFilter, statusFilter, jornada.completedSessions]);
 
-  const exportCSV = () => {
-    if (checkinHistory.length === 0) {
-      toast.error("Nenhum dado para exportar.");
-      return;
-    }
-    
-    const headers = ["Data", "Humor", "Nota"];
-    const rows = checkinHistory.map(c => [c.checkin_date, c.mood, c.note || ""]);
-    const csvContent = [headers, ...rows].map(e => e.join(",")).join("\n");
-    
-    const blob = new Blob([csvContent], { type: "text/csv;charset=utf-8;" });
-    const link = document.createElement("a");
-    const url = URL.createObjectURL(blob);
-    link.setAttribute("href", url);
-    link.setAttribute("download", `padh_evolucao_${format(new Date(), 'yyyy-MM-dd')}.csv`);
-    link.style.visibility = 'hidden';
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
-    toast.success("Histórico exportado com sucesso (CSV).");
-  };
-
-  const exportPDF = () => {
-    // Basic implementation using window.print() or specialized library
-    // For now, let's trigger a print-friendly view or just toast
-    window.print();
-    toast.info("Preparando visualização para impressão (PDF).");
-  };
-
   const COLORS = ['#8B5CF6', '#10B981', '#F59E0B', '#F43F5E'];
 
   return (
@@ -122,21 +90,12 @@ const ProgressPanel: React.FC = () => {
           <h2 className="text-4xl font-bold tracking-tighter text-white">Evolução da Jornada</h2>
           <p className="text-white/40 font-light text-lg tracking-wide uppercase text-[10px] font-black tracking-[0.4em]">Seu progresso clínico em dados.</p>
         </div>
-
-        <div className="flex flex-wrap gap-2">
-          <Button variant="outline" size="sm" className="border-white/10 text-white/60 hover:text-white" onClick={exportCSV}>
-            <Download className="w-4 h-4 mr-2" /> CSV
-          </Button>
-          <Button variant="outline" size="sm" className="border-white/10 text-white/60 hover:text-white" onClick={exportPDF}>
-            <Download className="w-4 h-4 mr-2" /> PDF
-          </Button>
-        </div>
       </div>
 
       {/* Filters */}
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 bg-white/5 p-6 rounded-2xl border border-white/5">
         <div className="space-y-2">
-          <label className="text-[9px] font-black uppercase tracking-[0.2em] text-white/30 ml-1">Período</label>
+          <label className="text-[9px] font-black uppercase tracking-[0.2em] text-white/30 ml-1">Período de Atividade</label>
           <Select value={dateFilter} onValueChange={setDateFilter}>
             <SelectTrigger className="bg-background/50 border-white/10 text-white h-10">
               <SelectValue placeholder="Selecione o período" />
@@ -150,7 +109,7 @@ const ProgressPanel: React.FC = () => {
         </div>
 
         <div className="space-y-2">
-          <label className="text-[9px] font-black uppercase tracking-[0.2em] text-white/30 ml-1">Fase</label>
+          <label className="text-[9px] font-black uppercase tracking-[0.2em] text-white/30 ml-1">Filtrar por Fase</label>
           <Select value={phaseFilter} onValueChange={setPhaseFilter}>
             <SelectTrigger className="bg-background/50 border-white/10 text-white h-10">
               <SelectValue placeholder="Selecione a fase" />
@@ -165,7 +124,7 @@ const ProgressPanel: React.FC = () => {
         </div>
 
         <div className="space-y-2">
-          <label className="text-[9px] font-black uppercase tracking-[0.2em] text-white/30 ml-1">Status</label>
+          <label className="text-[9px] font-black uppercase tracking-[0.2em] text-white/30 ml-1">Status de Conclusão</label>
           <Select value={statusFilter} onValueChange={setStatusFilter}>
             <SelectTrigger className="bg-background/50 border-white/10 text-white h-10">
               <SelectValue placeholder="Status de conclusão" />
@@ -273,6 +232,16 @@ const ProgressPanel: React.FC = () => {
             <span className="text-[9px] font-black uppercase tracking-widest text-white/30">{stat.label}</span>
           </motion.div>
         ))}
+      </div>
+
+      <div className="pt-10 border-t border-white/5">
+        <div className="flex flex-col gap-6">
+           <div className="space-y-1">
+             <h3 className="text-xl font-bold tracking-tight text-white">Relatórios e Exportação</h3>
+             <p className="text-sm text-white/40 font-light">Baixe seu histórico completo para acompanhamento clínico ou pessoal.</p>
+           </div>
+           <ProgressReportExport />
+        </div>
       </div>
     </div>
   );
