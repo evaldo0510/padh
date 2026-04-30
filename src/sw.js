@@ -16,6 +16,7 @@ registerRoute(
   ({ request }) => request.mode === 'navigate' || request.destination === 'document',
   new NetworkFirst({
     cacheName: 'html-freshness',
+    networkTimeoutSeconds: 3,
   })
 );
 
@@ -26,6 +27,7 @@ registerRoute(
     request.destination === 'worker',
   new NetworkFirst({
     cacheName: 'bundles-freshness',
+    networkTimeoutSeconds: 3,
   })
 );
 
