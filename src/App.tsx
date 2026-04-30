@@ -88,6 +88,8 @@ const ConscienciaHistorico = lazy(() => import("./pages/ConscienciaHistorico"));
 const Changelog = lazy(() => import("./pages/Changelog"));
 const Offline = lazy(() => import("./pages/Offline"));
 
+const AdminPWAHealth = lazy(() => import("./pages/AdminPWAHealth"));
+
 const queryClient = new QueryClient();
 
 const AnimatedRoutes = () => {
