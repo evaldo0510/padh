@@ -18,6 +18,8 @@ interface CheckinHistory {
   exercise_id?: string;
   response?: string;
   exercise_title?: string;
+  phase_title?: string;
+  phase_id?: string;
 }
 
 const ConscienciaHistorico: React.FC = () => {
