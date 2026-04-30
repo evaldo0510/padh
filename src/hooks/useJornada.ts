@@ -40,7 +40,7 @@ const findPhaseForSession = (sessionId: string): string | undefined => {
 const findPhaseForExercise = (exerciseId: string): { phaseId?: string; sessionId?: string } => {
   for (const fase of JORNADA_DATA) {
     for (const sessao of fase.sessoes) {
-      if (sessao.exercicios.some((e) => e.id === exerciseId)) {
+      if (sessao.blocos.some((b) => b.id === exerciseId)) {
         return { phaseId: fase.id, sessionId: sessao.id };
       }
     }
