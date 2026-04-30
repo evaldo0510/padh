@@ -70,7 +70,26 @@ async function getSetting(key) {
     } catch (e) {
       resolve(null);
     }
-  });
+  if (event.data.type === 'GET_TECHNICAL_INFO') {
+    const lastNotified = await getSetting('last_notified_date');
+    const config = reminderConfig || await getSetting('reminder_config');
+    
+    if (event.source) {
+      event.source.postMessage({
+        type: 'TECHNICAL_INFO_RESPONSE',
+        info: {
+          lastNotified,
+          config,
+          continuousMode: !!continuousTestInterval,
+          testCount,
+          swStatus: 'active',
+          timestamp: new Date().toISOString(),
+          persistence: (await dbPromise) ? 'IndexedDB' : 'Memory Fallback'
+        }
+      });
+    }
+  }
+});
 }
 
 async function setSetting(key, value) {
