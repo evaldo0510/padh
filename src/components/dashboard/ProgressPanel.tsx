@@ -117,9 +117,67 @@ const ProgressPanel: React.FC = () => {
 
   return (
     <div className="space-y-10 animate-fade-in">
-      <div className="flex flex-col gap-2">
-        <h2 className="text-4xl font-bold tracking-tighter text-white">Evolução da Jornada</h2>
-        <p className="text-white/40 font-light text-lg tracking-wide uppercase text-[10px] font-black tracking-[0.4em]">Seu progresso clínico em dados.</p>
+      <div className="flex flex-col md:flex-row md:items-end justify-between gap-6">
+        <div className="flex flex-col gap-2">
+          <h2 className="text-4xl font-bold tracking-tighter text-white">Evolução da Jornada</h2>
+          <p className="text-white/40 font-light text-lg tracking-wide uppercase text-[10px] font-black tracking-[0.4em]">Seu progresso clínico em dados.</p>
+        </div>
+
+        <div className="flex flex-wrap gap-2">
+          <Button variant="outline" size="sm" className="border-white/10 text-white/60 hover:text-white" onClick={exportCSV}>
+            <Download className="w-4 h-4 mr-2" /> CSV
+          </Button>
+          <Button variant="outline" size="sm" className="border-white/10 text-white/60 hover:text-white" onClick={exportPDF}>
+            <Download className="w-4 h-4 mr-2" /> PDF
+          </Button>
+        </div>
+      </div>
+
+      {/* Filters */}
+      <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 bg-white/5 p-6 rounded-2xl border border-white/5">
+        <div className="space-y-2">
+          <label className="text-[9px] font-black uppercase tracking-[0.2em] text-white/30 ml-1">Período</label>
+          <Select value={dateFilter} onValueChange={setDateFilter}>
+            <SelectTrigger className="bg-background/50 border-white/10 text-white h-10">
+              <SelectValue placeholder="Selecione o período" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="all">Todo o histórico</SelectItem>
+              <SelectItem value="week">Última semana</SelectItem>
+              <SelectItem value="month">Último mês</SelectItem>
+            </SelectContent>
+          </Select>
+        </div>
+
+        <div className="space-y-2">
+          <label className="text-[9px] font-black uppercase tracking-[0.2em] text-white/30 ml-1">Fase</label>
+          <Select value={phaseFilter} onValueChange={setPhaseFilter}>
+            <SelectTrigger className="bg-background/50 border-white/10 text-white h-10">
+              <SelectValue placeholder="Selecione a fase" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="all">Todas as fases</SelectItem>
+              {JORNADA_DATA.map(f => (
+                <SelectItem key={f.id} value={f.id}>{f.titulo}</SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+        </div>
+
+        <div className="space-y-2">
+          <label className="text-[9px] font-black uppercase tracking-[0.2em] text-white/30 ml-1">Status</label>
+          <Select value={statusFilter} onValueChange={setStatusFilter}>
+            <SelectTrigger className="bg-background/50 border-white/10 text-white h-10">
+              <SelectValue placeholder="Status de conclusão" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="all">Todos os estados</SelectItem>
+              <SelectItem value="completed">Concluídas</SelectItem>
+              <SelectItem value="in_progress">Em andamento</SelectItem>
+              <SelectItem value="not_started">Não iniciadas</SelectItem>
+            </SelectContent>
+          </Select>
+        </div>
       </div>
 
       <div className="grid md:grid-cols-2 gap-8">
