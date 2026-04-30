@@ -11,20 +11,16 @@ if (typeof window !== "undefined") {
 
 // Guard: never run service workers inside Lovable editor preview / iframes.
 // They cause stale content and break preview navigation.
-const isInIframe = (() => {
-  try {
-    return window.self !== window.top;
-  } catch {
-    return true;
-  }
+const isPreviewHost = (() => {
+  if (typeof window === "undefined") return false;
+  const host = window.location.hostname;
+  return (
+    host.includes("id-preview--") ||
+    host.includes("lovableproject.com") ||
+    host.includes("lovable.app") ||
+    window.self !== window.top
+  );
 })();
-
-const isPreviewHost =
-  typeof window !== "undefined" &&
-  (window.location.hostname.includes("id-preview--") ||
-    window.location.hostname.includes("lovableproject.com") ||
-    window.location.hostname.includes("lovable.app") === false &&
-      window.location.hostname.includes("lovable") );
 
 if (typeof navigator !== "undefined" && "serviceWorker" in navigator) {
   if (isPreviewHost || isInIframe) {
