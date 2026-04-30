@@ -1,10 +1,10 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { RefreshCw, X, FileText } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 import { APP_VERSION } from "@/lib/changelog";
-import { reportPWAEvent } from "@/lib/pwa-metrics";
+import { reportPWAEvent, PWAUpdateTrace } from "@/lib/pwa-metrics";
 
 /**
  * Detects new service worker versions and shows a non-blocking banner
