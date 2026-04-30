@@ -2,7 +2,7 @@ import React, { useEffect, useState, useCallback } from "react";
 import {
   ShieldCheck, RefreshCw, Trash2, Activity,
   AlertCircle, Info, Smartphone, HardDrive,
-  Undo2, FileSearch, Tag, Clock, Download, Zap, WifiOff, Link as LinkIcon,
+  Undo2, FileSearch, Tag, Clock, Download, Zap, WifiOff, Link as LinkIcon, ClipboardCopy,
 } from "lucide-react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -59,7 +59,22 @@ export const PWAManager: React.FC = () => {
   const [isSimulating, setIsSimulating] = useState(false);
   const [offlineTest, setOfflineTest] = useState<{ status: "idle" | "running" | "ok" | "fail"; message?: string }>({ status: "idle" });
 
-  const { counters, recordFailure, resetCounters, shouldRecommendRollback, threshold, logMessage } = usePWADiagnostics();
+  const { counters, recordFailure, resetCounters, shouldRecommendRollback, threshold, logMessage, recordOfflineTest, recordRollback } = usePWADiagnostics();
+  const rollbackNotifiedRef = React.useRef(false);
+
+  // Notify once when rollback recommendation triggers
+  useEffect(() => {
+    if (shouldRecommendRollback && !rollbackNotifiedRef.current) {
+      rollbackNotifiedRef.current = true;
+      toast.warning(`Rollback recomendado: ${counters.failuresInWindow} falhas em 5min`, {
+        description: "Considere reverter para a versão anterior do Service Worker.",
+        duration: 8000,
+      });
+      logMessage({ direction: "in", type: "ROLLBACK_RECOMMENDED", status: "fail", payload: { ...counters } });
+      reportPWAEvent("error", "fail", { context: "rollback_recommended", ...counters });
+    }
+    if (!shouldRecommendRollback) rollbackNotifiedRef.current = false;
+  }, [shouldRecommendRollback, counters, logMessage]);
 
   // Communicate with SW with timeout protection
   const askSW = useCallback(<T,>(type: string, responseType: string, timeoutMs = 5000): Promise<T> => {
@@ -158,35 +173,61 @@ export const PWAManager: React.FC = () => {
 
   const handleSimulateUpdate = async () => {
     setIsSimulating(true);
-    const startSnapshot = currentSnapshot?.version;
+    const startSnapshot = currentSnapshot;
+    const startVersion = startSnapshot?.version || null;
     toast.info("Simulando atualização do Service Worker...");
-    logMessage({ direction: "out", type: "SIMULATE_UPDATE" });
+    logMessage({ direction: "out", type: "SIMULATE_UPDATE", payload: { startVersion } });
 
     let controllerChanged = false;
     const onChange = () => { controllerChanged = true; };
     navigator.serviceWorker.addEventListener("controllerchange", onChange);
 
     try {
-      // 1. force update check
       const reg = await navigator.serviceWorker.getRegistration();
       if (!reg) throw new Error("Sem registration");
       await reg.update();
-
-      // 2. if new worker waiting -> skip waiting
       if (reg.waiting) reg.waiting.postMessage({ type: "SKIP_WAITING" });
 
-      // 3. wait up to 6s for controllerchange
+      // Wait up to 6s for controllerchange
       await new Promise((resolve) => setTimeout(resolve, 6000));
 
-      // 4. re-fetch precache and validate
+      // Re-fetch precache and validate critical files by URL+revision (hash)
       await loadPrecacheManifest();
       await loadSwVersion();
-      const endSnapshot = currentSnapshot?.version;
-      const versionChanged = startSnapshot && endSnapshot && startSnapshot !== endSnapshot;
+
+      // Wait one tick for state to settle, then diff
+      await new Promise(r => setTimeout(r, 100));
+      // We rebuild diff from localStorage (most up-to-date snapshot)
+      const stored = localStorage.getItem(SNAPSHOT_KEY);
+      const endSnapshot: PrecacheSnapshot | null = stored ? JSON.parse(stored) : null;
+
+      const startMap = new Map((startSnapshot?.files ?? []).map(f => [f.url, f.revision]));
+      const endMap = new Map((endSnapshot?.files ?? []).map(f => [f.url, f.revision]));
+      const criticalRegex = /\.(js|css|html)$|^\/(?:index\.html|sw\.js|manifest\.webmanifest)?$/i;
+      const criticalChanges: { url: string; from: string | null; to: string | null }[] = [];
+      endMap.forEach((rev, url) => {
+        if (criticalRegex.test(url) && startMap.get(url) !== rev) {
+          criticalChanges.push({ url, from: startMap.get(url) ?? null, to: rev });
+        }
+      });
+      const versionChanged = startVersion !== (endSnapshot?.version || null);
+
+      const summary = {
+        controllerChanged,
+        versionChanged,
+        startVersion,
+        endVersion: endSnapshot?.version || null,
+        criticalChanges,
+        criticalCount: criticalChanges.length,
+      };
+      logMessage({ direction: "in", type: "SIMULATE_UPDATE_RESULT", status: (controllerChanged || versionChanged) ? "success" : "fail", payload: summary });
 
       if (controllerChanged || versionChanged) {
-        toast.success(`Validação OK: ${controllerChanged ? "controller trocado" : ""}${versionChanged ? " · precache mudou" : ""}`);
-        reportPWAEvent("update_activated", "success", { context: "simulate_update" });
+        toast.success(`Validação OK · ${criticalChanges.length} arquivo(s) crítico(s) alterado(s)`, {
+          description: criticalChanges.slice(0, 3).map(c => c.url).join(", ") + (criticalChanges.length > 3 ? "..." : ""),
+          duration: 6000,
+        });
+        reportPWAEvent("update_activated", "success", { context: "simulate_update", ...summary });
       } else {
         toast.warning("Sem nova versão disponível no servidor — simulação completou sem trocas.");
       }
@@ -199,18 +240,22 @@ export const PWAManager: React.FC = () => {
     }
   };
 
+  const buildSupportPayload = () => ({
+    exportedAt: new Date().toISOString(),
+    appVersion: APP_VERSION,
+    swVersion,
+    swBuiltAt,
+    currentSnapshot,
+    previousSnapshot,
+    precacheDiff,
+    counters,
+    cacheKeys,
+    userAgent: navigator.userAgent,
+    url: window.location.href,
+  });
+
   const handleExportSnapshot = () => {
-    const payload = {
-      exportedAt: new Date().toISOString(),
-      appVersion: APP_VERSION,
-      swVersion,
-      swBuiltAt,
-      currentSnapshot,
-      previousSnapshot,
-      precacheDiff,
-      counters,
-      cacheKeys,
-    };
+    const payload = buildSupportPayload();
     const blob = new Blob([JSON.stringify(payload, null, 2)], { type: "application/json" });
     const url = URL.createObjectURL(blob);
     const a = document.createElement("a");
@@ -221,10 +266,21 @@ export const PWAManager: React.FC = () => {
     toast.success("Snapshot exportado.");
   };
 
+  const handleCopySupport = async () => {
+    try {
+      const payload = JSON.stringify(buildSupportPayload(), null, 2);
+      await navigator.clipboard.writeText(payload);
+      toast.success("JSON de suporte copiado para a área de transferência.", {
+        description: `${(payload.length / 1024).toFixed(1)} KB · cole no chat de suporte.`,
+      });
+    } catch (e: any) {
+      toast.error("Falha ao copiar: " + (e?.message || "erro"));
+    }
+  };
+
   const handleOfflineTest = async () => {
     setOfflineTest({ status: "running" });
     try {
-      // Validate critical precached assets are reachable from cache
       const targets = ["/", "/index.html", "/offline"];
       const results: { url: string; ok: boolean }[] = [];
       for (const url of targets) {
@@ -234,14 +290,20 @@ export const PWAManager: React.FC = () => {
       const allOk = results.every(r => r.ok);
       const failed = results.filter(r => !r.ok).map(r => r.url);
       if (allOk) {
-        setOfflineTest({ status: "ok", message: `Todos os ${targets.length} ativos críticos estão em cache.` });
+        const msg = `Todos os ${targets.length} ativos críticos estão em cache.`;
+        setOfflineTest({ status: "ok", message: msg });
+        recordOfflineTest({ status: "ok", message: msg });
         toast.success("App pronto para uso offline.");
       } else {
-        setOfflineTest({ status: "fail", message: `Faltando em cache: ${failed.join(", ")}` });
+        const msg = `Faltando em cache: ${failed.join(", ")}`;
+        setOfflineTest({ status: "fail", message: msg });
+        recordOfflineTest({ status: "fail", message: msg, missing: failed });
         toast.warning("Alguns ativos críticos não estão em cache.");
       }
     } catch (e: any) {
-      setOfflineTest({ status: "fail", message: e?.message || "Erro" });
+      const msg = e?.message || "Erro";
+      setOfflineTest({ status: "fail", message: msg });
+      recordOfflineTest({ status: "fail", message: msg });
     }
   };
 
@@ -345,23 +407,28 @@ export const PWAManager: React.FC = () => {
     }
   };
 
-  const handleRollback = async () => {
-    if (!confirm("Reverter para a versão anterior do Service Worker? A página será recarregada e os caches atuais serão limpos.")) return;
+  const handleRollback = async (auto = false) => {
+    if (!auto && !confirm("Reverter para a versão anterior do Service Worker? A página será recarregada e os caches atuais serão limpos.")) return;
     setIsReverting(true);
+    const fromVersion = swVersion;
+    const toVersion = previousSnapshot?.version || null;
     try {
       const regs = await navigator.serviceWorker.getRegistrations();
       await Promise.all(regs.map(r => r.unregister()));
       const keys = await caches.keys();
       await Promise.all(keys.map(k => caches.delete(k)));
-      // Restore previous snapshot reference (for diagnostics)
       if (previousSnapshot) {
         localStorage.setItem(SNAPSHOT_KEY, JSON.stringify(previousSnapshot));
       } else {
         localStorage.removeItem(SNAPSHOT_KEY);
       }
-      reportPWAEvent("update_activated", "fail", { context: "rollback_triggered" });
-      toast.success("Service Worker desregistrado. Recarregando...");
-      setTimeout(() => window.location.reload(), 800);
+      recordRollback({ fromVersion, toVersion, reason: auto ? "auto_recommended" : "manual" });
+      reportPWAEvent("update_activated", "fail", { context: "rollback_triggered", fromVersion, toVersion, auto });
+      toast.success(`Rollback concluído · voltando para ${toVersion || "instalação fresca"}`, {
+        description: `Era: ${fromVersion || "—"} · Recarregando em 1s...`,
+        duration: 3000,
+      });
+      setTimeout(() => window.location.reload(), 1200);
     } catch (e: any) {
       toast.error("Falha ao reverter: " + (e?.message || "erro"));
       setIsReverting(false);
@@ -420,7 +487,7 @@ export const PWAManager: React.FC = () => {
                 O Service Worker apresentou múltiplas falhas em curto período (comm: {counters.comm}, timeout: {counters.timeout}, ativação: {counters.activation}). Considere reverter para a versão anterior.
               </p>
               <div className="flex gap-2 mt-2">
-                <Button size="sm" className="h-8 bg-amber-500 hover:bg-amber-400 text-black font-bold" onClick={handleRollback}>
+                <Button size="sm" className="h-8 bg-amber-500 hover:bg-amber-400 text-black font-bold" onClick={() => handleRollback()}>
                   <Undo2 className="w-3.5 h-3.5 mr-1.5" /> Reverter Agora
                 </Button>
                 <Button size="sm" variant="outline" className="h-8 border-amber-500/30 text-amber-300" onClick={resetCounters}>
@@ -537,11 +604,18 @@ export const PWAManager: React.FC = () => {
           <Button variant="outline" size="sm"
             className="h-11 px-6 gap-2 border-white/10 hover:bg-white/5 font-bold"
             onClick={handleExportSnapshot}>
+            <Download className="w-4 h-4" /> Exportar JSON
+          </Button>
+
+          <Button variant="outline" size="sm"
+            className="h-11 px-6 gap-2 border-primary/30 text-primary hover:bg-primary/10 font-bold"
+            onClick={handleCopySupport}>
+            <ClipboardCopy className="w-4 h-4" /> Copiar p/ Suporte
           </Button>
 
           <Button variant="outline" size="sm"
             className="h-11 px-6 gap-2 border-amber-500/30 text-amber-400 hover:bg-amber-500/10 font-bold"
-            onClick={handleRollback} disabled={isReverting}>
+            onClick={() => handleRollback()} disabled={isReverting}>
             <Undo2 className={`w-4 h-4 ${isReverting ? "animate-spin" : ""}`} />
             Reverter SW
           </Button>

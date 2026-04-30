@@ -2,8 +2,24 @@ import { useEffect, useState, useCallback, useRef } from "react";
 
 const FAIL_KEY = "padh_sw_fail_counters";
 const MSG_LOG_KEY = "padh_sw_message_log";
+const OFFLINE_HISTORY_KEY = "padh_sw_offline_history";
+const ROLLBACK_HISTORY_KEY = "padh_sw_rollback_history";
 const ROLLBACK_THRESHOLD = 3; // failures within window
 const FAIL_WINDOW_MS = 5 * 60 * 1000; // 5 minutes
+
+export interface OfflineTestEntry {
+  timestamp: string;
+  status: "ok" | "fail";
+  message: string;
+  missing?: string[];
+}
+
+export interface RollbackEntry {
+  timestamp: string;
+  fromVersion: string | null;
+  toVersion: string | null;
+  reason: string;
+}
 
 export interface SWMessageLog {
   timestamp: string;
@@ -49,6 +65,12 @@ const saveMessageLog = (log: SWMessageLog[]) => {
 export const usePWADiagnostics = () => {
   const [counters, setCounters] = useState<FailCounters>(loadCounters);
   const [messageLog, setMessageLog] = useState<SWMessageLog[]>(loadMessageLog);
+  const [offlineHistory, setOfflineHistory] = useState<OfflineTestEntry[]>(() => {
+    try { return JSON.parse(localStorage.getItem(OFFLINE_HISTORY_KEY) || "[]"); } catch { return []; }
+  });
+  const [rollbackHistory, setRollbackHistory] = useState<RollbackEntry[]>(() => {
+    try { return JSON.parse(localStorage.getItem(ROLLBACK_HISTORY_KEY) || "[]"); } catch { return []; }
+  });
   const countersRef = useRef(counters);
   countersRef.current = counters;
 
@@ -99,13 +121,36 @@ export const usePWADiagnostics = () => {
     return () => clearInterval(timer);
   }, []);
 
+  const recordOfflineTest = useCallback((entry: Omit<OfflineTestEntry, "timestamp">) => {
+    const next: OfflineTestEntry = { timestamp: new Date().toISOString(), ...entry };
+    setOfflineHistory(prev => {
+      const updated = [next, ...prev].slice(0, 50);
+      try { localStorage.setItem(OFFLINE_HISTORY_KEY, JSON.stringify(updated)); } catch {}
+      return updated;
+    });
+  }, []);
+
+  const recordRollback = useCallback((entry: Omit<RollbackEntry, "timestamp">) => {
+    const next: RollbackEntry = { timestamp: new Date().toISOString(), ...entry };
+    setRollbackHistory(prev => {
+      const updated = [next, ...prev].slice(0, 30);
+      try { localStorage.setItem(ROLLBACK_HISTORY_KEY, JSON.stringify(updated)); } catch {}
+      return updated;
+    });
+    logMessage({ direction: "in", type: "ROLLBACK_TRIGGERED", status: "success", payload: entry });
+  }, [logMessage]);
+
   const shouldRecommendRollback = counters.failuresInWindow >= ROLLBACK_THRESHOLD;
 
   return {
     counters,
     messageLog,
+    offlineHistory,
+    rollbackHistory,
     logMessage,
     recordFailure,
+    recordOfflineTest,
+    recordRollback,
     resetCounters,
     clearMessageLog,
     shouldRecommendRollback,
