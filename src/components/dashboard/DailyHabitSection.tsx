@@ -44,6 +44,23 @@ const DailyHabitSection: React.FC = () => {
       setNotificationPermission(Notification.permission);
     }
 
+    const handleSWMessage = (event: MessageEvent) => {
+      if (event.data?.type === 'TEST_CONFIRMATION') {
+        setTestStatus('delivered');
+        setTimeout(() => setTestStatus('idle'), 3000);
+      }
+    };
+
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.addEventListener('message', handleSWMessage);
+    }
+
+    // Auto-open checkin if coming from notification
+    const params = new URLSearchParams(window.location.search);
+    if (params.get('from_notification') === 'true' && !isCompletedToday) {
+       setShowCheckin(true);
+    }
+
     const fetchReminderSettings = async () => {
       const { data: { user } } = await supabase.auth.getUser();
       if (user) {
