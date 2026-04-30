@@ -110,12 +110,12 @@ const MeuProduto: React.FC = () => {
             <CardContent className="divide-y divide-border/50">
               {fase.sessoes.map((s, idx) => {
                 const done = jornada.completedSessions.includes(s.id);
-                const sessionResponses = s.exercicios.filter((ex) =>
+                const sessionResponses = s.blocos.filter(b => b.tipo === 'exercise').filter((ex) =>
                   jornada.responses.some((r) => r.exerciseId === ex.id),
                 );
                 const inProgress = !done && sessionResponses.length > 0;
                 const lastResp = jornada.responses
-                  .filter((r) => s.exercicios.some((ex) => ex.id === r.exerciseId))
+                  .filter((r) => s.blocos.filter(b => b.tipo === 'exercise').some((ex) => ex.id === r.exerciseId))
                   .sort((a, b) => (a.date < b.date ? 1 : -1))[0];
 
                 return (

@@ -22,7 +22,7 @@ const ResponseHistory = () => {
           .map((resp, i) => {
             // Find exercise details
             const details = JORNADA_DATA.flatMap((f) =>
-              f.sessoes.flatMap((s) => s.exercicios),
+              f.sessoes.flatMap((s) => s.blocos.filter(b => b.tipo === 'exercise')),
             ).find((ex) => ex.id === resp.exerciseId);
 
             return (

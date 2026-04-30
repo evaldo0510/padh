@@ -9,7 +9,7 @@ const BibliotecaExercicios = () => {
   /* Extract all exercises from all phases */ const allExercises =
     JORNADA_DATA.flatMap((fase) =>
       fase.sessoes.flatMap((sessao) =>
-        sessao.exercicios.map((ex) => ({
+        sessao.blocos.filter(b => b.tipo === 'exercise').map((ex) => ({
           ...ex,
           faseId: fase.id,
           faseTitulo: fase.titulo,
