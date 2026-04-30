@@ -558,6 +558,19 @@ export const PWAManager: React.FC = () => {
           </Button>
         </div>
 
+        {/* Offline test result */}
+        {offlineTest.status !== "idle" && (
+          <div className={`p-3 rounded-xl border text-xs flex items-center gap-2 ${
+            offlineTest.status === "ok" ? "bg-emerald-500/10 border-emerald-500/30 text-emerald-300" :
+            offlineTest.status === "fail" ? "bg-red-500/10 border-red-500/30 text-red-300" :
+            "bg-white/5 border-white/10 text-muted-foreground"
+          }`}>
+            <WifiOff className="w-4 h-4" />
+            <span className="font-bold uppercase tracking-wider text-[10px]">Teste Offline:</span>
+            <span>{offlineTest.status === "running" ? "Verificando cache..." : offlineTest.message}</span>
+          </div>
+        )}
+
         {/* Precache Diff */}
         <div className="space-y-3">
           <div className="flex items-center justify-between">
