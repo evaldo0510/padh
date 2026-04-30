@@ -304,9 +304,25 @@ export const PWAManager: React.FC = () => {
     const activationTimeout = setTimeout(() => {
       if (!activated) {
         toast.warning("A nova versão demorou para ativar. Tente recarregar a página manualmente.", { duration: 6000 });
+        recordFailure("activation", { context: "activation_timeout" });
         reportPWAEvent("error", "fail", { context: "activation_timeout" });
       }
     }, 8000);
+
+    try {
+      if (registration.waiting) {
+        registration.waiting.postMessage({ type: "SKIP_WAITING" });
+        toast.success("Forçando ativação da nova versão...");
+      } else {
+        await registration.update();
+        toast.info("Buscando atualizações no servidor...");
+      }
+    } catch (e: any) {
+      toast.error("Falha na comunicação com o Service Worker.");
+      setCommError(e?.message || "Erro desconhecido");
+      recordFailure("comm", { context: "update_check", message: e?.message });
+      reportPWAEvent("error", "fail", { context: "update_check", message: e?.message });
+    } finally {
 
     try {
       if (registration.waiting) {
