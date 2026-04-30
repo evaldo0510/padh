@@ -5,7 +5,12 @@ import { componentTagger } from "lovable-tagger";
 import { VitePWA } from "vite-plugin-pwa";
 
 // https://vitejs.dev/config/
+const BUILD_ID = `${Date.now()}`;
+
 export default defineConfig(({ mode }) => ({
+  define: {
+    __BUILD_ID__: JSON.stringify(BUILD_ID),
+  },
   server: {
     host: "::",
     port: 8080,
@@ -19,6 +24,9 @@ export default defineConfig(({ mode }) => ({
       filename: 'sw.js',
       registerType: 'autoUpdate',
       devOptions: { enabled: false },
+      injectManifest: {
+        injectionPoint: 'self.__WB_MANIFEST',
+      },
       includeAssets: ['favicon.png', 'robots.txt', 'apple-touch-icon.png', 'logo-pwa.svg', 'pwa-192x192.png', 'pwa-512x512.png', 'maskable-icon-512x512.png', 'og-image.png', 'og-image.svg', 'pch-logo-180.png', 'pch-logo-192.png', 'pch-logo-32.png', 'pch-logo-48.png', 'pch-logo-512.png', 'pch-logo-96.png', 'pch-logo.svg', 'placeholder.svg'],
       manifest: {
         name: 'P.A.D.H. — Poesia Aplicada ao Desenvolvimento Humano',
