@@ -39,6 +39,7 @@ if (typeof navigator !== "undefined" && "serviceWorker" in navigator) {
     // Production: listen for SKIP_WAITING messages from the update banner.
     navigator.serviceWorker.addEventListener("message", (event) => {
       if (event.data?.type === "SKIP_WAITING") {
+        console.log("PWA: Received SKIP_WAITING message in main. Activating...");
         navigator.serviceWorker.getRegistration().then((reg) => {
           reg?.waiting?.postMessage({ type: "SKIP_WAITING" });
         });
