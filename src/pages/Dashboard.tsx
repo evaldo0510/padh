@@ -40,6 +40,7 @@ import SupabaseConfigBanner from "@/components/dashboard/SupabaseConfigBanner";
 import SyncStatusIndicator from "@/components/dashboard/SyncStatusIndicator";
 import NotificationCenter from "@/components/dashboard/NotificationCenter";
 import { ObjectiveSettings } from "@/components/dashboard/ObjectiveSettings";
+import { PWAManager } from "@/components/dashboard/PWAManager";
 import { toast } from "sonner";
 import { supabase } from "@/integrations/supabase/client";
 import { Progress } from "@/components/ui/progress";
