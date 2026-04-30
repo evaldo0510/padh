@@ -58,6 +58,11 @@ const DailyHabitSection: React.FC = () => {
         setDeliveryCount(event.data.count);
         setReminderHistory(prev => [{date: new Date().toISOString(), type: `Continuous #${event.data.count}`}, ...prev].slice(0, 5));
       }
+      if (event.data?.type === 'TECHNICAL_INFO_RESPONSE') {
+        const log = JSON.stringify(event.data.info, null, 2);
+        navigator.clipboard.writeText(log);
+        toast.success("Log técnico copiado para a área de transferência!");
+      }
     };
 
     if ('serviceWorker' in navigator) {
