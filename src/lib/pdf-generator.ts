@@ -623,7 +623,7 @@ export function gerarRelatorioProgresso(
     y = 32;
   }
 
-  y = sectionTitle(doc, y, "6. PRÓXIMOS PASSOS");
+  y = sectionTitle(doc, y, "7. PRÓXIMOS PASSOS");
   const nextModule = modulos.find(
     (m) => !(progressData.completedModules || []).includes(m.id),
   );
