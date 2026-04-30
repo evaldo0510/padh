@@ -453,6 +453,7 @@ export function gerarRelatorioProgresso(
   progressData: any,
   modulos: ModuloClinico[],
   jornadaProgress?: any,
+  checkins?: any[],
 ) {
   const doc = new jsPDF({ unit: "mm", format: "a4" });
   header(doc, "Relatório de Evolução P.A.D.H.", "Progresso do Aluno");
