@@ -70,7 +70,7 @@ test.describe('PWA E2E Update Flow', () => {
     await page.goto(`${targetUrl}/non-existent-route-123`);
     // Depending on how offline fallback is implemented, check for its content
     // If it's a dedicated page, it should be visible.
-    const offlineTitle = page.getByText(/Você está offline/i);
+    const offlineTitle = page.getByText(/Sem conexão/i);
     // Since we only allow specific routes in PWA config for offline, 
     // others might show the browser's default offline page or our fallback.
     // Let's check for our Offline.tsx content if it's rendered.
