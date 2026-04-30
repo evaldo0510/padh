@@ -495,4 +495,150 @@ export const JORNADA_DATA: FaseJornada[] = [
       },
     ],
   },
+  {
+    id: "expansao",
+    numero: 4,
+    titulo: "Expansão",
+    descricao: "Manifestando sua verdade no mundo. O florescimento da jornada, consolidando identidade e propósito.",
+    cor: "rose",
+    sessoes: [
+      {
+        id: "identidade-expandida",
+        titulo: "Identidade Expandida",
+        descricao: "Consolidando o novo 'eu' consciente.",
+        blocos: [
+          {
+            id: "ex-m1-b1",
+            tipo: "text",
+            titulo: "O Novo Eu",
+            conteudo: "Você não é mais quem costumava ser. A expansão começa quando você habita plenamente a sua nova pele mental, sem pedir desculpas por sua evolução.",
+          },
+          {
+            id: "ex-m1-b2",
+            tipo: "exercise",
+            titulo: "Auto-Definição",
+            conteudo: "Nomear a nova versão de si mesmo.",
+            instrucao: "Escreva três adjetivos que definem quem você é hoje, que não faziam parte do seu vocabulário há um mês.",
+            placeholder: "Eu sou...",
+          },
+          {
+            id: "ex-m1-b3",
+            tipo: "reflection",
+            titulo: "Soberania",
+            conteudo: "A soberania interior é o ato de decidir o próprio valor sem depender do espelho do outro. Como é a sensação de ser o autor da própria história?",
+          }
+        ],
+      },
+      {
+        id: "proposito-pratico",
+        titulo: "Propósito Prático",
+        descricao: "Transformando valores em ações reais.",
+        blocos: [
+          {
+            id: "ex-m2-b1",
+            tipo: "text",
+            titulo: "Ação no Mundo",
+            conteudo: "Propósito não é um destino distante, é a bússola que orienta cada passo hoje. É onde seus talentos encontram as necessidades da vida.",
+          },
+          {
+            id: "ex-m2-b2",
+            tipo: "exercise",
+            titulo: "O Chamado",
+            conteudo: "Identificar onde você quer atuar.",
+            instrucao: "Qual área da sua vida (trabalho, família, comunidade) mais precisa da sua nova versão hoje?",
+            placeholder: "A área é...",
+          },
+          {
+            id: "ex-m2-b3",
+            tipo: "exercise",
+            titulo: "O Primeiro Movimento",
+            conteudo: "Planejar a ação real.",
+            instrucao: "Descreva uma ação concreta que você fará nas próximas 24 horas para manifestar seu propósito nessa área.",
+            placeholder: "Amanhã eu vou...",
+          }
+        ],
+      },
+      {
+        id: "consistencia-fluxo",
+        titulo: "Consistência e Fluxo",
+        descricao: "Mantendo a chama acesa no cotidiano.",
+        blocos: [
+          {
+            id: "ex-m3-b1",
+            tipo: "text",
+            titulo: "A Manutenção do Verbo",
+            conteudo: "O fluxo é mantido pela consistência das pequenas escolhas. Não é sobre grandes saltos, mas sobre nunca deixar de caminhar.",
+          },
+          {
+            id: "ex-m3-b2",
+            tipo: "exercise",
+            titulo: "Ritual de Ancoragem",
+            conteudo: "Criar uma rotina de presença.",
+            instrucao: "Escolha uma palavra-chave para ser sua âncora diária. Qual será o sinal (ex: ao acordar, ao beber água) que te lembrará dessa palavra?",
+            placeholder: "Minha palavra é... e meu sinal é...",
+          },
+          {
+            id: "ex-m3-b3",
+            tipo: "reflection",
+            titulo: "O Fluxo",
+            conteudo: "A vida flui quando paramos de lutar contra a correnteza e começamos a ajustar as velas. Você está pronto para navegar?",
+          }
+        ],
+      },
+      {
+        id: "legado-impacto",
+        titulo: "Legado e Impacto",
+        descricao: "A marca que deixamos nos outros.",
+        blocos: [
+          {
+            id: "ex-m4-b1",
+            tipo: "text",
+            titulo: "Eco Poético",
+            conteudo: "Sua transformação ecoa. Quando você muda, o sistema ao seu redor é obrigado a se reorganizar. Seu maior legado é a sua própria presença.",
+          },
+          {
+            id: "ex-m4-b2",
+            tipo: "exercise",
+            titulo: "Servir com Versos",
+            conteudo: "Identificar o impacto positivo.",
+            instrucao: "Como a sua mudança pode beneficiar alguém próximo a você hoje? O que você pode oferecer sem esforço?",
+            placeholder: "Eu posso oferecer...",
+          },
+          {
+            id: "ex-m4-b3",
+            tipo: "reflection",
+            titulo: "A Marca",
+            conteudo: "O que você gostaria que as pessoas sentissem quando estivessem em sua presença daqui para frente?",
+          }
+        ],
+      },
+      {
+        id: "integracao-estilo-vida",
+        titulo: "Estilo de Vida PADH",
+        descricao: "Viver em estado de poesia cognitiva.",
+        blocos: [
+          {
+            id: "ex-m5-b1",
+            tipo: "text",
+            titulo: "O Fechamento do Círculo",
+            conteudo: "O PADH deixa de ser um método e se torna sua lente. Você agora vê poesia na neurociência e ciência na sensibilidade.",
+          },
+          {
+            id: "ex-m5-b2",
+            tipo: "exercise",
+            titulo: "O Manifesto",
+            conteudo: "Sua declaração de liberdade.",
+            instrucao: "Escreva seu manifesto pessoal de expansão. Use frases curtas, no presente, que comecem com 'Eu escolho...'.",
+            placeholder: "Eu escolho...",
+          },
+          {
+            id: "ex-m5-b3",
+            tipo: "reflection",
+            titulo: "Plenitude",
+            conteudo: "A jornada termina, mas o caminho continua. Sinta a gratidão por cada fenda que permitiu a luz entrar. Você é a expansão.",
+          }
+        ],
+      }
+    ],
+  },
 ];
