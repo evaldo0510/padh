@@ -14,6 +14,11 @@ const PWAUpdatePrompt = () => {
   const [registration, setRegistration] = useState<ServiceWorkerRegistration | null>(null);
 
   useEffect(() => {
+    // Test mode: allow triggering via window for CI/smoke tests
+    if (typeof window !== "undefined") {
+      (window as any).__TRIGGER_PWA_UPDATE__ = () => setNeedRefresh(true);
+    }
+
     if (typeof window === "undefined" || !("serviceWorker" in navigator)) return;
 
     // Skip in iframes / preview hosts (already unregistered in main.tsx).
