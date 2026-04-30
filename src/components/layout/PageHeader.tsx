@@ -1,7 +1,7 @@
-import React from "react";
-import { ArrowLeft, Home } from "lucide-react";
+import React, { useMemo } from "react";
+import { ArrowLeft, Home, ChevronRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { useNavigate, Link } from "react-router-dom";
+import { useNavigate, Link, useLocation } from "react-router-dom";
 import {
   Breadcrumb,
   BreadcrumbItem,
@@ -10,9 +10,12 @@ import {
   BreadcrumbPage,
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb";
+
 interface PageHeaderProps {
   currentPage: string;
   showBackButton?: boolean;
+  parentPage?: { name: string; path: string };
+  moduleName?: string;
 }
 const PageHeader: React.FC<PageHeaderProps> = ({
   currentPage,
