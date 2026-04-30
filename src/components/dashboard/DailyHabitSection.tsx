@@ -666,9 +666,19 @@ const DailyHabitSection: React.FC = () => {
 
               {reminderHistory.length > 0 && (
                 <div className="space-y-3 pt-4 border-t border-white/5">
-                  <div className="flex items-center gap-2">
-                    <History className="w-4 h-4 text-white/30" />
-                    <p className="text-[10px] font-black uppercase tracking-widest text-white/30">Histórico de Alertas</p>
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center gap-2">
+                      <History className="w-4 h-4 text-white/30" />
+                      <p className="text-[10px] font-black uppercase tracking-widest text-white/30">Histórico de Alertas</p>
+                    </div>
+                    <div className="flex gap-2">
+                      <Button variant="ghost" size="sm" onClick={handleGetLog} className="h-6 px-2 text-[8px] text-primary/60 hover:text-primary gap-1">
+                        <Terminal className="w-3 h-3" /> Log SW
+                      </Button>
+                      <Button variant="ghost" size="sm" onClick={exportReminderHistory} className="h-6 px-2 text-[8px] text-white/30 hover:text-white gap-1">
+                        <FileSpreadsheet className="w-3 h-3" /> Exportar
+                      </Button>
+                    </div>
                   </div>
                   <div className="space-y-2">
                     {reminderHistory.map((h, i) => (
