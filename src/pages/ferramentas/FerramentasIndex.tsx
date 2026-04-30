@@ -104,7 +104,12 @@ const FerramentasIndex = () => {
     },
   ];
   return (
-    <PageLayout seo={pagesSEO.ferramentas} currentPage="Ferramentas PCH">
+    <PageLayout 
+      seo={pagesSEO.ferramentas} 
+      currentPage="Ferramentas"
+      showBackButton={false}
+      hideHeader
+    >
       {" "}
       {/* Hero */}
       <section className="relative overflow-hidden">

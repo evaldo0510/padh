@@ -231,14 +231,14 @@ const SessaoView = () => {
         </div>
 
         {/* Minimal Header */}
-        <header className="px-8 py-8 flex justify-between items-center z-40">
+        <header className="px-4 md:px-8 pt-8 md:pt-8 pb-4 flex justify-between items-center z-40 pt-safe">
            <div className="flex items-center gap-6">
               <Button 
                 variant="ghost" 
                 size="icon" 
-                onClick={() => navigate("/dashboard")}
+                onClick={() => navigate(-1)}
                 className="rounded-2xl h-12 w-12 hover:bg-white/5 transition-all text-white/30 hover:text-white"
-                aria-label="Voltar para o Dashboard"
+                aria-label="Voltar"
               >
                 <ArrowLeft className="w-6 h-6" />
               </Button>

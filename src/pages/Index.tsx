@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import PageLayout from "@/components/layout/PageLayout";
 import {
   scientificStudies,
   getAllCategories,
@@ -104,21 +105,20 @@ const Index = () => {
 
   if (session) {
     return (
-      <div className="min-h-screen bg-[#050505]">
-        <SEOHead
-          title="Home — Jornada PADH"
-          description="Sua jornada contínua de transformação."
-          path="/"
-        />
-        <Header />
-        <main className="pb-20 lg:pb-0">
+      <PageLayout
+        seo={{
+          title: "Home — Jornada PADH",
+          description: "Sua jornada contínua de transformação.",
+          path: "/",
+        }}
+        currentPage="Início"
+        showBackButton={false}
+        hideHeader
+      >
+        <div className="min-h-screen bg-[#050505]">
           <StreamingHome />
-        </main>
-        <div className="hidden lg:block">
-          <Footer />
         </div>
-        <MobileNav />
-      </div>
+      </PageLayout>
     );
   }
 
