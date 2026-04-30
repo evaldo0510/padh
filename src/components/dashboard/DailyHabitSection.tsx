@@ -162,6 +162,27 @@ const DailyHabitSection: React.FC = () => {
     }
   };
 
+  const handleTestNotification = () => {
+    if (notificationPermission !== "granted") {
+      requestPermission();
+      return;
+    }
+
+    if ('serviceWorker' in navigator && navigator.serviceWorker.controller) {
+      navigator.serviceWorker.controller.postMessage({
+        type: 'TEST_NOTIFICATION',
+        message: customMessage
+      });
+      toast.success("Notificação de teste enviada!");
+    } else {
+      // Fallback
+      new Notification("Teste de Lembrete PADH", {
+        body: customMessage,
+        icon: "/pwa-192x192.png"
+      });
+    }
+  };
+
   const handleStart = () => {
     setStep("mood");
     setShowCheckin(true);
@@ -460,12 +481,20 @@ const DailyHabitSection: React.FC = () => {
       </Dialog>
 
       <Dialog open={showSettings} onOpenChange={setShowSettings}>
-        <DialogContent className="sm:max-w-[400px] bg-slate-900 border-white/10 p-8">
-          <DialogHeader>
+        <DialogContent className="sm:max-w-[440px] bg-slate-950 border-white/10 p-8 shadow-2xl">
+          <DialogHeader className="flex flex-row items-center justify-between">
             <DialogTitle className="text-2xl font-bold text-white flex items-center gap-3">
               <Bell className="text-primary w-6 h-6" />
               Lembretes Diários
             </DialogTitle>
+            <Button 
+              variant="outline" 
+              size="sm" 
+              onClick={handleTestNotification}
+              className="border-primary/20 text-primary hover:bg-primary/10 h-8"
+            >
+              Testar Agora
+            </Button>
           </DialogHeader>
           <div className="py-6 space-y-8">
             <div className="flex items-center justify-between">

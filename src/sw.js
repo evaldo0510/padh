@@ -39,34 +39,56 @@ registerRoute(
 
 // --- Daily Reminder Logic ---
 
+let reminderConfig = null;
+let lastNotifiedDate = null;
+
 self.addEventListener('message', (event) => {
-  if (event.data && event.data.type === 'SET_REMINDER') {
-    // Store reminder config locally in SW memory (as fallback)
-    self.reminderConfig = event.data;
-    console.log('SW: Reminder settings updated', self.reminderConfig);
+  if (!event.data) return;
+
+  if (event.data.type === 'SET_REMINDER') {
+    reminderConfig = event.data;
+    console.log('SW: Reminder settings updated', reminderConfig);
+  }
+
+  if (event.data.type === 'TEST_NOTIFICATION') {
+    self.registration.showNotification("Teste de Lembrete PADH", {
+      body: event.data.message || "Esta é uma demonstração do seu lembrete diário.",
+      icon: "/pwa-192x192.png",
+      tag: 'test-notification',
+      actions: [
+        { action: 'open_checkin', title: 'Fazer Check-in agora' }
+      ]
+    });
   }
 });
 
 async function checkAndShowNotification() {
-  if (!self.reminderConfig || !self.reminderConfig.enabled) return;
+  if (!reminderConfig || !reminderConfig.enabled) return;
 
   const now = new Date();
-  const today = now.toLocaleDateString('sv');
+  const today = now.toLocaleDateString('sv'); // YYYY-MM-DD
   
-  // We can't access localStorage directly, so we'd use IndexedDB for production persistence.
-  // For this version, we'll show a notification if the time matches.
-  const [targetHours, targetMinutes] = self.reminderConfig.time.split(':').map(Number);
+  if (lastNotifiedDate === today) return;
+
+  const [targetHours, targetMinutes] = reminderConfig.time.split(':').map(Number);
   
+  // Trigger only if within the correct minute and once per day
   if (now.getHours() === targetHours && now.getMinutes() === targetMinutes) {
-    self.registration.showNotification("Lembrete PADH (PWA)", {
-      body: self.reminderConfig.message,
+    lastNotifiedDate = today;
+    
+    return self.registration.showNotification("Lembrete PADH", {
+      body: reminderConfig.message,
       icon: "/pwa-192x192.png",
-      tag: 'daily-reminder'
+      tag: 'daily-reminder',
+      requireInteraction: true,
+      actions: [
+        { action: 'open_checkin', title: 'Fazer Check-in' }
+      ]
     });
   }
 }
 
-// Periodic Sync (requires installation and high engagement score)
+// Periodic Sync (requires app installation)
 self.addEventListener('periodicsync', (event) => {
   if (event.tag === 'daily-reminder') {
     event.waitUntil(checkAndShowNotification());
@@ -75,18 +97,21 @@ self.addEventListener('periodicsync', (event) => {
 
 self.addEventListener('notificationclick', (event) => {
   event.notification.close();
-  event.waitUntil(
-    clients.matchAll({ type: 'window', includeUncontrolled: true }).then((clientList) => {
-      if (clientList.length > 0) {
-        let client = clientList[0];
-        for (let i = 0; i < clientList.length; i++) {
-          if (clientList[i].focused) {
-            client = clientList[i];
+
+  if (event.action === 'open_checkin' || !event.action) {
+    event.waitUntil(
+      clients.matchAll({ type: 'window', includeUncontrolled: true }).then((clientList) => {
+        if (clientList.length > 0) {
+          let client = clientList[0];
+          for (let i = 0; i < clientList.length; i++) {
+            if (clientList[i].focused) {
+              client = clientList[i];
+            }
           }
+          return client.focus();
         }
-        return client.focus();
-      }
-      return clients.openWindow('/');
-    })
-  );
+        return clients.openWindow('/');
+      })
+    );
+  }
 });
