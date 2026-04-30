@@ -44,10 +44,17 @@ const PWAUpdatePrompt = () => {
 
     if (!("serviceWorker" in navigator)) return;
 
+    const isInIframe = (() => {
+      try {
+        return window.self !== window.top;
+      } catch {
+        return true;
+      }
+    })();
     const isEditorPreview =
       window.location.hostname.includes("id-preview--") ||
       window.location.hostname.includes("lovableproject.com") ||
-      window.self !== window.top;
+      isInIframe;
 
     if (isEditorPreview) return;
 
