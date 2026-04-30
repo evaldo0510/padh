@@ -1,0 +1,30 @@
+name: PWA Production Smoke Test
+
+on:
+  deployment_status:
+
+jobs:
+  smoke-test:
+    if: github.event.deployment_status.state == 'success'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          
+      - name: Run PWA Smoke Test
+        env:
+          TARGET_URL: ${{ github.event.deployment_status.target_url }}
+        run: |
+          node scripts/pwa-smoke-test.mjs $TARGET_URL
+
+      - name: Install Playwright Browsers
+        run: npx playwright install --with-deps chromium
+
+      - name: Run PWA Banner Interaction Test
+        env:
+          TARGET_URL: ${{ github.event.deployment_status.target_url }}
+        run: npx playwright test tests/pwa-banner.spec.ts
