@@ -54,21 +54,29 @@ recebem a versão mais recente sem precisar limpar cache manualmente.
 | UI continua antiga após atualizar | Confirmar que `cleanupOutdatedCaches: true` está ativo no Workbox |
 | Update banner em iframe Lovable | O guard em `main.tsx` deveria suprimir — checar `isPreviewHost` |
 
-## Smoke test automatizado (CLI)
+## 🤖 Testes Automatizados (CI/CD)
 
-Rode após cada deploy para validar headers, SW e manifest:
+A plataforma agora conta com verificações automáticas após cada deploy:
 
+### 1. Smoke Test de Infraestrutura
+Valida headers de cache, manifest e acessibilidade do Service Worker.
 ```bash
 node scripts/pwa-smoke-test.mjs https://padhpoesia.lovable.app
-# ou validando versão específica:
-EXPECTED_VERSION=1.2.0 node scripts/pwa-smoke-test.mjs https://padhpoesia.lovable.app
 ```
 
-Verifica:
-- `/` retorna 200 e não está cacheado de forma agressiva
-- `/sw.js` existe, é Workbox e chama `skipWaiting()`
-- `/manifest.webmanifest` é JSON válido com `display: standalone` e ícones
-- (opcional) versão exibida bate com `EXPECTED_VERSION`
+### 2. Teste de Interação de Banner (Playwright)
+Valida que o banner aparece e o botão de atualização recarrega a página.
+```bash
+# Rodar localmente (precisa de servidor rodando)
+TARGET_URL=http://localhost:8080 npx playwright test tests/pwa-banner.spec.ts
+```
+
+### 3. Pipeline CI/CD
+O arquivo `.github/workflows/pwa-checks.yml` executa ambos os testes automaticamente após cada deploy bem-sucedido. Se qualquer teste falhar, o build/deploy é marcado como falho.
+
+---
+
+## 📝 Checklist de Validação Manual (Produção)
 
 ## Smoke test manual rápido (1 min)
 
