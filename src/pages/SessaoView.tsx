@@ -325,12 +325,27 @@ const SessaoView = () => {
                 <ChevronLeft className="w-4 h-4 mr-2" /> Anterior
               </Button>
               <div className="flex gap-2">
-                 {Array.from({ length: totalSteps }).map((_, i) => (
-                    <div 
-                      key={i} 
-                      className={`h-1.5 w-12 rounded-full transition-all duration-700 ${i === currentExIdx ? 'bg-primary shadow-glow shadow-primary/40' : i < currentExIdx ? 'bg-primary/30' : 'bg-white/5'}`} 
-                    />
-                 ))}
+                 {Array.from({ length: totalSteps }).map((_, i) => {
+                    const isCurrent = i === currentExIdx;
+                    const isPast = i < currentExIdx;
+                    const blockType = sessao.blocos[i].tipo;
+                    
+                    return (
+                      <div 
+                        key={i} 
+                        className={`h-1.5 w-12 rounded-full transition-all duration-700 relative overflow-hidden ${isCurrent ? 'bg-primary shadow-glow shadow-primary/40' : isPast ? 'bg-primary/30' : 'bg-white/5'}`}
+                      >
+                         {isCurrent && blockType === "exercise" && !response.trim() && (
+                            <motion.div 
+                               initial={{ x: "-100%" }}
+                               animate={{ x: "0%" }}
+                               className="absolute inset-0 bg-white/10"
+                               transition={{ repeat: Infinity, duration: 1.5, ease: "linear" }}
+                            />
+                         )}
+                      </div>
+                    );
+                 })}
               </div>
            </div>
 
