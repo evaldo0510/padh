@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useMemo } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Flame, Sparkles, CheckCircle2, ChevronRight, MessageSquare, ArrowLeft, History, Bell, BellOff, Clock, Activity, FileSpreadsheet, Terminal, Download } from "lucide-react";
+import { Flame, Sparkles, CheckCircle2, ChevronRight, MessageSquare, ArrowLeft, History, Bell, BellOff, Clock, Activity, FileSpreadsheet, Terminal, Download, Cpu, Database, Info } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useJornada } from "@/hooks/useJornada";
 import { JORNADA_DATA } from "@/lib/jornada-data";
@@ -8,6 +8,7 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from "
 import { Textarea } from "@/components/ui/textarea";
 import { Switch } from "@/components/ui/switch";
 import { Input } from "@/components/ui/input";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { toast } from "sonner";
 import { supabase } from "@/integrations/supabase/client";
 import { useNavigate } from "react-router-dom";
@@ -30,6 +31,7 @@ const DailyHabitSection: React.FC = () => {
   const [deliveryCount, setDeliveryCount] = useState(0);
   const [reminderHistory, setReminderHistory] = useState<{date: string, type: string}[]>([]);
   const [fromReminderId, setFromReminderId] = useState<string | null>(null);
+  const [swStatusInfo, setSwStatusInfo] = useState<any>(null);
 
   // Get a daily exercise based on the date
   const getDailyExercise = () => {
@@ -59,9 +61,11 @@ const DailyHabitSection: React.FC = () => {
         setReminderHistory(prev => [{date: new Date().toISOString(), type: `Continuous #${event.data.count}`}, ...prev].slice(0, 5));
       }
       if (event.data?.type === 'TECHNICAL_INFO_RESPONSE') {
+        setSwStatusInfo(event.data.info);
         const log = JSON.stringify(event.data.info, null, 2);
+        // We still copy to clipboard for convenience, but now we also show in UI
         navigator.clipboard.writeText(log);
-        toast.success("Log técnico copiado para a área de transferência!");
+        toast.success("Status do Service Worker atualizado!");
       }
     };
 
@@ -569,132 +573,192 @@ const DailyHabitSection: React.FC = () => {
       </Dialog>
 
       <Dialog open={showSettings} onOpenChange={setShowSettings}>
-        <DialogContent className="sm:max-w-[440px] bg-slate-950 border-white/10 p-8 shadow-2xl">
-          <DialogHeader className="flex flex-row items-center justify-between">
-            <DialogTitle className="text-2xl font-bold text-white flex items-center gap-3">
-              <Bell className="text-primary w-6 h-6" />
-              Lembretes Diários
-            </DialogTitle>
-            <Button 
-              variant="outline" 
-              size="sm" 
-              onClick={handleTestNotification}
-              disabled={testStatus !== 'idle'}
-              className={`border-primary/20 text-primary hover:bg-primary/10 h-8 min-w-[100px] transition-all ${
-                testStatus === 'delivered' ? 'bg-emerald-500/20 text-emerald-400 border-emerald-500/20' : ''
-              }`}
-            >
-              {testStatus === 'idle' && "Testar Agora"}
-              {testStatus === 'sending' && "Enviando..."}
-              {testStatus === 'delivered' && "Recebido ✓"}
-            </Button>
-          </DialogHeader>
-          <div className="py-6 space-y-8 max-h-[70vh] overflow-y-auto pr-2 scrollbar-hide">
-            <div className="bg-primary/5 p-4 rounded-2xl border border-primary/10">
-              <h4 className="text-[10px] font-black uppercase tracking-widest text-primary/60 mb-2">Resumo da Agenda</h4>
-              <p className="text-white text-sm">
-                Disparo diário às <span className="font-bold">{reminderTime}</span> ({Intl.DateTimeFormat().resolvedOptions().timeZone})
-              </p>
-              <p className="text-white/40 text-[10px] mt-1 italic">"{customMessage}"</p>
+        <DialogContent className="sm:max-w-[500px] bg-slate-950 border-white/10 p-0 shadow-2xl overflow-hidden">
+          <Tabs defaultValue="config" className="w-full">
+            <div className="p-8 pb-0">
+              <DialogHeader className="flex flex-row items-center justify-between space-y-0 pb-4">
+                <DialogTitle className="text-2xl font-bold text-white flex items-center gap-3">
+                  <Bell className="text-primary w-6 h-6" />
+                  Lembretes
+                </DialogTitle>
+                <TabsList className="bg-white/5 border border-white/10">
+                  <TabsTrigger value="config" className="data-[state=active]:bg-primary data-[state=active]:text-white">Config</TabsTrigger>
+                  <TabsTrigger value="status" className="data-[state=active]:bg-primary data-[state=active]:text-white">Status SW</TabsTrigger>
+                </TabsList>
+              </DialogHeader>
             </div>
 
-            <div className="flex items-center justify-between">
-              <div className="space-y-1">
-                <p className="text-white font-medium">Ativar Lembretes</p>
-                <p className="text-white/40 text-sm">Receba um alerta no seu navegador.</p>
-              </div>
-              <Switch 
-                checked={reminderEnabled} 
-                onCheckedChange={(checked) => {
-                  if (checked && notificationPermission !== "granted") {
-                    requestPermission();
-                  }
-                  setReminderEnabled(checked);
-                  saveReminderSettings(checked, reminderTime, customMessage);
-                }} 
-              />
-            </div>
-
-            <div className={`space-y-6 transition-opacity ${reminderEnabled ? 'opacity-100' : 'opacity-30 pointer-events-none'}`}>
-              <div className="grid grid-cols-2 gap-4">
-                <div className="space-y-3">
-                  <div className="flex items-center gap-2">
-                    <Clock className="w-4 h-4 text-primary" />
-                    <p className="text-sm font-bold text-white/60 uppercase tracking-widest">Horário</p>
+            <TabsContent value="config" className="p-8 pt-2 mt-0">
+              <div className="space-y-6 max-h-[60vh] overflow-y-auto pr-2 scrollbar-hide">
+                <div className="flex items-center justify-between bg-primary/5 p-4 rounded-2xl border border-primary/10">
+                  <div className="space-y-1">
+                    <p className="text-white font-medium">Ativar Lembretes</p>
+                    <p className="text-white/40 text-xs">Receba um alerta no seu navegador.</p>
                   </div>
-                  <Input 
-                    type="time" 
-                    value={reminderTime} 
-                    onChange={(e) => {
-                      setReminderTime(e.target.value);
-                      saveReminderSettings(reminderEnabled, e.target.value, customMessage);
-                    }}
-                    className="bg-white/5 border-white/10 text-white text-lg h-12"
-                  />
-                </div>
-                
-                <div className="space-y-3">
-                  <div className="flex items-center gap-2">
-                    <Activity className="w-4 h-4 text-primary" />
-                    <p className="text-sm font-bold text-white/60 uppercase tracking-widest">Contínuo</p>
+                  <div className="flex items-center gap-3">
+                    <Button 
+                      variant="outline" 
+                      size="sm" 
+                      onClick={handleTestNotification}
+                      disabled={testStatus !== 'idle'}
+                      className={`border-primary/20 text-primary hover:bg-primary/10 h-8 px-3 transition-all ${
+                        testStatus === 'delivered' ? 'bg-emerald-500/20 text-emerald-400 border-emerald-500/20' : ''
+                      }`}
+                    >
+                      {testStatus === 'idle' && "Testar"}
+                      {testStatus === 'sending' && "..."}
+                      {testStatus === 'delivered' && "✓"}
+                    </Button>
+                    <Switch 
+                      checked={reminderEnabled} 
+                      onCheckedChange={(checked) => {
+                        if (checked && notificationPermission !== "granted") {
+                          requestPermission();
+                        }
+                        setReminderEnabled(checked);
+                        saveReminderSettings(checked, reminderTime, customMessage);
+                      }} 
+                    />
                   </div>
-                  <Button 
-                    variant="outline" 
-                    onClick={toggleContinuousTest}
-                    className={`w-full h-12 border-white/10 ${continuousTest ? 'bg-amber-500/20 text-amber-400 border-amber-500/20' : 'text-white/40'}`}
-                  >
-                    {continuousTest ? `Parar (${deliveryCount})` : "Iniciar 30s"}
-                  </Button>
                 </div>
-              </div>
 
-              <div className="space-y-3">
-                <div className="flex items-center gap-2">
-                  <MessageSquare className="w-4 h-4 text-primary" />
-                  <p className="text-sm font-bold text-white/60 uppercase tracking-widest">Mensagem de Incentivo</p>
-                </div>
-                <Textarea 
-                  value={customMessage} 
-                  onChange={(e) => {
-                    setCustomMessage(e.target.value);
-                  }}
-                  onBlur={() => saveReminderSettings(reminderEnabled, reminderTime, customMessage)}
-                  className="bg-white/5 border-white/10 text-white min-h-[80px] focus:border-primary/50 transition-all"
-                  placeholder="Ex: Hora da sua dose diária de poesia..."
-                />
-              </div>
-
-              {reminderHistory.length > 0 && (
-                <div className="space-y-3 pt-4 border-t border-white/5">
-                  <div className="flex items-center justify-between">
-                    <div className="flex items-center gap-2">
-                      <History className="w-4 h-4 text-white/30" />
-                      <p className="text-[10px] font-black uppercase tracking-widest text-white/30">Histórico de Alertas</p>
-                    </div>
-                    <div className="flex gap-2">
-                      <Button variant="ghost" size="sm" onClick={handleGetLog} className="h-6 px-2 text-[8px] text-primary/60 hover:text-primary gap-1">
-                        <Terminal className="w-3 h-3" /> Log SW
-                      </Button>
-                      <Button variant="ghost" size="sm" onClick={exportReminderHistory} className="h-6 px-2 text-[8px] text-white/30 hover:text-white gap-1">
-                        <FileSpreadsheet className="w-3 h-3" /> Exportar
-                      </Button>
-                    </div>
-                  </div>
-                  <div className="space-y-2">
-                    {reminderHistory.map((h, i) => (
-                      <div key={i} className="flex justify-between items-center text-[10px] text-white/40 bg-white/5 p-2 rounded-lg">
-                        <span>{h.type}</span>
-                        <span>{new Date(h.date).toLocaleTimeString()}</span>
+                <div className={`space-y-6 transition-opacity ${reminderEnabled ? 'opacity-100' : 'opacity-30 pointer-events-none'}`}>
+                  <div className="grid grid-cols-2 gap-4">
+                    <div className="space-y-3">
+                      <div className="flex items-center gap-2">
+                        <Clock className="w-4 h-4 text-primary" />
+                        <p className="text-[10px] font-black uppercase tracking-widest text-white/60">Horário</p>
                       </div>
-                    ))}
+                      <Input 
+                        type="time" 
+                        value={reminderTime} 
+                        onChange={(e) => {
+                          setReminderTime(e.target.value);
+                          saveReminderSettings(reminderEnabled, e.target.value, customMessage);
+                        }}
+                        className="bg-white/5 border-white/10 text-white text-lg h-12"
+                      />
+                    </div>
+                    
+                    <div className="space-y-3">
+                      <div className="flex items-center gap-2">
+                        <Activity className="w-4 h-4 text-primary" />
+                        <p className="text-[10px] font-black uppercase tracking-widest text-white/60">Contínuo (30s)</p>
+                      </div>
+                      <Button 
+                        variant="outline" 
+                        onClick={toggleContinuousTest}
+                        className={`w-full h-12 border-white/10 ${continuousTest ? 'bg-amber-500/20 text-amber-400 border-amber-500/20' : 'text-white/40'}`}
+                      >
+                        {continuousTest ? `Parar (${deliveryCount})` : "Iniciar Teste"}
+                      </Button>
+                    </div>
                   </div>
+
+                  <div className="space-y-3">
+                    <div className="flex items-center gap-2">
+                      <MessageSquare className="w-4 h-4 text-primary" />
+                      <p className="text-[10px] font-black uppercase tracking-widest text-white/60">Mensagem</p>
+                    </div>
+                    <Textarea 
+                      value={customMessage} 
+                      onChange={(e) => setCustomMessage(e.target.value)}
+                      onBlur={() => saveReminderSettings(reminderEnabled, reminderTime, customMessage)}
+                      className="bg-white/5 border-white/10 text-white min-h-[80px] focus:border-primary/50 transition-all text-sm"
+                      placeholder="Ex: Hora da sua dose diária de poesia..."
+                    />
+                  </div>
+
+                  {reminderHistory.length > 0 && (
+                    <div className="space-y-3 pt-4 border-t border-white/5">
+                      <div className="flex items-center justify-between">
+                        <div className="flex items-center gap-2">
+                          <History className="w-4 h-4 text-white/30" />
+                          <p className="text-[10px] font-black uppercase tracking-widest text-white/30">Histórico Recente</p>
+                        </div>
+                        <Button variant="ghost" size="sm" onClick={exportReminderHistory} className="h-6 px-2 text-[8px] text-white/30 hover:text-white gap-1">
+                          <FileSpreadsheet className="w-3 h-3" /> Exportar CSV
+                        </Button>
+                      </div>
+                      <div className="space-y-2">
+                        {reminderHistory.map((h, i) => (
+                          <div key={i} className="flex justify-between items-center text-[10px] text-white/40 bg-white/5 p-2 rounded-lg">
+                            <span>{h.type}</span>
+                            <span>{new Date(h.date).toLocaleTimeString()}</span>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  )}
                 </div>
-              )}
-            </div>
-          </div>
-          <DialogFooter>
+              </div>
+            </TabsContent>
+
+            <TabsContent value="status" className="p-8 pt-2 mt-0">
+              <div className="space-y-6">
+                <div className="flex items-center justify-between">
+                   <p className="text-white/60 text-sm">Status da Comunicação</p>
+                   <Button variant="outline" size="sm" onClick={handleGetLog} className="h-8 gap-2 border-primary/20 text-primary hover:bg-primary/10">
+                     <Terminal className="w-4 h-4" /> Atualizar Info
+                   </Button>
+                </div>
+
+                {!swStatusInfo ? (
+                  <div className="bg-white/5 border border-white/10 rounded-2xl p-8 text-center space-y-4">
+                    <Info className="w-12 h-12 text-white/20 mx-auto" />
+                    <p className="text-white/40 text-sm italic">Clique em "Atualizar Info" para verificar o estado do Service Worker.</p>
+                  </div>
+                ) : (
+                  <div className="space-y-4">
+                    <div className="grid grid-cols-2 gap-3">
+                      <div className="bg-white/5 p-4 rounded-xl border border-white/10 space-y-1">
+                        <div className="flex items-center gap-2 text-primary">
+                          <Cpu className="w-3 h-3" />
+                          <span className="text-[9px] font-black uppercase tracking-wider">SW Status</span>
+                        </div>
+                        <p className="text-white text-sm font-bold capitalize">{swStatusInfo.swStatus}</p>
+                      </div>
+                      <div className="bg-white/5 p-4 rounded-xl border border-white/10 space-y-1">
+                        <div className="flex items-center gap-2 text-primary">
+                          <Database className="w-3 h-3" />
+                          <span className="text-[9px] font-black uppercase tracking-wider">Persistência</span>
+                        </div>
+                        <p className="text-white text-sm font-bold">{swStatusInfo.persistence}</p>
+                      </div>
+                    </div>
+
+                    <div className="bg-white/5 p-4 rounded-xl border border-white/10 space-y-3">
+                      <div className="flex items-center justify-between">
+                        <p className="text-white/40 text-[10px] font-black uppercase tracking-widest">Última Notificação</p>
+                        <span className="text-white text-xs font-mono">{swStatusInfo.lastNotified || "Nenhuma"}</span>
+                      </div>
+                      <div className="flex items-center justify-between">
+                        <p className="text-white/40 text-[10px] font-black uppercase tracking-widest">Modo Contínuo</p>
+                        <span className={`text-xs font-bold ${swStatusInfo.continuousMode ? 'text-amber-400' : 'text-white/20'}`}>
+                          {swStatusInfo.continuousMode ? 'Ativo' : 'Inativo'}
+                        </span>
+                      </div>
+                      <div className="flex items-center justify-between">
+                        <p className="text-white/40 text-[10px] font-black uppercase tracking-widest">Sincronização</p>
+                        <span className="text-white/60 text-[10px]">{new Date(swStatusInfo.timestamp).toLocaleTimeString()}</span>
+                      </div>
+                    </div>
+
+                    <div className="bg-primary/5 p-4 rounded-xl border border-primary/10">
+                      <p className="text-primary/60 text-[9px] font-black uppercase tracking-widest mb-2">Configuração Ativa</p>
+                      <pre className="text-[10px] text-white/80 font-mono whitespace-pre-wrap leading-relaxed">
+                        {JSON.stringify(swStatusInfo.config, null, 2)}
+                      </pre>
+                    </div>
+                  </div>
+                )}
+              </div>
+            </TabsContent>
+          </Tabs>
+
+          <DialogFooter className="p-8 pt-0">
             <Button onClick={() => setShowSettings(false)} className="w-full btn-primary h-12">
-              Salvar e Fechar
+              Fechar Painel
             </Button>
           </DialogFooter>
         </DialogContent>
