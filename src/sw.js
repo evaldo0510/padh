@@ -37,52 +37,90 @@ registerRoute(
   })
 );
 
-// --- Daily Reminder Logic ---
+// --- Daily Reminder Logic with IndexedDB Persistence ---
 
 let reminderConfig = null;
-let lastNotifiedDate = null;
 
-self.addEventListener('message', (event) => {
+// Simple IDB wrapper for SW
+const dbPromise = new Promise((resolve) => {
+  const request = indexedDB.open('padh-sw-db', 1);
+  request.onupgradeneeded = (e) => {
+    e.target.result.createObjectStore('settings');
+  };
+  request.onsuccess = (e) => resolve(e.target.result);
+});
+
+async function getSetting(key) {
+  const db = await dbPromise;
+  return new Promise((resolve) => {
+    const transaction = db.transaction('settings', 'readonly');
+    const request = transaction.objectStore('settings').get(key);
+    request.onsuccess = () => resolve(request.result);
+  });
+}
+
+async function setSetting(key, value) {
+  const db = await dbPromise;
+  return new Promise((resolve) => {
+    const transaction = db.transaction('settings', 'readwrite');
+    transaction.objectStore('settings').put(value, key);
+    transaction.oncomplete = () => resolve();
+  });
+}
+
+self.addEventListener('message', async (event) => {
   if (!event.data) return;
 
   if (event.data.type === 'SET_REMINDER') {
     reminderConfig = event.data;
-    console.log('SW: Reminder settings updated', reminderConfig);
+    await setSetting('reminder_config', reminderConfig);
+    console.log('SW: Reminder settings persisted');
   }
 
   if (event.data.type === 'TEST_NOTIFICATION') {
-    self.registration.showNotification("Teste de Lembrete PADH", {
-      body: event.data.message || "Esta é uma demonstração do seu lembrete diário.",
+    const config = event.data.config || reminderConfig;
+    const timeInfo = config ? ` [Agendado para ${config.time}]` : "";
+    
+    await self.registration.showNotification("Teste de Lembrete PADH" + timeInfo, {
+      body: config?.message || "Esta é uma demonstração do seu lembrete diário.",
       icon: "/pwa-192x192.png",
       tag: 'test-notification',
+      data: { isTest: true },
       actions: [
-        { action: 'open_checkin', title: 'Fazer Check-in agora' }
+        { action: 'open_checkin', title: 'Abrir Check-in' }
       ]
     });
+
+    // Send confirmation back to UI
+    if (event.source) {
+      event.source.postMessage({ type: 'TEST_CONFIRMATION', status: 'delivered' });
+    }
   }
 });
 
 async function checkAndShowNotification() {
-  if (!reminderConfig || !reminderConfig.enabled) return;
+  const config = reminderConfig || await getSetting('reminder_config');
+  if (!config || !config.enabled) return;
 
   const now = new Date();
-  const today = now.toLocaleDateString('sv'); // YYYY-MM-DD
+  const today = now.toLocaleDateString('sv');
+  const lastNotified = await getSetting('last_notified_date');
   
-  if (lastNotifiedDate === today) return;
+  if (lastNotified === today) return;
 
-  const [targetHours, targetMinutes] = reminderConfig.time.split(':').map(Number);
+  const [targetHours, targetMinutes] = config.time.split(':').map(Number);
   
-  // Trigger only if within the correct minute and once per day
   if (now.getHours() === targetHours && now.getMinutes() === targetMinutes) {
-    lastNotifiedDate = today;
+    await setSetting('last_notified_date', today);
     
     return self.registration.showNotification("Lembrete PADH", {
-      body: reminderConfig.message,
+      body: config.message,
       icon: "/pwa-192x192.png",
       tag: 'daily-reminder',
       requireInteraction: true,
+      data: { url: '/?from_notification=true' },
       actions: [
-        { action: 'open_checkin', title: 'Fazer Check-in' }
+        { action: 'open_checkin', title: 'Fazer Check-in agora' }
       ]
     });
   }
@@ -97,21 +135,18 @@ self.addEventListener('periodicsync', (event) => {
 
 self.addEventListener('notificationclick', (event) => {
   event.notification.close();
+  const urlToOpen = event.notification.data?.url || '/';
 
-  if (event.action === 'open_checkin' || !event.action) {
-    event.waitUntil(
-      clients.matchAll({ type: 'window', includeUncontrolled: true }).then((clientList) => {
-        if (clientList.length > 0) {
-          let client = clientList[0];
-          for (let i = 0; i < clientList.length; i++) {
-            if (clientList[i].focused) {
-              client = clientList[i];
-            }
-          }
+  event.waitUntil(
+    clients.matchAll({ type: 'window', includeUncontrolled: true }).then((clientList) => {
+      for (const client of clientList) {
+        if (client.url.includes(urlToOpen) && 'focus' in client) {
           return client.focus();
         }
-        return clients.openWindow('/');
-      })
-    );
-  }
+      }
+      if (clients.openWindow) {
+        return clients.openWindow(urlToOpen);
+      }
+    })
+  );
 });
