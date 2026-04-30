@@ -195,6 +195,9 @@ const SessaoView = () => {
         description: sessao.descricao,
         path: `/jornada/${phaseId}/${sessionId}`,
       }}
+      currentPage={`Etapa ${currentExIdx + 1}`}
+      parentPage={{ name: "Jornada", path: "/jornada" }}
+      moduleName={sessao.titulo}
       hideHeader
       hideFooter
       hideMobileNav
