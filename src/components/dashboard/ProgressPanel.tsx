@@ -89,7 +89,7 @@ const ProgressPanel: React.FC = () => {
                   stroke="#8B5CF6" 
                   strokeWidth={3} 
                   dot={{ r: 4, fill: '#8B5CF6', strokeWidth: 0 }}
-                  activeDot={{ r: 6, shadow: '0 0 10px rgba(139, 92, 246, 0.5)' }}
+                  activeDot={{ r: 6, fill: '#8B5CF6' }}
                 />
               </LineChart>
             </ResponsiveContainer>
