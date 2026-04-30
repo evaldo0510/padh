@@ -327,6 +327,16 @@ const AnimatedRoutes = () => {
             }
           />
           <Route
+            path="/admin/pwa-diagnostics"
+            element={
+              <PageTransition>
+                <ProtectedRoute>
+                  <AdminPWADiagnostics />
+                </ProtectedRoute>
+              </PageTransition>
+            }
+          />
+          <Route
             path="/admin"
             element={
               <PageTransition>
