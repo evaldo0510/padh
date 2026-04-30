@@ -224,7 +224,34 @@ const DailyHabitSection: React.FC = () => {
     }
   };
 
-  const toggleContinuousTest = () => {
+  const handleGetLog = () => {
+    if ('serviceWorker' in navigator && navigator.serviceWorker.controller) {
+      navigator.serviceWorker.controller.postMessage({ type: 'GET_TECHNICAL_INFO' });
+    } else {
+      toast.error("Service Worker não está ativo.");
+    }
+  };
+
+  const exportReminderHistory = () => {
+    if (reminderHistory.length === 0) {
+      toast.error("Nenhum histórico para exportar.");
+      return;
+    }
+
+    const headers = ["Data/Hora", "Tipo de Alerta"];
+    const rows = reminderHistory.map(h => [new Date(h.date).toLocaleString(), h.type]);
+    const csvContent = [headers, ...rows].map(e => e.join(",")).join("\n");
+    
+    const blob = new Blob([csvContent], { type: "text/csv;charset=utf-8;" });
+    const link = document.createElement("a");
+    const url = URL.createObjectURL(blob);
+    link.setAttribute("href", url);
+    link.setAttribute("download", `historico_alertas_${new Date().toISOString().split('T')[0]}.csv`);
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    toast.success("Histórico de alertas exportado (CSV).");
+  };
     const newState = !continuousTest;
     setContinuousTest(newState);
     if (!newState) setDeliveryCount(0);
