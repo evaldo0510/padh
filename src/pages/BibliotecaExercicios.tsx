@@ -71,7 +71,7 @@ const BibliotecaExercicios = () => {
                   {" "}
                   <p className="text-xs text-muted-foreground line-clamp-2 leading-relaxed">
                     {" "}
-                    {ex.descricao}
+                    {ex.conteudo}
                   </p>{" "}
                   <div className="mt-4 pt-4 border-t border-primary/5">
                     {" "}
