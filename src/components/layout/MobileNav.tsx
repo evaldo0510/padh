@@ -52,26 +52,31 @@ const MobileNav = () => {
         {navItems.map((item) => {
           const active = isActive(item.path);
           return (
-            <PrefetchLink
+            <motion.div
               key={item.path}
-              to={item.path}
-              className={`relative flex flex-col items-center justify-center gap-1 flex-1 h-full transition-all duration-300 ${
-                active ? 'text-primary' : 'text-muted-foreground'
-              }`}
+              whileTap={{ scale: 0.9 }}
+              className="flex-1 h-full"
             >
-              <div className={`transition-all duration-300 ${active ? 'scale-110 -translate-y-1' : 'scale-100'}`}>
-                {active ? item.activeIcon : item.icon}
-              </div>
-              <span className={`text-[9px] font-black uppercase tracking-[0.15em] transition-all duration-300 ${active ? 'opacity-100' : 'opacity-60'}`}>
-                {item.name}
-              </span>
-              {active && (
-                <motion.span 
-                  layoutId="active-tab-dot"
-                  className="absolute bottom-2 w-1 h-1 rounded-full bg-primary shadow-glow shadow-primary/40" 
-                />
-              )}
-            </PrefetchLink>
+              <PrefetchLink
+                to={item.path}
+                className={`relative flex flex-col items-center justify-center gap-1 h-full transition-all duration-300 ${
+                  active ? 'text-primary' : 'text-muted-foreground'
+                }`}
+              >
+                <div className={`transition-all duration-300 ${active ? 'scale-110 -translate-y-1' : 'scale-100'}`}>
+                  {active ? item.activeIcon : item.icon}
+                </div>
+                <span className={`text-[9px] font-black uppercase tracking-[0.15em] transition-all duration-300 ${active ? 'opacity-100' : 'opacity-60'}`}>
+                  {item.name}
+                </span>
+                {active && (
+                  <motion.span 
+                    layoutId="active-tab-dot"
+                    className="absolute bottom-2 w-1 h-1 rounded-full bg-primary shadow-glow shadow-primary/40" 
+                  />
+                )}
+              </PrefetchLink>
+            </motion.div>
           );
         })}
       </div>

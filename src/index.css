@@ -137,6 +137,9 @@
   .progress-fill {
     @apply h-full bg-primary transition-all duration-1000 ease-out;
   }
+  .shadow-glow {
+    box-shadow: 0 0 20px -5px hsl(var(--primary) / 0.4);
+  }
 }
 
 /* Custom Scrollbar */

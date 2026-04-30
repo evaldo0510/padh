@@ -195,6 +195,9 @@ const SessaoView = () => {
         description: sessao.descricao,
         path: `/jornada/${phaseId}/${sessionId}`,
       }}
+      currentPage={`Etapa ${currentExIdx + 1}`}
+      parentPage={{ name: "Jornada", path: "/jornada" }}
+      moduleName={sessao.titulo}
       hideHeader
       hideFooter
       hideMobileNav
@@ -231,29 +234,29 @@ const SessaoView = () => {
         </div>
 
         {/* Minimal Header */}
-        <header className="px-4 md:px-8 pt-8 md:pt-8 pb-4 flex justify-between items-center z-40 pt-safe">
-           <div className="flex items-center gap-6">
+        <header className="px-4 md:px-8 pt-safe pb-4 flex justify-between items-center z-40">
+           <div className="flex items-center gap-4 md:gap-6">
               <Button 
                 variant="ghost" 
                 size="icon" 
-                onClick={() => navigate(-1)}
-                className="rounded-2xl h-12 w-12 hover:bg-white/5 transition-all text-white/30 hover:text-white"
+                onClick={() => navigate("/jornada")}
+                className="rounded-full h-10 w-10 md:h-12 md:w-12 hover:bg-white/5 transition-all text-white/30 hover:text-white active:scale-90"
                 aria-label="Voltar"
               >
-                <ArrowLeft className="w-6 h-6" />
+                <ArrowLeft className="w-5 h-5 md:w-6 md:h-6" />
               </Button>
-              <div className="h-10 w-px bg-white/10 hidden md:block" />
-              <div className="hidden md:block">
-                 <div className="flex items-center gap-2 mb-1">
-                    <p className="text-[10px] font-black uppercase tracking-[0.4em] text-primary/60">
+              <div className="h-8 md:h-10 w-px bg-white/10" />
+              <div>
+                 <div className="flex items-center gap-1.5 md:gap-2 mb-0.5 md:mb-1">
+                    <p className="text-[8px] md:text-[10px] font-black uppercase tracking-[0.2em] md:tracking-[0.4em] text-primary/60">
                        {fase.titulo}
                     </p>
-                    <ChevronRight className="w-3 h-3 text-white/10" />
-                    <p className="text-[10px] font-black uppercase tracking-[0.4em] text-white/40">
-                       Módulo {sessao.titulo}
+                    <ChevronRight className="w-2.5 h-2.5 md:w-3 md:h-3 text-white/10" />
+                    <p className="text-[8px] md:text-[10px] font-black uppercase tracking-[0.2em] md:tracking-[0.4em] text-white/40 truncate max-w-[120px] md:max-w-none">
+                       {sessao.titulo}
                     </p>
                  </div>
-                 <h2 className="text-2xl font-bold tracking-tighter text-white leading-none">
+                 <h2 className="text-lg md:text-2xl font-bold tracking-tighter text-white leading-none">
                     Etapa {currentExIdx + 1} de {totalSteps}
                  </h2>
               </div>

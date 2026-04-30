@@ -21,6 +21,8 @@ interface PageLayoutProps {
   hideHeader?: boolean;
   hideFooter?: boolean;
   hideMobileNav?: boolean;
+  parentPage?: { name: string; path: string };
+  moduleName?: string;
 }
 
 const PageLayout: React.FC<PageLayoutProps> = ({
@@ -32,6 +34,8 @@ const PageLayout: React.FC<PageLayoutProps> = ({
   hideHeader = false,
   hideFooter = false,
   hideMobileNav = false,
+  parentPage,
+  moduleName,
 }) => {
   const isLoading = usePageLoading(loadingDelay);
 
@@ -47,9 +51,14 @@ const PageLayout: React.FC<PageLayoutProps> = ({
       />
       {!hideHeader && <Header />}
       {currentPage && (
-        <PageHeader currentPage={currentPage} showBackButton={showBackButton} />
+        <PageHeader 
+          currentPage={currentPage} 
+          showBackButton={showBackButton} 
+          parentPage={parentPage}
+          moduleName={moduleName}
+        />
       )}
-      <main className={`flex-1 ${!hideMobileNav ? "pb-20 lg:pb-0" : ""} ${currentPage ? "pt-16 md:pt-0" : ""}`}>
+      <main className={`flex-1 ${!hideMobileNav ? "pb-24 lg:pb-0" : ""} ${currentPage ? "pt-20 md:pt-0" : ""}`}>
         {children}
       </main>
       {!hideFooter && <div className="hidden lg:block"><Footer /></div>}
