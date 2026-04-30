@@ -1,7 +1,8 @@
 import React from 'react';
-import { Home, Compass, BookOpen, User, Search, Feather } from 'lucide-react';
+import { Home, Compass, BookOpen, User, Feather } from 'lucide-react';
 import { useLocation } from 'react-router-dom';
 import PrefetchLink from './PrefetchLink';
+import { motion } from 'framer-motion';
 
 const MobileNav = () => {
   const location = useLocation();
