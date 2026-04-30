@@ -49,6 +49,7 @@ const PWAUpdatePrompt = () => {
         newWorker.addEventListener("statechange", () => {
           if (newWorker.state === "installed" && navigator.serviceWorker.controller) {
             setNeedRefresh(true);
+            reportPWAEvent("update_found");
           }
         });
       });
