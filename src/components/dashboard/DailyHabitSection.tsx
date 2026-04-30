@@ -420,17 +420,26 @@ const DailyHabitSection: React.FC = () => {
           <div className="py-6 space-y-8">
             <div className="flex items-center justify-between">
               <div className="space-y-1">
-                <p className="text-white font-medium">Ativar Notificações</p>
-                <p className="text-white/40 text-sm">Receba um lembrete no celular.</p>
+                <p className="text-white font-medium">Ativar Lembretes</p>
+                <p className="text-white/40 text-sm">Receba um alerta no seu navegador.</p>
               </div>
               <Switch 
                 checked={reminderEnabled} 
                 onCheckedChange={(checked) => {
+                  if (checked && notificationPermission !== "granted") {
+                    requestPermission();
+                  }
                   setReminderEnabled(checked);
                   saveReminderSettings(checked, reminderTime, customMessage);
                 }} 
               />
             </div>
+
+            {notificationPermission === "denied" && (
+              <p className="text-red-400 text-xs bg-red-500/10 p-3 rounded-lg border border-red-500/20">
+                As notificações estão bloqueadas pelo seu navegador. Por favor, ative-as nas configurações do site para receber os lembretes.
+              </p>
+            )}
 
             <div className={`space-y-6 transition-opacity ${reminderEnabled ? 'opacity-100' : 'opacity-30 pointer-events-none'}`}>
               <div className="space-y-3">
@@ -452,7 +461,7 @@ const DailyHabitSection: React.FC = () => {
               <div className="space-y-3">
                 <div className="flex items-center gap-2">
                   <MessageSquare className="w-4 h-4 text-primary" />
-                  <p className="text-sm font-bold text-white/60 uppercase tracking-widest">Mensagem Personalizada</p>
+                  <p className="text-sm font-bold text-white/60 uppercase tracking-widest">Mensagem de Incentivo</p>
                 </div>
                 <Textarea 
                   value={customMessage} 
@@ -460,7 +469,7 @@ const DailyHabitSection: React.FC = () => {
                     setCustomMessage(e.target.value);
                   }}
                   onBlur={() => saveReminderSettings(reminderEnabled, reminderTime, customMessage)}
-                  className="bg-white/5 border-white/10 text-white min-h-[80px]"
+                  className="bg-white/5 border-white/10 text-white min-h-[80px] focus:border-primary/50 transition-all"
                   placeholder="Ex: Hora da sua dose diária de poesia..."
                 />
               </div>
