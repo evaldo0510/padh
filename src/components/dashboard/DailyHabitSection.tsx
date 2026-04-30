@@ -215,6 +215,21 @@ const DailyHabitSection: React.FC = () => {
       });
       setTestStatus('delivered');
       setTimeout(() => setTestStatus('idle'), 3000);
+      setReminderHistory(prev => [{date: new Date().toISOString(), type: 'Test (Fallback)'}, ...prev].slice(0, 5));
+    }
+  };
+
+  const toggleContinuousTest = () => {
+    const newState = !continuousTest;
+    setContinuousTest(newState);
+    if (!newState) setDeliveryCount(0);
+    
+    if ('serviceWorker' in navigator && navigator.serviceWorker.controller) {
+      navigator.serviceWorker.controller.postMessage({
+        type: newState ? 'START_CONTINUOUS_TEST' : 'STOP_CONTINUOUS_TEST',
+        config: { message: customMessage }
+      });
+      toast.info(newState ? "Teste contínuo iniciado (30s)." : "Teste contínuo parado.");
     }
   };
 
