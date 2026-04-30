@@ -25,6 +25,7 @@ const DailyHabitSection: React.FC = () => {
   const [reminderTime, setReminderTime] = useState("09:00");
   const [showSettings, setShowSettings] = useState(false);
   const [customMessage, setCustomMessage] = useState("Hora de reconectar consigo mesmo. Vamos praticar?");
+  const [testStatus, setTestStatus] = useState<"idle" | "sending" | "delivered">("idle");
 
   // Get a daily exercise based on the date
   const getDailyExercise = () => {
@@ -41,6 +42,23 @@ const DailyHabitSection: React.FC = () => {
   useEffect(() => {
     if ("Notification" in window) {
       setNotificationPermission(Notification.permission);
+    }
+
+    const handleSWMessage = (event: MessageEvent) => {
+      if (event.data?.type === 'TEST_CONFIRMATION') {
+        setTestStatus('delivered');
+        setTimeout(() => setTestStatus('idle'), 3000);
+      }
+    };
+
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.addEventListener('message', handleSWMessage);
+    }
+
+    // Auto-open checkin if coming from notification
+    const params = new URLSearchParams(window.location.search);
+    if (params.get('from_notification') === 'true' && !isCompletedToday) {
+       setShowCheckin(true);
     }
 
     const fetchReminderSettings = async () => {
@@ -168,18 +186,24 @@ const DailyHabitSection: React.FC = () => {
       return;
     }
 
+    setTestStatus('sending');
     if ('serviceWorker' in navigator && navigator.serviceWorker.controller) {
       navigator.serviceWorker.controller.postMessage({
         type: 'TEST_NOTIFICATION',
-        message: customMessage
+        config: {
+          time: reminderTime,
+          message: customMessage
+        }
       });
-      toast.success("Notificação de teste enviada!");
+      toast.success("Solicitação de teste enviada!");
     } else {
       // Fallback
-      new Notification("Teste de Lembrete PADH", {
+      new Notification(`Teste PADH [Agendado: ${reminderTime}]`, {
         body: customMessage,
         icon: "/pwa-192x192.png"
       });
+      setTestStatus('delivered');
+      setTimeout(() => setTestStatus('idle'), 3000);
     }
   };
 
@@ -491,9 +515,14 @@ const DailyHabitSection: React.FC = () => {
               variant="outline" 
               size="sm" 
               onClick={handleTestNotification}
-              className="border-primary/20 text-primary hover:bg-primary/10 h-8"
+              disabled={testStatus !== 'idle'}
+              className={`border-primary/20 text-primary hover:bg-primary/10 h-8 min-w-[100px] transition-all ${
+                testStatus === 'delivered' ? 'bg-emerald-500/20 text-emerald-400 border-emerald-500/20' : ''
+              }`}
             >
-              Testar Agora
+              {testStatus === 'idle' && "Testar Agora"}
+              {testStatus === 'sending' && "Enviando..."}
+              {testStatus === 'delivered' && "Recebido ✓"}
             </Button>
           </DialogHeader>
           <div className="py-6 space-y-8">
