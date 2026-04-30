@@ -37,7 +37,7 @@ jobs:
         env:
           TARGET_URL: ${{ github.event.deployment_status.target_url }}
           EXPECTED_VERSION: ${{ github.event.deployment_status.environment == 'production' && 'PROD_VERSION_TAG' || 'STAGING_VERSION_TAG' }}
-        run: npx playwright test tests/pwa-banner.spec.ts
+        run: npx playwright test tests/pwa-banner.spec.ts tests/pwa-strategies.spec.ts
 
       - name: Upload Playwright Test Artifacts
         if: failure()
