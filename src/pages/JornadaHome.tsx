@@ -226,7 +226,7 @@ const JornadaHome = () => {
                          <motion.div 
                           key={sessao.id}
                           whileHover={sessionUnlocked ? { scale: 1.03, y: -8 } : {}}
-                          className={`group relative aspect-video glass-card overflow-hidden cursor-pointer shadow-xl ${!sessionUnlocked && 'cursor-not-allowed opacity-50'} ${isRecommended ? 'ring-2 ring-primary ring-offset-4 ring-offset-background' : ''}`}
+                          className={`group relative aspect-video glass-card overflow-hidden cursor-pointer shadow-xl ${!sessionUnlocked && 'cursor-not-allowed'} ${isRecommended ? 'ring-2 ring-primary ring-offset-4 ring-offset-background' : ''}`}
                           onClick={() => sessionUnlocked && navigate(`/jornada/${fase.id}/${sessao.id}`)}
                          >
                             <div className="absolute inset-0 bg-gradient-to-t from-background/90 via-background/40 to-transparent z-10" />
