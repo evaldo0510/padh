@@ -1,6 +1,7 @@
 import React from "react";
 import Header from "./Header";
 import Footer from "./Footer";
+import MobileNav from "./MobileNav";
 import PageHeader from "./PageHeader";
 import { usePageLoading } from "@/hooks/usePageLoading";
 import { PageSkeleton } from "@/components/ui/page-skeleton";
@@ -46,8 +47,9 @@ const PageLayout: React.FC<PageLayoutProps> = ({
       {currentPage && (
         <PageHeader currentPage={currentPage} showBackButton={showBackButton} />
       )}
-      <main className="flex-1">{children}</main>
-      {!hideFooter && <Footer />}
+      <main className="flex-1 pb-20 lg:pb-0">{children}</main>
+      {!hideFooter && <div className="hidden lg:block"><Footer /></div>}
+      <MobileNav />
     </div>
   );
 };
