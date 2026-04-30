@@ -2,7 +2,7 @@ import React, { useEffect, useState, useCallback } from "react";
 import {
   ShieldCheck, RefreshCw, Trash2, Activity,
   AlertCircle, Info, Smartphone, HardDrive,
-  Undo2, FileSearch, Tag, Clock, Download, Zap, WifiOff, Link as LinkIcon,
+  Undo2, FileSearch, Tag, Clock, Download, Zap, WifiOff, Link as LinkIcon, ClipboardCopy,
 } from "lucide-react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
