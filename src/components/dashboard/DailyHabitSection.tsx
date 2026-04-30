@@ -186,18 +186,24 @@ const DailyHabitSection: React.FC = () => {
       return;
     }
 
+    setTestStatus('sending');
     if ('serviceWorker' in navigator && navigator.serviceWorker.controller) {
       navigator.serviceWorker.controller.postMessage({
         type: 'TEST_NOTIFICATION',
-        message: customMessage
+        config: {
+          time: reminderTime,
+          message: customMessage
+        }
       });
-      toast.success("Notificação de teste enviada!");
+      toast.success("Solicitação de teste enviada!");
     } else {
       // Fallback
-      new Notification("Teste de Lembrete PADH", {
+      new Notification(`Teste PADH [Agendado: ${reminderTime}]`, {
         body: customMessage,
         icon: "/pwa-192x192.png"
       });
+      setTestStatus('delivered');
+      setTimeout(() => setTestStatus('idle'), 3000);
     }
   };
 
