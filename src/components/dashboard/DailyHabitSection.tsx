@@ -252,7 +252,7 @@ const DailyHabitSection: React.FC = () => {
     document.body.removeChild(link);
     toast.success("Histórico de alertas exportado (CSV).");
   };
-    const newState = !continuousTest;
+    const toggleContinuousTest = () => {
     setContinuousTest(newState);
     if (!newState) setDeliveryCount(0);
     
