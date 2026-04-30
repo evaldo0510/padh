@@ -17,24 +17,39 @@ import { format } from "date-fns";
 import { ptBR } from "date-fns/locale";
 
 const ProgressPanel: React.FC = () => {
-  const { jornada } = useJornada();
   const [checkinHistory, setCheckinHistory] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
+  const [dateFilter, setDateFilter] = useState("all");
+  const [phaseFilter, setPhaseFilter] = useState("all");
+  const [statusFilter, setStatusFilter] = useState("all");
+  const [searchTerm, setSearchFilter] = useState("");
 
   useEffect(() => {
     const fetchStats = async () => {
       const { data: { user } } = await supabase.auth.getUser();
       if (!user) return;
 
-      const { data: checkins } = await supabase
+      let query = supabase
         .from("daily_checkins")
-        .select("checkin_date, mood")
+        .select("checkin_date, mood, note")
         .eq("user_id", user.id)
-        .order("checkin_date", { ascending: true })
-        .limit(30);
+        .order("checkin_date", { ascending: true });
+
+      if (dateFilter === "week") {
+        const lastWeek = new Date();
+        lastWeek.setDate(lastWeek.getDate() - 7);
+        query = query.gte("checkin_date", lastWeek.toISOString().split('T')[0]);
+      } else if (dateFilter === "month") {
+        const lastMonth = new Date();
+        lastMonth.setMonth(lastMonth.getMonth() - 1);
+        query = query.gte("checkin_date", lastMonth.toISOString().split('T')[0]);
+      }
+
+      const { data: checkins } = await query;
 
       if (checkins) {
         setCheckinHistory(checkins.map(c => ({
+          ...c,
           date: new Date(c.checkin_date).toLocaleDateString('pt-BR', { day: '2-digit', month: '2-digit' }),
           activity: 1
         })));
@@ -42,18 +57,61 @@ const ProgressPanel: React.FC = () => {
       setLoading(false);
     };
     fetchStats();
-  }, []);
+  }, [dateFilter]);
 
-  const journeyProgressData = JORNADA_DATA.map(fase => {
-    const totalSessions = fase.sessoes.length;
-    const completedSessions = fase.sessoes.filter(s => jornada.completedSessions.includes(s.id)).length;
-    return {
-      name: fase.titulo,
-      completed: completedSessions,
-      total: totalSessions,
-      percent: Math.round((completedSessions / totalSessions) * 100)
-    };
-  });
+  const filteredJourneyData = useMemo(() => {
+    let data = JORNADA_DATA;
+    
+    if (phaseFilter !== "all") {
+      data = data.filter(f => f.id === phaseFilter);
+    }
+
+    return data.map(fase => {
+      const totalSessions = fase.sessoes.length;
+      let completedSessions = fase.sessoes.filter(s => jornada.completedSessions.includes(s.id)).length;
+      
+      return {
+        name: fase.titulo,
+        completed: completedSessions,
+        total: totalSessions,
+        percent: Math.round((completedSessions / totalSessions) * 100)
+      };
+    }).filter(f => {
+      if (statusFilter === "completed") return f.percent === 100;
+      if (statusFilter === "in_progress") return f.percent > 0 && f.percent < 100;
+      if (statusFilter === "not_started") return f.percent === 0;
+      return true;
+    });
+  }, [phaseFilter, statusFilter, jornada.completedSessions]);
+
+  const exportCSV = () => {
+    if (checkinHistory.length === 0) {
+      toast.error("Nenhum dado para exportar.");
+      return;
+    }
+    
+    const headers = ["Data", "Humor", "Nota"];
+    const rows = checkinHistory.map(c => [c.checkin_date, c.mood, c.note || ""]);
+    const csvContent = [headers, ...rows].map(e => e.join(",")).join("\n");
+    
+    const blob = new Blob([csvContent], { type: "text/csv;charset=utf-8;" });
+    const link = document.createElement("a");
+    const url = URL.createObjectURL(blob);
+    link.setAttribute("href", url);
+    link.setAttribute("download", `padh_evolucao_${format(new Date(), 'yyyy-MM-dd')}.csv`);
+    link.style.visibility = 'hidden';
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    toast.success("Histórico exportado com sucesso (CSV).");
+  };
+
+  const exportPDF = () => {
+    // Basic implementation using window.print() or specialized library
+    // For now, let's trigger a print-friendly view or just toast
+    window.print();
+    toast.info("Preparando visualização para impressão (PDF).");
+  };
 
   const COLORS = ['#8B5CF6', '#10B981', '#F59E0B', '#F43F5E'];
 
