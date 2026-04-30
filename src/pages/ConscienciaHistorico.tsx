@@ -29,6 +29,7 @@ const ConscienciaHistorico: React.FC = () => {
   const [loading, setLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState("");
   const [moodFilter, setMoodFilter] = useState("all");
+  const [phaseFilter, setPhaseFilter] = useState("all");
 
   const filteredHistory = useMemo(() => {
     return history.filter(item => {
@@ -38,10 +39,11 @@ const ConscienciaHistorico: React.FC = () => {
         (item.exercise_title?.toLowerCase().includes(searchTerm.toLowerCase()) ?? false);
       
       const matchesMood = moodFilter === "all" || item.mood.toLowerCase().includes(moodFilter.toLowerCase());
+      const matchesPhase = phaseFilter === "all" || item.phase_id === phaseFilter;
       
-      return matchesSearch && matchesMood;
+      return matchesSearch && matchesMood && matchesPhase;
     });
-  }, [history, searchTerm, moodFilter]);
+  }, [history, searchTerm, moodFilter, phaseFilter]);
 
   useEffect(() => {
     const fetchHistory = async () => {
