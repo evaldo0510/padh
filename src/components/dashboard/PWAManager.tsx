@@ -604,6 +604,13 @@ export const PWAManager: React.FC = () => {
           <Button variant="outline" size="sm"
             className="h-11 px-6 gap-2 border-white/10 hover:bg-white/5 font-bold"
             onClick={handleExportSnapshot}>
+            <Download className="w-4 h-4" /> Exportar JSON
+          </Button>
+
+          <Button variant="outline" size="sm"
+            className="h-11 px-6 gap-2 border-primary/30 text-primary hover:bg-primary/10 font-bold"
+            onClick={handleCopySupport}>
+            <ClipboardCopy className="w-4 h-4" /> Copiar p/ Suporte
           </Button>
 
           <Button variant="outline" size="sm"
