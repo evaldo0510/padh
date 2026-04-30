@@ -556,7 +556,15 @@ const DailyHabitSection: React.FC = () => {
               {testStatus === 'delivered' && "Recebido ✓"}
             </Button>
           </DialogHeader>
-          <div className="py-6 space-y-8">
+          <div className="py-6 space-y-8 max-h-[70vh] overflow-y-auto pr-2 scrollbar-hide">
+            <div className="bg-primary/5 p-4 rounded-2xl border border-primary/10">
+              <h4 className="text-[10px] font-black uppercase tracking-widest text-primary/60 mb-2">Resumo da Agenda</h4>
+              <p className="text-white text-sm">
+                Disparo diário às <span className="font-bold">{reminderTime}</span> ({Intl.DateTimeFormat().resolvedOptions().timeZone})
+              </p>
+              <p className="text-white/40 text-[10px] mt-1 italic">"{customMessage}"</p>
+            </div>
+
             <div className="flex items-center justify-between">
               <div className="space-y-1">
                 <p className="text-white font-medium">Ativar Lembretes</p>
@@ -574,27 +582,37 @@ const DailyHabitSection: React.FC = () => {
               />
             </div>
 
-            {notificationPermission === "denied" && (
-              <p className="text-red-400 text-xs bg-red-500/10 p-3 rounded-lg border border-red-500/20">
-                As notificações estão bloqueadas pelo seu navegador. Por favor, ative-as nas configurações do site para receber os lembretes.
-              </p>
-            )}
-
             <div className={`space-y-6 transition-opacity ${reminderEnabled ? 'opacity-100' : 'opacity-30 pointer-events-none'}`}>
-              <div className="space-y-3">
-                <div className="flex items-center gap-2">
-                  <Clock className="w-4 h-4 text-primary" />
-                  <p className="text-sm font-bold text-white/60 uppercase tracking-widest">Horário do Lembrete</p>
+              <div className="grid grid-cols-2 gap-4">
+                <div className="space-y-3">
+                  <div className="flex items-center gap-2">
+                    <Clock className="w-4 h-4 text-primary" />
+                    <p className="text-sm font-bold text-white/60 uppercase tracking-widest">Horário</p>
+                  </div>
+                  <Input 
+                    type="time" 
+                    value={reminderTime} 
+                    onChange={(e) => {
+                      setReminderTime(e.target.value);
+                      saveReminderSettings(reminderEnabled, e.target.value, customMessage);
+                    }}
+                    className="bg-white/5 border-white/10 text-white text-lg h-12"
+                  />
                 </div>
-                <Input 
-                  type="time" 
-                  value={reminderTime} 
-                  onChange={(e) => {
-                    setReminderTime(e.target.value);
-                    saveReminderSettings(reminderEnabled, e.target.value, customMessage);
-                  }}
-                  className="bg-white/5 border-white/10 text-white text-lg h-12"
-                />
+                
+                <div className="space-y-3">
+                  <div className="flex items-center gap-2">
+                    <Activity className="w-4 h-4 text-primary" />
+                    <p className="text-sm font-bold text-white/60 uppercase tracking-widest">Contínuo</p>
+                  </div>
+                  <Button 
+                    variant="outline" 
+                    onClick={toggleContinuousTest}
+                    className={`w-full h-12 border-white/10 ${continuousTest ? 'bg-amber-500/20 text-amber-400 border-amber-500/20' : 'text-white/40'}`}
+                  >
+                    {continuousTest ? `Parar (${deliveryCount})` : "Iniciar 30s"}
+                  </Button>
+                </div>
               </div>
 
               <div className="space-y-3">
@@ -612,6 +630,23 @@ const DailyHabitSection: React.FC = () => {
                   placeholder="Ex: Hora da sua dose diária de poesia..."
                 />
               </div>
+
+              {reminderHistory.length > 0 && (
+                <div className="space-y-3 pt-4 border-t border-white/5">
+                  <div className="flex items-center gap-2">
+                    <History className="w-4 h-4 text-white/30" />
+                    <p className="text-[10px] font-black uppercase tracking-widest text-white/30">Histórico de Alertas</p>
+                  </div>
+                  <div className="space-y-2">
+                    {reminderHistory.map((h, i) => (
+                      <div key={i} className="flex justify-between items-center text-[10px] text-white/40 bg-white/5 p-2 rounded-lg">
+                        <span>{h.type}</span>
+                        <span>{new Date(h.date).toLocaleTimeString()}</span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
             </div>
           </div>
           <DialogFooter>
