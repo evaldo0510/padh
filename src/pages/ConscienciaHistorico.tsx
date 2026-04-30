@@ -24,6 +24,21 @@ const ConscienciaHistorico: React.FC = () => {
   const { jornada } = useJornada();
   const [history, setHistory] = useState<CheckinHistory[]>([]);
   const [loading, setLoading] = useState(true);
+  const [searchTerm, setSearchTerm] = useState("");
+  const [moodFilter, setMoodFilter] = useState("all");
+
+  const filteredHistory = useMemo(() => {
+    return history.filter(item => {
+      const matchesSearch = 
+        item.mood.toLowerCase().includes(searchTerm.toLowerCase()) || 
+        (item.response?.toLowerCase().includes(searchTerm.toLowerCase()) ?? false) ||
+        (item.exercise_title?.toLowerCase().includes(searchTerm.toLowerCase()) ?? false);
+      
+      const matchesMood = moodFilter === "all" || item.mood.toLowerCase().includes(moodFilter.toLowerCase());
+      
+      return matchesSearch && matchesMood;
+    });
+  }, [history, searchTerm, moodFilter]);
 
   useEffect(() => {
     const fetchHistory = async () => {
