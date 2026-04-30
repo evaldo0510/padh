@@ -19,7 +19,7 @@ export default defineConfig(({ mode }) => ({
       filename: 'sw.js',
       registerType: 'autoUpdate',
       devOptions: { enabled: false },
-      includeAssets: ['favicon.png', 'robots.txt', 'apple-touch-icon.png', 'logo-pwa.svg', 'pwa-192x192.png', 'pwa-512x512.png', 'maskable-icon-512x512.png'],
+      includeAssets: ['favicon.png', 'robots.txt', 'apple-touch-icon.png', 'logo-pwa.svg', 'pwa-192x192.png', 'pwa-512x512.png', 'maskable-icon-512x512.png', 'og-image.png', 'og-image.svg', 'pch-logo-180.png', 'pch-logo-192.png', 'pch-logo-32.png', 'pch-logo-48.png', 'pch-logo-512.png', 'pch-logo-96.png', 'pch-logo.svg', 'placeholder.svg'],
       manifest: {
         name: 'P.A.D.H. — Poesia Aplicada ao Desenvolvimento Humano',
         short_name: 'P.A.D.H.',

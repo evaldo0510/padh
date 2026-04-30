@@ -22,6 +22,13 @@ export const reportPWAEvent = async (
   status: "success" | "fail" = "success",
   details: any = {}
 ) => {
+  // Dispatch local event for UI monitoring
+  if (typeof window !== "undefined") {
+    window.dispatchEvent(new CustomEvent("pwa-event", { 
+      detail: { eventType, status, details, timestamp: new Date().toISOString() } 
+    }));
+  }
+
   // Silent in dev
   if (import.meta.env.DEV) return;
   
