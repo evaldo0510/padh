@@ -96,6 +96,34 @@ const ConscienciaHistorico: React.FC = () => {
           </div>
         </header>
 
+        {/* Search and Filters */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 bg-white/5 p-6 rounded-2xl border border-white/5">
+          <div className="relative group">
+            <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-white/20 group-focus-within:text-primary transition-colors" />
+            <Input 
+              placeholder="Buscar no histórico..." 
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+              className="pl-11 bg-background/50 border-white/10 h-12"
+            />
+          </div>
+          <Select value={moodFilter} onValueChange={setMoodFilter}>
+            <SelectTrigger className="bg-background/50 border-white/10 h-12">
+              <div className="flex items-center gap-2">
+                <Filter className="w-4 h-4 text-white/20" />
+                <SelectValue placeholder="Filtrar por humor" />
+              </div>
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="all">Todos os humores</SelectItem>
+              <SelectItem value="ansioso">Ansiedade</SelectItem>
+              <SelectItem value="calmo">Calma</SelectItem>
+              <SelectItem value="feliz">Alegria</SelectItem>
+              <SelectItem value="triste">Tristeza</SelectItem>
+            </SelectContent>
+          </Select>
+        </div>
+
         {loading ? (
           <div className="grid gap-6">
             {[1, 2, 3].map(i => (
