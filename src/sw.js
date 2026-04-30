@@ -37,36 +37,61 @@ registerRoute(
   })
 );
 
-// --- Daily Reminder Logic with IndexedDB Persistence ---
+// --- Daily Reminder Logic with Robust Persistence & Fallback ---
 
 let reminderConfig = null;
+let memoryLastNotifiedDate = null;
 
-// Simple IDB wrapper for SW
+// IndexedDB with Fallback
 const dbPromise = new Promise((resolve) => {
-  const request = indexedDB.open('padh-sw-db', 1);
-  request.onupgradeneeded = (e) => {
-    e.target.result.createObjectStore('settings');
-  };
-  request.onsuccess = (e) => resolve(e.target.result);
+  try {
+    const request = indexedDB.open('padh-sw-db', 2);
+    request.onupgradeneeded = (e) => {
+      if (!e.target.result.objectStoreNames.contains('settings')) {
+        e.target.result.createObjectStore('settings');
+      }
+    };
+    request.onsuccess = (e) => resolve(e.target.result);
+    request.onerror = () => resolve(null); // Fallback to memory
+  } catch (e) {
+    resolve(null);
+  }
 });
 
 async function getSetting(key) {
   const db = await dbPromise;
+  if (!db) return memoryLastNotifiedDate; // Basic fallback for lastNotifiedDate
   return new Promise((resolve) => {
-    const transaction = db.transaction('settings', 'readonly');
-    const request = transaction.objectStore('settings').get(key);
-    request.onsuccess = () => resolve(request.result);
+    try {
+      const transaction = db.transaction('settings', 'readonly');
+      const request = transaction.objectStore('settings').get(key);
+      request.onsuccess = () => resolve(request.result);
+      request.onerror = () => resolve(null);
+    } catch (e) {
+      resolve(null);
+    }
   });
 }
 
 async function setSetting(key, value) {
+  if (key === 'last_notified_date') memoryLastNotifiedDate = value;
+  
   const db = await dbPromise;
+  if (!db) return;
   return new Promise((resolve) => {
-    const transaction = db.transaction('settings', 'readwrite');
-    transaction.objectStore('settings').put(value, key);
-    transaction.oncomplete = () => resolve();
+    try {
+      const transaction = db.transaction('settings', 'readwrite');
+      transaction.objectStore('settings').put(value, key);
+      transaction.oncomplete = () => resolve();
+      transaction.onerror = () => resolve();
+    } catch (e) {
+      resolve();
+    }
   });
 }
+
+let continuousTestInterval = null;
+let testCount = 0;
 
 self.addEventListener('message', async (event) => {
   if (!event.data) return;
@@ -74,24 +99,45 @@ self.addEventListener('message', async (event) => {
   if (event.data.type === 'SET_REMINDER') {
     reminderConfig = event.data;
     await setSetting('reminder_config', reminderConfig);
-    console.log('SW: Reminder settings persisted');
+  }
+
+  if (event.data.type === 'START_CONTINUOUS_TEST') {
+    testCount = 0;
+    if (continuousTestInterval) clearInterval(continuousTestInterval);
+    
+    continuousTestInterval = setInterval(async () => {
+      testCount++;
+      const config = event.data.config || reminderConfig;
+      await self.registration.showNotification(`Teste Contínuo #${testCount}`, {
+        body: `Entrega ${testCount}: ${config?.message || "Validando fluxo."}`,
+        icon: "/pwa-192x192.png",
+        tag: 'continuous-test',
+        data: { isTest: true }
+      });
+      
+      // Update UI with count
+      const clientsList = await clients.matchAll();
+      clientsList.forEach(client => client.postMessage({ type: 'TEST_COUNT_UPDATE', count: testCount }));
+    }, 30000);
+  }
+
+  if (event.data.type === 'STOP_CONTINUOUS_TEST') {
+    if (continuousTestInterval) clearInterval(continuousTestInterval);
+    continuousTestInterval = null;
   }
 
   if (event.data.type === 'TEST_NOTIFICATION') {
     const config = event.data.config || reminderConfig;
-    const timeInfo = config ? ` [Agendado para ${config.time}]` : "";
+    const timeInfo = config ? ` [Agendado: ${config.time}]` : "";
     
     await self.registration.showNotification("Teste de Lembrete PADH" + timeInfo, {
       body: config?.message || "Esta é uma demonstração do seu lembrete diário.",
       icon: "/pwa-192x192.png",
       tag: 'test-notification',
       data: { isTest: true },
-      actions: [
-        { action: 'open_checkin', title: 'Abrir Check-in' }
-      ]
+      actions: [{ action: 'open_checkin', title: 'Abrir Check-in' }]
     });
 
-    // Send confirmation back to UI
     if (event.source) {
       event.source.postMessage({ type: 'TEST_CONFIRMATION', status: 'delivered' });
     }
@@ -112,21 +158,19 @@ async function checkAndShowNotification() {
   
   if (now.getHours() === targetHours && now.getMinutes() === targetMinutes) {
     await setSetting('last_notified_date', today);
+    const reminderId = `rem_${Date.now()}`;
     
     return self.registration.showNotification("Lembrete PADH", {
       body: config.message,
       icon: "/pwa-192x192.png",
       tag: 'daily-reminder',
       requireInteraction: true,
-      data: { url: '/?from_notification=true' },
-      actions: [
-        { action: 'open_checkin', title: 'Fazer Check-in agora' }
-      ]
+      data: { url: `/?from_notification=true&rid=${reminderId}` },
+      actions: [{ action: 'open_checkin', title: 'Fazer Check-in agora' }]
     });
   }
 }
 
-// Periodic Sync (requires app installation)
 self.addEventListener('periodicsync', (event) => {
   if (event.tag === 'daily-reminder') {
     event.waitUntil(checkAndShowNotification());
@@ -144,9 +188,7 @@ self.addEventListener('notificationclick', (event) => {
           return client.focus();
         }
       }
-      if (clients.openWindow) {
-        return clients.openWindow(urlToOpen);
-      }
+      if (clients.openWindow) return clients.openWindow(urlToOpen);
     })
   );
 });
