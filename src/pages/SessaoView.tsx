@@ -126,8 +126,17 @@ const SessaoView = () => {
     }
   };
 
+  const [showError, setShowError] = useState(false);
+
   const handleNext = () => {
     if (isTransitioning) return;
+    
+    if (currentBlock.tipo === "exercise" && !response.trim()) {
+      setShowError(true);
+      setTimeout(() => setShowError(false), 2000);
+      toast.error("Por favor, preencha o campo para avançar.");
+      return;
+    }
     
     if (currentBlock.tipo === "exercise") {
       saveResponse(currentBlock.id, response);
