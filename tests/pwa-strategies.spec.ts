@@ -44,6 +44,12 @@ test.describe('PWA Cache Strategies', () => {
     // We can also verify that APP_VERSION is still readable
     const version = await page.evaluate(() => (window as any).APP_VERSION);
     expect(version).toBeDefined();
+    console.log(`Verified APP_VERSION: ${version}`);
+    
+    // If we passed an expected version, verify it
+    if (process.env.EXPECTED_VERSION) {
+      expect(version).toBe(process.env.EXPECTED_VERSION);
+    }
   });
 
   test('validate Cache-First for static assets', async ({ page, context }) => {
