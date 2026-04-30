@@ -47,80 +47,46 @@ export default defineConfig(({ mode }) => ({
         ]
       },
       workbox: {
+        cacheId: `padh-v${Date.now()}`, // Versioned cache name on every build
         globPatterns: ['**/*.{js,css,html,ico,png,svg,woff,woff2}'],
         navigateFallback: 'index.html',
         navigateFallbackDenylist: [/^\/~oauth/, /^\/api/],
         cleanupOutdatedCaches: true,
         skipWaiting: true,
         clientsClaim: true,
-        // Public routes allowed to use the offline fallback shell.
-        // Anything else (private/journey routes) just fails when offline.
         runtimeCaching: [
           {
-            // HTML navigations on public routes only — offline-friendly.
-            urlPattern: ({ request, url }) => {
-              if (request.mode !== 'navigate' && request.destination !== 'document') return false;
-              const allowed = [/^\/$/, /^\/sobre/, /^\/contato/, /^\/livro-curso/, /^\/changelog/, /^\/offline/];
-              return allowed.some((re) => re.test(url.pathname));
-            },
-            handler: 'NetworkFirst',
-            options: {
-              cacheName: 'html-public',
-              networkTimeoutSeconds: 3,
-              expiration: { maxEntries: 20, maxAgeSeconds: 60 * 60 * 24 },
-              cacheableResponse: { statuses: [0, 200] },
-            },
-          },
-          {
-            // All other navigations: network-first, no offline fallback.
+            // Aggressive Freshness for HTML: Network-First with minimal timeout.
             urlPattern: ({ request }) => request.mode === 'navigate' || request.destination === 'document',
             handler: 'NetworkFirst',
             options: {
-              cacheName: 'html-shell',
-              networkTimeoutSeconds: 3,
-              expiration: { maxEntries: 10, maxAgeSeconds: 60 * 60 * 24 },
+              cacheName: 'html-freshness',
+              networkTimeoutSeconds: 2, // Fail fast to cache if network is slow, but prefer network.
+              expiration: { maxEntries: 5, maxAgeSeconds: 60 * 60 },
               cacheableResponse: { statuses: [0, 200] },
             },
           },
           {
-            // JS + CSS: NetworkFirst so deploys are picked up immediately.
+            // JS, CSS and Workers: Network-First to ensure we get the latest hashed bundles.
             urlPattern: ({ request }) =>
               request.destination === 'script' ||
               request.destination === 'style' ||
               request.destination === 'worker',
             handler: 'NetworkFirst',
             options: {
-              cacheName: 'app-bundles',
-              networkTimeoutSeconds: 3,
-              expiration: { maxEntries: 60, maxAgeSeconds: 60 * 60 * 24 * 7 },
+              cacheName: 'bundles-freshness',
+              networkTimeoutSeconds: 2,
+              expiration: { maxEntries: 50, maxAgeSeconds: 60 * 60 * 24 },
               cacheableResponse: { statuses: [0, 200] },
             },
           },
           {
-            urlPattern: /^https:\/\/fonts\.googleapis\.com\/.*/i,
-            handler: 'CacheFirst',
-            options: {
-              cacheName: 'google-fonts-cache',
-              expiration: { maxEntries: 10, maxAgeSeconds: 60 * 60 * 24 * 365 },
-              cacheableResponse: { statuses: [0, 200] },
-            },
-          },
-          {
-            urlPattern: /^https:\/\/fonts\.gstatic\.com\/.*/i,
-            handler: 'CacheFirst',
-            options: {
-              cacheName: 'gstatic-fonts-cache',
-              expiration: { maxEntries: 10, maxAgeSeconds: 60 * 60 * 24 * 365 },
-              cacheableResponse: { statuses: [0, 200] },
-            },
-          },
-          {
-            // Static assets (images/fonts) — cache with TTL.
+            // Static assets (images/fonts): Cache-First for performance.
             urlPattern: /\.(?:png|jpg|jpeg|svg|gif|webp|woff2?|ttf|otf)$/i,
-            handler: 'StaleWhileRevalidate',
+            handler: 'CacheFirst',
             options: {
-              cacheName: 'static-assets',
-              expiration: { maxEntries: 80, maxAgeSeconds: 60 * 60 * 24 * 30 },
+              cacheName: 'static-assets-v1',
+              expiration: { maxEntries: 100, maxAgeSeconds: 60 * 60 * 24 * 30 },
               cacheableResponse: { statuses: [0, 200] },
             },
           },

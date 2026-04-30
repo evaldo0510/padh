@@ -15,23 +15,24 @@ const PWAUpdatePrompt = () => {
   const [registration, setRegistration] = useState<ServiceWorkerRegistration | null>(null);
 
   useEffect(() => {
-    // Test mode: allow triggering via window for CI/smoke tests
-    if (typeof window !== "undefined") {
-      (window as any).__TRIGGER_PWA_UPDATE__ = () => setNeedRefresh(true);
-    }
+    if (typeof window === "undefined") return;
 
-    if (typeof window === "undefined" || !("serviceWorker" in navigator)) return;
+    // Test mode
+    (window as any).__TRIGGER_PWA_UPDATE__ = () => setNeedRefresh(true);
 
-    // Skip in iframes / preview hosts (already unregistered in main.tsx).
-    let inIframe = false;
-    try { inIframe = window.self !== window.top; } catch { inIframe = true; }
+    if (!("serviceWorker" in navigator)) return;
+
     const isPreview =
       window.location.hostname.includes("id-preview--") ||
-      window.location.hostname.includes("lovableproject.com");
-    if (inIframe || isPreview) return;
+      window.location.hostname.includes("lovableproject.com") ||
+      window.location.hostname.includes("lovable.app") ||
+      window.self !== window.top;
+
+    if (isPreview) return;
 
     const onControllerChange = () => {
-      // The new SW has taken control — reload to get fresh assets.
+      // FORCE RELOAD immediately when a new SW takes control.
+      console.log("PWA: New Service Worker activated. Reloading...");
       window.location.reload();
     };
     navigator.serviceWorker.addEventListener("controllerchange", onControllerChange);
@@ -40,22 +41,28 @@ const PWAUpdatePrompt = () => {
       if (!reg) return;
       setRegistration(reg);
 
-      // If a waiting worker is already there, prompt immediately.
-      if (reg.waiting) setNeedRefresh(true);
+      // Aggressive Update Check: If waiting, skip immediately.
+      if (reg.waiting) {
+        console.log("PWA: Found waiting worker. Skipping waiting phase...");
+        reg.waiting.postMessage({ type: "SKIP_WAITING" });
+        setNeedRefresh(true);
+      }
 
       reg.addEventListener("updatefound", () => {
         const newWorker = reg.installing;
         if (!newWorker) return;
         newWorker.addEventListener("statechange", () => {
           if (newWorker.state === "installed" && navigator.serviceWorker.controller) {
+            console.log("PWA: New version installed. Activating now...");
+            newWorker.postMessage({ type: "SKIP_WAITING" });
             setNeedRefresh(true);
             reportPWAEvent("update_found");
           }
         });
       });
 
-      // Periodically check for updates (every 60s while tab is open).
-      const interval = setInterval(() => reg.update().catch(() => {}), 60_000);
+      // Poll frequently (every 30s) for aggressive freshness.
+      const interval = setInterval(() => reg.update().catch(() => {}), 30_000);
       return () => clearInterval(interval);
     });
 
@@ -65,7 +72,7 @@ const PWAUpdatePrompt = () => {
   }, []);
 
   const handleUpdate = () => {
-    reportPWAEvent("update_activated", "success", { method: registration?.waiting ? "skipWaiting" : "reload" });
+    reportPWAEvent("update_activated", "success", { method: "manual_force" });
     if (registration?.waiting) {
       registration.waiting.postMessage({ type: "SKIP_WAITING" });
     } else {
