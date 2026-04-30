@@ -590,7 +590,7 @@ export function gerarRelatorioProgresso(
   );
   y += 10;
 
-  y = sectionTitle(doc, y, "5. DETALHAMENTO DOS MÓDULOS");
+  y = sectionTitle(doc, y, "6. DETALHAMENTO DOS MÓDULOS");
 
   const body = modulos.map((m) => {
     const isCompleted = (progressData.completedModules || []).includes(m.id);
