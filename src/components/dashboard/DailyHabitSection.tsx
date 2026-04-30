@@ -134,6 +134,17 @@ const DailyHabitSection: React.FC = () => {
         .from("profiles")
         .update({ reminder_enabled: enabled, reminder_time: time, reminder_message: message })
         .eq("user_id", user.id);
+      
+      // Notify Service Worker
+      if ('serviceWorker' in navigator && navigator.serviceWorker.controller) {
+        navigator.serviceWorker.controller.postMessage({
+          type: 'SET_REMINDER',
+          enabled,
+          time,
+          message
+        });
+      }
+      
       toast.success("Configurações de lembrete atualizadas.");
     }
   };
