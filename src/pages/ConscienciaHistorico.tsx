@@ -130,16 +130,16 @@ const ConscienciaHistorico: React.FC = () => {
               <div key={i} className="glass-card p-8 h-40 animate-pulse bg-white/5" />
             ))}
           </div>
-        ) : history.length === 0 ? (
+        ) : filteredHistory.length === 0 ? (
           <div className="glass-card p-12 text-center space-y-4">
             <Calendar className="w-12 h-12 text-white/20 mx-auto" />
-            <h3 className="text-xl font-bold text-white">Nenhum registro ainda</h3>
-            <p className="text-white/40 max-w-xs mx-auto">Comece seu desafio diário para ver seu histórico crescer aqui.</p>
-            <Button onClick={() => navigate('/')} className="btn-primary">Ir para a Home</Button>
+            <h3 className="text-xl font-bold text-white">Nenhum registro encontrado</h3>
+            <p className="text-white/40 max-w-xs mx-auto">Tente ajustar seus filtros ou busca para encontrar o que procura.</p>
+            <Button onClick={() => { setSearchTerm(""); setMoodFilter("all"); }} variant="outline" className="border-white/10">Limpar Filtros</Button>
           </div>
         ) : (
           <div className="grid gap-8">
-            {history.map((item, index) => (
+            {filteredHistory.map((item, index) => (
               <motion.div 
                 key={item.checkin_date}
                 initial={{ opacity: 0, y: 20 }}
