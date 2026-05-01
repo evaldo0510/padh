@@ -80,9 +80,8 @@ const PWAUpdatePrompt = () => {
 
       if (reg.waiting) {
         traceRef.current.install_completed = Date.now();
-        console.log("PWA: Found waiting worker. Skipping waiting phase...");
+        console.log("PWA: Found waiting worker. Auto-activating...");
         reg.waiting.postMessage({ type: "SKIP_WAITING" });
-        setNeedRefresh(true);
       }
 
       reg.addEventListener("updatefound", () => {
