@@ -6,6 +6,30 @@ import { toast } from "sonner";
 import { Link } from "react-router-dom";
 import { APP_VERSION } from "@/lib/changelog";
 import { reportPWAEvent, PWAUpdateTrace } from "@/lib/pwa-metrics";
+import { pwaDebugLog, verifyNetworkFirstAtRuntime } from "@/lib/pwa-debug";
+
+// Module-level reload lock — prevents duplicate reloads when several
+// update notifications fire in quick succession (multiple tabs, retries, etc.)
+const RELOAD_LOCK_KEY = "pwa_reload_lock";
+const RELOAD_LOCK_TTL_MS = 10_000;
+
+function acquireReloadLock(reason: string): boolean {
+  try {
+    const now = Date.now();
+    const raw = sessionStorage.getItem(RELOAD_LOCK_KEY);
+    if (raw) {
+      const ts = parseInt(raw, 10);
+      if (!Number.isNaN(ts) && now - ts < RELOAD_LOCK_TTL_MS) {
+        pwaDebugLog("reload_blocked_duplicate", reason, { lockAgeMs: now - ts });
+        return false;
+      }
+    }
+    sessionStorage.setItem(RELOAD_LOCK_KEY, String(now));
+    return true;
+  } catch {
+    return true;
+  }
+}
 
 /**
  * Detects new service worker versions and shows a non-blocking banner
