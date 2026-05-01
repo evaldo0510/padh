@@ -1,6 +1,6 @@
 // Bump VERSION on each meaningful release. Used by the PWA update banner
 // to link the user to the matching entry below.
-export const APP_VERSION = "2026.04.29";
+export const APP_VERSION = "2026.05.01";
 
 export interface ChangelogEntry {
   version: string;
@@ -9,6 +9,15 @@ export interface ChangelogEntry {
 }
 
 export const CHANGELOG: ChangelogEntry[] = [
+  {
+    version: "2026.05.01",
+    date: "01 Mai 2026",
+    highlights: [
+      "Atualização automática do PWA: nova versão é aplicada e a página recarrega sozinha sem precisar clicar em nada.",
+      "Polling de atualização reduzido para 15s para detectar deploys mais rápido.",
+      "Estratégia network-first reforçada para HTML, JS e CSS — sem cache obsoleto.",
+    ],
+  },
   {
     version: "2026.04.29",
     date: "29 Abr 2026",
