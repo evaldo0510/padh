@@ -6,6 +6,30 @@ import { toast } from "sonner";
 import { Link } from "react-router-dom";
 import { APP_VERSION } from "@/lib/changelog";
 import { reportPWAEvent, PWAUpdateTrace } from "@/lib/pwa-metrics";
+import { pwaDebugLog, verifyNetworkFirstAtRuntime } from "@/lib/pwa-debug";
+
+// Module-level reload lock — prevents duplicate reloads when several
+// update notifications fire in quick succession (multiple tabs, retries, etc.)
+const RELOAD_LOCK_KEY = "pwa_reload_lock";
+const RELOAD_LOCK_TTL_MS = 10_000;
+
+function acquireReloadLock(reason: string): boolean {
+  try {
+    const now = Date.now();
+    const raw = sessionStorage.getItem(RELOAD_LOCK_KEY);
+    if (raw) {
+      const ts = parseInt(raw, 10);
+      if (!Number.isNaN(ts) && now - ts < RELOAD_LOCK_TTL_MS) {
+        pwaDebugLog("reload_blocked_duplicate", reason, { lockAgeMs: now - ts });
+        return false;
+      }
+    }
+    sessionStorage.setItem(RELOAD_LOCK_KEY, String(now));
+    return true;
+  } catch {
+    return true;
+  }
+}
 
 /**
  * Detects new service worker versions and shows a non-blocking banner
@@ -59,15 +83,21 @@ const PWAUpdatePrompt = () => {
     if (isEditorPreview) return;
 
     const onControllerChange = () => {
+      pwaDebugLog("controllerchange", "New SW took control");
+      if (!acquireReloadLock("controllerchange")) {
+        // Another reload already in flight — skip
+        return;
+      }
       traceRef.current.reload_triggered = Date.now();
       sessionStorage.setItem("pwa_pending_trace", JSON.stringify(traceRef.current));
+      pwaDebugLog("reload_triggered", "controllerchange → window.location.reload()");
       console.log("PWA: New Service Worker activated. Reloading...");
-      
+
       // Notify user before reload
       toast.success("Sistema atualizado! Recarregando para aplicar mudanças...", {
         duration: 2000,
       });
-      
+
       setTimeout(() => {
         window.location.reload();
       }, 1000);
@@ -80,20 +110,26 @@ const PWAUpdatePrompt = () => {
 
       if (reg.waiting) {
         traceRef.current.install_completed = Date.now();
+        pwaDebugLog("skipWaiting_sent", "Found waiting worker on load");
         console.log("PWA: Found waiting worker. Auto-activating...");
         reg.waiting.postMessage({ type: "SKIP_WAITING" });
       }
 
       reg.addEventListener("updatefound", () => {
         traceRef.current.download_start = Date.now();
+        pwaDebugLog("updatefound", "Registration reported new worker");
         const newWorker = reg.installing;
         if (!newWorker) return;
+        pwaDebugLog("installing", `state=${newWorker.state}`);
         newWorker.addEventListener("statechange", () => {
+          pwaDebugLog("installing", `state=${newWorker.state}`);
           if (newWorker.state === "installed" && navigator.serviceWorker.controller) {
             traceRef.current.install_completed = Date.now();
+            pwaDebugLog("installed", "New worker installed; sending SKIP_WAITING");
             console.log("PWA: New version installed. Auto-activating...");
             // Auto skip waiting → triggers controllerchange → auto reload
             newWorker.postMessage({ type: "SKIP_WAITING" });
+            pwaDebugLog("skipWaiting_sent", "auto after install");
             reportPWAEvent("update_found");
           }
         });
@@ -101,7 +137,25 @@ const PWAUpdatePrompt = () => {
 
       // Poll for updates more aggressively (every 15s)
       const interval = setInterval(() => reg.update().catch(() => {}), 15_000);
-      return () => clearInterval(interval);
+
+      // Periodic runtime verification: confirm critical assets are not stale.
+      // Runs every 2 minutes; logs to debug history if a stale response is detected.
+      const verifyInterval = setInterval(() => {
+        const urls = [window.location.origin + "/", window.location.origin + "/sw.js"];
+        verifyNetworkFirstAtRuntime(urls).catch(() => {});
+      }, 120_000);
+      // Run once shortly after mount as well
+      setTimeout(() => {
+        verifyNetworkFirstAtRuntime([
+          window.location.origin + "/",
+          window.location.origin + "/sw.js",
+        ]).catch(() => {});
+      }, 5_000);
+
+      return () => {
+        clearInterval(interval);
+        clearInterval(verifyInterval);
+      };
     });
 
     return () => {
@@ -112,9 +166,12 @@ const PWAUpdatePrompt = () => {
   const handleUpdate = () => {
     traceRef.current.activation_start = Date.now();
     reportPWAEvent("update_activated", "success", { method: "manual_force" });
+    pwaDebugLog("skipWaiting_sent", "manual user click");
     if (registration?.waiting) {
       registration.waiting.postMessage({ type: "SKIP_WAITING" });
     } else {
+      if (!acquireReloadLock("manual handleUpdate fallback")) return;
+      pwaDebugLog("reload_triggered", "manual fallback (no waiting worker)");
       window.location.reload();
     }
   };
