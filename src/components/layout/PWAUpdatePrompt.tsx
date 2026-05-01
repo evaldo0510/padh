@@ -80,9 +80,8 @@ const PWAUpdatePrompt = () => {
 
       if (reg.waiting) {
         traceRef.current.install_completed = Date.now();
-        console.log("PWA: Found waiting worker. Skipping waiting phase...");
+        console.log("PWA: Found waiting worker. Auto-activating...");
         reg.waiting.postMessage({ type: "SKIP_WAITING" });
-        setNeedRefresh(true);
       }
 
       reg.addEventListener("updatefound", () => {
@@ -92,15 +91,16 @@ const PWAUpdatePrompt = () => {
         newWorker.addEventListener("statechange", () => {
           if (newWorker.state === "installed" && navigator.serviceWorker.controller) {
             traceRef.current.install_completed = Date.now();
-            console.log("PWA: New version installed. Activating now...");
+            console.log("PWA: New version installed. Auto-activating...");
+            // Auto skip waiting → triggers controllerchange → auto reload
             newWorker.postMessage({ type: "SKIP_WAITING" });
-            setNeedRefresh(true);
             reportPWAEvent("update_found");
           }
         });
       });
 
-      const interval = setInterval(() => reg.update().catch(() => {}), 30_000);
+      // Poll for updates more aggressively (every 15s)
+      const interval = setInterval(() => reg.update().catch(() => {}), 15_000);
       return () => clearInterval(interval);
     });
 
