@@ -166,9 +166,12 @@ const PWAUpdatePrompt = () => {
   const handleUpdate = () => {
     traceRef.current.activation_start = Date.now();
     reportPWAEvent("update_activated", "success", { method: "manual_force" });
+    pwaDebugLog("skipWaiting_sent", "manual user click");
     if (registration?.waiting) {
       registration.waiting.postMessage({ type: "SKIP_WAITING" });
     } else {
+      if (!acquireReloadLock("manual handleUpdate fallback")) return;
+      pwaDebugLog("reload_triggered", "manual fallback (no waiting worker)");
       window.location.reload();
     }
   };
