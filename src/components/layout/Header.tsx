@@ -1,221 +1,170 @@
-import React, { useState, useEffect } from 'react';
-import { useLocation, Link, useNavigate } from 'react-router-dom';
-import { Menu, X, ChevronDown, LogOut, User } from 'lucide-react';
+import React, { useState, useEffect, useMemo } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import { User, LogOut, ArrowRight } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { ThemeToggle } from '@/components/ui/theme-toggle';
 import PrefetchLink from './PrefetchLink';
 import Logo from '@/components/ui/Logo';
-import { supabase } from "@/integrations/supabase/client";
-import { supabaseConfig } from "@/integrations/supabase/config";
+import { supabase } from '@/integrations/supabase/client';
+import { supabaseConfig } from '@/integrations/supabase/config';
+import { useJornada } from '@/hooks/useJornada';
+import { JORNADA_DATA } from '@/lib/jornada-data';
 import { toast } from 'sonner';
 
 const Header = () => {
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [isToolsOpen, setIsToolsOpen] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [scrolled, setScrolled] = useState(false);
-  const location = useLocation();
   const navigate = useNavigate();
+  const { jornada } = useJornada();
 
   useEffect(() => {
-    const handleScroll = () => {
-      setScrolled(window.scrollY > 20);
-    };
+    const handleScroll = () => setScrolled(window.scrollY > 10);
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-
   useEffect(() => {
     const checkAuth = async () => {
-      // Check simulated login
       const simulated = localStorage.getItem('padh_simulated_user');
-      if (simulated) {
-        setIsLoggedIn(true);
-        return;
-      }
-      
-      // Check real supabase login
+      if (simulated) return setIsLoggedIn(true);
       if (supabaseConfig.isConfigured) {
         const { data: { session } } = await supabase.auth.getSession();
         setIsLoggedIn(!!session);
       }
     };
-
     checkAuth();
 
-    // Listen for auth changes if supabase is configured
     if (supabaseConfig.isConfigured) {
-      const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
+      const { data: { subscription } } = supabase.auth.onAuthStateChange((_e, session) => {
         setIsLoggedIn(!!session || !!localStorage.getItem('padh_simulated_user'));
       });
-
       return () => subscription.unsubscribe();
     }
   }, []);
 
   const handleLogout = async () => {
-    // Clear simulated login
     localStorage.removeItem('padh_simulated_user');
-    
-    // Clear real supabase login if configured
-    if (supabaseConfig.isConfigured) {
-      await supabase.auth.signOut();
-    }
-    
+    if (supabaseConfig.isConfigured) await supabase.auth.signOut();
     setIsLoggedIn(false);
-    toast.success("Sessão encerrada com sucesso.");
+    toast.success('Sessão encerrada.');
     navigate('/');
   };
 
-  const navItems = [
-    { name: 'Início', path: '/' },
-    { name: 'Dashboard', path: '/dashboard' },
-    { name: 'Jornada', path: '/jornada' },
-    { name: 'Planos', path: '/planos' },
-    { name: 'Meu Produto', path: '/meu-produto' },
-    { name: 'Sobre', path: '/sobre' },
-    { name: 'Livro-Curso', path: '/livro-curso' },
-    { name: 'Formação PCH', path: '/formacao' },
-    { name: 'Curso PCH', path: '/curso-padh' },
-    { name: 'Combo PADH', path: '/combo-padh' },
-    { name: 'Recursos Clínicos', path: '/recursos-clinicos' },
-    { name: 'Ferramentas', path: '/ferramentas', hasDropdown: true },
-    { name: 'Ciência', path: '/ciencia-da-poesia' },
-    { name: 'Mapa Cerebral', path: '/mapa-cerebral' },
-    { name: 'Aula Exclusiva', path: '/aula-exclusiva' },
-    { name: 'Contato', path: '/contato' }
-  ];
+  // Compute journey progress (day + percentage)
+  const { dayLabel, percent, continueHref } = useMemo(() => {
+    const allSessions = JORNADA_DATA.flatMap((f) => f.sessoes);
+    const total = allSessions.length || 1;
+    const done = jornada.completedSessions?.length || 0;
+    const pct = Math.min(100, Math.round((done / total) * 100));
+    const day = Math.min(total, done + 1);
 
-  const toolLinks = [
-    { name: '1. Poema-Funil', path: '/ferramentas/poema-funil' },
-    { name: '2. Verso-Gatilho', path: '/ferramentas/verso-gatilho' },
-    { name: '3. Poemadiagnóstico', path: '/ferramentas/poemadiagnostico' },
-    { name: '4. Caderno de Voz Interna', path: '/ferramentas/caderno-voz-interna' },
-    { name: '5. Encenação Poética', path: '/ferramentas/encenacao-poetica' },
-    { name: '6. Reescrita Poética', path: '/ferramentas/reescrita-poetica' },
-    { name: '7. Ritual do Silêncio', path: '/ferramentas/ritual-silencio' },
-    { name: '8. Poesia Hipnótica', path: '/ferramentas/poesia-hipnotica' },
-  ];
+    // Find next pending session for "Continuar"
+    const nextSession = allSessions.find((s) => !jornada.completedSessions?.includes(s.id));
+    const href = nextSession ? `/jornada/${nextSession.id}` : '/jornada';
 
-  const isActive = (path: string) => location.pathname === path;
-  const isToolsActive = location.pathname.startsWith('/ferramentas');
+    return { dayLabel: `Dia ${day}`, percent: pct, continueHref: href };
+  }, [jornada.completedSessions]);
 
   return (
-    <header className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${scrolled ? 'glass-morphism py-2 border-b border-primary/10 shadow-lg' : 'bg-transparent py-4'}`}>
+    <header
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+        scrolled
+          ? 'bg-background/85 backdrop-blur-xl border-b border-border/60'
+          : 'bg-background/60 backdrop-blur-md border-b border-transparent'
+      }`}
+    >
       <div className="container mx-auto px-4 md:px-6">
-        <div className="flex items-center justify-between h-16 gap-2">
-          {/* Logo */}
-          <PrefetchLink to="/" className="flex items-center gap-2 md:gap-3 group shrink-0 transition-all duration-300">
-            <Logo size="md" className="w-9 h-9 md:w-11 md:h-11" />
-            <div className="flex flex-col justify-center min-w-0">
-              <span className="text-lg md:text-2xl font-heading font-black text-foreground leading-none tracking-tighter group-hover:text-primary transition-colors truncate">
-                PADH
-              </span>
-              <span className="text-[8px] md:text-[10px] text-primary/80 leading-none font-bold uppercase tracking-wider mt-0.5 md:mt-1 whitespace-nowrap overflow-hidden text-ellipsis max-w-[120px] xs:max-w-[160px] md:max-w-none">
-                Poesia Aplicada ao Desenvolvimento Humano
-              </span>
-            </div>
+        <div className="grid grid-cols-[auto_1fr_auto] items-center h-14 gap-3">
+          {/* LEFT — Logo */}
+          <PrefetchLink to="/" className="flex items-center gap-2 group shrink-0">
+            <Logo size="sm" className="w-8 h-8" />
+            <span className="hidden sm:inline text-base font-heading font-bold tracking-tight text-foreground group-hover:text-primary transition-colors">
+              PADH
+            </span>
           </PrefetchLink>
 
-          {/* Desktop Navigation */}
-          <div className="hidden lg:flex items-center gap-1">
-            <nav className="flex items-center gap-0.5">
-              {navItems.map((item) => (
-                <div 
-                  key={item.path} 
-                  className="relative"
-                  onMouseEnter={() => item.hasDropdown && setIsToolsOpen(true)}
-                  onMouseLeave={() => item.hasDropdown && setIsToolsOpen(false)}
-                >
-                  <PrefetchLink 
-                    to={item.path}
-                    className={`relative px-3 py-1.5 text-sm transition-all duration-300 rounded-md inline-flex items-center gap-1 ${
-                      (item.hasDropdown ? isToolsActive : isActive(item.path)) 
-                        ? 'text-primary font-medium' 
-                        : 'text-muted-foreground hover:text-foreground'
-                    }`}
-                  >
-                    {item.name}
-                    {item.hasDropdown && <ChevronDown className="h-3 w-3" />}
-                    {(item.hasDropdown ? isToolsActive : isActive(item.path)) && (
-                      <span className="absolute bottom-0 left-3 right-3 h-px bg-primary" />
-                    )}
-                  </PrefetchLink>
-
-                  {/* Dropdown */}
-                  {item.hasDropdown && isToolsOpen && (
-                    <div className="absolute top-full left-0 pt-1 z-50">
-                      <div className="bg-card border border-border/50 rounded-lg shadow-lg py-2 min-w-[220px]">
-                        <PrefetchLink 
-                          to="/ferramentas" 
-                          className="block px-4 py-2 text-sm text-muted-foreground hover:text-primary hover:bg-primary/5 transition-colors font-medium"
-                        >
-                          Todas as Ferramentas
-                        </PrefetchLink>
-                        <div className="h-px bg-border/30 my-1" />
-                        {toolLinks.map((tool) => (
-                          <PrefetchLink 
-                            key={tool.path}
-                            to={tool.path}
-                            className={`block px-4 py-1.5 text-sm transition-colors ${
-                              isActive(tool.path) 
-                                ? 'text-primary bg-primary/5' 
-                                : 'text-muted-foreground hover:text-foreground hover:bg-muted/50'
-                            }`}
-                          >
-                            {tool.name}
-                          </PrefetchLink>
-                        ))}
-                      </div>
-                    </div>
-                  )}
-                </div>
-              ))}
-            </nav>
-
-            <div className="ml-3 pl-3 border-l border-border/50 flex items-center gap-4">
-              <ThemeToggle />
-              {isLoggedIn ? (
-                <div className="flex items-center gap-2">
-                  <Button size="sm" variant="ghost" className="gap-2" asChild>
-                    <Link to="/dashboard">
-                      <User className="spiritual-icon" />
-                      Minha Área
-                    </Link>
-                  </Button>
-                  <Button 
-                    size="sm" 
-                    variant="outline" 
-                    className="gap-2 text-red-500 hover:text-red-600 hover:bg-red-50 dark:hover:bg-red-950/20"
-                    onClick={handleLogout}
-                  >
-                    <LogOut className="spiritual-icon" />
-                    Sair
-                  </Button>
-                </div>
-              ) : (
-                <Button size="sm" variant="ghost" asChild>
-                  <Link to="/login">Entrar</Link>
-                </Button>
-              )}
-            </div>
+          {/* CENTER — Primary action */}
+          <div className="flex justify-center">
+            {isLoggedIn ? (
+              <Button
+                size="sm"
+                className="h-9 px-4 md:px-5 rounded-full font-medium gap-2 bg-primary text-primary-foreground hover:bg-primary/90 shadow-sm"
+                asChild
+              >
+                <Link to={continueHref}>
+                  <span className="hidden xs:inline sm:inline">Continuar jornada</span>
+                  <span className="xs:hidden sm:hidden">Continuar</span>
+                  <ArrowRight className="w-4 h-4" />
+                </Link>
+              </Button>
+            ) : (
+              <Button
+                size="sm"
+                className="h-9 px-5 rounded-full font-medium gap-2"
+                asChild
+              >
+                <Link to="/jornada">
+                  Começar jornada
+                  <ArrowRight className="w-4 h-4" />
+                </Link>
+              </Button>
+            )}
           </div>
 
-          {/* Mobile Header (Simplified for App Feel) */}
-          <div className="lg:hidden flex items-center gap-2">
-            <ThemeToggle />
+          {/* RIGHT — Progress + profile */}
+          <div className="flex items-center gap-2 md:gap-3 shrink-0">
             {isLoggedIn && (
-               <Button 
-                variant="ghost" 
-                size="sm" 
-                className="h-8 w-8 p-0 rounded-full bg-primary/10"
-                asChild
-               >
-                 <Link to="/dashboard">
-                   <User className="w-4 h-4 text-primary" />
-                 </Link>
-               </Button>
+              <div
+                className="hidden sm:flex items-center gap-2 px-3 h-9 rounded-full bg-muted/40 border border-border/40"
+                aria-label={`Progresso: ${dayLabel}, ${percent} por cento`}
+              >
+                <span className="text-xs font-medium text-foreground tabular-nums">
+                  {dayLabel}
+                </span>
+                <span className="w-px h-3 bg-border/60" />
+                <div className="flex items-center gap-1.5">
+                  <div className="w-12 h-1 rounded-full bg-border/60 overflow-hidden">
+                    <div
+                      className="h-full bg-primary transition-all duration-500"
+                      style={{ width: `${percent}%` }}
+                    />
+                  </div>
+                  <span className="text-xs font-semibold text-primary tabular-nums">
+                    {percent}%
+                  </span>
+                </div>
+              </div>
+            )}
+
+            <ThemeToggle />
+
+            {isLoggedIn ? (
+              <div className="flex items-center gap-1">
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  className="h-9 w-9 p-0 rounded-full bg-primary/10 hover:bg-primary/20"
+                  asChild
+                  aria-label="Minha área"
+                >
+                  <Link to="/dashboard">
+                    <User className="w-4 h-4 text-primary" />
+                  </Link>
+                </Button>
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  className="hidden md:inline-flex h-9 w-9 p-0 rounded-full text-muted-foreground hover:text-destructive"
+                  onClick={handleLogout}
+                  aria-label="Sair"
+                >
+                  <LogOut className="w-4 h-4" />
+                </Button>
+              </div>
+            ) : (
+              <Button size="sm" variant="ghost" className="h-9" asChild>
+                <Link to="/login">Entrar</Link>
+              </Button>
             )}
           </div>
         </div>
