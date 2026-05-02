@@ -333,40 +333,79 @@ const SessaoView = () => {
                 )}
 
                 {/* Multiple choice block — renders real opcoes from data */}
-                {blockKind === "choice" && (
-                  <motion.div
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    transition={{ delay: 0.4, duration: 0.6 }}
-                    className="flex flex-col gap-3 max-w-md mx-auto pt-4"
-                    role={currentBlock.multiSelect ? "group" : "radiogroup"}
-                  >
-                    {(currentBlock.opcoes || []).map((opt) => {
-                      const selected = choice.includes(opt.id);
-                      return (
-                        <button
-                          key={opt.id}
-                          type="button"
-                          role={currentBlock.multiSelect ? "checkbox" : "radio"}
-                          aria-checked={selected}
-                          onClick={() => toggleChoice(opt.id, !!currentBlock.multiSelect)}
-                          className={`px-6 py-4 rounded-xl border text-left transition-all duration-200 ${
-                            selected
-                              ? "border-primary bg-primary/10 text-white"
-                              : "border-white/10 bg-white/[0.02] text-white/70 hover:border-white/20 hover:bg-white/5"
-                          }`}
-                        >
-                          {opt.label}
-                        </button>
-                      );
-                    })}
-                    {currentBlock.multiSelect && (
-                      <p className="text-[10px] uppercase tracking-[0.3em] text-white/30 text-center pt-2">
-                        Selecione uma ou mais opções
-                      </p>
-                    )}
-                  </motion.div>
-                )}
+                {blockKind === "choice" && (() => {
+                  const opts = currentBlock.opcoes || [];
+                  // Friendly fallback when block is misconfigured
+                  if (opts.length === 0) {
+                    return (
+                      <motion.div
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        transition={{ delay: 0.4, duration: 0.6 }}
+                        className="max-w-md mx-auto pt-4"
+                      >
+                        <div className="rounded-xl border border-amber-500/30 bg-amber-500/5 px-6 py-5 text-left">
+                          <p className="text-xs uppercase tracking-[0.25em] text-amber-400/80 font-semibold mb-2">
+                            Bloco indisponível
+                          </p>
+                          <p className="text-sm text-white/70 font-light leading-relaxed">
+                            Este passo de múltipla escolha não possui opções configuradas. Você pode continuar para o próximo bloco.
+                          </p>
+                        </div>
+                      </motion.div>
+                    );
+                  }
+
+                  // Summary of previously-selected labels (revisit)
+                  const selectedLabels = choice
+                    .map((id) => opts.find((o) => o.id === id)?.label)
+                    .filter((l): l is string => Boolean(l));
+
+                  return (
+                    <motion.div
+                      initial={{ opacity: 0 }}
+                      animate={{ opacity: 1 }}
+                      transition={{ delay: 0.4, duration: 0.6 }}
+                      className="flex flex-col gap-3 max-w-md mx-auto pt-4"
+                      role={currentBlock.multiSelect ? "group" : "radiogroup"}
+                    >
+                      {selectedLabels.length > 0 && (
+                        <div className="mb-2 rounded-xl border border-primary/20 bg-primary/5 px-5 py-3 text-left">
+                          <p className="text-[10px] uppercase tracking-[0.3em] text-primary/70 font-semibold mb-1.5">
+                            Sua escolha anterior
+                          </p>
+                          <p className="text-sm text-white/80 font-light">
+                            {selectedLabels.join(", ")}
+                          </p>
+                        </div>
+                      )}
+                      {opts.map((opt) => {
+                        const selected = choice.includes(opt.id);
+                        return (
+                          <button
+                            key={opt.id}
+                            type="button"
+                            role={currentBlock.multiSelect ? "checkbox" : "radio"}
+                            aria-checked={selected}
+                            onClick={() => toggleChoice(opt.id, !!currentBlock.multiSelect)}
+                            className={`px-6 py-4 rounded-xl border text-left transition-all duration-200 ${
+                              selected
+                                ? "border-primary bg-primary/10 text-white"
+                                : "border-white/10 bg-white/[0.02] text-white/70 hover:border-white/20 hover:bg-white/5"
+                            }`}
+                          >
+                            {opt.label}
+                          </button>
+                        );
+                      })}
+                      {currentBlock.multiSelect && (
+                        <p className="text-[10px] uppercase tracking-[0.3em] text-white/30 text-center pt-2">
+                          Selecione uma ou mais opções
+                        </p>
+                      )}
+                    </motion.div>
+                  );
+                })()}
 
                 {/* Guided pause block */}
                 {blockKind === "pause" && (
