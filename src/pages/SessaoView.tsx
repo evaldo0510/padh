@@ -51,13 +51,20 @@ const SessaoView = () => {
     }
     if (currentBlock.tipo === "choice") {
       const saved = getResponse(currentBlock.id);
+      const opts = currentBlock.opcoes || [];
       if (saved) {
+        let savedLabels: string[] = [];
         try {
           const parsed = JSON.parse(saved);
-          setChoice(Array.isArray(parsed) ? parsed : [String(parsed)]);
+          savedLabels = Array.isArray(parsed) ? parsed.map(String) : [String(parsed)];
         } catch {
-          setChoice(saved.split(",").map((s) => s.trim()).filter(Boolean));
+          savedLabels = saved.split(",").map((s) => s.trim()).filter(Boolean);
         }
+        // Map labels back to option IDs (fallback: keep raw if no match)
+        const ids = savedLabels
+          .map((lbl) => opts.find((o) => o.label === lbl)?.id ?? lbl)
+          .filter(Boolean);
+        setChoice(ids);
       } else {
         setChoice([]);
       }
