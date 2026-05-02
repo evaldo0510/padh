@@ -21,7 +21,7 @@ const SessaoView = () => {
 
   const [currentExIdx, setCurrentExIdx] = useState(0);
   const [response, setResponse] = useState("");
-  const [choice, setChoice] = useState<string | null>(null);
+  const [choice, setChoice] = useState<string[]>([]);
   const [isPaused, setIsPaused] = useState(false);
   const [pauseRemaining, setPauseRemaining] = useState(0);
   const [isTransitioning, setIsTransitioning] = useState(false);
