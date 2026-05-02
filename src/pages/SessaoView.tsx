@@ -165,7 +165,8 @@ const SessaoView = () => {
   };
 
   // Determine block kind for rendering
-  const blockKind: "opening" | "reflection" | "input" | "choice" | "pause" =
+  type BlockKind = "opening" | "reflection" | "input" | "choice" | "pause";
+  const blockKind: BlockKind =
     currentBlock?.tipo === "exercise"
       ? "input"
       : currentBlock?.tipo === "reflection"
