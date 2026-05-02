@@ -175,6 +175,17 @@ const SessaoView = () => {
       saveResponse(currentBlock.id, response);
     }
 
+    if (currentBlock.tipo === "choice") {
+      if (choice.length === 0) {
+        toast.error("Selecione uma opção para continuar.");
+        return;
+      }
+      const opts = currentBlock.opcoes || [];
+      const labels = choice
+        .map((id) => opts.find((o) => o.id === id)?.label ?? id);
+      saveResponse(currentBlock.id, JSON.stringify(labels));
+    }
+
     advance();
   };
 
@@ -184,6 +195,7 @@ const SessaoView = () => {
     if (currentBlock?.tipo === "exercise") return "input";
     if (currentBlock?.tipo === "reflection") return "reflection";
     if (currentBlock?.tipo === "action") return "pause";
+    if (currentBlock?.tipo === "choice") return "choice";
     return "opening";
   })();
 
@@ -191,12 +203,24 @@ const SessaoView = () => {
     ? "Finalizar"
     : blockKind === "input"
     ? "Responder"
+    : blockKind === "choice"
+    ? "Confirmar"
     : "Continuar";
 
   const primaryDisabled =
     isTransitioning ||
     (blockKind === "input" && !response.trim()) ||
+    (blockKind === "choice" && choice.length === 0) ||
     (blockKind === "pause" && isPaused);
+
+  const toggleChoice = (optId: string, multi: boolean) => {
+    setChoice((prev) => {
+      if (multi) {
+        return prev.includes(optId) ? prev.filter((p) => p !== optId) : [...prev, optId];
+      }
+      return [optId];
+    });
+  };
 
   return (
     <PageLayout
