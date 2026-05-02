@@ -325,27 +325,39 @@ const SessaoView = () => {
                   </motion.div>
                 )}
 
-                {/* Multiple choice block (graceful — used if future data adds opcoes) */}
+                {/* Multiple choice block — renders real opcoes from data */}
                 {blockKind === "choice" && (
                   <motion.div
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
                     transition={{ delay: 0.4, duration: 0.6 }}
                     className="flex flex-col gap-3 max-w-md mx-auto pt-4"
+                    role={currentBlock.multiSelect ? "group" : "radiogroup"}
                   >
-                    {(["Sim", "Não", "Talvez"]).map((opt) => (
-                      <button
-                        key={opt}
-                        onClick={() => setChoice(opt)}
-                        className={`px-6 py-4 rounded-xl border text-left transition-all duration-200 ${
-                          choice === opt
-                            ? "border-primary bg-primary/10 text-white"
-                            : "border-white/10 bg-white/[0.02] text-white/70 hover:border-white/20 hover:bg-white/5"
-                        }`}
-                      >
-                        {opt}
-                      </button>
-                    ))}
+                    {(currentBlock.opcoes || []).map((opt) => {
+                      const selected = choice.includes(opt.id);
+                      return (
+                        <button
+                          key={opt.id}
+                          type="button"
+                          role={currentBlock.multiSelect ? "checkbox" : "radio"}
+                          aria-checked={selected}
+                          onClick={() => toggleChoice(opt.id, !!currentBlock.multiSelect)}
+                          className={`px-6 py-4 rounded-xl border text-left transition-all duration-200 ${
+                            selected
+                              ? "border-primary bg-primary/10 text-white"
+                              : "border-white/10 bg-white/[0.02] text-white/70 hover:border-white/20 hover:bg-white/5"
+                          }`}
+                        >
+                          {opt.label}
+                        </button>
+                      );
+                    })}
+                    {currentBlock.multiSelect && (
+                      <p className="text-[10px] uppercase tracking-[0.3em] text-white/30 text-center pt-2">
+                        Selecione uma ou mais opções
+                      </p>
+                    )}
                   </motion.div>
                 )}
 
