@@ -1,6 +1,11 @@
 import { PCHObjectiveId } from "@/types/objectives";
 
-export type BlocoTipo = "text" | "reflection" | "exercise" | "action";
+export type BlocoTipo = "text" | "reflection" | "exercise" | "action" | "choice";
+
+export interface BlocoOpcao {
+  id: string;
+  label: string;
+}
 
 export interface Bloco {
   id: string;
@@ -10,6 +15,8 @@ export interface Bloco {
   instrucao?: string;
   placeholder?: string;
   imagem?: string;
+  opcoes?: BlocoOpcao[];
+  multiSelect?: boolean;
 }
 
 export interface SessaoJornada {
