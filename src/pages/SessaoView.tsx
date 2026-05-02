@@ -4,111 +4,106 @@ import { useParams, useNavigate } from "react-router-dom";
 import { JORNADA_DATA } from "@/lib/jornada-data";
 import { useJornada } from "@/hooks/useJornada";
 import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
 import { toast } from "sonner";
-import {
-  X,
-  ChevronLeft,
-  ChevronRight,
-  CheckCircle2,
-  Sparkles,
-  ArrowLeft,
-  FastForward,
-  Loader2,
-  Lock
-} from "lucide-react";
+import { ArrowLeft, ChevronRight, CheckCircle2, Lock } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
+
+const BLOCK_TRANSITION_MS = 450;
+const PACING_DELAY_MS = 250;
 
 const SessaoView = () => {
   const { phaseId, sessionId } = useParams();
   const navigate = useNavigate();
   const { saveResponse, completeSession, getResponse, jornada } = useJornada();
-  
+
   const fase = JORNADA_DATA.find((f) => f.id === phaseId);
   const sessao = fase?.sessoes.find((s) => s.id === sessionId);
-  
+
   const [currentExIdx, setCurrentExIdx] = useState(0);
   const [response, setResponse] = useState("");
+  const [choice, setChoice] = useState<string | null>(null);
+  const [isPaused, setIsPaused] = useState(false);
+  const [pauseRemaining, setPauseRemaining] = useState(0);
   const [isTransitioning, setIsTransitioning] = useState(false);
-  const [loadingType, setLoadingType] = useState<"next" | "prev" | "skip" | "finish">("next");
-  
+
   const transitionTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const pauseIntervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
 
-  useEffect(() => {
-    if (sessao) {
-      const currentBlock = sessao.blocos[currentExIdx];
-      if (currentBlock.tipo === "exercise") {
-        const saved = getResponse(currentBlock.id);
-        setResponse(saved || "");
-      }
-    }
-    
-    // Clear any existing transition if we change episode
-    if (transitionTimeoutRef.current) {
-      clearTimeout(transitionTimeoutRef.current);
-      setIsTransitioning(false);
-    }
-  }, [currentExIdx, sessao, getResponse]);
-
-  // Lock logic
+  // Lock check
   const isLocked = () => {
     if (!sessao || !fase) return true;
-    // Find all sessions before this one
-    const allSessions: any[] = [];
-    JORNADA_DATA.forEach(f => f.sessoes.forEach(s => allSessions.push(s)));
-    const currentIndex = allSessions.findIndex(s => s.id === sessionId);
-    if (currentIndex > 0) {
-      return !jornada.completedSessions.includes(allSessions[currentIndex - 1].id);
-    }
+    const allSessions: { id: string }[] = [];
+    JORNADA_DATA.forEach((f) => f.sessoes.forEach((s) => allSessions.push(s)));
+    const idx = allSessions.findIndex((s) => s.id === sessionId);
+    if (idx > 0) return !jornada.completedSessions.includes(allSessions[idx - 1].id);
     return false;
   };
 
-  if (!sessao || !fase) return (
-    <div className="min-h-screen bg-background flex items-center justify-center">
-       <div className="text-center space-y-4 animate-fade-in">
-          <p className="text-muted-foreground font-light text-lg">Episódio não disponível no momento.</p>
-          <Button variant="outline" onClick={() => navigate("/dashboard")} className="rounded-full px-8">Voltar ao Início</Button>
-       </div>
-    </div>
-  );
+  const currentBlock = sessao?.blocos[currentExIdx];
 
-  if (isLocked()) return (
-    <div className="min-h-screen bg-background flex items-center justify-center">
-       <div className="text-center space-y-6 animate-fade-in px-6">
-          <div className="w-20 h-20 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4">
-            <Lock className="w-10 h-10 text-primary" />
+  // Reset block-specific state on change
+  useEffect(() => {
+    if (!currentBlock) return;
+    if (currentBlock.tipo === "exercise") {
+      setResponse(getResponse(currentBlock.id) || "");
+    } else {
+      setResponse("");
+    }
+    setChoice(null);
+    // Clear pause
+    if (pauseIntervalRef.current) clearInterval(pauseIntervalRef.current);
+    setIsPaused(false);
+    setPauseRemaining(0);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [currentExIdx, sessao?.id]);
+
+  useEffect(() => {
+    return () => {
+      if (transitionTimeoutRef.current) clearTimeout(transitionTimeoutRef.current);
+      if (pauseIntervalRef.current) clearInterval(pauseIntervalRef.current);
+    };
+  }, []);
+
+  if (!sessao || !fase) {
+    return (
+      <div className="min-h-screen bg-background flex items-center justify-center">
+        <div className="text-center space-y-4">
+          <p className="text-muted-foreground font-light text-lg">
+            Episódio não disponível.
+          </p>
+          <Button variant="outline" onClick={() => navigate("/dashboard")} className="rounded-full px-8">
+            Voltar
+          </Button>
+        </div>
+      </div>
+    );
+  }
+
+  if (isLocked()) {
+    return (
+      <div className="min-h-screen bg-background flex items-center justify-center px-6">
+        <div className="text-center space-y-6 max-w-sm">
+          <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto">
+            <Lock className="w-8 h-8 text-primary" />
           </div>
           <div className="space-y-2">
-            <h2 className="text-2xl font-bold text-white">Episódio Bloqueado</h2>
-            <p className="text-muted-foreground font-light max-w-xs mx-auto">Você precisa concluir os episódios anteriores para liberar esta vivência.</p>
+            <h2 className="text-2xl font-bold">Episódio bloqueado</h2>
+            <p className="text-muted-foreground font-light">
+              Conclua os episódios anteriores para liberar esta vivência.
+            </p>
           </div>
-          <Button variant="default" onClick={() => navigate("/dashboard")} className="btn-primary px-8">Voltar ao Dashboard</Button>
-       </div>
-    </div>
-  );
+          <Button onClick={() => navigate("/dashboard")} className="px-8">
+            Voltar ao início
+          </Button>
+        </div>
+      </div>
+    );
+  }
 
-  const currentBlock = sessao.blocos[currentExIdx];
   const totalSteps = sessao.blocos.length;
   const progressPercent = ((currentExIdx + 1) / totalSteps) * 100;
   const isLast = currentExIdx === totalSteps - 1;
 
-  const startTransition = async (type: "next" | "prev" | "skip" | "finish", action: () => void) => {
-    // Cancel any previous transition
-    if (transitionTimeoutRef.current) {
-      clearTimeout(transitionTimeoutRef.current);
-    }
-    
-    setLoadingType(type);
-    setIsTransitioning(true);
-    
-    transitionTimeoutRef.current = setTimeout(() => {
-      action();
-      setIsTransitioning(false);
-      transitionTimeoutRef.current = null;
-    }, 800);
-  };
-
-  // Encontra a próxima sessão (em qualquer fase) para encadear automaticamente
   const findNextSession = () => {
     const all: { phaseId: string; sessionId: string }[] = [];
     JORNADA_DATA.forEach((f) =>
@@ -120,73 +115,74 @@ const SessaoView = () => {
 
   const goToNextSessionOrDashboard = () => {
     const next = findNextSession();
-    if (next) {
-      navigate(`/jornada/${next.phaseId}/${next.sessionId}`);
-    } else {
-      navigate("/dashboard");
-    }
+    if (next) navigate(`/jornada/${next.phaseId}/${next.sessionId}`);
+    else navigate("/dashboard");
   };
 
-  const [showError, setShowError] = useState(false);
-
-  const handleNext = () => {
-    if (isTransitioning) return;
-    
-    if (currentBlock.tipo === "exercise" && !response.trim()) {
-      setShowError(true);
-      setTimeout(() => setShowError(false), 2000);
-      toast.error("Por favor, preencha o campo para avançar.");
-      return;
-    }
-    
-    if (currentBlock.tipo === "exercise") {
-      saveResponse(currentBlock.id, response);
-    }
-    
-    startTransition(isLast ? "finish" : "next", () => {
+  const advance = () => {
+    setIsTransitioning(true);
+    transitionTimeoutRef.current = setTimeout(() => {
       if (isLast) {
-        completeSession(sessao.id);
+        completeSession(sessao!.id);
         goToNextSessionOrDashboard();
       } else {
-        setCurrentExIdx(prev => prev + 1);
+        setCurrentExIdx((p) => p + 1);
+        // pacing pause before showing next
+        setTimeout(() => setIsTransitioning(false), PACING_DELAY_MS);
+        return;
       }
-    });
+      setIsTransitioning(false);
+    }, BLOCK_TRANSITION_MS);
   };
 
-  const handlePrev = () => {
-    if (currentExIdx > 0 && !isTransitioning) {
-      startTransition("prev", () => {
-        setCurrentExIdx(prev => prev - 1);
-      });
-    }
-  };
-
-  const handleSkip = () => {
-    if (!isTransitioning) {
-      setResponse("Insight processado em silêncio...");
-      startTransition("skip", () => {
-        if (isLast) {
-          completeSession(sessao.id);
-          goToNextSessionOrDashboard();
-        } else {
-          setCurrentExIdx(prev => prev + 1);
+  const startPause = (seconds = 20) => {
+    setIsPaused(true);
+    setPauseRemaining(seconds);
+    pauseIntervalRef.current = setInterval(() => {
+      setPauseRemaining((r) => {
+        if (r <= 1) {
+          if (pauseIntervalRef.current) clearInterval(pauseIntervalRef.current);
+          setIsPaused(false);
+          return 0;
         }
+        return r - 1;
       });
-    }
+    }, 1000);
   };
 
-  const getLoadingMessage = () => {
-    switch (loadingType) {
-      case "next": return "Preparando próximo passo...";
-      case "prev": return "Retornando...";
-      case "skip": return "Avançando vivência...";
-      case "finish":
-        return findNextSession()
-          ? "Próximo episódio em instantes..."
-          : "Concluindo sua jornada...";
-      default: return "Processando Insight...";
+  const handlePrimary = () => {
+    if (!currentBlock || isTransitioning) return;
+
+    if (currentBlock.tipo === "exercise") {
+      if (!response.trim()) {
+        toast.error("Escreva uma resposta para continuar.");
+        return;
+      }
+      saveResponse(currentBlock.id, response);
     }
+
+    advance();
   };
+
+  // Determine block kind for rendering
+  type BlockKind = "opening" | "reflection" | "input" | "choice" | "pause";
+  const blockKind: BlockKind = ((): BlockKind => {
+    if (currentBlock?.tipo === "exercise") return "input";
+    if (currentBlock?.tipo === "reflection") return "reflection";
+    if (currentBlock?.tipo === "action") return "pause";
+    return "opening";
+  })();
+
+  const primaryLabel = isLast
+    ? "Finalizar"
+    : blockKind === "input"
+    ? "Responder"
+    : "Continuar";
+
+  const primaryDisabled =
+    isTransitioning ||
+    (blockKind === "input" && !response.trim()) ||
+    (blockKind === "pause" && isPaused);
 
   return (
     <PageLayout
@@ -195,216 +191,195 @@ const SessaoView = () => {
         description: sessao.descricao,
         path: `/jornada/${phaseId}/${sessionId}`,
       }}
-      currentPage={`Etapa ${currentExIdx + 1}`}
-      parentPage={{ name: "Jornada", path: "/jornada" }}
-      moduleName={sessao.titulo}
       hideHeader
       hideFooter
       hideMobileNav
     >
-      <div className="min-h-screen bg-background text-foreground flex flex-col relative overflow-hidden">
-        {/* Cinematic Loader Overlay */}
-        <AnimatePresence>
-          {isTransitioning && (
-            <motion.div 
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              className="absolute inset-0 z-[100] bg-background/80 backdrop-blur-xl flex flex-col items-center justify-center gap-6"
+      <div className="fixed inset-0 bg-background text-foreground flex flex-col overflow-hidden">
+        {/* Top: minimal progress + back */}
+        <div className="absolute top-0 left-0 right-0 z-50 pt-safe">
+          <div className="h-0.5 w-full bg-white/5">
+            <motion.div
+              className="h-full bg-primary"
+              initial={false}
+              animate={{ width: `${progressPercent}%` }}
+              transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+            />
+          </div>
+          <div className="px-4 md:px-6 h-12 flex items-center justify-between">
+            <button
+              onClick={() => navigate("/jornada")}
+              className="flex items-center gap-2 text-white/40 hover:text-white/80 transition-colors text-xs uppercase tracking-[0.2em] font-medium"
+              aria-label="Voltar"
             >
-               <div className="relative">
-                  <Loader2 className="w-16 h-16 text-primary animate-spin" />
-                  <Sparkles className="w-6 h-6 text-primary absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2" />
-               </div>
-               <p className="text-sm font-black uppercase tracking-[0.4em] text-primary animate-pulse">
-                {getLoadingMessage()}
-               </p>
-            </motion.div>
-          )}
-        </AnimatePresence>
-
-        {/* Top Progress Bar */}
-        <div className="absolute top-0 left-0 right-0 h-1.5 z-50 bg-white/5">
-           <motion.div 
-            className="h-full bg-primary shadow-glow shadow-primary/40"
-            initial={{ width: 0 }}
-            animate={{ width: `${progressPercent}%` }}
-            transition={{ duration: 1, ease: [0.22, 1, 0.36, 1] }}
-           />
+              <ArrowLeft className="w-4 h-4" />
+              <span className="hidden sm:inline">Voltar</span>
+            </button>
+            <div className="text-[10px] uppercase tracking-[0.3em] text-white/30 font-medium">
+              {currentExIdx + 1} / {totalSteps}
+            </div>
+          </div>
         </div>
 
-        {/* Minimal Header */}
-        <header className="px-4 md:px-8 pt-safe pb-4 flex justify-between items-center z-40">
-           <div className="flex items-center gap-4 md:gap-6">
-              <Button 
-                variant="ghost" 
-                size="icon" 
-                onClick={() => navigate("/jornada")}
-                className="rounded-full h-10 w-10 md:h-12 md:w-12 hover:bg-white/5 transition-all text-white/30 hover:text-white active:scale-90"
-                aria-label="Voltar"
+        {/* Centered content — one block at a time */}
+        <main className="flex-1 flex items-center justify-center px-6 md:px-12">
+          <AnimatePresence mode="wait">
+            {!isTransitioning && currentBlock && (
+              <motion.div
+                key={currentBlock.id}
+                initial={{ opacity: 0, y: 12 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -8 }}
+                transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
+                className="w-full max-w-2xl mx-auto text-center space-y-10 md:space-y-14"
               >
-                <ArrowLeft className="w-5 h-5 md:w-6 md:h-6" />
-              </Button>
-              <div className="h-8 md:h-10 w-px bg-white/10" />
-              <div>
-                 <div className="flex items-center gap-1.5 md:gap-2 mb-0.5 md:mb-1">
-                    <p className="text-[8px] md:text-[10px] font-black uppercase tracking-[0.2em] md:tracking-[0.4em] text-primary/60">
-                       {fase.titulo}
-                    </p>
-                    <ChevronRight className="w-2.5 h-2.5 md:w-3 md:h-3 text-white/10" />
-                    <p className="text-[8px] md:text-[10px] font-black uppercase tracking-[0.2em] md:tracking-[0.4em] text-white/40 truncate max-w-[120px] md:max-w-none">
-                       {sessao.titulo}
-                    </p>
-                 </div>
-                 <h2 className="text-lg md:text-2xl font-bold tracking-tighter text-white leading-none">
-                    Etapa {currentExIdx + 1} de {totalSteps}
-                 </h2>
-              </div>
-           </div>
+                {currentBlock.titulo && (
+                  <motion.h1
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    transition={{ delay: 0.1, duration: 0.6 }}
+                    className="text-3xl md:text-5xl font-bold tracking-tight leading-[1.1] text-white"
+                  >
+                    {currentBlock.titulo}
+                  </motion.h1>
+                )}
 
-           <Button 
-            variant="ghost" 
-            size="icon" 
-            onClick={() => navigate("/dashboard")}
-            className="rounded-2xl h-12 w-12 hover:bg-destructive/10 text-white/20 hover:text-destructive transition-all"
-            aria-label="Fechar player"
-           >
-              <X className="w-6 h-6" />
-           </Button>
-        </header>
-
-        {/* Central Workspace */}
-        <main className="flex-1 streaming-container flex flex-col justify-center items-center pb-32 relative z-20">
-            <AnimatePresence mode="wait">
-              {!isTransitioning && (
-                <motion.div
-                  key={currentBlock.id}
-                  initial={{ opacity: 0, scale: 0.98, y: 15 }}
-                  animate={{ opacity: 1, scale: 1, y: 0 }}
-                  exit={{ opacity: 0, scale: 1.02, y: -15 }}
-                  transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
-                  className="w-full max-w-3xl space-y-12"
-                >
-                   <div className="space-y-8 text-center">
-                      <Badge className="bg-primary/10 text-primary border-primary/20 px-6 py-2 rounded-full font-black uppercase tracking-widest text-[10px] shadow-lg shadow-primary/5">
-                         <Sparkles className="w-3.5 h-3.5 mr-2" /> Passo {currentExIdx + 1} de {totalSteps}
-                      </Badge>
-                      
-                      <div className="space-y-6">
-                        <h1 className="text-4xl md:text-7xl font-bold leading-[0.9] tracking-tighter text-white">
-                           {currentBlock.titulo}
-                        </h1>
-                        <p className="text-xl md:text-3xl text-white/50 font-light italic max-w-2xl mx-auto leading-relaxed">
-                           "{currentBlock.conteudo}"
-                        </p>
-                        {currentBlock.instrucao && (
-                          <p className="text-lg text-primary/70 font-medium">
-                             {currentBlock.instrucao}
-                          </p>
-                        )}
-                      </div>
-                   </div>
-
-                   {currentBlock.tipo === "exercise" && (
-                     <div className="relative group w-full">
-                        <textarea
-                          value={response}
-                          onChange={(e) => setResponse(e.target.value)}
-                          placeholder={currentBlock.placeholder || "Suas palavras aqui..."}
-                          className={`focus-input shadow-2xl transition-all duration-700 ${
-                            showError ? "border-red-500/50 shadow-red-500/10" : "group-focus-within:border-primary/30 group-focus-within:bg-card/60"
-                          }`}
-                          autoFocus
-                        />
-                        <div className="absolute bottom-8 left-1/2 -translate-x-1/2 opacity-0 group-focus-within:opacity-100 transition-opacity duration-1000 pointer-events-none">
-                           <div className="flex items-center gap-3 text-[10px] font-black uppercase tracking-[0.5em] text-primary/30">
-                              <div className="w-1.5 h-1.5 rounded-full bg-primary animate-pulse shadow-glow" />
-                              Estado de Escrita Ativo
-                           </div>
-                        </div>
-                     </div>
-                   )}
-                </motion.div>
-              )}
-            </AnimatePresence>
-        </main>
-
-        {/* Bottom Navigation Player Style */}
-        <footer className="px-12 py-12 flex flex-col md:flex-row items-center justify-between gap-10 z-40 bg-background/90 backdrop-blur-2xl border-t border-white/5">
-            <div className="flex items-center gap-10">
-              <Button
-                variant="ghost"
-                onClick={handlePrev}
-                disabled={currentExIdx === 0 || isTransitioning}
-                className="text-white/40 hover:text-white transition-all rounded-xl font-bold uppercase tracking-[0.2em] text-[10px]"
-              >
-                <ChevronLeft className="w-4 h-4 mr-2" /> Anterior
-              </Button>
-              <div className="flex gap-2">
-                 {Array.from({ length: totalSteps }).map((_, i) => {
-                    const isCurrent = i === currentExIdx;
-                    const isPast = i < currentExIdx;
-                    const blockType = sessao.blocos[i].tipo;
-                    
-                    return (
-                      <div 
-                        key={i} 
-                        className={`h-1.5 w-12 rounded-full transition-all duration-700 relative overflow-hidden ${isCurrent ? 'bg-primary shadow-glow shadow-primary/40' : isPast ? 'bg-primary/30' : 'bg-white/5'}`}
-                      >
-                         {isCurrent && blockType === "exercise" && !response.trim() && (
-                            <motion.div 
-                               initial={{ x: "-100%" }}
-                               animate={{ x: "0%" }}
-                               className="absolute inset-0 bg-white/10"
-                               transition={{ repeat: Infinity, duration: 1.5, ease: "linear" }}
-                            />
-                         )}
-                      </div>
-                    );
-                 })}
-              </div>
-           </div>
-
-           <div className="flex items-center gap-8">
-              <Button
-                variant="ghost"
-                onClick={handleSkip}
-                disabled={isTransitioning}
-                className="text-white/20 hover:text-white/60 transition-all text-[10px] uppercase font-black tracking-[0.3em]"
-              >
-                 <FastForward className="w-4 h-4 mr-2" /> Pular
-              </Button>
-              
-              <div className="relative group">
-                <Button
-                  onClick={handleNext}
-                  disabled={isTransitioning}
-                  className={`btn-primary h-16 min-w-[280px] text-xl shadow-2xl group shadow-primary/20 transition-all duration-500 ${
-                    currentBlock.tipo === "exercise" && !response.trim() ? "opacity-50 grayscale cursor-not-allowed" : ""
+                <motion.p
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  transition={{ delay: 0.25, duration: 0.7 }}
+                  className={`mx-auto leading-relaxed font-light ${
+                    blockKind === "reflection"
+                      ? "text-xl md:text-2xl text-white/70 italic max-w-xl"
+                      : "text-lg md:text-xl text-white/60 max-w-xl"
                   }`}
                 >
-                  {isLast ? "Concluir Módulo" : "Avançar Etapa"}
+                  {currentBlock.conteudo}
+                </motion.p>
+
+                {currentBlock.instrucao && blockKind === "input" && (
+                  <motion.p
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    transition={{ delay: 0.4, duration: 0.6 }}
+                    className="text-sm md:text-base text-primary/80 font-medium max-w-lg mx-auto"
+                  >
+                    {currentBlock.instrucao}
+                  </motion.p>
+                )}
+
+                {/* Input field block */}
+                {blockKind === "input" && (
+                  <motion.div
+                    initial={{ opacity: 0, y: 8 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.5, duration: 0.6 }}
+                    className="pt-2"
+                  >
+                    <textarea
+                      value={response}
+                      onChange={(e) => setResponse(e.target.value)}
+                      placeholder={currentBlock.placeholder || "Suas palavras aqui..."}
+                      autoFocus
+                      rows={5}
+                      className="w-full bg-white/5 border border-white/10 rounded-2xl px-6 py-5 text-base md:text-lg text-white placeholder:text-white/25 font-light leading-relaxed resize-none focus:outline-none focus:border-primary/40 focus:bg-white/[0.07] transition-all duration-300"
+                    />
+                  </motion.div>
+                )}
+
+                {/* Multiple choice block (graceful — used if future data adds opcoes) */}
+                {blockKind === "choice" && (
+                  <motion.div
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    transition={{ delay: 0.4, duration: 0.6 }}
+                    className="flex flex-col gap-3 max-w-md mx-auto pt-4"
+                  >
+                    {(["Sim", "Não", "Talvez"]).map((opt) => (
+                      <button
+                        key={opt}
+                        onClick={() => setChoice(opt)}
+                        className={`px-6 py-4 rounded-xl border text-left transition-all duration-200 ${
+                          choice === opt
+                            ? "border-primary bg-primary/10 text-white"
+                            : "border-white/10 bg-white/[0.02] text-white/70 hover:border-white/20 hover:bg-white/5"
+                        }`}
+                      >
+                        {opt}
+                      </button>
+                    ))}
+                  </motion.div>
+                )}
+
+                {/* Guided pause block */}
+                {blockKind === "pause" && (
+                  <motion.div
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    transition={{ delay: 0.4, duration: 0.6 }}
+                    className="flex flex-col items-center gap-6 pt-2"
+                  >
+                    {!isPaused ? (
+                      <button
+                        onClick={() => startPause(20)}
+                        className="text-xs uppercase tracking-[0.3em] text-primary/70 hover:text-primary border border-primary/30 hover:border-primary/60 rounded-full px-6 py-3 transition-all"
+                      >
+                        Iniciar pausa guiada · 20s
+                      </button>
+                    ) : (
+                      <div className="flex flex-col items-center gap-4">
+                        <div className="relative w-24 h-24">
+                          <motion.div
+                            className="absolute inset-0 rounded-full border-2 border-primary/30"
+                            animate={{ scale: [1, 1.15, 1], opacity: [0.4, 0.8, 0.4] }}
+                            transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+                          />
+                          <div className="absolute inset-0 flex items-center justify-center text-2xl font-light text-white">
+                            {pauseRemaining}
+                          </div>
+                        </div>
+                        <p className="text-xs uppercase tracking-[0.3em] text-white/40">
+                          Respire lentamente
+                        </p>
+                      </div>
+                    )}
+                  </motion.div>
+                )}
+              </motion.div>
+            )}
+          </AnimatePresence>
+        </main>
+
+        {/* Bottom: single primary action */}
+        <footer className="px-6 md:px-12 pb-10 md:pb-12 pt-4 flex justify-center">
+          <AnimatePresence>
+            {!isTransitioning && (
+              <motion.div
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0 }}
+                transition={{ delay: 0.3, duration: 0.5 }}
+              >
+                <Button
+                  onClick={handlePrimary}
+                  disabled={primaryDisabled}
+                  size="lg"
+                  className="min-w-[220px] h-14 rounded-full text-base font-medium tracking-wide bg-primary hover:bg-primary/90 text-primary-foreground shadow-lg shadow-primary/20 transition-all"
+                >
+                  {primaryLabel}
                   {isLast ? (
-                    <CheckCircle2 className="w-7 h-7 ml-4 text-white" />
-                  ) : currentBlock.tipo === "exercise" && !response.trim() ? (
-                    <Lock className="w-5 h-5 ml-4 text-white/40" />
+                    <CheckCircle2 className="w-5 h-5 ml-2" />
                   ) : (
-                    <ChevronRight className="w-7 h-7 ml-4 group-hover:translate-x-2 transition-transform duration-500" />
+                    <ChevronRight className="w-5 h-5 ml-1" />
                   )}
                 </Button>
-                
-                {currentBlock.tipo === "exercise" && !response.trim() && (
-                  <div className="absolute -top-10 left-1/2 -translate-x-1/2 whitespace-nowrap bg-black/80 text-[10px] text-primary/60 px-3 py-1.5 rounded-lg border border-primary/20 backdrop-blur-sm opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none uppercase font-black tracking-widest">
-                    Escreva para liberar o avanço
-                  </div>
-                )}
-              </div>
-           </div>
+              </motion.div>
+            )}
+          </AnimatePresence>
         </footer>
 
-        {/* Atmosphere */}
-        <div className="absolute -bottom-20 -right-20 w-[800px] h-[800px] bg-primary/5 rounded-full blur-[140px] pointer-events-none animate-pulse" />
-        <div className="absolute top-0 left-0 w-full h-full bg-[radial-gradient(circle_at_50%_50%,hsl(var(--primary)/0.03)_0%,transparent_100%)] pointer-events-none" />
+        {/* Subtle ambience */}
+        <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[600px] h-[400px] bg-primary/5 rounded-full blur-[120px] pointer-events-none" />
       </div>
     </PageLayout>
   );
