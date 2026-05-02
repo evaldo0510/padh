@@ -21,7 +21,7 @@ const SessaoView = () => {
 
   const [currentExIdx, setCurrentExIdx] = useState(0);
   const [response, setResponse] = useState("");
-  const [choice, setChoice] = useState<string | null>(null);
+  const [choice, setChoice] = useState<string[]>([]);
   const [isPaused, setIsPaused] = useState(false);
   const [pauseRemaining, setPauseRemaining] = useState(0);
   const [isTransitioning, setIsTransitioning] = useState(false);
@@ -49,7 +49,21 @@ const SessaoView = () => {
     } else {
       setResponse("");
     }
-    setChoice(null);
+    if (currentBlock.tipo === "choice") {
+      const saved = getResponse(currentBlock.id);
+      if (saved) {
+        try {
+          const parsed = JSON.parse(saved);
+          setChoice(Array.isArray(parsed) ? parsed : [String(parsed)]);
+        } catch {
+          setChoice(saved.split(",").map((s) => s.trim()).filter(Boolean));
+        }
+      } else {
+        setChoice([]);
+      }
+    } else {
+      setChoice([]);
+    }
     // Clear pause
     if (pauseIntervalRef.current) clearInterval(pauseIntervalRef.current);
     setIsPaused(false);
@@ -161,6 +175,17 @@ const SessaoView = () => {
       saveResponse(currentBlock.id, response);
     }
 
+    if (currentBlock.tipo === "choice") {
+      if (choice.length === 0) {
+        toast.error("Selecione uma opção para continuar.");
+        return;
+      }
+      const opts = currentBlock.opcoes || [];
+      const labels = choice
+        .map((id) => opts.find((o) => o.id === id)?.label ?? id);
+      saveResponse(currentBlock.id, JSON.stringify(labels));
+    }
+
     advance();
   };
 
@@ -170,6 +195,7 @@ const SessaoView = () => {
     if (currentBlock?.tipo === "exercise") return "input";
     if (currentBlock?.tipo === "reflection") return "reflection";
     if (currentBlock?.tipo === "action") return "pause";
+    if (currentBlock?.tipo === "choice") return "choice";
     return "opening";
   })();
 
@@ -177,12 +203,24 @@ const SessaoView = () => {
     ? "Finalizar"
     : blockKind === "input"
     ? "Responder"
+    : blockKind === "choice"
+    ? "Confirmar"
     : "Continuar";
 
   const primaryDisabled =
     isTransitioning ||
     (blockKind === "input" && !response.trim()) ||
+    (blockKind === "choice" && choice.length === 0) ||
     (blockKind === "pause" && isPaused);
+
+  const toggleChoice = (optId: string, multi: boolean) => {
+    setChoice((prev) => {
+      if (multi) {
+        return prev.includes(optId) ? prev.filter((p) => p !== optId) : [...prev, optId];
+      }
+      return [optId];
+    });
+  };
 
   return (
     <PageLayout
@@ -287,27 +325,39 @@ const SessaoView = () => {
                   </motion.div>
                 )}
 
-                {/* Multiple choice block (graceful — used if future data adds opcoes) */}
+                {/* Multiple choice block — renders real opcoes from data */}
                 {blockKind === "choice" && (
                   <motion.div
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
                     transition={{ delay: 0.4, duration: 0.6 }}
                     className="flex flex-col gap-3 max-w-md mx-auto pt-4"
+                    role={currentBlock.multiSelect ? "group" : "radiogroup"}
                   >
-                    {(["Sim", "Não", "Talvez"]).map((opt) => (
-                      <button
-                        key={opt}
-                        onClick={() => setChoice(opt)}
-                        className={`px-6 py-4 rounded-xl border text-left transition-all duration-200 ${
-                          choice === opt
-                            ? "border-primary bg-primary/10 text-white"
-                            : "border-white/10 bg-white/[0.02] text-white/70 hover:border-white/20 hover:bg-white/5"
-                        }`}
-                      >
-                        {opt}
-                      </button>
-                    ))}
+                    {(currentBlock.opcoes || []).map((opt) => {
+                      const selected = choice.includes(opt.id);
+                      return (
+                        <button
+                          key={opt.id}
+                          type="button"
+                          role={currentBlock.multiSelect ? "checkbox" : "radio"}
+                          aria-checked={selected}
+                          onClick={() => toggleChoice(opt.id, !!currentBlock.multiSelect)}
+                          className={`px-6 py-4 rounded-xl border text-left transition-all duration-200 ${
+                            selected
+                              ? "border-primary bg-primary/10 text-white"
+                              : "border-white/10 bg-white/[0.02] text-white/70 hover:border-white/20 hover:bg-white/5"
+                          }`}
+                        >
+                          {opt.label}
+                        </button>
+                      );
+                    })}
+                    {currentBlock.multiSelect && (
+                      <p className="text-[10px] uppercase tracking-[0.3em] text-white/30 text-center pt-2">
+                        Selecione uma ou mais opções
+                      </p>
+                    )}
                   </motion.div>
                 )}
 
