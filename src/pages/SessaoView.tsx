@@ -183,14 +183,16 @@ const SessaoView = () => {
     }
 
     if (currentBlock.tipo === "choice") {
-      if (choice.length === 0) {
-        toast.error("Selecione uma opção para continuar.");
-        return;
-      }
       const opts = currentBlock.opcoes || [];
-      const labels = choice
-        .map((id) => opts.find((o) => o.id === id)?.label ?? id);
-      saveResponse(currentBlock.id, JSON.stringify(labels));
+      // Skip validation/save when block is misconfigured (no opcoes)
+      if (opts.length > 0) {
+        if (choice.length === 0) {
+          toast.error("Selecione uma opção para continuar.");
+          return;
+        }
+        const labels = choice.map((id) => opts.find((o) => o.id === id)?.label ?? id);
+        saveResponse(currentBlock.id, JSON.stringify(labels));
+      }
     }
 
     advance();
@@ -206,18 +208,21 @@ const SessaoView = () => {
     return "opening";
   })();
 
+  const choiceHasOptions =
+    blockKind === "choice" && (currentBlock?.opcoes?.length ?? 0) > 0;
+
   const primaryLabel = isLast
     ? "Finalizar"
     : blockKind === "input"
     ? "Responder"
-    : blockKind === "choice"
+    : blockKind === "choice" && choiceHasOptions
     ? "Confirmar"
     : "Continuar";
 
   const primaryDisabled =
     isTransitioning ||
     (blockKind === "input" && !response.trim()) ||
-    (blockKind === "choice" && choice.length === 0) ||
+    (blockKind === "choice" && choiceHasOptions && choice.length === 0) ||
     (blockKind === "pause" && isPaused);
 
   const toggleChoice = (optId: string, multi: boolean) => {
