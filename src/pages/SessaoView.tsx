@@ -166,14 +166,12 @@ const SessaoView = () => {
 
   // Determine block kind for rendering
   type BlockKind = "opening" | "reflection" | "input" | "choice" | "pause";
-  const blockKind: BlockKind =
-    currentBlock?.tipo === "exercise"
-      ? "input"
-      : currentBlock?.tipo === "reflection"
-      ? "reflection"
-      : currentBlock?.tipo === "action"
-      ? "pause"
-      : "opening";
+  const blockKind: BlockKind = ((): BlockKind => {
+    if (currentBlock?.tipo === "exercise") return "input";
+    if (currentBlock?.tipo === "reflection") return "reflection";
+    if (currentBlock?.tipo === "action") return "pause";
+    return "opening";
+  })();
 
   const primaryLabel = isLast
     ? "Finalizar"
