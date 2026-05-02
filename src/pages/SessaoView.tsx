@@ -49,7 +49,21 @@ const SessaoView = () => {
     } else {
       setResponse("");
     }
-    setChoice(null);
+    if (currentBlock.tipo === "choice") {
+      const saved = getResponse(currentBlock.id);
+      if (saved) {
+        try {
+          const parsed = JSON.parse(saved);
+          setChoice(Array.isArray(parsed) ? parsed : [String(parsed)]);
+        } catch {
+          setChoice(saved.split(",").map((s) => s.trim()).filter(Boolean));
+        }
+      } else {
+        setChoice([]);
+      }
+    } else {
+      setChoice([]);
+    }
     // Clear pause
     if (pauseIntervalRef.current) clearInterval(pauseIntervalRef.current);
     setIsPaused(false);
