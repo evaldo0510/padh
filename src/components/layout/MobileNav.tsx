@@ -51,7 +51,7 @@ const MobileNav = () => {
             <div key={item.path} className="flex-1 h-full">
               <PrefetchLink
                 to={item.path}
-                className={`relative flex flex-col items-center justify-center gap-1.5 h-full transition-all duration-500 ${
+                className={`relative flex flex-col items-center justify-center gap-1.5 h-full transition-all duration-500 py-2 ${
                   active ? 'text-primary' : 'text-white/30'
                 }`}
               >
