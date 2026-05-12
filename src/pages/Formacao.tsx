@@ -108,7 +108,7 @@ const Formacao = () => {
             </div>
           </div>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Button size="lg" onClick={() => navigate("/planos")} className="px-8 bg-primary hover:bg-primary/90 text-white rounded-full group shadow-lg shadow-primary/20">
+            <Button size="lg" onClick={() => navigate("/planos?product=formacao")} className="px-8 bg-primary hover:bg-primary/90 text-white rounded-full group shadow-lg shadow-primary/20">
               Quero ser um Terapeuta PCH <ArrowRight className="ml-2 w-4 h-4 group-hover:translate-x-1 transition-transform" />
             </Button>
             <Button size="lg" variant="outline" onClick={generateCurriculumPDF} className="px-8 rounded-full border-primary/20 hover:bg-primary/5">
