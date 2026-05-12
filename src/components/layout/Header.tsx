@@ -86,11 +86,11 @@ const Header = () => {
                 className="h-9 px-5 rounded-full font-bold gap-2 bg-primary text-white hover:bg-primary/90 shadow-glow"
                 asChild
               >
-                <Link to={continuePath}>
+                <PrefetchLink to={continuePath}>
                   <span className="hidden xs:inline">{nextSession ? 'Continuar jornada' : 'Ver jornada'}</span>
                   <span className="xs:hidden">{nextSession ? 'Continuar' : 'Jornada'}</span>
                   <ArrowRight className="w-4 h-4" />
-                </Link>
+                </PrefetchLink>
               </Button>
             ) : (
               <Button
