@@ -7,7 +7,7 @@ import { HelmetProvider } from "react-helmet-async";
 import { AnimatePresence } from "framer-motion";
 import { lazy, Suspense } from "react";
 import PageTransition from "./components/layout/PageTransition";
-import { PageSkeleton } from "./components/ui/page-skeleton";
+import { PageSkeleton, SessionSkeleton } from "./components/ui/page-skeleton";
 import PWAPrompt from "./components/layout/PWAPrompt";
 import PWAUpdatePrompt from "./components/layout/PWAUpdatePrompt";
 import SupabaseErrorBoundary from "./components/layout/SupabaseErrorBoundary";
