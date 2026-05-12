@@ -300,17 +300,22 @@ const SessaoView = () => {
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -8 }}
                 transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
-                className="w-full max-w-2xl mx-auto text-center space-y-10 md:space-y-14"
+                className="w-full max-w-3xl mx-auto text-center space-y-12 md:space-y-16"
               >
                 {currentBlock.titulo && (
-                  <motion.h1
+                  <motion.div
                     initial={{ opacity: 0, y: 10 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: 0.1, duration: 0.8 }}
-                    className="text-4xl md:text-6xl font-black tracking-tighter leading-[1] text-white"
+                    className="space-y-3"
                   >
-                    {currentBlock.titulo}
-                  </motion.h1>
+                    <span className="text-[10px] md:text-xs font-black uppercase tracking-[0.4em] text-primary/60">
+                      {sessao.titulo}
+                    </span>
+                    <h1 className="text-5xl md:text-8xl font-black tracking-tighter leading-[0.9] text-white">
+                      {currentBlock.titulo}
+                    </h1>
+                  </motion.div>
                 )}
 
                 <motion.div
