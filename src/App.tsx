@@ -437,7 +437,9 @@ const AnimatedRoutes = () => {
             element={
               <PageTransition>
                 <ProtectedRoute>
-                  <SessaoView />
+                  <Suspense fallback={<SessionSkeleton />}>
+                    <SessaoView />
+                  </Suspense>
                 </ProtectedRoute>
               </PageTransition>
             }
