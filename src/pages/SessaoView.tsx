@@ -25,7 +25,7 @@ const SessaoView = () => {
     const firstUncompletedIdx = sessao.blocos.findIndex(
       (b) => !jornada.completedExercises.includes(b.id)
     );
-    return firstUncompletedIdx === -1 ? 0 : firstUncompletedIdx;
+    return firstUncompletedIdx === -1 ? sessao.blocos.length - 1 : firstUncompletedIdx;
   });
   const [response, setResponse] = useState("");
   const [choice, setChoice] = useState<string[]>([]);
