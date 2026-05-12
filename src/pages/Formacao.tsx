@@ -365,7 +365,7 @@ const Formacao = () => {
             As vagas para a próxima turma da Formação em PCH são limitadas para garantir a qualidade da supervisão e mentoria.
           </p>
           <div className="flex flex-col items-center gap-6">
-            <Button size="lg" onClick={() => navigate("/planos")} className="px-12 py-8 text-xl bg-primary hover:bg-primary/90 text-white rounded-full group shadow-2xl shadow-primary/20 scale-105 hover:scale-110 transition-all">
+            <Button size="lg" onClick={() => navigate("/planos?product=formacao")} className="px-12 py-8 text-xl bg-primary hover:bg-primary/90 text-white rounded-full group shadow-2xl shadow-primary/20 scale-105 hover:scale-110 transition-all">
               Garantir minha vaga na Formação <ArrowRight className="ml-3 w-6 h-6 group-hover:translate-x-1 transition-transform" />
             </Button>
             <p className="text-xs text-muted-foreground flex items-center gap-2">
