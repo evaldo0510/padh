@@ -3,6 +3,7 @@ import PageLayout from "@/components/layout/PageLayout";
 import { useParams, useNavigate } from "react-router-dom";
 import { JORNADA_DATA } from "@/lib/jornada-data";
 import { useJornada } from "@/hooks/useJornada";
+import { prefetchRoute } from "@/lib/route-prefetch";
 import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
 import { ArrowLeft, ChevronRight, CheckCircle2, Lock } from "lucide-react";
@@ -131,6 +132,17 @@ const SessaoView = () => {
   const totalSteps = sessao.blocos.length;
   const progressPercent = ((currentExIdx + 1) / totalSteps) * 100;
   const isLast = currentExIdx === totalSteps - 1;
+  const isNearEnd = currentExIdx >= totalSteps - 2;
+
+  // Prefetch next session when near end
+  useEffect(() => {
+    if (isNearEnd) {
+      const next = findNextSession();
+      if (next) {
+        prefetchRoute(`/jornada/${next.phaseId}/${next.sessionId}`, 'low');
+      }
+    }
+  }, [isNearEnd, sessionId]);
 
   const findNextSession = () => {
     const all: { phaseId: string; sessionId: string }[] = [];

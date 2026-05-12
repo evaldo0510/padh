@@ -14,6 +14,8 @@ import SupabaseErrorBoundary from "./components/layout/SupabaseErrorBoundary";
 import ProtectedRoute from "./components/auth/ProtectedRoute";
 import { PCHWelcomeGate } from "./components/onboarding/PCHWelcome";
 import { ProfileProvider } from "./providers/ProfileProvider";
+import { cancelAllPrefetches } from "./lib/route-prefetch";
+import { useEffect } from "react";
 
 const Index = lazy(() => import("./pages/Index"));
 const NotFound = lazy(() => import("./pages/NotFound"));
@@ -95,6 +97,11 @@ const queryClient = new QueryClient();
 
 const AnimatedRoutes = () => {
   const location = useLocation();
+
+  useEffect(() => {
+    // Cancel any pending low-priority prefetches when route changes
+    cancelAllPrefetches();
+  }, [location.pathname]);
 
   return (
     <Suspense fallback={<PageSkeleton />}>
