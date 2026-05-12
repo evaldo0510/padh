@@ -3,7 +3,7 @@ import { useJornada } from "@/hooks/useJornada";
 import { JORNADA_DATA } from "@/lib/jornada-data";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { Play, ChevronRight, Clock, Sparkles } from "lucide-react";
+import { Play, ChevronRight, Clock, Sparkles, Lock } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import NetflixCarousel from "@/components/ui/NetflixCarousel";
