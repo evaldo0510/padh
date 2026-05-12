@@ -283,6 +283,12 @@ export const useJornada = () => {
     return null;
   }, [jornada.completedSessions]);
 
+  const isFinished = useMemo(() => {
+    return JORNADA_DATA.every(fase => 
+      fase.sessoes.every(sessao => jornada.completedSessions.includes(sessao.id))
+    );
+  }, [jornada.completedSessions]);
+
   return {
     jornada,
     saveResponse,
@@ -293,9 +299,10 @@ export const useJornada = () => {
     isFavorite,
     isSyncing,
     nextSession,
+    isFinished,
     continuePath: nextSession 
       ? `/jornada/${nextSession.phaseId}/${nextSession.sessionId}` 
-      : '/jornada',
+      : (isFinished ? '/jornada' : '/jornada'), // Could be a summary page later
     hasConfig: true,
   };
 };
