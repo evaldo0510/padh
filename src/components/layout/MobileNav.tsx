@@ -43,7 +43,7 @@ const MobileNav = () => {
   };
 
   return (
-    <nav className="lg:hidden fixed bottom-0 left-0 right-0 z-50 bg-background/95 backdrop-blur-xl border-t border-white/5 pb-safe">
+    <nav className="lg:hidden fixed bottom-6 left-6 right-6 z-50 bg-black/40 backdrop-blur-2xl border border-white/5 rounded-3xl pb-safe shadow-2xl overflow-hidden">
       <div className="flex items-center justify-around h-16 max-w-md mx-auto relative z-10 px-4">
         {navItems.map((item) => {
           const active = isActive(item);
