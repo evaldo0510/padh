@@ -164,15 +164,7 @@ const Dashboard = () => {
                   </h3>
                   
                   <div className="space-y-10 relative z-10">
-                    <div className="space-y-4">
-                      <div className="flex justify-between items-end">
-                        <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-white/30">Jornada Total</span>
-                        <span className="text-4xl font-black text-primary">{totalProgress}%</span>
-                      </div>
-                      <div className="progress-bar-thin bg-white/5">
-                         <div className="progress-fill h-full shadow-glow" style={{ width: `${totalProgress}%` }} />
-                      </div>
-                    </div>
+                    <GlobalProgressBar />
                     
                     <div className="grid grid-cols-1 gap-4">
                        <div className="p-5 rounded-2xl bg-white/5 border border-white/5 flex items-center justify-between">
