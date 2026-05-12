@@ -61,3 +61,33 @@ export const PageSkeleton = () => (
     <CardGridSkeleton />
   </div>
 );
+
+export const SessionSkeleton = () => (
+  <div className="min-h-screen bg-[#050505] flex flex-col overflow-hidden animate-in fade-in duration-500">
+    {/* Progress bar */}
+    <div className="h-0.5 w-full bg-white/5">
+      <div className="h-full bg-primary/20 w-1/3 animate-pulse" />
+    </div>
+    
+    {/* Header */}
+    <div className="px-4 md:px-6 h-12 flex items-center justify-between">
+      <Skeleton className="h-4 w-24 bg-white/5 rounded-full" />
+      <Skeleton className="h-3 w-12 bg-white/5 rounded-full" />
+    </div>
+
+    {/* Center content */}
+    <div className="flex-1 flex items-center justify-center px-6 md:px-12">
+      <div className="w-full max-w-2xl mx-auto space-y-12 text-center">
+        <Skeleton className="h-16 md:h-24 w-3/4 mx-auto bg-white/5 rounded-2xl" />
+        <div className="space-y-4">
+          <Skeleton className="h-6 w-full bg-white/5 rounded-full" />
+          <Skeleton className="h-6 w-5/6 mx-auto bg-white/5 rounded-full" />
+          <Skeleton className="h-6 w-2/3 mx-auto bg-white/5 rounded-full" />
+        </div>
+        <div className="pt-8 flex justify-center">
+           <Skeleton className="h-14 w-48 bg-primary/20 rounded-full" />
+        </div>
+      </div>
+    </div>
+  </div>
+);

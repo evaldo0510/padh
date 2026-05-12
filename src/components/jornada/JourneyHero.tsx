@@ -3,7 +3,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Play, ChevronRight, Sparkles, Loader2, BookOpen } from "lucide-react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import PrefetchLink from "@/components/layout/PrefetchLink";
 
 interface JourneyHeroProps {
@@ -20,6 +20,16 @@ const JourneyHero: React.FC<JourneyHeroProps> = ({
   compact = false 
 }) => {
   const navigate = useNavigate();
+  const location = useLocation();
+  const [isNavigating, setIsNavigating] = React.useState(false);
+
+  React.useEffect(() => {
+    setIsNavigating(false);
+  }, [location.pathname]);
+
+  const handleNavigate = () => {
+    setIsNavigating(true);
+  };
 
   return (
     <div className={`relative ${compact ? 'h-[45vh] md:h-[55vh]' : 'h-[55vh] md:h-[65vh]'} flex items-center overflow-hidden`}>
@@ -87,10 +97,18 @@ const JourneyHero: React.FC<JourneyHeroProps> = ({
               <Button 
                 size="lg" 
                 asChild
-                className="btn-primary h-14 px-8 text-lg rounded-full"
+                className="btn-primary h-14 px-8 text-lg rounded-full relative overflow-hidden group"
+                disabled={isNavigating}
               >
-                <PrefetchLink to={`/jornada/${nextSession.phaseId || nextSession.faseId}/${nextSession.sessionId || nextSession.sessaoId}`}>
-                  <Play className="w-5 h-5 fill-current mr-2" /> 
+                <PrefetchLink 
+                  to={`/jornada/${nextSession.phaseId || nextSession.faseId}/${nextSession.sessionId || nextSession.sessaoId}`}
+                  onClick={handleNavigate}
+                >
+                  {isNavigating ? (
+                    <Loader2 className="w-5 h-5 animate-spin mr-2" />
+                  ) : (
+                    <Play className="w-5 h-5 fill-current mr-2 group-hover:scale-110 transition-transform" /> 
+                  )}
                   {nextSession.isRecommended ? `Iniciar: ${nextSession.titulo}` : `Continuar: ${nextSession.titulo}`}
                 </PrefetchLink>
               </Button>

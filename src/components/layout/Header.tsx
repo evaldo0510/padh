@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useMemo } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
-import { User, LogOut, ArrowRight } from 'lucide-react';
+import { Link, useNavigate, useLocation } from 'react-router-dom';
+import { User, LogOut, ArrowRight, Loader2 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { ThemeToggle } from '@/components/ui/theme-toggle';
 import PrefetchLink from './PrefetchLink';
@@ -15,7 +15,15 @@ const Header = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const navigate = useNavigate();
+  const location = useLocation();
+  const [isNavigating, setIsNavigating] = useState(false);
   const { jornada, nextSession, continuePath } = useJornada();
+
+  const handleNavigate = () => setIsNavigating(true);
+
+  useEffect(() => {
+    setIsNavigating(false);
+  }, [location.pathname]);
 
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 10);
@@ -83,13 +91,20 @@ const Header = () => {
             {isLoggedIn ? (
               <Button
                 size="sm"
-                className="h-9 px-5 rounded-full font-bold gap-2 bg-primary text-white hover:bg-primary/90 shadow-glow"
+                className="h-9 px-5 rounded-full font-bold gap-2 bg-primary text-white hover:bg-primary/90 shadow-glow disabled:opacity-70"
+                disabled={isNavigating}
                 asChild
               >
-                <PrefetchLink to={continuePath}>
-                  <span className="hidden xs:inline">{nextSession ? 'Continuar jornada' : 'Ver jornada'}</span>
-                  <span className="xs:hidden">{nextSession ? 'Continuar' : 'Jornada'}</span>
-                  <ArrowRight className="w-4 h-4" />
+                <PrefetchLink to={continuePath} onClick={handleNavigate}>
+                  {isNavigating ? (
+                    <Loader2 className="w-4 h-4 animate-spin" />
+                  ) : (
+                    <>
+                      <span className="hidden xs:inline">{nextSession ? 'Continuar jornada' : 'Ver jornada'}</span>
+                      <span className="xs:hidden">{nextSession ? 'Continuar' : 'Jornada'}</span>
+                      <ArrowRight className="w-4 h-4" />
+                    </>
+                  )}
                 </PrefetchLink>
               </Button>
             ) : (
