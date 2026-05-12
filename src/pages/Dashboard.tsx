@@ -21,6 +21,7 @@ import SyncStatusIndicator from "@/components/dashboard/SyncStatusIndicator";
 import NotificationCenter from "@/components/dashboard/NotificationCenter";
 import { ObjectiveSettings } from "@/components/dashboard/ObjectiveSettings";
 import { PWAManager } from "@/components/dashboard/PWAManager";
+import ProgressPanel from "@/components/dashboard/ProgressPanel";
 import { toast } from "sonner";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/hooks/useAuth";
