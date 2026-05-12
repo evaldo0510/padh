@@ -1,32 +1,42 @@
-import React from 'react';
-import { Home, Compass, BookOpen, User, Feather } from 'lucide-react';
+import React, { useMemo } from 'react';
+import { Home, BookOpen, User, Play } from 'lucide-react';
 import { useLocation } from 'react-router-dom';
 import PrefetchLink from './PrefetchLink';
 import { motion } from 'framer-motion';
+import { useJornada } from '@/hooks/useJornada';
 
 const MobileNav = () => {
   const location = useLocation();
+  const { nextSession } = useJornada();
   
-  const navItems = [
-    { 
-      name: 'Início', 
-      path: '/', 
-      icon: <Home className="w-5 h-5" />,
-      activeIcon: <Home className="w-5 h-5 fill-primary" />
-    },
-    { 
-      name: 'Jornada', 
-      path: '/jornada', 
-      icon: <BookOpen className="w-5 h-5" />,
-      activeIcon: <BookOpen className="w-5 h-5 fill-primary" />
-    },
-    { 
-      name: 'Área', 
-      path: '/dashboard', 
-      icon: <User className="w-5 h-5" />,
-      activeIcon: <User className="w-5 h-5 fill-primary" />
-    },
-  ];
+  const navItems = useMemo(() => {
+    const continuePath = nextSession 
+      ? `/jornada/${nextSession.phaseId}/${nextSession.sessionId}` 
+      : '/jornada';
+
+    return [
+      { 
+        name: 'Início', 
+        path: '/', 
+        icon: <Home className="w-5 h-5" />,
+        activeIcon: <Home className="w-5 h-5 fill-primary" />
+      },
+      { 
+        name: nextSession ? 'Continuar' : 'Jornada', 
+        path: continuePath, 
+        icon: nextSession ? <Play className="w-5 h-5" /> : <BookOpen className="w-5 h-5" />,
+        activeIcon: nextSession ? <Play className="w-5 h-5 fill-primary" /> : <BookOpen className="w-5 h-5 fill-primary" />,
+        // Custom isActive for session routes
+        match: (pathname: string) => pathname.startsWith('/jornada')
+      },
+      { 
+        name: 'Área', 
+        path: '/dashboard', 
+        icon: <User className="w-5 h-5" />,
+        activeIcon: <User className="w-5 h-5 fill-primary" />
+      },
+    ];
+  }, [nextSession]);
 
   const isActive = (path: string) => {
     if (path === '/') return location.pathname === '/';
