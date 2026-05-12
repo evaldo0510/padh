@@ -113,37 +113,38 @@ const Header = () => {
 
           {/* RIGHT — Progress + profile */}
           <div className="flex items-center gap-2 shrink-0">
-            {isLoggedIn && (
-              <div
-                className="hidden md:flex items-center gap-3 px-4 h-9 rounded-full bg-white/5 border border-white/10"
-                aria-label={`Progresso: ${dayLabel}, ${percent} por cento`}
-              >
-                <span className="text-[10px] font-bold text-white/60 uppercase tracking-widest">
-                  {dayLabel}
-                </span>
-                <div className="w-12 h-1 rounded-full bg-white/10 overflow-hidden">
-                  <div
-                    className="h-full bg-primary transition-all duration-500"
-                    style={{ width: `${percent}%` }}
-                  />
+            {isLoggedIn ? (
+              <div className="flex items-center gap-2">
+                <div
+                  className="hidden lg:flex items-center gap-3 px-4 h-9 rounded-full bg-white/5 border border-white/10"
+                >
+                  <span className="text-[10px] font-bold text-white/40 uppercase tracking-widest">
+                    {dayLabel}
+                  </span>
+                  <div className="w-12 h-1 rounded-full bg-white/10 overflow-hidden">
+                    <div
+                      className="h-full bg-primary transition-all duration-500"
+                      style={{ width: `${percent}%` }}
+                    />
+                  </div>
                 </div>
-              </div>
-            )}
 
-            <div className="flex items-center gap-1">
-              <Button
-                variant="ghost"
-                size="sm"
-                className="h-9 w-9 p-0 rounded-full hover:bg-white/10"
-                asChild
-                aria-label="Minha área"
-              >
-                <Link to="/dashboard">
-                  <User className="w-4 h-4 text-white/80" />
-                </Link>
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  className="h-9 w-9 p-0 rounded-full hover:bg-white/10 bg-white/5 border border-white/10"
+                  asChild
+                >
+                  <Link to="/dashboard">
+                    <User className="w-4 h-4 text-white/80" />
+                  </Link>
+                </Button>
+              </div>
+            ) : (
+              <Button size="sm" variant="ghost" className="h-9 px-4 text-xs font-bold uppercase tracking-widest text-white/60 hover:text-white" asChild>
+                <Link to="/login">Entrar</Link>
               </Button>
-              <ThemeToggle />
-            </div>
+            )}
           </div>
         </div>
       </div>
