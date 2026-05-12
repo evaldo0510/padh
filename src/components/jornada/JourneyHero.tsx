@@ -83,14 +83,27 @@ const JourneyHero: React.FC<JourneyHeroProps> = ({
           </div>
 
           <div className="flex flex-wrap items-center gap-4 pt-2">
-            {nextSession && (
+            {nextSession ? (
               <Button 
                 size="lg" 
-                onClick={() => navigate(`/jornada/${nextSession.phaseId || nextSession.faseId}/${nextSession.sessionId || nextSession.sessaoId}`)}
+                asChild
                 className="btn-primary h-14 px-8 text-lg rounded-full"
               >
-                <Play className="w-5 h-5 fill-current mr-2" /> 
-                {nextSession.isRecommended ? `Iniciar: ${nextSession.titulo}` : `Continuar: ${nextSession.titulo}`}
+                <PrefetchLink to={`/jornada/${nextSession.phaseId || nextSession.faseId}/${nextSession.sessionId || nextSession.sessaoId}`}>
+                  <Play className="w-5 h-5 fill-current mr-2" /> 
+                  {nextSession.isRecommended ? `Iniciar: ${nextSession.titulo}` : `Continuar: ${nextSession.titulo}`}
+                </PrefetchLink>
+              </Button>
+            ) : (
+              <Button 
+                size="lg" 
+                asChild
+                className="btn-primary h-14 px-8 text-lg rounded-full"
+              >
+                <PrefetchLink to="/jornada">
+                  <BookOpen className="w-5 h-5 mr-2" /> 
+                  Ver Minha Jornada
+                </PrefetchLink>
               </Button>
             )}
           </div>
