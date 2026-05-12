@@ -15,15 +15,15 @@ const Header = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const navigate = useNavigate();
+  const location = useLocation();
   const [isNavigating, setIsNavigating] = useState(false);
   const { jornada, nextSession, continuePath } = useJornada();
 
   const handleNavigate = () => setIsNavigating(true);
 
   useEffect(() => {
-    // Reset loading state when path changes
     setIsNavigating(false);
-  }, [window.location.pathname]);
+  }, [location.pathname]);
 
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 10);
