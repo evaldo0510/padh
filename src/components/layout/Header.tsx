@@ -91,13 +91,20 @@ const Header = () => {
             {isLoggedIn ? (
               <Button
                 size="sm"
-                className="h-9 px-5 rounded-full font-bold gap-2 bg-primary text-white hover:bg-primary/90 shadow-glow"
+                className="h-9 px-5 rounded-full font-bold gap-2 bg-primary text-white hover:bg-primary/90 shadow-glow disabled:opacity-70"
+                disabled={isNavigating}
                 asChild
               >
-                <PrefetchLink to={continuePath}>
-                  <span className="hidden xs:inline">{nextSession ? 'Continuar jornada' : 'Ver jornada'}</span>
-                  <span className="xs:hidden">{nextSession ? 'Continuar' : 'Jornada'}</span>
-                  <ArrowRight className="w-4 h-4" />
+                <PrefetchLink to={continuePath} onClick={handleNavigate}>
+                  {isNavigating ? (
+                    <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+                  ) : (
+                    <>
+                      <span className="hidden xs:inline">{nextSession ? 'Continuar jornada' : 'Ver jornada'}</span>
+                      <span className="xs:hidden">{nextSession ? 'Continuar' : 'Jornada'}</span>
+                      <ArrowRight className="w-4 h-4" />
+                    </>
+                  )}
                 </PrefetchLink>
               </Button>
             ) : (
