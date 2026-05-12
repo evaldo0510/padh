@@ -297,6 +297,91 @@ const Formacao = () => {
         </div>
       </section>
 
+      {/* Testimonials */}
+      <section className="py-24 bg-primary/5">
+        <div className="container mx-auto px-6 max-w-6xl">
+          <div className="text-center mb-16">
+            <h2 className="text-3xl md:text-5xl font-heading font-bold mb-4">Vozes da <span className="text-primary italic">Transformação</span></h2>
+            <p className="text-muted-foreground">O que dizem os profissionais que já aplicam a PCH em seus consultórios.</p>
+          </div>
+          
+          <div className="grid md:grid-cols-3 gap-8">
+            {[
+              {
+                name: "Dra. Clarice Mendes",
+                role: "Psicóloga Clínica",
+                text: "A PCH mudou minha forma de atender. Pacientes que estavam estagnados há meses voltaram a fluir através das metáforas poéticas. É revolucionário.",
+                avatar: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?q=80&w=200&auto=format&fit=crop"
+              },
+              {
+                name: "Marcos Oliveira",
+                role: "Hipnoterapeuta",
+                text: "O rigor científico aliado à sensibilidade da poesia cria uma ferramenta de intervenção única. A formação é profunda e extremamente prática.",
+                avatar: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?q=80&w=200&auto=format&fit=crop"
+              },
+              {
+                name: "Juliana Costa",
+                role: "Arteterapeuta",
+                text: "Encontrei na PCH a ponte que faltava entre a técnica e a alma. Evaldo é um mestre generoso e a metodologia é um divisor de águas.",
+                avatar: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?q=80&w=200&auto=format&fit=crop"
+              }
+            ].map((t, i) => (
+              <Card key={i} className="border-none shadow-xl bg-background/50 backdrop-blur-sm p-8 rounded-3xl relative overflow-hidden">
+                <div className="absolute top-0 right-0 p-4 opacity-10">
+                  <Star className="w-12 h-12 text-primary fill-primary" />
+                </div>
+                <CardContent className="p-0 space-y-6">
+                  <p className="text-muted-foreground italic leading-relaxed">"{t.text}"</p>
+                  <div className="flex items-center gap-4">
+                    <img src={t.avatar} alt={t.name} className="w-12 h-12 rounded-full object-cover" />
+                    <div>
+                      <p className="font-bold text-sm">{t.name}</p>
+                      <p className="text-xs text-primary">{t.role}</p>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* FAQ Section */}
+      <section className="py-24">
+        <div className="container mx-auto px-6 max-w-3xl">
+          <div className="text-center mb-16">
+            <h2 className="text-3xl md:text-5xl font-heading font-bold mb-4">Perguntas <span className="text-primary italic">Frequentes</span></h2>
+            <p className="text-muted-foreground">Tire suas dúvidas sobre a Formação em PCH.</p>
+          </div>
+          
+          <div className="space-y-4">
+            {[
+              {
+                q: "Preciso ser psicólogo para fazer a formação?",
+                a: "Não obrigatoriamente. A formação é aberta a terapeutas, educadores, coaches e profissionais que trabalham com desenvolvimento humano. No entanto, o uso clínico rigoroso deve respeitar as regulamentações de cada conselho profissional."
+              },
+              {
+                q: "Como funciona a certificação?",
+                a: "Após concluir os 8 módulos e realizar as atividades práticas supervisionadas, você receberá o certificado digital de Especialista em Poesia Cognitiva Hipnótica (PCH)."
+              },
+              {
+                q: "As aulas são gravadas ou ao vivo?",
+                a: "A formação combina aulas gravadas de alta qualidade (teoria) com encontros de mentoria e supervisão ao vivo (prática) com o Evaldo Santana."
+              },
+              {
+                q: "Quanto tempo tenho acesso ao curso?",
+                a: "O acesso à plataforma e a todos os materiais de apoio é vitalício, permitindo que você revise o conteúdo sempre que precisar."
+              }
+            ].map((faq, i) => (
+              <div key={i} className="p-6 rounded-2xl border border-border/50 bg-card/30">
+                <h3 className="font-heading font-bold text-lg mb-2">{faq.q}</h3>
+                <p className="text-sm text-muted-foreground leading-relaxed">{faq.a}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* Call to Action */}
       <section className="py-24 relative">
         <div className="absolute inset-0 bg-primary/5 rounded-[4rem] mx-6" />
