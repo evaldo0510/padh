@@ -148,7 +148,9 @@ const Dashboard = () => {
                      <Link to="/diagnostico">Refazer Diagnóstico</Link>
                    </Button>
                  </Card>
-               </div>
+                </div>
+
+                <ProgressPanel />
             </div>
             
             {/* Summary Panel */}
