@@ -15,7 +15,7 @@ const Header = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const navigate = useNavigate();
-  const { jornada, nextSession } = useJornada();
+  const { jornada, nextSession, continuePath } = useJornada();
 
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 10);
