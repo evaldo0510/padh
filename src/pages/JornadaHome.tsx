@@ -65,16 +65,16 @@ const JornadaHome = () => {
         </div>
 
         {/* Footer Navigation */}
-        <footer className="container mx-auto px-6 md:px-12 py-20 border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-8">
-           <div className="flex items-center gap-4">
-              <Button asChild variant="outline" className="rounded-full gap-2 border-white/10 text-white/60 hover:text-white">
-                <Link to="/dashboard"><ChevronRight className="w-4 h-4 rotate-180" /> Voltar ao Início</Link>
+        <footer className="streaming-container py-32 border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-10">
+           <div className="flex flex-wrap justify-center items-center gap-6">
+              <Button asChild variant="ghost" className="rounded-full gap-2 text-white/40 hover:text-primary transition-colors">
+                <Link to="/dashboard"><ChevronRight className="w-4 h-4 rotate-180" /> Dashboard</Link>
               </Button>
-              <Button asChild variant="outline" className="rounded-full gap-2 border-white/10 text-white/60 hover:text-white">
-                <Link to="/biblioteca-exercicios"><Library className="w-4 h-4" /> Ver Biblioteca</Link>
+              <Button asChild variant="ghost" className="rounded-full gap-2 text-white/40 hover:text-primary transition-colors">
+                <Link to="/biblioteca-exercicios"><Library className="w-4 h-4" /> Biblioteca</Link>
               </Button>
            </div>
-           <p className="text-white/20 text-xs font-bold uppercase tracking-[0.4em]">Original P.A.D.H. Content</p>
+           <p className="text-white/10 text-[10px] font-black uppercase tracking-[0.6em]">Original P.A.D.H. Content</p>
         </footer>
       </div>
     </PageLayout>
