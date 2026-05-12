@@ -69,17 +69,17 @@ const Header = () => {
     <header
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
         scrolled
-          ? 'bg-background/85 backdrop-blur-xl border-b border-border/60'
-          : 'bg-background/60 backdrop-blur-md border-b border-transparent'
+          ? 'bg-background/95 backdrop-blur-xl border-b border-white/5'
+          : 'bg-background/40 backdrop-blur-md border-b border-transparent'
       }`}
     >
       <div className="container mx-auto px-4 md:px-6">
-        <div className="grid grid-cols-[auto_1fr_auto] items-center h-14 gap-3">
+        <div className="grid grid-cols-[auto_1fr_auto] items-center h-14 gap-4">
           {/* LEFT — Logo */}
           <PrefetchLink to="/" className="flex items-center gap-2 group shrink-0">
             <Logo size="sm" className="w-8 h-8" />
-            <span className="hidden sm:inline text-base font-heading font-bold tracking-tight text-foreground group-hover:text-primary transition-colors">
-              PADH
+            <span className="hidden sm:inline text-sm font-bold tracking-tight text-white/90 group-hover:text-primary transition-colors">
+              P.A.D.H.
             </span>
           </PrefetchLink>
 
@@ -88,23 +88,23 @@ const Header = () => {
             {isLoggedIn ? (
               <Button
                 size="sm"
-                className="h-9 px-4 md:px-5 rounded-full font-medium gap-2 bg-primary text-primary-foreground hover:bg-primary/90 shadow-sm"
+                className="h-9 px-5 rounded-full font-bold gap-2 bg-primary text-white hover:bg-primary/90 shadow-glow"
                 asChild
               >
                 <Link to={continueHref}>
-                  <span className="hidden xs:inline sm:inline">Continuar jornada</span>
-                  <span className="xs:hidden sm:hidden">Continuar</span>
+                  <span className="hidden xs:inline">Continuar jornada</span>
+                  <span className="xs:hidden">Continuar</span>
                   <ArrowRight className="w-4 h-4" />
                 </Link>
               </Button>
             ) : (
               <Button
                 size="sm"
-                className="h-9 px-5 rounded-full font-medium gap-2"
+                className="h-9 px-6 rounded-full font-bold gap-2 shadow-glow"
                 asChild
               >
                 <Link to="/jornada">
-                  Começar jornada
+                  Começar
                   <ArrowRight className="w-4 h-4" />
                 </Link>
               </Button>
@@ -112,60 +112,38 @@ const Header = () => {
           </div>
 
           {/* RIGHT — Progress + profile */}
-          <div className="flex items-center gap-2 md:gap-3 shrink-0">
+          <div className="flex items-center gap-2 shrink-0">
             {isLoggedIn && (
               <div
-                className="hidden sm:flex items-center gap-2 px-3 h-9 rounded-full bg-muted/40 border border-border/40"
+                className="hidden md:flex items-center gap-3 px-4 h-9 rounded-full bg-white/5 border border-white/10"
                 aria-label={`Progresso: ${dayLabel}, ${percent} por cento`}
               >
-                <span className="text-xs font-medium text-foreground tabular-nums">
+                <span className="text-[10px] font-bold text-white/60 uppercase tracking-widest">
                   {dayLabel}
                 </span>
-                <span className="w-px h-3 bg-border/60" />
-                <div className="flex items-center gap-1.5">
-                  <div className="w-12 h-1 rounded-full bg-border/60 overflow-hidden">
-                    <div
-                      className="h-full bg-primary transition-all duration-500"
-                      style={{ width: `${percent}%` }}
-                    />
-                  </div>
-                  <span className="text-xs font-semibold text-primary tabular-nums">
-                    {percent}%
-                  </span>
+                <div className="w-12 h-1 rounded-full bg-white/10 overflow-hidden">
+                  <div
+                    className="h-full bg-primary transition-all duration-500"
+                    style={{ width: `${percent}%` }}
+                  />
                 </div>
               </div>
             )}
 
-            <ThemeToggle />
-
-            {isLoggedIn ? (
-              <div className="flex items-center gap-1">
-                <Button
-                  variant="ghost"
-                  size="sm"
-                  className="h-9 w-9 p-0 rounded-full bg-primary/10 hover:bg-primary/20"
-                  asChild
-                  aria-label="Minha área"
-                >
-                  <Link to="/dashboard">
-                    <User className="w-4 h-4 text-primary" />
-                  </Link>
-                </Button>
-                <Button
-                  variant="ghost"
-                  size="sm"
-                  className="hidden md:inline-flex h-9 w-9 p-0 rounded-full text-muted-foreground hover:text-destructive"
-                  onClick={handleLogout}
-                  aria-label="Sair"
-                >
-                  <LogOut className="w-4 h-4" />
-                </Button>
-              </div>
-            ) : (
-              <Button size="sm" variant="ghost" className="h-9" asChild>
-                <Link to="/login">Entrar</Link>
+            <div className="flex items-center gap-1">
+              <Button
+                variant="ghost"
+                size="sm"
+                className="h-9 w-9 p-0 rounded-full hover:bg-white/10"
+                asChild
+                aria-label="Minha área"
+              >
+                <Link to="/dashboard">
+                  <User className="w-4 h-4 text-white/80" />
+                </Link>
               </Button>
-            )}
+              <ThemeToggle />
+            </div>
           </div>
         </div>
       </div>

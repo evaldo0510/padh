@@ -285,54 +285,53 @@ const SessaoView = () => {
               >
                 {currentBlock.titulo && (
                   <motion.h1
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    transition={{ delay: 0.1, duration: 0.6 }}
-                    className="text-3xl md:text-5xl font-bold tracking-tight leading-[1.1] text-white"
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.1, duration: 0.8 }}
+                    className="text-4xl md:text-6xl font-black tracking-tighter leading-[1] text-white"
                   >
                     {currentBlock.titulo}
                   </motion.h1>
                 )}
 
-                <motion.p
+                <motion.div
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
-                  transition={{ delay: 0.25, duration: 0.7 }}
-                  className={`mx-auto leading-relaxed font-light ${
-                    blockKind === "reflection"
-                      ? "text-xl md:text-2xl text-white/70 italic max-w-xl"
-                      : "text-lg md:text-xl text-white/60 max-w-xl"
-                  }`}
+                  transition={{ delay: 0.3, duration: 0.8 }}
+                  className="space-y-6"
                 >
-                  {currentBlock.conteudo}
-                </motion.p>
-
-                {currentBlock.instrucao && blockKind === "input" && (
-                  <motion.p
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    transition={{ delay: 0.4, duration: 0.6 }}
-                    className="text-sm md:text-base text-primary/80 font-medium max-w-lg mx-auto"
+                  <p
+                    className={`mx-auto leading-relaxed font-light ${
+                      blockKind === "reflection"
+                        ? "text-2xl md:text-3xl text-white/80 italic max-w-2xl"
+                        : "text-xl md:text-2xl text-white/60 max-w-2xl"
+                    }`}
                   >
-                    {currentBlock.instrucao}
-                  </motion.p>
-                )}
+                    {currentBlock.conteudo}
+                  </p>
+
+                  {currentBlock.instrucao && blockKind === "input" && (
+                    <p className="text-xs md:text-sm text-primary font-bold uppercase tracking-[0.3em] max-w-lg mx-auto opacity-80">
+                      {currentBlock.instrucao}
+                    </p>
+                  )}
+                </motion.div>
 
                 {/* Input field block */}
                 {blockKind === "input" && (
                   <motion.div
-                    initial={{ opacity: 0, y: 8 }}
+                    initial={{ opacity: 0, y: 15 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: 0.5, duration: 0.6 }}
-                    className="pt-2"
+                    className="pt-4"
                   >
                     <textarea
                       value={response}
                       onChange={(e) => setResponse(e.target.value)}
                       placeholder={currentBlock.placeholder || "Suas palavras aqui..."}
                       autoFocus
-                      rows={5}
-                      className="w-full bg-white/5 border border-white/10 rounded-2xl px-6 py-5 text-base md:text-lg text-white placeholder:text-white/25 font-light leading-relaxed resize-none focus:outline-none focus:border-primary/40 focus:bg-white/[0.07] transition-all duration-300"
+                      rows={6}
+                      className="w-full bg-white/[0.03] border border-white/10 rounded-3xl px-8 py-6 text-xl md:text-2xl text-white placeholder:text-white/20 font-light leading-relaxed resize-none focus:outline-none focus:border-primary/40 focus:bg-white/[0.06] transition-all duration-500 shadow-2xl"
                     />
                   </motion.div>
                 )}
@@ -452,7 +451,7 @@ const SessaoView = () => {
         </main>
 
         {/* Bottom: single primary action */}
-        <footer className="px-6 md:px-12 pb-10 md:pb-12 pt-4 flex justify-center">
+        <footer className="px-6 md:px-12 pb-10 md:pb-16 pt-4 flex justify-center relative z-20">
           <AnimatePresence>
             {!isTransitioning && (
               <motion.div
@@ -465,13 +464,13 @@ const SessaoView = () => {
                   onClick={handlePrimary}
                   disabled={primaryDisabled}
                   size="lg"
-                  className="min-w-[220px] h-14 rounded-full text-base font-medium tracking-wide bg-primary hover:bg-primary/90 text-primary-foreground shadow-lg shadow-primary/20 transition-all"
+                  className="min-w-[260px] h-16 rounded-full text-lg font-bold tracking-widest uppercase bg-primary hover:bg-primary/90 text-white shadow-glow transition-all active:scale-95"
                 >
                   {primaryLabel}
                   {isLast ? (
                     <CheckCircle2 className="w-5 h-5 ml-2" />
                   ) : (
-                    <ChevronRight className="w-5 h-5 ml-1" />
+                    <ChevronRight className="w-5 h-5 ml-1.5" />
                   )}
                 </Button>
               </motion.div>
