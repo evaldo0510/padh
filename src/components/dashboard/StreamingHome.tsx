@@ -1,10 +1,14 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { useJornada } from "@/hooks/useJornada";
 import { StreamingSkeleton } from "./StreamingSkeleton";
 import GlobalProgressBar from "./GlobalProgressBar";
 import JourneyHero from "@/components/jornada/JourneyHero";
 import JourneyPhases from "@/components/jornada/JourneyPhases";
 import { JORNADA_DATA } from "@/lib/jornada-data";
+import { Switch } from "@/components/ui/switch";
+import { Label } from "@/components/ui/label";
+import { Sparkles, Brain } from "lucide-react";
+import TheoreticalSections from "./TheoreticalSections";
 
 const StreamingHome = () => {
   const { jornada, isSyncing, nextSession } = useJornada();
