@@ -7,7 +7,7 @@ interface PrefetchLinkProps extends LinkProps {
 }
 
 const PrefetchLink = React.forwardRef<HTMLAnchorElement, PrefetchLinkProps>(
-  ({ to, onMouseEnter, onFocus, ...props }, ref) => (
+  ({ to, onMouseEnter, onFocus, onTouchStart, ...props }, ref) => (
     <Link
       ref={ref}
       to={to}
@@ -18,6 +18,10 @@ const PrefetchLink = React.forwardRef<HTMLAnchorElement, PrefetchLinkProps>(
       onFocus={(e) => {
         prefetchRoute(to);
         onFocus?.(e);
+      }}
+      onTouchStart={(e) => {
+        prefetchRoute(to);
+        onTouchStart?.(e);
       }}
       {...props}
     />

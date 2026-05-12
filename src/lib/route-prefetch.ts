@@ -35,15 +35,26 @@ const routeImports: Record<string, () => Promise<unknown>> = {
     import("@/pages/venda/VendaReescritaPoetica"),
   "/venda/ritual-silencio": () => import("@/pages/venda/VendaRitualSilencio"),
   "/venda/poesia-hipnotica": () => import("@/pages/venda/VendaPoesiaHipnotica"),
+  "/jornada": () => import("@/pages/JornadaHome"),
+  "sessao": () => import("@/pages/SessaoView"),
 };
 
 const prefetched = new Set<string>();
 
 export const prefetchRoute = (path: string) => {
   if (prefetched.has(path)) return;
-  const importer = routeImports[path];
-  if (importer) {
+  
+  // Handle static routes
+  if (routeImports[path]) {
     prefetched.add(path);
-    importer();
+    routeImports[path]();
+    return;
+  }
+
+  // Handle dynamic journey routes
+  if (path.startsWith("/jornada/")) {
+    prefetched.add(path);
+    routeImports["sessao"]();
+    return;
   }
 };
