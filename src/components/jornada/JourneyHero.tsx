@@ -2,8 +2,9 @@ import React from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { Play, ChevronRight, Sparkles, Loader2 } from "lucide-react";
+import { Play, ChevronRight, Sparkles, Loader2, BookOpen } from "lucide-react";
 import { useNavigate } from "react-router-dom";
+import PrefetchLink from "@/components/layout/PrefetchLink";
 
 interface JourneyHeroProps {
   nextSession: any;
