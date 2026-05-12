@@ -105,44 +105,10 @@ const GlobalProgressBar: React.FC = () => {
           </div>
         </div>
       </div>
-
-      {/* Fases da Jornada */}
-      <div className="space-y-4">
-        <p className="text-[10px] font-black uppercase tracking-[0.3em] text-white/20">Fases da Jornada</p>
-        <PhaseProgress />
-      </div>
     </motion.div>
   );
 };
 
-const PhaseProgress: React.FC = () => {
-  const { jornada } = useJornada();
-  
-  return (
-    <div className="grid grid-cols-2 md:grid-cols-4 gap-4 pt-4">
-      {JORNADA_DATA.map((fase) => {
-        const completedInFase = fase.sessoes.filter(s => jornada.completedSessions.includes(s.id)).length;
-        const totalInFase = fase.sessoes.length;
-        const isCompleted = completedInFase === totalInFase && totalInFase > 0;
-        const isCurrent = !isCompleted && fase.sessoes.some(s => !jornada.completedSessions.includes(s.id));
-
-        return (
-          <div key={fase.id} className={`p-4 rounded-2xl border transition-all ${isCompleted ? 'bg-primary/10 border-primary/20' : 'bg-white/5 border-white/5'} ${isCurrent ? 'ring-1 ring-primary/50' : ''}`}>
-            <p className={`text-[9px] font-black uppercase tracking-widest ${isCompleted ? 'text-primary' : 'text-white/30'}`}>
-              Fase {fase.numero}
-            </p>
-            <h4 className="text-sm font-bold text-white truncate">{fase.titulo}</h4>
-            <div className="mt-2 h-1 w-full bg-white/5 rounded-full overflow-hidden">
-              <div 
-                className={`h-full ${isCompleted ? 'bg-primary' : 'bg-white/20'}`} 
-                style={{ width: `${(completedInFase / totalInFase) * 100}%` }}
-              />
-            </div>
-          </div>
-        );
-      })}
-    </div>
-  );
-};
+export default GlobalProgressBar;
 
 export default GlobalProgressBar;
