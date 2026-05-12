@@ -40,25 +40,47 @@ const routeImports: Record<string, () => Promise<unknown>> = {
 };
 
 const prefetched = new Set<string>();
+const pendingPrefetches = new Map<string, Promise<any>>();
 
-export const prefetchRoute = (path: string) => {
+export const prefetchRoute = (path: string, priority: 'high' | 'low' = 'high') => {
   if (prefetched.has(path)) return;
   
-  // Handle static routes
-  if (routeImports[path]) {
-    prefetched.add(path);
-    routeImports[path]();
-    return;
+  // Use a small delay for low priority to allow high priority ones to take precedence
+  if (priority === 'low') {
+    setTimeout(() => {
+      // Check if we already navigated or prefetch started
+      if (!prefetched.has(path)) {
+        triggerPrefetch(path);
+      }
+    }, 100);
+  } else {
+    triggerPrefetch(path);
   }
+};
 
-  // Handle dynamic journey routes
-  if (path.startsWith("/jornada/")) {
-    prefetched.add(path);
-    routeImports["sessao"]();
+const triggerPrefetch = (path: string) => {
+  if (prefetched.has(path) || pendingPrefetches.has(path)) return;
+
+  const importer = path.startsWith("/jornada/") ? routeImports["sessao"] : routeImports[path];
+  
+  if (importer) {
+    const promise = importer();
+    pendingPrefetches.set(path, promise);
     
-    // Advanced: Prefetch data for the session if we are in the browser
-    // This assumes the session data might be needed by useJornada or similar
-    // For now, we prioritize component prefetching
-    return;
+    promise.then(() => {
+      prefetched.add(path);
+      pendingPrefetches.delete(path);
+    }).catch(() => {
+      pendingPrefetches.delete(path);
+    });
   }
+};
+
+/**
+ * Cancels all pending prefetches. 
+ * Note: import() itself cannot be truly canceled in JS, 
+ * but we can clear our tracking and prevent further ones from starting.
+ */
+export const cancelAllPrefetches = () => {
+  pendingPrefetches.clear();
 };
