@@ -55,6 +55,10 @@ export const prefetchRoute = (path: string) => {
   if (path.startsWith("/jornada/")) {
     prefetched.add(path);
     routeImports["sessao"]();
+    
+    // Advanced: Prefetch data for the session if we are in the browser
+    // This assumes the session data might be needed by useJornada or similar
+    // For now, we prioritize component prefetching
     return;
   }
 };

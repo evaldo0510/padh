@@ -39,7 +39,7 @@ const MobileNav = () => {
     const currentPath = location.pathname;
     if (item.match) return item.match(currentPath);
     if (item.path === '/') return currentPath === '/';
-    return currentPath === item.path || currentPath.startsWith(item.path + '/');
+    return currentPath === item.path || currentPath.startsWith(item.path + '/') || (item.path.startsWith('/jornada') && currentPath.startsWith('/jornada'));
   };
 
   return (
