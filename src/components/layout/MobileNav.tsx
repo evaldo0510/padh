@@ -43,7 +43,7 @@ const MobileNav = () => {
   };
 
   return (
-    <nav className="lg:hidden fixed bottom-6 left-6 right-6 z-50 bg-black/40 backdrop-blur-2xl border border-white/5 rounded-3xl pb-safe shadow-2xl overflow-hidden">
+    <nav className="lg:hidden fixed bottom-6 left-6 right-6 z-50 bg-black/40 backdrop-blur-2xl border border-white/10 rounded-[2rem] pb-safe shadow-2xl overflow-hidden active:scale-[0.98] transition-transform duration-200">
       <div className="flex items-center justify-around h-16 max-w-md mx-auto relative z-10 px-4">
         {navItems.map((item) => {
           const active = isActive(item);
@@ -51,7 +51,7 @@ const MobileNav = () => {
             <div key={item.path} className="flex-1 h-full">
               <PrefetchLink
                 to={item.path}
-                className={`relative flex flex-col items-center justify-center gap-1.5 h-full transition-all duration-500 ${
+                className={`relative flex flex-col items-center justify-center gap-1.5 h-full transition-all duration-500 py-2 ${
                   active ? 'text-primary' : 'text-white/30'
                 }`}
               >

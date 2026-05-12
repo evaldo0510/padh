@@ -264,7 +264,7 @@ const SessaoView = () => {
       hideFooter
       hideMobileNav
     >
-      <div className="fixed inset-0 bg-background text-foreground flex flex-col overflow-hidden">
+      <div className="fixed inset-0 bg-[#050505] text-foreground flex flex-col overflow-hidden">
         {/* Top: minimal progress + back */}
         <div className="absolute top-0 left-0 right-0 z-50 pt-safe">
           <div className="h-0.5 w-full bg-white/5">
@@ -355,7 +355,7 @@ const SessaoView = () => {
                       placeholder={currentBlock.placeholder || "Suas palavras aqui..."}
                       autoFocus
                       rows={6}
-                      className="w-full bg-white/[0.03] border border-white/10 rounded-3xl px-8 py-6 text-xl md:text-2xl text-white placeholder:text-white/20 font-light leading-relaxed resize-none focus:outline-none focus:border-primary/40 focus:bg-white/[0.06] transition-all duration-500 shadow-2xl"
+                      className="w-full bg-white/[0.03] border border-white/10 rounded-3xl px-8 py-6 text-xl md:text-2xl text-white placeholder:text-white/20 font-light leading-relaxed resize-none focus:outline-none focus:border-primary/40 focus:bg-white/[0.06] transition-all duration-500 shadow-2xl appearance-none"
                     />
                   </motion.div>
                 )}
