@@ -33,6 +33,22 @@ const StreamingHome = () => {
       <JourneyHero nextSession={nextSession} totalProgress={totalProgress} />
 
       <div className="streaming-container -mt-24 md:-mt-32 relative z-30 space-y-20 md:space-y-32">
+        {/* Focus Mode Toggle */}
+        <div className="flex justify-end pt-4">
+          <div className="flex items-center space-x-3 bg-white/[0.03] backdrop-blur-md border border-white/5 py-3 px-5 rounded-full shadow-2xl">
+            <div className="flex flex-col items-end">
+               <Label htmlFor="focus-mode" className="text-[10px] font-black uppercase tracking-[0.2em] text-white/40 cursor-pointer">Modo Foco</Label>
+               <span className="text-[8px] text-primary/60 font-bold uppercase tracking-widest">{focusMode ? 'Apenas Prática' : 'Visão Completa'}</span>
+            </div>
+            <Switch 
+              id="focus-mode" 
+              checked={focusMode} 
+              onCheckedChange={setFocusMode}
+              className="data-[state=checked]:bg-primary"
+            />
+          </div>
+        </div>
+
         {/* 2. SEÇÃO PROGRESSO */}
         <section className="animate-fade-in" style={{ animationDelay: '0.2s' }}>
           <div className="flex flex-col gap-1.5 mb-8 md:mb-10">
@@ -52,6 +68,13 @@ const StreamingHome = () => {
           </div>
           <JourneyPhases completedSessions={jornada.completedSessions} />
         </section>
+
+        {/* 4. SEÇÕES TEÓRICAS (Opcionais) */}
+        {!focusMode && (
+          <section className="animate-fade-in pb-20">
+             <TheoreticalSections />
+          </section>
+        )}
       </div>
     </div>
   );
