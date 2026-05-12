@@ -20,12 +20,15 @@ const JourneyHero: React.FC<JourneyHeroProps> = ({
   compact = false 
 }) => {
   const navigate = useNavigate();
+  const location = useLocation();
   const [isNavigating, setIsNavigating] = React.useState(false);
+
+  React.useEffect(() => {
+    setIsNavigating(false);
+  }, [location.pathname]);
 
   const handleNavigate = () => {
     setIsNavigating(true);
-    // The link will handle the actual navigation, but we show the state
-    setTimeout(() => setIsNavigating(false), 2000); // Fallback
   };
 
   return (
