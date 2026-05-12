@@ -108,77 +108,60 @@ const JornadaHome = () => {
     >
       <div className="min-h-screen bg-[#050505] text-white flex flex-col">
         {/* Immersive Cinematic Header */}
-        <div className="relative h-[65vh] md:h-[75vh] flex items-center overflow-hidden">
-           <div className="absolute inset-0 bg-gradient-to-t from-background via-background/40 to-transparent z-10" />
-           <div className="absolute inset-0 bg-gradient-to-r from-background via-background/20 to-transparent z-10" />
+        <div className="relative h-[55vh] md:h-[65vh] flex items-center overflow-hidden">
+           <div className="absolute inset-0 bg-gradient-to-t from-[#050505] via-[#050505]/40 to-transparent z-10" />
+           <div className="absolute inset-0 bg-gradient-to-r from-[#050505] via-[#050505]/20 to-transparent z-10" />
            
-           {/* Dynamic Atmosphere */}
-           <div className="absolute inset-0 opacity-30">
-              <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[140%] h-[140%] bg-[radial-gradient(circle,hsl(var(--primary)/0.15)_0%,transparent_70%)] animate-pulse" />
-           </div>
-
-           <div className="relative z-20 streaming-container mt-20">
-              {/* Transition Overlay for Recommended Section */}
+           <div className="relative z-20 streaming-container mt-12">
               <AnimatePresence>
                 {isUpdating && (
                   <motion.div 
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
                     exit={{ opacity: 0 }}
-                    className="absolute inset-0 z-50 bg-background/60 backdrop-blur-md rounded-[2rem] flex items-center justify-center border border-white/10"
+                    className="absolute inset-0 z-50 bg-black/60 backdrop-blur-md rounded-3xl flex items-center justify-center border border-white/5"
                   >
-                     <div className="flex flex-col items-center gap-6">
-                        <div className="relative">
-                          <Loader2 className="w-12 h-12 text-primary animate-spin" />
-                          <Sparkles className="w-4 h-4 text-primary absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2" />
-                        </div>
-                        <span className="text-xs font-black uppercase tracking-[0.3em] text-primary animate-pulse">Sintonizando Frequência</span>
+                     <div className="flex flex-col items-center gap-4">
+                        <Loader2 className="w-8 h-8 text-primary animate-spin" />
+                        <span className="text-[10px] font-bold uppercase tracking-[0.3em] text-primary animate-pulse">Sintonizando</span>
                      </div>
                   </motion.div>
                 )}
               </AnimatePresence>
 
-              <div className="max-w-4xl space-y-8 animate-fade-in">
-                 <div className="flex items-center gap-4">
-                   <Badge className="bg-primary/20 text-primary border-primary/30 px-4 py-1.5 gap-2 rounded-full font-bold uppercase tracking-widest text-[10px]">
-                      <Sparkles className="w-3 h-3" /> Série Especial
+              <div className="max-w-3xl space-y-6 animate-fade-in">
+                 <div className="flex items-center gap-3">
+                   <Badge className="bg-primary/20 text-primary border-primary/30 px-3 py-1 gap-1.5 rounded-full font-bold uppercase tracking-widest text-[9px]">
+                      <Sparkles className="w-3 h-3" /> Original
                    </Badge>
-                   <div className="h-px w-12 bg-white/10" />
-                   <span className="text-[10px] font-black uppercase tracking-[0.3em] text-white/40">PCH Originals</span>
+                   <span className="text-[9px] font-bold uppercase tracking-[0.2em] text-white/30">Jornada de Transformação</span>
                  </div>
                  
-                 <h1 className="text-6xl md:text-9xl font-bold tracking-tighter leading-[0.8] text-white">
-                    Jornada de <br /> <span className="text-primary italic">Transformação</span>
+                 <h1 className="text-5xl md:text-8xl font-black tracking-tighter leading-[0.9] text-white">
+                    Sua trilha de <br /> <span className="text-primary italic">evolução</span>
                  </h1>
                  
-                 <p className="text-xl text-white/60 max-w-2xl leading-relaxed font-light">
-                    Uma trilha estruturada em 4 fases para o despertar da consciência, o encontro com a sombra e a expansão da sua verdade interior.
+                 <p className="text-lg text-white/50 max-w-xl leading-relaxed font-light">
+                    Uma experiência estruturada para o despertar da consciência e expansão da sua verdade interior.
                  </p>
                  
-                 <div className="flex items-center gap-5 pt-4">
+                 <div className="flex flex-wrap items-center gap-4 pt-4">
                     {nextSession && (
                       <Button 
                         size="lg" 
                         onClick={() => navigate(`/jornada/${nextSession.faseId}/${nextSession.sessaoId}`)}
-                        className="btn-primary h-16 px-10 text-xl gap-4"
+                        className="btn-primary h-14 px-8 text-lg rounded-full"
                       >
-                         <Play className="w-7 h-7 fill-current" /> 
-                         {(nextSession as any).isRecommended ? `Sugestão: ${nextSession.titulo}` : `Continuar: ${nextSession.titulo}`}
+                         <Play className="w-5 h-5 fill-current mr-2" /> 
+                         Continuar {nextSession.titulo}
                       </Button>
                     )}
-                    <Button 
-                      variant="outline" 
-                      size="lg" 
-                      className="btn-secondary h-16 px-10 text-xl gap-4"
-                    >
-                       <Info className="w-7 h-7" /> Sobre a Metodologia
-                    </Button>
                  </div>
 
-                 <div className="pt-10 space-y-4 max-w-sm">
+                 <div className="pt-8 space-y-3 max-w-xs">
                     <div className="flex justify-between items-end">
-                       <span className="text-[10px] font-black uppercase tracking-[0.3em] text-primary/80">Sua Evolução</span>
-                       <span className="text-2xl font-black text-white">{totalProgress}%</span>
+                       <span className="text-[9px] font-bold uppercase tracking-[0.3em] text-primary/80">Conclusão</span>
+                       <span className="text-xl font-black text-white">{totalProgress}%</span>
                     </div>
                     <div className="progress-bar-thin">
                        <div className="progress-fill" style={{ width: `${totalProgress}%` }} />
