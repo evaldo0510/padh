@@ -172,7 +172,7 @@ const JornadaHome = () => {
         </div>
 
         {/* Seasons (Fases) List */}
-        <div className="streaming-container py-24 space-y-32">
+        <div className="streaming-container py-16 space-y-24">
            {JORNADA_DATA.map((fase, idx) => {
              const prevFase = JORNADA_DATA[idx - 1];
              const isUnlocked = idx === 0 || 
@@ -180,18 +180,16 @@ const JornadaHome = () => {
                                 (nextSession && nextSession.faseId === fase.id && (nextSession as any).isRecommended);
              
              return (
-               <section key={fase.id} className={`space-y-12 transition-all duration-700 ${!isUnlocked && 'opacity-30 grayscale blur-[2px]'}`}>
-                  <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 border-b border-white/5 pb-8">
-                     <div className="space-y-2">
-                        <div className="flex items-center gap-3">
-                           <span className="text-[11px] font-black uppercase tracking-[0.4em] text-primary">Temporada {fase.numero}</span>
-                        </div>
-                        <h2 className="text-4xl md:text-5xl font-bold tracking-tight">{fase.titulo}</h2>
-                        <p className="text-white/40 max-w-2xl font-light text-lg">{fase.descricao}</p>
+               <section key={fase.id} className={`space-y-8 transition-all duration-700 ${!isUnlocked && 'opacity-40 grayscale blur-[1px]'}`}>
+                  <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 border-b border-white/5 pb-6">
+                     <div className="space-y-1">
+                        <span className="text-[10px] font-bold uppercase tracking-[0.3em] text-primary">Temporada {fase.numero}</span>
+                        <h2 className="text-3xl md:text-4xl font-black tracking-tight">{fase.titulo}</h2>
+                        <p className="text-white/40 max-w-xl font-light text-base">{fase.descricao}</p>
                      </div>
                      {!isUnlocked && (
-                       <div className="flex items-center gap-2 text-white/50 font-bold text-[10px] uppercase tracking-widest bg-white/5 px-6 py-3 rounded-full border border-white/10 backdrop-blur-sm">
-                          <Lock className="w-3.5 h-3.5" /> Episódios Bloqueados
+                       <div className="flex items-center gap-2 text-white/40 font-bold text-[9px] uppercase tracking-widest bg-white/[0.03] px-4 py-2 rounded-full border border-white/5">
+                          <Lock className="w-3 h-3" /> Bloqueado
                        </div>
                      )}
                   </div>
