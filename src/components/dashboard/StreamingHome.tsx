@@ -124,34 +124,33 @@ const StreamingHome = () => {
         <ProgressPanel />
         {/* Continuar Assistindo Section */}
         {nextSession && (
-          <section className="space-y-8 animate-slide-up">
-            <h2 className="text-3xl font-bold tracking-tight flex items-center gap-4 text-white">
-              <div className="w-1.5 h-8 bg-primary rounded-full shadow-glow" />
+          <section className="space-y-6 animate-slide-up">
+            <h2 className="text-2xl font-bold tracking-tight flex items-center gap-3 text-white">
+              <div className="w-1 h-6 bg-primary rounded-full" />
               Continuar Assistindo
             </h2>
             <motion.div 
-              whileHover={{ scale: 1.02, y: -5 }}
-              className="group relative w-full md:w-[540px] aspect-video glass-card overflow-hidden cursor-pointer shadow-[0_32px_64px_-16px_rgba(0,0,0,0.6)] border-white/5"
+              whileHover={{ y: -5 }}
+              className="group relative w-full md:w-[480px] aspect-video rounded-3xl glass-card overflow-hidden cursor-pointer border-white/5"
               onClick={() => navigate(`/jornada/${nextSession.faseId}/${nextSession.sessaoId}`)}
             >
-              <div className="absolute inset-0 bg-gradient-to-t from-background/90 via-background/40 to-transparent z-10" />
-              <div className="absolute inset-0 p-10 flex flex-col justify-end z-20">
-                <div className="flex items-center gap-3 mb-3">
-                  <Badge className="bg-primary text-white text-[9px] uppercase font-black tracking-widest py-0.5 h-5 px-3">Recente</Badge>
-                  <span className="text-[10px] font-black text-white/30 uppercase tracking-[0.3em]">EPISÓDIO DISPONÍVEL</span>
+              <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/30 to-transparent z-10" />
+              <div className="absolute inset-0 p-8 flex flex-col justify-end z-20">
+                <div className="flex items-center gap-2 mb-2">
+                  <Badge className="bg-primary text-white text-[8px] uppercase font-bold tracking-widest px-2 py-0.5">Disponível</Badge>
                 </div>
-                <h3 className="text-3xl font-bold mb-3 tracking-tighter">{nextSession.titulo}</h3>
-                <p className="text-base text-white/50 line-clamp-2 font-light leading-relaxed max-w-sm italic">
+                <h3 className="text-2xl font-bold mb-1 tracking-tight">{nextSession.titulo}</h3>
+                <p className="text-sm text-white/40 line-clamp-1 font-light italic">
                   "{nextSession.descricao}"
                 </p>
                 
-                <div className="mt-6 progress-bar-thin bg-white/5 h-1">
-                   <div className="progress-fill w-[45%] h-full shadow-glow" />
+                <div className="mt-4 progress-bar-thin bg-white/5 h-1">
+                   <div className="progress-fill w-[45%] h-full" />
                 </div>
               </div>
-              <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-700 bg-background/40 z-30 backdrop-blur-md">
-                <div className="w-20 h-20 rounded-full bg-primary flex items-center justify-center shadow-2xl shadow-primary/30 border-2 border-white/10">
-                  <Play className="w-10 h-10 fill-current ml-1.5 text-white" />
+              <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-500 bg-black/40 z-30">
+                <div className="w-14 h-14 rounded-full bg-primary flex items-center justify-center shadow-glow">
+                  <Play className="w-6 h-6 fill-current ml-1 text-white" />
                 </div>
               </div>
             </motion.div>
