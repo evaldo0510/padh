@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   GraduationCap,
   Clock,
@@ -13,21 +13,64 @@ import {
   Zap,
   Star,
   ArrowRight,
+  Search,
+  Download,
+  Plus,
+  Minus,
 } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
 import PageLayout from "@/components/layout/PageLayout";
 import { pagesSEO } from "@/lib/seo-config";
 import { MODULOS, PILARES_INFO } from "@/lib/dados-clinicos";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useScrollAnimation } from "@/hooks/useScrollAnimation";
+import { FormacaoLeadForm } from "@/components/sales/FormacaoLeadForm";
+import { generateCurriculumPDF } from "@/lib/pdf-utils";
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion";
 
 const Formacao = () => {
+  const navigate = useNavigate();
   const heroSection = useScrollAnimation(0.1);
   const pillarsSection = useScrollAnimation(0.15);
   const curriculumSection = useScrollAnimation(0.1);
   const teacherSection = useScrollAnimation(0.15);
+  const [faqSearch, setFaqSearch] = useState("");
+
+  const faqs = [
+    {
+      q: "Preciso ser psicólogo para fazer a formação?",
+      a: "Não obrigatoriamente. A formação é aberta a terapeutas, educadores, coaches e profissionais que trabalham com desenvolvimento humano. No entanto, o uso clínico rigoroso deve respeitar as regulamentações de cada conselho profissional."
+    },
+    {
+      q: "Como funciona a certificação?",
+      a: "Após concluir os 8 módulos e realizar as atividades práticas supervisionadas, você receberá o certificado digital de Especialista em Poesia Cognitiva Hipnótica (PCH)."
+    },
+    {
+      q: "As aulas são gravadas ou ao vivo?",
+      a: "A formação combina aulas gravadas de alta qualidade (teoria) com encontros de mentoria e supervisão ao vivo (prática) com o Evaldo Santana."
+    },
+    {
+      q: "Quanto tempo tenho acesso ao curso?",
+      a: "O acesso à plataforma e a todos os materiais de apoio é vitalício, permitindo que você revise o conteúdo sempre que precisar."
+    },
+    {
+      q: "Existe algum pré-requisito técnico?",
+      a: "Apenas o desejo de aprofundar na sensibilidade humana e na ciência da palavra. Todo o embasamento técnico é fornecido durante o curso."
+    }
+  ];
+
+  const filteredFaqs = faqs.filter(faq => 
+    faq.q.toLowerCase().includes(faqSearch.toLowerCase()) || 
+    faq.a.toLowerCase().includes(faqSearch.toLowerCase())
+  );
 
   return (
     <PageLayout seo={pagesSEO.formacao} currentPage="Formação em PCH">
@@ -65,11 +108,11 @@ const Formacao = () => {
             </div>
           </div>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Button size="lg" className="px-8 bg-primary hover:bg-primary/90 text-white rounded-full group shadow-lg shadow-primary/20">
+            <Button size="lg" onClick={() => navigate("/planos")} className="px-8 bg-primary hover:bg-primary/90 text-white rounded-full group shadow-lg shadow-primary/20">
               Quero ser um Terapeuta PCH <ArrowRight className="ml-2 w-4 h-4 group-hover:translate-x-1 transition-transform" />
             </Button>
-            <Button size="lg" variant="outline" className="px-8 rounded-full border-primary/20 hover:bg-primary/5">
-              Baixar Grade Curricular
+            <Button size="lg" variant="outline" onClick={generateCurriculumPDF} className="px-8 rounded-full border-primary/20 hover:bg-primary/5">
+              <Download className="w-4 h-4 mr-2" /> Baixar Grade Curricular
             </Button>
           </div>
         </div>
@@ -130,56 +173,50 @@ const Formacao = () => {
 
           <div className="grid md:grid-cols-2 gap-8">
             {MODULOS.map((modulo) => (
-              <Card key={modulo.id} className="border-border/50 hover:border-primary/20 transition-all duration-300 group overflow-hidden bg-card/50 backdrop-blur-sm">
-                <CardHeader className="pb-4 relative">
-                  <div className="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity">
-                    <span className="text-8xl font-heading font-bold">{modulo.numero}</span>
-                  </div>
-                  <div className="flex justify-between items-start mb-4">
-                    <Badge variant="secondary" className="bg-primary/10 text-primary border-none font-bold">
-                      Módulo {modulo.numero}
-                    </Badge>
-                    <div className="flex items-center gap-1 text-[10px] text-muted-foreground uppercase tracking-wider">
-                      <Clock className="w-3 h-3" /> {modulo.tempoEstimado} min
+              <Link key={modulo.id} to={`/formacao/modulo/${modulo.id}`}>
+                <Card className="border-border/50 hover:border-primary/20 transition-all duration-300 group overflow-hidden bg-card/50 backdrop-blur-sm cursor-pointer h-full">
+                  <CardHeader className="pb-4 relative">
+                    <div className="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity">
+                      <span className="text-8xl font-heading font-bold">{modulo.numero}</span>
                     </div>
-                  </div>
-                  <CardTitle className="text-2xl font-heading group-hover:text-primary transition-colors">{modulo.titulo}</CardTitle>
-                </CardHeader>
-                <CardContent className="space-y-6">
-                  <p className="text-sm text-muted-foreground italic border-l-2 border-primary/30 pl-4">
-                    "{modulo.foco}"
-                  </p>
-                  
-                  <div className="space-y-4">
-                    <div>
-                      <h4 className="text-[10px] font-bold text-foreground uppercase tracking-[0.2em] mb-3 flex items-center gap-2">
-                        <Sparkles className="w-3 h-3 text-primary" /> O que você vai aprender
-                      </h4>
-                      <ul className="grid grid-cols-1 gap-2">
-                        {modulo.atividades.slice(0, 3).map((atv) => (
-                          <li key={atv.id} className="text-xs text-muted-foreground flex items-center gap-2">
-                            <CheckCircle2 className="w-3 h-3 text-primary/60 shrink-0" />
-                            {atv.label}
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
-
-                    <div className="pt-4 border-t border-border/30">
-                      <h4 className="text-[10px] font-bold text-foreground uppercase tracking-[0.2em] mb-3 flex items-center gap-2">
-                        <Brain className="w-3 h-3 text-primary" /> Base Teórica
-                      </h4>
-                      <div className="flex flex-wrap gap-2">
-                        {modulo.teoricos.map((teorico, idx) => (
-                          <Badge key={idx} variant="outline" className="text-[10px] border-primary/10 bg-primary/[0.02]">
-                            {teorico.nome}
-                          </Badge>
-                        ))}
+                    <div className="flex justify-between items-start mb-4">
+                      <Badge variant="secondary" className="bg-primary/10 text-primary border-none font-bold">
+                        Módulo {modulo.numero}
+                      </Badge>
+                      <div className="flex items-center gap-1 text-[10px] text-muted-foreground uppercase tracking-wider">
+                        <Clock className="w-3 h-3" /> {modulo.tempoEstimado} min
                       </div>
                     </div>
-                  </div>
-                </CardContent>
-              </Card>
+                    <CardTitle className="text-2xl font-heading group-hover:text-primary transition-colors">{modulo.titulo}</CardTitle>
+                  </CardHeader>
+                  <CardContent className="space-y-6">
+                    <p className="text-sm text-muted-foreground italic border-l-2 border-primary/30 pl-4">
+                      "{modulo.foco}"
+                    </p>
+                    
+                    <div className="space-y-4">
+                      <div>
+                        <h4 className="text-[10px] font-bold text-foreground uppercase tracking-[0.2em] mb-3 flex items-center gap-2">
+                          <Sparkles className="w-3 h-3 text-primary" /> O que você vai aprender
+                        </h4>
+                        <ul className="grid grid-cols-1 gap-2">
+                          {modulo.atividades.slice(0, 3).map((atv) => (
+                            <li key={atv.id} className="text-xs text-muted-foreground flex items-center gap-2">
+                              <CheckCircle2 className="w-3 h-3 text-primary/60 shrink-0" />
+                              {atv.label}
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+                    </div>
+                    <div className="pt-4 flex justify-end">
+                      <span className="text-xs text-primary font-bold flex items-center gap-1 group-hover:translate-x-1 transition-transform">
+                        Ver detalhes <ArrowRight className="w-3 h-3" />
+                      </span>
+                    </div>
+                  </CardContent>
+                </Card>
+              </Link>
             ))}
           </div>
         </div>
@@ -244,104 +281,38 @@ const Formacao = () => {
         </div>
       </section>
 
-      {/* Benefits / Public Section */}
-      <section className="py-24">
-        <div className="container mx-auto px-6 text-center max-w-4xl">
-          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-primary/20 bg-primary/5 text-primary text-sm font-medium mb-8">
-            <ShieldCheck className="w-4 h-4" /> Por que se tornar um Terapeuta PCH?
-          </div>
-          <h2 className="text-3xl md:text-5xl font-heading font-bold mb-12 leading-tight">Uma ferramenta <span className="text-primary italic">diferenciada</span> no mercado de saúde mental</h2>
-          
-          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-8 text-left">
-            {[
-              {
-                icon: Zap,
-                title: "Impacto Imediato",
-                desc: "Técnicas que acessam o inconsciente rapidamente, acelerando os resultados terapêuticos."
-              },
-              {
-                icon: Target,
-                title: "Rigor Científico",
-                desc: "Metodologia embasada em neurociência e nas principais escolas de psicologia do mundo."
-              },
-              {
-                icon: Sparkles,
-                title: "Arte e Sensibilidade",
-                desc: "Diferencial humanístico que gera uma aliança terapêutica profunda e inabalável."
-              },
-              {
-                icon: ShieldCheck,
-                title: "Protocolos Seguros",
-                desc: "Passo a passo clínico detalhado para manejar casos complexos com segurança e ética."
-              },
-              {
-                icon: Users,
-                title: "Comunidade VIP",
-                desc: "Acesso a um grupo exclusivo de profissionais para troca de experiências e supervisão."
-              },
-              {
-                icon: GraduationCap,
-                title: "Certificação Oficial",
-                desc: "Selo de qualidade PCH reconhecido pela comunidade brasileira de hipnoterapia."
-              }
-            ].map((benefit, i) => (
-              <div key={i} className="space-y-4 p-6 rounded-2xl border border-border/50 bg-card/30 hover:bg-card/50 transition-colors">
-                <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center text-primary">
-                  <benefit.icon className="w-5 h-5" />
-                </div>
-                <h3 className="font-heading font-bold text-xl">{benefit.title}</h3>
-                <p className="text-sm text-muted-foreground leading-relaxed">{benefit.desc}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Testimonials */}
-      <section className="py-24 bg-primary/5">
+      {/* Lead Form Section */}
+      <section className="py-24 relative overflow-hidden">
+        <div className="absolute inset-0 bg-primary/5 -z-10" />
         <div className="container mx-auto px-6 max-w-6xl">
-          <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-5xl font-heading font-bold mb-4">Vozes da <span className="text-primary italic">Transformação</span></h2>
-            <p className="text-muted-foreground">O que dizem os profissionais que já aplicam a PCH em seus consultórios.</p>
-          </div>
-          
-          <div className="grid md:grid-cols-3 gap-8">
-            {[
-              {
-                name: "Dra. Clarice Mendes",
-                role: "Psicóloga Clínica",
-                text: "A PCH mudou minha forma de atender. Pacientes que estavam estagnados há meses voltaram a fluir através das metáforas poéticas. É revolucionário.",
-                avatar: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?q=80&w=200&auto=format&fit=crop"
-              },
-              {
-                name: "Marcos Oliveira",
-                role: "Hipnoterapeuta",
-                text: "O rigor científico aliado à sensibilidade da poesia cria uma ferramenta de intervenção única. A formação é profunda e extremamente prática.",
-                avatar: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?q=80&w=200&auto=format&fit=crop"
-              },
-              {
-                name: "Juliana Costa",
-                role: "Arteterapeuta",
-                text: "Encontrei na PCH a ponte que faltava entre a técnica e a alma. Evaldo é um mestre generoso e a metodologia é um divisor de águas.",
-                avatar: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?q=80&w=200&auto=format&fit=crop"
-              }
-            ].map((t, i) => (
-              <Card key={i} className="border-none shadow-xl bg-background/50 backdrop-blur-sm p-8 rounded-3xl relative overflow-hidden">
-                <div className="absolute top-0 right-0 p-4 opacity-10">
-                  <Star className="w-12 h-12 text-primary fill-primary" />
-                </div>
-                <CardContent className="p-0 space-y-6">
-                  <p className="text-muted-foreground italic leading-relaxed">"{t.text}"</p>
-                  <div className="flex items-center gap-4">
-                    <img src={t.avatar} alt={t.name} className="w-12 h-12 rounded-full object-cover" />
-                    <div>
-                      <p className="font-bold text-sm">{t.name}</p>
-                      <p className="text-xs text-primary">{t.role}</p>
-                    </div>
+          <div className="grid lg:grid-cols-2 gap-16 items-center">
+            <div className="space-y-8">
+              <h2 className="text-4xl md:text-6xl font-heading font-bold leading-tight">Junte-se a uma nova <span className="text-primary italic">elite de terapeutas</span>.</h2>
+              <p className="text-xl text-muted-foreground leading-relaxed">
+                Preencha o formulário para receber o catálogo completo da formação, valores exclusivos de pré-venda e datas das próximas turmas diretamente no seu e-mail.
+              </p>
+              <div className="space-y-4">
+                <div className="flex items-center gap-4">
+                  <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center text-primary shrink-0">
+                    <CheckCircle2 className="w-5 h-5" />
                   </div>
-                </CardContent>
-              </Card>
-            ))}
+                  <p className="font-medium">Prioridade na lista de espera</p>
+                </div>
+                <div className="flex items-center gap-4">
+                  <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center text-primary shrink-0">
+                    <CheckCircle2 className="w-5 h-5" />
+                  </div>
+                  <p className="font-medium">Acesso a aulas bônus exclusivas</p>
+                </div>
+                <div className="flex items-center gap-4">
+                  <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center text-primary shrink-0">
+                    <CheckCircle2 className="w-5 h-5" />
+                  </div>
+                  <p className="font-medium">Descontos especiais de lançamento</p>
+                </div>
+              </div>
+            </div>
+            <FormacaoLeadForm />
           </div>
         </div>
       </section>
@@ -351,34 +322,34 @@ const Formacao = () => {
         <div className="container mx-auto px-6 max-w-3xl">
           <div className="text-center mb-16">
             <h2 className="text-3xl md:text-5xl font-heading font-bold mb-4">Perguntas <span className="text-primary italic">Frequentes</span></h2>
-            <p className="text-muted-foreground">Tire suas dúvidas sobre a Formação em PCH.</p>
+            <p className="text-muted-foreground mb-8">Tire suas dúvidas sobre a Formação em PCH.</p>
+            
+            <div className="relative max-w-md mx-auto">
+              <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
+              <Input 
+                placeholder="Buscar dúvida..." 
+                className="pl-10 h-12 bg-muted/50 border-border/50 focus:border-primary/50"
+                value={faqSearch}
+                onChange={(e) => setFaqSearch(e.target.value)}
+              />
+            </div>
           </div>
           
-          <div className="space-y-4">
-            {[
-              {
-                q: "Preciso ser psicólogo para fazer a formação?",
-                a: "Não obrigatoriamente. A formação é aberta a terapeutas, educadores, coaches e profissionais que trabalham com desenvolvimento humano. No entanto, o uso clínico rigoroso deve respeitar as regulamentações de cada conselho profissional."
-              },
-              {
-                q: "Como funciona a certificação?",
-                a: "Após concluir os 8 módulos e realizar as atividades práticas supervisionadas, você receberá o certificado digital de Especialista em Poesia Cognitiva Hipnótica (PCH)."
-              },
-              {
-                q: "As aulas são gravadas ou ao vivo?",
-                a: "A formação combina aulas gravadas de alta qualidade (teoria) com encontros de mentoria e supervisão ao vivo (prática) com o Evaldo Santana."
-              },
-              {
-                q: "Quanto tempo tenho acesso ao curso?",
-                a: "O acesso à plataforma e a todos os materiais de apoio é vitalício, permitindo que você revise o conteúdo sempre que precisar."
-              }
-            ].map((faq, i) => (
-              <div key={i} className="p-6 rounded-2xl border border-border/50 bg-card/30">
-                <h3 className="font-heading font-bold text-lg mb-2">{faq.q}</h3>
-                <p className="text-sm text-muted-foreground leading-relaxed">{faq.a}</p>
-              </div>
+          <Accordion type="single" collapsible className="w-full space-y-4">
+            {filteredFaqs.map((faq, i) => (
+              <AccordionItem key={i} value={`faq-${i}`} className="border border-border/50 rounded-2xl px-6 bg-card/30 overflow-hidden">
+                <AccordionTrigger className="text-left font-heading font-bold text-lg hover:no-underline py-6">
+                  {faq.q}
+                </AccordionTrigger>
+                <AccordionContent className="text-muted-foreground pb-6 leading-relaxed">
+                  {faq.a}
+                </AccordionContent>
+              </AccordionItem>
             ))}
-          </div>
+            {filteredFaqs.length === 0 && (
+              <p className="text-center text-muted-foreground py-8">Nenhuma pergunta encontrada para sua busca.</p>
+            )}
+          </Accordion>
         </div>
       </section>
 
@@ -394,7 +365,7 @@ const Formacao = () => {
             As vagas para a próxima turma da Formação em PCH são limitadas para garantir a qualidade da supervisão e mentoria.
           </p>
           <div className="flex flex-col items-center gap-6">
-            <Button size="lg" className="px-12 py-8 text-xl bg-primary hover:bg-primary/90 text-white rounded-full group shadow-2xl shadow-primary/20 scale-105 hover:scale-110 transition-all">
+            <Button size="lg" onClick={() => navigate("/planos")} className="px-12 py-8 text-xl bg-primary hover:bg-primary/90 text-white rounded-full group shadow-2xl shadow-primary/20 scale-105 hover:scale-110 transition-all">
               Garantir minha vaga na Formação <ArrowRight className="ml-3 w-6 h-6 group-hover:translate-x-1 transition-transform" />
             </Button>
             <p className="text-xs text-muted-foreground flex items-center gap-2">
