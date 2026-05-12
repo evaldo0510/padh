@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect, useCallback, useMemo } from "react";
 import { toast } from "sonner";
 import { supabase } from "@/integrations/supabase/client";
 import { useOfflineMode } from "./useOfflineMode";
@@ -265,6 +265,24 @@ export const useJornada = () => {
 
   const isFavorite = (id: string) => (jornada.favorites || []).includes(id);
 
+  const nextSession = useMemo(() => {
+    for (const fase of JORNADA_DATA) {
+      for (const sessao of fase.sessoes) {
+        if (!jornada.completedSessions.includes(sessao.id)) {
+          return {
+            phaseId: fase.id,
+            sessionId: sessao.id,
+            titulo: sessao.titulo,
+            faseTitulo: fase.titulo,
+            descricao: sessao.descricao,
+            numero: sessao.id, // Or index if needed
+          };
+        }
+      }
+    }
+    return null;
+  }, [jornada.completedSessions]);
+
   return {
     jornada,
     saveResponse,
@@ -274,6 +292,7 @@ export const useJornada = () => {
     toggleFavorite,
     isFavorite,
     isSyncing,
+    nextSession,
     hasConfig: true,
   };
 };

@@ -15,7 +15,7 @@ const Header = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const navigate = useNavigate();
-  const { jornada } = useJornada();
+  const { jornada, nextSession } = useJornada();
 
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 10);
@@ -58,12 +58,12 @@ const Header = () => {
     const pct = Math.min(100, Math.round((done / total) * 100));
     const day = Math.min(total, done + 1);
 
-    // Find next pending session for "Continuar"
-    const nextSession = allSessions.find((s) => !jornada.completedSessions?.includes(s.id));
-    const href = nextSession ? `/jornada/${nextSession.id}` : '/jornada';
+    const href = nextSession 
+      ? `/jornada/${nextSession.phaseId}/${nextSession.sessionId}` 
+      : '/jornada';
 
     return { dayLabel: `Dia ${day}`, percent: pct, continueHref: href };
-  }, [jornada.completedSessions]);
+  }, [jornada.completedSessions, nextSession]);
 
   return (
     <header
