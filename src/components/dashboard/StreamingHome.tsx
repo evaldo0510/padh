@@ -88,23 +88,24 @@ const StreamingHome = () => {
             
             <div className="space-y-4">
               <h1 className="text-5xl md:text-8xl font-black tracking-tighter leading-[0.9] text-white">
-                Prática de <br />
-                <span className="text-primary italic">Consciência</span>
+                Próximo <br />
+                <span className="text-primary italic">Episódio</span>
               </h1>
               <p className="text-lg md:text-xl text-white/50 leading-relaxed max-w-lg font-light italic">
-                Uma pequena prática para ancorar sua presença e transformar seu estado emocional.
+                {nextSession ? `Você está na fase ${nextSession.faseTitulo}. Continue sua evolução com "${nextSession.titulo}".` : "Sua jornada está completa. Continue explorando novas ferramentas."}
               </p>
             </div>
 
             <div className="flex flex-wrap items-center gap-4 pt-2">
               <Button 
                 onClick={() => {
-                  const element = document.getElementById('daily-challenge');
-                  if (element) element.scrollIntoView({ behavior: 'smooth' });
+                  if (nextSession) {
+                    navigate(`/jornada/${nextSession.faseId}/${nextSession.sessaoId}`);
+                  }
                 }}
                 className="btn-primary h-14 min-w-[260px] text-lg rounded-full"
               >
-                <Play className="w-5 h-5 fill-current mr-2" /> Começar Agora
+                <Play className="w-5 h-5 fill-current mr-2" /> {nextSession ? "Continuar Jornada" : "Ver Biblioteca"}
               </Button>
             </div>
           </motion.div>
