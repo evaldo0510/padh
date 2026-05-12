@@ -21,6 +21,7 @@ const Index = lazy(() => import("./pages/Index"));
 const NotFound = lazy(() => import("./pages/NotFound"));
 const LivroCurso = lazy(() => import("./pages/LivroCurso"));
 const Formacao = lazy(() => import("./pages/Formacao"));
+const ModuloFormacao = lazy(() => import("./pages/formacao/ModuloFormacao"));
 const MapaCerebral = lazy(() => import("./pages/MapaCerebral"));
 const AulaExclusiva = lazy(() => import("./pages/AulaExclusiva"));
 const Contato = lazy(() => import("./pages/Contato"));
@@ -128,6 +129,14 @@ const AnimatedRoutes = () => {
             element={
               <PageTransition>
                 <Formacao />
+              </PageTransition>
+            }
+          />
+          <Route
+            path="/formacao/modulo/:id"
+            element={
+              <PageTransition>
+                <ModuloFormacao />
               </PageTransition>
             }
           />
