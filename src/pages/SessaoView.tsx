@@ -19,7 +19,14 @@ const SessaoView = () => {
   const fase = JORNADA_DATA.find((f) => f.id === phaseId);
   const sessao = fase?.sessoes.find((s) => s.id === sessionId);
 
-  const [currentExIdx, setCurrentExIdx] = useState(0);
+  const [currentExIdx, setCurrentExIdx] = useState(() => {
+    if (!sessao) return 0;
+    // Find first block that is NOT completed
+    const firstUncompletedIdx = sessao.blocos.findIndex(
+      (b) => !jornada.completedExercises.includes(b.id)
+    );
+    return firstUncompletedIdx === -1 ? sessao.blocos.length - 1 : firstUncompletedIdx;
+  });
   const [response, setResponse] = useState("");
   const [choice, setChoice] = useState<string[]>([]);
   const [isPaused, setIsPaused] = useState(false);

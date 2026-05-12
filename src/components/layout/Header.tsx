@@ -15,7 +15,7 @@ const Header = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const navigate = useNavigate();
-  const { jornada, nextSession } = useJornada();
+  const { jornada, nextSession, continuePath } = useJornada();
 
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 10);
@@ -50,20 +50,15 @@ const Header = () => {
     navigate('/');
   };
 
-  // Compute journey progress (day + percentage)
-  const { dayLabel, percent, continueHref } = useMemo(() => {
+  const { dayLabel, percent } = useMemo(() => {
     const allSessions = JORNADA_DATA.flatMap((f) => f.sessoes);
     const total = allSessions.length || 1;
     const done = jornada.completedSessions?.length || 0;
     const pct = Math.min(100, Math.round((done / total) * 100));
     const day = Math.min(total, done + 1);
 
-    const href = nextSession 
-      ? `/jornada/${nextSession.phaseId}/${nextSession.sessionId}` 
-      : '/jornada';
-
-    return { dayLabel: `Dia ${day}`, percent: pct, continueHref: href };
-  }, [jornada.completedSessions, nextSession]);
+    return { dayLabel: `Dia ${day}`, percent: pct };
+  }, [jornada.completedSessions]);
 
   return (
     <header
@@ -91,9 +86,9 @@ const Header = () => {
                 className="h-9 px-5 rounded-full font-bold gap-2 bg-primary text-white hover:bg-primary/90 shadow-glow"
                 asChild
               >
-                <Link to={continueHref}>
-                  <span className="hidden xs:inline">Continuar jornada</span>
-                  <span className="xs:hidden">Continuar</span>
+                <Link to={continuePath}>
+                  <span className="hidden xs:inline">{nextSession ? 'Continuar jornada' : 'Ver jornada'}</span>
+                  <span className="xs:hidden">{nextSession ? 'Continuar' : 'Jornada'}</span>
                   <ArrowRight className="w-4 h-4" />
                 </Link>
               </Button>

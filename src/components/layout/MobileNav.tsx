@@ -7,12 +7,9 @@ import { useJornada } from '@/hooks/useJornada';
 
 const MobileNav = () => {
   const location = useLocation();
-  const { nextSession } = useJornada();
+  const { nextSession, continuePath } = useJornada();
   
   const navItems = useMemo(() => {
-    const continuePath = nextSession 
-      ? `/jornada/${nextSession.phaseId}/${nextSession.sessionId}` 
-      : '/jornada';
 
     return [
       { 
@@ -46,27 +43,28 @@ const MobileNav = () => {
 
   return (
     <nav className="lg:hidden fixed bottom-0 left-0 right-0 z-50 bg-background/95 backdrop-blur-xl border-t border-white/5 pb-safe">
-      <div className="flex items-center justify-around h-16 px-2 max-w-md mx-auto relative z-10">
+      <div className="flex items-center justify-around h-16 max-w-md mx-auto relative z-10 px-4">
         {navItems.map((item) => {
           const active = isActive(item);
           return (
             <div key={item.path} className="flex-1 h-full">
               <PrefetchLink
                 to={item.path}
-                className={`relative flex flex-col items-center justify-center gap-1 h-full transition-all duration-300 ${
-                  active ? 'text-primary' : 'text-white/40'
+                className={`relative flex flex-col items-center justify-center gap-1.5 h-full transition-all duration-500 ${
+                  active ? 'text-primary' : 'text-white/30'
                 }`}
               >
-                <div className={`transition-all duration-300 ${active ? 'scale-110' : 'scale-100'}`}>
+                <div className={`transition-all duration-500 ${active ? 'scale-110 -translate-y-0.5' : 'scale-100'}`}>
                   {active ? item.activeIcon : item.icon}
                 </div>
-                <span className={`text-[8px] font-bold uppercase tracking-[0.1em] transition-all duration-300 ${active ? 'opacity-100' : 'opacity-60'}`}>
+                <span className={`text-[9px] font-black uppercase tracking-[0.15em] transition-all duration-500 ${active ? 'opacity-100' : 'opacity-60'}`}>
                   {item.name}
                 </span>
+                
                 {active && (
-                  <motion.span 
-                    layoutId="active-tab-dot"
-                    className="absolute bottom-2 w-1 h-1 rounded-full bg-primary shadow-glow shadow-primary/40" 
+                  <motion.div 
+                    layoutId="active-nav-glow"
+                    className="absolute -top-1 w-12 h-1 bg-primary rounded-full shadow-glow" 
                   />
                 )}
               </PrefetchLink>

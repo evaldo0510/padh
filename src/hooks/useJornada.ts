@@ -293,6 +293,9 @@ export const useJornada = () => {
     isFavorite,
     isSyncing,
     nextSession,
+    continuePath: nextSession 
+      ? `/jornada/${nextSession.phaseId}/${nextSession.sessionId}` 
+      : '/jornada',
     hasConfig: true,
   };
 };
