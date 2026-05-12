@@ -120,6 +120,35 @@ const TheoreticalSections = () => {
           ))}
         </div>
       </section>
+
+      {/* 4. Guia de Jornada */}
+      <section className="space-y-10">
+        <div className="flex flex-col gap-1.5 px-1">
+          <h2 className="text-3xl md:text-4xl font-black tracking-tighter text-white">Guia de Jornada</h2>
+          <p className="text-[10px] md:text-xs font-bold uppercase tracking-[0.4em] text-white/30">Escolha seu nível de aprofundamento</p>
+        </div>
+        
+        <div className="grid md:grid-cols-3 gap-8">
+          {[
+            { title: "Livro-Curso", subtitle: "A Experiência Pessoal", desc: "Ideal para autotransformação e vivência prática.", link: "/livro-curso" },
+            { title: "Curso PCH", subtitle: "O Manual Técnico", desc: "Base teórica e o 'como fazer' da metodologia.", link: "/curso-padh", highlight: true },
+            { title: "Formação", subtitle: "Nível Profissional", desc: "Capacitação para terapeutas com certificação.", link: "/formacao" },
+          ].map((item, i) => (
+            <div key={i} className={`p-10 rounded-[2rem] border-2 transition-all duration-500 ${item.highlight ? 'bg-primary/5 border-primary/20 scale-105 shadow-glow' : 'bg-white/[0.02] border-white/5 opacity-60'}`}>
+              <div className="mb-6">
+                <h3 className="text-2xl font-black tracking-tighter text-white">{item.title}</h3>
+                <p className="text-primary text-[10px] font-bold uppercase tracking-widest">{item.subtitle}</p>
+              </div>
+              <p className="text-sm text-white/40 leading-relaxed font-light mb-8">{item.desc}</p>
+              <Link to={item.link}>
+                <button className={`w-full py-3 rounded-full font-bold uppercase tracking-widest text-[10px] transition-all ${item.highlight ? 'bg-primary text-white hover:bg-primary/80' : 'bg-white/5 text-white/40 hover:bg-white/10'}`}>
+                  Explorar
+                </button>
+              </Link>
+            </div>
+          ))}
+        </div>
+      </section>
     </div>
   );
 };
