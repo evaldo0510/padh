@@ -31,7 +31,7 @@ const JourneyPhases: React.FC<JourneyPhasesProps> = ({
             <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 border-b border-white/5 pb-6">
               <div className="space-y-1">
                 <span className="text-[10px] font-bold uppercase tracking-[0.3em] text-primary">Temporada {fase.numero}</span>
-                <h2 className="text-3xl md:text-4xl font-black tracking-tight text-white">{fase.titulo}</h2>
+                <h2 className="text-4xl md:text-6xl font-black tracking-tighter text-white">{fase.titulo}</h2>
                 <p className="text-white/40 max-w-xl font-light text-base">{fase.descricao}</p>
               </div>
               {!isUnlocked && (
