@@ -20,6 +20,13 @@ const JourneyHero: React.FC<JourneyHeroProps> = ({
   compact = false 
 }) => {
   const navigate = useNavigate();
+  const [isNavigating, setIsNavigating] = React.useState(false);
+
+  const handleNavigate = () => {
+    setIsNavigating(true);
+    // The link will handle the actual navigation, but we show the state
+    setTimeout(() => setIsNavigating(false), 2000); // Fallback
+  };
 
   return (
     <div className={`relative ${compact ? 'h-[45vh] md:h-[55vh]' : 'h-[55vh] md:h-[65vh]'} flex items-center overflow-hidden`}>
