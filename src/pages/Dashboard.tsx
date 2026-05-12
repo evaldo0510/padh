@@ -508,160 +508,78 @@ const Dashboard = () => {
           </div>
         </section>
 
-        {/* Content Rows */}
-        <div className="space-y-8 pb-20 -mt-20 md:-mt-32 relative z-30">
-          
-          {/* Row: Meus Favoritos */}
-          {jornada.favorites && jornada.favorites.length > 0 && (
-            <NetflixCarousel title="Minha Lista">
-               {jornada.favorites.map((favId) => {
-                 // Try to find if it's a tool or a session
-                 const isTool = favId.startsWith('/');
-                 const sessao = JORNADA_DATA.flatMap(f => f.sessoes).find(s => s.id === favId);
-                 
-                 if (isTool) {
-                    const toolName = favId.split('/').pop()?.replace(/-/g, ' ');
-                    return (
-                      <StreamingCard 
-                        key={favId}
-                        title={toolName || "Ferramenta"}
-                        subtitle="Ferramenta"
-                        onClick={() => navigate(favId)}
-                        type="episode"
-                      />
-                    );
-                 }
-                 
-                 if (sessao) {
-                    const fase = JORNADA_DATA.find(f => f.sessoes.some(s => s.id === sessao.id));
-                    return (
-                      <StreamingCard 
-                        key={favId}
-                        title={sessao.titulo}
-                        subtitle={fase?.titulo}
-                        onClick={() => navigate(`/jornada/${fase?.id}/${sessao.id}`)}
-                        type="series"
-                      />
-                    );
-                 }
-                 
-                 return null;
-               })}
-            </NetflixCarousel>
-          )}
-
-          {/* Row: Continuar de Onde Parei */}
-          {nextSession && (
-            <NetflixCarousel title="Continuar de Onde Parei">
-               <StreamingCard 
-                title={nextSession.titulo}
-                subtitle={`Fase ${nextSession.faseNumero}: ${nextSession.faseTitulo}`}
-                progress={jornada.completedExercises.length > 0 ? 35 : 0} // Simulated progress
-                onClick={() => navigate(`/jornada/${nextSession.faseId}/${nextSession.sessaoId}`)}
-                type="series"
-               />
-               {/* Show a few more from history if they exist */}
-            </NetflixCarousel>
-          )}
-
-          {/* Row: Jornadas Terapêuticas (Séries) */}
-          <NetflixCarousel title="Jornadas de Transformação">
-             {JORNADA_DATA.map((fase, idx) => {
-               const isUnlocked = idx === 0 || JORNADA_DATA[idx-1].sessoes.every(s => jornada.completedSessions.includes(s.id));
-               const completed = fase.sessoes.filter(s => jornada.completedSessions.includes(s.id)).length;
-               const percent = Math.round((completed / fase.sessoes.length) * 100);
+        {/* Dashboard Dynamic Section */}
+        <section className="streaming-container py-12 mb-24">
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-12">
+            {/* Left Col: Main Stats & Evolution */}
+            <div className="lg:col-span-2 space-y-12">
+               <ObjectiveSettings />
+               <PWAManager />
                
-               return (
-                 <StreamingCard 
-                  key={fase.id}
-                  title={fase.titulo}
-                  subtitle={`Temporada ${fase.numero}`}
-                  progress={percent}
-                  isLocked={!isUnlocked}
-                  isCompleted={percent === 100}
-                  onClick={() => {
-                    const next = fase.sessoes.find(s => !jornada.completedSessions.includes(s.id)) || fase.sessoes[0];
-                    navigate(`/jornada/${fase.id}/${next.id}`);
-                  }}
-                  type="series"
-                 />
-               );
-             })}
-          </NetflixCarousel>
+               {/* Motivational Insight Card */}
+               <motion.div 
+                 whileHover={{ y: -2 }}
+                 className="glass-card p-10 bg-gradient-to-br from-primary/5 via-background/20 to-accent-warm/5 relative overflow-hidden group border-white/5"
+               >
+                  <div className="relative z-10 space-y-4">
+                     <div className="flex items-center gap-3">
+                        <div className="w-1.5 h-8 bg-primary rounded-full" />
+                        <h3 className="text-3xl font-bold tracking-tight">Evolução Contínua</h3>
+                     </div>
+                     <p className="text-xl text-white/50 font-light max-w-xl leading-relaxed">
+                        Seu progresso é registrado aqui. Revise suas respostas, analise seu impacto e continue expandindo sua consciência.
+                     </p>
+                  </div>
+               </motion.div>
+            </div>
+            
+            <div className="space-y-8">
+               {/* Stats Overview */}
+               <Card className="glass-card p-10 border-white/5 bg-card/40">
+                  <h3 className="text-xl font-bold mb-8 flex items-center justify-between">
+                    <div className="flex items-center gap-3">
+                      <TrendingUp className="w-5 h-5 text-primary" /> Seu Impacto
+                    </div>
+                  </h3>
+                  
+                  <div className="space-y-10">
+                    <div className="space-y-4">
+                      <div className="flex justify-between items-end">
+                        <span className="text-[10px] font-black uppercase tracking-[0.2em] text-white/40">Progresso Geral</span>
+                        <span className="text-3xl font-black text-primary">{totalProgress}%</span>
+                      </div>
+                      <div className="progress-bar-thin">
+                         <div className="progress-fill" style={{ width: `${totalProgress}%` }} />
+                      </div>
+                    </div>
+                    
+                    <div className="grid grid-cols-1 gap-6">
+                       <div className="p-6 rounded-2xl bg-white/5 border border-white/5 flex items-center justify-between group">
+                          <div className="space-y-1">
+                             <span className="text-[10px] font-black uppercase tracking-widest text-white/30">Fase Atual</span>
+                             <span className="block text-lg font-bold text-white leading-none">{currentPhase.titulo}</span>
+                          </div>
+                       </div>
+                       
+                       <div className="grid grid-cols-2 gap-4">
+                          <div className="p-6 rounded-2xl bg-white/5 border border-white/5 space-y-2">
+                             <span className="block text-4xl font-black text-white">{completedSessionsCount}</span>
+                             <span className="text-[9px] font-black uppercase tracking-[0.3em] text-white/20 leading-none">Episódios</span>
+                          </div>
+                          <div className="p-6 rounded-2xl bg-white/5 border border-white/5 space-y-2">
+                             <span className="block text-4xl font-black text-white">{responsesCount}</span>
+                             <span className="text-[9px] font-black uppercase tracking-[0.3em] text-white/20 leading-none">Insights</span>
+                          </div>
+                       </div>
+                    </div>
+                  </div>
+               </Card>
+            </div>
+          </div>
+        </section>
 
-          {/* Row: Módulos de Formação (Educação) */}
-          <NetflixCarousel title="Formação PCH (Expertise)">
-             {MODULOS.map((modulo, idx) => {
-               const isUnlocked = isModuleUnlocked(idx);
-               const isCompleted = progress.completedModules.includes(modulo.id);
-               const activitiesCount = progress.completedActivities[modulo.id]?.length || 0;
-               const percent = Math.round((activitiesCount / modulo.atividades.length) * 100);
-
-               return (
-                 <StreamingCard 
-                  key={modulo.id}
-                  title={modulo.titulo}
-                  subtitle={`Pilar ${modulo.pilar}: ${modulo.pilarNome}`}
-                  progress={percent}
-                  isLocked={!isUnlocked}
-                  isCompleted={isCompleted}
-                  onClick={() => navigate("/curso-padh")}
-                  type="series"
-                 />
-               );
-             })}
-          </NetflixCarousel>
-
-          {/* Row: Ferramentas (Shorts) */}
-          <NetflixCarousel title="Ferramentas Rápidas (Intervenções)">
-             {[
-               { title: "Poema-Funil", path: "/ferramentas/poema-funil", tag: "Foco" },
-               { title: "Verso-Gatilho", path: "/ferramentas/verso-gatilho", tag: "Ação" },
-               { title: "Poemadiagnóstico", path: "/ferramentas/poemadiagnostico", tag: "Insights" },
-               { title: "Voz Interna", path: "/ferramentas/caderno-voz-interna", tag: "Reflexão" },
-               { title: "Encenação Poética", path: "/ferramentas/encenacao-poetica", tag: "Corpo" },
-               { title: "Ritual do Silêncio", path: "/ferramentas/ritual-silencio", tag: "Paz" },
-               { title: "Poesia Hipnótica", path: "/ferramentas/poesia-hipnotica", tag: "Transe" },
-             ].map((tool, idx) => (
-               <StreamingCard 
-                key={idx}
-                title={tool.title}
-                subtitle={tool.tag}
-                onClick={() => navigate(tool.path)}
-                type="episode"
-               />
-             ))}
-          </NetflixCarousel>
-
-          {/* Ranking — episodes with biggest recent progress */}
-          <RecentImpactRanking
-            remoteProgress={remoteProgress}
-            navigate={navigate}
-            isAuthenticated={isAuthenticated}
-          />
-
-          {/* Episode History — per-episode status & last response */}
-          <EpisodeHistorySection
-            navigate={navigate}
-            jornada={jornada}
-            remoteProgress={remoteProgress}
-            isAuthenticated={isAuthenticated}
-            filter={filter}
-            setFilter={setFilter}
-            sort={sort}
-            setSort={setSort}
-            visibleCount={visibleCount}
-            setVisibleCount={setVisibleCount}
-            loading={loadingProgress}
-            reloading={reloading}
-            onReload={handleReload}
-            error={progressError}
-            lastSyncAt={lastSyncAt}
-            recentlyChanged={recentlyChanged}
-            totalRemote={totalRemote}
-            favorites={favorites}
-            onToggleFavorite={toggleFavorite}
-          />
+        {/* Detailed History */}
+        <div className="space-y-8 pb-20 relative z-30">
           {/* User Stats & Info Section (Bottom) */}
           <section className="container mx-auto px-6 md:px-12 py-12 grid grid-cols-1 md:grid-cols-3 gap-8">
              <div className="space-y-4">
