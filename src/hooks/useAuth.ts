@@ -55,6 +55,7 @@ export const useAuth = () => {
 
 // ===== Purchases (Supabase-backed) =====
 export const PRODUCT_PRISAO_INTERIOR = "prisao-interior-jornada";
+export const PRODUCT_FORMACAO_PCH = "formacao-pch";
 
 export interface Purchase {
   id: string;
