@@ -98,6 +98,11 @@ const queryClient = new QueryClient();
 const AnimatedRoutes = () => {
   const location = useLocation();
 
+  useEffect(() => {
+    // Cancel any pending low-priority prefetches when route changes
+    cancelAllPrefetches();
+  }, [location.pathname]);
+
   return (
     <Suspense fallback={<PageSkeleton />}>
       <AnimatePresence mode="wait">
