@@ -87,7 +87,7 @@ const Header = () => {
           </PrefetchLink>
 
           {/* CENTER — Primary action */}
-          <div className="flex justify-center">
+          <div className="flex justify-center md:flex-1">
             {isLoggedIn ? (
               <Button
                 size="sm"
