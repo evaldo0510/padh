@@ -203,35 +203,40 @@ const StreamingHome = () => {
           })}
         </NetflixCarousel>
 
+        {/* Daily Consciousness Section - Re-organized as a dedicated module */}
+        <section id="daily-challenge" className="pt-8">
+          <DailyHabitSection />
+        </section>
+
         {/* Quick Exercises Grid - Explore Style */}
-        <section className="space-y-10">
-          <div className="flex flex-col gap-2">
-            <h2 className="text-4xl font-bold tracking-tighter text-white">Práticas Rápidas</h2>
-            <p className="text-white/40 font-light text-lg tracking-wide uppercase text-[10px] font-black tracking-[0.4em]">Impacto profundo em 5 minutos.</p>
+        <section className="space-y-8">
+          <div className="flex flex-col gap-1">
+            <h2 className="text-2xl font-bold tracking-tight text-white">Práticas Rápidas</h2>
+            <p className="text-[10px] font-bold uppercase tracking-[0.3em] text-white/30">Impacto profundo em poucos minutos</p>
           </div>
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-8">
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6">
             {[1, 2, 3, 4, 5].map((i) => (
               <motion.div 
                 key={i}
-                initial={{ opacity: 0, y: 20 }}
+                initial={{ opacity: 0, y: 10 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
-                transition={{ delay: i * 0.1 }}
-                whileHover={{ scale: 1.05, y: -5 }}
-                className="glass-card p-10 flex flex-col justify-between h-80 cursor-pointer group hover:border-primary/40 shadow-glow shadow-primary/0 hover:shadow-primary/5 transition-all duration-500"
+                transition={{ delay: i * 0.05 }}
+                whileHover={{ y: -5 }}
+                className="glass-card p-8 flex flex-col justify-between h-72 cursor-pointer group border-white/5"
                 onClick={() => navigate(`/biblioteca-exercicios`)}
               >
-                <div className="w-14 h-14 rounded-[2rem] bg-primary/10 flex items-center justify-center group-hover:bg-primary/20 group-hover:rotate-12 transition-all duration-700 shadow-inner">
-                  <Sparkles className="w-7 h-7 text-primary" />
+                <div className="w-12 h-12 rounded-2xl bg-primary/10 flex items-center justify-center group-hover:bg-primary/20 transition-all duration-500">
+                  <Sparkles className="w-6 h-6 text-primary" />
                 </div>
-                <div className="space-y-3">
-                  <h3 className="font-bold text-2xl tracking-tighter leading-tight group-hover:text-primary transition-colors">Insight #{i}</h3>
-                  <p className="text-[11px] text-white/30 line-clamp-3 leading-relaxed uppercase tracking-[0.2em] font-medium italic">
-                    Recalibração imediata através da intenção poética.
+                <div className="space-y-2">
+                  <h3 className="font-bold text-lg tracking-tight group-hover:text-primary transition-colors">Insight #{i}</h3>
+                  <p className="text-[10px] text-white/30 line-clamp-2 leading-relaxed uppercase tracking-[0.1em] italic font-light">
+                    Transformação imediata através da intenção poética.
                   </p>
                 </div>
-                <div className="flex items-center gap-3 text-[10px] text-primary font-black uppercase tracking-[0.3em]">
-                  <Clock className="w-4 h-4" /> 5 Minutos
+                <div className="flex items-center gap-2 text-[9px] text-primary/60 font-bold uppercase tracking-widest">
+                  <Clock className="w-3 h-3" /> 5 Min
                 </div>
               </motion.div>
             ))}
