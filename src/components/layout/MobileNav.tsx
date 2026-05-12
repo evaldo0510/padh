@@ -15,22 +15,10 @@ const MobileNav = () => {
       activeIcon: <Home className="w-5 h-5 fill-primary" />
     },
     { 
-      name: 'Explorar', 
-      path: '/explorar', 
-      icon: <Compass className="w-5 h-5" />,
-      activeIcon: <Compass className="w-5 h-5 fill-primary" />
-    },
-    { 
       name: 'Jornada', 
       path: '/jornada', 
       icon: <BookOpen className="w-5 h-5" />,
       activeIcon: <BookOpen className="w-5 h-5 fill-primary" />
-    },
-    { 
-      name: 'Ferramentas', 
-      path: '/ferramentas', 
-      icon: <Feather className="w-5 h-5" />,
-      activeIcon: <Feather className="w-5 h-5 fill-primary" />
     },
     { 
       name: 'Área', 
