@@ -26,7 +26,11 @@ const ModuloFormacao = () => {
   if (!modulo) {
     return (
       <PageLayout 
-        seo={{ title: "Módulo não encontrado", description: "O módulo solicitado não pôde ser localizado." }}
+        seo={{ 
+          title: "Módulo não encontrado", 
+          description: "O módulo solicitado não pôde ser localizado.",
+          path: "/formacao/modulo-not-found"
+        }}
         currentPage="Módulo não encontrado"
       >
         <div className="container mx-auto px-6 py-24 text-center">
@@ -46,7 +50,8 @@ const ModuloFormacao = () => {
     <PageLayout 
       seo={{ 
         title: `Módulo ${modulo.numero}: ${modulo.titulo} | Formação PCH`,
-        description: modulo.foco 
+        description: modulo.foco,
+        path: `/formacao/modulo/${modulo.id}`
       }}
       currentPage={`Módulo ${modulo.numero}: ${modulo.titulo}`}
     >
