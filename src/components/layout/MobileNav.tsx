@@ -38,16 +38,17 @@ const MobileNav = () => {
     ];
   }, [nextSession]);
 
-  const isActive = (path: string) => {
-    if (path === '/') return location.pathname === '/';
-    return location.pathname.startsWith(path);
+  const isActive = (item: any) => {
+    if (item.match) return item.match(location.pathname);
+    if (item.path === '/') return location.pathname === '/';
+    return location.pathname.startsWith(item.path);
   };
 
   return (
     <nav className="lg:hidden fixed bottom-0 left-0 right-0 z-50 bg-background/95 backdrop-blur-xl border-t border-white/5 pb-safe">
       <div className="flex items-center justify-around h-16 px-2 max-w-md mx-auto relative z-10">
         {navItems.map((item) => {
-          const active = isActive(item.path);
+          const active = isActive(item);
           return (
             <div key={item.path} className="flex-1 h-full">
               <PrefetchLink
