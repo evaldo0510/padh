@@ -153,55 +153,49 @@ const StreamingHome = () => {
           </section>
         )}
 
-        {/* Categories (Fases) Carousel */}
-        <NetflixCarousel 
-          title="Temporadas Originais" 
-          subtitle="Explore as 4 fases estruturadas da sua transformação interior."
-        >
-          {JORNADA_DATA.map((fase) => {
-            const colorMap: Record<string, string> = {
-              amber: "bg-accent-warm",
-              indigo: "bg-indigo-500",
-              emerald: "bg-emerald-500",
-              rose: "bg-rose-500",
-            };
-            const bgColorClass = colorMap[fase.cor] || "bg-primary";
-            
-            return (
-              <StreamingCard 
-                key={fase.id}
-                title={fase.titulo}
-                subtitle={`Temporada ${fase.numero}`}
-                image="" // Placeholder will trigger
-                onClick={() => navigate(`/jornada`)}
-                className="w-[320px] md:w-[420px] h-64"
-              />
-            );
-          })}
-        </NetflixCarousel>
+        {/* Main Journey Seasons - Focused and Clean */}
+        <section className="space-y-6">
+          <div className="flex items-center justify-between px-2">
+            <div className="flex flex-col gap-1">
+              <h2 className="text-2xl font-bold tracking-tight text-white">Sua Jornada</h2>
+              <p className="text-[10px] font-bold uppercase tracking-[0.3em] text-white/30">Fases de transformação estruturada</p>
+            </div>
+            <Button variant="ghost" size="sm" className="text-[10px] font-bold uppercase tracking-widest text-primary hover:text-primary/80" onClick={() => navigate('/jornada')}>
+              Ver todas <ChevronRight className="w-3 h-3 ml-1" />
+            </Button>
+          </div>
 
-        {/* Sessões Carousel */}
-        <NetflixCarousel 
-          title="Experiências Rápidas" 
-          subtitle="Sessões baseadas no seu perfil e progresso atual."
-        >
-          {sessions.map((sessao, index) => {
-            const isCompleted = jornada.completedSessions.includes(sessao.id);
-            const isLocked = index > 0 && !jornada.completedSessions.includes(sessions[index - 1].id);
-            
-            return (
-              <StreamingCard 
-                key={sessao.id}
-                title={sessao.titulo}
-                subtitle={sessao.faseTitulo}
-                isCompleted={isCompleted}
-                isLocked={isLocked}
-                onClick={() => navigate(`/jornada/${sessao.faseId}/${sessao.id}`)}
-                type="episode"
-              />
-            );
-          })}
-        </NetflixCarousel>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            {JORNADA_DATA.slice(0, 4).map((fase, idx) => {
+              const isUnlocked = idx === 0 || JORNADA_DATA[idx-1].sessoes.every(s => jornada.completedSessions.includes(s.id));
+              const completed = fase.sessoes.filter(s => jornada.completedSessions.includes(s.id)).length;
+              const percent = Math.round((completed / fase.sessoes.length) * 100);
+              
+              return (
+                <motion.div
+                  key={fase.id}
+                  whileHover={isUnlocked ? { y: -5 } : {}}
+                  className={`group relative aspect-[16/10] rounded-2xl overflow-hidden bg-card/40 border border-white/5 transition-all duration-500 ${!isUnlocked && 'opacity-40 grayscale blur-[1px]'}`}
+                  onClick={() => isUnlocked && navigate(`/jornada`)}
+                >
+                  <div className="absolute inset-0 p-6 flex flex-col justify-end z-20">
+                    <span className="text-[9px] font-bold text-primary uppercase tracking-[0.2em] mb-1">Temporada {fase.numero}</span>
+                    <h3 className="text-xl font-bold tracking-tight group-hover:text-primary transition-colors">{fase.titulo}</h3>
+                    <div className="mt-3 progress-bar-thin bg-white/5 h-1">
+                      <div className="progress-fill h-full" style={{ width: `${percent}%` }} />
+                    </div>
+                  </div>
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent z-10" />
+                  {!isUnlocked && (
+                    <div className="absolute inset-0 flex items-center justify-center z-30">
+                      <Lock className="w-6 h-6 text-white/20" />
+                    </div>
+                  )}
+                </motion.div>
+              );
+            })}
+          </div>
+        </section>
 
         {/* Daily Consciousness Section - Re-organized as a dedicated module */}
         <section id="daily-challenge" className="pt-8">
