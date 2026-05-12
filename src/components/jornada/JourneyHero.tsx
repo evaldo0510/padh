@@ -94,10 +94,18 @@ const JourneyHero: React.FC<JourneyHeroProps> = ({
               <Button 
                 size="lg" 
                 asChild
-                className="btn-primary h-14 px-8 text-lg rounded-full"
+                className="btn-primary h-14 px-8 text-lg rounded-full relative overflow-hidden group"
+                disabled={isNavigating}
               >
-                <PrefetchLink to={`/jornada/${nextSession.phaseId || nextSession.faseId}/${nextSession.sessionId || nextSession.sessaoId}`}>
-                  <Play className="w-5 h-5 fill-current mr-2" /> 
+                <PrefetchLink 
+                  to={`/jornada/${nextSession.phaseId || nextSession.faseId}/${nextSession.sessionId || nextSession.sessaoId}`}
+                  onClick={handleNavigate}
+                >
+                  {isNavigating ? (
+                    <Loader2 className="w-5 h-5 animate-spin mr-2" />
+                  ) : (
+                    <Play className="w-5 h-5 fill-current mr-2 group-hover:scale-110 transition-transform" /> 
+                  )}
                   {nextSession.isRecommended ? `Iniciar: ${nextSession.titulo}` : `Continuar: ${nextSession.titulo}`}
                 </PrefetchLink>
               </Button>
