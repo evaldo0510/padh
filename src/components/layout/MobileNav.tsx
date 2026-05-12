@@ -7,12 +7,9 @@ import { useJornada } from '@/hooks/useJornada';
 
 const MobileNav = () => {
   const location = useLocation();
-  const { nextSession } = useJornada();
+  const { nextSession, continuePath } = useJornada();
   
   const navItems = useMemo(() => {
-    const continuePath = nextSession 
-      ? `/jornada/${nextSession.phaseId}/${nextSession.sessionId}` 
-      : '/jornada';
 
     return [
       { 
