@@ -53,60 +53,58 @@ const StreamingHome = () => {
   return (
     <div className="min-h-screen bg-background text-foreground pb-20 overflow-x-hidden">
       {/* Featured Hero Banner - Cinematic Level */}
-      <section className="relative h-[85vh] w-full overflow-hidden flex items-center">
+      <section className="relative h-[55vh] md:h-[65vh] w-full overflow-hidden flex items-center">
         {/* Atmosphere with Deep Texture */}
-        <div className="absolute inset-0 bg-gradient-to-t from-background via-background/20 to-transparent z-10" />
-        <div className="absolute inset-0 bg-gradient-to-r from-background via-background/40 to-transparent z-10" />
+        <div className="absolute inset-0 bg-gradient-to-t from-background via-background/40 to-transparent z-10" />
+        <div className="absolute inset-0 bg-gradient-to-r from-background via-background/20 to-transparent z-10" />
         
         {/* Dynamic Abstract Vibe */}
         <div className="absolute inset-0 z-0 opacity-40">
-          <div className="absolute top-[20%] right-[10%] w-[500px] h-[500px] bg-primary/20 rounded-full blur-[140px] animate-pulse" />
-          <div className="absolute bottom-[20%] left-[5%] w-[400px] h-[400px] bg-accent-warm/10 rounded-full blur-[120px]" />
+          <div className="absolute top-[10%] right-[10%] w-[400px] h-[400px] bg-primary/10 rounded-full blur-[100px] animate-pulse" />
           <div className="w-full h-full flex items-center justify-center opacity-[0.03] select-none pointer-events-none">
-             <div className="text-[30vw] font-black tracking-tighter italic">PADH</div>
+             <div className="text-[20vw] font-black tracking-tighter">P.A.D.H.</div>
           </div>
         </div>
 
-        <div className="relative z-20 streaming-container pt-20">
+        <div className="relative z-20 streaming-container pt-12">
           <motion.div 
-            initial={{ opacity: 0, y: 30 }}
+            initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 1.2, ease: [0.22, 1, 0.36, 1] }}
-            className="max-w-3xl space-y-10"
+            transition={{ duration: 1, ease: [0.22, 1, 0.36, 1] }}
+            className="max-w-2xl space-y-6"
           >
-            <div className="flex items-center gap-4">
-              <Badge className="bg-primary/20 text-primary border-primary/30 py-2 px-5 rounded-full text-[10px] font-black tracking-[0.3em] uppercase shadow-lg shadow-primary/10">
-                <Sparkles className="w-3.5 h-3.5 mr-2" />
-                Original PADH
+            <div className="flex items-center gap-3">
+              <Badge className="bg-primary/20 text-primary border-primary/30 py-1.5 px-4 rounded-full text-[9px] font-bold tracking-widest uppercase">
+                <Sparkles className="w-3 h-3 mr-1.5" />
+                Original P.A.D.H.
               </Badge>
               {nextSession && (
-                <div className="flex items-center gap-3 text-white/50 text-[10px] font-black tracking-[0.3em] uppercase">
-                  <ChevronRight className="w-4 h-4 text-primary" />
-                  Temporada {nextSession.faseTitulo}
+                <div className="flex items-center gap-2 text-white/30 text-[9px] font-bold tracking-widest uppercase">
+                  <ChevronRight className="w-3.5 h-3.5 text-primary/50" />
+                  Fase {nextSession.faseTitulo}
                 </div>
               )}
             </div>
             
-            <div className="space-y-6">
-              <h1 className="text-7xl md:text-9xl font-bold tracking-tighter leading-[0.85] text-white">
-                Seu dia de <br />
-                <span className="text-primary italic animate-pulse">Consciência</span>
+            <div className="space-y-4">
+              <h1 className="text-5xl md:text-8xl font-black tracking-tighter leading-[0.9] text-white">
+                Prática de <br />
+                <span className="text-primary italic">Consciência</span>
               </h1>
-              <p className="text-xl md:text-3xl text-white/70 leading-relaxed max-w-xl font-light italic opacity-80">
-                Uma pequena prática para ancorar sua presença <br />
-                e transformar seu estado emocional hoje.
+              <p className="text-lg md:text-xl text-white/50 leading-relaxed max-w-lg font-light italic">
+                Uma pequena prática para ancorar sua presença e transformar seu estado emocional.
               </p>
             </div>
 
-            <div className="flex flex-wrap items-center gap-6 pt-4">
+            <div className="flex flex-wrap items-center gap-4 pt-2">
               <Button 
                 onClick={() => {
                   const element = document.getElementById('daily-challenge');
                   if (element) element.scrollIntoView({ behavior: 'smooth' });
                 }}
-                className="btn-primary h-16 min-w-[320px] text-xl gap-4 shadow-2xl shadow-primary/20"
+                className="btn-primary h-14 min-w-[260px] text-lg rounded-full"
               >
-                <Play className="w-7 h-7 fill-current" /> Começar Prática do Dia
+                <Play className="w-5 h-5 fill-current mr-2" /> Começar Agora
               </Button>
             </div>
           </motion.div>
