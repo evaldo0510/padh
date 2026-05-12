@@ -36,9 +36,10 @@ const MobileNav = () => {
   }, [nextSession]);
 
   const isActive = (item: any) => {
-    if (item.match) return item.match(location.pathname);
-    if (item.path === '/') return location.pathname === '/';
-    return location.pathname.startsWith(item.path);
+    const currentPath = location.pathname;
+    if (item.match) return item.match(currentPath);
+    if (item.path === '/') return currentPath === '/';
+    return currentPath === item.path || currentPath.startsWith(item.path + '/');
   };
 
   return (
