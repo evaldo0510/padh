@@ -384,110 +384,92 @@ const Dashboard = () => {
     >
       <div className="flex flex-col min-h-screen bg-background -mt-16 overflow-x-hidden">
         {/* Cinematic Hero Banner */}
-        <section className="relative w-full h-[60vh] md:h-[70vh] flex items-center overflow-hidden">
+        <section className="relative w-full h-[50vh] md:h-[60vh] flex items-center overflow-hidden">
           {/* Enhanced Background with Depth */}
           <div className="absolute inset-0 z-0">
-             <div className="absolute inset-0 bg-gradient-to-r from-background via-background/60 to-transparent z-10" />
+             <div className="absolute inset-0 bg-gradient-to-r from-background via-background/40 to-transparent z-10" />
              <div className="absolute inset-0 bg-gradient-to-t from-background via-transparent to-transparent z-10" />
              
              {/* Dynamic Ambient Bloom */}
-             <div className="absolute top-[15%] left-[5%] w-[600px] h-[600px] bg-primary/10 rounded-full blur-[140px] animate-pulse" />
-             <div className="absolute bottom-[10%] right-[10%] w-[500px] h-[500px] bg-accent-warm/5 rounded-full blur-[120px]" />
+             <div className="absolute top-[10%] left-[5%] w-[500px] h-[500px] bg-primary/5 rounded-full blur-[120px] animate-pulse" />
              
              <div className="w-full h-full flex items-center justify-center opacity-5 select-none pointer-events-none">
-                <div className="text-[25vw] font-black tracking-tighter">PCH</div>
+                <div className="text-[20vw] font-black tracking-tighter">P.A.D.H.</div>
              </div>
           </div>
 
-          <div className="relative z-20 streaming-container pt-20">
+          <div className="relative z-20 streaming-container pt-12">
              <motion.div 
-               initial={{ opacity: 0, x: -30 }}
+               initial={{ opacity: 0, x: -20 }}
                animate={{ opacity: 1, x: 0 }}
-               transition={{ duration: 1, ease: [0.22, 1, 0.36, 1] }}
-               className="max-w-3xl space-y-8"
+               transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
+               className="max-w-2xl space-y-6"
              >
-                <div className="flex items-center gap-4">
-                   <Badge className="bg-primary/20 text-primary border-primary/30 px-4 py-1.5 rounded-full font-black uppercase tracking-widest text-[10px]">
-                      <Sparkles className="w-3.5 h-3.5 mr-2" /> Original PCH
+                <div className="flex items-center gap-3">
+                   <Badge className="bg-primary/20 text-primary border-primary/30 px-3 py-1 rounded-full font-bold uppercase tracking-widest text-[9px]">
+                      <Sparkles className="w-3 h-3 mr-1.5" /> Original
                    </Badge>
-                   <div className="h-px w-10 bg-white/10" />
-                   <span className="text-[10px] font-black uppercase tracking-[0.3em] text-white/40">Série em Exibição</span>
+                   <span className="text-[9px] font-bold uppercase tracking-[0.2em] text-white/30">Destaque do Dia</span>
                 </div>
                 
-                <div className="space-y-4">
-                  <h1 className="text-5xl md:text-8xl font-bold text-white leading-none tracking-tighter">
+                <div className="space-y-2">
+                  <h1 className="text-4xl md:text-7xl font-black text-white leading-[0.9] tracking-tighter">
                      {featured.titulo}
                   </h1>
-                  <p className="text-xl text-white/60 line-clamp-2 max-w-xl font-light leading-relaxed italic">
+                  <p className="text-lg text-white/50 line-clamp-2 max-w-lg font-light leading-relaxed italic">
                      "{featured.descricao}"
                   </p>
                 </div>
 
-                <div className="flex flex-wrap items-center gap-6 pt-6">
+                <div className="flex flex-wrap items-center gap-4 pt-4">
                    <Button 
                     size="lg" 
-                    className="btn-primary h-16 min-w-[260px] text-xl"
+                    className="btn-primary h-14 min-w-[200px] text-lg rounded-full"
                     onClick={() => featured.faseId && navigate(`/jornada/${featured.faseId}/${featured.sessaoId}`)}
                    >
-                      <Play className="w-7 h-7 fill-current" /> Assistir Agora
+                      <Play className="w-5 h-5 fill-current mr-2" /> Assistir Agora
                    </Button>
                    <Button 
                     size="lg" 
                     variant="outline" 
-                    className="btn-secondary h-16 px-10 text-xl"
+                    className="h-14 px-8 text-lg rounded-full bg-white/5 border-white/10 hover:bg-white/10"
                    >
-                      <Info className="w-7 h-7" /> Mais Detalhes
+                      Mais Detalhes
                    </Button>
                 </div>
              </motion.div>
           </div>
         </section>
 
-        {/* Global Toolbar */}
-        <div className="sticky top-16 z-40 w-full bg-background/0 backdrop-blur-0 py-6 transition-all duration-500">
-           <div className="streaming-container flex flex-wrap justify-between items-center gap-6">
-              <div className="flex gap-6 items-center">
+        {/* Simplified Toolbar */}
+        <div className="sticky top-14 z-40 w-full bg-background/80 backdrop-blur-md border-b border-white/5 py-3 transition-all duration-300">
+           <div className="streaming-container flex flex-wrap justify-between items-center gap-4">
+              <div className="flex gap-4 items-center">
                  <SyncStatusIndicator />
                  <NotificationCenter />
               </div>
               
-              <div className="flex flex-wrap gap-2 md:gap-3">
+              <div className="flex items-center gap-1 overflow-x-auto pb-1 md:pb-0 scrollbar-hide">
                  {[
                    { to: "/recursos-clinicos", label: "Biblioteca", icon: Library },
                    { onClick: scrollToHistory, label: "Episódios", icon: Clock },
                    { to: "/planos", label: "Planos", icon: CreditCard },
-                 ].map((btn, i) => (
-                   <Button 
-                    key={i}
-                    asChild={!!btn.to}
-                    variant="ghost" 
-                    size="sm" 
-                    className="rounded-xl h-10 px-4 gap-2 text-white/50 hover:text-primary hover:bg-primary/5 transition-all font-bold uppercase tracking-widest text-[10px]"
-                    onClick={btn.onClick as any}
-                   >
-                     {btn.to ? <Link to={btn.to}><btn.icon className="w-3.5 h-3.5" /> {btn.label}</Link> : <><btn.icon className="w-3.5 h-3.5" /> {btn.label}</>}
-                   </Button>
-                 ))}
-                 
-                 {isAuthenticated ? (
-                   <Button
-                     variant="ghost"
-                     size="sm"
-                     className="rounded-xl h-10 px-4 gap-2 text-white/50 hover:text-primary hover:bg-primary/5 transition-all font-bold uppercase tracking-widest text-[10px]"
-                     onClick={() => goTo("/meu-produto", "Meu Produto")}
-                   >
-                     <ShoppingBag className="w-3.5 h-3.5" /> Meu Produto
-                   </Button>
-                 ) : (
-                   <Button
-                     variant="ghost"
-                     size="sm"
-                     className="rounded-xl h-10 px-4 gap-2 text-primary hover:bg-primary/5 transition-all font-bold uppercase tracking-widest text-[10px]"
-                     onClick={() => goTo("/login", "Entrar")}
-                   >
-                     <ShoppingBag className="w-3.5 h-3.5" /> Entrar
-                   </Button>
-                 )}
+                   { to: "/meu-produto", label: "Produto", icon: ShoppingBag, authRequired: true },
+                 ].map((btn, i) => {
+                   if (btn.authRequired && !isAuthenticated) return null;
+                   return (
+                     <Button 
+                      key={i}
+                      asChild={!!btn.to}
+                      variant="ghost" 
+                      size="sm" 
+                      className="rounded-full h-8 px-4 gap-2 text-white/40 hover:text-white hover:bg-white/5 transition-all font-bold uppercase tracking-widest text-[9px]"
+                      onClick={btn.onClick as any}
+                     >
+                       {btn.to ? <Link to={btn.to}><btn.icon className="w-3 h-3" /> {btn.label}</Link> : <><btn.icon className="w-3 h-3" /> {btn.label}</>}
+                     </Button>
+                   );
+                 })}
               </div>
            </div>
         </div>
