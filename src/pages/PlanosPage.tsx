@@ -1,45 +1,61 @@
-import React, { useState } from "react";
+import React, { useState, useMemo } from "react";
 import PageLayout from "@/components/layout/PageLayout";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Check, Sparkles } from "lucide-react";
-import { useNavigate } from "react-router-dom";
-import { useAuth, PRODUCT_PRISAO_INTERIOR } from "@/hooks/useAuth";
+import { useNavigate, useSearchParams } from "react-router-dom";
+import { useAuth, PRODUCT_PRISAO_INTERIOR, PRODUCT_FORMACAO_PCH } from "@/hooks/useAuth";
 import { usePurchase } from "@/hooks/usePurchase";
 import CheckoutDialog, { PLAN_OPTIONS, type PlanKey } from "@/components/checkout/CheckoutDialog";
 
 const PLAN_FEATURES: Record<PlanKey, string[]> = {
-  mensal: ["Acesso aos 5 episódios", "Progresso salvo na nuvem", "Cancele quando quiser"],
-  anual: ["Tudo do mensal", "Economia de ~30%", "Suporte prioritário", "Conteúdos extras"],
-  vitalicio: ["Tudo do anual", "Acesso vitalício", "Atualizações futuras", "Bônus exclusivos"],
+  mensal: ["Acesso aos conteúdos básicos", "Progresso salvo na nuvem", "Cancele quando quiser"],
+  anual: ["Acesso completo por 1 ano", "Economia significativa", "Suporte prioritário", "Materiais bônus"],
+  vitalicio: ["Acesso vitalício ilimitado", "Atualizações para sempre", "Certificação inclusa", "Comunidade VIP"],
 };
 
 const PlanosPage: React.FC = () => {
   const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
   const { isAuthenticated } = useAuth();
-  const { hasAccess } = usePurchase(PRODUCT_PRISAO_INTERIOR);
+  
+  const productId = searchParams.get("product") === "formacao" ? PRODUCT_FORMACAO_PCH : PRODUCT_PRISAO_INTERIOR;
+  const productName = productId === PRODUCT_FORMACAO_PCH ? "Formação em PCH" : "Prisão Interior — Jornada";
+  
+  const { hasAccess } = usePurchase(productId);
   const [open, setOpen] = useState(false);
   const [selectedPlan, setSelectedPlan] = useState<PlanKey>("vitalicio");
 
   const choose = (plan: PlanKey) => {
-    if (hasAccess) { navigate("/meu-produto"); return; }
-    if (!isAuthenticated) { navigate("/login", { state: { from: "/planos" } }); return; }
+    if (hasAccess) { 
+      navigate(productId === PRODUCT_FORMACAO_PCH ? "/formacao" : "/meu-produto"); 
+      return; 
+    }
+    if (!isAuthenticated) { navigate("/login", { state: { from: `/planos?product=${searchParams.get("product")}` } }); return; }
     setSelectedPlan(plan);
     setOpen(true);
   };
 
   return (
     <PageLayout
-      seo={{ title: "Planos — Prisão Interior", description: "Escolha o plano ideal: mensal, anual ou vitalício.", path: "/planos" }}
+      seo={{ 
+        title: `Planos — ${productName}`, 
+        description: "Escolha o plano ideal para sua transformação.", 
+        path: "/planos" 
+      }}
       currentPage="Planos"
     >
       <div className="container mx-auto px-6 py-20">
         <div className="text-center mb-14 max-w-2xl mx-auto space-y-4">
-          <Badge className="bg-primary/10 text-primary border-primary/20"><Sparkles className="w-3 h-3 mr-1" /> Monetização</Badge>
+          <Badge className="bg-primary/10 text-primary border-primary/20">
+            <Sparkles className="w-3 h-3 mr-1" /> {productId === PRODUCT_FORMACAO_PCH ? "Profissional" : "Transformação"}
+          </Badge>
           <h1 className="text-4xl md:text-5xl font-heading font-bold">Escolha seu plano</h1>
           <p className="text-muted-foreground text-lg">
-            Mesma jornada, três formas de embarcar. Pague uma vez ou aos poucos.
+            {productId === PRODUCT_FORMACAO_PCH 
+              ? "Invista na sua carreira e torne-se um especialista em Poesia Cognitiva Hipnótica."
+              : "Embarque na jornada de libertação emocional com o plano ideal para você."}
           </p>
         </div>
 
@@ -75,7 +91,7 @@ const PlanosPage: React.FC = () => {
                     variant={featured ? "default" : "outline"}
                     size="lg"
                   >
-                    {hasAccess ? "Acessar produto" : "Escolher " + opt.label.toLowerCase()}
+                    {hasAccess ? "Acessar" : "Escolher " + opt.label.toLowerCase()}
                   </Button>
                 </CardContent>
               </Card>
@@ -91,10 +107,10 @@ const PlanosPage: React.FC = () => {
       <CheckoutDialog
         open={open}
         onOpenChange={setOpen}
-        productId={PRODUCT_PRISAO_INTERIOR}
-        productName="Prisão Interior — Jornada"
+        productId={productId}
+        productName={productName}
         defaultPlan={selectedPlan}
-        onSuccess={() => navigate("/meu-produto")}
+        onSuccess={() => navigate(productId === PRODUCT_FORMACAO_PCH ? "/formacao" : "/meu-produto")}
       />
     </PageLayout>
   );
