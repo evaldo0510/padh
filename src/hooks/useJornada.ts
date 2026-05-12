@@ -302,7 +302,7 @@ export const useJornada = () => {
     isFinished,
     continuePath: nextSession 
       ? `/jornada/${nextSession.phaseId}/${nextSession.sessionId}` 
-      : (isFinished ? '/jornada' : '/jornada'), // Could be a summary page later
+      : (isFinished ? '/dashboard' : '/jornada'),
     hasConfig: true,
   };
 };
