@@ -100,7 +100,7 @@ const GlobalProgressBar: React.FC = () => {
           </div>
         </div>
       </div>
-    </motion.div>
+    </div>
   );
 };
 
