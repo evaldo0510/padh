@@ -275,7 +275,7 @@ export const useJornada = () => {
             titulo: sessao.titulo,
             faseTitulo: fase.titulo,
             descricao: sessao.descricao,
-            numero: sessao.id, // Or index if needed
+            numero: sessao.id,
           };
         }
       }
@@ -303,8 +303,6 @@ export const useJornada = () => {
     continuePath: nextSession 
       ? `/jornada/${nextSession.phaseId}/${nextSession.sessionId}` 
       : (isFinished ? '/dashboard' : '/jornada'),
-    isFinished,
-    nextSession,
     hasConfig: true,
   };
 };
