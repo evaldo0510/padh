@@ -18,6 +18,7 @@ import { useJornada } from "@/hooks/useJornada";
 import { JORNADA_DATA } from "@/lib/jornada-data";
 import { motion } from "framer-motion";
 import SyncStatusIndicator from "@/components/dashboard/SyncStatusIndicator";
+import GlobalProgressBar from "@/components/dashboard/GlobalProgressBar";
 import NotificationCenter from "@/components/dashboard/NotificationCenter";
 import { ObjectiveSettings } from "@/components/dashboard/ObjectiveSettings";
 import { PWAManager } from "@/components/dashboard/PWAManager";
