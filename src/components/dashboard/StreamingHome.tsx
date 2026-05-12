@@ -112,13 +112,8 @@ const StreamingHome = () => {
         </div>
       </section>
 
-      <div className="streaming-container -mt-48 relative z-30 space-y-20 md:space-y-32 pb-32">
-        {/* Daily Consciousness Section */}
-        <div id="daily-challenge">
-          <DailyHabitSection />
-        </div>
-
-        {/* Global Journey Progress */}
+      <div className="streaming-container -mt-32 relative z-30 space-y-16 md:space-y-24 pb-32">
+        {/* Journey Continuity - Highlight current phase progress */}
         <GlobalProgressBar />
 
         {/* Clinical Evolution Charts */}
