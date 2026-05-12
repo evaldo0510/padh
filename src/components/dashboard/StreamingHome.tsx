@@ -12,6 +12,14 @@ import TheoreticalSections from "./TheoreticalSections";
 
 const StreamingHome = () => {
   const { jornada, isSyncing, nextSession } = useJornada();
+  const [focusMode, setFocusMode] = useState(() => {
+    const saved = localStorage.getItem("pch_focus_mode");
+    return saved ? JSON.parse(saved) : true;
+  });
+
+  useEffect(() => {
+    localStorage.setItem("pch_focus_mode", JSON.stringify(focusMode));
+  }, [focusMode]);
 
   if (isSyncing) return <StreamingSkeleton />;
 
