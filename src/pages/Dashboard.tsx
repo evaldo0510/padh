@@ -475,89 +475,79 @@ const Dashboard = () => {
         </div>
 
         {/* Dashboard Dynamic Section */}
-        <section className="streaming-container py-12 mb-24">
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-12">
-            <div className="lg:col-span-2 space-y-12">
-               {/* Objectives with modern UI */}
+        <section className="streaming-container py-8 mb-16">
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+            <div className="lg:col-span-2 space-y-8">
                <ObjectiveSettings />
                <PWAManager />
                
                {/* Motivational Insight Card */}
                <motion.div 
-                 whileHover={{ y: -5 }}
-                 className="glass-card p-10 bg-gradient-to-br from-primary/10 via-background/40 to-accent-warm/5 relative overflow-hidden group border-white/5"
+                 whileHover={{ y: -2 }}
+                 className="glass-card p-8 bg-gradient-to-br from-primary/5 via-background/20 to-accent-warm/5 relative overflow-hidden group border-white/5"
                >
-                  <div className="absolute top-0 right-0 p-8 opacity-5 group-hover:opacity-10 transition-opacity duration-1000">
-                     <Target className="w-48 h-48 text-primary" />
-                  </div>
-                  <div className="relative z-10 space-y-4">
-                     <div className="flex items-center gap-3">
-                        <div className="w-1.5 h-8 bg-primary rounded-full" />
-                        <h3 className="text-3xl font-bold tracking-tight">Você está avançando</h3>
+                  <div className="relative z-10 space-y-3">
+                     <div className="flex items-center gap-2">
+                        <div className="w-1 h-6 bg-primary rounded-full" />
+                        <h3 className="text-2xl font-bold tracking-tight">Sua jornada contínua</h3>
                      </div>
-                     <p className="text-xl text-white/60 font-light max-w-xl leading-relaxed">
-                        Cada palavra escrita na sua jornada é um passo para fora de uma prisão que você nem sabia que existia. Siga o fluxo.
+                     <p className="text-base text-white/50 font-light max-w-xl leading-relaxed">
+                        Cada palavra escrita é um passo para fora de uma prisão que você nem sabia que existia. Siga o fluxo e confie no processo.
                      </p>
                   </div>
                </motion.div>
             </div>
             
-            <div className="space-y-8">
+            <div className="space-y-6">
                {/* Stats Overview */}
-               <Card className="glass-card p-10 border-white/5 bg-card/40">
-                  <h3 className="text-xl font-bold mb-8 flex items-center justify-between">
-                    <div className="flex items-center gap-3">
-                      <TrendingUp className="w-5 h-5 text-primary" /> Seu Impacto
+               <Card className="glass-card p-8 border-white/5 bg-card/40">
+                  <h3 className="text-lg font-bold mb-6 flex items-center justify-between">
+                    <div className="flex items-center gap-2">
+                      <TrendingUp className="w-4 h-4 text-primary" /> Progresso
                     </div>
-                    <Badge variant="outline" className="border-emerald-500/20 text-emerald-400 text-[10px]">Ativo</Badge>
                   </h3>
                   
-                  <div className="space-y-10">
-                    <div className="space-y-4">
+                  <div className="space-y-8">
+                    <div className="space-y-3">
                       <div className="flex justify-between items-end">
-                        <span className="text-[10px] font-black uppercase tracking-[0.2em] text-white/40">Progresso Geral</span>
-                        <span className="text-3xl font-black text-primary">{totalProgress}%</span>
+                        <span className="text-[9px] font-bold uppercase tracking-[0.1em] text-white/30">Total</span>
+                        <span className="text-2xl font-black text-primary">{totalProgress}%</span>
                       </div>
                       <div className="progress-bar-thin">
                          <div className="progress-fill" style={{ width: `${totalProgress}%` }} />
                       </div>
                     </div>
                     
-                    <div className="grid grid-cols-1 gap-6">
-                       <div className="p-6 rounded-2xl bg-white/5 border border-white/5 flex items-center justify-between group hover:bg-white/10 transition-colors">
-                          <div className="space-y-1">
-                             <span className="text-[10px] font-black uppercase tracking-widest text-white/30">Fase Atual</span>
-                             <span className="block text-lg font-bold text-white leading-none">{currentPhase.titulo}</span>
+                    <div className="grid grid-cols-1 gap-4">
+                       <div className="p-4 rounded-xl bg-white/5 border border-white/5 flex items-center justify-between group">
+                          <div className="space-y-0.5">
+                             <span className="text-[9px] font-bold uppercase tracking-widest text-white/30">Fase Atual</span>
+                             <span className="block text-base font-bold text-white leading-none">{currentPhase.titulo}</span>
                           </div>
-                          <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center">
-                             <span className="text-primary font-black text-xs">{currentPhase.numero}</span>
+                          <div className="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center">
+                             <span className="text-primary font-bold text-[10px]">{currentPhase.numero}</span>
                           </div>
                        </div>
                        
-                       <div className="grid grid-cols-2 gap-4">
-                          <div className="p-6 rounded-2xl bg-white/5 border border-white/5 space-y-2">
-                             <span className="block text-4xl font-black text-white">{completedSessionsCount}</span>
-                             <span className="text-[9px] font-black uppercase tracking-[0.3em] text-white/20 leading-none">Episódios</span>
+                       <div className="grid grid-cols-2 gap-3">
+                          <div className="p-4 rounded-xl bg-white/5 border border-white/5 space-y-1">
+                             <span className="block text-2xl font-black text-white">{completedSessionsCount}</span>
+                             <span className="text-[8px] font-bold uppercase tracking-[0.2em] text-white/20 leading-none">Episódios</span>
                           </div>
-                          <div className="p-6 rounded-2xl bg-white/5 border border-white/5 space-y-2">
-                             <span className="block text-4xl font-black text-white">{responsesCount}</span>
-                             <span className="text-[9px] font-black uppercase tracking-[0.3em] text-white/20 leading-none">Insights</span>
+                          <div className="p-4 rounded-xl bg-white/5 border border-white/5 space-y-1">
+                             <span className="block text-2xl font-black text-white">{responsesCount}</span>
+                             <span className="text-[8px] font-bold uppercase tracking-[0.2em] text-white/20 leading-none">Insights</span>
                           </div>
                        </div>
                     </div>
                   </div>
                </Card>
 
-               {/* Quick Access Grid */}
-               <div className="grid grid-cols-2 gap-4">
-                  {[
-                    { id: 'ansiedade', label: 'Ansiedade' },
-                    { id: 'foco', label: 'Foco' },
-                    { id: 'escrita', label: 'Escrita' },
-                    { id: 'identidade', label: 'Identidade' }
-                  ].map(cat => (
-                    <button key={cat.id} className="p-4 rounded-xl border border-white/5 bg-white/5 text-[10px] font-black uppercase tracking-[0.3em] text-white/40 hover:bg-primary/10 hover:text-primary hover:border-primary/20 transition-all">
-                       {cat.label}
+               {/* Quick Categories */}
+               <div className="flex flex-wrap gap-2">
+                  {['Ansiedade', 'Foco', 'Escrita', 'Identidade'].map(cat => (
+                    <button key={cat} className="px-3 py-2 rounded-lg border border-white/5 bg-white/5 text-[9px] font-bold uppercase tracking-[0.1em] text-white/30 hover:bg-primary/10 hover:text-primary transition-all">
+                       {cat}
                     </button>
                   ))}
                </div>
