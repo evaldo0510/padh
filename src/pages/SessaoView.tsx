@@ -451,7 +451,7 @@ const SessaoView = () => {
         </main>
 
         {/* Bottom: single primary action */}
-        <footer className="px-6 md:px-12 pb-10 md:pb-12 pt-4 flex justify-center">
+        <footer className="px-6 md:px-12 pb-10 md:pb-16 pt-4 flex justify-center relative z-20">
           <AnimatePresence>
             {!isTransitioning && (
               <motion.div
@@ -464,13 +464,13 @@ const SessaoView = () => {
                   onClick={handlePrimary}
                   disabled={primaryDisabled}
                   size="lg"
-                  className="min-w-[220px] h-14 rounded-full text-base font-medium tracking-wide bg-primary hover:bg-primary/90 text-primary-foreground shadow-lg shadow-primary/20 transition-all"
+                  className="min-w-[260px] h-16 rounded-full text-lg font-bold tracking-widest uppercase bg-primary hover:bg-primary/90 text-white shadow-glow transition-all active:scale-95"
                 >
                   {primaryLabel}
                   {isLast ? (
                     <CheckCircle2 className="w-5 h-5 ml-2" />
                   ) : (
-                    <ChevronRight className="w-5 h-5 ml-1" />
+                    <ChevronRight className="w-5 h-5 ml-1.5" />
                   )}
                 </Button>
               </motion.div>
