@@ -16,25 +16,27 @@ const StreamingHome = () => {
   const totalProgress = Math.round((completedSessionsCount / totalSessionsCount) * 100);
 
   return (
-    <div className="min-h-screen bg-background text-foreground pb-20 overflow-x-hidden">
+    <div className="min-h-screen bg-background text-foreground pb-24 md:pb-32 overflow-x-hidden">
       {/* 1. SEÇÃO PRÓXIMO (Hero) */}
       <JourneyHero nextSession={nextSession} totalProgress={totalProgress} />
 
-      <div className="streaming-container -mt-32 relative z-30 space-y-16 md:space-y-24 pb-32">
+      <div className="streaming-container -mt-24 md:-mt-32 relative z-30 space-y-20 md:space-y-32">
         {/* 2. SEÇÃO PROGRESSO */}
-        <section className="space-y-6">
-          <div className="flex flex-col gap-1">
-            <h2 className="text-2xl font-bold tracking-tight text-white px-2">Seu Progresso</h2>
-            <p className="text-[10px] font-bold uppercase tracking-[0.3em] text-white/30 px-2">Visão geral da sua trilha de transformação</p>
+        <section className="animate-fade-in" style={{ animationDelay: '0.2s' }}>
+          <div className="flex flex-col gap-1.5 mb-8 md:mb-10">
+            <h2 className="text-3xl md:text-4xl font-black tracking-tighter text-white px-1">Seu Progresso</h2>
+            <p className="text-[10px] md:text-xs font-bold uppercase tracking-[0.4em] text-white/30 px-1">Visão geral da sua trilha de evolução</p>
           </div>
-          <GlobalProgressBar />
+          <div className="glass-card p-6 md:p-10">
+            <GlobalProgressBar />
+          </div>
         </section>
 
         {/* 3. SEÇÃO FASES (Jornada) */}
-        <section className="space-y-8">
-          <div className="flex flex-col gap-1 px-2 mb-8">
-            <h2 className="text-2xl font-bold tracking-tight text-white">Fases da Jornada</h2>
-            <p className="text-[10px] font-bold uppercase tracking-[0.3em] text-white/30">Explore as etapas estruturadas</p>
+        <section className="animate-fade-in" style={{ animationDelay: '0.4s' }}>
+          <div className="flex flex-col gap-1.5 mb-10 md:mb-14">
+            <h2 className="text-3xl md:text-4xl font-black tracking-tighter text-white px-1">Fases da Jornada</h2>
+            <p className="text-[10px] md:text-xs font-bold uppercase tracking-[0.4em] text-white/30 px-1">Explore as etapas estruturadas</p>
           </div>
           <JourneyPhases completedSessions={jornada.completedSessions} />
         </section>

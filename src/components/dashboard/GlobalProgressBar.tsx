@@ -49,12 +49,7 @@ const GlobalProgressBar: React.FC = () => {
   }, [jornada.completedSessions, jornada.responses]);
 
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.7, delay: 0.2 }}
-      className="glass-card p-6 md:p-8 flex flex-col gap-8 border-white/5"
-    >
+    <div className="flex flex-col gap-8">
       <div className="flex flex-col md:flex-row items-stretch gap-6 md:gap-10">
         {/* Progresso global */}
         <div className="flex-1 space-y-3">
@@ -105,7 +100,7 @@ const GlobalProgressBar: React.FC = () => {
           </div>
         </div>
       </div>
-    </motion.div>
+    </div>
   );
 };
 
