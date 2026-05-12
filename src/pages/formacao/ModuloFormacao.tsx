@@ -1,6 +1,6 @@
 import React from "react";
 import { useParams, Link, useNavigate } from "react-router-dom";
-import { MODULOS, getModulo, PILARES_INFO } from "@/lib/dados-clinicos";
+import { MODULOS, PILARES_INFO } from "@/lib/dados-clinicos";
 import PageLayout from "@/components/layout/PageLayout";
 import { 
   ArrowLeft, 
@@ -9,7 +9,6 @@ import {
   Brain, 
   CheckCircle2, 
   AlertTriangle, 
-  BookOpen,
   ArrowRight,
   ShieldCheck,
   Zap,
@@ -18,7 +17,6 @@ import {
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Separator } from "@/components/ui/separator";
 
 const ModuloFormacao = () => {
   const { id } = useParams();
@@ -27,7 +25,10 @@ const ModuloFormacao = () => {
 
   if (!modulo) {
     return (
-      <PageLayout currentPage="Módulo não encontrado">
+      <PageLayout 
+        seo={{ title: "Módulo não encontrado", description: "O módulo solicitado não pôde ser localizado." }}
+        currentPage="Módulo não encontrado"
+      >
         <div className="container mx-auto px-6 py-24 text-center">
           <h1 className="text-3xl font-bold mb-4">Módulo não encontrado</h1>
           <Button asChild>
@@ -42,7 +43,13 @@ const ModuloFormacao = () => {
   const proximoModulo = MODULOS.find(m => m.numero === modulo.numero + 1);
 
   return (
-    <PageLayout currentPage={`Módulo ${modulo.numero}: ${modulo.titulo}`}>
+    <PageLayout 
+      seo={{ 
+        title: `Módulo ${modulo.numero}: ${modulo.titulo} | Formação PCH`,
+        description: modulo.foco 
+      }}
+      currentPage={`Módulo ${modulo.numero}: ${modulo.titulo}`}
+    >
       <section className="relative py-20 overflow-hidden">
         <div className="absolute inset-0 bg-primary/5 -z-10" />
         <div className="container mx-auto px-6">
