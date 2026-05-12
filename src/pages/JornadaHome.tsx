@@ -48,7 +48,7 @@ const JornadaHome = () => {
       }}
       currentPage="Jornada"
       showBackButton={false}
-      hideHeader
+      hideHeader={false}
     >
       <div className="min-h-screen bg-[#050505] text-white flex flex-col">
         <JourneyHero 

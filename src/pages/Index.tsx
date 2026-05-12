@@ -113,7 +113,7 @@ const Index = () => {
         }}
         currentPage="Início"
         showBackButton={false}
-        hideHeader
+        hideHeader={false}
       >
         <div className="min-h-screen bg-[#050505]">
           <StreamingHome />
