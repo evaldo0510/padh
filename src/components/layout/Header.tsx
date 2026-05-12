@@ -50,20 +50,15 @@ const Header = () => {
     navigate('/');
   };
 
-  // Compute journey progress (day + percentage)
-  const { dayLabel, percent, continueHref } = useMemo(() => {
+  const { dayLabel, percent } = useMemo(() => {
     const allSessions = JORNADA_DATA.flatMap((f) => f.sessoes);
     const total = allSessions.length || 1;
     const done = jornada.completedSessions?.length || 0;
     const pct = Math.min(100, Math.round((done / total) * 100));
     const day = Math.min(total, done + 1);
 
-    const href = nextSession 
-      ? `/jornada/${nextSession.phaseId}/${nextSession.sessionId}` 
-      : '/jornada';
-
-    return { dayLabel: `Dia ${day}`, percent: pct, continueHref: href };
-  }, [jornada.completedSessions, nextSession]);
+    return { dayLabel: `Dia ${day}`, percent: pct };
+  }, [jornada.completedSessions]);
 
   return (
     <header
