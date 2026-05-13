@@ -5,37 +5,16 @@ import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 
 const TheoreticalSections = () => {
+  const indexItems = [
+    { id: "theory-intro", label: "Fundamentação" },
+    { id: "methodology-pillars", label: "Metodologia" },
+    { id: "clinical-tools", label: "Ferramentas" },
+    { id: "science-neuro", label: "Ciência & Poesia" },
+    { id: "journey-guide", label: "Guia de Jornada" },
+  ];
+
   const ferramentas = [
-    {
-      icon: <BookOpen className="w-5 h-5" />,
-      title: "Livro-Curso",
-      desc: "Mergulhe na teoria e prática da PCH com exercícios guiados.",
-      link: "/livro-curso",
-    },
-    {
-      icon: <GraduationCap className="w-5 h-5" />,
-      title: "Formação PCH",
-      desc: "Capacitação completa para terapeutas e educadores.",
-      link: "/formacao",
-    },
-    {
-      icon: <Target className="w-5 h-5" />,
-      title: "Curso PCH",
-      desc: "O manual técnico completo da metodologia e neurociência.",
-      link: "/curso-padh",
-    },
-    {
-      icon: <Feather className="w-5 h-5" />,
-      title: "8 Ferramentas",
-      desc: "Do Poema-Funil à Poesia Hipnótica — 8 instrumentos vivos.",
-      link: "/ferramentas",
-    },
-    {
-      icon: <Brain className="w-5 h-5" />,
-      title: "Mapa Cerebral",
-      desc: "Descubra como cada verso ativa áreas específicas do cérebro.",
-      link: "/mapa-cerebral",
-    },
+// ... keep existing code
     {
       icon: <Star className="w-5 h-5" />,
       title: "Aula Exclusiva",
@@ -43,6 +22,19 @@ const TheoreticalSections = () => {
       link: "/aula-exclusiva",
     },
   ];
+
+  const scrollTo = (id: string) => {
+    const element = document.getElementById(id);
+    if (element) {
+      const offset = 100; // Account for sticky headers
+      const elementPosition = element.getBoundingClientRect().top;
+      const offsetPosition = elementPosition + window.pageYOffset - offset;
+      window.scrollTo({
+        top: offsetPosition,
+        behavior: "smooth"
+      });
+    }
+  };
 
   return (
     <div className="space-y-24 animate-fade-in" id="theoretical-foundations">
