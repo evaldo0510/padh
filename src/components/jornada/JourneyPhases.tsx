@@ -2,7 +2,8 @@ import React from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
 import { JORNADA_DATA, FaseJornada } from "@/lib/jornada-data";
 import { Badge } from "@/components/ui/badge";
-import { Play, Lock, CheckCircle2, Star, Sparkles, Flame, Moon, Sun } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { Play, Lock, CheckCircle2, Star, Sparkles, Flame, Moon, Sun, ChevronRight } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { PCHObjectiveId } from "@/types/objectives";
 
