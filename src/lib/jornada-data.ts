@@ -151,6 +151,7 @@ export const JORNADA_DATA: FaseJornada[] = [
     titulo: "Encontro com a Sombra",
     descricao: "Explorando as partes negadas de si mesmo. Integrando o que foi excluído.",
     cor: "indigo",
+    resultados: ["Integração da autocrítica", "Coragem emocional", "Clareza interior"],
     sessoes: [
       {
         id: "critico-interno",
