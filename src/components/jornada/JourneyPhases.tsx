@@ -317,7 +317,7 @@ const JourneyPhases: React.FC<JourneyPhasesProps> = ({
                              </Badge>
                           </div>
                         )}
-                      </motion.div>
+                      </motion.button>
                     );
                   })}
                   {fase.sessoes.every(s => completedSessions.includes(s.id)) && JORNADA_DATA[idx + 1] && (
