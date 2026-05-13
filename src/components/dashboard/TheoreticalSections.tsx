@@ -5,6 +5,8 @@ import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 
 const TheoreticalSections = () => {
+  const [activeSection, setActiveSection] = useState("theory-intro");
+
   const indexItems = [
     { id: "theory-intro", label: "Fundamentação" },
     { id: "methodology-pillars", label: "Metodologia" },
@@ -12,6 +14,31 @@ const TheoreticalSections = () => {
     { id: "science-neuro", label: "Ciência & Poesia" },
     { id: "journey-guide", label: "Guia de Jornada" },
   ];
+
+  useEffect(() => {
+    const observerOptions = {
+      root: null,
+      rootMargin: "-20% 0px -70% 0px", // Focus on upper-middle of screen
+      threshold: 0
+    };
+
+    const handleIntersect = (entries: IntersectionObserverEntry[]) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          setActiveSection(entry.target.id);
+        }
+      });
+    };
+
+    const observer = new IntersectionObserver(handleIntersect, observerOptions);
+    
+    indexItems.forEach((item) => {
+      const element = document.getElementById(item.id);
+      if (element) observer.observe(element);
+    });
+
+    return () => observer.disconnect();
+  }, []);
 
   const ferramentas = [
     {
