@@ -125,7 +125,9 @@ const Header = () => {
           {/* RIGHT — Progress + profile */}
           <div className="flex items-center gap-2 shrink-0">
             {isLoggedIn ? (
-              <div className="flex items-center gap-2">
+              <div className="flex items-center gap-3">
+                <SyncIndicator className="hidden md:flex" />
+                <div className="flex items-center gap-2">
                 <div
                   className="hidden lg:flex items-center gap-3 px-4 h-9 rounded-full bg-white/5 border border-white/10"
                 >
