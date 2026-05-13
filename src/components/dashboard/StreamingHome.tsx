@@ -14,7 +14,7 @@ const StreamingHome = () => {
   const { jornada, isSyncing, nextSession } = useJornada();
   const [focusMode, setFocusMode] = useState(() => {
     const saved = localStorage.getItem("pch_focus_mode");
-    return saved ? JSON.parse(saved) : true;
+    return saved ? JSON.parse(saved) : false;
   });
 
   useEffect(() => {
