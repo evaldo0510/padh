@@ -32,6 +32,10 @@ const INITIAL_JORNADA: JornadaProgress = {
   completedSessions: [],
   responses: [],
   favorites: [],
+  pendingSync: {
+    sessions: [],
+    responses: [],
+  },
 };
 
 // Helper to find phase_id from session_id (lookup in static data)
