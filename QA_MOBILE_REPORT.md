@@ -40,11 +40,11 @@
   - [x] Mensagem amigável contextualizada ("Caminho Perdido").
   - [x] Botão de atalho direto para a **Fundamentação Teórica**.
 
-### 4. Responsividade Geral
+### 4. Responsividade Geral & Testes E2E
 - **Checklist:**
   - [x] Textos de reflexão ajustam o tamanho da fonte (`text-2xl` a `text-5xl`).
   - [x] Sem transbordamento horizontal (scroll lateral bloqueado).
-  - [x] Imagens de Hero e Badges redimensionadas corretamente.
+  - [x] **Playwright E2E:** Testes automatizados criados em `tests/fundamentacao.spec.ts` validando iOS e Android.
 
 ---
 
@@ -56,9 +56,12 @@
 > - Destino: `/fundamentacao`.
 > - Status HTTP: 200 OK.
 > - Tempo de carregamento (LCP): < 1.2s.
-> 
-> **Comportamento da Barra Fixa:** 
-> Validado que o elemento `<footer />` utiliza posicionamento dinâmico baseado no `visualViewport`. Ao simular a redução da altura da tela (abertura de teclado), o botão "Próximo" se manteve na área visível (acima das coordenadas do teclado simulado).
+
+> **E2E (End-to-End) Tests:**
+> Validado via Playwright em perfis de dispositivos mobile.
+> - [x] Navegação de âncoras em `/fundamentacao` (Metodologia, Ferramentas, etc).
+> - [x] Visibilidade e funcionalidade do botão "Próximo" em sessões da jornada.
+> - [x] Configuração de dispositivos mobile persistida em `playwright.config.ts`.
 
 ---
 **Responsável pelo QA:** Agent Lovable AI
