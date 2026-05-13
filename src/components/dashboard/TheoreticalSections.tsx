@@ -45,7 +45,7 @@ const TheoreticalSections = () => {
   ];
 
   return (
-    <div className="space-y-24 animate-fade-in">
+    <div className="space-y-24 animate-fade-in" id="theoretical-foundations">
       {/* 0. Fundamentação Teórica */}
       <section className="space-y-10">
         <div className="flex flex-col gap-1.5 px-1">
