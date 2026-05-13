@@ -15,6 +15,9 @@ test.describe('Acessibilidade E2E - Fundamentação', () => {
     // O botão voltar é o primeiro botão na página FundamentacaoTeorica
     const backButton = page.getByRole('button', { name: 'Voltar' });
     await expect(backButton).toBeFocused();
+    await expect(backButton).toHaveCSS('outline-style', 'none');
+    const backBoxShadow = await backButton.evaluate((el) => window.getComputedStyle(el).boxShadow);
+    expect(backBoxShadow).not.toBe('none');
     
     // 2. Tabula para os itens do índice
     const indexItems = [
