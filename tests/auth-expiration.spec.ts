@@ -5,17 +5,29 @@ test.use({ storageState: { cookies: [], origins: [] } });
 
 test.describe('Auth Expiration / Redirection', () => {
   
-  test('deve redirecionar para login ao tentar acessar rota protegida sem autenticação', async ({ page }) => {
-    // Tenta acessar uma rota que sabemos ser protegida (ProtectedRoute)
+  test('deve redirecionar para login ao tentar acessar rota protegida (cold start) sem autenticação', async ({ page }) => {
+    // Tenta acessar uma rota protegida diretamente (Deep Link)
     await page.goto('/jornada');
     
     // Deve ser redirecionado para a página de login
     await expect(page).toHaveURL(/\/login/);
+    await page.screenshot({ path: 'test-results/cold-start-auth-redirect.png' });
+  });
+
+  test('deve permitir acesso à rota pública e redirecionar somente ao tentar rota protegida após logout', async ({ page }) => {
+    // 1. Acesso inicial à rota pública (mesmo sem cookies)
+    await page.goto('/fundamentacao');
+    await expect(page).toHaveURL(/\/fundamentacao/);
     
-    // Verifica se a mensagem de feedback (opcional) está visível
-    // Se o seu app mostra "Faça login para continuar", podemos validar aqui
+    // 2. Tenta navegar para uma rota protegida via clique ou redirecionamento manual
+    await page.goto('/jornada');
+    await expect(page).toHaveURL(/\/login/);
     
-    await page.screenshot({ path: 'test-results/auth-redirect-login.png' });
+    // 3. Volta para pública e deve funcionar
+    await page.goto('/fundamentacao');
+    await expect(page).toHaveURL(/\/fundamentacao/);
+
+    await page.screenshot({ path: 'test-results/logout-selective-redirect.png' });
   });
 
   test('deve permitir acesso à rota pública mesmo sem autenticação', async ({ page }) => {
