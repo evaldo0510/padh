@@ -340,6 +340,7 @@ const JourneyPhases: React.FC<JourneyPhasesProps> = ({
                           navigate(`/jornada/${nextFase.id}/${nextFase.sessoes[0].id}`);
                         }}
                         className="rounded-full bg-primary text-black font-black uppercase tracking-widest px-10 h-16 group"
+                        aria-label={`Desbloquear e iniciar próxima temporada ${JORNADA_DATA[idx + 1].numero}: ${JORNADA_DATA[idx + 1].titulo}`}
                       >
                         Desbloquear Temporada {JORNADA_DATA[idx + 1].numero}
                         <ChevronRight className="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform" />
