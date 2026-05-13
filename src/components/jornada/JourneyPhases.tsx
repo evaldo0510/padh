@@ -181,7 +181,7 @@ const JourneyPhases: React.FC<JourneyPhasesProps> = ({
                         className="h-16 px-10 rounded-full bg-primary text-black hover:scale-105 transition-all duration-500 font-black uppercase tracking-[0.2em] text-sm group shadow-[0_10px_30px_rgba(234,179,8,0.3)]"
                       >
                         <Play className="w-5 h-5 mr-3 fill-current" />
-                        Retomar a temporada
+                        {episodesCompleted === 0 ? "Iniciar Temporada" : "Retomar a temporada"}
                         <ChevronRight className="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform" />
                       </Button>
                     </motion.div>
