@@ -18,6 +18,10 @@ export interface JornadaProgress {
   responses: RespostaExercicio[];
   favorites?: string[];
   last_updated?: string;
+  pendingSync?: {
+    sessions: string[];
+    responses: string[];
+  };
 }
 
 const STORAGE_KEY = "padh_jornada_progress";
@@ -28,6 +32,10 @@ const INITIAL_JORNADA: JornadaProgress = {
   completedSessions: [],
   responses: [],
   favorites: [],
+  pendingSync: {
+    sessions: [],
+    responses: [],
+  },
 };
 
 // Helper to find phase_id from session_id (lookup in static data)
@@ -69,10 +77,69 @@ export const useJornada = () => {
     return () => sub.subscription.unsubscribe();
   }, []);
 
-  // Initial sync from DB when user logs in
+  // Sync queue logic
+  const processSyncQueue = useCallback(async (currentUserId: string) => {
+    if (isOffline || !currentUserId || !jornada.pendingSync) return;
+    
+    const { sessions, responses: pendingExerciseIds } = jornada.pendingSync;
+    if (sessions.length === 0 && pendingExerciseIds.length === 0) return;
+    
+    setIsSyncing(true);
+    reportSyncStatus("pending");
+    
+    try {
+      // Sync sessions
+      for (const sessionId of sessions) {
+        const phaseId = findPhaseForSession(sessionId);
+        if (phaseId) {
+          await supabase.from("episode_progress").upsert({
+            user_id: currentUserId,
+            session_id: sessionId,
+            phase_id: phaseId,
+            status: "completed",
+            completed_at: new Date().toISOString(),
+          }, { onConflict: "user_id,session_id" });
+        }
+      }
+      
+      // Sync responses
+      for (const exerciseId of pendingExerciseIds) {
+        const localResponse = jornada.responses.find(r => r.exerciseId === exerciseId);
+        if (localResponse) {
+          const { phaseId, sessionId } = findPhaseForExercise(exerciseId);
+          await supabase.from("exercise_responses").upsert({
+            user_id: currentUserId,
+            exercise_id: exerciseId,
+            response: localResponse.response,
+            phase_id: phaseId ?? null,
+            session_id: sessionId ?? null,
+          }, { onConflict: "user_id,exercise_id" });
+        }
+      }
+      
+      // Clear queue locally
+      setJornada(prev => ({
+        ...prev,
+        pendingSync: { sessions: [], responses: [] }
+      }));
+      reportSyncStatus("ok");
+      console.log("Offline progress synced successfully");
+    } catch (error) {
+      console.error("Error processing sync queue", error);
+      reportSyncStatus("error");
+    } finally {
+      setIsSyncing(false);
+    }
+  }, [isOffline, jornada.pendingSync, jornada.responses]);
+
+  // Initial sync from DB when user logs in OR when coming back online
   useEffect(() => {
     const fetchProgress = async () => {
       if (isOffline || !userId) return;
+      
+      // First, process any pending offline changes
+      await processSyncQueue(userId);
+
       setIsSyncing(true);
       try {
         const [progressRes, responsesRes] = await Promise.all([
@@ -128,7 +195,7 @@ export const useJornada = () => {
       }
     };
     fetchProgress();
-  }, [userId, isOffline]);
+  }, [userId, isOffline, processSyncQueue]);
 
   // Persist locally on every change
   useEffect(() => {
@@ -153,6 +220,10 @@ export const useJornada = () => {
           completedExercises: prev.completedExercises.includes(exerciseId)
             ? prev.completedExercises
             : [...prev.completedExercises, exerciseId],
+          pendingSync: {
+            sessions: prev.pendingSync?.sessions || [],
+            responses: Array.from(new Set([...(prev.pendingSync?.responses || []), exerciseId]))
+          }
         };
       });
 
@@ -175,6 +246,15 @@ export const useJornada = () => {
           console.error("saveResponse error", error);
           reportSyncStatus("error");
         } else {
+          // If successful, we can remove it from pendingSync
+          setJornada(prev => ({
+            ...prev,
+            pendingSync: {
+              ...prev.pendingSync!,
+              responses: prev.pendingSync!.responses.filter(id => id !== exerciseId)
+            }
+          }));
+
           // Mark episode as in_progress (only if not already completed)
           if (phaseId && sessionId) {
             const { data: existing } = await supabase
@@ -203,7 +283,7 @@ export const useJornada = () => {
 
       toast.success("Resposta salva", {
         description: userId
-          ? "Sincronizada com sua conta."
+          ? (isOffline ? "Salva offline. Sincronizará quando voltar online." : "Sincronizada com sua conta.")
           : "Salva localmente. Faça login para sincronizar.",
       });
     },
@@ -216,11 +296,16 @@ export const useJornada = () => {
         setJornada((prev) => ({
           ...prev,
           completedSessions: [...prev.completedSessions, sessionId],
+          pendingSync: {
+            ...prev.pendingSync!,
+            sessions: Array.from(new Set([...(prev.pendingSync?.sessions || []), sessionId]))
+          }
         }));
         toast.success("Sessão Concluída!", {
           description: "Mais um passo na sua jornada.",
         });
       }
+
       if (userId && !isOffline) {
         const phaseId = findPhaseForSession(sessionId);
         if (!phaseId) return;
@@ -236,7 +321,18 @@ export const useJornada = () => {
             },
             { onConflict: "user_id,session_id" },
           );
-        if (error) console.error("completeSession error", error);
+        if (error) {
+          console.error("completeSession error", error);
+        } else {
+          // If successful, remove from pendingSync
+          setJornada(prev => ({
+            ...prev,
+            pendingSync: {
+              ...prev.pendingSync!,
+              sessions: prev.pendingSync!.sessions.filter(id => id !== sessionId)
+            }
+          }));
+        }
       }
     },
     [jornada.completedSessions, userId, isOffline],
