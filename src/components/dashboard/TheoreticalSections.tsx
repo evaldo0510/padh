@@ -110,6 +110,7 @@ const TheoreticalSections = () => {
             <button
               key={item.id}
               onClick={() => scrollTo(item.id)}
+              aria-current={activeSection === item.id ? "true" : undefined}
               className={`text-[10px] font-bold uppercase tracking-widest transition-all duration-300 whitespace-nowrap border px-4 py-2 rounded-full focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background outline-none ${
                 activeSection === item.id 
                   ? "bg-primary text-white border-primary shadow-[0_0_15px_-3px_rgba(139,92,246,0.6)]" 
