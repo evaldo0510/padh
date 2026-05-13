@@ -213,7 +213,7 @@ const TheoreticalSections = () => {
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
           {ferramentas.map((tool, i) => (
-            <Link key={i} to={tool.link} className="group">
+            <Link key={i} to={tool.link} className="group focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-8 focus-visible:ring-offset-background rounded-2xl outline-none">
               <Card className="h-full border-white/5 hover:border-primary/30 transition-all duration-700 bg-white/[0.01] hover:bg-white/[0.04] relative overflow-hidden">
                 <div className="absolute top-0 right-0 w-32 h-32 bg-primary/5 rounded-full blur-3xl -mr-16 -mt-16 group-hover:bg-primary/10 transition-colors" />
                 <CardContent className="p-10 space-y-6 relative z-10">
