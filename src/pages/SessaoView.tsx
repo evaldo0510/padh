@@ -292,7 +292,7 @@ const SessaoView = () => {
         </div>
 
         {/* Centered content — one block at a time */}
-        <main className="flex-1 flex items-center justify-center px-6 md:px-12">
+        <main className="flex-1 flex items-center justify-center px-6 md:px-12 overflow-y-auto scrollbar-hide py-20 md:py-0">
           <AnimatePresence mode="wait">
             {isFinished ? (
               <motion.div
@@ -393,8 +393,8 @@ const SessaoView = () => {
                       onChange={(e) => setResponse(e.target.value)}
                       placeholder={currentBlock.placeholder || "Suas palavras aqui..."}
                       autoFocus
-                      rows={6}
-                      className="w-full bg-white/[0.03] border border-white/10 rounded-3xl px-8 py-6 text-xl md:text-2xl text-white placeholder:text-white/20 font-light leading-relaxed resize-none focus:outline-none focus:border-primary/40 focus:bg-white/[0.06] transition-all duration-500 shadow-2xl appearance-none"
+                      rows={4}
+                      className="w-full bg-white/[0.03] border border-white/10 rounded-3xl px-8 py-6 text-xl md:text-2xl text-white placeholder:text-white/20 font-light leading-relaxed resize-none focus:outline-none focus:border-primary/40 focus:bg-white/[0.06] transition-all duration-500 shadow-2xl appearance-none md:min-h-[200px]"
                     />
                   </motion.div>
                 )}
@@ -514,7 +514,7 @@ const SessaoView = () => {
         </main>
 
         {/* Bottom: single primary action */}
-        <footer className="px-6 md:px-12 pb-10 md:pb-16 pt-4 flex justify-center relative z-20">
+        <footer className="px-6 md:px-12 pb-[calc(env(safe-area-inset-bottom)+1.5rem)] md:pb-16 pt-4 flex justify-center relative z-30 bg-gradient-to-t from-[#050505] via-[#050505]/80 to-transparent">
           <AnimatePresence>
             {!isTransitioning && !isFinished && (
               <motion.div
