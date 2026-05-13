@@ -6,7 +6,7 @@ import { useJornada } from "@/hooks/useJornada";
 import { prefetchRoute } from "@/lib/route-prefetch";
 import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
-import { ArrowLeft, ChevronRight, CheckCircle2, Lock } from "lucide-react";
+import { ArrowLeft, ChevronRight, CheckCircle2, Lock, Keyboard } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 
 const BLOCK_TRANSITION_MS = 450;
