@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import PageLayout from "@/components/layout/PageLayout";
+import SyncIndicator from "@/components/layout/SyncIndicator";
 import { useParams, useNavigate } from "react-router-dom";
 import { JORNADA_DATA } from "@/lib/jornada-data";
 import { useJornada } from "@/hooks/useJornada";
