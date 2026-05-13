@@ -18,7 +18,8 @@ const JourneyHero: React.FC<JourneyHeroProps> = ({
   nextSession, 
   totalProgress, 
   isUpdating,
-  compact = false 
+  compact = false,
+  onShowTheory
 }) => {
   const navigate = useNavigate();
   const location = useLocation();
