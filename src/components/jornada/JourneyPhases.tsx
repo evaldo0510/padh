@@ -144,11 +144,18 @@ const JourneyPhases: React.FC<JourneyPhasesProps> = ({
                           <span className={`text-[9px] font-black uppercase tracking-[0.2em] px-3 py-1 rounded-full border transition-all duration-500 ${episodesCompleted === fase.sessoes.length ? 'bg-emerald-500/20 text-emerald-400 border-emerald-500/30 shadow-[0_0_15px_rgba(16,185,129,0.3)]' : 'bg-white/5 text-white/20 border-white/5'}`}>
                             {episodesCompleted} / {fase.sessoes.length} EPISÓDIOS
                           </span>
-                          <span className="text-[9px] font-black text-white/40 uppercase tracking-widest">
+                          <span className="text-[9px] font-black text-white/40 uppercase tracking-widest" aria-hidden="true">
                             {Math.round((episodesCompleted / fase.sessoes.length) * 100)}%
                           </span>
                         </div>
-                        <div className="h-1 w-full bg-white/5 rounded-full overflow-hidden">
+                        <div 
+                          className="h-1 w-full bg-white/5 rounded-full overflow-hidden"
+                          role="progressbar"
+                          aria-valuenow={Math.round((episodesCompleted / fase.sessoes.length) * 100)}
+                          aria-valuemin={0}
+                          aria-valuemax={100}
+                          aria-label={`Progresso da Temporada ${fase.numero}: ${Math.round((episodesCompleted / fase.sessoes.length) * 100)}% concluído`}
+                        >
                           <motion.div 
                             initial={{ width: 0 }}
                             whileInView={{ width: `${(episodesCompleted / fase.sessoes.length) * 100}%` }}
@@ -156,6 +163,16 @@ const JourneyPhases: React.FC<JourneyPhasesProps> = ({
                             className={`h-full ${episodesCompleted === fase.sessoes.length ? 'bg-emerald-500 shadow-[0_0_10px_rgba(16,185,129,0.5)]' : 'bg-primary shadow-glow'}`}
                           />
                         </div>
+                        {isUnlocked && episodesCompleted < fase.sessoes.length && (
+                          <div className="flex flex-col gap-1 mt-1">
+                            <span className="text-[8px] font-bold text-primary uppercase tracking-wider animate-pulse">
+                              Próximo episódio: {fase.sessoes.find(s => !completedSessions.includes(s.id))?.titulo}
+                            </span>
+                            <span className="text-[7px] text-white/30 uppercase tracking-[0.2em]">
+                              Faltam {fase.sessoes.length - episodesCompleted} para concluir a temporada
+                            </span>
+                          </div>
+                        )}
                       </div>
                     </div>
                   </div>
@@ -289,7 +306,7 @@ const JourneyPhases: React.FC<JourneyPhasesProps> = ({
                         {isRecommended && (
                           <div className="absolute top-4 left-4 z-40">
                              <Badge className="bg-primary text-black font-black text-[9px] uppercase tracking-wider px-3 py-1 rounded-full shadow-lg animate-bounce">
-                               Recomendado
+                                Recomendado
                              </Badge>
                           </div>
                         )}
