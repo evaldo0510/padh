@@ -250,21 +250,21 @@ export const useJornada = () => {
         
         // Only mark as in_progress if not already completed
         const { data: existing } = await supabase
-          .from(\"episode_progress\")
-          .select(\"status\")
-          .eq(\"user_id\", userId)
-          .eq(\"session_id\", sessionId)
+          .from("episode_progress")
+          .select("status")
+          .eq("user_id", userId)
+          .eq("session_id", sessionId)
           .maybeSingle();
 
-        if (!existing || existing.status !== \"completed\") {
-          await supabase.from(\"episode_progress\").upsert(
+        if (!existing || existing.status !== "completed") {
+          await supabase.from("episode_progress").upsert(
             {
               user_id: userId,
               session_id: sessionId,
               phase_id: phaseId,
-              status: \"in_progress\",
+              status: "in_progress",
             },
-            { onConflict: \"user_id,session_id\" }
+            { onConflict: "user_id,session_id" }
           );
         }
       }
