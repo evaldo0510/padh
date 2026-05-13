@@ -83,6 +83,7 @@ const JornadaHome = () => {
            <p className="text-white/10 text-[10px] font-black uppercase tracking-[0.6em]">Original P.A.D.H. Content</p>
         </footer>
       </div>
+      </motion.div>
     </PageLayout>
   );
 };
