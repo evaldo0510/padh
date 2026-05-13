@@ -514,7 +514,7 @@ const SessaoView = () => {
         </main>
 
         {/* Bottom: single primary action */}
-        <footer className="px-6 md:px-12 pb-10 md:pb-16 pt-4 flex justify-center relative z-20">
+        <footer className="px-6 md:px-12 pb-[calc(env(safe-area-inset-bottom)+1.5rem)] md:pb-16 pt-4 flex justify-center relative z-30 bg-gradient-to-t from-[#050505] via-[#050505]/80 to-transparent">
           <AnimatePresence>
             {!isTransitioning && !isFinished && (
               <motion.div
