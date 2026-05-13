@@ -256,7 +256,7 @@ const SessaoView = () => {
     ? "Responder"
     : blockKind === "choice" && choiceHasOptions
     ? "Confirmar"
-    : "Continuar";
+    : "Próximo";
 
   const primaryDisabled =
     isTransitioning ||
