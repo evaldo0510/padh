@@ -292,7 +292,7 @@ const SessaoView = () => {
         </div>
 
         {/* Centered content — one block at a time */}
-        <main className="flex-1 flex items-center justify-center px-6 md:px-12 overflow-y-auto scrollbar-hide py-20 md:py-0">
+        <main className="flex-1 w-full flex flex-col items-center justify-start md:justify-center px-6 md:px-12 overflow-y-auto scrollbar-hide pb-12 pt-24 md:pt-0">
           <AnimatePresence mode="wait">
             {isFinished ? (
               <motion.div
@@ -513,21 +513,22 @@ const SessaoView = () => {
           </AnimatePresence>
         </main>
 
-        {/* Bottom: single primary action */}
-        <footer className="px-6 md:px-12 pb-[calc(env(safe-area-inset-bottom)+1.5rem)] md:pb-16 pt-4 flex justify-center relative z-30 bg-gradient-to-t from-[#050505] via-[#050505]/80 to-transparent">
+        {/* Bottom: fixed-feel navigation bar (integrated in flex flow for keyboard handling) */}
+        <footer className="w-full z-50 px-6 md:px-12 pb-[calc(env(safe-area-inset-bottom)+1.5rem)] pt-6 flex justify-center bg-[#050505] border-t border-white/5 md:bg-gradient-to-t md:from-[#050505] md:via-[#050505]/95 md:to-transparent md:border-none">
           <AnimatePresence>
             {!isTransitioning && !isFinished && (
               <motion.div
-                initial={{ opacity: 0, y: 10 }}
+                initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0 }}
-                transition={{ delay: 0.3, duration: 0.5 }}
+                exit={{ opacity: 0, y: 20 }}
+                transition={{ delay: 0.3, duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
+                className="w-full max-w-[280px]"
               >
                 <Button
                   onClick={handlePrimary}
                   disabled={primaryDisabled}
                   size="lg"
-                  className="min-w-[260px] h-16 rounded-full text-lg font-bold tracking-widest uppercase bg-primary hover:bg-primary/90 text-white shadow-glow transition-all active:scale-95"
+                  className="w-full h-16 rounded-full text-lg font-black tracking-[0.2em] uppercase bg-primary hover:bg-primary/90 text-white shadow-[0_0_30px_-5px_rgba(139,92,246,0.5)] transition-all active:scale-95 border border-primary/20"
                 >
                   {primaryLabel}
                   {isLast ? (
