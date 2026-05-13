@@ -103,6 +103,7 @@ const JourneyHero: React.FC<JourneyHeroProps> = ({
                 asChild
                 className="btn-primary h-16 px-10 text-xl rounded-full relative overflow-hidden group shadow-[0_0_50px_rgba(234,179,8,0.3)] hover:shadow-[0_0_80px_rgba(234,179,8,0.5)] transition-all duration-500"
                 disabled={isNavigating}
+                aria-label={`${nextSession.isRecommended ? 'Iniciar' : 'Continuar'}: ${nextSession.titulo}. Episódio da temporada ${nextSession.faseTitulo || nextSession.phaseId}.`}
               >
                 <PrefetchLink 
                   to={`/jornada/${nextSession.phaseId || nextSession.faseId}/${nextSession.sessionId || nextSession.sessaoId}`}

@@ -102,7 +102,11 @@ const JourneyPhases: React.FC<JourneyPhasesProps> = ({
         const episodesCompleted = fase.sessoes.filter(s => completedSessions.includes(s.id)).length;
         
         return (
-          <section key={fase.id} className="relative group min-h-[60vh] flex flex-col justify-center">
+          <section 
+            key={fase.id} 
+            className="relative group min-h-[60vh] flex flex-col justify-center"
+            aria-label={`Temporada ${fase.numero}: ${fase.titulo}. ${episodesCompleted} de ${fase.sessoes.length} episódios concluídos (${Math.round((episodesCompleted / fase.sessoes.length) * 100)}%). ${isUnlocked && episodesCompleted < fase.sessoes.length ? `Faltam ${fase.sessoes.length - episodesCompleted} para concluir.` : ''}`}
+          >
             {/* Immersive background per season */}
             <SeasonBackground color={fase.cor} />
             
@@ -196,6 +200,7 @@ const JourneyPhases: React.FC<JourneyPhasesProps> = ({
                           if (nextSession) navigate(`/jornada/${fase.id}/${nextSession.id}`);
                         }}
                         className="h-16 px-10 rounded-full bg-primary text-black hover:scale-105 transition-all duration-500 font-black uppercase tracking-[0.2em] text-sm group shadow-[0_10px_30px_rgba(234,179,8,0.3)]"
+                        aria-label={`${episodesCompleted === 0 ? "Iniciar" : "Retomar"} Temporada ${fase.numero}: ${fase.titulo}. Próximo episódio: ${fase.sessoes.find(s => !completedSessions.includes(s.id))?.titulo}`}
                       >
                         <Play className="w-5 h-5 mr-3 fill-current" />
                         {episodesCompleted === 0 ? "Iniciar Temporada" : "Retomar a temporada"}
@@ -248,12 +253,14 @@ const JourneyPhases: React.FC<JourneyPhasesProps> = ({
                     const sessionUnlocked = (isUnlocked && allPrevSessionsDone) || isRecommended;
                     
                     return (
-                      <motion.div 
+                      <motion.button 
                         key={sessao.id}
                         variants={itemVariants}
                         whileHover={sessionUnlocked ? { y: -16, scale: 1.05 } : {}}
-                        className={`group relative aspect-[16/10] rounded-2xl overflow-hidden bg-white/[0.02] border border-white/5 shadow-[0_20px_50px_rgba(0,0,0,0.5)] transition-all duration-700 ${!sessionUnlocked && 'cursor-not-allowed grayscale'}`}
+                        className={`group relative aspect-[16/10] w-full text-left rounded-2xl overflow-hidden bg-white/[0.02] border border-white/5 shadow-[0_20px_50px_rgba(0,0,0,0.5)] transition-all duration-700 ${!sessionUnlocked ? 'cursor-not-allowed grayscale' : 'cursor-pointer focus-visible:ring-2 focus-visible:ring-primary focus-visible:outline-none'}`}
                         onClick={() => sessionUnlocked && navigate(`/jornada/${fase.id}/${sessao.id}`)}
+                        disabled={!sessionUnlocked}
+                        aria-label={`Episódio ${sIdx + 1}: ${sessao.titulo}. ${isCompleted ? 'Concluído.' : ''} ${!sessionUnlocked ? 'Bloqueado.' : ''} ${sessao.descricao}`}
                       >
                         {/* Interactive Spotlight Effect */}
                         <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_0%,rgba(255,255,255,0.05),transparent)] opacity-0 group-hover:opacity-100 transition-opacity duration-700 z-10" />
@@ -310,7 +317,7 @@ const JourneyPhases: React.FC<JourneyPhasesProps> = ({
                              </Badge>
                           </div>
                         )}
-                      </motion.div>
+                      </motion.button>
                     );
                   })}
                   {fase.sessoes.every(s => completedSessions.includes(s.id)) && JORNADA_DATA[idx + 1] && (
@@ -333,6 +340,7 @@ const JourneyPhases: React.FC<JourneyPhasesProps> = ({
                           navigate(`/jornada/${nextFase.id}/${nextFase.sessoes[0].id}`);
                         }}
                         className="rounded-full bg-primary text-black font-black uppercase tracking-widest px-10 h-16 group"
+                        aria-label={`Desbloquear e iniciar próxima temporada ${JORNADA_DATA[idx + 1].numero}: ${JORNADA_DATA[idx + 1].titulo}`}
                       >
                         Desbloquear Temporada {JORNADA_DATA[idx + 1].numero}
                         <ChevronRight className="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform" />
