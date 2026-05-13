@@ -44,6 +44,7 @@ export const JORNADA_DATA: FaseJornada[] = [
     titulo: "Despertar",
     descricao: "O início da consciência. Percebendo os padrões automáticos e despertando a presença.",
     cor: "amber",
+    resultados: ["Consciência dos padrões", "Redução da reatividade", "Mapeamento mental"],
     sessoes: [
       {
         id: "aula-exclusiva-modulo",
