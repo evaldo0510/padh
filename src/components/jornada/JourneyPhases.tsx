@@ -138,7 +138,7 @@ const JourneyPhases: React.FC<JourneyPhasesProps> = ({
                   initial="hidden"
                   whileInView="visible"
                   viewport={{ once: true, margin: "-100px" }}
-                  className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8 md:gap-10"
+                  className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-10 md:gap-12"
                 >
                   {fase.sessoes.map((sessao, sIdx) => {
                     const isCompleted = completedSessions.includes(sessao.id);
@@ -154,28 +154,33 @@ const JourneyPhases: React.FC<JourneyPhasesProps> = ({
                       <motion.div 
                         key={sessao.id}
                         variants={itemVariants}
-                        whileHover={sessionUnlocked ? { y: -12, scale: 1.02 } : {}}
-                        className={`group relative aspect-[16/10] rounded-3xl overflow-hidden bg-[#0a0a0a] border border-white/5 shadow-2xl transition-all duration-500 ${!sessionUnlocked && 'cursor-not-allowed opacity-60'}`}
+                        whileHover={sessionUnlocked ? { y: -16, scale: 1.05 } : {}}
+                        className={`group relative aspect-[16/10] rounded-2xl overflow-hidden bg-white/[0.02] border border-white/5 shadow-[0_20px_50px_rgba(0,0,0,0.5)] transition-all duration-700 ${!sessionUnlocked && 'cursor-not-allowed grayscale'}`}
                         onClick={() => sessionUnlocked && navigate(`/jornada/${fase.id}/${sessao.id}`)}
                       >
-                        {/* Immersive Card Overlay */}
-                        <div className="absolute inset-0 p-8 flex flex-col justify-end z-20">
-                          <div className="flex items-center justify-between mb-2">
-                            <span className="text-[10px] font-black text-primary uppercase tracking-[0.3em]">
-                              Episódio {sIdx + 1}
+                        {/* Interactive Spotlight Effect */}
+                        <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_0%,rgba(255,255,255,0.05),transparent)] opacity-0 group-hover:opacity-100 transition-opacity duration-700 z-10" />
+
+                        {/* Card Content Overlay */}
+                        <div className="absolute inset-0 p-10 flex flex-col justify-end z-20">
+                          <div className="flex items-center justify-between mb-4 transform translate-y-4 group-hover:translate-y-0 transition-transform duration-500">
+                            <span className="text-[10px] font-black text-primary uppercase tracking-[0.4em] bg-primary/10 px-3 py-1 rounded-full">
+                              EP {sIdx + 1}
                             </span>
                             {isCompleted && (
-                              <div className="bg-emerald-500/20 p-1 rounded-full">
+                              <div className="bg-emerald-500/20 p-1.5 rounded-full backdrop-blur-md">
                                 <CheckCircle2 className="w-4 h-4 text-emerald-400" />
                               </div>
                             )}
                           </div>
-                          <h3 className="text-2xl font-bold tracking-tight text-white mb-2 group-hover:text-primary transition-colors duration-300">
+                          <h3 className="text-2xl md:text-3xl font-black tracking-tighter text-white mb-3 group-hover:text-primary transition-colors duration-500">
                             {sessao.titulo}
                           </h3>
-                          <p className="text-xs text-white/40 line-clamp-2 font-light leading-relaxed">
-                            {sessao.descricao}
-                          </p>
+                          <div className="overflow-hidden max-h-0 group-hover:max-h-20 transition-all duration-700 ease-in-out">
+                            <p className="text-xs text-white/40 line-clamp-3 font-light leading-relaxed mb-4">
+                              {sessao.descricao}
+                            </p>
+                          </div>
                         </div>
 
                         {/* Animated Gradient Background */}
