@@ -15,6 +15,9 @@ test.describe('Acessibilidade E2E - Fundamentação', () => {
     // O botão voltar é o primeiro botão na página FundamentacaoTeorica
     const backButton = page.getByRole('button', { name: 'Voltar' });
     await expect(backButton).toBeFocused();
+    await expect(backButton).toHaveCSS('outline-style', 'none');
+    const backBoxShadow = await backButton.evaluate((el) => window.getComputedStyle(el).boxShadow);
+    expect(backBoxShadow).not.toBe('none');
     
     // 2. Tabula para os itens do índice
     const indexItems = [
@@ -30,9 +33,15 @@ test.describe('Acessibilidade E2E - Fundamentação', () => {
       const button = page.getByRole('button', { name: label, exact: true });
       await expect(button).toBeFocused();
       
-      // Verifica se há indicação visual de foco (simplificado por checagem de estado :focus-visible ou estilos)
-      // Nota: No Tailwind/Radix, o foco costuma ser via ring-offset ou similar.
-      // Aqui apenas validamos que o navegador reconhece o foco.
+      // Verifica se há indicação visual de foco (ring do Tailwind)
+      await expect(button).toHaveClass(/focus-visible:ring-primary/);
+      
+      // Valida que o outline padrão foi removido para usar o ring customizado
+      await expect(button).toHaveCSS('outline-style', 'none');
+      
+      // Verifica se o box-shadow foi aplicado (não deve ser 'none')
+      const boxShadow = await button.evaluate((el) => window.getComputedStyle(el).boxShadow);
+      expect(boxShadow).not.toBe('none');
     }
   });
 
@@ -92,9 +101,15 @@ test.describe('Acessibilidade E2E - Fundamentação', () => {
     // Mas para teste de ordem de tabulação, o ideal é contar os tabs ou usar focus() inicial
     await firstTool.focus();
     await expect(firstTool).toBeFocused();
+    await expect(firstTool).toHaveClass(/focus-visible:ring-primary/);
+    
+    // Verifica indicação visual de foco no card
+    const boxShadow = await firstTool.evaluate((el) => window.getComputedStyle(el).boxShadow);
+    expect(boxShadow).not.toBe('none');
     
     await page.keyboard.press('Tab');
     const secondTool = page.locator('a[href="/formacao"]').first();
     await expect(secondTool).toBeFocused();
+    await expect(secondTool).toHaveClass(/focus-visible:ring-primary/);
   });
 });
