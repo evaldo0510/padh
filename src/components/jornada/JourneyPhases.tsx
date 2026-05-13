@@ -14,15 +14,27 @@ interface JourneyPhasesProps {
 
 const SeasonBackground = ({ color }: { color: string }) => {
   const colorMap: Record<string, string> = {
-    amber: "from-amber-500/10 via-amber-500/5 to-transparent",
-    indigo: "from-indigo-500/10 via-indigo-500/5 to-transparent",
-    emerald: "from-emerald-500/10 via-emerald-500/5 to-transparent",
-    rose: "from-rose-500/10 via-rose-500/5 to-transparent",
-    purple: "from-purple-500/10 via-purple-500/5 to-transparent",
+    amber: "from-amber-500/20 via-amber-500/5 to-transparent",
+    indigo: "from-indigo-500/20 via-indigo-500/5 to-transparent",
+    emerald: "from-emerald-500/20 via-emerald-500/5 to-transparent",
+    rose: "from-rose-500/20 via-rose-500/5 to-transparent",
+    purple: "from-purple-500/20 via-purple-500/5 to-transparent",
   };
 
   return (
-    <div className={`absolute inset-0 bg-gradient-to-b ${colorMap[color] || 'from-primary/10 via-primary/5 to-transparent'} pointer-events-none opacity-50`} />
+    <div className="absolute inset-0 overflow-hidden pointer-events-none">
+      <div className={`absolute inset-0 bg-gradient-to-b ${colorMap[color] || 'from-primary/20 via-primary/5 to-transparent'} opacity-40`} />
+      <motion.div 
+        animate={{ 
+          scale: [1, 1.2, 1],
+          opacity: [0.3, 0.5, 0.3],
+          x: [0, 50, 0],
+          y: [0, -30, 0]
+        }}
+        transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
+        className={`absolute -top-1/2 -right-1/4 w-[1000px] h-[1000px] bg-${color}-500/10 rounded-full blur-[120px]`} 
+      />
+    </div>
   );
 };
 
@@ -35,7 +47,16 @@ const SeasonIcon = ({ color }: { color: string }) => {
     purple: Sparkles,
   };
   const Icon = icons[color] || Sparkles;
-  return <Icon className="w-12 h-12 md:w-20 md:h-20 opacity-[0.03] absolute top-0 right-0 -translate-y-1/4 translate-x-1/4" />;
+  return (
+    <motion.div 
+      initial={{ rotate: -20, opacity: 0 }}
+      whileInView={{ rotate: 0, opacity: 0.05 }}
+      transition={{ duration: 2 }}
+      className="absolute top-0 right-0 -translate-y-1/4 translate-x-1/4 z-0"
+    >
+      <Icon className="w-64 h-64 md:w-[400px] md:h-[400px]" />
+    </motion.div>
+  );
 };
 
 const JourneyPhases: React.FC<JourneyPhasesProps> = ({ 
