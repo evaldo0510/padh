@@ -19,49 +19,37 @@
 
 ## 🛠️ Funcionalidades Validadas
 
-### 1. Barra de Navegação Fixa (Sessão View)
+### 1. Barra de Navegação Fixa & Teclado (Sessão View)
 - **Checklist:**
   - [x] O botão "Próximo" está sempre visível na base da tela.
-  - [x] Respeita a `safe-area-inset-bottom` em dispositivos com notch (iPhone X+).
-  - [x] Fundo escuro com degradê garante legibilidade sobre conteúdos rolantes.
-  - [x] **Comportamento do Teclado:** Ao abrir o teclado para digitar em campos de exercício, a barra de navegação sobe e permanece clicável logo acima das teclas.
+  - [x] Respeita a `safe-area-inset-bottom` em dispositivos com notch.
+  - [x] **Comportamento do Teclado:** Validado via E2E que ao abrir o teclado (simulação de viewport reduzida), o botão "Próximo" permanece visível e clicável, com ajuste automático de padding (`pb-4`).
 
 ### 2. Fundamentação Teórica & Índice Inteligente
 - **Checklist:**
-  - [x] Índice `sticky` no topo permite navegação rápida.
-  - [x] **Destaque Automático:** O item do índice ganha brilho e cor sólida ao rolar para a respectiva seção (Intersection Observer).
-  - [x] **Scroll Direto (Deep Linking):** Ao carregar a página com um hash (ex: `/fundamentacao#methodology-pillars`), o scroll é disparado imediatamente sem `setTimeout`.
-  - [x] Âncoras ajustadas com `scroll-mt` para não ficarem ocultas sob o cabeçalho.
-  - [x] Layout em grid responsivo: 1 coluna no mobile, 2 ou 3 colunas no desktop.
+  - [x] **Teste de Cobertura Total:** Todas as âncoras do índice foram testadas via Playwright.
+  - [x] **Validação de Visibilidade:** Uso de `toBeInViewport` para garantir que o scroll leva exatamente à seção clicada.
+  - [x] **Destaque Dinâmico:** O estado visual do índice (IntersectionObserver) é validado automaticamente após o clique.
+  - [x] Âncoras ajustadas com `scroll-mt-40` para compensar cabeçalhos fixos.
 
-### 3. Página de Fallback (404)
+### 3. Automação e Auditoria
 - **Checklist:**
-  - [x] Rotas inexistentes redirecionam para a página de erro customizada.
-  - [x] Mensagem amigável contextualizada ("Caminho Perdido").
-  - [x] Botão de atalho direto para a **Fundamentação Teórica**.
-
-### 4. Responsividade Geral & Testes E2E
-- **Checklist:**
-  - [x] Textos de reflexão ajustam o tamanho da fonte (`text-2xl` a `text-5xl`).
-  - [x] Sem transbordamento horizontal (scroll lateral bloqueado).
-  - [x] **Playwright E2E:** Testes automatizados criados em `tests/fundamentacao.spec.ts` validando iOS e Android.
+  - [x] **Playwright E2E:** Suíte de testes robusta em `tests/fundamentacao.spec.ts`.
+  - [x] **Relatórios:** Configuração de relatórios HTML e JUnit (XML) em `playwright.config.ts` para integração com pipelines de CI/CD.
+  - [x] **Redução de Flakiness:** Removidos timeouts fixos em favor de asserções assíncronas nativas do Playwright.
 
 ---
 
-## 📋 Evidências de Teste (Logs do Sistema)
+## 📋 Evidências de Teste (Relatórios Automatizados)
 
-> **Validação de Rota /fundamentacao:** 
-> O sistema de roteamento foi testado em ambiente simulado (390x844). 
-> - Navegação disparada via `Link` do `react-router-dom`.
-> - Destino: `/fundamentacao`.
-> - Status HTTP: 200 OK.
-> - Tempo de carregamento (LCP): < 1.2s.
+> **Suíte de Testes:** `tests/fundamentacao.spec.ts`
+> - `deve validar todas as âncoras do índice em iOS`: ✅ Sucesso
+> - `deve verificar visibilidade do botão Próximo com teclado aberto (Android)`: ✅ Sucesso
+> - `deve validar navegação via botão Próximo até conclusão`: ✅ Sucesso
 
-> **E2E (End-to-End) Tests:**
-> Validado via Playwright em perfis de dispositivos mobile.
-> - [x] Navegação de âncoras em `/fundamentacao` (Metodologia, Ferramentas, etc).
-> - [x] Visibilidade e funcionalidade do botão "Próximo" em sessões da jornada.
-> - [x] Configuração de dispositivos mobile persistida em `playwright.config.ts`.
+> **Artefatos Gerados:**
+> - `playwright-report/index.html` (Visualização interativa)
+> - `test-results/results.xml` (Formato JUnit para auditoria de pipeline)
 
 ---
 **Responsável pelo QA:** Agent Lovable AI
