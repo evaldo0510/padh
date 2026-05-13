@@ -144,6 +144,23 @@ const JourneyPhases: React.FC<JourneyPhasesProps> = ({
                   <p className="text-white/40 max-w-2xl font-light text-lg md:text-xl leading-relaxed italic">
                     {fase.descricao}
                   </p>
+
+                  {fase.resultados && (
+                    <div className="flex flex-wrap gap-3 pt-4">
+                      {fase.resultados.map((res, ridx) => (
+                        <motion.div 
+                          key={ridx}
+                          initial={{ opacity: 0, scale: 0.9 }}
+                          whileInView={{ opacity: 1, scale: 1 }}
+                          transition={{ delay: 0.5 + ridx * 0.1 }}
+                          className="flex items-center gap-2 text-[10px] font-bold uppercase tracking-widest text-white/60 bg-white/5 border border-white/10 px-4 py-2 rounded-full backdrop-blur-sm"
+                        >
+                          <Sparkles className="w-3 h-3 text-primary" />
+                          {res}
+                        </motion.div>
+                      ))}
+                    </div>
+                  )}
                 </motion.div>
 
                 {!isUnlocked && (
