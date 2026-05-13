@@ -16,9 +16,17 @@ const TheoreticalSections = () => {
   ];
 
   useEffect(() => {
+    // 1. Initial scroll to hash if present
+    const hash = window.location.hash.replace("#", "");
+    if (hash) {
+      // Small micro-task delay to ensure layout is ready without being a full setTimeout
+      Promise.resolve().then(() => scrollTo(hash));
+    }
+
+    // 2. Intersection Observer for index highlighting
     const observerOptions = {
       root: null,
-      rootMargin: "-20% 0px -70% 0px", // Focus on upper-middle of screen
+      rootMargin: "-20% 0px -70% 0px",
       threshold: 0
     };
 
