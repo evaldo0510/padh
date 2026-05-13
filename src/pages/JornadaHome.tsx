@@ -50,7 +50,12 @@ const JornadaHome = () => {
       showBackButton={false}
       hideHeader={false}
     >
-      <div className="min-h-screen bg-[#050505] text-white flex flex-col">
+      <motion.div 
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 1.5 }}
+        className="min-h-screen bg-[#050505] text-white flex flex-col"
+      >
         <JourneyHero 
           nextSession={nextSession} 
           totalProgress={totalProgress} 
