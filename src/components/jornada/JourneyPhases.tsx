@@ -102,7 +102,11 @@ const JourneyPhases: React.FC<JourneyPhasesProps> = ({
         const episodesCompleted = fase.sessoes.filter(s => completedSessions.includes(s.id)).length;
         
         return (
-          <section key={fase.id} className="relative group min-h-[60vh] flex flex-col justify-center">
+          <section 
+            key={fase.id} 
+            className="relative group min-h-[60vh] flex flex-col justify-center"
+            aria-label={`Temporada ${fase.numero}: ${fase.titulo}. ${episodesCompleted} de ${fase.sessoes.length} episódios concluídos (${Math.round((episodesCompleted / fase.sessoes.length) * 100)}%). ${isUnlocked && episodesCompleted < fase.sessoes.length ? `Faltam ${fase.sessoes.length - episodesCompleted} para concluir.` : ''}`}
+          >
             {/* Immersive background per season */}
             <SeasonBackground color={fase.cor} />
             
@@ -196,6 +200,7 @@ const JourneyPhases: React.FC<JourneyPhasesProps> = ({
                           if (nextSession) navigate(`/jornada/${fase.id}/${nextSession.id}`);
                         }}
                         className="h-16 px-10 rounded-full bg-primary text-black hover:scale-105 transition-all duration-500 font-black uppercase tracking-[0.2em] text-sm group shadow-[0_10px_30px_rgba(234,179,8,0.3)]"
+                        aria-label={`${episodesCompleted === 0 ? "Iniciar" : "Retomar"} Temporada ${fase.numero}: ${fase.titulo}. Próximo episódio: ${fase.sessoes.find(s => !completedSessions.includes(s.id))?.titulo}`}
                       >
                         <Play className="w-5 h-5 mr-3 fill-current" />
                         {episodesCompleted === 0 ? "Iniciar Temporada" : "Retomar a temporada"}
