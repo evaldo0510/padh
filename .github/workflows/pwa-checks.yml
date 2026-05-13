@@ -31,18 +31,21 @@ jobs:
           node scripts/pwa-smoke-test.mjs $TARGET_URL
 
       - name: Install Playwright Browsers
-        run: npx playwright install --with-deps chromium
+        run: npx playwright install --with-deps
 
-      - name: Run E2E PWA Update Flow Test
+      - name: Run E2E Tests
         env:
           TARGET_URL: ${{ github.event.deployment_status.target_url }}
-          EXPECTED_VERSION: ${{ github.event.deployment_status.environment == 'production' && 'PROD_VERSION_TAG' || 'STAGING_VERSION_TAG' }}
-        run: npx playwright test tests/pwa-banner.spec.ts tests/pwa-strategies.spec.ts
+          TEST_USER_EMAIL: ${{ secrets.TEST_USER_EMAIL }}
+          TEST_USER_PASSWORD: ${{ secrets.TEST_USER_PASSWORD }}
+        run: npx playwright test
 
       - name: Upload Playwright Test Artifacts
-        if: failure()
+        if: always()
         uses: actions/upload-artifact@v4
         with:
           name: playwright-report
-          path: playwright-report/
+          path: |
+            playwright-report/
+            test-results/
           retention-days: 7
