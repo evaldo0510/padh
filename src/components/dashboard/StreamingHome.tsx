@@ -30,7 +30,11 @@ const StreamingHome = () => {
   return (
     <div className="min-h-screen bg-background text-foreground pb-24 md:pb-32 overflow-x-hidden">
       {/* 1. SEÇÃO PRÓXIMO (Hero) */}
-      <JourneyHero nextSession={nextSession} totalProgress={totalProgress} />
+      <JourneyHero 
+        nextSession={nextSession} 
+        totalProgress={totalProgress} 
+        onShowTheory={() => setFocusMode(false)}
+      />
 
       <div className="streaming-container -mt-24 md:-mt-32 relative z-30 space-y-20 md:space-y-32">
         {/* Focus Mode Toggle */}

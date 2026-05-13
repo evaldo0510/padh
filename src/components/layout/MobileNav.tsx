@@ -19,10 +19,16 @@ const MobileNav = () => {
         activeIcon: <Home className="w-5 h-5 fill-primary" />
       },
       { 
+        name: 'Teoria', 
+        path: '/fundamentacao', 
+        icon: <BookOpen className="w-5 h-5" />,
+        activeIcon: <BookOpen className="w-5 h-5 fill-primary" />
+      },
+      { 
         name: nextSession ? 'Continuar' : 'Jornada', 
         path: continuePath, 
-        icon: nextSession ? <Play className="w-5 h-5" /> : <BookOpen className="w-5 h-5" />,
-        activeIcon: nextSession ? <Play className="w-5 h-5 fill-primary" /> : <BookOpen className="w-5 h-5 fill-primary" />,
+        icon: nextSession ? <Play className="w-5 h-5" /> : <Play className="w-5 h-5" />,
+        activeIcon: nextSession ? <Play className="w-5 h-5 fill-primary" /> : <Play className="w-5 h-5 fill-primary" />,
         // Custom isActive for session routes
         match: (pathname: string) => pathname.startsWith('/jornada')
       },

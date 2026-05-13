@@ -3,7 +3,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Play, ChevronRight, Sparkles, Loader2, BookOpen } from "lucide-react";
-import { useNavigate, useLocation } from "react-router-dom";
+import { useNavigate, useLocation, Link } from "react-router-dom";
 import PrefetchLink from "@/components/layout/PrefetchLink";
 
 interface JourneyHeroProps {
@@ -11,13 +11,15 @@ interface JourneyHeroProps {
   totalProgress: number;
   isUpdating?: boolean;
   compact?: boolean;
+  onShowTheory?: () => void;
 }
 
 const JourneyHero: React.FC<JourneyHeroProps> = ({ 
   nextSession, 
   totalProgress, 
   isUpdating,
-  compact = false 
+  compact = false,
+  onShowTheory
 }) => {
   const navigate = useNavigate();
   const location = useLocation();
@@ -130,15 +132,12 @@ const JourneyHero: React.FC<JourneyHeroProps> = ({
               variant="outline" 
               size="lg" 
               className="h-14 px-8 rounded-full border-white/10 text-white/60 hover:text-white hover:bg-white/5 transition-all"
-              onClick={() => {
-                const theoryElement = document.getElementById('theoretical-foundations');
-                if (theoryElement) {
-                  theoryElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
-                }
-              }}
+              asChild
             >
-              <BookOpen className="w-5 h-5 mr-2" /> 
-              Fundamentação Teórica
+              <Link to="/fundamentacao">
+                <BookOpen className="w-5 h-5 mr-2" /> 
+                Fundamentação Teórica
+              </Link>
             </Button>
           </div>
 
