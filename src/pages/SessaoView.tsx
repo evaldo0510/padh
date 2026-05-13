@@ -33,6 +33,7 @@ const SessaoView = () => {
   const [isPaused, setIsPaused] = useState(false);
   const [pauseRemaining, setPauseRemaining] = useState(0);
   const [isTransitioning, setIsTransitioning] = useState(false);
+  const [isFinished, setIsFinished] = useState(false);
 
   const transitionTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const pauseIntervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
