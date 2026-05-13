@@ -513,21 +513,22 @@ const SessaoView = () => {
           </AnimatePresence>
         </main>
 
-        {/* Bottom: single primary action */}
-        <footer className="px-6 md:px-12 pb-[calc(env(safe-area-inset-bottom)+1.5rem)] md:pb-16 pt-4 flex justify-center relative z-30 bg-gradient-to-t from-[#050505] via-[#050505]/80 to-transparent">
+        {/* Bottom: fixed navigation bar */}
+        <footer className="fixed bottom-0 left-0 right-0 z-50 px-6 md:px-12 pb-[calc(env(safe-area-inset-bottom)+1.5rem)] pt-10 flex justify-center bg-gradient-to-t from-[#050505] via-[#050505]/95 to-transparent">
           <AnimatePresence>
             {!isTransitioning && !isFinished && (
               <motion.div
-                initial={{ opacity: 0, y: 10 }}
+                initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0 }}
-                transition={{ delay: 0.3, duration: 0.5 }}
+                exit={{ opacity: 0, y: 20 }}
+                transition={{ delay: 0.3, duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
+                className="w-full max-w-[280px]"
               >
                 <Button
                   onClick={handlePrimary}
                   disabled={primaryDisabled}
                   size="lg"
-                  className="min-w-[260px] h-16 rounded-full text-lg font-bold tracking-widest uppercase bg-primary hover:bg-primary/90 text-white shadow-glow transition-all active:scale-95"
+                  className="w-full h-16 rounded-full text-lg font-black tracking-[0.2em] uppercase bg-primary hover:bg-primary/90 text-white shadow-[0_0_30px_-5px_rgba(139,92,246,0.5)] transition-all active:scale-95 border border-primary/20"
                 >
                   {primaryLabel}
                   {isLast ? (
