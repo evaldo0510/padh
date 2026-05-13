@@ -6,7 +6,7 @@ import { useJornada } from "@/hooks/useJornada";
 import { prefetchRoute } from "@/lib/route-prefetch";
 import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
-import { ArrowLeft, ChevronRight, CheckCircle2, Lock } from "lucide-react";
+import { ArrowLeft, ChevronRight, CheckCircle2, Lock, Keyboard } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 
 const BLOCK_TRANSITION_MS = 450;
@@ -34,6 +34,25 @@ const SessaoView = () => {
   const [pauseRemaining, setPauseRemaining] = useState(0);
   const [isTransitioning, setIsTransitioning] = useState(false);
   const [isFinished, setIsFinished] = useState(false);
+  const [isKeyboardOpen, setIsKeyboardOpen] = useState(false);
+
+  useEffect(() => {
+    const handleResize = () => {
+      // If viewport height decreases significantly, keyboard is likely open
+      if (window.visualViewport) {
+        setIsKeyboardOpen(window.visualViewport.height < window.innerHeight * 0.85);
+      }
+    };
+
+    if (window.visualViewport) {
+      window.visualViewport.addEventListener('resize', handleResize);
+    }
+    return () => {
+      if (window.visualViewport) {
+        window.visualViewport.removeEventListener('resize', handleResize);
+      }
+    };
+  }, []);
 
   const transitionTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const pauseIntervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
@@ -315,11 +334,11 @@ const SessaoView = () => {
                   </p>
                 </div>
 
-                <div className="pt-6 flex flex-col gap-4">
+                <div className="pt-6 flex flex-col gap-4 w-full">
                   <Button
                     onClick={goToNextSessionOrDashboard}
                     size="lg"
-                    className="h-16 rounded-full text-lg font-bold tracking-widest uppercase bg-primary hover:bg-primary/90 text-white shadow-glow"
+                    className="h-16 w-full rounded-full text-lg font-bold tracking-widest uppercase bg-primary hover:bg-primary/90 text-white shadow-glow"
                   >
                     Próximo Passo <ChevronRight className="w-5 h-5 ml-2" />
                   </Button>
@@ -333,6 +352,7 @@ const SessaoView = () => {
                 </div>
               </motion.div>
             ) : !isTransitioning && currentBlock && (
+              <>
               <motion.div
                 key={currentBlock.id}
                 initial={{ opacity: 0, y: 12 }}
@@ -508,13 +528,16 @@ const SessaoView = () => {
                     )}
                   </motion.div>
                 )}
-              </motion.div>
+                </motion.div>
+              </>
             )}
           </AnimatePresence>
         </main>
 
         {/* Bottom: fixed-feel navigation bar (integrated in flex flow for keyboard handling) */}
-        <footer className="w-full z-50 px-6 md:px-12 pb-[calc(env(safe-area-inset-bottom)+1.5rem)] pt-6 flex justify-center bg-[#050505] border-t border-white/5 md:bg-gradient-to-t md:from-[#050505] md:via-[#050505]/95 md:to-transparent md:border-none">
+        <footer className={`w-full z-50 px-6 md:px-12 transition-all duration-300 flex justify-center bg-[#050505] border-t border-white/5 md:bg-gradient-to-t md:from-[#050505] md:via-[#050505]/95 md:to-transparent md:border-none ${
+          isKeyboardOpen ? 'pb-4 pt-4' : 'pb-[calc(env(safe-area-inset-bottom)+1.5rem)] pt-6'
+        }`}>
           <AnimatePresence>
             {!isTransitioning && !isFinished && (
               <motion.div

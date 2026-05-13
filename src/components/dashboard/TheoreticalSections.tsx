@@ -1,10 +1,12 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { Card, CardContent } from "@/components/ui/card";
 import { BookOpen, GraduationCap, Target, Feather, Brain, Star, ArrowRight } from "lucide-react";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 
 const TheoreticalSections = () => {
+  const [activeSection, setActiveSection] = useState("theory-intro");
+
   const indexItems = [
     { id: "theory-intro", label: "Fundamentação" },
     { id: "methodology-pillars", label: "Metodologia" },
@@ -12,6 +14,31 @@ const TheoreticalSections = () => {
     { id: "science-neuro", label: "Ciência & Poesia" },
     { id: "journey-guide", label: "Guia de Jornada" },
   ];
+
+  useEffect(() => {
+    const observerOptions = {
+      root: null,
+      rootMargin: "-20% 0px -70% 0px", // Focus on upper-middle of screen
+      threshold: 0
+    };
+
+    const handleIntersect = (entries: IntersectionObserverEntry[]) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          setActiveSection(entry.target.id);
+        }
+      });
+    };
+
+    const observer = new IntersectionObserver(handleIntersect, observerOptions);
+    
+    indexItems.forEach((item) => {
+      const element = document.getElementById(item.id);
+      if (element) observer.observe(element);
+    });
+
+    return () => observer.disconnect();
+  }, []);
 
   const ferramentas = [
     {
@@ -75,7 +102,11 @@ const TheoreticalSections = () => {
             <button
               key={item.id}
               onClick={() => scrollTo(item.id)}
-              className="text-[10px] font-bold uppercase tracking-widest text-white/40 hover:text-primary transition-colors whitespace-nowrap border border-white/5 hover:border-primary/20 px-3 py-1.5 rounded-full"
+              className={`text-[10px] font-bold uppercase tracking-widest transition-all duration-300 whitespace-nowrap border px-4 py-2 rounded-full ${
+                activeSection === item.id 
+                  ? "bg-primary text-white border-primary shadow-[0_0_15px_-3px_rgba(139,92,246,0.6)]" 
+                  : "text-white/40 border-white/5 hover:border-primary/20 hover:text-primary"
+              }`}
             >
               {item.label}
             </button>
