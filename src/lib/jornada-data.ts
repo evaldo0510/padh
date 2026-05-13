@@ -34,6 +34,7 @@ export interface FaseJornada {
   descricao: string;
   cor: string;
   sessoes: SessaoJornada[];
+  resultados?: string[];
 }
 
 export const JORNADA_DATA: FaseJornada[] = [
@@ -43,6 +44,7 @@ export const JORNADA_DATA: FaseJornada[] = [
     titulo: "Despertar",
     descricao: "O início da consciência. Percebendo os padrões automáticos e despertando a presença.",
     cor: "amber",
+    resultados: ["Consciência dos padrões", "Redução da reatividade", "Mapeamento mental"],
     sessoes: [
       {
         id: "aula-exclusiva-modulo",
@@ -149,6 +151,7 @@ export const JORNADA_DATA: FaseJornada[] = [
     titulo: "Encontro com a Sombra",
     descricao: "Explorando as partes negadas de si mesmo. Integrando o que foi excluído.",
     cor: "indigo",
+    resultados: ["Integração da autocrítica", "Coragem emocional", "Clareza interior"],
     sessoes: [
       {
         id: "critico-interno",
@@ -216,6 +219,7 @@ export const JORNADA_DATA: FaseJornada[] = [
     titulo: "Reprogramação",
     descricao: "Transformar consciência em novas respostas internas. Interrompendo padrões e criando novas escolhas.",
     cor: "emerald",
+    resultados: ["Novas respostas automáticas", "Soberania emocional", "Liberdade de escolha"],
     sessoes: [
       {
         id: "interrupcao-automato",

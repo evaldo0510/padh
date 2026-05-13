@@ -6,6 +6,7 @@ import { useProfile } from '@/hooks/useProfile';
 import { Button } from '@/components/ui/button';
 import { ChevronRight, Library } from 'lucide-react';
 import { Link } from 'react-router-dom';
+import { motion } from 'framer-motion';
 import JourneyHero from '@/components/jornada/JourneyHero';
 import JourneyPhases from '@/components/jornada/JourneyPhases';
 import { PCHObjectiveId } from '@/types/objectives';
@@ -50,7 +51,12 @@ const JornadaHome = () => {
       showBackButton={false}
       hideHeader={false}
     >
-      <div className="min-h-screen bg-[#050505] text-white flex flex-col">
+      <motion.div 
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 1.5 }}
+        className="min-h-screen bg-[#050505] text-white flex flex-col"
+      >
         <JourneyHero 
           nextSession={nextSession} 
           totalProgress={totalProgress} 
@@ -76,7 +82,7 @@ const JornadaHome = () => {
            </div>
            <p className="text-white/10 text-[10px] font-black uppercase tracking-[0.6em]">Original P.A.D.H. Content</p>
         </footer>
-      </div>
+      </motion.div>
     </PageLayout>
   );
 };

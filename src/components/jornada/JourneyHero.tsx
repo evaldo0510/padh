@@ -101,19 +101,24 @@ const JourneyHero: React.FC<JourneyHeroProps> = ({
               <Button 
                 size="lg" 
                 asChild
-                className="btn-primary h-14 px-8 text-lg rounded-full relative overflow-hidden group"
+                className="btn-primary h-16 px-10 text-xl rounded-full relative overflow-hidden group shadow-[0_0_50px_rgba(234,179,8,0.3)] hover:shadow-[0_0_80px_rgba(234,179,8,0.5)] transition-all duration-500"
                 disabled={isNavigating}
               >
                 <PrefetchLink 
                   to={`/jornada/${nextSession.phaseId || nextSession.faseId}/${nextSession.sessionId || nextSession.sessaoId}`}
                   onClick={handleNavigate}
                 >
-                  {isNavigating ? (
-                    <Loader2 className="w-5 h-5 animate-spin mr-2" />
-                  ) : (
-                    <Play className="w-5 h-5 fill-current mr-2 group-hover:scale-110 transition-transform" /> 
-                  )}
-                  {nextSession.isRecommended ? `Iniciar: ${nextSession.titulo}` : `Continuar: ${nextSession.titulo}`}
+                  <div className="absolute inset-0 bg-gradient-to-r from-primary via-amber-400 to-primary opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                  <div className="relative flex items-center">
+                    {isNavigating ? (
+                      <Loader2 className="w-6 h-6 animate-spin mr-3" />
+                    ) : (
+                      <Play className="w-6 h-6 fill-current mr-3 group-hover:scale-125 transition-transform duration-500" /> 
+                    )}
+                    <span className="font-black uppercase tracking-wider">
+                      {nextSession.isRecommended ? `Iniciar: ${nextSession.titulo}` : `Continuar: ${nextSession.titulo}`}
+                    </span>
+                  </div>
                 </PrefetchLink>
               </Button>
             ) : (
