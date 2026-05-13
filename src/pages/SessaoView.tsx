@@ -528,7 +528,8 @@ const SessaoView = () => {
                     )}
                   </motion.div>
                 )}
-              </motion.div>
+                </motion.div>
+              </>
             )}
           </AnimatePresence>
         </main>
