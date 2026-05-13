@@ -182,6 +182,14 @@ export const useJornada = () => {
         if (error) {
           console.error("saveResponse error", error);
           reportSyncStatus("error");
+          // On error, add to pending sync
+          setJornada(prev => ({
+            ...prev,
+            pendingSync: {
+              ...prev.pendingSync!,
+              responses: Array.from(new Set([...(prev.pendingSync?.responses || []), exerciseId]))
+            }
+          }));
         } else {
           // Mark episode as in_progress (only if not already completed)
           if (phaseId && sessionId) {
@@ -206,6 +214,14 @@ export const useJornada = () => {
           reportSyncStatus("ok");
         }
       } else {
+        // Offline or no user - add to pending sync
+        setJornada(prev => ({
+          ...prev,
+          pendingSync: {
+            ...prev.pendingSync!,
+            responses: Array.from(new Set([...(prev.pendingSync?.responses || []), exerciseId]))
+          }
+        }));
         reportSyncStatus("blocked");
       }
 
