@@ -253,12 +253,14 @@ const JourneyPhases: React.FC<JourneyPhasesProps> = ({
                     const sessionUnlocked = (isUnlocked && allPrevSessionsDone) || isRecommended;
                     
                     return (
-                      <motion.div 
+                      <motion.button 
                         key={sessao.id}
                         variants={itemVariants}
                         whileHover={sessionUnlocked ? { y: -16, scale: 1.05 } : {}}
-                        className={`group relative aspect-[16/10] rounded-2xl overflow-hidden bg-white/[0.02] border border-white/5 shadow-[0_20px_50px_rgba(0,0,0,0.5)] transition-all duration-700 ${!sessionUnlocked && 'cursor-not-allowed grayscale'}`}
+                        className={`group relative aspect-[16/10] w-full text-left rounded-2xl overflow-hidden bg-white/[0.02] border border-white/5 shadow-[0_20px_50px_rgba(0,0,0,0.5)] transition-all duration-700 ${!sessionUnlocked ? 'cursor-not-allowed grayscale' : 'cursor-pointer focus-visible:ring-2 focus-visible:ring-primary focus-visible:outline-none'}`}
                         onClick={() => sessionUnlocked && navigate(`/jornada/${fase.id}/${sessao.id}`)}
+                        disabled={!sessionUnlocked}
+                        aria-label={`Episódio ${sIdx + 1}: ${sessao.titulo}. ${isCompleted ? 'Concluído.' : ''} ${!sessionUnlocked ? 'Bloqueado.' : ''} ${sessao.descricao}`}
                       >
                         {/* Interactive Spotlight Effect */}
                         <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_0%,rgba(255,255,255,0.05),transparent)] opacity-0 group-hover:opacity-100 transition-opacity duration-700 z-10" />
