@@ -194,8 +194,4 @@ const JourneyPhases: React.FC<JourneyPhasesProps> = ({
     </div>
   );
 };
-
-export default JourneyPhases;
-
-
 export default JourneyPhases;
