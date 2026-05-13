@@ -15,7 +15,9 @@ import ProtectedRoute from "./components/auth/ProtectedRoute";
 import { PCHWelcomeGate } from "./components/onboarding/PCHWelcome";
 import { ProfileProvider } from "./providers/ProfileProvider";
 import { cancelAllPrefetches } from "./lib/route-prefetch";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+import SplashScreen from "./components/layout/SplashScreen";
+import { useAuth } from "./hooks/useAuth";
 
 const Index = lazy(() => import("./pages/Index"));
 const NotFound = lazy(() => import("./pages/NotFound"));
@@ -540,25 +542,37 @@ const AnimatedRoutes = () => {
   );
 };
 
-const App = () => (
-  <HelmetProvider>
-    <QueryClientProvider client={queryClient}>
-      <TooltipProvider>
-        <Toaster />
-        <Sonner />
-        <BrowserRouter>
-          <PWAPrompt />
-          <PWAUpdatePrompt />
-          <ProfileProvider>
-            <PCHWelcomeGate />
-            <SupabaseErrorBoundary>
-              <AnimatedRoutes />
-            </SupabaseErrorBoundary>
-          </ProfileProvider>
-        </BrowserRouter>
-      </TooltipProvider>
-    </QueryClientProvider>
-  </HelmetProvider>
-);
+const App = () => {
+  const [isInitialLoading, setIsInitialLoading] = useState(true);
+  const { loading: authLoading } = useAuth();
+
+  useEffect(() => {
+    if (!authLoading) {
+      setIsInitialLoading(false);
+    }
+  }, [authLoading]);
+
+  return (
+    <HelmetProvider>
+      <QueryClientProvider client={queryClient}>
+        <TooltipProvider>
+          <SplashScreen isLoading={isInitialLoading} />
+          <Toaster />
+          <Sonner position="top-center" closeButton richColors />
+          <BrowserRouter>
+            <PWAPrompt />
+            <PWAUpdatePrompt />
+            <ProfileProvider>
+              <PCHWelcomeGate />
+              <SupabaseErrorBoundary>
+                <AnimatedRoutes />
+              </SupabaseErrorBoundary>
+            </ProfileProvider>
+          </BrowserRouter>
+        </TooltipProvider>
+      </QueryClientProvider>
+    </HelmetProvider>
+  );
+};
 
 export default App;

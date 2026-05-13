@@ -1,4 +1,6 @@
+import React from "react";
 import { Skeleton } from "@/components/ui/skeleton";
+import PCHSymbol from "@/components/ui/PCHSymbol";
 
 export const HeroSkeleton = () => (
   <section className="relative overflow-hidden min-h-[60vh] flex items-center">
@@ -47,20 +49,47 @@ export const ContentSkeleton = () => (
   </div>
 );
 
-export const PageSkeleton = () => (
-  <div className="min-h-screen bg-background animate-in fade-in duration-300">
-    <div className="h-16 border-b border-border/50 px-6 flex items-center gap-4">
-      <Skeleton className="h-8 w-8 rounded-full" />
-      <Skeleton className="h-5 w-32" />
-      <div className="flex-1" />
-      <Skeleton className="h-5 w-20" />
-      <Skeleton className="h-5 w-20" />
-      <Skeleton className="h-5 w-20" />
+export const PageSkeleton = () => {
+  const [showSlowMessage, setShowSlowMessage] = React.useState(false);
+
+  React.useEffect(() => {
+    const timer = setTimeout(() => setShowSlowMessage(true), 5000);
+    return () => clearTimeout(timer);
+  }, []);
+
+  return (
+    <div className="min-h-screen bg-[#050505] flex flex-col items-center justify-center animate-in fade-in duration-500">
+      <div className="relative flex flex-col items-center gap-8">
+        <div className="relative w-24 h-24">
+          <div className="absolute inset-0 rounded-full bg-primary/20 blur-2xl animate-pulse" />
+          <PCHSymbol variant="glow" size="xl" animated />
+        </div>
+        
+        <div className="space-y-3 text-center">
+          <p className="text-[11px] uppercase tracking-[0.5em] text-primary/60 font-medium">
+            Poesia Cognitiva Hipnótica
+          </p>
+          <div className="flex items-center justify-center gap-1.5">
+            <span className="w-1.5 h-1.5 rounded-full bg-primary/40 animate-bounce [animation-delay:-0.3s]" />
+            <span className="w-1.5 h-1.5 rounded-full bg-primary/40 animate-bounce [animation-delay:-0.15s]" />
+            <span className="w-1.5 h-1.5 rounded-full bg-primary/40 animate-bounce" />
+          </div>
+        </div>
+
+        {showSlowMessage && (
+          <div className="mt-8 animate-in fade-in slide-in-from-bottom-2 duration-700">
+            <button 
+              onClick={() => window.location.reload()}
+              className="text-xs text-muted-foreground hover:text-primary transition-colors border-b border-muted-foreground/20"
+            >
+              Carregamento lento? Clique para recarregar.
+            </button>
+          </div>
+        )}
+      </div>
     </div>
-    <HeroSkeleton />
-    <CardGridSkeleton />
-  </div>
-);
+  );
+};
 
 export const SessionSkeleton = () => (
   <div className="min-h-screen bg-[#050505] flex flex-col overflow-hidden animate-in fade-in duration-500">

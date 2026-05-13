@@ -15,21 +15,21 @@ const STORAGE_KEY = "pch_onboarding_seen_v1";
 const steps = [
   {
     variant: "glow" as const,
-    eyebrow: "Bem-vindo",
-    title: "Você chegou.",
-    body: "Respire. Aqui o tempo desacelera. A PCH é um espaço onde a palavra reencontra a sua função mais antiga: curar.",
+    eyebrow: "O Despertar",
+    title: "O silêncio é a primeira página.",
+    body: "Respire fundo. A PCH não é apenas leitura, é uma imersão sensorial onde a neurociência encontra o poder curativo da palavra.",
   },
   {
     variant: "flow" as const,
-    eyebrow: "O método",
+    eyebrow: "A Alquimia",
     title: "Poesia · Cognição · Hipnose",
-    body: "Três movimentos integrados que conduzem você do ruído à clareza, da clareza à transformação.",
+    body: "Três forças unidas para reprogramar padrões emocionais e criar novas rotas de bem-estar em seu sistema nervoso.",
   },
   {
     variant: "feather" as const,
-    eyebrow: "Sua jornada",
-    title: "Comece quando estiver pronto.",
-    body: "Cada exercício é um pequeno ritual. Cada palavra escrita, um passo. O caminho se faz no andar.",
+    eyebrow: "Sua Escrita",
+    title: "Sua história, novos versos.",
+    body: "Cada passo aqui é um convite à transformação. Quando estiver pronto, o caminho se revelará sob seus pés.",
   },
 ];
 

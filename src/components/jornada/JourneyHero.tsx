@@ -69,7 +69,7 @@ const JourneyHero: React.FC<JourneyHeroProps> = ({
           <div className="flex items-center gap-3">
             <Badge className="bg-primary/20 text-primary border-primary/30 py-1.5 px-4 rounded-full text-[9px] font-bold tracking-widest uppercase">
               <Sparkles className="w-3 h-3 mr-1.5" />
-              Original
+              Original PCH
             </Badge>
             {nextSession && (
               <div className="flex items-center gap-2 text-white/30 text-[9px] font-bold tracking-widest uppercase">
@@ -81,13 +81,15 @@ const JourneyHero: React.FC<JourneyHeroProps> = ({
           
           <div className="space-y-4">
             <h1 className={`${compact ? 'text-4xl md:text-7xl' : 'text-5xl md:text-8xl'} font-black tracking-tighter leading-[0.9] text-white`}>
-               {nextSession ? (nextSession.isRecommended ? 'Sugestão' : 'Continuar') : 'Jornada'} <br /> 
-               <span className="text-primary italic">{nextSession ? 'Evolução' : 'Concluída'}</span>
+               {nextSession ? (totalProgress > 0 ? 'Bem-vindo de' : 'Comece sua') : 'Jornada'} <br /> 
+               <span className="text-primary italic">{nextSession ? (totalProgress > 0 ? 'Volta' : 'História') : 'Concluída'}</span>
             </h1>
             
             <p className="text-lg text-white/50 max-w-xl leading-relaxed font-light italic">
-              {nextSession 
-                ? `Sua próxima vivência: "${nextSession.titulo}". Mantenha o fluxo e continue expandindo sua consciência.`
+               {nextSession 
+                ? (totalProgress > 0 
+                    ? `Que bom te ver novamente. Vamos continuar de onde paramos: "${nextSession.titulo}".` 
+                    : `Sua jornada de transformação começa agora com: "${nextSession.titulo}". Respire e sinta cada palavra.`)
                 : "Você completou todas as fases atuais. Revise seus insights ou explore novas ferramentas."}
             </p>
           </div>

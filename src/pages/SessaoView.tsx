@@ -33,6 +33,7 @@ const SessaoView = () => {
   const [isPaused, setIsPaused] = useState(false);
   const [pauseRemaining, setPauseRemaining] = useState(0);
   const [isTransitioning, setIsTransitioning] = useState(false);
+  const [isFinished, setIsFinished] = useState(false);
 
   const transitionTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const pauseIntervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
@@ -164,7 +165,7 @@ const SessaoView = () => {
     transitionTimeoutRef.current = setTimeout(() => {
       if (isLast) {
         completeSession(sessao!.id);
-        goToNextSessionOrDashboard();
+        setIsFinished(true);
       } else {
         setCurrentExIdx((p) => p + 1);
         // pacing pause before showing next
@@ -293,7 +294,45 @@ const SessaoView = () => {
         {/* Centered content — one block at a time */}
         <main className="flex-1 flex items-center justify-center px-6 md:px-12">
           <AnimatePresence mode="wait">
-            {!isTransitioning && currentBlock && (
+            {isFinished ? (
+              <motion.div
+                key="finished"
+                initial={{ opacity: 0, scale: 0.9 }}
+                animate={{ opacity: 1, scale: 1 }}
+                className="w-full max-w-xl mx-auto text-center space-y-10"
+              >
+                <div className="relative inline-block">
+                  <div className="absolute inset-0 rounded-full bg-primary/20 blur-2xl animate-pulse" />
+                  <CheckCircle2 className="w-24 h-24 text-primary relative z-10 mx-auto" />
+                </div>
+                
+                <div className="space-y-4">
+                  <h2 className="text-4xl md:text-5xl font-black tracking-tighter text-white">
+                    Vivência Concluída
+                  </h2>
+                  <p className="text-xl text-white/50 font-light italic">
+                    "Cada palavra é um degrau. Você acaba de subir mais um."
+                  </p>
+                </div>
+
+                <div className="pt-6 flex flex-col gap-4">
+                  <Button
+                    onClick={goToNextSessionOrDashboard}
+                    size="lg"
+                    className="h-16 rounded-full text-lg font-bold tracking-widest uppercase bg-primary hover:bg-primary/90 text-white shadow-glow"
+                  >
+                    Próximo Passo <ChevronRight className="w-5 h-5 ml-2" />
+                  </Button>
+                  <Button
+                    variant="ghost"
+                    onClick={() => navigate("/jornada")}
+                    className="text-white/40 hover:text-white"
+                  >
+                    Voltar para a Jornada
+                  </Button>
+                </div>
+              </motion.div>
+            ) : !isTransitioning && currentBlock && (
               <motion.div
                 key={currentBlock.id}
                 initial={{ opacity: 0, y: 12 }}
@@ -477,7 +516,7 @@ const SessaoView = () => {
         {/* Bottom: single primary action */}
         <footer className="px-6 md:px-12 pb-10 md:pb-16 pt-4 flex justify-center relative z-20">
           <AnimatePresence>
-            {!isTransitioning && (
+            {!isTransitioning && !isFinished && (
               <motion.div
                 initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
