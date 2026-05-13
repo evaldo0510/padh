@@ -92,6 +92,7 @@ const Explorar = lazy(() => import("./pages/Explorar"));
 const ConscienciaHistorico = lazy(() => import("./pages/ConscienciaHistorico"));
 const Changelog = lazy(() => import("./pages/Changelog"));
 const Offline = lazy(() => import("./pages/Offline"));
+const FundamentacaoTeorica = lazy(() => import("./pages/FundamentacaoTeorica"));
 
 const AdminPWAHealth = lazy(() => import("./pages/AdminPWAHealth"));
 const AdminPWADiagnostics = lazy(() => import("./pages/AdminPWADiagnostics"));
