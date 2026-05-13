@@ -149,10 +149,17 @@ const JourneyHero: React.FC<JourneyHeroProps> = ({
           <div className="pt-8 space-y-3 max-w-xs">
             <div className="flex justify-between items-end">
                <span className="text-[9px] font-bold uppercase tracking-[0.3em] text-primary/80">Conclusão</span>
-               <span className="text-xl font-black text-white">{totalProgress}%</span>
+               <span className="text-xl font-black text-white" aria-hidden="true">{totalProgress}%</span>
             </div>
-            <div className="progress-bar-thin bg-white/5 h-1.5">
-               <div className="progress-fill h-full shadow-glow" style={{ width: `${totalProgress}%` }} />
+            <div 
+              className="progress-bar-thin bg-white/5 h-1.5"
+              role="progressbar"
+              aria-valuenow={totalProgress}
+              aria-valuemin={0}
+              aria-valuemax={100}
+              aria-label={`Progresso total da jornada: ${totalProgress}% concluído`}
+            >
+               <div className="progress-fill h-full shadow-glow transition-all duration-1000" style={{ width: `${totalProgress}%` }} />
             </div>
           </div>
         </motion.div>
