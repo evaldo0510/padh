@@ -139,9 +139,24 @@ const JourneyPhases: React.FC<JourneyPhasesProps> = ({
                           Bloqueado
                         </Badge>
                       )}
-                      <span className={`text-[9px] font-black uppercase tracking-[0.2em] px-3 py-1 rounded-full border transition-all duration-500 ${episodesCompleted === fase.sessoes.length ? 'bg-emerald-500/20 text-emerald-400 border-emerald-500/30 shadow-[0_0_15px_rgba(16,185,129,0.3)]' : 'bg-white/5 text-white/20 border-white/5'}`}>
-                        {episodesCompleted} / {fase.sessoes.length} EPISÓDIOS
-                      </span>
+                      <div className=\"flex flex-col gap-2 min-w-[120px] md:min-w-[180px]\">
+                        <div className=\"flex items-center justify-between gap-4\">
+                          <span className={`text-[9px] font-black uppercase tracking-[0.2em] px-3 py-1 rounded-full border transition-all duration-500 ${episodesCompleted === fase.sessoes.length ? 'bg-emerald-500/20 text-emerald-400 border-emerald-500/30 shadow-[0_0_15px_rgba(16,185,129,0.3)]' : 'bg-white/5 text-white/20 border-white/5'}`}>
+                            {episodesCompleted} / {fase.sessoes.length} EPISÓDIOS
+                          </span>
+                          <span className=\"text-[9px] font-black text-white/40 uppercase tracking-widest\">
+                            {Math.round((episodesCompleted / fase.sessoes.length) * 100)}%
+                          </span>
+                        </div>
+                        <div className=\"h-1 w-full bg-white/5 rounded-full overflow-hidden\">
+                          <motion.div 
+                            initial={{ width: 0 }}
+                            whileInView={{ width: `${(episodesCompleted / fase.sessoes.length) * 100}%` }}
+                            transition={{ duration: 1.5, ease: \"circOut\" }}
+                            className={`h-full ${episodesCompleted === fase.sessoes.length ? 'bg-emerald-500 shadow-[0_0_10px_rgba(16,185,129,0.5)]' : 'bg-primary shadow-glow'}`}
+                          />
+                        </div>
+                      </div>
                     </div>
                   </div>
                   <h2 className="text-5xl md:text-8xl font-black tracking-tighter text-white leading-none">
