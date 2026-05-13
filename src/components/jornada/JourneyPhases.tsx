@@ -61,7 +61,11 @@ const JourneyPhases: React.FC<JourneyPhasesProps> = ({
   };
 
   return (
-    <div className="space-y-32 md:space-y-48">
+    <div className="space-y-32 md:space-y-48 relative overflow-hidden">
+      {/* Cinematic noise and mesh gradient overlay */}
+      <div className="absolute inset-0 bg-noise pointer-events-none z-0" />
+      <div className="absolute inset-0 gradient-mesh pointer-events-none z-0 opacity-50" />
+
       {JORNADA_DATA.map((fase, idx) => {
         const prevFase = JORNADA_DATA[idx - 1];
         const isUnlocked = idx === 0 || prevFase.sessoes.every(s => completedSessions.includes(s.id));
