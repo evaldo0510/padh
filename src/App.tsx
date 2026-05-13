@@ -542,25 +542,37 @@ const AnimatedRoutes = () => {
   );
 };
 
-const App = () => (
-  <HelmetProvider>
-    <QueryClientProvider client={queryClient}>
-      <TooltipProvider>
-        <Toaster />
-        <Sonner />
-        <BrowserRouter>
-          <PWAPrompt />
-          <PWAUpdatePrompt />
-          <ProfileProvider>
-            <PCHWelcomeGate />
-            <SupabaseErrorBoundary>
-              <AnimatedRoutes />
-            </SupabaseErrorBoundary>
-          </ProfileProvider>
-        </BrowserRouter>
-      </TooltipProvider>
-    </QueryClientProvider>
-  </HelmetProvider>
-);
+const App = () => {
+  const [isInitialLoading, setIsInitialLoading] = useState(true);
+  const { loading: authLoading } = useAuth();
+
+  useEffect(() => {
+    if (!authLoading) {
+      setIsInitialLoading(false);
+    }
+  }, [authLoading]);
+
+  return (
+    <HelmetProvider>
+      <QueryClientProvider client={queryClient}>
+        <TooltipProvider>
+          <SplashScreen isLoading={isInitialLoading} />
+          <Toaster />
+          <Sonner position="top-center" closeButton richColors />
+          <BrowserRouter>
+            <PWAPrompt />
+            <PWAUpdatePrompt />
+            <ProfileProvider>
+              <PCHWelcomeGate />
+              <SupabaseErrorBoundary>
+                <AnimatedRoutes />
+              </SupabaseErrorBoundary>
+            </ProfileProvider>
+          </BrowserRouter>
+        </TooltipProvider>
+      </QueryClientProvider>
+    </HelmetProvider>
+  );
+};
 
 export default App;
