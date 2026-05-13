@@ -309,6 +309,7 @@ export const useJornada = () => {
       if (userId && !isOffline) {
         const phaseId = findPhaseForSession(sessionId);
         if (!phaseId) return;
+        reportSyncStatus("pending");
         const { error } = await supabase
           .from("episode_progress")
           .upsert(
@@ -323,7 +324,9 @@ export const useJornada = () => {
           );
         if (error) {
           console.error("completeSession error", error);
+          reportSyncStatus("error");
         } else {
+          reportSyncStatus("ok");
           // If successful, remove from pendingSync
           setJornada(prev => ({
             ...prev,
