@@ -516,7 +516,7 @@ const SessaoView = () => {
         {/* Bottom: single primary action */}
         <footer className="px-6 md:px-12 pb-10 md:pb-16 pt-4 flex justify-center relative z-20">
           <AnimatePresence>
-            {!isTransitioning && (
+            {!isTransitioning && !isFinished && (
               <motion.div
                 initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
