@@ -139,7 +139,7 @@ const JourneyPhases: React.FC<JourneyPhasesProps> = ({
                           Bloqueado
                         </Badge>
                       )}
-                      <span className="text-[9px] font-black text-white/20 uppercase tracking-[0.2em] bg-white/5 px-3 py-1 rounded-full border border-white/5">
+                      <span className={`text-[9px] font-black uppercase tracking-[0.2em] px-3 py-1 rounded-full border transition-all duration-500 ${episodesCompleted === fase.sessoes.length ? 'bg-emerald-500/20 text-emerald-400 border-emerald-500/30 shadow-[0_0_15px_rgba(16,185,129,0.3)]' : 'bg-white/5 text-white/20 border-white/5'}`}>
                         {episodesCompleted} / {fase.sessoes.length} EPISÓDIOS
                       </span>
                     </div>
