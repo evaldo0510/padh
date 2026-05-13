@@ -323,6 +323,7 @@ export const useJornada = () => {
     jornada,
     saveResponse,
     completeSession,
+    startSession,
     setPhase,
     getResponse,
     toggleFavorite,
