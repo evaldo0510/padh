@@ -6,6 +6,7 @@ import { useProfile } from '@/hooks/useProfile';
 import { Button } from '@/components/ui/button';
 import { ChevronRight, Library } from 'lucide-react';
 import { Link } from 'react-router-dom';
+import { motion } from 'framer-motion';
 import JourneyHero from '@/components/jornada/JourneyHero';
 import JourneyPhases from '@/components/jornada/JourneyPhases';
 import { PCHObjectiveId } from '@/types/objectives';
