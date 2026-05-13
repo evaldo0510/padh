@@ -10,6 +10,7 @@ import { supabaseConfig } from '@/integrations/supabase/config';
 import { useJornada } from '@/hooks/useJornada';
 import { JORNADA_DATA } from '@/lib/jornada-data';
 import { toast } from 'sonner';
+import SyncIndicator from './SyncIndicator';
 
 const Header = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
