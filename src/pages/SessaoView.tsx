@@ -352,6 +352,7 @@ const SessaoView = () => {
                 </div>
               </motion.div>
             ) : !isTransitioning && currentBlock && (
+              <div className="w-full h-full flex flex-col items-center justify-start md:justify-center">
               <motion.div
                 key={currentBlock.id}
                 initial={{ opacity: 0, y: 12 }}
