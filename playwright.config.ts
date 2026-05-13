@@ -12,22 +12,30 @@ export default defineConfig({
   ],
   use: {
     baseURL: process.env.TARGET_URL || 'http://localhost:8080',
-    trace: 'on-first-retry',
-    screenshot: 'only-on-failure',
-    video: 'retain-on-failure',
+    trace: 'on',
+    screenshot: 'on',
+    video: 'on-first-retry',
+    storageState: 'playwright/.auth/user.json',
   },
   projects: [
     {
+      name: 'setup',
+      testMatch: /auth\.setup\.ts/,
+    },
+    {
       name: 'chromium',
       use: { ...devices['Desktop Chrome'] },
+      dependencies: ['setup'],
     },
     {
       name: 'ios',
       use: { ...devices['iPhone 13'] },
+      dependencies: ['setup'],
     },
     {
       name: 'android',
       use: { ...devices['Pixel 5'] },
+      dependencies: ['setup'],
     },
   ],
 });
