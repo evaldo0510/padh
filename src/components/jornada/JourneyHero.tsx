@@ -132,26 +132,12 @@ const JourneyHero: React.FC<JourneyHeroProps> = ({
               variant="outline" 
               size="lg" 
               className="h-14 px-8 rounded-full border-white/10 text-white/60 hover:text-white hover:bg-white/5 transition-all"
-              onClick={() => {
-                if (onShowTheory) {
-                  onShowTheory();
-                  // Give time for state to update and section to render
-                  setTimeout(() => {
-                    const theoryElement = document.getElementById('theoretical-foundations');
-                    if (theoryElement) {
-                      theoryElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
-                    }
-                  }, 100);
-                } else {
-                  const theoryElement = document.getElementById('theoretical-foundations');
-                  if (theoryElement) {
-                    theoryElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
-                  }
-                }
-              }}
+              asChild
             >
-              <BookOpen className="w-5 h-5 mr-2" /> 
-              Fundamentação Teórica
+              <Link to="/fundamentacao">
+                <BookOpen className="w-5 h-5 mr-2" /> 
+                Fundamentação Teórica
+              </Link>
             </Button>
           </div>
 
