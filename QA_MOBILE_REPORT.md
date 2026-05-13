@@ -7,12 +7,14 @@ Este relatório documenta as validações de interface e funcionalidade para dis
 ### 1. Fundamentação Teórica
 - [x] **Navegação por Âncoras**: O índice flutuante navega corretamente para as seções (Fundamentação, Metodologia, etc.).
 - [x] **Highlight de Tópico Ativo**: O botão no índice destaca-se (bg-primary) conforme a seção visível.
-- [x] **Scroll Nativo**: Transição suave e precisa para os IDs de seção.
+- [x] **Barra Fixa com Teclado**: O índice sticky permanece visível mesmo em viewports reduzidos (teclado).
+- [x] **Segurança de Rota**: Validação de que usuários autenticados nunca são redirecionados para /login erroneamente.
 
 ### 2. Sessão View & Jornada (Mobile)
 - [x] **Acessibilidade do Botão "Próximo"**: Barra fixa sempre visível no rodapé, respeitando a safe-area.
-- [x] **Comportamento com Teclado (iOS/Android)**: O botão "Próximo" permanece visível e clicável mesmo com o teclado virtual aberto (simulação de 50% de viewport).
-- [x] **Persistência de Autenticação**: Uso de `storageState` para evitar redirecionamentos indesejados para /login durante os testes.
+- [x] **Comportamento com Teclado (iOS/Android)**: O botão "Próximo" permanece visível e clicável mesmo com o teclado virtual aberto.
+- [x] **Expiração de Sessão**: Teste de redirecionamento automático para /login ao tentar acessar rotas protegidas sem autenticação válida.
+
 
 ## 🛠️ Infraestrutura de QA
 
