@@ -195,6 +195,11 @@ const Index = () => {
                   Ver Livro-Curso
                 </Button>
               </Link>
+              <Link to="/fundamentacao">
+                <Button variant="ghost" size="lg" className="w-full sm:w-auto text-muted-foreground hover:text-primary text-base px-8">
+                  <BookOpen className="w-4 h-4 mr-2" /> Fundamentação Teórica
+                </Button>
+              </Link>
             </div>
             {/* Poem quote */}
             <div className="pt-8 max-w-lg mx-auto">
