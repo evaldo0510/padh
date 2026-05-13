@@ -8,12 +8,7 @@ test.describe('PCH Mobile E2E - Fundamentação & Jornada', () => {
     await expect(page).not.toHaveURL(/\/login/);
   });
 
-  test('deve validar todas as âncoras do índice', async ({ page }) => {
-    // A página já foi carregada no beforeEach
-    
-    // Captura de tela inicial (etapa-chave)
-    await page.screenshot({ path: 'test-results/fundamentacao-inicio.png' });
-
+  test('deve validar todas as âncoras do índice em ambas as direções', async ({ page }) => {
     const indexItems = [
       { id: 'theory-intro', label: 'Fundamentação' },
       { id: 'methodology-pillars', label: 'Metodologia' },
@@ -22,66 +17,88 @@ test.describe('PCH Mobile E2E - Fundamentação & Jornada', () => {
       { id: 'journey-guide', label: 'Guia de Jornada' },
     ];
 
+    // 1. Percorre avançando
     for (const item of indexItems) {
       const button = page.getByRole('button', { name: item.label, exact: true });
-      
-      // Clica na âncora
       await button.click();
       
-      // Valida que o scroll levou à seção correta sem usar timeouts fixos
       const section = page.locator(`#${item.id}`);
       await expect(section).toBeInViewport();
+      await expect(button).toHaveClass(/bg-primary/);
       
-      // Valida que o botão de índice está destacado (IntersectionObserver)
+      // Pequena espera para garantir estabilidade do estado ativo (evitar flicker)
+      await page.waitForTimeout(200);
+      await expect(button).toHaveClass(/bg-primary/);
+    }
+
+    // 2. Percorre voltando
+    for (const item of [...indexItems].reverse()) {
+      const button = page.getByRole('button', { name: item.label, exact: true });
+      await button.click();
+      
+      const section = page.locator(`#${item.id}`);
+      await expect(section).toBeInViewport();
+      await expect(button).toHaveClass(/bg-primary/);
+      
+      await page.waitForTimeout(200);
       await expect(button).toHaveClass(/bg-primary/);
     }
   });
 
-  test('deve verificar visibilidade da barra fixa no índice com teclado simulado', async ({ page, isMobile }) => {
+  test('deve verificar visibilidade da barra fixa no índice com diferentes alturas de teclado', async ({ page, isMobile }) => {
     test.skip(!isMobile, 'Teste exclusivo para mobile');
     
-    // Simula a abertura do teclado reduzindo a altura do viewport
-    const originalViewport = page.viewportSize()!;
-    await page.setViewportSize({ 
-      width: originalViewport.width, 
-      height: Math.floor(originalViewport.height * 0.5) 
-    });
-
-    // Verifica se a barra de índice (sticky) ainda está visível
     const indexNav = page.locator('nav.sticky');
-    await expect(indexNav).toBeVisible();
+    const heights = [0.7, 0.5, 0.4]; // Diferentes simulações de teclado
+
+    const originalViewport = page.viewportSize()!;
+
+    for (const factor of heights) {
+      await page.setViewportSize({ 
+        width: originalViewport.width, 
+        height: Math.floor(originalViewport.height * factor) 
+      });
+
+      // Validação via Bounding Box para garantir que está dentro do viewport visível
+      const box = await indexNav.boundingBox();
+      expect(box).not.toBeNull();
+      expect(box!.y).toBeGreaterThanOrEqual(0);
+      expect(box!.y + box!.height).toBeLessThanOrEqual(Math.floor(originalViewport.height * factor));
+      
+      await expect(indexNav).toBeVisible();
+      await page.screenshot({ path: `test-results/index-keyboard-${factor}-${page.context().browser()?.browserType().name()}.png` });
+    }
     
-    // Captura evidência
-    await page.screenshot({ path: `test-results/index-keyboard-${page.context().browser()?.browserType().name()}.png` });
+    // Restaura o viewport
+    await page.setViewportSize(originalViewport);
   });
 
   test('deve verificar visibilidade do botão Próximo com teclado aberto em protected route', async ({ page, isMobile }) => {
     test.skip(!isMobile, 'Teste exclusivo para mobile');
 
-    // Navega para uma sessão da jornada que tenha campo de texto
     await page.goto('/jornada/despertar/percepcao-inicial');
-    
-    // Verifica que não foi para o login (storageState check)
     await expect(page).not.toHaveURL(/\/login/);
     
-    // Localiza o campo de resposta
-    const textarea = page.locator('textarea');
-    await expect(textarea).toBeVisible();
-    
-    // Simula a abertura do teclado
     const originalViewport = page.viewportSize()!;
     await page.setViewportSize({ 
       width: originalViewport.width, 
       height: Math.floor(originalViewport.height * 0.5) 
     });
 
-    // Captura de tela com teclado "aberto"
-    await page.screenshot({ path: `test-results/keyboard-open-jornada-${page.context().browser()?.browserType().name()}.png` });
-
-    // Verifica se o botão "Próximo" ainda está visível e clicável
     const nextButton = page.getByRole('button', { name: 'Próximo' });
     await expect(nextButton).toBeVisible();
+    
+    // Validação de viewport baseada em Bounding Box
+    const box = await nextButton.boundingBox();
+    expect(box).not.toBeNull();
+    // O botão deve estar na parte inferior, mas visível dentro da altura reduzida
+    expect(box!.y + box!.height).toBeLessThanOrEqual(Math.floor(originalViewport.height * 0.5));
+    expect(box!.y).toBeGreaterThan(0);
+
     await expect(nextButton).toBeEnabled();
+    await page.screenshot({ path: `test-results/keyboard-next-button-${page.context().browser()?.browserType().name()}.png` });
+    
+    await page.setViewportSize(originalViewport);
   });
 
   test('deve validar navegação via botão Próximo até conclusão', async ({ page }) => {
