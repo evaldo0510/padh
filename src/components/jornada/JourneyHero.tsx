@@ -11,6 +11,7 @@ interface JourneyHeroProps {
   totalProgress: number;
   isUpdating?: boolean;
   compact?: boolean;
+  onShowTheory?: () => void;
 }
 
 const JourneyHero: React.FC<JourneyHeroProps> = ({ 
