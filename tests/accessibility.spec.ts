@@ -1,115 +1,128 @@
 import { test, expect } from '@playwright/test';
 
-test.describe('Acessibilidade E2E - Fundamentação', () => {
+test.describe('Acessibilidade Avançada E2E - Fundamentação', () => {
   
   test.beforeEach(async ({ page }) => {
     await page.goto('/fundamentacao');
-    // Espera o conteúdo carregar
     await expect(page.locator('h2').first()).toBeVisible();
   });
 
-  test('deve garantir foco visível e ordem de tabulação correta', async ({ page }) => {
-    // 1. O primeiro elemento focado deve ser o botão "Voltar" (ou o primeiro link/botão na página)
-    await page.keyboard.press('Tab');
+  test('deve alternar foco visual (ring) entre mouse e teclado corretamente', async ({ page }) => {
+    const introButton = page.getByRole('button', { name: 'Fundamentação', exact: true });
     
-    // O botão voltar é o primeiro botão na página FundamentacaoTeorica
-    const backButton = page.getByRole('button', { name: 'Voltar' });
-    await expect(backButton).toBeFocused();
-    await expect(backButton).toHaveCSS('outline-style', 'none');
-    const backBoxShadow = await backButton.evaluate((el) => window.getComputedStyle(el).boxShadow);
-    expect(backBoxShadow).not.toBe('none');
+    // 1. Clique com o mouse não deve mostrar o ring de focus-visible
+    await introButton.click();
     
-    // 2. Tabula para os itens do índice
-    const indexItems = [
-      'Fundamentação',
-      'Metodologia',
-      'Ferramentas',
-      'Ciência & Poesia',
-      'Guia de Jornada'
+    // Verifica se o foco está no elemento, mas o focus-visible não está ativo
+    // No Playwright, não há um seletor nativo para :focus-visible, 
+    // mas podemos verificar se as propriedades do 'ring' (box-shadow) estão presentes.
+    // O Tailwind aplica o ring apenas em focus-visible.
+    let boxShadow = await introButton.evaluate((el) => window.getComputedStyle(el).boxShadow);
+    // Se o clique foi com mouse, o box-shadow não deve ser o do ring (que geralmente tem valores específicos)
+    // Na verdade, o Tailwind focus-visible:ring-2 adiciona box-shadow apenas no estado :focus-visible.
+    expect(boxShadow).toBe('none');
+
+    // 2. Navegação via Tab deve mostrar o ring
+    await page.keyboard.press('Tab'); // Supondo que o foco vá para o próximo ou volte
+    await page.keyboard.press('Shift+Tab'); // Volta para o botão anterior
+    await introButton.focus(); // Força foco via script simula teclado em muitos ambientes
+    
+    // Para garantir simulação de teclado real:
+    await page.keyboard.press('Tab'); // Move foco para fora
+    await page.keyboard.press('Shift+Tab'); // Move foco de volta via teclado
+    
+    await expect(introButton).toBeFocused();
+    boxShadow = await introButton.evaluate((el) => window.getComputedStyle(el).boxShadow);
+    expect(boxShadow).not.toBe('none');
+  });
+
+  test('deve percorrer a ordem de tabulação completa sem saltos', async ({ page }) => {
+    // Ordem esperada: Voltar -> Índice (5 itens) -> Ferramentas (6 links) -> Caminhos (3 links)
+    const expectedOrder = [
+      { role: 'button', name: 'Voltar' },
+      { role: 'button', name: 'Fundamentação' },
+      { role: 'button', name: 'Metodologia' },
+      { role: 'button', name: 'Ferramentas' },
+      { role: 'button', name: 'Ciência & Poesia' },
+      { role: 'button', name: 'Guia de Jornada' },
+      { role: 'link', name: 'Livro-Curso' },
+      { role: 'link', name: 'Formação PCH' },
+      { role: 'link', name: 'Curso PCH' },
+      { role: 'link', name: '8 Ferramentas' },
+      { role: 'link', name: 'Mapa Cerebral' },
+      { role: 'link', name: 'Aula Exclusiva' },
+      { role: 'link', name: 'Ver Detalhes', count: 0 }, // Primeiro botão de Detalhes
+      { role: 'link', name: 'Ver Detalhes', count: 1 }, // Segundo
+      { role: 'link', name: 'Ver Detalhes', count: 2 }, // Terceiro
     ];
 
-    for (const label of indexItems) {
+    for (const item of expectedOrder) {
       await page.keyboard.press('Tab');
-      const button = page.getByRole('button', { name: label, exact: true });
-      await expect(button).toBeFocused();
-      
-      // Verifica se há indicação visual de foco (ring do Tailwind)
-      await expect(button).toHaveClass(/focus-visible:ring-primary/);
-      
-      // Valida que o outline padrão foi removido para usar o ring customizado
-      await expect(button).toHaveCSS('outline-style', 'none');
-      
-      // Verifica se o box-shadow foi aplicado (não deve ser 'none')
-      const boxShadow = await button.evaluate((el) => window.getComputedStyle(el).boxShadow);
-      expect(boxShadow).not.toBe('none');
+      let locator;
+      if ('count' in item) {
+        locator = page.getByRole(item.role as any, { name: item.name }).nth(item.count);
+      } else {
+        locator = page.getByRole(item.role as any, { name: item.name, exact: true });
+      }
+      await expect(locator).toBeFocused();
     }
   });
 
-  test('deve atualizar o item ativo via teclado sem flicker ao navegar no índice', async ({ page }) => {
-    const indexItems = [
-      { id: 'theory-intro', label: 'Fundamentação' },
-      { id: 'methodology-pillars', label: 'Metodologia' },
-      { id: 'clinical-tools', label: 'Ferramentas' },
-      { id: 'science-neuro', label: 'Ciência & Poesia' },
-      { id: 'journey-guide', label: 'Guia de Jornada' }
-    ];
+  test('deve atualizar aria-current corretamente ao navegar pelo índice', async ({ page }) => {
+    const methodologyButton = page.getByRole('button', { name: 'Metodologia', exact: true });
+    const introButton = page.getByRole('button', { name: 'Fundamentação', exact: true });
 
-    // Navega até o segundo item usando Tab
+    // Inicialmente a fundamentação é a ativa
+    await expect(introButton).toHaveAttribute('aria-current', 'true');
+    await expect(methodologyButton).not.toHaveAttribute('aria-current', 'true');
+
+    // Navega para Metodologia via Tab + Enter
     await page.keyboard.press('Tab'); // Voltar
     await page.keyboard.press('Tab'); // Fundamentação
     await page.keyboard.press('Tab'); // Metodologia
-    
-    const methodologyButton = page.getByRole('button', { name: 'Metodologia', exact: true });
-    await expect(methodologyButton).toBeFocused();
-    
-    // Ativa via teclado (Enter)
     await page.keyboard.press('Enter');
+
+    // Agora Metodologia deve ser aria-current
+    await expect(methodologyButton).toHaveAttribute('aria-current', 'true');
+    await expect(introButton).not.toHaveAttribute('aria-current', 'true');
     
-    // Verifica se a seção correta ficou visível e o botão está marcado como ativo (bg-primary)
-    const methodologySection = page.locator('#methodology-pillars');
-    await expect(methodologySection).toBeInViewport();
-    
-    // O item ativo deve mudar para Metodologia
-    await expect(methodologyButton).toHaveClass(/bg-primary/);
-    
-    // Volta para o primeiro item via teclado
+    // Volta via teclado
     await page.keyboard.press('Shift+Tab');
-    const introButton = page.getByRole('button', { name: 'Fundamentação', exact: true });
-    await expect(introButton).toBeFocused();
     await page.keyboard.press('Space');
-    
-    const introSection = page.locator('#theory-intro');
-    await expect(introSection).toBeInViewport();
-    await expect(introButton).toHaveClass(/bg-primary/);
+    await expect(introButton).toHaveAttribute('aria-current', 'true');
   });
 
-  test('deve garantir que links de ferramentas são acessíveis via teclado', async ({ page }) => {
-    // Avança até a seção de ferramentas
-    const toolsButton = page.getByRole('button', { name: 'Ferramentas', exact: true });
-    await toolsButton.click();
-    await expect(page.locator('#clinical-tools')).toBeInViewport();
+  test('deve validar estilos de foco visível em diferentes viewports', async ({ page }) => {
+    const viewports = [
+      { width: 1280, height: 720 }, // Desktop
+      { width: 375, height: 812 }   // Mobile
+    ];
 
-    // Tabula através dos cards de ferramentas
-    // Como os cards são <Link> (que são <a>), eles devem ser focáveis
-    // Precisamos de alguns tabs para chegar neles
-    // Tab order: Voltar -> Índice (5 botões) -> Cards de Ferramentas
-    
-    // Vamos usar um seletor mais direto para focar o primeiro card de ferramenta
-    const firstTool = page.locator('a[href="/livro-curso"]').first();
-    
-    // Alternativamente, podemos simular o scroll e ver se o foco flui
-    // Mas para teste de ordem de tabulação, o ideal é contar os tabs ou usar focus() inicial
-    await firstTool.focus();
-    await expect(firstTool).toBeFocused();
-    await expect(firstTool).toHaveClass(/focus-visible:ring-primary/);
-    
-    // Verifica indicação visual de foco no card
-    const boxShadow = await firstTool.evaluate((el) => window.getComputedStyle(el).boxShadow);
-    expect(boxShadow).not.toBe('none');
-    
-    await page.keyboard.press('Tab');
-    const secondTool = page.locator('a[href="/formacao"]').first();
-    await expect(secondTool).toBeFocused();
-    await expect(secondTool).toHaveClass(/focus-visible:ring-primary/);
+    const targetButton = page.getByRole('button', { name: 'Metodologia', exact: true });
+
+    for (const vp of viewports) {
+      await page.setViewportSize(vp);
+      await targetButton.focus();
+      
+      // Verifica se o ring de foco mantém as propriedades visuais
+      const style = await targetButton.evaluate((el) => {
+        const s = window.getComputedStyle(el);
+        return {
+          boxShadow: s.boxShadow,
+          outline: s.outlineStyle,
+          borderRadius: s.borderRadius
+        };
+      });
+
+      expect(style.outline).toBe('none');
+      expect(style.boxShadow).not.toBe('none');
+      // No Tailwind, o ring-offset cria uma separação. Validamos que o shadow é robusto.
+      expect(style.boxShadow).toContain('rgb(139, 92, 246)'); // Cor primária
+      
+      await page.screenshot({ 
+        path: `test-results/focus-styles-${vp.width}x${vp.height}.png`,
+        fullPage: false 
+      });
+    }
   });
 });
