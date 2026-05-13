@@ -46,6 +46,47 @@ const TheoreticalSections = () => {
 
   return (
     <div className="space-y-24 animate-fade-in">
+      {/* 0. Fundamentação Teórica */}
+      <section className="space-y-10">
+        <div className="flex flex-col gap-1.5 px-1">
+          <h2 className="text-3xl md:text-4xl font-black tracking-tighter text-white">Fundamentação Teórica</h2>
+          <p className="text-[10px] md:text-xs font-bold uppercase tracking-[0.4em] text-white/30">O embasamento científico da PCH</p>
+        </div>
+        
+        <div className="glass-card p-8 md:p-12 bg-white/[0.02] border-white/5 space-y-8">
+          <div className="grid md:grid-cols-2 gap-12">
+            <div className="space-y-6">
+              <h3 className="text-2xl font-bold text-primary">Neurociência e Poesia</h3>
+              <p className="text-white/60 leading-relaxed font-light">
+                A Poesia Cognitiva Hipnótica (PCH) baseia-se em estudos de neuroestética que demonstram como a linguagem metafórica ativa áreas do córtex pré-frontal e do sistema límbico simultaneamente. Esta ativação dupla permite que a "lógica emocional" seja processada de forma mais eficaz do que através do discurso racional puro.
+              </p>
+              <div className="p-6 rounded-2xl bg-primary/5 border border-primary/10 italic text-sm text-white/50">
+                "A metáfora não é apenas um ornamento da linguagem, mas uma ferramenta fundamental da mente para organizar a experiência subjetiva."
+              </div>
+            </div>
+            <div className="space-y-6">
+              <h3 className="text-2xl font-bold text-primary">O Fenômeno Hipnótico</h3>
+              <p className="text-white/60 leading-relaxed font-light">
+                Utilizamos a Hipnose Ericksoniana como base para a comunicação com o inconsciente. Através de padrões de linguagem permissivos e sugestões indiretas inseridas nos versos, contornamos o "fator crítico" da mente consciente, permitindo que as sementes da mudança emocional germinem em solo fértil.
+              </p>
+              <ul className="space-y-3">
+                {[
+                  "Acesso ao estado de fluxo (Flow)",
+                  "Redução do ruído mental cognitivo",
+                  "Ancoragem de novos estados emocionais",
+                  "Ressignificação simbólica de traumas"
+                ].map((item, i) => (
+                  <li key={i} className="flex items-center gap-3 text-xs text-white/40 font-bold uppercase tracking-widest">
+                    <div className="w-1.5 h-1.5 rounded-full bg-primary" />
+                    {item}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* 1. Metodologia */}
       <section className="space-y-10">
         <div className="flex flex-col gap-1.5 px-1">
