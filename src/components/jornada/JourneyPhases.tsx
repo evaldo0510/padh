@@ -47,14 +47,19 @@ const SeasonIcon = ({ color }: { color: string }) => {
     purple: Sparkles,
   };
   const Icon = icons[color] || Sparkles;
+  const { scrollYProgress } = useScroll();
+  const rotate = useTransform(scrollYProgress, [0, 1], [0, 45]);
+  const y = useTransform(scrollYProgress, [0, 1], [0, -100]);
+
   return (
     <motion.div 
-      initial={{ rotate: -20, opacity: 0 }}
-      whileInView={{ rotate: 0, opacity: 0.05 }}
+      style={{ rotate, y }}
+      initial={{ opacity: 0 }}
+      whileInView={{ opacity: 0.05 }}
       transition={{ duration: 2 }}
       className="absolute top-0 right-0 -translate-y-1/4 translate-x-1/4 z-0"
     >
-      <Icon className="w-64 h-64 md:w-[400px] md:h-[400px]" />
+      <Icon className="w-64 h-64 md:w-[600px] md:h-[600px]" />
     </motion.div>
   );
 };
