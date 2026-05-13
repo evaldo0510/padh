@@ -98,9 +98,15 @@ test.describe('Acessibilidade E2E - Fundamentação', () => {
     // Mas para teste de ordem de tabulação, o ideal é contar os tabs ou usar focus() inicial
     await firstTool.focus();
     await expect(firstTool).toBeFocused();
+    await expect(firstTool).toHaveClass(/focus-visible:ring-primary/);
+    
+    // Verifica indicação visual de foco no card
+    const boxShadow = await firstTool.evaluate((el) => window.getComputedStyle(el).boxShadow);
+    expect(boxShadow).not.toBe('none');
     
     await page.keyboard.press('Tab');
     const secondTool = page.locator('a[href="/formacao"]').first();
     await expect(secondTool).toBeFocused();
+    await expect(secondTool).toHaveClass(/focus-visible:ring-primary/);
   });
 });
