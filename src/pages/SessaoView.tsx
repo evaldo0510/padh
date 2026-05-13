@@ -292,7 +292,7 @@ const SessaoView = () => {
         </div>
 
         {/* Centered content — one block at a time */}
-        <main className="flex-1 flex items-center justify-center px-6 md:px-12 overflow-y-auto scrollbar-hide py-20 md:py-0">
+        <main className="flex-1 w-full flex flex-col items-center justify-start md:justify-center px-6 md:px-12 overflow-y-auto scrollbar-hide pb-48 pt-24">
           <AnimatePresence mode="wait">
             {isFinished ? (
               <motion.div
