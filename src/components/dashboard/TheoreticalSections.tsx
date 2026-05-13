@@ -14,7 +14,36 @@ const TheoreticalSections = () => {
   ];
 
   const ferramentas = [
-// ... keep existing code
+    {
+      icon: <BookOpen className="w-5 h-5" />,
+      title: "Livro-Curso",
+      desc: "Mergulhe na teoria e prática da PCH com exercícios guiados.",
+      link: "/livro-curso",
+    },
+    {
+      icon: <GraduationCap className="w-5 h-5" />,
+      title: "Formação PCH",
+      desc: "Capacitação completa para terapeutas e educadores.",
+      link: "/formacao",
+    },
+    {
+      icon: <Target className="w-5 h-5" />,
+      title: "Curso PCH",
+      desc: "O manual técnico completo da metodologia e neurociência.",
+      link: "/curso-padh",
+    },
+    {
+      icon: <Feather className="w-5 h-5" />,
+      title: "8 Ferramentas",
+      desc: "Do Poema-Funil à Poesia Hipnótica — 8 instrumentos vivos.",
+      link: "/ferramentas",
+    },
+    {
+      icon: <Brain className="w-5 h-5" />,
+      title: "Mapa Cerebral",
+      desc: "Descubra como cada verso ativa áreas específicas do cérebro.",
+      link: "/mapa-cerebral",
+    },
     {
       icon: <Star className="w-5 h-5" />,
       title: "Aula Exclusiva",
