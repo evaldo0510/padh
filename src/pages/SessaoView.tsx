@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import PageLayout from "@/components/layout/PageLayout";
+import SyncIndicator from "@/components/layout/SyncIndicator";
 import { useParams, useNavigate } from "react-router-dom";
 import { JORNADA_DATA } from "@/lib/jornada-data";
 import { useJornada } from "@/hooks/useJornada";
@@ -310,8 +311,11 @@ const SessaoView = () => {
               <ArrowLeft className="w-4 h-4" />
               <span className="hidden sm:inline">Voltar</span>
             </button>
-            <div className="text-[10px] uppercase tracking-[0.3em] text-white/30 font-medium">
-              {currentExIdx + 1} / {totalSteps}
+            <div className="flex items-center gap-4">
+              <SyncIndicator />
+              <div className="text-[10px] uppercase tracking-[0.3em] text-white/30 font-medium">
+                {currentExIdx + 1} / {totalSteps}
+              </div>
             </div>
           </div>
         </div>

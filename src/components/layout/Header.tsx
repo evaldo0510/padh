@@ -10,6 +10,7 @@ import { supabaseConfig } from '@/integrations/supabase/config';
 import { useJornada } from '@/hooks/useJornada';
 import { JORNADA_DATA } from '@/lib/jornada-data';
 import { toast } from 'sonner';
+import SyncIndicator from './SyncIndicator';
 
 const Header = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -124,31 +125,34 @@ const Header = () => {
           {/* RIGHT — Progress + profile */}
           <div className="flex items-center gap-2 shrink-0">
             {isLoggedIn ? (
-              <div className="flex items-center gap-2">
-                <div
-                  className="hidden lg:flex items-center gap-3 px-4 h-9 rounded-full bg-white/5 border border-white/10"
-                >
-                  <span className="text-[10px] font-bold text-white/40 uppercase tracking-widest">
-                    {dayLabel}
-                  </span>
-                  <div className="w-12 h-1 rounded-full bg-white/10 overflow-hidden">
-                    <div
-                      className="h-full bg-primary transition-all duration-500"
-                      style={{ width: `${percent}%` }}
-                    />
+              <div className="flex items-center gap-3">
+                <SyncIndicator className="hidden md:flex" />
+                <div className="flex items-center gap-2">
+                  <div
+                    className="hidden lg:flex items-center gap-3 px-4 h-9 rounded-full bg-white/5 border border-white/10"
+                  >
+                    <span className="text-[10px] font-bold text-white/40 uppercase tracking-widest">
+                      {dayLabel}
+                    </span>
+                    <div className="w-12 h-1 rounded-full bg-white/10 overflow-hidden">
+                      <div
+                        className="h-full bg-primary transition-all duration-500"
+                        style={{ width: `${percent}%` }}
+                      />
+                    </div>
                   </div>
-                </div>
 
-                <Button
-                  variant="ghost"
-                  size="sm"
-                  className="h-9 w-9 p-0 rounded-full hover:bg-white/10 bg-white/5 border border-white/10"
-                  asChild
-                >
-                  <Link to="/dashboard">
-                    <User className="w-4 h-4 text-white/80" />
-                  </Link>
-                </Button>
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    className="h-9 w-9 p-0 rounded-full hover:bg-white/10 bg-white/5 border border-white/10"
+                    asChild
+                  >
+                    <Link to="/dashboard">
+                      <User className="w-4 h-4 text-white/80" />
+                    </Link>
+                  </Button>
+                </div>
               </div>
             ) : (
               <Button size="sm" variant="ghost" className="h-9 px-4 text-xs font-bold uppercase tracking-widest text-white/60 hover:text-white" asChild>
