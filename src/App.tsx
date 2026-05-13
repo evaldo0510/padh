@@ -320,6 +320,14 @@ const AnimatedRoutes = () => {
             }
           />
           <Route
+            path="/fundamentacao"
+            element={
+              <PageTransition>
+                <FundamentacaoTeorica />
+              </PageTransition>
+            }
+          />
+          <Route
             path="/ciencia-da-poesia"
             element={
               <PageTransition>
