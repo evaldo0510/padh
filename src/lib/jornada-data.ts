@@ -219,6 +219,7 @@ export const JORNADA_DATA: FaseJornada[] = [
     titulo: "Reprogramação",
     descricao: "Transformar consciência em novas respostas internas. Interrompendo padrões e criando novas escolhas.",
     cor: "emerald",
+    resultados: ["Novas respostas automáticas", "Soberania emocional", "Liberdade de escolha"],
     sessoes: [
       {
         id: "interrupcao-automato",
