@@ -102,7 +102,11 @@ const TheoreticalSections = () => {
             <button
               key={item.id}
               onClick={() => scrollTo(item.id)}
-              className="text-[10px] font-bold uppercase tracking-widest text-white/40 hover:text-primary transition-colors whitespace-nowrap border border-white/5 hover:border-primary/20 px-3 py-1.5 rounded-full"
+              className={`text-[10px] font-bold uppercase tracking-widest transition-all duration-300 whitespace-nowrap border px-4 py-2 rounded-full ${
+                activeSection === item.id 
+                  ? "bg-primary text-white border-primary shadow-[0_0_15px_-3px_rgba(139,92,246,0.6)]" 
+                  : "text-white/40 border-white/5 hover:border-primary/20 hover:text-primary"
+              }`}
             >
               {item.label}
             </button>
