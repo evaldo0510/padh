@@ -519,7 +519,9 @@ const AnimatedRoutes = () => {
             path="/diagnosticos"
             element={
               <PageTransition>
-                <DiagnosticsPage />
+                <ProtectedRoute authMessage="Acesso restrito.">
+                  <DiagnosticsPage />
+                </ProtectedRoute>
               </PageTransition>
             }
           />
@@ -527,7 +529,9 @@ const AnimatedRoutes = () => {
             path="/configurar-supabase"
             element={
               <PageTransition>
-                <ConfigGuidePage />
+                <ProtectedRoute authMessage="Acesso restrito.">
+                  <ConfigGuidePage />
+                </ProtectedRoute>
               </PageTransition>
             }
           />
@@ -535,7 +539,9 @@ const AnimatedRoutes = () => {
             path="/ui-guide"
             element={
               <PageTransition>
-                <UiGuide />
+                <ProtectedRoute authMessage="Acesso restrito.">
+                  <UiGuide />
+                </ProtectedRoute>
               </PageTransition>
             }
           />
