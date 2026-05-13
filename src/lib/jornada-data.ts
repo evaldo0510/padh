@@ -34,6 +34,7 @@ export interface FaseJornada {
   descricao: string;
   cor: string;
   sessoes: SessaoJornada[];
+  resultados?: string[];
 }
 
 export const JORNADA_DATA: FaseJornada[] = [
