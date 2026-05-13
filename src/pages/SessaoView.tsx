@@ -15,7 +15,13 @@ const PACING_DELAY_MS = 250;
 const SessaoView = () => {
   const { phaseId, sessionId } = useParams();
   const navigate = useNavigate();
-  const { saveResponse, completeSession, getResponse, jornada } = useJornada();
+  const { saveResponse, completeSession, startSession, getResponse, jornada } = useJornada();
+
+  useEffect(() => {
+    if (sessionId) {
+      startSession(sessionId);
+    }
+  }, [sessionId, startSession]);
 
   const fase = JORNADA_DATA.find((f) => f.id === phaseId);
   const sessao = fase?.sessoes.find((s) => s.id === sessionId);

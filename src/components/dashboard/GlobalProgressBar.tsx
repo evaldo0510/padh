@@ -100,6 +100,36 @@ const GlobalProgressBar: React.FC = () => {
           </div>
         </div>
       </div>
+
+      {/* Progresso por Temporada */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4 pt-4 border-t border-white/5">
+        {JORNADA_DATA.map((fase) => {
+          const completedInFase = fase.sessoes.filter(s => jornada.completedSessions.includes(s.id)).length;
+          const totalInFase = fase.sessoes.length;
+          const pctFase = Math.round((completedInFase / totalInFase) * 100);
+          
+          return (
+            <div key={fase.id} className="space-y-2">
+              <div className="flex items-center justify-between">
+                <span className="text-[8px] font-black uppercase tracking-[0.2em] text-white/30">
+                  TEMP 0{fase.numero}
+                </span>
+                <span className={`text-[8px] font-black uppercase tracking-widest ${pctFase === 100 ? 'text-emerald-400' : 'text-primary/60'}`}>
+                  {pctFase}%
+                </span>
+              </div>
+              <div className="h-1 w-full bg-white/5 rounded-full overflow-hidden">
+                <motion.div 
+                  initial={{ width: 0 }}
+                  animate={{ width: `${pctFase}%` }}
+                  transition={{ duration: 1, delay: 0.5 + fase.numero * 0.1 }}
+                  className={`h-full ${pctFase === 100 ? 'bg-emerald-500 shadow-[0_0_8px_rgba(16,185,129,0.4)]' : 'bg-primary shadow-glow-sm'}`}
+                />
+              </div>
+            </div>
+          );
+        })}
+      </div>
     </div>
   );
 };
