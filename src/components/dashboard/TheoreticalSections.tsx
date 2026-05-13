@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { Card, CardContent } from "@/components/ui/card";
 import { BookOpen, GraduationCap, Target, Feather, Brain, Star, ArrowRight } from "lucide-react";
 import { Link } from "react-router-dom";
