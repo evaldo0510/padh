@@ -165,7 +165,7 @@ const SessaoView = () => {
     transitionTimeoutRef.current = setTimeout(() => {
       if (isLast) {
         completeSession(sessao!.id);
-        goToNextSessionOrDashboard();
+        setIsFinished(true);
       } else {
         setCurrentExIdx((p) => p + 1);
         // pacing pause before showing next
