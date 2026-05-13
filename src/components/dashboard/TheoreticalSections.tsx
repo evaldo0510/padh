@@ -95,7 +95,7 @@ const TheoreticalSections = () => {
   return (
     <div className="space-y-32 animate-fade-in" id="theoretical-foundations">
       {/* Table of Contents / Index */}
-      <nav className="sticky top-20 z-40 bg-background/80 backdrop-blur-md border-b border-white/5 py-4 overflow-x-auto scrollbar-hide -mx-6 px-6 md:mx-0 md:px-0">
+      <nav className="sticky top-14 z-40 bg-background/80 backdrop-blur-md border-b border-white/5 py-4 overflow-x-auto scrollbar-hide -mx-6 px-6 md:mx-0 md:px-0">
         <div className="flex items-center gap-4 md:justify-center">
           <span className="text-[10px] font-black uppercase tracking-[0.2em] text-primary/60 whitespace-nowrap">Índice:</span>
           {indexItems.map((item) => (
