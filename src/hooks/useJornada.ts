@@ -18,6 +18,10 @@ export interface JornadaProgress {
   responses: RespostaExercicio[];
   favorites?: string[];
   last_updated?: string;
+  pendingSync?: {
+    sessions: string[];
+    responses: string[];
+  };
 }
 
 const STORAGE_KEY = "padh_jornada_progress";
