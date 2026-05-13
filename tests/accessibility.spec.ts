@@ -30,9 +30,15 @@ test.describe('Acessibilidade E2E - Fundamentação', () => {
       const button = page.getByRole('button', { name: label, exact: true });
       await expect(button).toBeFocused();
       
-      // Verifica se há indicação visual de foco (simplificado por checagem de estado :focus-visible ou estilos)
-      // Nota: No Tailwind/Radix, o foco costuma ser via ring-offset ou similar.
-      // Aqui apenas validamos que o navegador reconhece o foco.
+      // Verifica se há indicação visual de foco (ring do Tailwind)
+      await expect(button).toHaveClass(/focus-visible:ring-primary/);
+      
+      // Valida que o outline padrão foi removido para usar o ring customizado
+      await expect(button).toHaveCSS('outline-style', 'none');
+      
+      // Verifica se o box-shadow foi aplicado (não deve ser 'none')
+      const boxShadow = await button.evaluate((el) => window.getComputedStyle(el).boxShadow);
+      expect(boxShadow).not.toBe('none');
     }
   });
 
