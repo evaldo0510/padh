@@ -61,10 +61,13 @@ const JourneyPhases: React.FC<JourneyPhasesProps> = ({
   };
 
   return (
-    <div className="space-y-32 md:space-y-48 relative overflow-hidden">
+    <div className="space-y-48 md:space-y-72 relative">
       {/* Cinematic noise and mesh gradient overlay */}
-      <div className="absolute inset-0 bg-noise pointer-events-none z-0" />
-      <div className="absolute inset-0 gradient-mesh pointer-events-none z-0 opacity-50" />
+      <div className="fixed inset-0 bg-noise pointer-events-none z-0 opacity-20" />
+      <div className="fixed inset-0 gradient-mesh pointer-events-none z-0 opacity-30" />
+
+      {/* Vertical Connection Line */}
+      <div className="absolute left-6 md:left-12 top-0 bottom-0 w-px bg-gradient-to-b from-primary/50 via-white/10 to-transparent hidden md:block z-10" />
 
       {JORNADA_DATA.map((fase, idx) => {
         const prevFase = JORNADA_DATA[idx - 1];
@@ -72,24 +75,33 @@ const JourneyPhases: React.FC<JourneyPhasesProps> = ({
         const episodesCompleted = fase.sessoes.filter(s => completedSessions.includes(s.id)).length;
         
         return (
-          <section key={fase.id} className="relative group">
+          <section key={fase.id} className="relative group min-h-[60vh] flex flex-col justify-center">
             {/* Immersive background per season */}
             <SeasonBackground color={fase.cor} />
             
-            <div className={`container-fluid px-6 md:px-12 transition-all duration-1000 ${!isUnlocked && 'opacity-40 grayscale blur-[1px]'}`}>
-              <div className="flex flex-col md:flex-row md:items-end justify-between gap-8 mb-12 relative">
+            {/* Floating Season Number Background */}
+            <div className="absolute -left-12 top-1/2 -translate-y-1/2 text-[30vw] font-black text-white/[0.02] select-none pointer-events-none z-0 hidden lg:block">
+              0{fase.numero}
+            </div>
+            
+            <div className={`container-fluid px-6 md:px-12 transition-all duration-1000 relative z-10 ${!isUnlocked && 'opacity-40 grayscale blur-[1px]'}`}>
+              <div className="flex flex-col md:flex-row md:items-end justify-between gap-8 mb-20 relative">
                 <SeasonIcon color={fase.cor} />
                 
                 <motion.div 
-                  initial={{ opacity: 0, x: -20 }}
+                  initial={{ opacity: 0, x: -40 }}
                   whileInView={{ opacity: 1, x: 0 }}
-                  viewport={{ once: true }}
-                  className="space-y-3 relative z-10"
+                  viewport={{ once: true, margin: "-100px" }}
+                  transition={{ duration: 1.2, ease: [0.22, 1, 0.36, 1] }}
+                  className="space-y-6 relative z-10"
                 >
-                  <div className="flex flex-wrap items-center gap-4">
-                    <span className="text-[10px] font-black uppercase tracking-[0.5em] text-primary bg-primary/10 px-3 py-1 rounded-full">
-                      Temporada {fase.numero}
-                    </span>
+                  <div className="flex flex-wrap items-center gap-6">
+                    <div className="flex items-center gap-2">
+                      <span className="w-8 h-[2px] bg-primary rounded-full" />
+                      <span className="text-xs font-black uppercase tracking-[0.5em] text-primary">
+                        Temporada {fase.numero}
+                      </span>
+                    </div>
                     <div className="flex items-center gap-3">
                       {isUnlocked ? (
                         <Badge variant="outline" className="text-[9px] uppercase tracking-widest border-emerald-500/30 text-emerald-400 bg-emerald-500/5 px-3 py-1">
