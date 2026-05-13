@@ -259,6 +259,32 @@ const JourneyPhases: React.FC<JourneyPhasesProps> = ({
                       </motion.div>
                     );
                   })}
+                  {fase.sessoes.every(s => completedSessions.includes(s.id)) && JORNADA_DATA[idx + 1] && (
+                    <motion.div 
+                      initial={{ opacity: 0, y: 20 }}
+                      whileInView={{ opacity: 1, y: 0 }}
+                      className="col-span-full mt-12 p-12 rounded-3xl bg-gradient-to-r from-primary/10 to-transparent border border-primary/20 backdrop-blur-md flex flex-col md:flex-row items-center justify-between gap-8"
+                    >
+                      <div className="space-y-2">
+                        <span className="text-[10px] font-black text-primary uppercase tracking-[0.5em]">Próximo Nível</span>
+                        <h4 className="text-3xl md:text-5xl font-black text-white tracking-tighter">
+                          {JORNADA_DATA[idx + 1].titulo}
+                        </h4>
+                        <p className="text-white/40 italic">{JORNADA_DATA[idx + 1].descricao}</p>
+                      </div>
+                      <Button 
+                        size="lg" 
+                        onClick={() => {
+                          const nextFase = JORNADA_DATA[idx + 1];
+                          navigate(`/jornada/${nextFase.id}/${nextFase.sessoes[0].id}`);
+                        }}
+                        className="rounded-full bg-primary text-black font-black uppercase tracking-widest px-10 h-16 group"
+                      >
+                        Desbloquear Temporada {JORNADA_DATA[idx + 1].numero}
+                        <ChevronRight className="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform" />
+                      </Button>
+                    </motion.div>
+                  )}
                 </motion.div>
               )}
             </div>
