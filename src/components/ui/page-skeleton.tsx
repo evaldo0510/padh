@@ -1,4 +1,6 @@
+import React from "react";
 import { Skeleton } from "@/components/ui/skeleton";
+import PCHSymbol from "@/components/ui/PCHSymbol";
 
 export const HeroSkeleton = () => (
   <section className="relative overflow-hidden min-h-[60vh] flex items-center">
