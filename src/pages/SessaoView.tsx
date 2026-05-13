@@ -513,8 +513,8 @@ const SessaoView = () => {
           </AnimatePresence>
         </main>
 
-        {/* Bottom: fixed navigation bar */}
-        <footer className="fixed bottom-0 left-0 right-0 z-50 px-6 md:px-12 pb-[calc(env(safe-area-inset-bottom)+1.5rem)] pt-10 flex justify-center bg-gradient-to-t from-[#050505] via-[#050505]/95 to-transparent">
+        {/* Bottom: fixed-feel navigation bar (integrated in flex flow for keyboard handling) */}
+        <footer className="w-full z-50 px-6 md:px-12 pb-[calc(env(safe-area-inset-bottom)+1.5rem)] pt-6 flex justify-center bg-[#050505] border-t border-white/5 md:bg-gradient-to-t md:from-[#050505] md:via-[#050505]/95 md:to-transparent md:border-none">
           <AnimatePresence>
             {!isTransitioning && !isFinished && (
               <motion.div
