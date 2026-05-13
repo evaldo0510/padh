@@ -15,7 +15,9 @@ import ProtectedRoute from "./components/auth/ProtectedRoute";
 import { PCHWelcomeGate } from "./components/onboarding/PCHWelcome";
 import { ProfileProvider } from "./providers/ProfileProvider";
 import { cancelAllPrefetches } from "./lib/route-prefetch";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+import SplashScreen from "./components/layout/SplashScreen";
+import { useAuth } from "./hooks/useAuth";
 
 const Index = lazy(() => import("./pages/Index"));
 const NotFound = lazy(() => import("./pages/NotFound"));
