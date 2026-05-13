@@ -37,13 +37,13 @@ const StreamingHome = () => {
         <div className="flex justify-end pt-4">
           <div className="flex items-center space-x-3 bg-white/[0.03] backdrop-blur-md border border-white/5 py-3 px-5 rounded-full shadow-2xl">
             <div className="flex flex-col items-end">
-               <Label htmlFor="focus-mode" className="text-[10px] font-black uppercase tracking-[0.2em] text-white/40 cursor-pointer">Modo Foco</Label>
-               <span className="text-[8px] text-primary/60 font-bold uppercase tracking-widest">{focusMode ? 'Apenas Prática' : 'Visão Completa'}</span>
+               <Label htmlFor="focus-mode" className="text-[10px] font-black uppercase tracking-[0.2em] text-white/40 cursor-pointer">Teoria e Fundamentos</Label>
+               <span className="text-[8px] text-primary/60 font-bold uppercase tracking-widest">{!focusMode ? 'Visíveis' : 'Ocultos'}</span>
             </div>
             <Switch 
               id="focus-mode" 
-              checked={focusMode} 
-              onCheckedChange={setFocusMode}
+              checked={!focusMode} 
+              onCheckedChange={(checked) => setFocusMode(!checked)}
               className="data-[state=checked]:bg-primary"
             />
           </div>
