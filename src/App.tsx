@@ -347,7 +347,7 @@ const AnimatedRoutes = () => {
             path="/admin/pwa-health"
             element={
               <PageTransition>
-                <ProtectedRoute>
+                <ProtectedRoute authMessage="Acesso restrito a administradores.">
                   <AdminPWAHealth />
                 </ProtectedRoute>
               </PageTransition>
@@ -357,7 +357,7 @@ const AnimatedRoutes = () => {
             path="/admin/pwa-diagnostics"
             element={
               <PageTransition>
-                <ProtectedRoute>
+                <ProtectedRoute authMessage="Acesso restrito a administradores.">
                   <AdminPWADiagnostics />
                 </ProtectedRoute>
               </PageTransition>
@@ -367,7 +367,9 @@ const AnimatedRoutes = () => {
             path="/admin"
             element={
               <PageTransition>
-                <Admin />
+                <ProtectedRoute authMessage="Acesso restrito a administradores.">
+                  <Admin />
+                </ProtectedRoute>
               </PageTransition>
             }
           />
@@ -517,7 +519,9 @@ const AnimatedRoutes = () => {
             path="/diagnosticos"
             element={
               <PageTransition>
-                <DiagnosticsPage />
+                <ProtectedRoute authMessage="Acesso restrito.">
+                  <DiagnosticsPage />
+                </ProtectedRoute>
               </PageTransition>
             }
           />
@@ -525,7 +529,9 @@ const AnimatedRoutes = () => {
             path="/configurar-supabase"
             element={
               <PageTransition>
-                <ConfigGuidePage />
+                <ProtectedRoute authMessage="Acesso restrito.">
+                  <ConfigGuidePage />
+                </ProtectedRoute>
               </PageTransition>
             }
           />
@@ -533,7 +539,9 @@ const AnimatedRoutes = () => {
             path="/ui-guide"
             element={
               <PageTransition>
-                <UiGuide />
+                <ProtectedRoute authMessage="Acesso restrito.">
+                  <UiGuide />
+                </ProtectedRoute>
               </PageTransition>
             }
           />
