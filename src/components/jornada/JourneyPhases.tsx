@@ -69,6 +69,7 @@ const JourneyPhases: React.FC<JourneyPhasesProps> = ({
       {JORNADA_DATA.map((fase, idx) => {
         const prevFase = JORNADA_DATA[idx - 1];
         const isUnlocked = idx === 0 || prevFase.sessoes.every(s => completedSessions.includes(s.id));
+        const episodesCompleted = fase.sessoes.filter(s => completedSessions.includes(s.id)).length;
         
         return (
           <section key={fase.id} className="relative group">
@@ -85,15 +86,24 @@ const JourneyPhases: React.FC<JourneyPhasesProps> = ({
                   viewport={{ once: true }}
                   className="space-y-3 relative z-10"
                 >
-                  <div className="flex items-center gap-4">
+                  <div className="flex flex-wrap items-center gap-4">
                     <span className="text-[10px] font-black uppercase tracking-[0.5em] text-primary bg-primary/10 px-3 py-1 rounded-full">
                       Temporada {fase.numero}
                     </span>
-                    {isUnlocked && (
-                      <Badge variant="outline" className="text-[9px] uppercase tracking-widest border-emerald-500/30 text-emerald-400 bg-emerald-500/5">
-                        Disponível
-                      </Badge>
-                    )}
+                    <div className="flex items-center gap-3">
+                      {isUnlocked ? (
+                        <Badge variant="outline" className="text-[9px] uppercase tracking-widest border-emerald-500/30 text-emerald-400 bg-emerald-500/5 px-3 py-1">
+                          Disponível
+                        </Badge>
+                      ) : (
+                        <Badge variant="outline" className="text-[9px] uppercase tracking-widest border-white/10 text-white/30 px-3 py-1">
+                          Bloqueado
+                        </Badge>
+                      )}
+                      <span className="text-[9px] font-black text-white/20 uppercase tracking-[0.2em] bg-white/5 px-3 py-1 rounded-full border border-white/5">
+                        {episodesCompleted} / {fase.sessoes.length} EPISÓDIOS
+                      </span>
+                    </div>
                   </div>
                   <h2 className="text-5xl md:text-8xl font-black tracking-tighter text-white leading-none">
                     {fase.titulo}
@@ -198,4 +208,5 @@ const JourneyPhases: React.FC<JourneyPhasesProps> = ({
     </div>
   );
 };
+
 export default JourneyPhases;
