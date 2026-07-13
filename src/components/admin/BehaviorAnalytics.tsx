@@ -10,19 +10,42 @@ import {
   isAdminRangePreset,
 } from "@/lib/admin-filters";
 import {
-  buildCohort,
   buildFunnel,
   computeRetention,
   FUNNEL_STAGES,
   FunnelStage,
   mergeActivityDays,
   UserEventRow,
+  CohortRow,
 } from "@/lib/user-events";
 import { Users, TrendingUp, Filter } from "lucide-react";
 
 const DAY_MS = 86_400_000;
 
 type StageFilter = "all" | FunnelStage;
+
+interface CohortRpcRow {
+  week_start: string;
+  cohort_size: number;
+  day_offset: number;
+  retained: number;
+  retention: number | null;
+}
+
+function cohortRowsFromRpc(rows: CohortRpcRow[]): CohortRow[] {
+  const byWeek = new Map<string, CohortRow>();
+  let maxOffset = 0;
+  for (const r of rows) maxOffset = Math.max(maxOffset, r.day_offset);
+  for (const r of rows) {
+    let row = byWeek.get(r.week_start);
+    if (!row) {
+      row = { weekStart: r.week_start, size: r.cohort_size, retention: Array(maxOffset + 1).fill(null) };
+      byWeek.set(r.week_start, row);
+    }
+    row.retention[r.day_offset] = r.retention == null ? null : Number(r.retention);
+  }
+  return Array.from(byWeek.values()).sort((a, b) => a.weekStart.localeCompare(b.weekStart));
+}
 
 export default function BehaviorAnalytics() {
   const [range, setRange] = useState<AdminRangePreset>(ADMIN_RANGE_DEFAULT);
