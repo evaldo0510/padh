@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useId } from "react";
 import PageLayout from "@/components/layout/PageLayout";
 import { Button } from "@/components/ui/button";
 import { FileDown, Save, FileText, RotateCcw } from "lucide-react";
@@ -130,16 +130,22 @@ const Prontuario: React.FC = () => {
     children,
   }: {
     label: string;
-    children: React.ReactNode;
-  }) => (
-    <div>
-      {" "}
-      <label className="block text-sm font-medium text-foreground mb-1.5">
-        {label}
-      </label>{" "}
-      {children}
-    </div>
-  );
+    children: React.ReactElement<{ id?: string; "aria-label"?: string }>;
+  }) => {
+    const generatedId = useId();
+    const fieldId = children.props.id ?? generatedId;
+    return (
+      <div>
+        <label
+          htmlFor={fieldId}
+          className="block text-sm font-medium text-foreground mb-1.5"
+        >
+          {label}
+        </label>
+        {React.cloneElement(children, { id: fieldId })}
+      </div>
+    );
+  };
   const inputCls =
     "w-full px-3 py-2 rounded-md border border-border bg-background text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/30";
   return (
