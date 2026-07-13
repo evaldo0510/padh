@@ -13,7 +13,7 @@ import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import PageLayout from "@/components/layout/PageLayout";
 import { StudyCard } from "@/components/sections/ScientificValidation";
-import heroImage from "@/assets/hero-ciencia-poesia.jpg";
+import heroImage from "@/assets/hero-ciencia-poesia.webp";
 import ScienceStats from "@/components/sections/ScienceStats";
 import {
   scientificStudies,

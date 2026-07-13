@@ -21,7 +21,7 @@ import {
 } from "lucide-react";
 import PoemadiagnosticoInterativo from "@/components/sections/PoemadiagnosticoInterativo";
 import { Link, useNavigate } from "react-router-dom";
-import heroImage from "@/assets/hero-padh.png";
+import heroImage from "@/assets/hero-padh.webp";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import Header from "@/components/layout/Header";
