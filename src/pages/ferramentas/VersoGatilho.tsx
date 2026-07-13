@@ -1,5 +1,6 @@
 import React from "react";
 import { Anchor, Brain, BookOpen, Lightbulb, Zap } from "lucide-react";
+import FerramentaHero from "@/components/ferramentas/FerramentaHero";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import PageLayout from "@/components/layout/PageLayout";
 import { useScrollAnimation } from "@/hooks/useScrollAnimation";
@@ -33,50 +34,27 @@ const VersoGatilho = () => {
   return (
     <PageLayout seo={pagesSEO.versoGatilho} currentPage="Verso-Gatilho">
       {" "}
-      {/* Hero */}
-      <section className="relative overflow-hidden">
-        {" "}
-        <div className="absolute inset-0 gradient-glow" />{" "}
-        <div className="relative container mx-auto px-6 py-20 text-center">
-          {" "}
-          <div className="animate-fade-in-up max-w-3xl mx-auto">
-            {" "}
-            <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-primary/20 bg-primary/5 text-primary text-sm font-medium mb-6">
-              {" "}
-              <Anchor className="spiritual-icon spiritual-icon-sm" /> Ferramenta
-              2 — P.A.D.H.{" "}
-            </div>{" "}
-            <h1 className="text-4xl md:text-6xl font-heading font-bold mb-4 text-foreground">
-              {" "}
-              Verso-<span className="text-primary italic">Gatilho</span>{" "}
-            </h1>{" "}
-            <p className="text-xl text-muted-foreground mb-2 font-medium">
-              A Palavra-Chave que Liberta
-            </p>{" "}
-            <p className="text-lg text-muted-foreground leading-relaxed max-w-2xl mx-auto">
-              {" "}
-              Uma âncora emocional rápida — um verso curto e memorável que
-              funciona como um botão de emergência emocional, um
-              microtransplante de consciência.{" "}
-            </p>{" "}
-            <div className="mx-auto w-full max-w-md mt-6 mb-4">
-              {" "}
-              <img
-                src={toolImage}
-                alt="Verso-Gatilho — âncora emocional poética"
-                className="w-full rounded-xl shadow-lg opacity-80"
-              />{" "}
-            </div>{" "}
-            <div className="poem-block max-w-sm mx-auto mt-4">
-              {" "}
-              <p className="poem-text text-foreground/80">
-                "Eu não sou o que me prende,
-                <br /> sou o que se solta depois."{" "}
-              </p>{" "}
-            </div>{" "}
-          </div>{" "}
-        </div>{" "}
-      </section>{" "}
+      <FerramentaHero
+        icon={Anchor}
+        badgeLabel="Ferramenta 2 — P.A.D.H."
+        title={
+          <>
+            Verso-<span className="text-primary italic">Gatilho</span>
+          </>
+        }
+        subtitle="A Palavra-Chave que Liberta"
+        description="Uma âncora emocional rápida — um verso curto e memorável que funciona como um botão de emergência emocional, um microtransplante de consciência."
+        image={{
+          src: toolImage,
+          alt: "Verso-Gatilho — âncora emocional poética",
+        }}
+        poem={
+          <>
+            "Eu não sou o que me prende,
+            <br /> sou o que se solta depois."
+          </>
+        }
+      />{" "}
       {/* Objetivo e Modo de Uso */}
       <section className="py-20 border-t border-border/30">
         {" "}

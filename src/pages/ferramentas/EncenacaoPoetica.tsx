@@ -1,5 +1,6 @@
 import React from "react";
 import { Drama, Brain, BookOpen, MessageSquare } from "lucide-react";
+import FerramentaHero from "@/components/ferramentas/FerramentaHero";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import PageLayout from "@/components/layout/PageLayout";
 import { useScrollAnimation } from "@/hooks/useScrollAnimation";
@@ -13,53 +14,29 @@ const EncenacaoPoetica = () => {
   return (
     <PageLayout seo={pagesSEO.encenacaoPoetica} currentPage="Encenação Poética">
       {" "}
-      {/* Hero */}
-      <section className="relative overflow-hidden">
-        {" "}
-        <div className="absolute inset-0 gradient-glow" />{" "}
-        <div className="relative container mx-auto px-6 py-20 text-center">
-          {" "}
-          <div className="animate-fade-in-up max-w-3xl mx-auto">
-            {" "}
-            <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-primary/20 bg-primary/5 text-primary text-sm font-medium mb-6">
-              {" "}
-              <Drama className="spiritual-icon spiritual-icon-sm" /> Ferramenta
-              5 — P.A.D.H.{" "}
-            </div>{" "}
-            <h1 className="text-4xl md:text-6xl font-heading font-bold mb-4 text-foreground">
-              {" "}
-              Encenação{" "}
-              <span className="text-primary italic">Poética Interna</span>{" "}
-            </h1>{" "}
-            <p className="text-xl text-muted-foreground mb-2 font-medium">
-              O Teatro dos Eus
-            </p>{" "}
-            <p className="text-lg text-muted-foreground leading-relaxed max-w-2xl mx-auto">
-              {" "}
-              Quando o Eu vira uma conversa entre eus — dar forma, voz e
-              argumento às subpersonalidades internas, promovendo consciência e
-              diálogo entre partes conflitantes.{" "}
-            </p>{" "}
-            <div className="mx-auto w-full max-w-md mt-6 mb-4">
-              {" "}
-              <img
-                src={toolImage}
-                alt="Encenação Poética — teatro dos eus"
-                className="w-full rounded-xl shadow-lg opacity-80"
-              />{" "}
-            </div>{" "}
-            <div className="poem-block max-w-sm mx-auto mt-4">
-              {" "}
-              <p className="poem-text text-foreground/80">
-                {" "}
-                — Eu quero sair.
-                <br /> — E se for pior lá fora?
-                <br /> — E se for melhor e eu nunca souber?{" "}
-              </p>{" "}
-            </div>{" "}
-          </div>{" "}
-        </div>{" "}
-      </section>{" "}
+      <FerramentaHero
+        icon={Drama}
+        badgeLabel="Ferramenta 5 — P.A.D.H."
+        title={
+          <>
+            Encenação{" "}
+            <span className="text-primary italic">Poética Interna</span>
+          </>
+        }
+        subtitle="O Teatro dos Eus"
+        description="Quando o Eu vira uma conversa entre eus — dar forma, voz e argumento às subpersonalidades internas, promovendo consciência e diálogo entre partes conflitantes."
+        image={{
+          src: toolImage,
+          alt: "Encenação Poética — teatro dos eus",
+        }}
+        poem={
+          <>
+            — Eu quero sair.
+            <br /> — E se for pior lá fora?
+            <br /> — E se for melhor e eu nunca souber?
+          </>
+        }
+      />{" "}
       {/* Objetivo e Modo de Uso */}
       <section className="py-20 border-t border-border/30">
         {" "}

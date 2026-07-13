@@ -1,5 +1,6 @@
 import React from "react";
 import { BookOpen, Brain, PenTool, Lightbulb } from "lucide-react";
+import FerramentaHero from "@/components/ferramentas/FerramentaHero";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import PageLayout from "@/components/layout/PageLayout";
 import { useScrollAnimation } from "@/hooks/useScrollAnimation";
@@ -38,45 +39,22 @@ const CadernoVozInterna = () => {
       currentPage="Caderno de Voz Interna"
     >
       {" "}
-      {/* Hero */}
-      <section className="relative overflow-hidden">
-        {" "}
-        <div className="absolute inset-0 gradient-glow" />{" "}
-        <div className="relative container mx-auto px-6 py-20 text-center">
-          {" "}
-          <div className="animate-fade-in-up max-w-3xl mx-auto">
-            {" "}
-            <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-primary/20 bg-primary/5 text-primary text-sm font-medium mb-6">
-              {" "}
-              <PenTool className="spiritual-icon spiritual-icon-sm" />{" "}
-              Ferramenta 4 — P.A.D.H.{" "}
-            </div>{" "}
-            <h1 className="text-4xl md:text-6xl font-heading font-bold mb-4 text-foreground">
-              {" "}
-              Caderno de{" "}
-              <span className="text-primary italic">
-                Voz Interna Poética
-              </span>{" "}
-            </h1>{" "}
-            <p className="text-xl text-muted-foreground mb-2 font-medium">
-              O Diário Onde a Alma Gagueja Verdade
-            </p>{" "}
-            <p className="text-lg text-muted-foreground leading-relaxed max-w-2xl mx-auto">
-              {" "}
-              Transformar o cliente em autor de sua própria escuta — a escrita
-              como oráculo e ferramenta de autoconhecimento profundo.{" "}
-            </p>{" "}
-            <div className="mx-auto w-full max-w-md mt-6">
-              {" "}
-              <img
-                src={toolImage}
-                alt="Caderno de Voz Interna — diário poético"
-                className="w-full rounded-xl shadow-lg opacity-80"
-              />{" "}
-            </div>{" "}
-          </div>{" "}
-        </div>{" "}
-      </section>{" "}
+      <FerramentaHero
+        icon={PenTool}
+        badgeLabel="Ferramenta 4 — P.A.D.H."
+        title={
+          <>
+            Caderno de{" "}
+            <span className="text-primary italic">Voz Interna Poética</span>
+          </>
+        }
+        subtitle="O Diário Onde a Alma Gagueja Verdade"
+        description="Transformar o cliente em autor de sua própria escuta — a escrita como oráculo e ferramenta de autoconhecimento profundo."
+        image={{
+          src: toolImage,
+          alt: "Caderno de Voz Interna — diário poético",
+        }}
+      />{" "}
       {/* Objetivo e Modo de Uso */}
       <section className="py-20 border-t border-border/30">
         {" "}

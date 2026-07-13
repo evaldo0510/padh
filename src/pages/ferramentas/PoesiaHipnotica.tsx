@@ -9,6 +9,7 @@ import {
   Eye,
   CheckCircle,
 } from "lucide-react";
+import FerramentaHero from "@/components/ferramentas/FerramentaHero";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import {
   Accordion,
@@ -37,37 +38,17 @@ const PoesiaHipnotica = () => {
   return (
     <PageLayout seo={pagesSEO.poesiaHipnotica} currentPage="Poesia Hipnótica">
       {" "}
-      {/* Hero */}
-      <section className="relative overflow-hidden">
-        {" "}
-        <div className="absolute inset-0 gradient-glow" />{" "}
-        <div className="relative container mx-auto px-6 py-20 text-center">
-          {" "}
-          <div className="animate-fade-in-up max-w-3xl mx-auto">
-            {" "}
-            <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-primary/20 bg-primary/5 text-primary text-sm font-medium mb-6">
-              {" "}
-              <Sparkles className="spiritual-icon spiritual-icon-sm" /> Poesia
-              Aplicada ao Desenvolvimento Humano{" "}
-            </div>{" "}
-            <h1 className="text-4xl md:text-6xl font-heading font-bold mb-4 text-foreground">
-              {" "}
-              Poesia <span className="text-primary italic">Hipnótica</span>{" "}
-            </h1>{" "}
-            <p className="text-xl text-muted-foreground mb-2 font-medium">
-              O Poder das Palavras
-            </p>{" "}
-            <p className="text-lg text-muted-foreground leading-relaxed max-w-2xl mx-auto">
-              {" "}
-              A palavra tem um impacto profundo na psique humana, sendo a
-              principal ferramenta da terapia. Quando usada com propósito e
-              poesia, ela pode reestruturar pensamentos e emoções,
-              proporcionando novas percepções e caminhos para a transformação
-              interior.{" "}
-            </p>{" "}
-          </div>{" "}
-        </div>{" "}
-      </section>{" "}
+      <FerramentaHero
+        icon={Sparkles}
+        badgeLabel="Poesia Aplicada ao Desenvolvimento Humano"
+        title={
+          <>
+            Poesia <span className="text-primary italic">Hipnótica</span>
+          </>
+        }
+        subtitle="O Poder das Palavras"
+        description="A palavra tem um impacto profundo na psique humana, sendo a principal ferramenta da terapia. Quando usada com propósito e poesia, ela pode reestruturar pensamentos e emoções, proporcionando novas percepções e caminhos para a transformação interior."
+      />{" "}
       {/* Base Teórica */}
       <section className="py-20 border-t border-border/30">
         {" "}
