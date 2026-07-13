@@ -355,6 +355,16 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
+      admin_weekly_cohort: {
+        Args: { _max_day?: number; _since: string; _stage?: string }
+        Returns: {
+          cohort_size: number
+          day_offset: number
+          retained: number
+          retention: number
+          week_start: string
+        }[]
+      }
       audit_policy_check: { Args: { target_user_id: string }; Returns: boolean }
       get_tables_security: {
         Args: never

@@ -10,19 +10,42 @@ import {
   isAdminRangePreset,
 } from "@/lib/admin-filters";
 import {
-  buildCohort,
   buildFunnel,
   computeRetention,
   FUNNEL_STAGES,
   FunnelStage,
   mergeActivityDays,
   UserEventRow,
+  CohortRow,
 } from "@/lib/user-events";
 import { Users, TrendingUp, Filter } from "lucide-react";
 
 const DAY_MS = 86_400_000;
 
 type StageFilter = "all" | FunnelStage;
+
+interface CohortRpcRow {
+  week_start: string;
+  cohort_size: number;
+  day_offset: number;
+  retained: number;
+  retention: number | null;
+}
+
+function cohortRowsFromRpc(rows: CohortRpcRow[]): CohortRow[] {
+  const byWeek = new Map<string, CohortRow>();
+  let maxOffset = 0;
+  for (const r of rows) maxOffset = Math.max(maxOffset, r.day_offset);
+  for (const r of rows) {
+    let row = byWeek.get(r.week_start);
+    if (!row) {
+      row = { weekStart: r.week_start, size: r.cohort_size, retention: Array(maxOffset + 1).fill(null) };
+      byWeek.set(r.week_start, row);
+    }
+    row.retention[r.day_offset] = r.retention == null ? null : Number(r.retention);
+  }
+  return Array.from(byWeek.values()).sort((a, b) => a.weekStart.localeCompare(b.weekStart));
+}
 
 export default function BehaviorAnalytics() {
   const [range, setRange] = useState<AdminRangePreset>(ADMIN_RANGE_DEFAULT);
@@ -31,6 +54,10 @@ export default function BehaviorAnalytics() {
   const [profiles, setProfiles] = useState<{ id: string; created_at: string }[]>([]);
   const [events, setEvents] = useState<UserEventRow[]>([]);
   const [checkins, setCheckins] = useState<{ user_id: string; checkin_date: string }[]>([]);
+  const [cohort, setCohort] = useState<CohortRow[]>([]);
+  const [cohortLoading, setCohortLoading] = useState(true);
+
+  const maxDay = Math.min(Number(range), 30);
 
   useEffect(() => {
     let cancelled = false;
@@ -55,9 +82,33 @@ export default function BehaviorAnalytics() {
     return () => { cancelled = true; };
   }, [range]);
 
+  // Coorte semanal calculada no banco via RPC (SECURITY DEFINER, gate admin).
+  useEffect(() => {
+    let cancelled = false;
+    async function loadCohort() {
+      setCohortLoading(true);
+      const days = Number(range);
+      const since = new Date(Date.now() - days * DAY_MS).toISOString();
+      const { data, error } = await (supabase as any).rpc("admin_weekly_cohort", {
+        _since: since,
+        _max_day: maxDay,
+        _stage: stage === "all" ? null : stage,
+      });
+      if (cancelled) return;
+      if (error) {
+        console.error("[admin_weekly_cohort]", error);
+        setCohort([]);
+      } else {
+        setCohort(cohortRowsFromRpc((data as CohortRpcRow[]) || []));
+      }
+      setCohortLoading(false);
+    }
+    loadCohort();
+    return () => { cancelled = true; };
+  }, [range, stage, maxDay]);
+
   const filteredProfiles = useMemo(() => {
     if (stage === "all") return profiles;
-    // Restringe base aos usuários que atingiram a etapa selecionada
     const stageUsers = new Set(
       stage === "cadastro"
         ? profiles.map((p) => p.id)
@@ -81,16 +132,6 @@ export default function BehaviorAnalytics() {
     [filteredProfiles, activityDays],
   );
 
-  const cohort = useMemo(
-    () => buildCohort({
-      profiles: filteredProfiles,
-      activityDaysByUser: activityDays,
-      maxDay: Math.min(Number(range), 30),
-    }),
-    [filteredProfiles, activityDays, range],
-  );
-
-  const maxDay = Math.min(Number(range), 30);
 
   return (
     <Card className="border-primary/20 bg-card/50 overflow-hidden">
@@ -166,8 +207,8 @@ export default function BehaviorAnalytics() {
           <h3 id="coorte-title" className="text-sm font-semibold uppercase tracking-wider text-muted-foreground">
             Coorte semanal × Dias
           </h3>
-          {loading ? (
-            <p className="text-sm text-muted-foreground">Carregando…</p>
+          {cohortLoading ? (
+            <p className="text-sm text-muted-foreground">Carregando coorte…</p>
           ) : cohort.length === 0 ? (
             <p className="text-sm text-muted-foreground">Sem coortes no período selecionado.</p>
           ) : (
