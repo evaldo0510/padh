@@ -3,6 +3,7 @@ import { ThemeProvider } from "next-themes";
 import App from "./App.tsx";
 import "./index.css";
 import { APP_VERSION } from "./lib/changelog";
+import { initWebVitals } from "./lib/web-vitals";
 
 // Expose version for automated tests
 if (typeof window !== "undefined") {
@@ -56,3 +57,6 @@ createRoot(document.getElementById("root")!).render(
     <App />
   </ThemeProvider>,
 );
+
+// Coleta de Web Vitals (assíncrona, após load — não bloqueia render)
+initWebVitals();
