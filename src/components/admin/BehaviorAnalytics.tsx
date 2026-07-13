@@ -84,6 +84,8 @@ export default function BehaviorAnalytics() {
   const [checkins, setCheckins] = useState<{ user_id: string; checkin_date: string }[]>([]);
   const [cohort, setCohort] = useState<CohortRow[]>([]);
   const [cohortLoading, setCohortLoading] = useState(true);
+  const [funnel, setFunnel] = useState<FunnelBucket[]>([]);
+  const [funnelLoading, setFunnelLoading] = useState(true);
 
   const maxDay = Math.min(Number(range), 30);
 
