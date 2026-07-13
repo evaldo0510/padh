@@ -241,8 +241,10 @@ export default function BehaviorAnalytics() {
           <h3 id="funil-title" className="text-sm font-semibold uppercase tracking-wider text-muted-foreground">
             Funil de conversão
           </h3>
-          {loading ? (
-            <p className="text-sm text-muted-foreground">Carregando…</p>
+          {funnelLoading ? (
+            <p className="text-sm text-muted-foreground">Carregando funil…</p>
+          ) : funnel.length === 0 ? (
+            <p className="text-sm text-muted-foreground">Sem dados no período selecionado.</p>
           ) : (
             <div className="space-y-2">
               {funnel.map((row) => (
