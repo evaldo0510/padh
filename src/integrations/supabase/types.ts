@@ -355,6 +355,16 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
+      admin_funnel_matrix: {
+        Args: { _since: string; _stage?: string }
+        Returns: {
+          conversion_from_prev: number
+          conversion_from_top: number
+          stage: string
+          stage_order: number
+          users: number
+        }[]
+      }
       admin_weekly_cohort: {
         Args: { _max_day?: number; _since: string; _stage?: string }
         Returns: {
