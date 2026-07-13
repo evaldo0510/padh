@@ -137,7 +137,7 @@ const Diagnostico = () => {
   const [currentStep, setCurrentStep] = useState(0);
   const [answers, setAnswers] = useState<Record<number, any>>({});
   const [showResult, setShowResult] = useState(false);
-  const { setDiagnosis } = useCourseProgress();
+  const { progress, setDiagnosis } = useCourseProgress();
   const navigate = useNavigate();
   const handleSelect = (questionId: number, option: any) => {
     setAnswers((prev) => ({
