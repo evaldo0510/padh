@@ -14,11 +14,23 @@ const NotificationCenter = () => {
   return (
     <Popover>
       <PopoverTrigger asChild>
-        <Button variant="ghost" size="icon" className="relative">
+        <Button
+          variant="ghost"
+          size="icon"
+          className="relative"
+          aria-label={
+            unreadCount > 0
+              ? `Notificações (${unreadCount} não lida${unreadCount > 1 ? "s" : ""})`
+              : "Notificações"
+          }
+        >
           {" "}
-          <Bell className="spiritual-icon spiritual-icon-lg" />{" "}
+          <Bell className="spiritual-icon spiritual-icon-lg" aria-hidden="true" />{" "}
           {unreadCount > 0 && (
-            <span className="absolute top-1 right-1 w-2 h-2 bg-destructive rounded-full" />
+            <span
+              className="absolute top-1 right-1 w-2 h-2 bg-destructive rounded-full"
+              aria-hidden="true"
+            />
           )}
         </Button>
       </PopoverTrigger>{" "}

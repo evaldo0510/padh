@@ -73,15 +73,15 @@ const StreamingCard: React.FC<StreamingCardProps> = ({
                  </div>
                ) : (
                  <>
-                   <Button size="icon" variant="default" className="h-8 w-8 rounded-full shadow-lg">
-                      <Play className="w-4 h-4 fill-current" />
-                   </Button>
-                   <Button size="icon" variant="outline" className="h-8 w-8 rounded-full border-white/20 bg-white/5 backdrop-blur-sm">
-                      <Plus className="w-4 h-4" />
-                   </Button>
-                   <Button size="icon" variant="outline" className="h-8 w-8 rounded-full border-white/20 bg-white/5 backdrop-blur-sm">
-                      <Info className="w-4 h-4" />
-                   </Button>
+                    <Button size="icon" variant="default" className="h-8 w-8 rounded-full shadow-lg" aria-label={`Reproduzir ${title}`}>
+                       <Play className="w-4 h-4 fill-current" aria-hidden="true" />
+                    </Button>
+                    <Button size="icon" variant="outline" className="h-8 w-8 rounded-full border-white/20 bg-white/5 backdrop-blur-sm" aria-label={`Adicionar ${title} à minha lista`}>
+                       <Plus className="w-4 h-4" aria-hidden="true" />
+                    </Button>
+                    <Button size="icon" variant="outline" className="h-8 w-8 rounded-full border-white/20 bg-white/5 backdrop-blur-sm" aria-label={`Mais informações sobre ${title}`}>
+                       <Info className="w-4 h-4" aria-hidden="true" />
+                    </Button>
                  </>
                )}
             </div>

@@ -131,9 +131,10 @@ const ConfigGuidePage = () => {
                   size="icon"
                   className="h-8 w-8 text-slate-400 hover:text-white hover:bg-slate-800"
                   onClick={() => copyToClipboard(envExample)}
+                  aria-label="Copiar exemplo .env"
                 >
                   {" "}
-                  <Copy className="spiritual-icon" />{" "}
+                  <Copy className="spiritual-icon" aria-hidden="true" />{" "}
                 </Button>{" "}
               </CardHeader>{" "}
               <CardContent className="p-4">
