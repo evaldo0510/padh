@@ -216,6 +216,10 @@ export function initWebVitals(): void {
   if (typeof window === "undefined") return;
 
   const start = () => {
+    // drena qualquer coisa que tenha ficado da sessão anterior
+    void flushQueue();
+    attachLifecycleFlush();
+
     import("web-vitals")
       .then(({ onCLS, onFCP, onINP, onLCP, onTTFB }) => {
         const sessionId = getSessionId();
