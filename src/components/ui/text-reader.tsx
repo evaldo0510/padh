@@ -134,9 +134,10 @@ const TextReader: React.FC<TextReaderProps> = ({
           onClick={handleStop}
           className="h-8 w-8 text-muted-foreground hover:text-destructive"
           title="Parar"
+          aria-label="Parar leitura"
         >
           {" "}
-          <VolumeX className="spiritual-icon" />{" "}
+          <VolumeX className="spiritual-icon" aria-hidden="true" />{" "}
         </Button>
       )}
     </div>
