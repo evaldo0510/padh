@@ -437,6 +437,7 @@ font-serif italic`}
                 value={form.versoCoCriado}
                 onChange={(e) => update("versoCoCriado", e.target.value)}
                 placeholder="Transcreva fielmente o material poético produzido junto com o paciente..."
+                aria-label="Verso ou poema co-criado em sessão"
               />{" "}
             </section>{" "}
             {/* Cuidados éticos */}
@@ -479,6 +480,7 @@ font-serif italic`}
                 value={form.hipoteseTeorica}
                 onChange={(e) => update("hipoteseTeorica", e.target.value)}
                 placeholder="Como o caso se lê à luz de Freud, Lacan, Jung, Beck, Erickson, Winnicott...?"
+                aria-label="Hipótese teórica de leitura do caso"
               />{" "}
             </section>{" "}
             {/* Tarefa & próximos passos */}
