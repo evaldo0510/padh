@@ -4,6 +4,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { useOfflineMode } from "./useOfflineMode";
 import { reportSyncStatus } from "./useSyncStatus";
 import { JORNADA_DATA } from "@/lib/jornada-data";
+import { trackEvent } from "@/lib/user-events";
 
 export interface RespostaExercicio {
   exerciseId: string;
