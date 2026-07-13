@@ -254,6 +254,45 @@ const AdminWebVitals: React.FC = () => {
             <Badge variant="outline" className="px-3 py-1 gap-2">
               <Activity className="w-4 h-4 text-primary animate-pulse" /> Live
             </Badge>
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button variant="outline" size="sm" className="gap-2">
+                  <Download className="w-4 h-4" /> Exportar
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="end">
+                <DropdownMenuItem
+                  onClick={() =>
+                    exportWebVitalsCsv({
+                      generatedAt: new Date(),
+                      windowDays: days,
+                      device,
+                      totalEvents: stats.total,
+                      totalSessions: stats.sessions,
+                      summary: stats.summary,
+                      daily: stats.dailyRows,
+                    })
+                  }
+                >
+                  CSV (.csv)
+                </DropdownMenuItem>
+                <DropdownMenuItem
+                  onClick={() =>
+                    void exportWebVitalsPdf({
+                      generatedAt: new Date(),
+                      windowDays: days,
+                      device,
+                      totalEvents: stats.total,
+                      totalSessions: stats.sessions,
+                      summary: stats.summary,
+                      daily: stats.dailyRows,
+                    })
+                  }
+                >
+                  PDF (.pdf)
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
           </div>
         </div>
 
