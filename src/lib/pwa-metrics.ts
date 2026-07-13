@@ -34,20 +34,29 @@ export const reportPWAEvent = async (
   
   try {
     const { supabase } = await import("@/integrations/supabase/client");
-    const { data: { session } } = await supabase.auth.getSession();
-    
-    await supabase.from("pwa_health_events").insert({
-      event_type: eventType,
-      status,
-      version: APP_VERSION,
-      user_id: session?.user?.id,
-      user_agent: navigator.userAgent,
-      details: {
-        ...details,
-        url: window.location.href,
-        timestamp: new Date().toISOString(),
+
+    // Envio via edge function pública (aceita anônimos, insere com service_role)
+    const { error } = await supabase.functions.invoke("ingest-telemetry", {
+      body: {
+        kind: "pwa_event",
+        events: [
+          {
+            event_type: eventType,
+            status,
+            version: APP_VERSION,
+            user_agent: navigator.userAgent,
+            details: {
+              ...details,
+              url: window.location.href,
+              timestamp: new Date().toISOString(),
+            },
+          },
+        ],
       },
     });
+    if (error) {
+      console.warn("PWA Metrics: ingest-telemetry error", eventType, error);
+    }
   } catch (err) {
     console.warn("PWA Metrics: failed to report event", eventType, err);
   }

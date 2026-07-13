@@ -148,19 +148,18 @@ async function flushQueue(): Promise<void> {
       const batch = readQueue();
       if (batch.length === 0) return;
 
-      const { error } = await supabase.from("web_vitals").insert(batch);
+      // Envio via edge function pública (aceita anônimos, insere com service_role)
+      const { error } = await supabase.functions.invoke("ingest-telemetry", {
+        body: { kind: "web_vital", events: batch },
+      });
       if (!error) {
-        // sucesso: remove apenas o que foi enviado (preserva itens novos
-        // enfileirados durante a chamada)
         const current = readQueue();
         writeQueue(current.slice(batch.length));
         return;
       }
 
-      // falha: aguarda backoff e tenta de novo
       await new Promise((r) => setTimeout(r, BACKOFF_STEPS_MS[attempt]));
     }
-    // esgotou tentativas — mantém fila para próximo gatilho
   } catch {
     // qualquer exceção: silêncio, fila permanece
   } finally {
