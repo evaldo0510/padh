@@ -1,5 +1,6 @@
 import React from "react";
 import { Search, Brain, BookOpen, Eye } from "lucide-react";
+import FerramentaHero from "@/components/ferramentas/FerramentaHero";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import PageLayout from "@/components/layout/PageLayout";
 import { useScrollAnimation } from "@/hooks/useScrollAnimation";
