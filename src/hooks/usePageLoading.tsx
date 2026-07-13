@@ -1,9 +1,10 @@
 import { useState, useEffect } from "react";
 
 export const usePageLoading = (delay = 150) => {
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(delay > 0);
 
   useEffect(() => {
+    if (delay <= 0) return;
     const timer = setTimeout(() => setIsLoading(false), delay);
     return () => clearTimeout(timer);
   }, [delay]);
