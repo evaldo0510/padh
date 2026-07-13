@@ -46,6 +46,35 @@ function cohortRowsFromRpc(rows: CohortRpcRow[]): CohortRow[] {
   return Array.from(byWeek.values()).sort((a, b) => a.weekStart.localeCompare(b.weekStart));
 }
 
+interface FunnelRpcRow {
+  stage: string;
+  stage_order: number;
+  users: number;
+  conversion_from_prev: number | null;
+  conversion_from_top: number | null;
+}
+
+interface FunnelBucket {
+  stage: string;
+  label: string;
+  users: number;
+  conversionFromPrev: number | null;
+  conversionFromTop: number | null;
+}
+
+function funnelFromRpc(rows: FunnelRpcRow[]): FunnelBucket[] {
+  const labelBy = new Map(FUNNEL_STAGES.map((s) => [s.key as string, s.label]));
+  return [...rows]
+    .sort((a, b) => a.stage_order - b.stage_order)
+    .map((r) => ({
+      stage: r.stage,
+      label: labelBy.get(r.stage) ?? r.stage,
+      users: r.users,
+      conversionFromPrev: r.conversion_from_prev == null ? null : Number(r.conversion_from_prev),
+      conversionFromTop: r.conversion_from_top == null ? null : Number(r.conversion_from_top),
+    }));
+}
+
 export default function BehaviorAnalytics() {
   const [range, setRange] = useState<AdminRangePreset>(ADMIN_RANGE_DEFAULT);
   const [stage, setStage] = useState<StageFilter>("all");
