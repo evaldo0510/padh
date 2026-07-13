@@ -225,7 +225,7 @@ const Diagnostico = () => {
               {" "}
               <h2 className="text-2xl font-heading font-bold text-primary">
                 {" "}
-                {useCourseProgress().progress.diagnosisResult}
+                {courseProgress.diagnosisResult}
               </h2>{" "}
             </div>{" "}
             <p className="text-sm text-muted-foreground mb-8">
