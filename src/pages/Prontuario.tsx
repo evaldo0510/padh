@@ -356,6 +356,7 @@ const Prontuario: React.FC = () => {
                 value={form.ferramenta}
                 onChange={(e) => update("ferramenta", e.target.value)}
                 placeholder="Ex.: Poema-Funil, Verso-Gatilho, Poemadiagnóstico..."
+                aria-label="Ferramenta aplicada"
               />{" "}
             </section>{" "}
             {/* Passo a passo */}
@@ -381,6 +382,7 @@ const Prontuario: React.FC = () => {
                         update("passos", next);
                       }}
                       placeholder={`Passo ${i + 1}...`}
+                      aria-label={`Passo ${i + 1} da aplicação`}
                     />{" "}
                   </div>
                 ))}
