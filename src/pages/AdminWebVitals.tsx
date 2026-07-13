@@ -1,5 +1,5 @@
 import React, { useMemo, useState } from "react";
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, keepPreviousData } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
 import {
   BarChart,
@@ -127,6 +127,7 @@ const AdminWebVitals: React.FC = () => {
       return (data ?? []) as WebVital[];
     },
     refetchInterval: 60_000,
+    placeholderData: keepPreviousData,
   });
 
   const stats = useMemo(() => {
@@ -201,9 +202,6 @@ const AdminWebVitals: React.FC = () => {
     value,
   }));
 
-  if (isLoading) {
-    return <div className="p-8 text-center">Carregando métricas…</div>;
-  }
 
   return (
     <PageLayout
