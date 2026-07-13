@@ -33,7 +33,16 @@ import {
   Smartphone,
   Tablet,
   AlertTriangle,
+  Download,
 } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import { exportWebVitalsCsv, exportWebVitalsPdf } from "@/lib/export-web-vitals";
 import PageLayout from "@/components/layout/PageLayout";
 
 type MetricName = "LCP" | "CLS" | "INP" | "FCP" | "TTFB";
