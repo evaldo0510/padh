@@ -1,5 +1,5 @@
 import React, { useMemo, useState } from "react";
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, keepPreviousData } from "@tanstack/react-query";
 import { Link } from "react-router-dom";
 import {
   LineChart,
@@ -68,6 +68,7 @@ const WebVitalsOverview: React.FC = () => {
       return (data ?? []) as Row[];
     },
     refetchInterval: 60_000,
+    placeholderData: keepPreviousData,
   });
 
   const stats = useMemo(() => {
@@ -112,7 +113,7 @@ const WebVitalsOverview: React.FC = () => {
   }, [data]);
 
   return (
-    <Card className="border-primary/20 bg-card/50 backdrop-blur-sm overflow-hidden">
+    <Card className="border-primary/20 bg-card/50 overflow-hidden">
       <CardHeader className="bg-primary/5 border-b border-primary/10">
         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
           <CardTitle className="flex items-center gap-2 text-xl">
