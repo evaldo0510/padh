@@ -78,16 +78,16 @@ export default defineConfig(({ mode }) => ({
             },
           },
           {
-            // JS, CSS and Workers: Network-First to ensure we get the latest hashed bundles.
+            // JS, CSS and Workers: hashed by Vite so they're immutable — SWR
+            // returns cache instantly (fast TTFB) and revalidates in background.
             urlPattern: ({ request }) =>
               request.destination === 'script' ||
               request.destination === 'style' ||
               request.destination === 'worker',
-            handler: 'NetworkFirst',
+            handler: 'StaleWhileRevalidate',
             options: {
-              cacheName: 'bundles-freshness',
-              networkTimeoutSeconds: 2,
-              expiration: { maxEntries: 50, maxAgeSeconds: 60 * 60 * 24 },
+              cacheName: 'bundles-swr',
+              expiration: { maxEntries: 60, maxAgeSeconds: 60 * 60 * 24 * 7 },
               cacheableResponse: { statuses: [0, 200] },
             },
           },
