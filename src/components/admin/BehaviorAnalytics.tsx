@@ -10,7 +10,6 @@ import {
   isAdminRangePreset,
 } from "@/lib/admin-filters";
 import {
-  buildFunnel,
   computeRetention,
   FUNNEL_STAGES,
   FunnelStage,
@@ -47,6 +46,35 @@ function cohortRowsFromRpc(rows: CohortRpcRow[]): CohortRow[] {
   return Array.from(byWeek.values()).sort((a, b) => a.weekStart.localeCompare(b.weekStart));
 }
 
+interface FunnelRpcRow {
+  stage: string;
+  stage_order: number;
+  users: number;
+  conversion_from_prev: number | null;
+  conversion_from_top: number | null;
+}
+
+interface FunnelBucket {
+  stage: string;
+  label: string;
+  users: number;
+  conversionFromPrev: number | null;
+  conversionFromTop: number | null;
+}
+
+function funnelFromRpc(rows: FunnelRpcRow[]): FunnelBucket[] {
+  const labelBy = new Map(FUNNEL_STAGES.map((s) => [s.key as string, s.label]));
+  return [...rows]
+    .sort((a, b) => a.stage_order - b.stage_order)
+    .map((r) => ({
+      stage: r.stage,
+      label: labelBy.get(r.stage) ?? r.stage,
+      users: r.users,
+      conversionFromPrev: r.conversion_from_prev == null ? null : Number(r.conversion_from_prev),
+      conversionFromTop: r.conversion_from_top == null ? null : Number(r.conversion_from_top),
+    }));
+}
+
 export default function BehaviorAnalytics() {
   const [range, setRange] = useState<AdminRangePreset>(ADMIN_RANGE_DEFAULT);
   const [stage, setStage] = useState<StageFilter>("all");
@@ -56,6 +84,8 @@ export default function BehaviorAnalytics() {
   const [checkins, setCheckins] = useState<{ user_id: string; checkin_date: string }[]>([]);
   const [cohort, setCohort] = useState<CohortRow[]>([]);
   const [cohortLoading, setCohortLoading] = useState(true);
+  const [funnel, setFunnel] = useState<FunnelBucket[]>([]);
+  const [funnelLoading, setFunnelLoading] = useState(true);
 
   const maxDay = Math.min(Number(range), 30);
 
@@ -107,6 +137,30 @@ export default function BehaviorAnalytics() {
     return () => { cancelled = true; };
   }, [range, stage, maxDay]);
 
+  // Funil calculado no banco via RPC (SECURITY DEFINER, gate admin).
+  useEffect(() => {
+    let cancelled = false;
+    async function loadFunnel() {
+      setFunnelLoading(true);
+      const days = Number(range);
+      const since = new Date(Date.now() - days * DAY_MS).toISOString();
+      const { data, error } = await (supabase as any).rpc("admin_funnel_matrix", {
+        _since: since,
+        _stage: stage === "all" ? null : stage,
+      });
+      if (cancelled) return;
+      if (error) {
+        console.error("[admin_funnel_matrix]", error);
+        setFunnel([]);
+      } else {
+        setFunnel(funnelFromRpc((data as FunnelRpcRow[]) || []));
+      }
+      setFunnelLoading(false);
+    }
+    loadFunnel();
+    return () => { cancelled = true; };
+  }, [range, stage]);
+
   const filteredProfiles = useMemo(() => {
     if (stage === "all") return profiles;
     const stageUsers = new Set(
@@ -117,10 +171,6 @@ export default function BehaviorAnalytics() {
     return profiles.filter((p) => stageUsers.has(p.id));
   }, [profiles, events, stage]);
 
-  const funnel = useMemo(
-    () => buildFunnel({ profiles: filteredProfiles, events, filterStage: stage }),
-    [filteredProfiles, events, stage],
-  );
 
   const activityDays = useMemo(
     () => mergeActivityDays({ events, checkins }),
@@ -191,8 +241,10 @@ export default function BehaviorAnalytics() {
           <h3 id="funil-title" className="text-sm font-semibold uppercase tracking-wider text-muted-foreground">
             Funil de conversão
           </h3>
-          {loading ? (
-            <p className="text-sm text-muted-foreground">Carregando…</p>
+          {funnelLoading ? (
+            <p className="text-sm text-muted-foreground">Carregando funil…</p>
+          ) : funnel.length === 0 ? (
+            <p className="text-sm text-muted-foreground">Sem dados no período selecionado.</p>
           ) : (
             <div className="space-y-2">
               {funnel.map((row) => (
@@ -267,7 +319,7 @@ function KpiTile({ label, value, suffix }: { label: string; value: string; suffi
   );
 }
 
-function FunnelRow({ row, maxUsers }: { row: ReturnType<typeof buildFunnel>[number]; maxUsers: number }) {
+function FunnelRow({ row, maxUsers }: { row: FunnelBucket; maxUsers: number }) {
   const width = maxUsers > 0 ? Math.max(4, (row.users / maxUsers) * 100) : 0;
   return (
     <div className="flex items-center gap-3">
