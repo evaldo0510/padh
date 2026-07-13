@@ -71,6 +71,10 @@ const Admin = () => {
             {/* Web Vitals Operacional */}
             <WebVitalsOverview />
 
+            {/* Comportamento & Retenção (funil, D1/D7/D30, coorte) */}
+            <BehaviorAnalytics />
+
+
             {/* Security Audit Section */}
             <Card className="border-primary/20 bg-card/50 backdrop-blur-sm overflow-hidden">
               <CardHeader className="bg-primary/5 border-b border-primary/10">
