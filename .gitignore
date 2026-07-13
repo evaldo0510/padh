@@ -23,3 +23,7 @@ dist-ssr
 *.sln
 *.sw?
 playwright/.auth
+
+# Lighthouse reports (mantém pasta via .gitkeep e README)
+lighthouse-reports/*.html
+lighthouse-reports/*.json
