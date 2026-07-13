@@ -10,7 +10,6 @@ import {
   isAdminRangePreset,
 } from "@/lib/admin-filters";
 import {
-  buildFunnel,
   computeRetention,
   FUNNEL_STAGES,
   FunnelStage,
