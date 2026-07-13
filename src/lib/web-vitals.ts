@@ -128,6 +128,20 @@ function buildReporter(
   };
 }
 
+let started = false;
+
+export function initWebVitals(): void {
+  if (started) return;
+  started = true;
+  if (typeof window === "undefined") return;
+
+  const start = () => {
+    import("web-vitals")
+      .then(({ onCLS, onFCP, onINP, onLCP, onTTFB }) => {
+        const sessionId = getSessionId();
+        const deviceType = getDeviceType();
+        const userAgent = (navigator.userAgent || "").slice(0, 512);
+        const report = buildReporter(sessionId, deviceType, userAgent);
 
         onLCP(report as any);
         onCLS(report as any);
@@ -146,3 +160,4 @@ function buildReporter(
     window.addEventListener("load", () => setTimeout(start, 0), { once: true });
   }
 }
+
