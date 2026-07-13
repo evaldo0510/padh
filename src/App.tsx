@@ -96,6 +96,7 @@ const FundamentacaoTeorica = lazy(() => import("./pages/FundamentacaoTeorica"));
 
 const AdminPWAHealth = lazy(() => import("./pages/AdminPWAHealth"));
 const AdminPWADiagnostics = lazy(() => import("./pages/AdminPWADiagnostics"));
+const AdminWebVitals = lazy(() => import("./pages/AdminWebVitals"));
 
 const queryClient = new QueryClient();
 
@@ -349,6 +350,16 @@ const AnimatedRoutes = () => {
               <PageTransition>
                 <ProtectedRoute authMessage="Acesso restrito a administradores.">
                   <AdminPWAHealth />
+                </ProtectedRoute>
+              </PageTransition>
+            }
+          />
+          <Route
+            path="/admin/web-vitals"
+            element={
+              <PageTransition>
+                <ProtectedRoute authMessage="Acesso restrito a administradores.">
+                  <AdminWebVitals />
                 </ProtectedRoute>
               </PageTransition>
             }
