@@ -342,7 +342,7 @@ export const PWAManager: React.FC = () => {
     window.addEventListener("pwa-event", handlePWAEvent);
 
     const loadCaches = async () => {
-      try { setCacheKeys(await caches.keys()); } catch {}
+      try { setCacheKeys(await caches.keys()); } catch { /* noop */ }
     };
     loadCaches();
 

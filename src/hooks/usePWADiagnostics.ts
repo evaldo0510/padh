@@ -48,7 +48,7 @@ const loadCounters = (): FailCounters => {
 };
 
 const saveCounters = (c: FailCounters) => {
-  try { localStorage.setItem(FAIL_KEY, JSON.stringify(c)); } catch {}
+  try { localStorage.setItem(FAIL_KEY, JSON.stringify(c)); } catch { /* noop */ }
 };
 
 const loadMessageLog = (): SWMessageLog[] => {
@@ -59,7 +59,7 @@ const loadMessageLog = (): SWMessageLog[] => {
 };
 
 const saveMessageLog = (log: SWMessageLog[]) => {
-  try { localStorage.setItem(MSG_LOG_KEY, JSON.stringify(log.slice(0, 200))); } catch {}
+  try { localStorage.setItem(MSG_LOG_KEY, JSON.stringify(log.slice(0, 200))); } catch { /* noop */ }
 };
 
 export const usePWADiagnostics = () => {
@@ -125,7 +125,7 @@ export const usePWADiagnostics = () => {
     const next: OfflineTestEntry = { timestamp: new Date().toISOString(), ...entry };
     setOfflineHistory(prev => {
       const updated = [next, ...prev].slice(0, 50);
-      try { localStorage.setItem(OFFLINE_HISTORY_KEY, JSON.stringify(updated)); } catch {}
+      try { localStorage.setItem(OFFLINE_HISTORY_KEY, JSON.stringify(updated)); } catch { /* noop */ }
       return updated;
     });
   }, []);
@@ -134,7 +134,7 @@ export const usePWADiagnostics = () => {
     const next: RollbackEntry = { timestamp: new Date().toISOString(), ...entry };
     setRollbackHistory(prev => {
       const updated = [next, ...prev].slice(0, 30);
-      try { localStorage.setItem(ROLLBACK_HISTORY_KEY, JSON.stringify(updated)); } catch {}
+      try { localStorage.setItem(ROLLBACK_HISTORY_KEY, JSON.stringify(updated)); } catch { /* noop */ }
       return updated;
     });
     logMessage({ direction: "in", type: "ROLLBACK_TRIGGERED", status: "success", payload: entry });
