@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useId } from "react";
 import PageLayout from "@/components/layout/PageLayout";
 import { Button } from "@/components/ui/button";
 import { FileDown, Save, FileText, RotateCcw } from "lucide-react";
@@ -131,15 +131,31 @@ const Prontuario: React.FC = () => {
   }: {
     label: string;
     children: React.ReactNode;
-  }) => (
-    <div>
-      {" "}
-      <label className="block text-sm font-medium text-foreground mb-1.5">
-        {label}
-      </label>{" "}
-      {children}
-    </div>
-  );
+  }) => {
+    const generatedId = useId();
+    // Localiza o primeiro filho que é um elemento (ignora strings/whitespace)
+    // e injeta id para associar ao <label htmlFor>.
+    let fieldId = generatedId;
+    const enhanced = React.Children.map(children, (child) => {
+      if (!React.isValidElement(child)) return child;
+      const existingId = (child.props as { id?: string }).id;
+      if (existingId) fieldId = existingId;
+      return React.cloneElement(child as React.ReactElement<{ id?: string }>, {
+        id: fieldId,
+      });
+    });
+    return (
+      <div>
+        <label
+          htmlFor={fieldId}
+          className="block text-sm font-medium text-foreground mb-1.5"
+        >
+          {label}
+        </label>
+        {enhanced}
+      </div>
+    );
+  };
   const inputCls =
     "w-full px-3 py-2 rounded-md border border-border bg-background text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/30";
   return (
@@ -246,6 +262,7 @@ const Prontuario: React.FC = () => {
                   value={form.queixaInicial}
                   onChange={(e) => update("queixaInicial", e.target.value)}
                   placeholder="Como o paciente chegou? O que trouxe hoje?"
+                  aria-label="Queixa atual e estado emocional inicial"
                 />{" "}
                 <Field label="Escala emocional inicial (0–10)">
                   {" "}
@@ -339,6 +356,7 @@ const Prontuario: React.FC = () => {
                 value={form.ferramenta}
                 onChange={(e) => update("ferramenta", e.target.value)}
                 placeholder="Ex.: Poema-Funil, Verso-Gatilho, Poemadiagnóstico..."
+                aria-label="Ferramenta aplicada"
               />{" "}
             </section>{" "}
             {/* Passo a passo */}
@@ -364,6 +382,7 @@ const Prontuario: React.FC = () => {
                         update("passos", next);
                       }}
                       placeholder={`Passo ${i + 1}...`}
+                      aria-label={`Passo ${i + 1} da aplicação`}
                     />{" "}
                   </div>
                 ))}
@@ -418,6 +437,7 @@ font-serif italic`}
                 value={form.versoCoCriado}
                 onChange={(e) => update("versoCoCriado", e.target.value)}
                 placeholder="Transcreva fielmente o material poético produzido junto com o paciente..."
+                aria-label="Verso ou poema co-criado em sessão"
               />{" "}
             </section>{" "}
             {/* Cuidados éticos */}
@@ -460,6 +480,7 @@ font-serif italic`}
                 value={form.hipoteseTeorica}
                 onChange={(e) => update("hipoteseTeorica", e.target.value)}
                 placeholder="Como o caso se lê à luz de Freud, Lacan, Jung, Beck, Erickson, Winnicott...?"
+                aria-label="Hipótese teórica de leitura do caso"
               />{" "}
             </section>{" "}
             {/* Tarefa & próximos passos */}
