@@ -168,7 +168,7 @@ const Index = () => {
                 src={heroImage}
                 alt="PCH — Poesia Cognitiva Hipnótica"
                 className="w-full h-full object-contain drop-shadow-lg"
-                fetchpriority="high"
+                fetchPriority="high"
                 decoding="async"
               />
             </div>
