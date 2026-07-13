@@ -67,3 +67,32 @@ Aplicados no cliente antes do envio (em memória, por aba):
 
 Eventos além dos limites são descartados silenciosamente. Nada é persistido
 em disco — recarregar a página zera os contadores.
+
+## Fila persistente + backoff exponencial
+
+Todo evento coletado é **enfileirado em `localStorage`** (chave `wv_queue_v1`)
+antes de ser enviado. A fila é drenada em lote via `insert([...])`:
+
+- **Retenção:** até 100 eventos (FIFO — descarta os mais antigos ao encher).
+- **Backoff:** 2s → 4s → 8s → 16s → 32s → 60s, até 6 tentativas por rodada.
+  Após esgotar, os eventos permanecem na fila para a próxima oportunidade.
+- **Gatilhos de flush:**
+  - nova métrica coletada;
+  - inicialização da página (drena o que sobrou da sessão anterior);
+  - evento `online` (rede voltou);
+  - `visibilitychange → hidden` e `pagehide` (último suspiro antes de fechar).
+- **Offline:** se `navigator.onLine === false`, o flush é adiado; nada é
+  perdido enquanto houver espaço na fila.
+
+### Por que localStorage e não IndexedDB
+
+Os payloads são pequenos (~200 B cada) e o teto da fila é 60–100 eventos.
+`localStorage` é síncrono, dep-free e resolve o caso. IndexedDB só seria
+necessário para volumes muito maiores.
+
+## RLS — estado atual
+
+- Nenhuma policy de `SELECT`, `UPDATE` ou `DELETE` → clientes `anon` e
+  `authenticated` **não conseguem** ler nem alterar métricas.
+- Policy única de `INSERT` com validação de tamanhos e valor mínimo/máximo.
+- Leitura só via `service_role` (edge functions, admin, SQL).
