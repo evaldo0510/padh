@@ -317,7 +317,7 @@ function KpiTile({ label, value, suffix }: { label: string; value: string; suffi
   );
 }
 
-function FunnelRow({ row, maxUsers }: { row: ReturnType<typeof buildFunnel>[number]; maxUsers: number }) {
+function FunnelRow({ row, maxUsers }: { row: FunnelBucket; maxUsers: number }) {
   const width = maxUsers > 0 ? Math.max(4, (row.users / maxUsers) * 100) : 0;
   return (
     <div className="flex items-center gap-3">
