@@ -262,6 +262,7 @@ const Prontuario: React.FC = () => {
                   value={form.queixaInicial}
                   onChange={(e) => update("queixaInicial", e.target.value)}
                   placeholder="Como o paciente chegou? O que trouxe hoje?"
+                  aria-label="Queixa atual e estado emocional inicial"
                 />{" "}
                 <Field label="Escala emocional inicial (0–10)">
                   {" "}
