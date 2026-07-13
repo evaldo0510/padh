@@ -11,6 +11,7 @@ import { Input } from "@/components/ui/input";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { toast } from "sonner";
 import { supabase } from "@/integrations/supabase/client";
+import { trackEvent } from "@/lib/user-events";
 import { useNavigate } from "react-router-dom";
 
 const DailyHabitSection: React.FC = () => {
@@ -328,6 +329,8 @@ const DailyHabitSection: React.FC = () => {
           note: note,
           checkin_date: todayKey
         }, { onConflict: "user_id,checkin_date" });
+        // Telemetria comportamental (best-effort, não bloqueia)
+        trackEvent("checkin", { checkin_date: todayKey, mood });
       }
 
       // Save exercise response

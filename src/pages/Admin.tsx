@@ -5,6 +5,7 @@ import { Shield, Lock, AlertTriangle, CheckCircle, Database } from "lucide-react
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import WebVitalsOverview from "@/components/admin/WebVitalsOverview";
+import BehaviorAnalytics from "@/components/admin/BehaviorAnalytics";
 
 interface TableSecurity {
   tablename: string;
@@ -69,6 +70,10 @@ const Admin = () => {
           <div className="grid gap-8">
             {/* Web Vitals Operacional */}
             <WebVitalsOverview />
+
+            {/* Comportamento & Retenção (funil, D1/D7/D30, coorte) */}
+            <BehaviorAnalytics />
+
 
             {/* Security Audit Section */}
             <Card className="border-primary/20 bg-card/50 backdrop-blur-sm overflow-hidden">

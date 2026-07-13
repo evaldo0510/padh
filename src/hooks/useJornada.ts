@@ -4,6 +4,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { useOfflineMode } from "./useOfflineMode";
 import { reportSyncStatus } from "./useSyncStatus";
 import { JORNADA_DATA } from "@/lib/jornada-data";
+import { trackEvent } from "@/lib/user-events";
 
 export interface RespostaExercicio {
   exerciseId: string;
@@ -335,6 +336,18 @@ export const useJornada = () => {
               sessions: prev.pendingSync!.sessions.filter(id => id !== sessionId)
             }
           }));
+          // Telemetria: bloco concluído
+          trackEvent("bloco_concluido", { sessionId, phaseId });
+          // Telemetria: se todas as sessões desta fase estão concluídas → etapa avançada
+          const fase = JORNADA_DATA.find((f) => f.id === phaseId);
+          if (fase) {
+            const allSessionIds = fase.sessoes.map((s) => s.id);
+            const completedSet = new Set([...jornada.completedSessions, sessionId]);
+            const phaseComplete = allSessionIds.every((id) => completedSet.has(id));
+            if (phaseComplete) {
+              trackEvent("etapa_avancada", { phaseId, totalSessions: allSessionIds.length });
+            }
+          }
         }
       }
     },
