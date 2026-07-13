@@ -54,3 +54,16 @@ sessões do navegador. Query string e hash da URL são descartados.
 Qualquer erro na coleta ou envio é silenciado — telemetria nunca quebra
 o app. A importação do pacote é dinâmica e ocorre após o `load`, então
 não afeta o LCP.
+
+## Deduplicação e rate limit
+
+Aplicados no cliente antes do envio (em memória, por aba):
+
+- **Dedup:** cada par `(metric_name, page_url)` é enviado no máximo 1x a cada
+  30 s dentro da mesma sessão. Trocar de rota gera novo par e continua sendo
+  medido.
+- **Rate limit por janela:** máximo 8 eventos por minuto (janela deslizante).
+- **Rate limit por sessão:** máximo 60 eventos no total.
+
+Eventos além dos limites são descartados silenciosamente. Nada é persistido
+em disco — recarregar a página zera os contadores.
