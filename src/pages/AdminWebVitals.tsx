@@ -44,6 +44,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { exportWebVitalsCsv, exportWebVitalsPdf } from "@/lib/export-web-vitals";
 import PageLayout from "@/components/layout/PageLayout";
+import { ADMIN_RANGE_PRESETS, ADMIN_RANGE_DEFAULT } from "@/lib/admin-filters";
 
 type MetricName = "LCP" | "CLS" | "INP" | "FCP" | "TTFB";
 type DeviceType = "mobile" | "tablet" | "desktop" | "unknown";
@@ -61,11 +62,7 @@ interface WebVital {
 }
 
 const METRICS: MetricName[] = ["LCP", "CLS", "INP", "FCP", "TTFB"];
-const RANGES = [
-  { value: "1", label: "Últimas 24h" },
-  { value: "7", label: "Últimos 7 dias" },
-  { value: "30", label: "Últimos 30 dias" },
-];
+const RANGES = ADMIN_RANGE_PRESETS;
 const DEVICE_FILTERS: Array<{ value: string; label: string }> = [
   { value: "all", label: "Todos dispositivos" },
   { value: "mobile", label: "Mobile" },
@@ -104,7 +101,7 @@ function formatMetric(name: MetricName, value: number): string {
 }
 
 const AdminWebVitals: React.FC = () => {
-  const [days, setDays] = useState("7");
+  const [days, setDays] = useState<string>(ADMIN_RANGE_DEFAULT);
   const [device, setDevice] = useState("all");
 
   const { data: rows, isLoading, error } = useQuery({
