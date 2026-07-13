@@ -120,6 +120,23 @@ const SessaoView = () => {
     };
   }, []);
 
+  // Prefetch next session when near end (hook precisa rodar em toda render)
+  const totalStepsForPrefetch = sessao?.blocos.length ?? 0;
+  const isNearEndForPrefetch =
+    totalStepsForPrefetch > 0 && currentExIdx >= totalStepsForPrefetch - 2;
+  useEffect(() => {
+    if (!isNearEndForPrefetch) return;
+    const all: { phaseId: string; sessionId: string }[] = [];
+    JORNADA_DATA.forEach((f) =>
+      f.sessoes.forEach((s) => all.push({ phaseId: f.id, sessionId: s.id })),
+    );
+    const idx = all.findIndex((s) => s.sessionId === sessionId);
+    const next = idx >= 0 && idx < all.length - 1 ? all[idx + 1] : null;
+    if (next) {
+      prefetchRoute(`/jornada/${next.phaseId}/${next.sessionId}`, 'low');
+    }
+  }, [isNearEndForPrefetch, sessionId]);
+
   if (!sessao || !fase) {
     return (
       <div className="min-h-screen bg-background flex items-center justify-center">
