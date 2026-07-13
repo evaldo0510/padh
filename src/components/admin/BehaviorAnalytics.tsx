@@ -137,6 +137,30 @@ export default function BehaviorAnalytics() {
     return () => { cancelled = true; };
   }, [range, stage, maxDay]);
 
+  // Funil calculado no banco via RPC (SECURITY DEFINER, gate admin).
+  useEffect(() => {
+    let cancelled = false;
+    async function loadFunnel() {
+      setFunnelLoading(true);
+      const days = Number(range);
+      const since = new Date(Date.now() - days * DAY_MS).toISOString();
+      const { data, error } = await (supabase as any).rpc("admin_funnel_matrix", {
+        _since: since,
+        _stage: stage === "all" ? null : stage,
+      });
+      if (cancelled) return;
+      if (error) {
+        console.error("[admin_funnel_matrix]", error);
+        setFunnel([]);
+      } else {
+        setFunnel(funnelFromRpc((data as FunnelRpcRow[]) || []));
+      }
+      setFunnelLoading(false);
+    }
+    loadFunnel();
+    return () => { cancelled = true; };
+  }, [range, stage]);
+
   const filteredProfiles = useMemo(() => {
     if (stage === "all") return profiles;
     const stageUsers = new Set(
@@ -147,10 +171,6 @@ export default function BehaviorAnalytics() {
     return profiles.filter((p) => stageUsers.has(p.id));
   }, [profiles, events, stage]);
 
-  const funnel = useMemo(
-    () => buildFunnel({ profiles: filteredProfiles, events, filterStage: stage }),
-    [filteredProfiles, events, stage],
-  );
 
   const activityDays = useMemo(
     () => mergeActivityDays({ events, checkins }),
