@@ -51,12 +51,12 @@ export async function trackEvent(
   try {
     const { data: { user } } = await supabase.auth.getUser();
     if (!user) return;
-    await supabase.from("user_events").insert({
+    await supabase.from("user_events").insert([{
       user_id: user.id,
       event_name: event,
       stage: STAGE_BY_EVENT[event],
-      payload,
-    });
+      payload: payload as never,
+    }]);
   } catch (err) {
     // Telemetria não deve quebrar o fluxo do usuário.
     console.warn("[user-events] trackEvent failed", err);
