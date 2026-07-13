@@ -327,7 +327,7 @@ const SessaoView = () => {
         </div>
 
         {/* Centered content — one block at a time */}
-        <main className="flex-1 w-full flex flex-col items-center justify-start md:justify-center px-6 md:px-12 overflow-y-auto scrollbar-hide pb-12 pt-24 md:pt-0">
+        <div className="flex-1 w-full flex flex-col items-center justify-start md:justify-center px-6 md:px-12 overflow-y-auto scrollbar-hide pb-12 pt-24 md:pt-0">
           <AnimatePresence mode="wait">
             {isFinished ? (
               <motion.div
@@ -548,7 +548,7 @@ const SessaoView = () => {
               </>
             )}
           </AnimatePresence>
-        </main>
+        </div>
 
         {/* Bottom: fixed-feel navigation bar (integrated in flex flow for keyboard handling) */}
         <footer className={`w-full z-50 px-6 md:px-12 transition-all duration-300 flex justify-center bg-[#050505] border-t border-white/5 md:bg-gradient-to-t md:from-[#050505] md:via-[#050505]/95 md:to-transparent md:border-none ${
