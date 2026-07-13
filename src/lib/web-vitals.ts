@@ -56,6 +56,44 @@ function sanitizeUrl(url: string): string {
   }
 }
 
+// -----------------------------------------------------------------------------
+// Deduplicação + rate limit (em memória, por aba/sessão)
+// -----------------------------------------------------------------------------
+// Regras:
+// - DEDUP: uma (metric_name + page_url) só é enviada 1x por sessão dentro de
+//   uma janela de 30s. Trocar de rota gera um novo par e continua sendo aceito.
+// - RATE LIMIT global por sessão:
+//     * até 8 eventos por minuto (janela deslizante);
+//     * até 60 eventos no total durante a sessão.
+// -----------------------------------------------------------------------------
+const DEDUP_WINDOW_MS = 30_000;
+const RATE_WINDOW_MS = 60_000;
+const RATE_MAX_PER_WINDOW = 8;
+const SESSION_MAX_EVENTS = 60;
+
+const dedupMap = new Map<string, number>(); // key -> lastSentAt
+const recentSends: number[] = []; // timestamps dentro da janela de 1min
+let totalSent = 0;
+
+function shouldSend(metric: MetricName, pageUrl: string): boolean {
+  const now = Date.now();
+  const key = `${metric}|${pageUrl}`;
+  const last = dedupMap.get(key);
+  if (last && now - last < DEDUP_WINDOW_MS) return false;
+
+  if (totalSent >= SESSION_MAX_EVENTS) return false;
+
+  while (recentSends.length && now - recentSends[0] > RATE_WINDOW_MS) {
+    recentSends.shift();
+  }
+  if (recentSends.length >= RATE_MAX_PER_WINDOW) return false;
+
+  dedupMap.set(key, now);
+  recentSends.push(now);
+  totalSent += 1;
+  return true;
+}
+
 async function sendVital(payload: WebVitalPayload): Promise<void> {
   try {
     await supabase.from("web_vitals").insert(payload);
@@ -64,37 +102,32 @@ async function sendVital(payload: WebVitalPayload): Promise<void> {
   }
 }
 
-let started = false;
+function buildReporter(
+  sessionId: string,
+  deviceType: WebVitalPayload["device_type"],
+  userAgent: string,
+) {
+  return (metric: {
+    name: MetricName;
+    value: number;
+    rating?: "good" | "needs-improvement" | "poor";
+  }) => {
+    const pageUrl = sanitizeUrl(window.location.href);
+    if (!shouldSend(metric.name, pageUrl)) return;
 
-export function initWebVitals(): void {
-  if (started) return;
-  started = true;
-  if (typeof window === "undefined") return;
+    const payload: WebVitalPayload = {
+      metric_name: metric.name,
+      metric_value: Number(metric.value.toFixed(3)),
+      metric_rating: metric.rating ?? null,
+      page_url: pageUrl,
+      user_agent: userAgent,
+      device_type: deviceType,
+      session_id: sessionId,
+    };
+    void sendVital(payload);
+  };
+}
 
-  // Executa após o carregamento inicial para não competir com o LCP.
-  const start = () => {
-    import("web-vitals")
-      .then(({ onCLS, onFCP, onINP, onLCP, onTTFB }) => {
-        const sessionId = getSessionId();
-        const deviceType = getDeviceType();
-        const userAgent = (navigator.userAgent || "").slice(0, 512);
-
-        const report = (metric: {
-          name: MetricName;
-          value: number;
-          rating?: "good" | "needs-improvement" | "poor";
-        }) => {
-          const payload: WebVitalPayload = {
-            metric_name: metric.name,
-            metric_value: Number(metric.value.toFixed(3)),
-            metric_rating: metric.rating ?? null,
-            page_url: sanitizeUrl(window.location.href),
-            user_agent: userAgent,
-            device_type: deviceType,
-            session_id: sessionId,
-          };
-          void sendVital(payload);
-        };
 
         onLCP(report as any);
         onCLS(report as any);
