@@ -207,8 +207,8 @@ export default function BehaviorAnalytics() {
           <h3 id="coorte-title" className="text-sm font-semibold uppercase tracking-wider text-muted-foreground">
             Coorte semanal × Dias
           </h3>
-          {loading ? (
-            <p className="text-sm text-muted-foreground">Carregando…</p>
+          {cohortLoading ? (
+            <p className="text-sm text-muted-foreground">Carregando coorte…</p>
           ) : cohort.length === 0 ? (
             <p className="text-sm text-muted-foreground">Sem coortes no período selecionado.</p>
           ) : (
