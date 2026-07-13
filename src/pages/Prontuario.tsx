@@ -130,10 +130,20 @@ const Prontuario: React.FC = () => {
     children,
   }: {
     label: string;
-    children: React.ReactElement<{ id?: string; "aria-label"?: string }>;
+    children: React.ReactNode;
   }) => {
     const generatedId = useId();
-    const fieldId = children.props.id ?? generatedId;
+    // Localiza o primeiro filho que é um elemento (ignora strings/whitespace)
+    // e injeta id para associar ao <label htmlFor>.
+    let fieldId = generatedId;
+    const enhanced = React.Children.map(children, (child) => {
+      if (!React.isValidElement(child)) return child;
+      const existingId = (child.props as { id?: string }).id;
+      if (existingId) fieldId = existingId;
+      return React.cloneElement(child as React.ReactElement<{ id?: string }>, {
+        id: fieldId,
+      });
+    });
     return (
       <div>
         <label
@@ -142,7 +152,7 @@ const Prontuario: React.FC = () => {
         >
           {label}
         </label>
-        {React.cloneElement(children, { id: fieldId })}
+        {enhanced}
       </div>
     );
   };
