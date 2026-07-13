@@ -54,6 +54,10 @@ export default function BehaviorAnalytics() {
   const [profiles, setProfiles] = useState<{ id: string; created_at: string }[]>([]);
   const [events, setEvents] = useState<UserEventRow[]>([]);
   const [checkins, setCheckins] = useState<{ user_id: string; checkin_date: string }[]>([]);
+  const [cohort, setCohort] = useState<CohortRow[]>([]);
+  const [cohortLoading, setCohortLoading] = useState(true);
+
+  const maxDay = Math.min(Number(range), 30);
 
   useEffect(() => {
     let cancelled = false;
@@ -78,9 +82,33 @@ export default function BehaviorAnalytics() {
     return () => { cancelled = true; };
   }, [range]);
 
+  // Coorte semanal calculada no banco via RPC (SECURITY DEFINER, gate admin).
+  useEffect(() => {
+    let cancelled = false;
+    async function loadCohort() {
+      setCohortLoading(true);
+      const days = Number(range);
+      const since = new Date(Date.now() - days * DAY_MS).toISOString();
+      const { data, error } = await (supabase as any).rpc("admin_weekly_cohort", {
+        _since: since,
+        _max_day: maxDay,
+        _stage: stage === "all" ? null : stage,
+      });
+      if (cancelled) return;
+      if (error) {
+        console.error("[admin_weekly_cohort]", error);
+        setCohort([]);
+      } else {
+        setCohort(cohortRowsFromRpc((data as CohortRpcRow[]) || []));
+      }
+      setCohortLoading(false);
+    }
+    loadCohort();
+    return () => { cancelled = true; };
+  }, [range, stage, maxDay]);
+
   const filteredProfiles = useMemo(() => {
     if (stage === "all") return profiles;
-    // Restringe base aos usuários que atingiram a etapa selecionada
     const stageUsers = new Set(
       stage === "cadastro"
         ? profiles.map((p) => p.id)
@@ -104,16 +132,6 @@ export default function BehaviorAnalytics() {
     [filteredProfiles, activityDays],
   );
 
-  const cohort = useMemo(
-    () => buildCohort({
-      profiles: filteredProfiles,
-      activityDaysByUser: activityDays,
-      maxDay: Math.min(Number(range), 30),
-    }),
-    [filteredProfiles, activityDays, range],
-  );
-
-  const maxDay = Math.min(Number(range), 30);
 
   return (
     <Card className="border-primary/20 bg-card/50 overflow-hidden">
