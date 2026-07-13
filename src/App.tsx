@@ -348,7 +348,7 @@ const AnimatedRoutes = () => {
             path="/admin/pwa-health"
             element={
               <PageTransition>
-                <ProtectedRoute authMessage="Acesso restrito a administradores.">
+                <ProtectedRoute requireAdmin authMessage="Acesso restrito a administradores.">
                   <AdminPWAHealth />
                 </ProtectedRoute>
               </PageTransition>
@@ -358,7 +358,7 @@ const AnimatedRoutes = () => {
             path="/admin/web-vitals"
             element={
               <PageTransition>
-                <ProtectedRoute authMessage="Acesso restrito a administradores.">
+                <ProtectedRoute requireAdmin authMessage="Acesso restrito a administradores.">
                   <AdminWebVitals />
                 </ProtectedRoute>
               </PageTransition>
@@ -368,7 +368,7 @@ const AnimatedRoutes = () => {
             path="/admin/pwa-diagnostics"
             element={
               <PageTransition>
-                <ProtectedRoute authMessage="Acesso restrito a administradores.">
+                <ProtectedRoute requireAdmin authMessage="Acesso restrito a administradores.">
                   <AdminPWADiagnostics />
                 </ProtectedRoute>
               </PageTransition>
@@ -378,7 +378,7 @@ const AnimatedRoutes = () => {
             path="/admin"
             element={
               <PageTransition>
-                <ProtectedRoute authMessage="Acesso restrito a administradores.">
+                <ProtectedRoute requireAdmin authMessage="Acesso restrito a administradores.">
                   <Admin />
                 </ProtectedRoute>
               </PageTransition>
