@@ -62,7 +62,7 @@ export const ProfileProvider: React.FC<{ children: React.ReactNode }> = ({ child
     try {
       const existing = JSON.parse(localStorage.getItem(HISTORY_KEY) || "[]");
       localStorage.setItem(HISTORY_KEY, JSON.stringify([newLog, ...existing].slice(0, 50)));
-    } catch (e) {}
+    } catch { /* noop */ }
   }, []);
 
   const fetchProfile = async (isManual = false) => {
@@ -90,7 +90,7 @@ export const ProfileProvider: React.FC<{ children: React.ReactNode }> = ({ child
           const parsed = JSON.parse(localRaw);
           if (Array.isArray(parsed)) validatedLocal = parsed.filter(isValidObjective);
         }
-      } catch (e) {}
+      } catch { /* noop */ }
 
       if (data) {
         const dbProfile = data as Profile;
@@ -159,7 +159,7 @@ export const ProfileProvider: React.FC<{ children: React.ReactNode }> = ({ child
     try {
       const saved = localStorage.getItem(HISTORY_KEY);
       if (saved) setHistory(JSON.parse(saved).map((h: any) => ({ ...h, timestamp: new Date(h.timestamp) })));
-    } catch (e) {}
+    } catch { /* noop */ }
   }, [user]);
 
   const toggleApplyMode = (mode: "auto" | "manual") => {

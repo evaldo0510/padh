@@ -26,7 +26,7 @@ const JornadaHome = () => {
   let localObjectives: PCHObjectiveId[] = [];
   try {
     if (localRaw) localObjectives = JSON.parse(localRaw);
-  } catch (e) {}
+  } catch { /* noop */ }
 
   const userObjectives = dbObjectives.length > 0 ? dbObjectives : localObjectives;
 

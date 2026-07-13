@@ -65,7 +65,7 @@ const ProgressPanel: React.FC = () => {
 
     return data.map(fase => {
       const totalSessions = fase.sessoes.length;
-      let completedSessions = fase.sessoes.filter(s => jornada.completedSessions.includes(s.id)).length;
+      const completedSessions = fase.sessoes.filter(s => jornada.completedSessions.includes(s.id)).length;
       
       return {
         name: fase.titulo,

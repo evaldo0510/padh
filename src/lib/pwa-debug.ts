@@ -45,7 +45,7 @@ export function setPWADebug(enabled: boolean) {
   try {
     if (enabled) localStorage.setItem(FLAG_KEY, "1");
     else localStorage.removeItem(FLAG_KEY);
-  } catch {}
+  } catch { /* noop */ }
 }
 
 export function pwaDebugLog(event: PWADebugEvent, reason?: string, data?: any) {
@@ -60,7 +60,7 @@ export function pwaDebugLog(event: PWADebugEvent, reason?: string, data?: any) {
   if (typeof window !== "undefined") {
     try {
       window.dispatchEvent(new CustomEvent("pwa-debug", { detail: entry }));
-    } catch {}
+    } catch { /* noop */ }
   }
 
   if (!isPWADebugEnabled()) return;
@@ -74,7 +74,7 @@ export function pwaDebugLog(event: PWADebugEvent, reason?: string, data?: any) {
     arr.push(entry);
     while (arr.length > MAX_ENTRIES) arr.shift();
     sessionStorage.setItem(HISTORY_KEY, JSON.stringify(arr));
-  } catch {}
+  } catch { /* noop */ }
 }
 
 export function getPWADebugHistory(): PWADebugEntry[] {
@@ -89,7 +89,7 @@ export function getPWADebugHistory(): PWADebugEntry[] {
 export function clearPWADebugHistory() {
   try {
     sessionStorage.removeItem(HISTORY_KEY);
-  } catch {}
+  } catch { /* noop */ }
 }
 
 /**

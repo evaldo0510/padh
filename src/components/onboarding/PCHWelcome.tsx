@@ -52,7 +52,7 @@ const PCHWelcome: React.FC<{ onComplete?: () => void }> = ({ onComplete }) => {
       for (const obj of selectedObjectives) {
         await toggleObjective(obj);
       }
-    } catch {}
+    } catch { /* noop */ }
     onComplete?.();
     navigate("/jornada");
   };
@@ -214,7 +214,7 @@ export const PCHWelcomeGate: React.FC = () => {
       }
 
       if (!seen) setShow(true);
-    } catch {}
+    } catch { /* noop */ }
   }, [authLoading, profileLoading, profile]);
 
   if (!show) return null;
