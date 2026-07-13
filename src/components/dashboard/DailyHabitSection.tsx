@@ -328,6 +328,8 @@ const DailyHabitSection: React.FC = () => {
           note: note,
           checkin_date: todayKey
         }, { onConflict: "user_id,checkin_date" });
+        // Telemetria comportamental (best-effort, não bloqueia)
+        trackEvent("checkin", { checkin_date: todayKey, mood });
       }
 
       // Save exercise response
