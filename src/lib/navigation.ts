@@ -5,6 +5,7 @@ import {
   BookOpen,
   TrendingUp,
   UserCircle,
+  GraduationCap,
   LucideIcon,
 } from "lucide-react";
 
@@ -74,6 +75,23 @@ export const NAV_SECTIONS: NavSection[] = [
       { label: "Mapa cerebral", path: "/mapa-cerebral" },
       { label: "Aula exclusiva", path: "/aula-exclusiva" },
       { label: "Livro do curso", path: "/livro-curso" },
+    ],
+  },
+  {
+    id: "formacao",
+    label: "Formação",
+    icon: GraduationCap,
+    path: "/formacao",
+    items: [
+      { label: "Visão geral", path: "/formacao" },
+      { label: "Módulo 1 — Base Teórica", path: "/formacao/modulo/modulo-1" },
+      { label: "Módulo 2 — Reestruturação de Crenças", path: "/formacao/modulo/modulo-2" },
+      { label: "Módulo 3 — Linguagem Hipnótica", path: "/formacao/modulo/modulo-3" },
+      { label: "Módulo 4 — Poemas Hipnóticos", path: "/formacao/modulo/modulo-4" },
+      { label: "Módulo 5 — Metáforas Curativas", path: "/formacao/modulo/modulo-5" },
+      { label: "Módulo 6 — Poesia Terapêutica", path: "/formacao/modulo/modulo-6" },
+      { label: "Módulo 7 — Sessão P.A.D.H.", path: "/formacao/modulo/modulo-7" },
+      { label: "Módulo 8 — Práticas Avançadas", path: "/formacao/modulo/modulo-8" },
     ],
   },
   {
