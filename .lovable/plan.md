@@ -1,150 +1,95 @@
+# Reorganização da Navegação
 
-# Plano: Ferramentas Clínicas Avançadas para o Curso PCH/P.A.D.H.
+Reorganizar a navegação da área logada em 6 seções com submenus, sem remover páginas, sem alterar rotas e sem tocar em lógica de negócio.
 
-## Visão Geral
-Vou expandir a página `/curso-padh` adicionando 4 grandes recursos clínicos, sempre conectando o conteúdo aos teóricos fundadores (Freud, Jung, Lacan, Erickson, Bowlby, Frankl, Beck, Damásio) para dar consistência acadêmica.
+## Estrutura final
 
----
+```
+1. Início          → /dashboard
+2. Jornadas        → /jornada  (+ submenus por fase)
+3. Ferramentas PCH → /ferramentas  (+ submenus)
+4. Biblioteca      → /explorar  (+ submenus)
+5. Minha Evolução  → /dashboard#progresso  (+ submenus)
+6. Perfil          → /perfil  (+ submenus)
+```
 
-## 1. Versões Imprimíveis em PDF (Protocolos + Exercícios por Módulo)
+Admin permanece separado, acessível só para admins, agrupado em Dashboard / Conteúdo / Usuários / Relatórios / Sistema.
 
-**Implementação:**
-- Criar utilitário `src/lib/pdf-generator.ts` usando `jspdf` + `jspdf-autotable` (geração 100% client-side, sem backend).
-- Criar componente `BotaoImprimirPDF.tsx` que aparecerá em cada módulo do curso.
-- Cada PDF gerado conterá:
-  - Cabeçalho com logo P.A.D.H. e nome do módulo
-  - Protocolo clínico (sinais, aplicação, indicações, cuidados éticos)
-  - **Fundamentação teórica** ligando ao teórico (ex.: Módulo 1 → Lacan e a "fala plena"; Módulo 4 → Erickson e linguagem hipnótica)
-  - Exercícios práticos para o paciente levar para casa (em formato de "tarefas terapêuticas")
-  - Espaço em branco para anotações
-  - Rodapé com aviso ético
+## Mapa Menu → Submenu → Rota existente
 
-**Dois tipos de PDF por módulo:**
-1. **PDF do Terapeuta** — protocolo completo, com hipóteses diagnósticas
-2. **PDF do Paciente** — exercícios simplificados, poemas guia e prescrição poética
+**Início**
+- Dashboard → `/dashboard`
+- Continuar jornada → `continuePath` (dinâmico via `useJornada`)
+- Prática de hoje → `/dashboard` (âncora)
 
----
+**Jornadas** (fases de `JORNADA_DATA`)
+- Despertar / Sombra / Reprogramação / Expansão → `/jornada` (filtrado por fase)
+- Hábitos Diários → `/dashboard` (seção hábitos)
 
-## 2. Template de Registro de Sessão (Prontuário PCH)
+**Ferramentas PCH**
+- Índice → `/ferramentas`
+- Poema-diagnóstico → `/ferramentas/poemadiagnostico`
+- Poema-Funil → `/ferramentas/poema-funil`
+- Verso-Gatilho → `/ferramentas/verso-gatilho`
+- Reescrita Poética → `/ferramentas/reescrita-poetica`
+- Encenação Poética → `/ferramentas/encenacao-poetica`
+- Poesia Hipnótica → `/ferramentas/poesia-hipnotica`
+- Ritual do Silêncio → `/ferramentas/ritual-silencio`
+- Caderno da Voz Interna → `/ferramentas/caderno-voz-interna`
 
-**Novo componente:** `src/components/clinical/PromtuarioSessao.tsx`
+**Biblioteca**
+- Explorar → `/explorar`
+- Fundamentação Teórica → `/fundamentacao`
+- Recursos Clínicos → `/recursos-clinicos`
+- Biblioteca de Exercícios → `/biblioteca-exercicios`
+- Ciência & Poesia → `/ciencia-poesia`
+- Mapa Cerebral → `/mapa-cerebral`
+- Aula Exclusiva → `/aula-exclusiva`
+- Livro do Curso → `/livro-curso`
 
-Será uma página dedicada em `/prontuario-pch` (acessível também como botão de download na página do curso).
+**Minha Evolução**
+- Progresso → `/dashboard`
+- Prontuário → `/prontuario`
+- Histórico de Consciência → `/consciencia-historico`
+- Diagnóstico → `/diagnostico`
+- Diagnóstico Jornada → `/diagnostico-jornada`
 
-**Estrutura do prontuário (também exportável em PDF):**
-- **Identificação:** data, número da sessão, paciente (iniciais)
-- **Queixa atual & estado emocional inicial** (escala 0-10)
-- **Sinais observados pela linguagem** (checklist com hipóteses ligadas a:
-  - Freud — atos falhos, lapsos
-  - Lacan — significantes-mestre repetidos
-  - Jung — símbolos arquetípicos emergentes
-  - Bowlby — padrões de apego no discurso)
-- **Pilar P.A.D.H. trabalhado na sessão** (P/A/D/H — checkbox)
-- **Ferramenta aplicada** (Poema-Funil, Verso-Gatilho, etc.)
-- **Aplicação passo a passo** (campos numerados 1-5)
-- **Resposta do paciente:** verbal, corporal, emocional
-- **Verso/poema co-criado em sessão** (campo aberto)
-- **Cuidados éticos observados** (CFP / CFM checklist)
-- **Hipótese teórica de leitura** (campo conectando à teoria)
-- **Tarefa terapêutica** (homework poético)
-- **Próximos passos**
+**Perfil**
+- Meu Produto → `/meu-produto`
+- Planos → `/planos`
+- Sobre → `/sobre`
+- Contato → `/contato`
+- Changelog → `/changelog`
+- Config → `/config`
+- Sair → logout
 
----
+Comunidade fica **oculta** até existir (nenhum item no menu).
 
-## 3. Checklist Clínico Rápido (no início de cada módulo)
+## Implementação (frontend apenas)
 
-**Novo componente:** `src/components/clinical/ChecklistClinico.tsx`
+1. **Novo componente `AppSidebar.tsx`** (desktop, ≥`lg`) usando shadcn `Sidebar` com `collapsible="icon"`. 6 grupos com submenus expansíveis. Highlight ativo via `useLocation`. Marca fase ativa com `defaultOpen` quando a rota bate.
 
-Será inserido **no topo** de cada AccordionContent dos 8 módulos (sem alterar conteúdo existente).
+2. **Novo componente `MobileMenuSheet.tsx`** — Sheet lateral disparado por um botão hamburger no `MobileNav`, contendo as 6 seções + submenus. O `MobileNav` bottom-bar continua com 4 atalhos rápidos (Início, Jornada, Ferramentas, Perfil), mas ganha um 5º item "Menu" que abre o Sheet completo.
 
-**Estrutura do checklist (interativo + imprimível):**
-- ☐ **Sinais presentes** (3-5 marcáveis, específicos do módulo)
-- ☐ **Nível de contenção emocional** (Baixo / Moderado / Alto — radio)
-- ☐ **Estado de rapport** (1-5)
-- ☐ **Indicações respeitadas?** (sim/não)
-- ☐ **Contraindicações verificadas?** (sim/não)
-- ☐ **Próximo passo definido?** (campo aberto)
-- ☐ **Referencial teórico ativado** (ex.: "Estou usando a escuta lacaniana?" / "Estou aplicando metáfora ericksoniana?")
+3. **`Header.tsx`** — adicionar `SidebarTrigger` visível em desktop; preservar botão "Continuar jornada" e progresso.
 
-O estado é salvo em `localStorage` para que o terapeuta não perca o preenchimento.
+4. **`App.tsx`** — envolver rotas logadas em `SidebarProvider` + `AppSidebar` para exibir sidebar apenas em rotas autenticadas. Páginas públicas (landing, login, vendas) não recebem sidebar.
 
----
+5. **Fonte única `src/lib/navigation.ts`** — definir a estrutura das 6 seções + submenus como dado, consumida por `AppSidebar` e `MobileMenuSheet` (evita duplicação).
 
-## 4. Fluxograma de Decisão Interativo
+## Não faz parte
 
-**Novo componente:** `src/components/clinical/FluxogramaDecisao.tsx`
+- Não renomeia páginas nem altera conteúdo.
+- Não cria rotas novas (submenus apontam para rotas já existentes).
+- Não remove `MobileNav` bottom bar; apenas adiciona acesso ao menu completo.
+- Não mexe em Admin nesta rodada (posso fazer em rodada separada se quiser).
+- Não implementa Comunidade (oculta).
 
-Posicionado logo após a tabela de "Como Identificar Problemas" no topo da página.
+## Validação
 
-**Funcionamento (decision tree interativa):**
-- **Pergunta 1:** O paciente está em crise aguda (ideação suicida, surto)?
-  - Sim → Bloco vermelho: "PCH não é primeira linha. Encaminhar para atendimento de urgência. Ler Frankl sobre sentido em situações-limite."
-  - Não → próxima pergunta
-- **Pergunta 2:** Qual o sintoma predominante observado?
-  - Discurso rígido, absoluto → **Pilar P (M1)** — escuta semântica, base lacaniana
-  - Crenças nucleares disfuncionais → **Pilar A (M2)** — reestruturação, base de Beck + Erickson
-  - Defesas racionais altas → **Pilar A (M3-M4)** — linguagem hipnótica, base de Erickson
-  - Trauma fragmentado → **Pilar D (M5)** — metáforas integradoras, base de Janet/Van der Kolk
-  - Vazio existencial → **Pilar D (M6)** — poesia ritualística, base de Frankl/Jung
-  - Necessidade de integração → **Pilar H (M7-M8)** — autonomia psíquica, base de Winnicott
-- **Resultado:** card colorido com pilar recomendado + ferramenta + leitura teórica sugerida
+- `bun run build` passa.
+- Todas as rotas atuais continuam acessíveis via novo menu.
+- Mobile: bottom nav + sheet funcionam; desktop: sidebar colapsável funciona.
+- Highlight de rota ativa correto em cada nível.
 
-**Tecnologia:** state machine simples com `useState`, sem libs externas.
-
----
-
-## 5. Conexão Teórica Integrada (em TODOS os módulos)
-
-Adicionarei um **novo card** chamado `<FundamentacaoTeorica />` ao final de cada módulo (sem remover conteúdo), conectando explicitamente:
-
-| Módulo | Teóricos integrados |
-|--------|-----|
-| M1 — Poder das Palavras | **Lacan** (significante), **Freud** (associação livre), **Vygotsky** (linguagem e pensamento) |
-| M2 — Reestruturação | **Aaron Beck** (TCC), **Albert Ellis** (TREC), **Piaget** (esquemas) |
-| M3 — Linguagem Hipnótica | **Milton Erickson** (metáfora terapêutica), **Bandler & Grinder** (PNL) |
-| M4 — Poemas Hipnóticos | **Erickson + Rossi** (sugestão indireta), **Damásio** (marcadores somáticos) |
-| M5 — Técnicas Avançadas | **Jung** (arquétipos), **Joseph Campbell** (jornada do herói), **Hillman** (psicologia arquetípica) |
-| M6 — Poesia Terapêutica | **Frankl** (logoterapia), **Pennebaker** (escrita expressiva), **Bolton** (poetry therapy) |
-| M7 — Sessão em 4 Fases | **Winnicott** (holding), **Bowlby** (base segura), **Yalom** (fatores terapêuticos) |
-| M8 — Exercícios Práticos | **Bandura** (autoeficácia), **Csikszentmihalyi** (flow), **Maslow** (auto-realização) |
-
----
-
-## 6. Página Dedicada de Recursos Clínicos
-
-**Nova rota:** `/recursos-clinicos`
-- Hub centralizado com:
-  - Download de todos os PDFs (terapeuta + paciente)
-  - Acesso ao prontuário em branco
-  - Acesso ao fluxograma standalone
-  - Biblioteca de checklists por módulo
-- Adicionar link no menu (Header) e no Footer
-
----
-
-## Arquivos a Criar
-1. `src/lib/pdf-generator.ts` — utilitário de geração PDF
-2. `src/components/clinical/BotaoImprimirPDF.tsx`
-3. `src/components/clinical/PromtuarioSessao.tsx`
-4. `src/components/clinical/ChecklistClinico.tsx`
-5. `src/components/clinical/FluxogramaDecisao.tsx`
-6. `src/components/clinical/FundamentacaoTeorica.tsx`
-7. `src/pages/RecursosClinicos.tsx`
-8. `src/pages/Prontuario.tsx`
-9. `src/lib/dados-clinicos.ts` — dados estruturados de cada módulo (sinais, teóricos, etc.)
-
-## Arquivos a Modificar (apenas adições, sem remover conteúdo)
-1. `src/pages/CursoPCH.tsx` — inserir Checklist no topo + Fundamentação Teórica + Botão PDF em cada módulo
-2. `src/App.tsx` — adicionar rotas novas
-3. `src/components/layout/Header.tsx` — link "Recursos Clínicos"
-4. `src/components/layout/Footer.tsx` — link "Recursos Clínicos"
-5. `src/lib/seo-config.ts` — SEO das novas páginas
-
-## Dependência
-- `jspdf` e `jspdf-autotable` (instalar via npm/bun)
-
----
-
-## Aviso Ético
-Todos os PDFs e prontuários incluirão rodapé:
-> "Este material é uma ferramenta de apoio clínico baseada na metodologia P.A.D.H. Não substitui avaliação diagnóstica formal. Uso restrito a profissionais habilitados conforme CFP/CFM."
+Confirma para eu executar? Se quiser Admin junto, ou ajustes na divisão de submenus, me diga antes.

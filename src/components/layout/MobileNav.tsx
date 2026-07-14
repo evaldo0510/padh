@@ -1,85 +1,171 @@
-import React, { useMemo } from 'react';
-import { Home, BookOpen, User, Play } from 'lucide-react';
+import React, { useMemo, useState } from 'react';
+import { Home, BookOpen, User, Play, Menu as MenuIcon } from 'lucide-react';
 import { useLocation } from 'react-router-dom';
 import PrefetchLink from './PrefetchLink';
 import { motion } from 'framer-motion';
 import { useJornada } from '@/hooks/useJornada';
+import {
+  Sheet,
+  SheetContent,
+  SheetHeader,
+  SheetTitle,
+} from '@/components/ui/sheet';
+import {
+  Collapsible,
+  CollapsibleContent,
+  CollapsibleTrigger,
+} from '@/components/ui/collapsible';
+import { ChevronDown } from 'lucide-react';
+import { NAV_SECTIONS } from '@/lib/navigation';
 
 const MobileNav = () => {
   const location = useLocation();
   const { nextSession, continuePath } = useJornada();
-  
-  const navItems = useMemo(() => {
+  const [menuOpen, setMenuOpen] = useState(false);
 
+  const navItems = useMemo(() => {
     return [
-      { 
-        name: 'Início', 
-        path: '/', 
+      {
+        name: 'Início',
+        path: '/',
         icon: <Home className="w-5 h-5" />,
-        activeIcon: <Home className="w-5 h-5 fill-primary" />
+        activeIcon: <Home className="w-5 h-5 fill-primary" />,
       },
-      { 
-        name: 'Teoria', 
-        path: '/fundamentacao', 
+      {
+        name: 'Teoria',
+        path: '/fundamentacao',
         icon: <BookOpen className="w-5 h-5" />,
-        activeIcon: <BookOpen className="w-5 h-5 fill-primary" />
+        activeIcon: <BookOpen className="w-5 h-5 fill-primary" />,
       },
-      { 
-        name: nextSession ? 'Continuar' : 'Jornada', 
-        path: continuePath, 
-        icon: nextSession ? <Play className="w-5 h-5" /> : <Play className="w-5 h-5" />,
-        activeIcon: nextSession ? <Play className="w-5 h-5 fill-primary" /> : <Play className="w-5 h-5 fill-primary" />,
-        // Custom isActive for session routes
-        match: (pathname: string) => pathname.startsWith('/jornada')
+      {
+        name: nextSession ? 'Continuar' : 'Jornada',
+        path: continuePath,
+        icon: <Play className="w-5 h-5" />,
+        activeIcon: <Play className="w-5 h-5 fill-primary" />,
+        match: (pathname: string) => pathname.startsWith('/jornada'),
       },
-      { 
-        name: 'Área', 
-        path: '/dashboard', 
+      {
+        name: 'Área',
+        path: '/dashboard',
         icon: <User className="w-5 h-5" />,
-        activeIcon: <User className="w-5 h-5 fill-primary" />
+        activeIcon: <User className="w-5 h-5 fill-primary" />,
       },
     ];
-  }, [nextSession]);
+  }, [nextSession, continuePath]);
 
   const isActive = (item: any) => {
     const currentPath = location.pathname;
     if (item.match) return item.match(currentPath);
     if (item.path === '/') return currentPath === '/';
-    return currentPath === item.path || currentPath.startsWith(item.path + '/') || (item.path.startsWith('/jornada') && currentPath.startsWith('/jornada'));
+    return currentPath === item.path || currentPath.startsWith(item.path + '/');
   };
 
+  const isSectionActive = (section: (typeof NAV_SECTIONS)[number]) =>
+    section.items.some(
+      (it) => location.pathname === it.path || location.pathname.startsWith(it.path + '/'),
+    );
+
   return (
-    <nav className="lg:hidden fixed bottom-6 left-6 right-6 z-50 bg-black/40 backdrop-blur-2xl border border-white/10 rounded-[2rem] pb-safe shadow-2xl overflow-hidden active:scale-[0.98] transition-transform duration-200">
-      <div className="flex items-center justify-around h-16 max-w-md mx-auto relative z-10 px-4">
-        {navItems.map((item) => {
-          const active = isActive(item);
-          return (
-            <div key={item.path} className="flex-1 h-full">
-              <PrefetchLink
-                to={item.path}
-                className={`relative flex flex-col items-center justify-center gap-1.5 h-full transition-all duration-500 py-2 ${
-                  active ? 'text-primary' : 'text-white/30'
-                }`}
-              >
-                <div className={`transition-all duration-500 ${active ? 'scale-110 -translate-y-0.5' : 'scale-100'}`}>
-                  {active ? item.activeIcon : item.icon}
-                </div>
-                <span className={`text-[9px] font-black uppercase tracking-[0.15em] transition-all duration-500 ${active ? 'opacity-100' : 'opacity-60'}`}>
-                  {item.name}
-                </span>
-                
-                {active && (
-                  <motion.div 
-                    layoutId="active-nav-glow"
-                    className="absolute -top-1 w-12 h-1 bg-primary rounded-full shadow-glow" 
-                  />
-                )}
-              </PrefetchLink>
-            </div>
-          );
-        })}
-      </div>
-    </nav>
+    <>
+      <nav className="lg:hidden fixed bottom-6 left-6 right-6 z-50 bg-black/40 backdrop-blur-2xl border border-white/10 rounded-[2rem] pb-safe shadow-2xl overflow-hidden active:scale-[0.98] transition-transform duration-200">
+        <div className="flex items-center justify-around h-16 max-w-md mx-auto relative z-10 px-2">
+          {navItems.map((item) => {
+            const active = isActive(item);
+            return (
+              <div key={item.path} className="flex-1 h-full">
+                <PrefetchLink
+                  to={item.path}
+                  className={`relative flex flex-col items-center justify-center gap-1.5 h-full transition-all duration-500 py-2 ${
+                    active ? 'text-primary' : 'text-white/30'
+                  }`}
+                >
+                  <div className={`transition-all duration-500 ${active ? 'scale-110 -translate-y-0.5' : 'scale-100'}`}>
+                    {active ? item.activeIcon : item.icon}
+                  </div>
+                  <span className={`text-[9px] font-black uppercase tracking-[0.15em] transition-all duration-500 ${active ? 'opacity-100' : 'opacity-60'}`}>
+                    {item.name}
+                  </span>
+                  {active && (
+                    <motion.div
+                      layoutId="active-nav-glow"
+                      className="absolute -top-1 w-12 h-1 bg-primary rounded-full shadow-glow"
+                    />
+                  )}
+                </PrefetchLink>
+              </div>
+            );
+          })}
+          {/* Menu completo */}
+          <div className="flex-1 h-full">
+            <button
+              type="button"
+              onClick={() => setMenuOpen(true)}
+              aria-label="Abrir menu completo"
+              className="relative flex flex-col items-center justify-center gap-1.5 h-full w-full transition-all duration-500 py-2 text-white/30 hover:text-white/70"
+            >
+              <MenuIcon className="w-5 h-5" />
+              <span className="text-[9px] font-black uppercase tracking-[0.15em] opacity-60">
+                Menu
+              </span>
+            </button>
+          </div>
+        </div>
+      </nav>
+
+      <Sheet open={menuOpen} onOpenChange={setMenuOpen}>
+        <SheetContent
+          side="right"
+          className="w-[320px] sm:w-[380px] overflow-y-auto bg-background/95 backdrop-blur-2xl border-l border-white/10"
+        >
+          <SheetHeader>
+            <SheetTitle className="text-left">Navegação</SheetTitle>
+          </SheetHeader>
+          <nav className="mt-6 flex flex-col gap-1">
+            {NAV_SECTIONS.map((section) => {
+              const Icon = section.icon;
+              const active = isSectionActive(section);
+              return (
+                <Collapsible key={section.id} defaultOpen={active}>
+                  <CollapsibleTrigger className="group flex w-full items-center justify-between rounded-xl px-3 py-2.5 text-left hover:bg-white/5 transition-colors">
+                    <span className="flex items-center gap-3">
+                      <Icon className={`w-4 h-4 ${active ? 'text-primary' : 'text-white/60'}`} />
+                      <span className={`text-sm font-semibold ${active ? 'text-primary' : 'text-white/90'}`}>
+                        {section.label}
+                      </span>
+                    </span>
+                    <ChevronDown className="w-4 h-4 text-white/40 transition-transform group-data-[state=open]:rotate-180" />
+                  </CollapsibleTrigger>
+                  <CollapsibleContent>
+                    <ul className="ml-7 mt-1 mb-2 flex flex-col gap-0.5 border-l border-white/10 pl-3">
+                      {section.items.map((item) => {
+                        const itemActive =
+                          location.pathname === item.path ||
+                          location.pathname.startsWith(item.path + '/');
+                        return (
+                          <li key={item.path}>
+                            <PrefetchLink
+                              to={item.path}
+                              onClick={() => setMenuOpen(false)}
+                              className={`block rounded-lg px-3 py-1.5 text-sm transition-colors ${
+                                itemActive
+                                  ? 'text-primary bg-primary/10 font-medium'
+                                  : 'text-white/70 hover:text-white hover:bg-white/5'
+                              }`}
+                            >
+                              {item.label}
+                            </PrefetchLink>
+                          </li>
+                        );
+                      })}
+                    </ul>
+                  </CollapsibleContent>
+                </Collapsible>
+              );
+            })}
+          </nav>
+        </SheetContent>
+      </Sheet>
+    </>
   );
 };
 
