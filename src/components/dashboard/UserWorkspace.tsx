@@ -166,12 +166,12 @@ const UserWorkspace: React.FC = () => {
                   className="btn-primary h-14 px-8 rounded-full shrink-0 shadow-[0_0_40px_rgba(234,179,8,0.25)] hover:shadow-[0_0_60px_rgba(234,179,8,0.4)] transition-shadow"
                 >
                   <PrefetchLink
-                    to={`/jornada/${nextSession.phaseId || nextSession.faseId}/${nextSession.sessionId || nextSession.sessaoId}`}
+                    to={`/jornada/${nextSession.phaseId}/${nextSession.sessionId}`}
                     aria-label={`Continuar: ${nextSession.titulo}`}
                   >
                     <Play className="w-5 h-5 fill-current mr-2" />
                     <span className="font-black uppercase tracking-wider text-sm">
-                      {nextSession.isRecommended ? "Iniciar" : "Continuar"}
+                      {totalProgress > 0 ? "Continuar" : "Iniciar"}
                     </span>
                   </PrefetchLink>
                 </Button>
