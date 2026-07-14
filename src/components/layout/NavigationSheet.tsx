@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useLocation } from "react-router-dom";
-import { Menu, ChevronDown, LogOut } from "lucide-react";
+import { Menu, ChevronDown, LogOut, Flame } from "lucide-react";
+
 import {
   Sheet,
   SheetContent,
@@ -20,6 +21,8 @@ import { supabase } from "@/integrations/supabase/client";
 import { supabaseConfig } from "@/integrations/supabase/config";
 import { toast } from "sonner";
 import { useNavigate } from "react-router-dom";
+import { useNavBadges } from "@/hooks/useNavBadges";
+
 
 interface NavigationSheetProps {
   triggerClassName?: string;
@@ -35,11 +38,39 @@ const NavigationSheet: React.FC<NavigationSheetProps> = ({
   const [open, setOpen] = useState(false);
   const location = useLocation();
   const navigate = useNavigate();
+  const badges = useNavBadges();
 
   const isSectionActive = (section: (typeof NAV_SECTIONS)[number]) =>
     section.items.some(
       (it) => location.pathname === it.path || location.pathname.startsWith(it.path + "/"),
     );
+
+  const renderBadge = (sectionId: string) => {
+    if (sectionId === "jornadas" && badges.jornadasPercent > 0) {
+      return (
+        <span className="text-[11px] font-medium text-white/50 tabular-nums">
+          {badges.jornadasPercent}%
+        </span>
+      );
+    }
+    if (sectionId === "formacao") {
+      return (
+        <span className="text-[11px] font-medium text-white/50 tabular-nums">
+          {badges.formacaoCompleted}/{badges.formacaoTotal}
+        </span>
+      );
+    }
+    if (sectionId === "evolucao" && badges.streak > 0) {
+      return (
+        <span className="inline-flex items-center gap-1 text-[11px] font-medium text-accent-warm tabular-nums">
+          <Flame className="w-3 h-3" />
+          {badges.streak}
+        </span>
+      );
+    }
+    return null;
+  };
+
 
   const handleLogout = async () => {
     localStorage.removeItem("padh_simulated_user");
@@ -75,27 +106,32 @@ const NavigationSheet: React.FC<NavigationSheetProps> = ({
           <SheetTitle className="text-left">Navegação</SheetTitle>
         </SheetHeader>
 
-        <nav className="mt-6 flex flex-col gap-1">
+        <nav className="mt-6 flex flex-col gap-0.5">
           {NAV_SECTIONS.map((section) => {
             const Icon = section.icon;
             const active = isSectionActive(section);
+            const badge = renderBadge(section.id);
             return (
               <Collapsible key={section.id} defaultOpen={active}>
                 <CollapsibleTrigger className="group flex w-full items-center justify-between rounded-xl px-3 py-2.5 text-left hover:bg-white/5 transition-colors">
-                  <span className="flex items-center gap-3">
+                  <span className="flex min-w-0 items-center gap-3">
                     <Icon
-                      className={`w-4 h-4 ${active ? "text-primary" : "text-white/60"}`}
+                      className={`w-4 h-4 shrink-0 ${active ? "text-primary" : "text-white/60"}`}
                     />
                     <span
-                      className={`text-sm font-semibold ${active ? "text-primary" : "text-white/90"}`}
+                      className={`truncate text-sm font-semibold tracking-tight ${active ? "text-primary" : "text-white/90"}`}
                     >
                       {section.label}
                     </span>
                   </span>
-                  <ChevronDown className="w-4 h-4 text-white/40 transition-transform group-data-[state=open]:rotate-180" />
+                  <span className="flex items-center gap-2.5">
+                    {badge}
+                    <ChevronDown className="w-4 h-4 text-white/40 transition-transform group-data-[state=open]:rotate-180" />
+                  </span>
                 </CollapsibleTrigger>
                 <CollapsibleContent>
-                  <ul className="ml-7 mt-1 mb-2 flex flex-col gap-0.5 border-l border-white/10 pl-3">
+                  <ul className="ml-7 mt-0.5 mb-1.5 flex flex-col gap-0.5 border-l border-white/10 pl-3">
+
                     {section.items.map((item) => {
                       const itemActive =
                         location.pathname === item.path ||
