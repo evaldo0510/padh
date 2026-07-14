@@ -71,8 +71,30 @@ const SHORTCUTS = [
 const UserWorkspace: React.FC = () => {
   const navigate = useNavigate();
   const { user } = useAuth();
-  const { jornada, nextSession } = useJornada();
+  const { jornada, nextSession, isSyncing } = useJornada();
   const badges = useNavBadges();
+
+  React.useEffect(() => {
+    if (!import.meta.env.DEV) return;
+    // eslint-disable-next-line no-console
+    console.log(
+      `[flicker] +${Math.round(performance.now())}ms · UserWorkspace mount`,
+      { hasUser: !!user, completed: jornada.completedSessions?.length ?? 0 },
+    );
+  }, []);
+
+  React.useEffect(() => {
+    if (!import.meta.env.DEV) return;
+    // eslint-disable-next-line no-console
+    console.log(
+      `[flicker] +${Math.round(performance.now())}ms · useJornada update`,
+      {
+        isSyncing,
+        completed: jornada.completedSessions?.length ?? 0,
+        responses: jornada.responses?.length ?? 0,
+      },
+    );
+  }, [isSyncing, jornada.completedSessions, jornada.responses]);
 
   const totalProgress = useMemo(() => {
     const total = JORNADA_DATA.reduce((acc, f) => acc + f.sessoes.length, 0);
@@ -82,6 +104,7 @@ const UserWorkspace: React.FC = () => {
 
   const firstName =
     user?.name?.split(" ")[0] || user?.email?.split("@")[0] || "viajante";
+
 
   return (
     <div className="min-h-screen bg-background text-foreground pb-24 md:pb-32 overflow-x-hidden">

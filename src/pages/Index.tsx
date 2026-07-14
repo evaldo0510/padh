@@ -37,16 +37,32 @@ import TextReader from "@/components/ui/text-reader";
 import UserWorkspace from "@/components/dashboard/UserWorkspace";
 import { supabase } from "@/integrations/supabase/client";
 
+const DEBUG_FLICKER = import.meta.env.DEV;
+const flickerLog = (label: string, extra?: Record<string, unknown>) => {
+  if (!DEBUG_FLICKER) return;
+  // eslint-disable-next-line no-console
+  console.log(
+    `[flicker] +${Math.round(performance.now())}ms · ${label}`,
+    extra ?? "",
+  );
+};
+
 const Index = () => {
   const [session, setSession] = useState<any>(null);
   const [checkingSession, setCheckingSession] = useState(true);
-  
+
   useEffect(() => {
+    flickerLog("Index mount · checkingSession=true → render PageSkeleton");
     let mounted = true;
-    
+
     const checkSession = async () => {
+      const t0 = performance.now();
       try {
         const { data: { session } } = await supabase.auth.getSession();
+        flickerLog("getSession resolved", {
+          ms: Math.round(performance.now() - t0),
+          hasSession: !!session,
+        });
         if (mounted) {
           setSession(session);
         }
@@ -55,6 +71,7 @@ const Index = () => {
       } finally {
         if (mounted) {
           setCheckingSession(false);
+          flickerLog("checkingSession=false → will render PageLayout/UserWorkspace or public Home");
         }
       }
     };
@@ -62,6 +79,7 @@ const Index = () => {
     checkSession();
 
     const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
+      flickerLog("onAuthStateChange", { event: _event, hasSession: !!session });
       if (mounted) {
         setSession(session);
       }
@@ -72,6 +90,7 @@ const Index = () => {
       subscription.unsubscribe();
     };
   }, []);
+
 
   const aboutSection = useScrollAnimation(0.15);
   const toolsSection = useScrollAnimation(0.15);
