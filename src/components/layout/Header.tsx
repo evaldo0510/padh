@@ -11,6 +11,7 @@ import { useJornada } from '@/hooks/useJornada';
 import { JORNADA_DATA } from '@/lib/jornada-data';
 import { toast } from 'sonner';
 import SyncIndicator from './SyncIndicator';
+import NavigationSheet from './NavigationSheet';
 
 const Header = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -148,16 +149,20 @@ const Header = () => {
                     className="h-9 w-9 p-0 rounded-full hover:bg-white/10 bg-white/5 border border-white/10"
                     asChild
                   >
-                    <Link to="/dashboard">
+                    <Link to="/dashboard" aria-label="Área do usuário">
                       <User className="w-4 h-4 text-white/80" />
                     </Link>
                   </Button>
+                  <NavigationSheet isLoggedIn />
                 </div>
               </div>
             ) : (
-              <Button size="sm" variant="ghost" className="h-9 px-4 text-xs font-bold uppercase tracking-widest text-white/60 hover:text-white" asChild>
-                <Link to="/login">Entrar</Link>
-              </Button>
+              <>
+                <Button size="sm" variant="ghost" className="h-9 px-4 text-xs font-bold uppercase tracking-widest text-white/60 hover:text-white" asChild>
+                  <Link to="/login">Entrar</Link>
+                </Button>
+                <NavigationSheet />
+              </>
             )}
           </div>
         </div>
