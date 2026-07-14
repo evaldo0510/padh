@@ -106,27 +106,32 @@ const NavigationSheet: React.FC<NavigationSheetProps> = ({
           <SheetTitle className="text-left">Navegação</SheetTitle>
         </SheetHeader>
 
-        <nav className="mt-6 flex flex-col gap-1">
+        <nav className="mt-6 flex flex-col gap-0.5">
           {NAV_SECTIONS.map((section) => {
             const Icon = section.icon;
             const active = isSectionActive(section);
+            const badge = renderBadge(section.id);
             return (
               <Collapsible key={section.id} defaultOpen={active}>
                 <CollapsibleTrigger className="group flex w-full items-center justify-between rounded-xl px-3 py-2.5 text-left hover:bg-white/5 transition-colors">
-                  <span className="flex items-center gap-3">
+                  <span className="flex min-w-0 items-center gap-3">
                     <Icon
-                      className={`w-4 h-4 ${active ? "text-primary" : "text-white/60"}`}
+                      className={`w-4 h-4 shrink-0 ${active ? "text-primary" : "text-white/60"}`}
                     />
                     <span
-                      className={`text-sm font-semibold ${active ? "text-primary" : "text-white/90"}`}
+                      className={`truncate text-sm font-semibold tracking-tight ${active ? "text-primary" : "text-white/90"}`}
                     >
                       {section.label}
                     </span>
                   </span>
-                  <ChevronDown className="w-4 h-4 text-white/40 transition-transform group-data-[state=open]:rotate-180" />
+                  <span className="flex items-center gap-2.5">
+                    {badge}
+                    <ChevronDown className="w-4 h-4 text-white/40 transition-transform group-data-[state=open]:rotate-180" />
+                  </span>
                 </CollapsibleTrigger>
                 <CollapsibleContent>
-                  <ul className="ml-7 mt-1 mb-2 flex flex-col gap-0.5 border-l border-white/10 pl-3">
+                  <ul className="ml-7 mt-0.5 mb-1.5 flex flex-col gap-0.5 border-l border-white/10 pl-3">
+
                     {section.items.map((item) => {
                       const itemActive =
                         location.pathname === item.path ||
