@@ -34,7 +34,7 @@ import { PageSkeleton } from "@/components/ui/page-skeleton";
 import SEOHead from "@/components/seo/SEOHead";
 import { pagesSEO } from "@/lib/seo-config";
 import TextReader from "@/components/ui/text-reader";
-import StreamingHome from "@/components/dashboard/StreamingHome";
+import UserWorkspace from "@/components/dashboard/UserWorkspace";
 import { supabase } from "@/integrations/supabase/client";
 
 const Index = () => {
@@ -120,7 +120,7 @@ const Index = () => {
   ];
 
   const isLoading = usePageLoading(150);
-  if (isLoading || checkingSession) return <PageSkeleton />;
+  if (checkingSession) return <PageSkeleton />;
 
   if (session) {
     return (
@@ -135,11 +135,13 @@ const Index = () => {
         hideHeader={false}
       >
         <div className="min-h-screen bg-[#050505]">
-          <StreamingHome />
+          <UserWorkspace />
         </div>
       </PageLayout>
     );
   }
+
+  if (isLoading) return <PageSkeleton />;
 
   return (
     <div className="min-h-screen bg-background">
