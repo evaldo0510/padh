@@ -21,6 +21,8 @@ import { supabase } from "@/integrations/supabase/client";
 import { supabaseConfig } from "@/integrations/supabase/config";
 import { toast } from "sonner";
 import { useNavigate } from "react-router-dom";
+import { useNavBadges } from "@/hooks/useNavBadges";
+
 
 interface NavigationSheetProps {
   triggerClassName?: string;
