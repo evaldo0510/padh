@@ -38,11 +38,39 @@ const NavigationSheet: React.FC<NavigationSheetProps> = ({
   const [open, setOpen] = useState(false);
   const location = useLocation();
   const navigate = useNavigate();
+  const badges = useNavBadges();
 
   const isSectionActive = (section: (typeof NAV_SECTIONS)[number]) =>
     section.items.some(
       (it) => location.pathname === it.path || location.pathname.startsWith(it.path + "/"),
     );
+
+  const renderBadge = (sectionId: string) => {
+    if (sectionId === "jornadas" && badges.jornadasPercent > 0) {
+      return (
+        <span className="text-[11px] font-medium text-white/50 tabular-nums">
+          {badges.jornadasPercent}%
+        </span>
+      );
+    }
+    if (sectionId === "formacao") {
+      return (
+        <span className="text-[11px] font-medium text-white/50 tabular-nums">
+          {badges.formacaoCompleted}/{badges.formacaoTotal}
+        </span>
+      );
+    }
+    if (sectionId === "evolucao" && badges.streak > 0) {
+      return (
+        <span className="inline-flex items-center gap-1 text-[11px] font-medium text-accent-warm tabular-nums">
+          <Flame className="w-3 h-3" />
+          {badges.streak}
+        </span>
+      );
+    }
+    return null;
+  };
+
 
   const handleLogout = async () => {
     localStorage.removeItem("padh_simulated_user");
