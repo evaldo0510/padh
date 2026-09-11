@@ -194,7 +194,7 @@ const UserWorkspace: React.FC = () => {
                   >
                     <Play className="w-5 h-5 fill-current mr-2" />
                     <span className="font-black uppercase tracking-wider text-sm">
-                      {totalProgress > 0 ? "Continuar" : "Iniciar"}
+                      Continuar agora
                     </span>
                   </PrefetchLink>
                 </Button>
