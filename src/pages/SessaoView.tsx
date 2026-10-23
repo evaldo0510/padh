@@ -425,10 +425,11 @@ const SessaoView = () => {
                     className="pt-4"
                   >
                     <textarea
+                      id={`session-response-${currentBlock.id}`}
                       value={response}
                       onChange={(e) => setResponse(e.target.value)}
                       placeholder={currentBlock.placeholder || "Suas palavras aqui..."}
-                      autoFocus
+                      aria-label={currentBlock.titulo ? `Resposta para ${currentBlock.titulo}` : "Sua resposta"}
                       rows={4}
                       className="w-full bg-white/[0.03] border border-white/10 rounded-3xl px-8 py-6 text-xl md:text-2xl text-white placeholder:text-white/20 font-light leading-relaxed resize-none focus:outline-none focus:border-primary/40 focus:bg-white/[0.06] transition-all duration-500 shadow-2xl appearance-none md:min-h-[200px]"
                     />

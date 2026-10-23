@@ -12,6 +12,7 @@
     "preview": "vite preview",
     "test:pwa": "playwright test",
     "test:smoke": "node scripts/pwa-smoke-test.mjs",
+    "test:jornada": "node scripts/test-jornada-data.mjs",
     "lighthouse:mobile": "node scripts/lighthouse.mjs mobile",
     "lighthouse:desktop": "node scripts/lighthouse.mjs desktop"
   },

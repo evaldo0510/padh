@@ -195,10 +195,15 @@ const Dashboard = () => {
                <div className="p-8 rounded-3xl bg-white/[0.02] border border-white/5">
                  <h4 className="text-xs font-bold uppercase tracking-[0.3em] text-white/30 mb-4">Acesso Rápido</h4>
                  <div className="flex flex-wrap gap-2">
-                    {['Explorar', 'Biblioteca', 'Planos', 'Suporte'].map(tag => (
-                      <button key={tag} className="px-4 py-2 rounded-full border border-white/5 bg-white/5 text-[9px] font-bold uppercase tracking-[0.1em] text-white/40 hover:bg-primary/10 hover:text-primary transition-all">
-                        {tag}
-                      </button>
+                    {[
+                      { label: 'Explorar', to: '/explorar' },
+                      { label: 'Biblioteca', to: '/biblioteca-exercicios' },
+                      { label: 'Planos', to: '/planos' },
+                      { label: 'Suporte', to: '/contato' },
+                    ].map(({ label, to }) => (
+                      <Link key={label} to={to} className="px-4 py-2 rounded-full border border-white/5 bg-white/5 text-[9px] font-bold uppercase tracking-[0.1em] text-white/40 hover:bg-primary/10 hover:text-primary transition-all">
+                        {label}
+                      </Link>
                     ))}
                  </div>
                </div>

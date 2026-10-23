@@ -388,7 +388,9 @@ const AnimatedRoutes = () => {
             path="/prontuario-pch"
             element={
               <PageTransition>
-                <Prontuario />
+                <ProtectedRoute authMessage="Faça login para acessar o prontuário clínico.">
+                  <Prontuario />
+                </ProtectedRoute>
               </PageTransition>
             }
           />
@@ -540,7 +542,7 @@ const AnimatedRoutes = () => {
             path="/configurar-supabase"
             element={
               <PageTransition>
-                <ProtectedRoute authMessage="Acesso restrito.">
+                <ProtectedRoute requireAdmin authMessage="Acesso restrito a administradores.">
                   <ConfigGuidePage />
                 </ProtectedRoute>
               </PageTransition>
@@ -550,7 +552,7 @@ const AnimatedRoutes = () => {
             path="/ui-guide"
             element={
               <PageTransition>
-                <ProtectedRoute authMessage="Acesso restrito.">
+                <ProtectedRoute requireAdmin authMessage="Acesso restrito a administradores.">
                   <UiGuide />
                 </ProtectedRoute>
               </PageTransition>

@@ -37,7 +37,7 @@ export interface FaseJornada {
   resultados?: string[];
 }
 
-export const JORNADA_DATA: FaseJornada[] = [
+const RAW_JORNADA_DATA: FaseJornada[] = [
   {
     id: "despertar",
     numero: 1,
@@ -653,3 +653,40 @@ export const JORNADA_DATA: FaseJornada[] = [
     ],
   },
 ];
+
+
+// Keep the original authored phase/session records intact above, while exposing
+// one canonical phase per ID to routing, progress, and navigation consumers.
+const phaseById = new Map<string, FaseJornada>();
+for (const phase of RAW_JORNADA_DATA) {
+  const existing = phaseById.get(phase.id);
+  if (!existing) {
+    phaseById.set(phase.id, { ...phase, sessoes: [...phase.sessoes] });
+    continue;
+  }
+
+  if (
+    existing.numero !== phase.numero ||
+    existing.titulo !== phase.titulo ||
+    existing.cor !== phase.cor
+  ) {
+    throw new Error(`Conflicting definitions for journey phase: ${phase.id}`);
+  }
+
+  const descriptions = [existing.descricao, phase.descricao];
+  const description = descriptions.reduce((longest, value) =>
+    value.length > longest.length ? value : longest,
+  );
+  const resultados = Array.from(
+    new Set([...(existing.resultados ?? []), ...(phase.resultados ?? [])]),
+  );
+
+  phaseById.set(phase.id, {
+    ...existing,
+    descricao: description,
+    sessoes: [...existing.sessoes, ...phase.sessoes],
+    ...(resultados.length > 0 ? { resultados } : {}),
+  });
+}
+
+export const JORNADA_DATA: FaseJornada[] = Array.from(phaseById.values());

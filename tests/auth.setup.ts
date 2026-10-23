@@ -3,9 +3,11 @@ import { test as setup, expect } from '@playwright/test';
 const authFile = 'playwright/.auth/user.json';
 
 setup('authenticate', async ({ page }) => {
-  // Use environment variables for credentials if available, otherwise skip or use defaults
-  const email = process.env.TEST_USER_EMAIL || 'test@example.com';
-  const password = process.env.TEST_USER_PASSWORD || 'password123';
+  const email = process.env.TEST_USER_EMAIL;
+  const password = process.env.TEST_USER_PASSWORD;
+  if (!email || !password) {
+    throw new Error('Set TEST_USER_EMAIL and TEST_USER_PASSWORD for the isolated test environment.');
+  }
 
   await page.goto('/login');
   

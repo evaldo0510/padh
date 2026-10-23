@@ -1,7 +1,8 @@
 import { test, expect } from '@playwright/test';
 
 test.describe('PWA Cache Strategies', () => {
-  const targetUrl = process.env.TARGET_URL || 'https://padhpoesia.lovable.app';
+  const targetUrl = process.env.TARGET_URL;
+  if (!targetUrl) throw new Error('TARGET_URL must point to an isolated test or staging deployment.');
 
   test('validate Stale-While-Revalidate for /changelog', async ({ page, context }) => {
     // 1. Visit page to populate cache

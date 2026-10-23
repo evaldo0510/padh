@@ -49,7 +49,7 @@ const SHORTCUTS = [
     icon: GraduationCap,
   },
   {
-    to: "/biblioteca",
+    to: "/biblioteca-exercicios",
     label: "Biblioteca",
     desc: "Exercícios e leituras",
     icon: BookOpen,

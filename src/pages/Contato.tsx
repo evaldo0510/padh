@@ -15,6 +15,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import PageLayout from "@/components/layout/PageLayout";
 import { pagesSEO } from "@/lib/seo-config";
+import { toast } from "sonner";
 const Contato = () => {
   const [formData, setFormData] = useState({
     nome: "",
@@ -32,13 +33,9 @@ const Contato = () => {
   };
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    console.log("Formulário enviado:", formData);
-    alert("Mensagem enviada com sucesso!");
-    setFormData({
-      nome: "",
-      email: "",
-      mensagem: "",
-    });
+    toast.error(
+      "O envio automático ainda não está configurado. Nenhuma mensagem foi enviada; seus dados permanecem no formulário.",
+    );
   };
   return (
     <PageLayout seo={pagesSEO.contato} currentPage="Contato">
