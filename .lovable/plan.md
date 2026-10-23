@@ -1,95 +1,58 @@
-# Reorganização da Navegação
+# Auditoria Geral P.A.D.H. — Fase 1 (somente diagnóstico)
 
-Reorganizar a navegação da área logada em 6 seções com submenus, sem remover páginas, sem alterar rotas e sem tocar em lógica de negócio.
+Nenhum arquivo foi alterado. Este documento é o relatório; aprovar significa apenas autorizar a escolha da Etapa 1 do plano (G).
 
-## Estrutura final
+## A. Resumo executivo
+- Base sólida: rotas admin protegidas por papel, RPCs admin com checagem interna, CI com lint/typecheck/build, PWA com NetworkFirst para páginas.
+- 1 falha crítica comprovada: a compra feita pelo app não é gravada (o banco recusa a gravação pelo navegador).
+- Voz Interior/Google Live com microfone: não existe no código atual (nenhum uso de microfone ou de chave Google encontrado).
+- Risco alto: cor do app instalado (roxo) diverge da marca; páginas de diagnóstico técnico expostas a qualquer usuário logado.
 
-```
-1. Início          → /dashboard
-2. Jornadas        → /jornada  (+ submenus por fase)
-3. Ferramentas PCH → /ferramentas  (+ submenus)
-4. Biblioteca      → /explorar  (+ submenus)
-5. Minha Evolução  → /dashboard#progresso  (+ submenus)
-6. Perfil          → /perfil  (+ submenus)
-```
+## B. Inventário (fato, lido em App.tsx e navigation.ts)
+- Públicas: /, /livro-curso, /formacao, /formacao/modulo/:id, /mapa-cerebral, /aula-exclusiva, /sobre, /contato, /curso-padh, /ferramentas + 8 ferramentas, 8 páginas /venda/*, /fundamentacao, /ciencia-da-poesia, /combo-padh, /prontuario-pch, /prisao-interior, /planos, /explorar, /changelog, /offline, /diagnostico-jornada, /biblioteca-exercicios, /login, /diagnostico.
+- Privadas (login): /recursos-clinicos, /meu-produto, /consciencia/historico, /jornada, /jornada/:phaseId/:sessionId, /dashboard, /diagnosticos, /configurar-supabase, /ui-guide.
+- Admin (papel admin): /admin, /admin/web-vitals, /admin/pwa-health, /admin/pwa-diagnostics.
+- Menu: 7 seções (Início, Jornadas, Ferramentas PCH, Biblioteca, Formação com 8 módulos, Minha Evolução, Perfil).
+- Backend: 1 função (ingest-telemetry); 11 tabelas com RLS.
+- Testes: 6 specs Playwright (a11y, auth, fundamentação, PWA x3); nenhum teste unitário.
 
-Admin permanece separado, acessível só para admins, agrupado em Dashboard / Conteúdo / Usuários / Relatórios / Sistema.
+## C/D. Achados
 
-## Mapa Menu → Submenu → Rota existente
+| # | Sev. | Achado | Evidência | Impacto |
+|---|---|---|---|---|
+| 1 | Crítico | Compra não é registrada | `useAuth.ts:89-124` faz upsert em `purchases`; política nega INSERT/UPDATE | Usuário "paga" e não recebe acesso; erro só no console |
+| 2 | Alto | /diagnosticos, /configurar-supabase e /ui-guide abertas a qualquer logado | App.tsx sem `requireAdmin` | Telas técnicas visíveis a alunos |
+| 3 | Alto | Cor do app instalado roxa (#8B5CF6), fundo branco | vite.config.ts manifest | Fere identidade Navy/Gold e o tema escuro padrão |
+| 4 | Médio | /prontuario-pch é pública | App.tsx sem ProtectedRoute | Hipótese: se salvar dados, falha sem login |
+| 5 | Médio | Registro do SW via `useRegisterSW` sem as barreiras de preview completas | PWAPrompt.tsx; guarda só em main.tsx (não cobre `preview--`, `beta.lovable.dev`, `?sw=off`) | Risco de conteúdo velho em pré-visualização |
+| 6 | Médio | Dívidas já documentadas pendentes | docs/AUDIT.md (arquivos >600 linhas, DailyHabitSection), docs/A11Y.md (C7, headings, foco, h-screen) | Manutenção e acessibilidade |
+| 7 | Baixo | 101 avisos de lint (`any`) com regra relaxada | eslint.config.js | Tipos frágeis |
+| 8 | Baixo | CI de PWA depende de segredos de teste no GitHub | pwa-checks.yml | Não verificável daqui |
 
-**Início**
-- Dashboard → `/dashboard`
-- Continuar jornada → `continuePath` (dinâmico via `useJornada`)
-- Prática de hoje → `/dashboard` (âncora)
+Não verificado (exigiria execução/alteração): Lighthouse/Web Vitals reais, PWA instalado em celular, conteúdo completo de cada módulo, resultado atual do scanner de segurança, workflows no GitHub.
+Voz Interior/Google Live: comprovado que não há implementação; nenhuma credencial exposta encontrada no código (apenas chave pública do backend, que é permitida).
 
-**Jornadas** (fases de `JORNADA_DATA`)
-- Despertar / Sombra / Reprogramação / Expansão → `/jornada` (filtrado por fase)
-- Hábitos Diários → `/dashboard` (seção hábitos)
+## E. Recomendações (impacto/risco/custo)
+1. Mover a gravação da compra para uma função no servidor (corrige #1; também evita que o próprio usuário se libere acesso).
+2. Exigir admin em /diagnosticos, /configurar-supabase, /ui-guide.
+3. Ajustar cores do manifesto para a marca.
+4. Decidir se /prontuario-pch deve exigir login.
+5. Centralizar registro do SW num único módulo com todas as barreiras.
+6. Seguir docs/A11Y.md (C7 em diante).
 
-**Ferramentas PCH**
-- Índice → `/ferramentas`
-- Poema-diagnóstico → `/ferramentas/poemadiagnostico`
-- Poema-Funil → `/ferramentas/poema-funil`
-- Verso-Gatilho → `/ferramentas/verso-gatilho`
-- Reescrita Poética → `/ferramentas/reescrita-poetica`
-- Encenação Poética → `/ferramentas/encenacao-poetica`
-- Poesia Hipnótica → `/ferramentas/poesia-hipnotica`
-- Ritual do Silêncio → `/ferramentas/ritual-silencio`
-- Caderno da Voz Interna → `/ferramentas/caderno-voz-interna`
+## F. Dependências e regressões
+- #1 depende de um provedor de pagamento real; sem ele, a função só simula. Pode afetar MeuProduto, ProtectedRoute requireProduct.
+- #3 exige reinstalar o app para quem já instalou.
+- #5 pode mudar o aviso de atualização (testes pwa-*.spec.ts cobrem).
 
-**Biblioteca**
-- Explorar → `/explorar`
-- Fundamentação Teórica → `/fundamentacao`
-- Recursos Clínicos → `/recursos-clinicos`
-- Biblioteca de Exercícios → `/biblioteca-exercicios`
-- Ciência & Poesia → `/ciencia-poesia`
-- Mapa Cerebral → `/mapa-cerebral`
-- Aula Exclusiva → `/aula-exclusiva`
-- Livro do Curso → `/livro-curso`
+## G. Plano incremental (uma tarefa por etapa, cada uma aguarda aprovação)
+1. Compra via servidor (#1).
+2. Proteger rotas técnicas (#2).
+3. Cores do manifesto (#3).
+4. Prontuário: login sim/não (#4).
+5. Registro único do SW (#5).
+6. Acessibilidade C7.
+7. Definir escopo da Voz Interior (feature nova, se desejada).
 
-**Minha Evolução**
-- Progresso → `/dashboard`
-- Prontuário → `/prontuario`
-- Histórico de Consciência → `/consciencia-historico`
-- Diagnóstico → `/diagnostico`
-- Diagnóstico Jornada → `/diagnostico-jornada`
-
-**Perfil**
-- Meu Produto → `/meu-produto`
-- Planos → `/planos`
-- Sobre → `/sobre`
-- Contato → `/contato`
-- Changelog → `/changelog`
-- Config → `/config`
-- Sair → logout
-
-Comunidade fica **oculta** até existir (nenhum item no menu).
-
-## Implementação (frontend apenas)
-
-1. **Novo componente `AppSidebar.tsx`** (desktop, ≥`lg`) usando shadcn `Sidebar` com `collapsible="icon"`. 6 grupos com submenus expansíveis. Highlight ativo via `useLocation`. Marca fase ativa com `defaultOpen` quando a rota bate.
-
-2. **Novo componente `MobileMenuSheet.tsx`** — Sheet lateral disparado por um botão hamburger no `MobileNav`, contendo as 6 seções + submenus. O `MobileNav` bottom-bar continua com 4 atalhos rápidos (Início, Jornada, Ferramentas, Perfil), mas ganha um 5º item "Menu" que abre o Sheet completo.
-
-3. **`Header.tsx`** — adicionar `SidebarTrigger` visível em desktop; preservar botão "Continuar jornada" e progresso.
-
-4. **`App.tsx`** — envolver rotas logadas em `SidebarProvider` + `AppSidebar` para exibir sidebar apenas em rotas autenticadas. Páginas públicas (landing, login, vendas) não recebem sidebar.
-
-5. **Fonte única `src/lib/navigation.ts`** — definir a estrutura das 6 seções + submenus como dado, consumida por `AppSidebar` e `MobileMenuSheet` (evita duplicação).
-
-## Não faz parte
-
-- Não renomeia páginas nem altera conteúdo.
-- Não cria rotas novas (submenus apontam para rotas já existentes).
-- Não remove `MobileNav` bottom bar; apenas adiciona acesso ao menu completo.
-- Não mexe em Admin nesta rodada (posso fazer em rodada separada se quiser).
-- Não implementa Comunidade (oculta).
-
-## Validação
-
-- `bun run build` passa.
-- Todas as rotas atuais continuam acessíveis via novo menu.
-- Mobile: bottom nav + sheet funcionam; desktop: sidebar colapsável funciona.
-- Highlight de rota ativa correto em cada nível.
-
-Confirma para eu executar? Se quiser Admin junto, ou ajustes na divisão de submenus, me diga antes.
+## H. Intocáveis
+Conteúdo de jornadas, módulos, ferramentas e textos; design system e tipografia; RPCs admin e políticas já corrigidas; `ingest-telemetry`; arquivos gerados do backend; rotas existentes e URLs publicadas.
