@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from "react";
+import React, { useState } from "react";
 import PageLayout from "@/components/layout/PageLayout";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -100,17 +100,15 @@ const PlanosPage: React.FC = () => {
         </div>
 
         <p className="text-center text-xs text-muted-foreground mt-10">
-          Pagamento processado em modo demonstração. Integração com Stripe pode ser ativada quando desejar.
+          Checkout temporariamente indisponível: nenhum pagamento é processado nesta página.
         </p>
       </div>
 
       <CheckoutDialog
         open={open}
         onOpenChange={setOpen}
-        productId={productId}
         productName={productName}
         defaultPlan={selectedPlan}
-        onSuccess={() => navigate(productId === PRODUCT_FORMACAO_PCH ? "/formacao" : "/meu-produto")}
       />
     </PageLayout>
   );

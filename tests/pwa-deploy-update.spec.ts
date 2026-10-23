@@ -12,7 +12,8 @@ import { test, expect } from "@playwright/test";
  * lifecycle the real PWA goes through.
  */
 test.describe("PWA Deploy Update Simulation", () => {
-  const targetUrl = process.env.TARGET_URL || "https://padhpoesia.lovable.app";
+  const targetUrl = process.env.TARGET_URL;
+  if (!targetUrl) throw new Error("TARGET_URL must point to an isolated test or staging deployment.");
 
   test("auto reload after new SW version is published", async ({ page }) => {
     await page.goto(targetUrl);

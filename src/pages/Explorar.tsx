@@ -1,14 +1,13 @@
-import React from "react";
+import React, { useState } from "react";
 import PageLayout from "@/components/layout/PageLayout";
 import { motion } from "framer-motion";
 import { 
   Wind, Brain, PenTool, Sparkles, 
   Search, Heart, Shield, Compass,
-  ChevronRight, ArrowRight
 } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
-import { useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 const CATEGORIES = [
   { id: 'ansiedade', label: 'Ansiedade', icon: Wind, color: 'bg-blue-500/20 text-blue-400', desc: 'Práticas para calma e presença.' },
@@ -19,8 +18,26 @@ const CATEGORIES = [
   { id: 'coragem', label: 'Coragem', icon: Shield, color: 'bg-orange-500/20 text-orange-400', desc: 'Enfrentamento de medos.' },
 ];
 
+const COLLECTIONS = [
+  { title: 'Ritual do Amanhã', items: '12 sessões', color: 'bg-blue-500' },
+  { title: 'Sombra e Luz', items: '8 sessões', color: 'bg-purple-500' },
+  { title: 'Voz Interior', items: '15 sessões', color: 'bg-amber-500' },
+  { title: 'Travessia Poética', items: '10 sessões', color: 'bg-emerald-500' },
+];
+
 const Explorar = () => {
-  const navigate = useNavigate();
+  const [query, setQuery] = useState("");
+  const normalizedQuery = query.trim().toLocaleLowerCase("pt-BR");
+  const filteredCategories = CATEGORIES.filter((category) =>
+    `${category.id} ${category.label} ${category.desc}`
+      .toLocaleLowerCase("pt-BR")
+      .includes(normalizedQuery),
+  );
+  const filteredCollections = COLLECTIONS.filter((collection) =>
+    `${collection.title} ${collection.items}`
+      .toLocaleLowerCase("pt-BR")
+      .includes(normalizedQuery),
+  );
 
   return (
     <PageLayout
@@ -42,7 +59,10 @@ const Explorar = () => {
            <div className="relative group">
               <Search className="absolute left-6 top-1/2 -translate-y-1/2 text-white/20 group-focus-within:text-primary transition-colors" />
               <Input 
-                placeholder="Buscar por sentimento, prática ou ferramenta..." 
+                aria-label="Buscar categorias e coleções"
+                value={query}
+                onChange={(event) => setQuery(event.target.value)}
+                placeholder="Buscar por sentimento, categoria ou coleção..."
                 className="h-16 pl-16 bg-white/5 border-white/5 rounded-2xl text-lg focus-visible:ring-primary/20 focus-visible:border-primary/30 transition-all"
               />
            </div>
@@ -55,21 +75,18 @@ const Explorar = () => {
            </div>
 
            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-              {CATEGORIES.map((cat, i) => (
+              {filteredCategories.map((cat, i) => (
                 <motion.div
                   key={cat.id}
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: i * 0.05 }}
-                  whileHover={{ scale: 1.02, y: -5 }}
-                  className="glass-card p-8 flex flex-col justify-between h-64 cursor-pointer group"
-                  onClick={() => navigate('/jornada')}
+                  className="glass-card p-8 flex flex-col justify-between h-64 group"
                 >
                   <div className="flex justify-between items-start">
                     <div className={`p-4 rounded-2xl ${cat.color}`}>
                        <cat.icon className="w-6 h-6" />
                     </div>
-                    <ArrowRight className="w-5 h-5 text-white/10 group-hover:text-primary group-hover:translate-x-2 transition-all" />
                   </div>
                   
                   <div className="space-y-1">
@@ -87,20 +104,14 @@ const Explorar = () => {
                 <div className="w-1.5 h-6 bg-primary rounded-full" />
                 <h2 className="text-2xl font-bold tracking-tight">Coleções Originais</h2>
               </div>
-              <button className="text-xs font-black uppercase tracking-[0.2em] text-primary hover:underline">Ver Todas</button>
+              <Link to="/biblioteca-exercicios" className="text-xs font-black uppercase tracking-[0.2em] text-primary hover:underline">Ver Todas</Link>
            </div>
 
            <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
-              {[
-                { title: 'Ritual do Amanhã', items: '12 sessões', color: 'bg-blue-500' },
-                { title: 'Sombra e Luz', items: '8 sessões', color: 'bg-purple-500' },
-                { title: 'Voz Interior', items: '15 sessões', color: 'bg-amber-500' },
-                { title: 'Travessia Poética', items: '10 sessões', color: 'bg-emerald-500' },
-              ].map((coll, i) => (
+              {filteredCollections.map((coll) => (
                 <motion.div
-                  key={i}
-                  whileHover={{ scale: 1.05 }}
-                  className="aspect-[3/4] relative rounded-2xl overflow-hidden group cursor-pointer border border-white/5"
+                  key={coll.title}
+                  className="aspect-[3/4] relative rounded-2xl overflow-hidden group border border-white/5"
                 >
                    <div className={`absolute inset-0 opacity-20 ${coll.color}`} />
                    <div className="absolute inset-0 bg-gradient-to-t from-background via-transparent to-transparent" />
@@ -112,6 +123,11 @@ const Explorar = () => {
               ))}
            </div>
         </section>
+        {normalizedQuery && filteredCategories.length === 0 && filteredCollections.length === 0 && (
+          <p role="status" className="text-center text-muted-foreground">
+            Nenhuma categoria ou coleção corresponde à busca.
+          </p>
+        )}
       </div>
     </PageLayout>
   );

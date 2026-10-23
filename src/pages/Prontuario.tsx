@@ -190,6 +190,15 @@ const Prontuario: React.FC = () => {
               rascunho fica salvo neste navegador. Você também pode baixar o
               template em PDF em branco para imprimir.{" "}
             </p>{" "}
+            <div
+              role="note"
+              className="mt-5 rounded-xl border border-destructive/30 bg-destructive/5 p-4 text-left text-sm text-foreground"
+            >
+              <strong>Atenção à privacidade:</strong> este rascunho fica neste navegador,
+              sem criptografia ou isolamento por conta. Até existir armazenamento clínico
+              seguro, não registre nomes completos, dados identificáveis ou informações
+              reais de pacientes aqui. Prefira dados fictícios ou o PDF em branco.
+            </div>
           </div>{" "}
           {/* Botões de ação */}
           <div className="flex flex-wrap gap-3 mb-8 sticky top-20 z-30 bg-background/95 backdrop-blur-sm py-3 rounded-xl border border-border/50 px-4 shadow-sm">

@@ -87,8 +87,10 @@ const ModuloFormacao = () => {
               </div>
 
               <div className="pt-8">
-                <Button size="lg" className="px-12 h-14 text-lg rounded-full shadow-lg shadow-primary/20">
-                  Matricular-se neste Módulo <ArrowRight className="ml-2 w-5 h-5" />
+                <Button asChild size="lg" className="px-12 h-14 text-lg rounded-full shadow-lg shadow-primary/20">
+                  <Link to="/planos?product=formacao">
+                    Matricular-se neste Módulo <ArrowRight className="ml-2 w-5 h-5" />
+                  </Link>
                 </Button>
               </div>
             </div>

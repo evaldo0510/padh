@@ -85,6 +85,8 @@ export const useJornada = () => {
     const { sessions, responses: pendingExerciseIds } = jornada.pendingSync;
     if (sessions.length === 0 && pendingExerciseIds.length === 0) return;
     
+    const syncedSessions = new Set<string>();
+    const syncedResponses = new Map<string, RespostaExercicio>();
     setIsSyncing(true);
     reportSyncStatus("pending");
     
@@ -92,36 +94,46 @@ export const useJornada = () => {
       // Sync sessions
       for (const sessionId of sessions) {
         const phaseId = findPhaseForSession(sessionId);
-        if (phaseId) {
-          await supabase.from("episode_progress").upsert({
+        if (!phaseId) throw new Error(`Unknown session in offline queue: ${sessionId}`);
+        const { error } = await supabase.from("episode_progress").upsert({
             user_id: currentUserId,
             session_id: sessionId,
             phase_id: phaseId,
             status: "completed",
             completed_at: new Date().toISOString(),
           }, { onConflict: "user_id,session_id" });
-        }
+        if (error) throw error;
+        syncedSessions.add(sessionId);
       }
       
       // Sync responses
       for (const exerciseId of pendingExerciseIds) {
         const localResponse = jornada.responses.find(r => r.exerciseId === exerciseId);
-        if (localResponse) {
-          const { phaseId, sessionId } = findPhaseForExercise(exerciseId);
-          await supabase.from("exercise_responses").upsert({
+        if (!localResponse) throw new Error(`Missing response in offline queue: ${exerciseId}`);
+        const { phaseId, sessionId } = findPhaseForExercise(exerciseId);
+        const { error } = await supabase.from("exercise_responses").upsert({
             user_id: currentUserId,
             exercise_id: exerciseId,
             response: localResponse.response,
             phase_id: phaseId ?? null,
             session_id: sessionId ?? null,
           }, { onConflict: "user_id,exercise_id" });
-        }
+        if (error) throw error;
+        syncedResponses.set(exerciseId, localResponse);
       }
       
-      // Clear queue locally
+      // Remove only confirmed snapshot items; keep entries added or edited mid-sync.
       setJornada(prev => ({
         ...prev,
-        pendingSync: { sessions: [], responses: [] }
+        pendingSync: {
+          sessions: (prev.pendingSync?.sessions ?? []).filter((id) => !syncedSessions.has(id)),
+          responses: (prev.pendingSync?.responses ?? []).filter((id) => {
+            const synced = syncedResponses.get(id);
+            if (!synced) return true;
+            const current = prev.responses.find((response) => response.exerciseId === id);
+            return current?.date !== synced.date || current?.response !== synced.response;
+          }),
+        }
       }));
       reportSyncStatus("ok");
       console.log("Offline progress synced successfully");

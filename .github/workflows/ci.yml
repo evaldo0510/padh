@@ -33,7 +33,12 @@ jobs:
         run: npm run lint
 
       - name: Typecheck
-        run: npx tsc --noEmit
+        run: |
+          npx tsc --project tsconfig.app.json --noEmit
+          npx tsc --project tsconfig.node.json --noEmit
+
+      - name: Journey data invariants
+        run: npm run test:jornada
 
       - name: Build
         run: npm run build
