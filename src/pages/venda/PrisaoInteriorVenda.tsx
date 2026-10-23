@@ -178,9 +178,7 @@ const PrisaoInteriorVenda: React.FC = () => {
       <CheckoutDialog
         open={checkoutOpen}
         onOpenChange={setCheckoutOpen}
-        productId={PRODUCT_PRISAO_INTERIOR}
         productName="Prisão Interior — Jornada"
-        onSuccess={() => navigate("/jornada")}
       />
     </PageLayout>
   );
