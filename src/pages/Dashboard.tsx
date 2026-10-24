@@ -4,11 +4,11 @@ import { useCourseProgress } from "@/hooks/useCourseProgress";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import {
   LogOut,
-  TrendingUp,
-  User,
+  ChartNoAxesCombined,
+  ContactRound,
   History,
-  Target,
-  Trophy,
+  ScanSearch,
+  Medal,
   RefreshCw,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -84,7 +84,7 @@ const Dashboard = () => {
               className="flex flex-col md:flex-row md:items-center gap-8"
             >
               <div className="w-24 h-24 rounded-full bg-primary/10 border-2 border-primary/20 flex items-center justify-center shadow-glow">
-                <User className="w-12 h-12 text-primary" />
+                <ContactRound className="w-12 h-12 text-primary" />
               </div>
               <div className="space-y-2">
                 <h1 className="text-4xl md:text-6xl font-black tracking-tighter text-white">Minha Área</h1>
@@ -139,7 +139,7 @@ const Dashboard = () => {
 
                  <Card className="glass-card p-8 bg-white/[0.02] border-white/5">
                    <div className="flex items-center gap-3 mb-6">
-                      <Target className="w-5 h-5 text-primary" />
+                      <ScanSearch className="w-5 h-5 text-primary" />
                       <h3 className="text-lg font-bold">Diagnóstico</h3>
                    </div>
                    <p className="text-sm text-white/40 leading-relaxed font-light mb-6">
@@ -158,10 +158,10 @@ const Dashboard = () => {
             <div className="space-y-8">
                <Card className="glass-card p-10 border-white/5 bg-primary/5 relative overflow-hidden">
                   <div className="absolute top-0 right-0 p-6 opacity-5">
-                    <Trophy className="w-32 h-32 text-primary" />
+                    <Medal className="w-32 h-32 text-primary" />
                   </div>
                   <h3 className="text-xl font-bold mb-8 flex items-center gap-3">
-                    <TrendingUp className="w-5 h-5 text-primary" /> Performance
+                    <ChartNoAxesCombined className="w-5 h-5 text-primary" /> Performance
                   </h3>
                   
                   <div className="space-y-10 relative z-10">

@@ -1,5 +1,5 @@
 import React from "react";
-import { Flame, Brain, BookOpen, Volume2 } from "lucide-react";
+import { VolumeX, Flame, Brain, BookOpen, Volume2 } from "lucide-react";
 import FerramentaHero from "@/components/ferramentas/FerramentaHero";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import PageLayout from "@/components/layout/PageLayout";
@@ -15,7 +15,7 @@ const RitualSilencio = () => {
     <PageLayout seo={pagesSEO.ritualSilencio} currentPage="Ritual do Silêncio">
       {" "}
       <FerramentaHero
-        icon={Flame}
+        icon={VolumeX}
         badgeLabel="Ferramenta 7 — P.A.D.H."
         title={
           <>

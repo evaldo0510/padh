@@ -2,7 +2,7 @@ import React from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { Play, ChevronRight, Sparkles, Loader2, BookOpen } from "lucide-react";
+import { Navigation, ChevronRight, Compass, Loader2, BookOpenText } from "lucide-react";
 import { useNavigate, useLocation, Link } from "react-router-dom";
 import PrefetchLink from "@/components/layout/PrefetchLink";
 
@@ -70,7 +70,7 @@ const JourneyHero: React.FC<JourneyHeroProps> = ({
         >
           <div className="flex items-center gap-3">
             <Badge className="bg-primary/20 text-primary border-primary/30 py-1.5 px-4 rounded-full text-[9px] font-bold tracking-widest uppercase">
-              <Sparkles className="w-3 h-3 mr-1.5" />
+              <Compass className="w-3 h-3 mr-1.5" />
               Original PCH
             </Badge>
             {nextSession && (
@@ -114,7 +114,7 @@ const JourneyHero: React.FC<JourneyHeroProps> = ({
                     {isNavigating ? (
                       <Loader2 className="w-6 h-6 animate-spin mr-3" />
                     ) : (
-                      <Play className="w-6 h-6 fill-current mr-3 group-hover:scale-125 transition-transform duration-500" /> 
+                      <Navigation className="w-6 h-6 mr-3 group-hover:scale-125 transition-transform duration-500" /> 
                     )}
                     <span className="font-black uppercase tracking-wider">
                       {nextSession.isRecommended ? `Iniciar: ${nextSession.titulo}` : `Continuar: ${nextSession.titulo}`}
@@ -129,7 +129,7 @@ const JourneyHero: React.FC<JourneyHeroProps> = ({
                 className="btn-primary h-14 px-8 text-lg rounded-full"
               >
                 <PrefetchLink to="/jornada">
-                  <BookOpen className="w-5 h-5 mr-2" /> 
+                  <BookOpenText className="w-5 h-5 mr-2" /> 
                   Ver Minha Jornada
                 </PrefetchLink>
               </Button>
@@ -141,7 +141,7 @@ const JourneyHero: React.FC<JourneyHeroProps> = ({
               asChild
             >
               <Link to="/fundamentacao">
-                <BookOpen className="w-5 h-5 mr-2" /> 
+                <BookOpenText className="w-5 h-5 mr-2" /> 
                 Fundamentação Teórica
               </Link>
             </Button>

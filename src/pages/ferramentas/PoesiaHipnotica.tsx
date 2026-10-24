@@ -1,5 +1,5 @@
 import React from "react";
-import {
+import { AudioLines,
   Sparkles,
   Brain,
   BookOpen,
@@ -39,7 +39,7 @@ const PoesiaHipnotica = () => {
     <PageLayout seo={pagesSEO.poesiaHipnotica} currentPage="Poesia Hipnótica">
       {" "}
       <FerramentaHero
-        icon={Sparkles}
+        icon={AudioLines}
         badgeLabel="Poesia Aplicada ao Desenvolvimento Humano"
         title={
           <>

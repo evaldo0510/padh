@@ -1,5 +1,5 @@
 import React from "react";
-import { Feather, Brain, BookOpen, Lightbulb, Music } from "lucide-react";
+import { ListFilter, Feather, Brain, BookOpen, Lightbulb, Music } from "lucide-react";
 import FerramentaHero from "@/components/ferramentas/FerramentaHero";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import PageLayout from "@/components/layout/PageLayout";
@@ -15,7 +15,7 @@ const PoemaFunil = () => {
     <PageLayout seo={pagesSEO.poemaFunil} currentPage="Poema-Funil">
       {" "}
       <FerramentaHero
-        icon={Feather}
+        icon={ListFilter}
         badgeLabel="Ferramenta 1 — P.A.D.H."
         title={
           <>

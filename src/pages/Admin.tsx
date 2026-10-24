@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import PageLayout from "@/components/layout/PageLayout";
 import { supabase } from "@/integrations/supabase/client";
-import { Shield, Lock, AlertTriangle, CheckCircle, Database } from "lucide-react";
+import { ShieldCheck, ShieldEllipsis, ShieldAlert, CircleCheckBig, DatabaseZap } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import WebVitalsOverview from "@/components/admin/WebVitalsOverview";
@@ -63,7 +63,7 @@ const Admin = () => {
               Painel Administrativo
             </h1>
             <Badge variant="outline" className="bg-primary/5 text-primary border-primary/20 gap-2 px-3 py-1">
-              <Shield className="w-3 h-3" /> Sistema Protegido
+              <ShieldCheck className="w-3 h-3" /> Sistema Protegido
             </Badge>
           </div>
 
@@ -79,7 +79,7 @@ const Admin = () => {
             <Card className="border-primary/20 bg-card/50 backdrop-blur-sm overflow-hidden">
               <CardHeader className="bg-primary/5 border-b border-primary/10">
                 <CardTitle className="flex items-center gap-2 text-xl">
-                  <Lock className="w-5 h-5 text-primary" /> Auditoria de Segurança (RLS)
+                  <ShieldEllipsis className="w-5 h-5 text-primary" /> Auditoria de Segurança (RLS)
                 </CardTitle>
               </CardHeader>
               <CardContent className="p-6">
@@ -94,7 +94,7 @@ const Admin = () => {
                     ) : securityStatus.map((table) => (
                       <div key={table.tablename} className="p-4 rounded-xl border border-border bg-background flex items-center justify-between">
                         <div className="flex items-center gap-3">
-                          <Database className="w-4 h-4 text-muted-foreground" />
+                          <DatabaseZap className="w-4 h-4 text-muted-foreground" />
                           <div>
                             <div className="font-bold text-sm">{table.tablename}</div>
                             <div className="text-[10px] text-muted-foreground uppercase tracking-wider">
@@ -104,11 +104,11 @@ const Admin = () => {
                         </div>
                         {table.rowsecurity ? (
                           <div className="flex items-center gap-1 text-emerald-500 font-bold text-[10px] uppercase">
-                            <CheckCircle className="w-3 h-3" /> Ativo
+                            <CircleCheckBig className="w-3 h-3" /> Ativo
                           </div>
                         ) : (
                           <div className="flex items-center gap-1 text-red-500 font-bold text-[10px] uppercase">
-                            <AlertTriangle className="w-3 h-3" /> Inativo
+                            <ShieldAlert className="w-3 h-3" /> Inativo
                           </div>
                         )}
                       </div>

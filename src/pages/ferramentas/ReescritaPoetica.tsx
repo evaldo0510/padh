@@ -1,5 +1,5 @@
 import React from "react";
-import { RefreshCw, Brain, BookOpen, Sparkles } from "lucide-react";
+import { FilePenLine, RefreshCw, Brain, BookOpen, Sparkles } from "lucide-react";
 import FerramentaHero from "@/components/ferramentas/FerramentaHero";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import PageLayout from "@/components/layout/PageLayout";
@@ -15,7 +15,7 @@ const ReescritaPoetica = () => {
     <PageLayout seo={pagesSEO.reescritaPoetica} currentPage="Reescrita Poética">
       {" "}
       <FerramentaHero
-        icon={RefreshCw}
+        icon={FilePenLine}
         badgeLabel="Ferramenta 6 — P.A.D.H."
         title={
           <>

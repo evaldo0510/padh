@@ -1,16 +1,15 @@
 import React, { useMemo } from "react";
 import { motion } from "framer-motion";
 import {
-  Play,
-  Sparkles,
-  Flame,
-  Target,
-  GraduationCap,
-  Feather,
-  BookOpen,
+  Navigation,
+  Route,
+  CalendarCheck2,
+  ClipboardList,
+  School,
+  PencilRuler,
+  LibraryBig,
   ArrowRight,
-  TrendingUp,
-  Compass,
+  ChartNoAxesCombined,
 } from "lucide-react";
 import { useNavigate, Link } from "react-router-dom";
 import { useJornada } from "@/hooks/useJornada";
@@ -34,37 +33,37 @@ const SHORTCUTS = [
     to: "/jornada",
     label: "Continuar Jornada",
     desc: "Retome de onde parou",
-    icon: Compass,
+    icon: Route,
   },
   {
     to: "/ferramentas",
     label: "Ferramentas PCH",
     desc: "8 instrumentos vivos",
-    icon: Feather,
+    icon: PencilRuler,
   },
   {
     to: "/formacao",
     label: "Formação",
     desc: "Módulos técnicos",
-    icon: GraduationCap,
+    icon: School,
   },
   {
     to: "/biblioteca-exercicios",
     label: "Biblioteca",
     desc: "Exercícios e leituras",
-    icon: BookOpen,
+    icon: LibraryBig,
   },
   {
     to: "/dashboard",
     label: "Minha Evolução",
     desc: "Métricas e histórico",
-    icon: TrendingUp,
+    icon: ChartNoAxesCombined,
   },
   {
     to: "/prontuario-pch",
     label: "Prontuário PCH",
     desc: "Ferramenta clínica",
-    icon: Target,
+    icon: ClipboardList,
   },
 ];
 
@@ -138,19 +137,19 @@ const UserWorkspace: React.FC = () => {
           aria-label="Suas métricas"
         >
           <StatCard
-            icon={<Flame className="w-4 h-4" />}
+            icon={<CalendarCheck2 className="w-4 h-4" />}
             label="Sequência"
             value={`${badges.streak}`}
             suffix={badges.streak === 1 ? "dia" : "dias"}
             accent
           />
           <StatCard
-            icon={<Sparkles className="w-4 h-4" />}
+            icon={<Route className="w-4 h-4" />}
             label="Jornada"
             value={`${badges.jornadasPercent}%`}
           />
           <StatCard
-            icon={<GraduationCap className="w-4 h-4" />}
+            icon={<School className="w-4 h-4" />}
             label="Formação"
             value={`${badges.formacaoCompleted}/${badges.formacaoTotal}`}
           />
@@ -192,7 +191,7 @@ const UserWorkspace: React.FC = () => {
                     to={`/jornada/${nextSession.phaseId}/${nextSession.sessionId}`}
                     aria-label={`Continuar: ${nextSession.titulo}`}
                   >
-                    <Play className="w-5 h-5 fill-current mr-2" />
+                    <Navigation className="w-5 h-5 mr-2" />
                     <span className="font-black uppercase tracking-wider text-sm">
                       Continuar agora
                     </span>
