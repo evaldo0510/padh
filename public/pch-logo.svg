@@ -1,27 +1,5 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
-  <defs>
-    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#0F0820"/>
-      <stop offset="100%" stop-color="#1A0F33"/>
-    </linearGradient>
-    <linearGradient id="violet" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#2D1B4B"/>
-      <stop offset="100%" stop-color="#8B5CF6"/>
-    </linearGradient>
-    <linearGradient id="gold" x1="50%" y1="0%" x2="50%" y2="100%">
-      <stop offset="0%" stop-color="#FDE68A"/>
-      <stop offset="50%" stop-color="#F59E0B"/>
-      <stop offset="100%" stop-color="#B45309"/>
-    </linearGradient>
-    <filter id="glow" x="-50%" y="-50%" width="200%" height="200%">
-      <feGaussianBlur stdDeviation="6" result="b"/>
-      <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
-    </filter>
-  </defs>
-  <rect width="512" height="512" rx="112" fill="url(#bg)"/>
-  <g transform="translate(256 256) scale(6) translate(-32 -32)">
-    <path d="M32 56 C20 44 18 30 22 18 C26 8 36 6 42 12 C48 18 46 32 38 44 C36 48 34 52 32 56 Z" fill="url(#violet)"/>
-    <path d="M32 12 L32 54" stroke="url(#gold)" stroke-width="1.4" stroke-linecap="round" filter="url(#glow)"/>
-    <circle cx="32" cy="11" r="2" fill="#FDE68A" filter="url(#glow)"/>
-  </g>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" fill="none">
+  <rect width="100" height="100" rx="20" fill="#0F172A"/><path d="M50 85 C35 70 30 55 30 40 C30 25 40 15 50 15 C60 15 70 25 70 40 C70 55 65 70 50 85 Z" fill="#8B5CF6"/>
+  <path d="M50 20 Q55 45 50 75" stroke="#F59E0B" stroke-width="3" stroke-linecap="round"/>
+  <circle cx="50" cy="15" r="3" fill="#F59E0B"/>
 </svg>

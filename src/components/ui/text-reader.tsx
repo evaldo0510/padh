@@ -97,6 +97,7 @@ const TextReader: React.FC<TextReaderProps> = ({
           onClick={handlePlay}
           className="gap-2 text-primary hover:text-primary hover:bg-primary/10 text-xs"
           title={label}
+          aria-label={label}
         >
           {" "}
           <Volume2 className="spiritual-icon" />{" "}
@@ -108,6 +109,7 @@ const TextReader: React.FC<TextReaderProps> = ({
           variant="ghost"
           size="sm"
           onClick={handlePause}
+          aria-label="Pausar leitura"
           className="gap-2 text-primary hover:text-primary hover:bg-primary/10 text-xs"
         >
           {" "}
@@ -120,6 +122,7 @@ const TextReader: React.FC<TextReaderProps> = ({
           variant="ghost"
           size="sm"
           onClick={handlePlay}
+          aria-label="Continuar leitura"
           className="gap-2 text-primary hover:text-primary hover:bg-primary/10 text-xs"
         >
           {" "}
@@ -132,7 +135,7 @@ const TextReader: React.FC<TextReaderProps> = ({
           variant="ghost"
           size="icon"
           onClick={handleStop}
-          className="h-8 w-8 text-muted-foreground hover:text-destructive"
+          className="text-muted-foreground hover:text-destructive"
           title="Parar"
           aria-label="Parar leitura"
         >

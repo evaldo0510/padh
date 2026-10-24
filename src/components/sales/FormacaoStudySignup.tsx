@@ -8,7 +8,7 @@ const SIGN_IN_PATH = `/login?next=${encodeURIComponent(FIRST_MODULE_PATH)}`;
 
 export function FormacaoStudySignup() {
   return (
-    <div className="glass-card rounded-3xl border border-primary/20 bg-background/50 p-8 shadow-2xl backdrop-blur-xl md:p-10">
+    <div className="glass-card min-w-0 rounded-3xl border border-primary/20 bg-background/50 p-5 shadow-2xl backdrop-blur-xl md:p-10">
       <div className="mb-6 flex h-12 w-12 items-center justify-center rounded-2xl bg-primary/10 text-primary">
         <GraduationCap className="h-6 w-6" aria-hidden="true" />
       </div>
@@ -17,7 +17,7 @@ export function FormacaoStudySignup() {
         Crie uma conta gratuita no PADH para abrir o Módulo 1. Esta etapa é um cadastro de acesso; nenhum pagamento é processado aqui.
       </p>
 
-      <Button asChild size="lg" className="w-full gap-2">
+      <Button asChild size="lg" className="w-full h-auto min-h-14 whitespace-normal gap-2 px-4 py-4">
         <Link to={CREATE_ACCOUNT_PATH}>
           Criar conta e iniciar o Módulo 1
           <ArrowRight className="h-4 w-4" aria-hidden="true" />

@@ -350,8 +350,8 @@ const Formacao = () => {
       <section className="py-24 relative overflow-hidden">
         <div className="absolute inset-0 bg-primary/5 -z-10" />
         <div className="container mx-auto px-6 max-w-6xl">
-          <div className="grid lg:grid-cols-2 gap-16 items-center">
-            <div className="space-y-8">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+            <div className="min-w-0 space-y-8">
               <h2 className="text-4xl md:text-6xl font-heading font-bold leading-tight">Sua trilha de estudos começa <span className="text-primary italic">aqui</span>.</h2>
               <p className="text-xl text-muted-foreground leading-relaxed">
                 Conheça a estrutura dos oito módulos e, quando quiser aprofundar, crie uma conta no PADH para abrir o conteúdo de estudo completo.
@@ -392,6 +392,7 @@ const Formacao = () => {
             <div className="relative max-w-md mx-auto">
               <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
               <Input 
+                aria-label="Buscar dúvida"
                 placeholder="Buscar dúvida..." 
                 className="pl-10 h-12 bg-muted/50 border-border/50 focus:border-primary/50"
                 value={faqSearch}
@@ -430,7 +431,7 @@ const Formacao = () => {
             As vagas para a próxima turma da Formação em PCH são limitadas para garantir a qualidade da supervisão e mentoria.
           </p>
           <div className="flex flex-col items-center gap-6">
-            <Button size="lg" onClick={() => navigate("/planos?product=formacao")} className="px-12 py-8 text-xl bg-primary hover:bg-primary/90 text-white rounded-full group shadow-2xl shadow-primary/20 scale-105 hover:scale-110 transition-all">
+            <Button size="lg" onClick={() => navigate("/planos?product=formacao")} className="max-w-full h-auto min-h-14 whitespace-normal px-6 md:px-12 py-5 text-base md:text-xl bg-primary hover:bg-primary/90 text-primary-foreground rounded-full group shadow-2xl shadow-primary/20 transition-all">
               Garantir minha vaga na Formação <ArrowRight className="ml-3 w-6 h-6 group-hover:translate-x-1 transition-transform" />
             </Button>
             <p className="text-xs text-muted-foreground flex items-center gap-2">

@@ -66,20 +66,20 @@ const StreamingCard: React.FC<StreamingCardProps> = ({
             </h3>
             
             {/* Hover Actions */}
-            <div className="flex items-center gap-2 pt-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+            <div className="flex items-center gap-2 pt-2 opacity-0 group-hover:opacity-100 group-focus-within:opacity-100 transition-opacity duration-300">
                {isLocked ? (
                  <div className="flex items-center gap-1.5 text-[10px] font-bold text-muted-foreground uppercase">
                     <Lock className="w-3 h-3" /> Bloqueado
                  </div>
                ) : (
                  <>
-                    <Button size="icon" variant="default" className="h-8 w-8 rounded-full shadow-lg" aria-label={`Reproduzir ${title}`}>
+                    <Button size="icon" variant="default" className="rounded-full shadow-lg" aria-label={`Reproduzir ${title}`}>
                        <Play className="w-4 h-4 fill-current" aria-hidden="true" />
                     </Button>
-                    <Button size="icon" variant="outline" className="h-8 w-8 rounded-full border-white/20 bg-white/5 backdrop-blur-sm" aria-label={`Adicionar ${title} à minha lista`}>
+                    <Button size="icon" variant="outline" className="rounded-full border-white/20 bg-white/5 backdrop-blur-sm" aria-label={`Adicionar ${title} à minha lista`}>
                        <Plus className="w-4 h-4" aria-hidden="true" />
                     </Button>
-                    <Button size="icon" variant="outline" className="h-8 w-8 rounded-full border-white/20 bg-white/5 backdrop-blur-sm" aria-label={`Mais informações sobre ${title}`}>
+                    <Button size="icon" variant="outline" className="rounded-full border-white/20 bg-white/5 backdrop-blur-sm" aria-label={`Mais informações sobre ${title}`}>
                        <Info className="w-4 h-4" aria-hidden="true" />
                     </Button>
                  </>

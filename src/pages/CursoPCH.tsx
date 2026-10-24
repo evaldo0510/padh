@@ -20,6 +20,7 @@ import {
   Feather,
   Lock,
   CheckCircle2,
+  Waves,
 } from "lucide-react";
 import ProtocoloPCH from "@/components/sections/ProtocoloPCH";
 import ChecklistClinico from "@/components/clinical/ChecklistClinico";
@@ -439,7 +440,7 @@ const ExerciseStep = ({
                       <ul className="space-y-3">
                         {" "}
                         <li className="flex items-start gap-3">
-                          <span className="text-primary shrink-0">🌀</span>
+                          <Waves className="spiritual-icon-lg text-primary" aria-hidden="true" />
                           <span>
                             <strong className="text-foreground">
                               Hipnose e PNL
@@ -450,7 +451,7 @@ const ExerciseStep = ({
                           </span>
                         </li>{" "}
                         <li className="flex items-start gap-3">
-                          <span className="text-primary shrink-0">🧠</span>
+                          <Brain className="spiritual-icon-lg text-primary" aria-hidden="true" />
                           <span>
                             <strong className="text-foreground">
                               Psicoterapia
@@ -460,7 +461,7 @@ const ExerciseStep = ({
                           </span>
                         </li>{" "}
                         <li className="flex items-start gap-3">
-                          <span className="text-primary shrink-0">🧘‍♂️</span>
+                          <Eye className="spiritual-icon-lg text-primary" aria-hidden="true" />
                           <span>
                             <strong className="text-foreground">
                               Mindfulness e Meditação
@@ -470,7 +471,7 @@ const ExerciseStep = ({
                           </span>
                         </li>{" "}
                         <li className="flex items-start gap-3">
-                          <span className="text-primary shrink-0">📖</span>
+                          <BookOpen className="spiritual-icon-lg text-primary" aria-hidden="true" />
                           <span>
                             <strong className="text-foreground">
                               Terapia Narrativa
@@ -480,7 +481,7 @@ const ExerciseStep = ({
                           </span>
                         </li>{" "}
                         <li className="flex items-start gap-3">
-                          <span className="text-primary shrink-0">✍️</span>
+                          <PenTool className="spiritual-icon-lg text-primary" aria-hidden="true" />
                           <span>
                             <strong className="text-foreground">
                               Escrita Terapêutica
