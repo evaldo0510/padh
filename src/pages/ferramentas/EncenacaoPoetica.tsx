@@ -532,6 +532,42 @@ const EncenacaoPoetica = () => {
           </div>{" "}
         </div>{" "}
       </section>{" "}
+      
+      <section className="py-16 border-t border-border/30">
+        <div className="container mx-auto px-6">
+          <div className="max-w-4xl mx-auto">
+            <div className="mb-8">
+              <p className="text-xs uppercase tracking-[0.2em] text-primary mb-3 font-medium">Prática ampliada</p>
+              <h2 className="text-2xl md:text-3xl font-heading font-bold text-foreground">Aprofundamento: dar forma simbólica sem inventar fatos</h2>
+              <p className="mt-4 text-muted-foreground leading-relaxed">A encenação poética usa personagens, objetos ou metáforas para expressar perspectivas. Não é reconstrução fiel de acontecimentos nem exige representar experiências sensíveis.</p>
+            </div>
+            <div className="space-y-5">
+              <article className="rounded-xl border border-border/50 bg-card/60 p-5 md:p-6">
+                <h3 className="font-heading text-lg font-semibold text-foreground mb-3">1. Escolha uma forma segura</h3>
+                <p className="text-sm md:text-base leading-relaxed text-muted-foreground whitespace-pre-line">Escolha um objeto, elemento da natureza ou personagem fictício — por exemplo, uma ponte, uma árvore ou uma pequena lanterna. Evite cenas que não queira revisitar.</p>
+              </article>
+              <article className="rounded-xl border border-border/50 bg-card/60 p-5 md:p-6">
+                <h3 className="font-heading text-lg font-semibold text-foreground mb-3">2. Dê voz a três perspectivas</h3>
+                <p className="text-sm md:text-base leading-relaxed text-muted-foreground whitespace-pre-line">Opcionalmente, escreva: “A parte de mim que sente diz…”; “A parte que precisa de cuidado pede…”; “Minha voz de hoje responde…”. Trate cada fala como uma possibilidade de escrita, não como uma verdade oculta.</p>
+              </article>
+              <article className="rounded-xl border border-border/50 bg-card/60 p-5 md:p-6">
+                <h3 className="font-heading text-lg font-semibold text-foreground mb-3">3. Faça perguntas abertas</h3>
+                <p className="text-sm md:text-base leading-relaxed text-muted-foreground whitespace-pre-line">“O que essa personagem quer comunicar?”; “O que ela não sabe ainda?”; “Que limite precisa ser respeitado?”; “Que outra resposta seria possível?”. Não force reconciliação, perdão ou conclusão positiva.</p>
+              </article>
+              <article className="rounded-xl border border-border/50 bg-card/60 p-5 md:p-6">
+                <h3 className="font-heading text-lg font-semibold text-foreground mb-3">4. Feche a cena</h3>
+                <p className="text-sm md:text-base leading-relaxed text-muted-foreground whitespace-pre-line">Escreva uma última fala que reconheça a escolha presente: “Por agora, posso…”. A ação pode ser pequena, adiada ou nenhuma. Depois, volte ao ambiente e deixe a personagem no papel.</p>
+              </article>
+              <article className="rounded-xl border border-border/50 bg-card/60 p-5 md:p-6">
+                <h3 className="font-heading text-lg font-semibold text-foreground mb-3">Exemplo breve</h3>
+                <p className="text-sm md:text-base leading-relaxed text-muted-foreground whitespace-pre-line">A Ponte: “Não prometo que o caminho será fácil; ofereço apenas um lugar para começar.” A Pessoa: “Hoje, começo por olhar, sem obrigação de atravessar.”</p>
+              </article>
+            </div>
+            <p className="mt-6 text-sm leading-relaxed text-muted-foreground border-l-2 border-primary/40 pl-4">Não use a atividade para induzir lembranças, afirmar fatos sobre o passado ou interpretar personagens como partes clínicas diagnosticáveis. A participação e a profundidade são sempre opcionais.</p>
+          </div>
+        </div>
+      </section>
+      
       <ScientificValidation tool="encenacao-poetica" />{" "}
     </PageLayout>
   );
