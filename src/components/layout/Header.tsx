@@ -115,8 +115,8 @@ const Header = () => {
                 className="h-9 px-6 rounded-full font-bold gap-2 shadow-glow"
                 asChild
               >
-                <Link to="/jornada">
-                  Começar
+                <Link to="/formacao">
+                  Ver trilha
                   <ArrowRight className="w-4 h-4" />
                 </Link>
               </Button>

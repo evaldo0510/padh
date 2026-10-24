@@ -204,26 +204,24 @@ const Index = () => {
             </h1>
             {/* Subtitle */}
             <p className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto leading-relaxed">
-              A metodologia <strong className="text-foreground">PCH</strong> une neurociência, hipnose ericksoniana e linguagem simbólica para criar intervenções terapêuticas que transformam o inconsciente através da beleza da palavra.
+              O <strong className="text-foreground">PADH</strong> organiza o estudo da metodologia <strong className="text-foreground">PCH</strong> em uma trilha progressiva, com fundamentos, práticas e módulos conectados.
             </p>
             {/* CTA */}
             <div className="flex flex-col sm:flex-row gap-3 justify-center pt-4">
-              <Link to="/diagnostico">
-                <Button size="lg" className="w-full sm:w-auto bg-primary text-primary-foreground hover:bg-primary-dark text-base px-8 shadow-module-glow">
-                  Começar Diagnóstico <Sparkles className="ml-2 spiritual-icon" />
-                </Button>
-              </Link>
-              <Link to="/livro-curso">
-                <Button variant="outline" size="lg" className="w-full sm:w-auto border-primary/30 text-foreground hover:bg-primary/5 text-base px-8">
-                  Ver Livro-Curso
-                </Button>
-              </Link>
-              <Link to="/fundamentacao">
-                <Button variant="ghost" size="lg" className="w-full sm:w-auto text-muted-foreground hover:text-primary text-base px-8">
-                  <BookOpen className="w-4 h-4 mr-2" /> Fundamentação Teórica
-                </Button>
-              </Link>
+              <Button asChild size="lg" className="w-full sm:w-auto bg-primary text-primary-foreground hover:bg-primary-dark text-base px-8 shadow-module-glow">
+                <Link to="/login?mode=signup&next=%2Fformacao%2Fmodulo%2Fmodulo-1">
+                  Criar conta e iniciar os estudos <GraduationCap className="ml-2 spiritual-icon" />
+                </Link>
+              </Button>
+              <Button asChild variant="outline" size="lg" className="w-full sm:w-auto border-primary/30 text-foreground hover:bg-primary/5 text-base px-8">
+                <Link to="/formacao">
+                  Ver a trilha de módulos
+                </Link>
+              </Button>
             </div>
+            <p className="text-sm text-muted-foreground">
+              A estrutura é pública; o conteúdo completo abre após criar conta.
+            </p>
             {/* Poem quote */}
             <div className="pt-8 max-w-lg mx-auto">
               <blockquote className="poem-block">

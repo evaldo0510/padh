@@ -140,7 +140,12 @@ const AnimatedRoutes = () => {
             path="/formacao/modulo/:id"
             element={
               <PageTransition>
-                <ModuloFormacao />
+                <ProtectedRoute
+                  redirectTo="/login?mode=signup"
+                  authMessage="Crie uma conta ou entre para acessar este módulo de estudo."
+                >
+                  <ModuloFormacao />
+                </ProtectedRoute>
               </PageTransition>
             }
           />
@@ -180,7 +185,12 @@ const AnimatedRoutes = () => {
             path="/curso-padh"
             element={
               <PageTransition>
-                <CursoPCH />
+                <ProtectedRoute
+                  redirectTo="/login?mode=signup"
+                  authMessage="Crie uma conta ou entre para acessar o conteúdo de estudo PCH."
+                >
+                  <CursoPCH />
+                </ProtectedRoute>
               </PageTransition>
             }
           />

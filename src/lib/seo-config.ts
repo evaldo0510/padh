@@ -8,9 +8,9 @@ export interface PageSEO {
 
 export const pagesSEO: Record<string, PageSEO> = {
   home: {
-    title: "PADH — Poesia Aplicada ao Desenvolvimento Humano | Jornada PCH",
+    title: "PADH — Plataforma de estudos em PCH | Poesia Cognitiva Hipnótica",
     description:
-      "Descubra a metodologia PADH — Poesia Aplicada ao Desenvolvimento Humano. Uma abordagem que une neurociência, hipnose ericksoniana e linguagem poética para a libertação emocional e consciência.",
+      "Estude a metodologia PCH no PADH. Conheça os oito módulos conectados, explore a trilha e crie sua conta para continuar os estudos.",
     path: "/",
   },
   livroCurso: {
