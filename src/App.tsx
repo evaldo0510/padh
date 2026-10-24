@@ -82,6 +82,7 @@ const DiagnosticoJornada = lazy(() => import("./pages/DiagnosticoJornada"));
 const BibliotecaExercicios = lazy(() => import("./pages/BibliotecaExercicios"));
 const SessaoView = lazy(() => import("./pages/SessaoView"));
 const LoginPage = lazy(() => import("./pages/LoginPage"));
+const Videos = lazy(() => import("./pages/Videos"));
 const DiagnosticsPage = lazy(() => import("./pages/DiagnosticsPage"));
 const ConfigGuidePage = lazy(() => import("./pages/ConfigGuidePage"));
 const UiGuide = lazy(() => import("./pages/UiGuide"));
@@ -124,7 +125,7 @@ const AnimatedRoutes = () => {
             path="/livro-curso"
             element={
               <PageTransition>
-                <LivroCurso />
+                <ProtectedRoute redirectTo="/login?mode=signup" authMessage="Crie uma conta ou entre para acessar o conteúdo completo."><LivroCurso /></ProtectedRoute>
               </PageTransition>
             }
           />
@@ -153,7 +154,7 @@ const AnimatedRoutes = () => {
             path="/mapa-cerebral"
             element={
               <PageTransition>
-                <MapaCerebral />
+                <ProtectedRoute redirectTo="/login?mode=signup" authMessage="Crie uma conta ou entre para acessar o conteúdo completo."><MapaCerebral /></ProtectedRoute>
               </PageTransition>
             }
           />
@@ -161,7 +162,7 @@ const AnimatedRoutes = () => {
             path="/aula-exclusiva"
             element={
               <PageTransition>
-                <AulaExclusiva />
+                <ProtectedRoute redirectTo="/login?mode=signup" authMessage="Crie uma conta ou entre para acessar o conteúdo completo."><AulaExclusiva /></ProtectedRoute>
               </PageTransition>
             }
           />
@@ -206,7 +207,7 @@ const AnimatedRoutes = () => {
             path="/ferramentas/poema-funil"
             element={
               <PageTransition>
-                <PoemaFunil />
+                <ProtectedRoute redirectTo="/login?mode=signup" authMessage="Crie uma conta ou entre para acessar o conteúdo completo."><PoemaFunil /></ProtectedRoute>
               </PageTransition>
             }
           />
@@ -214,7 +215,7 @@ const AnimatedRoutes = () => {
             path="/ferramentas/verso-gatilho"
             element={
               <PageTransition>
-                <VersoGatilho />
+                <ProtectedRoute redirectTo="/login?mode=signup" authMessage="Crie uma conta ou entre para acessar o conteúdo completo."><VersoGatilho /></ProtectedRoute>
               </PageTransition>
             }
           />
@@ -222,7 +223,7 @@ const AnimatedRoutes = () => {
             path="/ferramentas/poemadiagnostico"
             element={
               <PageTransition>
-                <Poemadiagnostico />
+                <ProtectedRoute redirectTo="/login?mode=signup" authMessage="Crie uma conta ou entre para acessar o conteúdo completo."><Poemadiagnostico /></ProtectedRoute>
               </PageTransition>
             }
           />
@@ -230,7 +231,7 @@ const AnimatedRoutes = () => {
             path="/ferramentas/caderno-voz-interna"
             element={
               <PageTransition>
-                <CadernoVozInterna />
+                <ProtectedRoute redirectTo="/login?mode=signup" authMessage="Crie uma conta ou entre para acessar o conteúdo completo."><CadernoVozInterna /></ProtectedRoute>
               </PageTransition>
             }
           />
@@ -238,7 +239,7 @@ const AnimatedRoutes = () => {
             path="/ferramentas/encenacao-poetica"
             element={
               <PageTransition>
-                <EncenacaoPoetica />
+                <ProtectedRoute redirectTo="/login?mode=signup" authMessage="Crie uma conta ou entre para acessar o conteúdo completo."><EncenacaoPoetica /></ProtectedRoute>
               </PageTransition>
             }
           />
@@ -246,7 +247,7 @@ const AnimatedRoutes = () => {
             path="/ferramentas/reescrita-poetica"
             element={
               <PageTransition>
-                <ReescritaPoetica />
+                <ProtectedRoute redirectTo="/login?mode=signup" authMessage="Crie uma conta ou entre para acessar o conteúdo completo."><ReescritaPoetica /></ProtectedRoute>
               </PageTransition>
             }
           />
@@ -254,7 +255,7 @@ const AnimatedRoutes = () => {
             path="/ferramentas/ritual-silencio"
             element={
               <PageTransition>
-                <RitualSilencio />
+                <ProtectedRoute redirectTo="/login?mode=signup" authMessage="Crie uma conta ou entre para acessar o conteúdo completo."><RitualSilencio /></ProtectedRoute>
               </PageTransition>
             }
           />
@@ -262,7 +263,7 @@ const AnimatedRoutes = () => {
             path="/ferramentas/poesia-hipnotica"
             element={
               <PageTransition>
-                <PoesiaHipnotica />
+                <ProtectedRoute redirectTo="/login?mode=signup" authMessage="Crie uma conta ou entre para acessar o conteúdo completo."><PoesiaHipnotica /></ProtectedRoute>
               </PageTransition>
             }
           />
@@ -517,6 +518,16 @@ const AnimatedRoutes = () => {
             element={
               <PageTransition>
                 <LoginPage />
+              </PageTransition>
+            }
+          />
+          <Route
+            path="/videos"
+            element={
+              <PageTransition>
+                <ProtectedRoute redirectTo="/login?mode=signup" authMessage="Entre ou crie uma conta para acessar as aulas e vídeos.">
+                  <Videos />
+                </ProtectedRoute>
               </PageTransition>
             }
           />
