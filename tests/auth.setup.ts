@@ -12,7 +12,7 @@ setup('authenticate', async ({ page }) => {
   await page.goto('/login');
   
   // Fill login form
-  await page.getByLabel('E-mail').fill(email);
+  await page.getByRole('textbox', { name: 'E-mail', exact: true }).fill(email);
   await page.getByLabel('Senha').fill(password);
   await page.getByRole('button', { name: 'Entrar e continuar', exact: true }).click();
 

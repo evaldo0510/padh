@@ -5,13 +5,13 @@ test.use({ storageState: { cookies: [], origins: [] } });
 test('login permanece acessível na primeira visita sem apresentação bloqueante', async ({ page }) => {
   await page.goto('/login');
   await expect(page.getByRole('heading', { name: 'Acesse os estudos PCH' })).toBeVisible();
-  await expect(page.getByLabel('E-mail')).toBeVisible();
+  await expect(page.getByRole('textbox', { name: 'E-mail', exact: true })).toBeVisible();
   await expect(page.getByRole('button', { name: 'Pular', exact: true })).toHaveCount(0);
-  await page.getByLabel('E-mail').focus();
+  await page.getByRole('textbox', { name: 'E-mail', exact: true }).focus();
   await page.keyboard.press('Tab');
   await expect(page.getByLabel('Senha', { exact: true })).toBeFocused();
   await page.keyboard.press('Shift+Tab');
-  await expect(page.getByLabel('E-mail')).toBeFocused();
+  await expect(page.getByRole('textbox', { name: 'E-mail', exact: true })).toBeFocused();
 });
 
 test('menu navega para Formação por teclado e restaura o foco ao fechar', async ({ page }) => {
