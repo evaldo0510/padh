@@ -5,6 +5,7 @@ interface LogoProps {
   size?: "sm" | "md" | "lg" | "xl";
 }
 
+/** PADH mark: a geometric P paired with three lines representing progress and human development. */
 const Logo: React.FC<LogoProps> = ({ className = "", size = "md" }) => {
   const sizeClasses = {
     sm: "w-8 h-8",
@@ -15,38 +16,42 @@ const Logo: React.FC<LogoProps> = ({ className = "", size = "md" }) => {
 
   return (
     <div
-      className={`relative flex items-center justify-center shrink-0 transition-all duration-700 ease-in-out group ${sizeClasses[size]} ${className}`}
+      className={`relative flex items-center justify-center shrink-0 transition-all duration-300 ${sizeClasses[size]} ${className}`}
       role="img"
-      aria-label="PADH - Poesia Aplicada ao Desenvolvimento Humano Logo"
+      aria-label="PADH — Poesia Aplicada ao Desenvolvimento Humano"
     >
       <svg
-        viewBox="20 8 60 84"
+        viewBox="0 0 100 100"
         fill="none"
         xmlns="http://www.w3.org/2000/svg"
-        className="w-full h-full relative z-10"
+        className="w-full h-full"
         aria-hidden="true"
         focusable="false"
       >
-        {/* Central Symbol - Minimalist Leaf/Feather Flow */}
-        <path
-          d="M50 85 C35 70 30 55 30 40 C30 25 40 15 50 15 C60 15 70 25 70 40 C70 55 65 70 50 85 Z"
-          fill="currentColor"
-          className="text-primary"
-        />
+        <defs>
+          <linearGradient id="padh-purple" x1="20" y1="12" x2="72" y2="84" gradientUnits="userSpaceOnUse">
+            <stop stopColor="#8B45E8" />
+            <stop offset="1" stopColor="#6930C3" />
+          </linearGradient>
+          <linearGradient id="padh-gold" x1="48" y1="76" x2="91" y2="76" gradientUnits="userSpaceOnUse">
+            <stop stopColor="#F6B51B" />
+            <stop offset="1" stopColor="#E99A00" />
+          </linearGradient>
+        </defs>
 
-        {/* The "Golden Flow" - Symbolic of Poetry and Insight */}
+        {/* Geometric P: the selected second concept */}
         <path
-          d="M50 20 Q55 45 50 75"
-          stroke="currentColor"
-          strokeWidth="3"
-          strokeLinecap="round"
-          className="text-warm"
+          d="M24 86V16H55C73 16 82 27 82 42C82 57 72 66 55 66H43V86H24Z"
+          fill="url(#padh-purple)"
         />
+        <path d="M43 29V53H55C63 53 68 49 68 41C68 34 63 29 55 29H43Z" fill="white" />
+        <path d="M48 33L63 41L48 49V33Z" fill="url(#padh-purple)" />
 
-        {/* The Spark of Transformation */}
-        <circle cx="50" cy="15" r="3" fill="currentColor" className="text-warm" />
+        {/* Rising lines represent learning, progress, and human development */}
+        <path d="M70 61H91" stroke="url(#padh-purple)" strokeWidth="6" strokeLinecap="square" />
+        <path d="M61 75H91" stroke="url(#padh-purple)" strokeWidth="6" strokeLinecap="square" />
+        <path d="M49 89H91" stroke="url(#padh-gold)" strokeWidth="6" strokeLinecap="square" />
       </svg>
-
     </div>
   );
 };
