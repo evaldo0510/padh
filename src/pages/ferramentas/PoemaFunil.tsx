@@ -579,6 +579,42 @@ const PoemaFunil = () => {
           </div>{" "}
         </div>{" "}
       </section>{" "}
+      
+      <section className="py-16 border-t border-border/30">
+        <div className="container mx-auto px-6">
+          <div className="max-w-4xl mx-auto">
+            <div className="mb-8">
+              <p className="text-xs uppercase tracking-[0.2em] text-primary mb-3 font-medium">Prática ampliada</p>
+              <h2 className="text-2xl md:text-3xl font-heading font-bold text-foreground">Aprofundamento: do amplo ao essencial</h2>
+              <p className="mt-4 text-muted-foreground leading-relaxed">O funil ajuda a organizar uma experiência sem pressionar por revelações. A pessoa escolhe a profundidade e pode parar em qualquer etapa.</p>
+            </div>
+            <div className="space-y-5">
+              <article className="rounded-xl border border-border/50 bg-card/60 p-5 md:p-6">
+                <h3 className="font-heading text-lg font-semibold text-foreground mb-3">1. Contexto amplo</h3>
+                <p className="text-sm md:text-base leading-relaxed text-muted-foreground whitespace-pre-line">Comece com uma pergunta aberta: “O que tem ocupado espaço em você ultimamente?”. Aceite uma palavra, uma frase, um acontecimento ou “ainda não sei”.</p>
+              </article>
+              <article className="rounded-xl border border-border/50 bg-card/60 p-5 md:p-6">
+                <h3 className="font-heading text-lg font-semibold text-foreground mb-3">2. Escolher uma cena</h3>
+                <p className="text-sm md:text-base leading-relaxed text-muted-foreground whitespace-pre-line">Se a pessoa quiser, convide-a a selecionar um momento específico: onde estava, o que aconteceu e o que percebeu. Evite perguntas sugestivas ou que presumam culpa, trauma ou uma causa escondida.</p>
+              </article>
+              <article className="rounded-xl border border-border/50 bg-card/60 p-5 md:p-6">
+                <h3 className="font-heading text-lg font-semibold text-foreground mb-3">3. Nomear o que importa</h3>
+                <p className="text-sm md:text-base leading-relaxed text-muted-foreground whitespace-pre-line">Pergunte: “Que emoção você identifica?”; “Que necessidade ou valor parece importante aqui?”; “O que você sabe e o que ainda é hipótese?”. Não imponha uma emoção nem trate interpretação como fato.</p>
+              </article>
+              <article className="rounded-xl border border-border/50 bg-card/60 p-5 md:p-6">
+                <h3 className="font-heading text-lg font-semibold text-foreground mb-3">4. Encontrar a metáfora</h3>
+                <p className="text-sm md:text-base leading-relaxed text-muted-foreground whitespace-pre-line">Convide a escolher uma imagem: ponte, janela, mar, pedra, semente ou outra criada pela própria pessoa. Pergunte o que a metáfora significa para ela, sem interpretar por ela.</p>
+              </article>
+              <article className="rounded-xl border border-border/50 bg-card/60 p-5 md:p-6">
+                <h3 className="font-heading text-lg font-semibold text-foreground mb-3">5. Criar o núcleo poético e um passo</h3>
+                <p className="text-sm md:text-base leading-relaxed text-muted-foreground whitespace-pre-line">Complete opcionalmente: “Hoje eu percebo…”; “O que merece cuidado é…”; “Um gesto possível nesta semana é…”. A pessoa pode guardar o texto só para si.</p>
+              </article>
+            </div>
+            <p className="mt-6 text-sm leading-relaxed text-muted-foreground border-l-2 border-primary/40 pl-4">O objetivo é clareza e expressão, não obter uma confissão nem conduzir a pessoa a uma conclusão predeterminada.</p>
+          </div>
+        </div>
+      </section>
+      
       <ScientificValidation tool="poema-funil" />{" "}
     </PageLayout>
   );
