@@ -630,6 +630,48 @@ const VersoGatilho = () => {
         </div>
       </section>
       
+
+      <section className="py-16 border-t border-border/30">
+        <div className="container mx-auto px-6">
+          <div className="max-w-4xl mx-auto">
+            <p className="text-xs uppercase tracking-[0.2em] text-primary mb-3 font-medium">Folha de aplicação</p>
+            <h2 className="text-2xl md:text-3xl font-heading font-bold text-foreground">Construindo um verso-âncora pessoal</h2>
+            <p className="mt-4 mb-8 text-muted-foreground leading-relaxed">Use esta sequência como roteiro de escrita. O objetivo é encontrar uma frase útil e realista, não eliminar emoções nem controlar a reação de outra pessoa.</p>
+            <div className="space-y-5">
+              <article className="rounded-xl border border-border/50 bg-card/60 p-5 md:p-6">
+                <h3 className="font-heading text-lg font-semibold text-foreground mb-2">Etapa A — Nomeie a situação sem julgamento</h3>
+                <p className="text-sm leading-relaxed text-muted-foreground">Complete: “A situação que quero observar é…”. Descreva apenas o que uma câmera poderia registrar. Evite começar por rótulos como “sou um fracasso” ou “ninguém se importa”.</p>
+              </article>
+              <article className="rounded-xl border border-border/50 bg-card/60 p-5 md:p-6">
+                <h3 className="font-heading text-lg font-semibold text-foreground mb-2">Etapa B — Perceba o sinal</h3>
+                <p className="text-sm leading-relaxed text-muted-foreground">Se desejar, anote o pensamento que apareceu, a emoção percebida e o que você gostaria de proteger ou pedir. Não é preciso localizar uma causa nem explicar tudo.</p>
+              </article>
+              <article className="rounded-xl border border-border/50 bg-card/60 p-5 md:p-6">
+                <h3 className="font-heading text-lg font-semibold text-foreground mb-2">Etapa C — Escreva três versões</h3>
+                <p className="text-sm leading-relaxed text-muted-foreground">Versão direta: “Posso pedir um minuto antes de responder.” Versão imagética: “Entre a onda e a palavra, existe uma margem.” Versão prática: “Vou pausar, conferir o que preciso e escolher meu próximo passo.” Escolha a que parece mais verdadeira; não há obrigação de usar poesia.</p>
+              </article>
+              <article className="rounded-xl border border-border/50 bg-card/60 p-5 md:p-6">
+                <h3 className="font-heading text-lg font-semibold text-foreground mb-2">Etapa D — Teste de utilidade</h3>
+                <p className="text-sm leading-relaxed text-muted-foreground">Pergunte: “A frase reconhece o que sinto sem me dar ordens?”; “Ela é plausível neste momento?”; “Ela respeita meus limites e os das outras pessoas?”. Se soar artificial, grandiosa ou culpabilizante, reescreva.</p>
+              </article>
+              <article className="rounded-xl border border-border/50 bg-card/60 p-5 md:p-6">
+                <h3 className="font-heading text-lg font-semibold text-foreground mb-2">Etapa E — Associe uma ação pequena</h3>
+                <p className="text-sm leading-relaxed text-muted-foreground">Escolha uma ação concreta: respirar sem forçar o ritmo, beber água, sair de uma conversa por alguns minutos, escrever uma mensagem ou procurar alguém de confiança. O verso é um lembrete, não uma garantia de resultado.</p>
+              </article>
+            </div>
+            <div className="mt-8 rounded-xl border border-primary/20 bg-primary/[0.03] p-5 md:p-6">
+              <h3 className="font-heading text-lg font-semibold text-foreground mb-3">Modelo para preencher</h3>
+              <p className="text-sm leading-relaxed text-muted-foreground whitespace-pre-line">Situação observável: …
+O que percebo em mim: …
+O que preciso neste momento: …
+Meu verso-âncora: …
+Uma ação pequena e segura: …
+Como vou avaliar se ajudou: …</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
       <ScientificValidation tool="verso-gatilho" />{" "}
     </PageLayout>
   );
