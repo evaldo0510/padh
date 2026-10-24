@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useId } from "react";
+import Logo from "./Logo";
 
 export type PCHSymbolVariant = "feather" | "flow" | "glow";
 
@@ -28,6 +29,8 @@ const PCHSymbol: React.FC<PCHSymbolProps> = ({
   size = "md",
   animated = false,
 }) => {
+  const id = useId();
+  if (variant === "feather") return <Logo size={size} className={className} />;
   return (
     <svg
       viewBox="0 0 64 64"

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import PCHSymbol from "@/components/ui/PCHSymbol";
+import Logo from "@/components/ui/Logo";
 
 interface SplashScreenProps {
   onComplete?: () => void;
@@ -50,18 +50,18 @@ const SplashScreen: React.FC<SplashScreenProps> = ({ onComplete, isLoading = tru
               className="relative"
             >
               <div className="absolute inset-0 rounded-full bg-primary/20 blur-3xl animate-pulse" />
-              <PCHSymbol variant="glow" size="xl" animated />
+              <Logo size="xl" />
             </motion.div>
 
             <div className="flex flex-col items-center gap-4 text-center">
-              <motion.h1
+              <motion.p
                 initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.5, duration: 0.8 }}
                 className="text-white text-2xl font-black tracking-[0.2em] uppercase"
               >
                 PCH
-              </motion.h1>
+              </motion.p>
               <motion.p
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
