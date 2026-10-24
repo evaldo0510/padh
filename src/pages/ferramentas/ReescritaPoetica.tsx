@@ -548,6 +548,46 @@ const ReescritaPoetica = () => {
         </div>{" "}
       </section>{" "}
       {/* Validação Científica */}
+      
+      <section className="py-16 border-t border-border/30">
+        <div className="container mx-auto px-6">
+          <div className="max-w-4xl mx-auto">
+            <div className="mb-8">
+              <p className="text-xs uppercase tracking-[0.2em] text-primary mb-3 font-medium">Prática ampliada</p>
+              <h2 className="text-2xl md:text-3xl font-heading font-bold text-foreground">Aprofundamento: reescrever sem apagar a experiência</h2>
+              <p className="mt-4 text-muted-foreground leading-relaxed">A reescrita poética oferece outra forma de narrar uma situação. Não exige transformar dor em algo positivo, perdoar alguém ou chegar a uma conclusão definitiva. O texto original pode continuar válido.</p>
+            </div>
+            <div className="space-y-5">
+              <article className="rounded-xl border border-border/50 bg-card/60 p-5 md:p-6">
+                <h3 className="font-heading text-lg font-semibold text-foreground mb-3">1. Escolha o que deseja trabalhar</h3>
+                <p className="text-sm md:text-base leading-relaxed text-muted-foreground">Selecione uma situação que se sinta confortável para escrever. Prefira um recorte específico e atual. Não é necessário narrar detalhes íntimos nem revisitar uma lembrança intensa.</p>
+              </article>
+              <article className="rounded-xl border border-border/50 bg-card/60 p-5 md:p-6">
+                <h3 className="font-heading text-lg font-semibold text-foreground mb-3">2. Registre a primeira versão</h3>
+                <p className="text-sm md:text-base leading-relaxed text-muted-foreground">Escreva de modo simples: “O que aconteceu foi…”; “O que senti foi…”; “O que ainda não compreendo é…”. Separe fatos observáveis, sentimentos e interpretações. Não precisa rimar nem ficar bonito.</p>
+              </article>
+              <article className="rounded-xl border border-border/50 bg-card/60 p-5 md:p-6">
+                <h3 className="font-heading text-lg font-semibold text-foreground mb-3">3. Encontre uma imagem alternativa</h3>
+                <p className="text-sm md:text-base leading-relaxed text-muted-foreground">Escolha uma metáfora que represente a experiência hoje: uma estrada interrompida, uma casa em reforma, uma janela entreaberta. Pergunte: “O que esta imagem acrescenta?” e “O que ela não consegue explicar?”. A metáfora é uma possibilidade, não uma explicação literal.</p>
+              </article>
+              <article className="rounded-xl border border-border/50 bg-card/60 p-5 md:p-6">
+                <h3 className="font-heading text-lg font-semibold text-foreground mb-3">4. Escreva uma segunda versão</h3>
+                <p className="text-sm md:text-base leading-relaxed text-muted-foreground">Experimente completar: “Naquele momento eu via…”; “Hoje também consigo considerar…”; “Ainda é difícil…”; “O que está ao meu alcance agora é…”. Mantenha a dificuldade quando ela continua presente. Reescrever não significa negar nem minimizar o que aconteceu.</p>
+              </article>
+              <article className="rounded-xl border border-border/50 bg-card/60 p-5 md:p-6">
+                <h3 className="font-heading text-lg font-semibold text-foreground mb-3">5. Feche com uma escolha realista</h3>
+                <p className="text-sm md:text-base leading-relaxed text-muted-foreground">Leia as duas versões e pergunte: “Qual representa melhor o que sei hoje?”; “Que frase quero guardar?”; “Existe um passo pequeno e viável?”. Você pode escolher não agir ainda, guardar apenas uma linha ou encerrar sem conclusão.</p>
+              </article>
+              <article className="rounded-xl border border-border/50 bg-card/60 p-5 md:p-6">
+                <h3 className="font-heading text-lg font-semibold text-foreground mb-3">Exemplo breve</h3>
+                <p className="text-sm md:text-base leading-relaxed text-muted-foreground whitespace-pre-line">Primeira versão: “Errei e estraguei tudo.”{"\n"}Nova versão: “Uma coisa não saiu como eu esperava. Posso reconhecer o impacto sem transformar esse erro na definição de quem sou. Vou escolher o que consigo reparar.”</p>
+              </article>
+            </div>
+            <p className="mt-6 text-sm leading-relaxed text-muted-foreground border-l-2 border-primary/40 pl-4">A atividade é de expressão e reflexão pessoal; não garante mudança emocional nem substitui apoio profissional. Se escrever aumentar o desconforto, pare e escolha uma forma de cuidado que pareça segura.</p>
+          </div>
+        </div>
+      </section>
+ 
       <ScientificValidation tool="reescrita-poetica" />{" "}
     </PageLayout>
   );
