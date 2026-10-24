@@ -19,7 +19,7 @@ dist-ssr
 .DS_Store
 *.suo
 *.ntvs*
-*.njsproj
+.njsproj
 *.sln
 *.sw?
 playwright/.auth
@@ -27,3 +27,8 @@ playwright/.auth
 # Lighthouse reports (mantém pasta via .gitkeep e README)
 lighthouse-reports/*.html
 lighthouse-reports/*.json
+
+# Environment variables (keep templates only)
+.env
+.env.*
+!.env.example
