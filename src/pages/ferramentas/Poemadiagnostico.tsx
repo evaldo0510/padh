@@ -24,7 +24,7 @@ const Poemadiagnostico = () => {
           </>
         }
         subtitle="O Espelho Emocional"
-        description="A imagem emocional que escolhe por ele — permitindo que o inconsciente fale por preferências poéticas, revelando estados internos que a razão ainda nega."
+        description="Uma experiência de leitura e auto-observação: escolha um poema, perceba o que chamou sua atenção e explore os sentidos que ele desperta em você. A escolha não revela automaticamente estados inconscientes nem substitui avaliação clínica."
         image={{
           src: toolImage,
           alt: "Poemadiagnóstico — espelho emocional através da poesia",
@@ -70,10 +70,9 @@ const Poemadiagnostico = () => {
                 </p>{" "}
                 <p>
                   {" "}
-                  Permite que{" "}
+                  Convida a pessoa a observar se{" "}
                   <strong className="text-foreground">
-                    partes internas inconscientes se manifestem sem
-                    constrangimento
+                    alguma imagem, palavra ou lembrança faz sentido para sua experiência
                   </strong>
                   , abrindo um canal legítimo e simbólico para a escuta.{" "}
                 </p>{" "}
@@ -128,7 +127,7 @@ const Poemadiagnostico = () => {
                     {" "}
                     <li>→ O que mais te tocou nesse poema?</li>{" "}
                     <li>
-                      → O que você acha que esse poema revela sobre você agora?
+                      → Que associação ou lembrança esse poema desperta em você, se alguma?
                     </li>{" "}
                     <li>→ Que parte sua falou mais alto nessa escolha?</li>{" "}
                   </ul>{" "}
@@ -259,7 +258,7 @@ const Poemadiagnostico = () => {
                   <li className="flex items-start gap-2">
                     <span className="text-primary mt-1">•</span>Baseia-se na{" "}
                     <strong className="text-foreground">
-                      projeção simbólica
+                      identificação simbólica possível
                     </strong>
                     : o cliente lê algo externo e, ao se identificar, revela seu
                     estado interno.
