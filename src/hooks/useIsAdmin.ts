@@ -10,6 +10,9 @@ import { useAuth } from "@/hooks/useAuth";
  * a linha se (e somente se) o usuário for admin.
  */
 export function useIsAdmin() {
+  // A conta precisa corresponder ao e-mail explicitamente configurado no ambiente
+  // e também possuir a role admin no banco. Não confiar apenas em dados do navegador.
+  const configuredAdminEmail = (import.meta.env.VITE_PADH_ADMIN_EMAIL ?? "").trim().toLowerCase();
   const { user, loading: authLoading } = useAuth();
 
   const { data, isLoading, error } = useQuery({
@@ -29,7 +32,7 @@ export function useIsAdmin() {
   });
 
   return {
-    isAdmin: !!data,
+    isAdmin: !!data && !!configuredAdminEmail && user?.email?.trim().toLowerCase() === configuredAdminEmail,
     loading: authLoading || (!!user?.id && isLoading),
     error,
   };
