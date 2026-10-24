@@ -14,10 +14,10 @@ setup('authenticate', async ({ page }) => {
   // Fill login form
   await page.getByLabel('E-mail').fill(email);
   await page.getByLabel('Senha').fill(password);
-  await page.getByRole('button', { name: 'Entrar na Plataforma' }).click();
+  await page.getByRole('button', { name: 'Entrar e continuar', exact: true }).click();
 
   // Wait for redirect to dashboard or index
-  await page.waitForURL(/\/dashboard|\//);
+  await page.waitForURL((url) => url.pathname !== '/login');
   
   // Verify we are logged in (e.g., check for a specific element or just the URL)
   await expect(page).not.toHaveURL(/\/login/);
