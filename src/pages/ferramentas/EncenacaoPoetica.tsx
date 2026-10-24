@@ -568,6 +568,50 @@ const EncenacaoPoetica = () => {
         </div>
       </section>
       
+
+      <section className="py-16 border-t border-border/30">
+        <div className="container mx-auto px-6">
+          <div className="max-w-4xl mx-auto">
+            <p className="text-xs uppercase tracking-[0.2em] text-primary mb-3 font-medium">Laboratório de escrita</p>
+            <h2 className="text-2xl md:text-3xl font-heading font-bold text-foreground">Roteiro completo para uma cena poética</h2>
+            <p className="mt-4 mb-8 text-muted-foreground leading-relaxed">A cena é uma composição simbólica criada no presente. Ela não precisa reproduzir uma conversa real, resolver um conflito ou terminar em reconciliação.</p>
+            <div className="space-y-5">
+              <article className="rounded-xl border border-border/50 bg-card/60 p-5 md:p-6">
+                <h3 className="font-heading text-lg font-semibold text-foreground mb-2">1. Defina o tema e o limite</h3>
+                <p className="text-sm leading-relaxed text-muted-foreground">Escolha um tema manejável, como indecisão, cansaço ou desejo de mudança. Complete: “Hoje quero escrever sobre…”. Depois: “Não quero entrar em…”. O limite pode ser alterado ou a atividade interrompida a qualquer momento.</p>
+              </article>
+              <article className="rounded-xl border border-border/50 bg-card/60 p-5 md:p-6">
+                <h3 className="font-heading text-lg font-semibold text-foreground mb-2">2. Crie personagens simbólicos</h3>
+                <p className="text-sm leading-relaxed text-muted-foreground">Escolha duas ou três vozes fictícias, como “A Pressa”, “A Pausa” e “A Pessoa de Hoje”. Elas são recursos literários, não entidades independentes nem categorias clínicas.</p>
+              </article>
+              <article className="rounded-xl border border-border/50 bg-card/60 p-5 md:p-6">
+                <h3 className="font-heading text-lg font-semibold text-foreground mb-2">3. Escreva falas com objetivos diferentes</h3>
+                <p className="text-sm leading-relaxed text-muted-foreground whitespace-pre-line">A Pressa: “Quero resolver tudo antes que a dúvida cresça.”
+A Pausa: “Posso ajudar a olhar uma coisa de cada vez.”
+A Pessoa de Hoje: “Não preciso decidir tudo nesta página.”</p>
+              </article>
+              <article className="rounded-xl border border-border/50 bg-card/60 p-5 md:p-6">
+                <h3 className="font-heading text-lg font-semibold text-foreground mb-2">4. Permita desacordo</h3>
+                <p className="text-sm leading-relaxed text-muted-foreground">Cada voz pode ter um argumento compreensível e um limite. Não transforme uma personagem em vilã, nem force a voz “positiva” a vencer. Pergunte: “O que cada voz tenta proteger?” e “O que ainda não sabemos?”.</p>
+              </article>
+              <article className="rounded-xl border border-border/50 bg-card/60 p-5 md:p-6">
+                <h3 className="font-heading text-lg font-semibold text-foreground mb-2">5. Conclua com uma escolha presente</h3>
+                <p className="text-sm leading-relaxed text-muted-foreground">A última fala pode ser provisória: “Por hoje, vou reunir mais informação”, “Vou pedir ajuda” ou “Ainda não estou pronto para decidir”. Feche nomeando algo que vê ou ouve no ambiente e retome a rotina com calma.</p>
+              </article>
+            </div>
+            <div className="mt-8 rounded-xl border border-primary/20 bg-primary/[0.03] p-5 md:p-6">
+              <h3 className="font-heading text-lg font-semibold text-foreground mb-3">Ficha de criação</h3>
+              <p className="text-sm leading-relaxed text-muted-foreground whitespace-pre-line">Tema da cena: …
+Limite que desejo respeitar: …
+Personagem 1 e o que tenta proteger: …
+Personagem 2 e o que tenta proteger: …
+Uma pergunta que permanece aberta: …
+Escolha ou próximo passo possível: …</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
       <ScientificValidation tool="encenacao-poetica" />{" "}
     </PageLayout>
   );
