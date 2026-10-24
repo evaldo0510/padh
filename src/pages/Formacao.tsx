@@ -27,7 +27,7 @@ import { COMPLEMENTOS_ESTUDO_PCH, ETAPAS_ESTUDO_PCH } from "@/lib/estudo-curricu
 import { useCourseProgress } from "@/hooks/useCourseProgress";
 import { Link, useNavigate } from "react-router-dom";
 import { useScrollAnimation } from "@/hooks/useScrollAnimation";
-import { FormacaoLeadForm } from "@/components/sales/FormacaoLeadForm";
+import { FormacaoStudySignup } from "@/components/sales/FormacaoStudySignup";
 import { generateCurriculumPDF } from "@/lib/pdf-utils";
 import {
   Accordion,
@@ -346,38 +346,38 @@ const Formacao = () => {
         </div>
       </section>
 
-      {/* Lead Form Section */}
+      {/* Study account entry */}
       <section className="py-24 relative overflow-hidden">
         <div className="absolute inset-0 bg-primary/5 -z-10" />
         <div className="container mx-auto px-6 max-w-6xl">
           <div className="grid lg:grid-cols-2 gap-16 items-center">
             <div className="space-y-8">
-              <h2 className="text-4xl md:text-6xl font-heading font-bold leading-tight">Junte-se a uma nova <span className="text-primary italic">elite de terapeutas</span>.</h2>
+              <h2 className="text-4xl md:text-6xl font-heading font-bold leading-tight">Sua trilha de estudos começa <span className="text-primary italic">aqui</span>.</h2>
               <p className="text-xl text-muted-foreground leading-relaxed">
-                Preencha o formulário para receber o catálogo completo da formação, valores exclusivos de pré-venda e datas das próximas turmas diretamente no seu e-mail.
+                Conheça a estrutura dos oito módulos e, quando quiser aprofundar, crie uma conta no PADH para abrir o conteúdo de estudo completo.
               </p>
               <div className="space-y-4">
                 <div className="flex items-center gap-4">
                   <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center text-primary shrink-0">
                     <CheckCircle2 className="w-5 h-5" />
                   </div>
-                  <p className="font-medium">Prioridade na lista de espera</p>
+                  <p className="font-medium">Oito módulos organizados em sequência didática</p>
                 </div>
                 <div className="flex items-center gap-4">
                   <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center text-primary shrink-0">
                     <CheckCircle2 className="w-5 h-5" />
                   </div>
-                  <p className="font-medium">Acesso a aulas bônus exclusivas</p>
+                  <p className="font-medium">Pré-requisitos e complementos indicados ao longo da trilha</p>
                 </div>
                 <div className="flex items-center gap-4">
                   <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center text-primary shrink-0">
                     <CheckCircle2 className="w-5 h-5" />
                   </div>
-                  <p className="font-medium">Descontos especiais de lançamento</p>
+                  <p className="font-medium">Conta gratuita para entrar nos módulos de estudo</p>
                 </div>
               </div>
             </div>
-            <FormacaoLeadForm />
+            <FormacaoStudySignup />
           </div>
         </div>
       </section>
