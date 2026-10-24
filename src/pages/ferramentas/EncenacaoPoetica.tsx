@@ -24,7 +24,7 @@ const EncenacaoPoetica = () => {
           </>
         }
         subtitle="O Teatro dos Eus"
-        description="Quando o Eu vira uma conversa entre eus — dar forma, voz e argumento às subpersonalidades internas, promovendo consciência e diálogo entre partes conflitantes."
+        description="Um exercício de escrita simbólica que coloca perspectivas diferentes em diálogo — por exemplo, o desejo de mudar e o receio do desconhecido. As vozes são recursos narrativos, não entidades independentes nem diagnósticos."
         image={{
           src: toolImage,
           alt: "Encenação Poética — teatro dos eus",
@@ -61,13 +61,14 @@ const EncenacaoPoetica = () => {
                 {" "}
                 <p>
                   {" "}
-                  Permitir ao cliente{" "}
+                  Convidar a pessoa a{" "}
                   <strong className="text-foreground">
-                    dar forma, voz e argumento às suas subpersonalidades
-                    internas
+                    representar perspectivas, necessidades e receios diferentes
                   </strong>
-                  , promovendo consciência e diálogo entre suas partes
-                  conflitantes.{" "}
+                  por meio de personagens simbólicos. Escrever esse diálogo pode
+                  ajudar a organizar pensamentos, mas não comprova a existência
+                  de partes psicológicas separadas nem determina qual voz está
+                  certa.{" "}
                 </p>{" "}
                 <p>
                   {" "}
@@ -98,8 +99,7 @@ const EncenacaoPoetica = () => {
                     1. Escolha de Partes Internas
                   </h4>{" "}
                   <p className="text-sm text-muted-foreground mb-3">
-                    O terapeuta ajuda o cliente a identificar partes em
-                    conflito:
+                    Se estiver conduzindo a atividade com outra pessoa, convide-a a nomear perspectivas em conflito, sem impor interpretações:
                   </p>{" "}
                   <div className="grid sm:grid-cols-2 gap-2">
                     {" "}
