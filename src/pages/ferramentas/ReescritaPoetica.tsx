@@ -24,7 +24,7 @@ const ReescritaPoetica = () => {
           </>
         }
         subtitle="O Alquimista do Passado"
-        description="Transformar o que doeu em algo que dança na página — reconfigurar memórias difíceis através da linguagem simbólica e ressignificadora."
+        description="Explorar uma experiência por meio da escrita simbólica, experimentando outras formas de narrá-la sem apagar fatos, minimizar a dor ou exigir um desfecho positivo."
         image={{
           src: toolImage,
           alt: "Reescrita Poética — alquimia de narrativas",
@@ -325,8 +325,7 @@ const ReescritaPoetica = () => {
                 Exercício: Reescreva sua História
               </h2>{" "}
               <p className="text-muted-foreground mt-3 max-w-xl mx-auto">
-                Transforme uma memória dolorosa em poesia curativa — passo a
-                passo.
+                Explore uma experiência por meio da poesia, no seu ritmo e sem a obrigação de encontrar um lado positivo.
               </p>{" "}
             </div>{" "}
             <div className="space-y-6">
@@ -375,7 +374,7 @@ const ReescritaPoetica = () => {
                     <div>
                       {" "}
                       <h4 className="font-heading font-semibold text-foreground mb-2">
-                        Extraia as Metáforas Ocultas
+                        Explore Imagens e Metáforas
                       </h4>{" "}
                       <p className="text-sm text-muted-foreground leading-relaxed mb-3">
                         Releia o que escreveu e responda:
@@ -484,8 +483,7 @@ const ReescritaPoetica = () => {
                         ouça como se fosse outra pessoa te contando essa
                         história. Note:{" "}
                         <strong className="text-foreground">
-                          a dor ainda está lá, mas agora ela tem beleza. E a
-                          beleza muda tudo.
+                          observe o que mudou na sua leitura — e o que continua difícil. Não é necessário transformar a dor em beleza.
                         </strong>
                       </p>{" "}
                     </div>{" "}
