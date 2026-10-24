@@ -75,6 +75,7 @@ export const NAV_SECTIONS: NavSection[] = [
       { label: "Mapa cerebral", path: "/mapa-cerebral" },
       { label: "Aula exclusiva", path: "/aula-exclusiva" },
       { label: "Livro do curso", path: "/livro-curso" },
+      { label: "Aulas e vídeos", path: "/videos" },
     ],
   },
   {
