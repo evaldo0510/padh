@@ -37,8 +37,8 @@ Inspeção estática das páginas e componentes, apoiada nos relatórios AUDIT/A
 - PWA instalado, atualização entre versões e cache em produção exigem publicação concluída.
 - Há links sociais `#` e contato sem confirmação no rodapé, imagem externa apresentada como autor na Formação e cartões administrativos sem ação. Não foram inventados destinos, fotos ou funcionalidades para preencher esses pontos.
 - Ainda existem estilos legados e classes sem token em páginas específicas. A revisão segura não foi uma migração visual ampla.
-- Primeira publicação solicitada: endereço respondeu HTTP 200 e HTML incluiu as fontes desta revisão. Correção residual de Encenação Poética aplicada depois exige nova publicação; resultado final deve ser confirmado separadamente.
+- Primeira publicação: endereço respondeu HTTP 200 e HTML incluiu as fontes desta revisão. Correção residual de Encenação Poética também passou nos testes e será incluída na publicação final; implantação final depende da plataforma.
 
 ## Arquivos alterados
 
-`AGENTS.md`, `roadmap.md`, `index.html`, `src/index.css`; layouts Header/MobileNav/NavigationSheet/PageHeader/PageLayout/SplashScreen; UI Logo/PCHSymbol/StreamingCard/badge/button/dialog/input/sheet/text-reader/textarea/theme-toggle; UserWorkspace, PCHWelcome, FormacaoStudySignup; páginas CursoPCH/Formacao/Index/LoginPage/PoesiaHipnotica/ModuloFormacao; testes auth.setup e interface-review; `public/padh-mark.svg`, favicon SVG/PNG, logo-pwa.svg, pch-logo.svg e PNGs 32/48/96/180/192/512, apple-touch-icon e ícones PWA 192/512/maskable; este relatório.
+`AGENTS.md`, `roadmap.md`, `index.html`, `src/index.css`; layouts Header/MobileNav/NavigationSheet/PageHeader/PageLayout/SplashScreen; UI Logo/PCHSymbol/StreamingCard/badge/button/dialog/input/sheet/text-reader/textarea/theme-toggle; UserWorkspace, PCHWelcome, FormacaoStudySignup; páginas CursoPCH/Formacao/Index/LoginPage/PoesiaHipnotica/EncenacaoPoetica/ModuloFormacao; testes auth.setup e interface-review; `public/padh-mark.svg`, favicon SVG/PNG, logo-pwa.svg, pch-logo.svg e PNGs 32/48/96/180/192/512, apple-touch-icon e ícones PWA 192/512/maskable; este relatório.

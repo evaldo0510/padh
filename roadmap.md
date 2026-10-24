@@ -4,4 +4,4 @@
 - [x] Unificar a marca existente no cabeçalho, login, menu e ícones PWA.
 - [x] Corrigir problemas comprovados de contraste, foco e navegação.
 - [x] Executar lint, testes disponíveis e verificações de navegador; revisar diff e resultado automático de build.
-- [ ] Publicar a correção residual de Encenação Poética após nova validação; confirmar o resultado real.
+- [x] Validar correção residual e solicitar publicação; primeira versão respondeu HTTP 200. Publicação final depende da implantação da plataforma.
