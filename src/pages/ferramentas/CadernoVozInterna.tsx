@@ -49,7 +49,7 @@ const CadernoVozInterna = () => {
           </>
         }
         subtitle="O Diário Onde a Alma Gagueja Verdade"
-        description="Transformar o cliente em autor de sua própria escuta — a escrita como oráculo e ferramenta de autoconhecimento profundo."
+        description="Oferecer um espaço de escrita para observar pensamentos, emoções e necessidades com curiosidade e sem julgamento — a escrita como oráculo e ferramenta de autoconhecimento profundo."
         image={{
           src: toolImage,
           alt: "Caderno de Voz Interna — diário poético",
