@@ -45,7 +45,7 @@ const FerramentaHero: React.FC<FerramentaHeroProps> = ({
       <div className="relative container mx-auto px-6 py-20 text-center">
         <div className="animate-fade-in-up max-w-3xl mx-auto">
           <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-primary/20 bg-primary/5 text-primary text-sm font-medium mb-6">
-            <Icon className="spiritual-icon spiritual-icon-sm" />
+            <Icon className="w-6 h-6" aria-hidden="true" />
             {badgeLabel}
           </div>
           <h1 className="text-4xl md:text-6xl font-heading font-bold mb-4 text-foreground">

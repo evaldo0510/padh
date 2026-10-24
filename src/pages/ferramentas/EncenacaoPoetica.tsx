@@ -1,5 +1,5 @@
 import React from "react";
-import { Drama, Brain, BookOpen, MessageSquare } from "lucide-react";
+import { MessagesSquare, Drama, Brain, BookOpen, MessageSquare } from "lucide-react";
 import FerramentaHero from "@/components/ferramentas/FerramentaHero";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import PageLayout from "@/components/layout/PageLayout";
@@ -15,7 +15,7 @@ const EncenacaoPoetica = () => {
     <PageLayout seo={pagesSEO.encenacaoPoetica} currentPage="Encenação Poética">
       {" "}
       <FerramentaHero
-        icon={Drama}
+        icon={MessagesSquare}
         badgeLabel="Ferramenta 5 — P.A.D.H."
         title={
           <>

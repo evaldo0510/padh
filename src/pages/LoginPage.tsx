@@ -5,7 +5,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import Logo from '@/components/ui/Logo';
-import {  Sparkles, ArrowRight, LogIn } from 'lucide-react';
+import {  BookOpenCheck, DoorOpen, KeyRound } from 'lucide-react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { toast } from 'sonner';
 import { supabase } from '@/integrations/supabase/client';
@@ -142,7 +142,7 @@ const LoginPage = () => {
           <Card className="border-primary/10 shadow-xl">
             <CardHeader>
               <CardTitle className="flex items-center gap-2">
-                <LogIn className="spiritual-icon spiritual-icon-lg" aria-hidden="true" />
+                <KeyRound className="spiritual-icon spiritual-icon-lg" aria-hidden="true" />
                 {mode === 'signup' ? 'Criar conta' : 'Entrar'}
               </CardTitle>
               <CardDescription>
@@ -225,7 +225,7 @@ const LoginPage = () => {
                 </div>
                 <Button type="submit" className="w-full gap-2 py-6" disabled={isLoading || isGoogleLoading}>
                   {isLoading ? 'Aguarde...' : mode === 'signup' ? 'Criar conta e continuar' : 'Entrar e continuar'}
-                  {!isLoading && <ArrowRight className="spiritual-icon" aria-hidden="true" />}
+                  {!isLoading && <DoorOpen className="spiritual-icon" aria-hidden="true" />}
                 </Button>
               </form>
 
@@ -247,7 +247,7 @@ const LoginPage = () => {
 
           <div className="mt-8 flex justify-center">
             <p className="flex items-center gap-2 text-[10px] text-muted-foreground">
-              <Sparkles className="h-3 w-3" aria-hidden="true" /> Sua trilha de estudos continua após o acesso.
+              <BookOpenCheck className="h-3 w-3" aria-hidden="true" /> Sua trilha de estudos continua após o acesso.
             </p>
           </div>
         </div>

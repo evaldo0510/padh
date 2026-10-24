@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useLocation } from "react-router-dom";
-import { Menu, ChevronDown, LogOut, Flame } from "lucide-react";
+import { PanelsTopLeft, ChevronDown, LogOut, CalendarCheck2 } from "lucide-react";
 
 import {
   Sheet,
@@ -64,7 +64,7 @@ const NavigationSheet: React.FC<NavigationSheetProps> = ({
     if (sectionId === "evolucao" && badges.streak > 0) {
       return (
         <span className="inline-flex items-center gap-1 text-[11px] font-medium text-warm tabular-nums">
-          <Flame className="w-3 h-3" />
+          <CalendarCheck2 className="w-4 h-4" aria-hidden="true" />
           {badges.streak}
         </span>
       );
@@ -93,7 +93,7 @@ const NavigationSheet: React.FC<NavigationSheetProps> = ({
             "h-9 w-9 p-0 rounded-full hover:bg-accent bg-muted border border-border"
           }
         >
-          <Menu className="w-4 h-4 text-foreground" aria-hidden="true" />
+          <PanelsTopLeft className="w-5 h-5 text-foreground" aria-hidden="true" />
           {triggerLabel && (
             <span className="sr-only">{triggerLabel}</span>
           )}
@@ -117,7 +117,8 @@ const NavigationSheet: React.FC<NavigationSheetProps> = ({
                 <CollapsibleTrigger className="group flex w-full items-center justify-between rounded-xl px-3 py-2.5 text-left hover:bg-accent transition-colors">
                   <span className="flex min-w-0 items-center gap-3">
                     <Icon
-                      className={`w-4 h-4 shrink-0 ${active ? "text-primary" : "text-muted-foreground"}`}
+                      aria-hidden="true"
+                      className={`w-5 h-5 shrink-0 ${active ? "text-primary" : "text-muted-foreground"}`}
                     />
                     <span
                       className={`truncate text-sm font-semibold tracking-tight ${active ? "text-primary" : "text-foreground"}`}

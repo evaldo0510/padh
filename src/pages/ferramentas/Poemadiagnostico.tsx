@@ -1,5 +1,5 @@
 import React from "react";
-import { Search, Brain, BookOpen, Eye } from "lucide-react";
+import { ScanSearch, Search, Brain, BookOpen, Eye } from "lucide-react";
 import FerramentaHero from "@/components/ferramentas/FerramentaHero";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import PageLayout from "@/components/layout/PageLayout";
@@ -16,7 +16,7 @@ const Poemadiagnostico = () => {
     <PageLayout seo={pagesSEO.poemadiagnostico} currentPage="Poemadiagnóstico">
       {" "}
       <FerramentaHero
-        icon={Eye}
+        icon={ScanSearch}
         badgeLabel="Ferramenta 3 — P.A.D.H."
         title={
           <>

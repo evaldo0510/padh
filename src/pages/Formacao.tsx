@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import {
   GraduationCap,
+  BookOpenCheck,
+  Timer,
   Clock,
   Users,
   BookOpen,
@@ -238,10 +240,10 @@ const Formacao = () => {
                                 <span className="text-8xl font-heading font-bold">{modulo.numero}</span>
                               </div>
                               <div className="flex flex-wrap justify-between items-start gap-2 mb-4">
-                                <Badge variant="secondary" className="bg-primary/10 text-primary border-none font-bold">Módulo {modulo.numero}</Badge>
+                                <Badge variant="secondary" className="bg-primary/10 text-primary border-none font-bold gap-2"><BookOpenCheck className="w-5 h-5" aria-hidden="true" />Módulo {modulo.numero}</Badge>
                                 <div className="flex items-center gap-3">
                                   {isCompleted && <span className="text-xs text-primary font-medium inline-flex items-center gap-1"><CheckCircle2 className="w-3 h-3" /> Concluído</span>}
-                                  <div className="flex items-center gap-1 text-[10px] text-muted-foreground uppercase tracking-wider"><Clock className="w-3 h-3" /> {modulo.tempoEstimado} min</div>
+                                  <div className="flex items-center gap-1 text-[10px] text-muted-foreground uppercase tracking-wider"><Timer className="w-4 h-4" aria-hidden="true" /> {modulo.tempoEstimado} min</div>
                                 </div>
                               </div>
                               <CardTitle className="text-2xl font-heading group-hover:text-primary transition-colors">{modulo.titulo}</CardTitle>

@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
-import { User, LogOut, ArrowRight, Loader2 } from 'lucide-react';
+import { ContactRound, LogOut, Route, Loader2 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { ThemeToggle } from '@/components/ui/theme-toggle';
 import PrefetchLink from './PrefetchLink';
@@ -104,7 +104,7 @@ const Header = () => {
                     <>
                       <span className="hidden xs:inline">{nextSession ? 'Continuar jornada' : 'Ver jornada'}</span>
                       <span className="xs:hidden">{nextSession ? 'Continuar' : 'Jornada'}</span>
-                      <ArrowRight className="w-4 h-4" />
+                      <Route className="w-5 h-5" aria-hidden="true" />
                     </>
                   )}
                 </PrefetchLink>
@@ -117,7 +117,7 @@ const Header = () => {
               >
                 <Link to="/formacao">
                   Ver trilha
-                  <ArrowRight className="w-4 h-4" />
+                  <Route className="w-5 h-5" aria-hidden="true" />
                 </Link>
               </Button>
             )}
@@ -150,7 +150,7 @@ const Header = () => {
                     asChild
                   >
                     <Link to="/dashboard" aria-label="Área do usuário">
-                      <User className="w-4 h-4 text-foreground" />
+                      <ContactRound className="w-5 h-5 text-foreground" aria-hidden="true" />
                     </Link>
                   </Button>
                   <NavigationSheet isLoggedIn />
