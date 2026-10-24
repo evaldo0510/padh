@@ -115,8 +115,8 @@ const Header = () => {
                 className="h-9 px-6 rounded-full font-bold gap-2 shadow-glow"
                 asChild
               >
-                <Link to="/formacao">
-                  Ver trilha
+                <Link to="/login?mode=signup">
+                  Criar conta
                   <Route className="w-5 h-5" aria-hidden="true" />
                 </Link>
               </Button>
