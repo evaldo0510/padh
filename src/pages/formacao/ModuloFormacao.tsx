@@ -4,13 +4,13 @@ import { MODULOS, PILARES_INFO } from "@/lib/dados-clinicos";
 import { COMPLEMENTOS_ESTUDO_PCH, getEtapaEstudoPCH, NOTAS_ESTUDO_PCH } from "@/lib/estudo-curricular";
 import { useCourseProgress } from "@/hooks/useCourseProgress";
 import PageLayout from "@/components/layout/PageLayout";
-import { 
-  ArrowLeft, 
-  Timer, 
-  ListChecks, 
-  Brain, 
-  ClipboardCheck, 
-  AlertTriangle, 
+import {
+  ArrowLeft,
+  Timer,
+  ListChecks,
+  Brain,
+  ClipboardCheck,
+  AlertTriangle,
   ArrowRight,
   BadgeCheck,
   Zap,
@@ -67,14 +67,14 @@ const ModuloFormacao = () => {
       }}
       currentPage={`Módulo ${modulo.numero}: ${modulo.titulo}`}
     >
-      <section className="relative py-20 overflow-hidden">
+      <section className="relative py-20 lg:py-16 overflow-hidden">
         <div className="absolute inset-0 bg-primary/5 -z-10" />
-        <div className="container mx-auto px-6">
+        <div className="container mx-auto px-6 max-w-6xl">
           <Button variant="ghost" onClick={() => navigate("/formacao")} className="mb-8 group">
             <ArrowLeft className="mr-2 w-4 h-4 group-hover:-translate-x-1 transition-transform" /> Voltar para a Formação
           </Button>
 
-          <div className="grid lg:grid-cols-2 gap-12 items-start">
+          <div className="grid lg:grid-cols-2 gap-12 lg:gap-8 items-start">
             <div className="space-y-6">
               <div className="flex flex-wrap items-center gap-3">
                 <Badge className="bg-primary/10 text-primary border-none text-sm px-4">Módulo {modulo.numero}</Badge>
@@ -82,10 +82,10 @@ const ModuloFormacao = () => {
                 {etapa && <Badge variant="secondary" className="text-xs">Etapa {etapa.numero}: {etapa.titulo}</Badge>}
               </div>
               <p className="text-xs text-muted-foreground">Pilar {modulo.pilar} · {pilar.nome}</p>
-              <h1 className="text-4xl md:text-6xl font-heading font-bold leading-tight">
+              <h1 className="text-4xl md:text-4xl lg:text-5xl font-heading font-bold leading-tight">
                 {modulo.titulo}
               </h1>
-              <p className="text-xl text-muted-foreground italic leading-relaxed">
+              <p className="text-xl lg:text-lg text-muted-foreground italic leading-relaxed">
                 "{modulo.foco}"
               </p>
               <p className="text-sm text-muted-foreground">
@@ -155,9 +155,9 @@ const ModuloFormacao = () => {
         </div>
       </section>
 
-      <section className="py-24 border-t border-border/10">
-        <div className="container mx-auto px-6 max-w-5xl">
-          <div className="grid md:grid-cols-2 gap-12">
+      <section className="py-24 lg:py-16 border-t border-border/10">
+        <div className="container mx-auto px-6 max-w-5xl lg:max-w-4xl">
+          <div className="grid md:grid-cols-2 gap-12 lg:gap-8">
             <div className="space-y-12">
               <div className="space-y-6">
                 <h3 className="text-2xl font-heading font-bold flex items-center gap-3">
@@ -214,7 +214,7 @@ const ModuloFormacao = () => {
             </div>
 
             <div className="space-y-12">
-              <div className="space-y-6 p-8 rounded-3xl bg-primary/5 border border-primary/10">
+              <div className="space-y-6 p-8 lg:p-6 rounded-3xl bg-primary/5 border border-primary/10">
                 <h3 className="text-2xl font-heading font-bold flex items-center gap-3">
                   <AlertTriangle className="w-6 h-6 text-primary" /> Cuidados e Ética
                 </h3>

@@ -173,7 +173,7 @@ const Index = () => {
       <main>
       
       {/* Hero Section */}
-      <section className="relative overflow-hidden min-h-[90vh] flex items-center">
+      <section className="relative overflow-hidden min-h-[90vh] lg:min-h-[80vh] flex items-center">
         <FloatingParticles />
         <div className="absolute inset-0 gradient-hero" />
         <div className="absolute inset-0 gradient-glow" />
@@ -185,7 +185,7 @@ const Index = () => {
         <div className="relative container mx-auto px-6 md:px-8 py-24 z-10">
           <div className="max-w-4xl mx-auto text-center animate-fade-in-up space-y-10">
             {/* Hero Image */}
-            <div className="mx-auto w-32 h-32 md:w-40 md:h-40 mb-4">
+            <div className="mx-auto w-32 h-32 md:w-36 md:h-36 mb-4">
               <img
                 src={heroImage}
                 alt="PCH — Poesia Cognitiva Hipnótica"
@@ -199,12 +199,12 @@ const Index = () => {
               <Feather className="spiritual-icon spiritual-icon-sm" /> Poesia como ciência da transformação
             </div>
             {/* Title */}
-            <h1 className="text-6xl sm:text-7xl md:text-9xl font-black leading-[0.85] tracking-tighter">
+            <h1 className="text-6xl sm:text-7xl md:text-7xl xl:text-8xl font-black leading-[0.9] tracking-tighter">
               <span className="text-foreground">Poesia Cognitiva</span> <br />
               <span className="text-primary italic">Hipnótica (PCH)</span>
             </h1>
             {/* Subtitle */}
-            <p className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto leading-relaxed">
+            <p className="text-lg md:text-lg text-muted-foreground max-w-2xl mx-auto leading-relaxed">
               O <strong className="text-foreground">PADH</strong> organiza o estudo da metodologia <strong className="text-foreground">PCH</strong> em uma trilha progressiva, com fundamentos, práticas e módulos conectados.
             </p>
             {/* CTA */}
@@ -439,7 +439,7 @@ const Index = () => {
         <div className="relative container mx-auto px-6 md:px-8 text-center">
           <div className="max-w-2xl mx-auto space-y-8">
             <Feather className="h-8 w-8 text-primary mx-auto opacity-60" />
-            <blockquote className="text-2xl md:text-3xl font-heading italic text-foreground/90 leading-relaxed">
+            <blockquote className="text-2xl md:text-2xl font-heading italic text-foreground/90 leading-relaxed">
               "Não são os muros que nos prendem,<br />são os espelhos que nos mentem.<br />Quando a poesia limpa o vidro,<br />o reflexo finalmente nos reconhece."
             </blockquote>
             <cite className="text-sm text-primary/70 block not-italic">— Evaldo de Jesus Santana, Prisão Interior</cite>

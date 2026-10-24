@@ -84,7 +84,7 @@ const Formacao = () => {
   return (
     <PageLayout seo={pagesSEO.formacao} currentPage="Formação em PCH">
       {/* Hero Section */}
-      <section className="relative py-20 md:py-32 overflow-hidden">
+      <section className="relative py-20 md:py-20 lg:py-24 overflow-hidden">
         <div className="absolute inset-0 gradient-hero" />
         <div className="absolute inset-0 gradient-glow" />
         <div 
@@ -96,10 +96,10 @@ const Formacao = () => {
           <Badge variant="outline" className="mb-6 border-primary/30 text-primary bg-primary/5 px-4 py-1 animate-pulse">
             <Award className="w-3 h-3 mr-2" /> Certificação Profissional Nível Especialista
           </Badge>
-          <h1 className="text-4xl md:text-7xl font-heading font-bold text-foreground mb-6 leading-tight">
+          <h1 className="text-4xl md:text-5xl lg:text-6xl font-heading font-bold text-foreground mb-6 leading-tight">
             Formação em <span className="text-primary italic">PCH</span>
           </h1>
-          <p className="text-muted-foreground text-lg md:text-2xl max-w-2xl mx-auto mb-10 leading-relaxed">
+          <p className="text-muted-foreground text-lg md:text-xl max-w-2xl mx-auto mb-10 leading-relaxed">
             Domine a <strong className="text-foreground">Poesia Cognitiva Hipnótica</strong> e transforme sua prática clínica com a metodologia que une neurociência e arte.
           </p>
           <div className="flex flex-wrap justify-center gap-8 text-sm font-medium mb-12">
@@ -131,22 +131,22 @@ const Formacao = () => {
       </section>
 
       {/* Os 4 Pilares P.A.D.H. */}
-      <section className="py-24 bg-muted/30 border-y border-border/20">
+      <section className="py-24 lg:py-20 bg-muted/30 border-y border-border/20">
         <div 
           ref={pillarsSection.ref}
-          className={`container mx-auto px-6 max-w-6xl transition-all duration-1000 ${
+          className={`container mx-auto px-6 max-w-6xl lg:max-w-5xl transition-all duration-1000 ${
             pillarsSection.isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-12"
           }`}
         >
           <div className="text-center mb-16">
             <p className="text-primary font-bold tracking-widest uppercase text-xs mb-4">A Metodologia</p>
-            <h2 className="text-3xl md:text-5xl font-heading font-bold mb-4">Os 4 Pilares <span className="text-primary italic">P.A.D.H.</span></h2>
+            <h2 className="text-3xl md:text-4xl font-heading font-bold mb-4">Os 4 Pilares <span className="text-primary italic">P.A.D.H.</span></h2>
             <p className="text-muted-foreground max-w-2xl mx-auto">A estrutura clínica que sustenta a transformação profunda através da palavra.</p>
           </div>
 
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
             {Object.entries(PILARES_INFO).map(([key, info]) => (
-              <div key={key} className="glass-card p-8 rounded-2xl border border-border/50 hover:border-primary/30 transition-all group">
+              <div key={key} className="glass-card p-8 lg:p-6 rounded-2xl border border-border/50 hover:border-primary/30 transition-all group">
                 <div className="w-14 h-14 rounded-2xl bg-primary/10 flex items-center justify-center text-primary font-heading font-bold text-2xl mb-6 group-hover:scale-110 transition-transform">
                   {key}
                 </div>
@@ -159,17 +159,17 @@ const Formacao = () => {
       </section>
 
       {/* Study Path and Curriculum Section */}
-      <section id="trilha-pch" className="py-24 scroll-mt-24">
+      <section id="trilha-pch" className="py-24 lg:py-20 scroll-mt-24">
         <div 
           ref={curriculumSection.ref}
-          className={`container mx-auto px-6 max-w-6xl transition-all duration-1000 ${
+          className={`container mx-auto px-6 max-w-6xl lg:max-w-5xl transition-all duration-1000 ${
             curriculumSection.isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-12"
           }`}
         >
           <div className="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-6">
             <div className="max-w-2xl">
               <p className="text-primary font-bold tracking-widest uppercase text-xs mb-4">Trilha de estudos profissional</p>
-              <h2 className="text-3xl md:text-5xl font-heading font-bold">Do fundamento à <span className="text-primary italic">integração</span></h2>
+              <h2 className="text-3xl md:text-4xl font-heading font-bold">Do fundamento à <span className="text-primary italic">integração</span></h2>
               <p className="text-muted-foreground mt-4 leading-relaxed">Os oito módulos mantêm seus nomes e números originais, agora agrupados em etapas para mostrar como os temas se complementam. Esta é uma ordem didática sugerida; os dados dos módulos não declaram pré-requisitos formais entre eles.</p>
             </div>
             <div className="text-sm text-muted-foreground flex items-center gap-4">
@@ -212,7 +212,7 @@ const Formacao = () => {
               ).length;
 
               return (
-                <section key={etapa.numero} aria-labelledby={`etapa-pch-${etapa.numero}`} className="rounded-3xl border border-border/50 bg-muted/10 p-5 md:p-8">
+                <section key={etapa.numero} aria-labelledby={`etapa-pch-${etapa.numero}`} className="rounded-3xl border border-border/50 bg-muted/10 p-5 md:p-8 lg:p-6">
                   <div className="flex flex-col md:flex-row md:items-start justify-between gap-4 mb-6">
                     <div className="max-w-3xl">
                       <div className="flex flex-wrap items-center gap-3 mb-3">
@@ -237,7 +237,7 @@ const Formacao = () => {
                           <Card className="border-border/50 hover:border-primary/30 transition-all duration-300 group overflow-hidden bg-card/70 backdrop-blur-sm h-full">
                             <CardHeader className="pb-4 relative">
                               <div className="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity">
-                                <span className="text-8xl font-heading font-bold">{modulo.numero}</span>
+                                <span className="text-8xl lg:text-7xl font-heading font-bold">{modulo.numero}</span>
                               </div>
                               <div className="flex flex-wrap justify-between items-start gap-2 mb-4">
                                 <Badge variant="secondary" className="bg-primary/10 text-primary border-none font-bold gap-2"><BookOpenCheck className="w-5 h-5" aria-hidden="true" />Módulo {modulo.numero}</Badge>
@@ -290,7 +290,7 @@ const Formacao = () => {
       </section>
 
       {/* Teacher Profile */}
-      <section className="py-24 bg-muted/30 relative overflow-hidden">
+      <section className="py-24 lg:py-20 bg-muted/30 relative overflow-hidden">
         <div className="absolute top-1/2 left-0 w-96 h-96 bg-primary/5 rounded-full blur-3xl" />
         <div 
           ref={teacherSection.ref}

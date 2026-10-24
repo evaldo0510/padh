@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Badge } from "@/components/ui/badge";
@@ -10,11 +10,8 @@ import {
   isAdminRangePreset,
 } from "@/lib/admin-filters";
 import {
-  computeRetention,
   FUNNEL_STAGES,
   FunnelStage,
-  mergeActivityDays,
-  UserEventRow,
   CohortRow,
 } from "@/lib/user-events";
 import { Users, TrendingUp, Filter } from "lucide-react";
@@ -29,6 +26,13 @@ interface CohortRpcRow {
   day_offset: number;
   retained: number;
   retention: number | null;
+}
+
+interface RetentionSummaryRpc {
+  cohort_size: number;
+  d1: number | null;
+  d7: number | null;
+  d30: number | null;
 }
 
 function cohortRowsFromRpc(rows: CohortRpcRow[]): CohortRow[] {
@@ -78,10 +82,8 @@ function funnelFromRpc(rows: FunnelRpcRow[]): FunnelBucket[] {
 export default function BehaviorAnalytics() {
   const [range, setRange] = useState<AdminRangePreset>(ADMIN_RANGE_DEFAULT);
   const [stage, setStage] = useState<StageFilter>("all");
-  const [loading, setLoading] = useState(true);
-  const [profiles, setProfiles] = useState<{ id: string; created_at: string }[]>([]);
-  const [events, setEvents] = useState<UserEventRow[]>([]);
-  const [checkins, setCheckins] = useState<{ user_id: string; checkin_date: string }[]>([]);
+  const [retentionSummary, setRetentionSummary] = useState<RetentionSummaryRpc | null>(null);
+  const [retentionSummaryLoading, setRetentionSummaryLoading] = useState(true);
   const [cohort, setCohort] = useState<CohortRow[]>([]);
   const [cohortLoading, setCohortLoading] = useState(true);
   const [funnel, setFunnel] = useState<FunnelBucket[]>([]);
@@ -89,28 +91,29 @@ export default function BehaviorAnalytics() {
 
   const maxDay = Math.min(Number(range), 30);
 
+  // O servidor devolve somente agregados; nenhum perfil, identificador ou nota individual
+  // de check-in é lido pelo navegador para montar estes indicadores.
   useEffect(() => {
     let cancelled = false;
-    async function load() {
-      setLoading(true);
-      const days = Number(range);
-      const since = new Date(Date.now() - days * DAY_MS).toISOString();
-
-      const [profRes, evRes, ciRes] = await Promise.all([
-        supabase.from("profiles").select("id, created_at").gte("created_at", since),
-        supabase.from("user_events").select("id, user_id, event_name, stage, payload, created_at").gte("created_at", since),
-        supabase.from("daily_checkins").select("user_id, checkin_date").gte("checkin_date", since.slice(0, 10)),
-      ]);
-
+    async function loadRetentionSummary() {
+      setRetentionSummaryLoading(true);
+      const since = new Date(Date.now() - Number(range) * DAY_MS).toISOString();
+      const { data, error } = await supabase.rpc("admin_retention_summary", {
+        _since: since,
+        _stage: stage === "all" ? null : stage,
+      });
       if (cancelled) return;
-      setProfiles((profRes.data as any) || []);
-      setEvents(((evRes.data as any) || []).map((e: any) => ({ ...e, payload: e.payload ?? {} })));
-      setCheckins((ciRes.data as any) || []);
-      setLoading(false);
+      if (error) {
+        console.error("[admin_retention_summary]", error);
+        setRetentionSummary(null);
+      } else {
+        setRetentionSummary(data?.[0] ?? null);
+      }
+      setRetentionSummaryLoading(false);
     }
-    load();
+    void loadRetentionSummary();
     return () => { cancelled = true; };
-  }, [range]);
+  }, [range, stage]);
 
   // Coorte semanal calculada no banco via RPC (SECURITY DEFINER, gate admin).
   useEffect(() => {
@@ -119,7 +122,7 @@ export default function BehaviorAnalytics() {
       setCohortLoading(true);
       const days = Number(range);
       const since = new Date(Date.now() - days * DAY_MS).toISOString();
-      const { data, error } = await (supabase as any).rpc("admin_weekly_cohort", {
+      const { data, error } = await supabase.rpc("admin_weekly_cohort", {
         _since: since,
         _max_day: maxDay,
         _stage: stage === "all" ? null : stage,
@@ -129,7 +132,7 @@ export default function BehaviorAnalytics() {
         console.error("[admin_weekly_cohort]", error);
         setCohort([]);
       } else {
-        setCohort(cohortRowsFromRpc((data as CohortRpcRow[]) || []));
+        setCohort(cohortRowsFromRpc(data || []));
       }
       setCohortLoading(false);
     }
@@ -144,7 +147,7 @@ export default function BehaviorAnalytics() {
       setFunnelLoading(true);
       const days = Number(range);
       const since = new Date(Date.now() - days * DAY_MS).toISOString();
-      const { data, error } = await (supabase as any).rpc("admin_funnel_matrix", {
+      const { data, error } = await supabase.rpc("admin_funnel_matrix", {
         _since: since,
         _stage: stage === "all" ? null : stage,
       });
@@ -153,34 +156,13 @@ export default function BehaviorAnalytics() {
         console.error("[admin_funnel_matrix]", error);
         setFunnel([]);
       } else {
-        setFunnel(funnelFromRpc((data as FunnelRpcRow[]) || []));
+        setFunnel(funnelFromRpc(data || []));
       }
       setFunnelLoading(false);
     }
     loadFunnel();
     return () => { cancelled = true; };
   }, [range, stage]);
-
-  const filteredProfiles = useMemo(() => {
-    if (stage === "all") return profiles;
-    const stageUsers = new Set(
-      stage === "cadastro"
-        ? profiles.map((p) => p.id)
-        : events.filter((e) => e.stage === stage).map((e) => e.user_id),
-    );
-    return profiles.filter((p) => stageUsers.has(p.id));
-  }, [profiles, events, stage]);
-
-
-  const activityDays = useMemo(
-    () => mergeActivityDays({ events, checkins }),
-    [events, checkins],
-  );
-
-  const retention = useMemo(
-    () => computeRetention({ profiles: filteredProfiles, activityDaysByUser: activityDays }),
-    [filteredProfiles, activityDays],
-  );
 
 
   return (
@@ -226,13 +208,13 @@ export default function BehaviorAnalytics() {
             <Users className="w-4 h-4" /> Retenção do coorte
           </h3>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
-            <KpiTile label="Coorte" value={String(retention.cohortSize)} suffix="usuários" />
-            <KpiTile label="D1" value={fmtPct(retention.d1)} />
-            <KpiTile label="D7" value={fmtPct(retention.d7)} />
-            <KpiTile label="D30" value={fmtPct(retention.d30)} />
+            <KpiTile label="Coorte" value={retentionSummaryLoading ? "…" : String(retentionSummary?.cohort_size ?? 0)} suffix="usuários" />
+            <KpiTile label="D1" value={retentionSummaryLoading ? "…" : fmtNullablePct(retentionSummary?.d1)} />
+            <KpiTile label="D7" value={retentionSummaryLoading ? "…" : fmtNullablePct(retentionSummary?.d7)} />
+            <KpiTile label="D30" value={retentionSummaryLoading ? "…" : fmtNullablePct(retentionSummary?.d30)} />
           </div>
           <p className="text-xs text-muted-foreground">
-            Retido em Dn = teve check-in ou evento no dia n após o cadastro. Baseado em <code>profiles.created_at</code>.
+            Dn considera atividade no respectivo dia após o cadastro e apenas contas que já alcançaram esse dia. O cálculo é agregado no banco.
           </p>
         </section>
 
@@ -301,7 +283,7 @@ export default function BehaviorAnalytics() {
             </div>
           )}
           <p className="text-xs text-muted-foreground">
-            Cada célula = % do coorte de cadastro daquela semana com atividade no dia Dn.
+            Cada célula = percentual das contas daquele coorte que já alcançaram Dn e tiveram atividade nesse dia.
           </p>
         </section>
       </CardContent>
@@ -344,4 +326,8 @@ function FunnelRow({ row, maxUsers }: { row: FunnelBucket; maxUsers: number }) {
 
 function fmtPct(v: number): string {
   return `${(v * 100).toFixed(1)}%`;
+}
+
+function fmtNullablePct(v: number | null | undefined): string {
+  return v == null ? "—" : fmtPct(Number(v));
 }

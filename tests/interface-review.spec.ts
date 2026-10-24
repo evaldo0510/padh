@@ -7,6 +7,7 @@ test('login permanece acessível na primeira visita sem apresentação bloqueant
   await expect(page.getByRole('heading', { name: 'Acesse os estudos PCH' })).toBeVisible();
   await expect(page.getByRole('textbox', { name: 'E-mail', exact: true })).toBeVisible();
   await expect(page.getByRole('button', { name: 'Pular', exact: true })).toHaveCount(0);
+  await expect(page.getByText('Sua jornada começa aqui', { exact: true })).toHaveCount(0, { timeout: 8000 });
   await page.getByRole('textbox', { name: 'E-mail', exact: true }).focus();
   await page.keyboard.press('Tab');
   await expect(page.getByLabel('Senha', { exact: true })).toBeFocused();

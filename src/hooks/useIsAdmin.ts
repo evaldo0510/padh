@@ -3,11 +3,8 @@ import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/hooks/useAuth";
 
 /**
- * Verifica se o usuário autenticado possui o papel de administrador.
- *
- * A checagem é feita lendo a tabela `user_roles` diretamente. RLS garante
- * que cada usuário só enxerga seus próprios papéis, então a query retorna
- * a linha se (e somente se) o usuário for admin.
+ * Confirma autorização administrativa no servidor.
+ * A regra de e-mail confirmado fica no RPC/RLS, não apenas na interface.
  */
 export function useIsAdmin() {
   const { user, loading: authLoading } = useAuth();
@@ -17,19 +14,14 @@ export function useIsAdmin() {
     enabled: !!user?.id,
     staleTime: 5 * 60 * 1000,
     queryFn: async () => {
-      const { data, error } = await supabase
-        .from("user_roles")
-        .select("role")
-        .eq("user_id", user!.id)
-        .eq("role", "admin")
-        .maybeSingle();
+      const { data, error } = await supabase.rpc("is_designated_admin");
       if (error) throw error;
-      return !!data;
+      return data === true;
     },
   });
 
   return {
-    isAdmin: !!data,
+    isAdmin: data === true,
     loading: authLoading || (!!user?.id && isLoading),
     error,
   };

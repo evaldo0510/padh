@@ -111,13 +111,13 @@ const JourneyHero: React.FC<JourneyHeroProps> = ({
                 >
                   <div className="absolute inset-0 bg-gradient-to-r from-primary via-amber-400 to-primary opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
                   <div className="relative flex items-center">
-                    {isNavigating ? (
-                      <Loader2 className="w-6 h-6 animate-spin mr-3" />
-                    ) : (
-                      <Navigation className="w-6 h-6 mr-3 group-hover:scale-125 transition-transform duration-500" /> 
-                    )}
-                    <span className="font-black uppercase tracking-wider">
-                      {nextSession.isRecommended ? `Iniciar: ${nextSession.titulo}` : `Continuar: ${nextSession.titulo}`}
+                  {isNavigating ? (
+                    <Loader2 className="w-6 h-6 animate-spin mr-3" />
+                  ) : (
+                    <Navigation className="w-6 h-6 mr-3 group-hover:scale-125 transition-transform duration-500" />
+                  )}
+                  <span className="font-black uppercase tracking-wider">
+                    {nextSession.isRecommended ? `Iniciar: ${nextSession.titulo}` : `Continuar: ${nextSession.titulo}`}
                     </span>
                   </div>
                 </PrefetchLink>
@@ -129,7 +129,7 @@ const JourneyHero: React.FC<JourneyHeroProps> = ({
                 className="btn-primary h-14 px-8 text-lg rounded-full"
               >
                 <PrefetchLink to="/jornada">
-                  <BookOpenText className="w-5 h-5 mr-2" /> 
+                  <BookOpenText className="w-5 h-5 mr-2" />
                   Ver Minha Jornada
                 </PrefetchLink>
               </Button>
@@ -141,7 +141,7 @@ const JourneyHero: React.FC<JourneyHeroProps> = ({
               asChild
             >
               <Link to="/fundamentacao">
-                <BookOpenText className="w-5 h-5 mr-2" /> 
+                <BookOpenText className="w-5 h-5 mr-2" />
                 Fundamentação Teórica
               </Link>
             </Button>
