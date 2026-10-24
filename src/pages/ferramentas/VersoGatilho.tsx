@@ -592,6 +592,42 @@ const VersoGatilho = () => {
           </div>{" "}
         </div>{" "}
       </section>{" "}
+      
+      <section className="py-16 border-t border-border/30">
+        <div className="container mx-auto px-6">
+          <div className="max-w-4xl mx-auto">
+            <div className="mb-8">
+              <p className="text-xs uppercase tracking-[0.2em] text-primary mb-3 font-medium">Prática ampliada</p>
+              <h2 className="text-2xl md:text-3xl font-heading font-bold text-foreground">Aprofundamento: perceber sem provocar</h2>
+              <p className="mt-4 text-muted-foreground leading-relaxed">Esta prática observa palavras, situações ou lembranças que mobilizam emoções. Não é necessário evocar cenas intensas, testar limites ou reviver experiências difíceis.</p>
+            </div>
+            <div className="space-y-5">
+              <article className="rounded-xl border border-border/50 bg-card/60 p-5 md:p-6">
+                <h3 className="font-heading text-lg font-semibold text-foreground mb-3">1. Comece pelo presente</h3>
+                <p className="text-sm md:text-base leading-relaxed text-muted-foreground whitespace-pre-line">Pergunte: “Há algo recente que mexeu com você e que se sente seguro(a) para observar?”. Se não houver, use uma situação leve ou encerre a prática.</p>
+              </article>
+              <article className="rounded-xl border border-border/50 bg-card/60 p-5 md:p-6">
+                <h3 className="font-heading text-lg font-semibold text-foreground mb-3">2. Separe os elementos</h3>
+                <p className="text-sm md:text-base leading-relaxed text-muted-foreground whitespace-pre-line">Registre, se desejar: situação observável; pensamento que apareceu; emoção reconhecida; reação que percebeu; necessidade atual. Diferencie o acontecimento da interpretação que veio depois.</p>
+              </article>
+              <article className="rounded-xl border border-border/50 bg-card/60 p-5 md:p-6">
+                <h3 className="font-heading text-lg font-semibold text-foreground mb-3">3. Escolha um verso-âncora</h3>
+                <p className="text-sm md:text-base leading-relaxed text-muted-foreground whitespace-pre-line">Crie uma frase curta e não autoritária, como: “Posso pausar antes de responder” ou “Uma emoção é um sinal, não uma ordem”. A frase deve soar verdadeira para a pessoa; se não soar, reescreva.</p>
+              </article>
+              <article className="rounded-xl border border-border/50 bg-card/60 p-5 md:p-6">
+                <h3 className="font-heading text-lg font-semibold text-foreground mb-3">4. Defina uma resposta segura</h3>
+                <p className="text-sm md:text-base leading-relaxed text-muted-foreground whitespace-pre-line">Pergunte: “O que ajudaria agora: afastar-se, pedir tempo, respirar normalmente, sentir os pés no chão ou falar com alguém?”. Não exija confronto com a situação nem exposição ao gatilho.</p>
+              </article>
+              <article className="rounded-xl border border-border/50 bg-card/60 p-5 md:p-6">
+                <h3 className="font-heading text-lg font-semibold text-foreground mb-3">Se a intensidade aumentar</h3>
+                <p className="text-sm md:text-base leading-relaxed text-muted-foreground whitespace-pre-line">Interrompa, olhe ao redor, nomeie objetos ou sons presentes e retome a atividade cotidiana. A pessoa pode pular qualquer pergunta e não precisa explicar por quê.</p>
+              </article>
+            </div>
+            <p className="mt-6 text-sm leading-relaxed text-muted-foreground border-l-2 border-primary/40 pl-4">A ferramenta não identifica automaticamente trauma nem determina a origem de uma reação. Se a prática causar sofrimento persistente, procure apoio profissional qualificado.</p>
+          </div>
+        </div>
+      </section>
+      
       <ScientificValidation tool="verso-gatilho" />{" "}
     </PageLayout>
   );
