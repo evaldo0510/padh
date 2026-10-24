@@ -2340,6 +2340,23 @@ const PoesiaHipnotica = () => {
         </div>
       </section>
       
+      <section className="py-16 border-t border-border/30">
+        <div className="container mx-auto px-6"><div className="max-w-4xl mx-auto">
+          <p className="text-xs uppercase tracking-[0.2em] text-primary mb-3 font-medium">Roteiro completo e transparente</p>
+          <h2 className="text-2xl md:text-3xl font-heading font-bold text-foreground">Leitura poética com escolha e autonomia</h2>
+          <p className="mt-4 text-muted-foreground leading-relaxed">Esta sequência usa ritmo, repetição e imagens como recursos literários de atenção e reflexão. Não é um protocolo de hipnose clínica e não garante transe, recuperação de memórias ou mudança psicológica. Explique o exercício antes de começar.</p>
+          <div className="mt-6 grid gap-4 md:grid-cols-2">
+            <article className="rounded-xl border border-border/50 bg-card/60 p-5"><h3 className="font-heading text-lg font-semibold text-foreground mb-2">1. Combine os limites</h3><p className="text-sm leading-relaxed text-muted-foreground">Pergunte se a pessoa deseja ouvir ou ler o poema. Combine um sinal para parar e deixe claro que pode abrir os olhos, mover-se, discordar ou encerrar sem explicar o motivo.</p></article>
+            <article className="rounded-xl border border-border/50 bg-card/60 p-5"><h3 className="font-heading text-lg font-semibold text-foreground mb-2">2. Comece no ambiente</h3><p className="text-sm leading-relaxed text-muted-foreground">Convide a notar um som, uma cor ou um objeto presente. Não exija olhos fechados nem concentração na respiração. O foco externo é uma alternativa igualmente válida.</p></article>
+            <article className="rounded-xl border border-border/50 bg-card/60 p-5"><h3 className="font-heading text-lg font-semibold text-foreground mb-2">3. Leia com ritmo natural</h3><p className="text-sm leading-relaxed text-muted-foreground">Use pausas confortáveis e voz natural, sem dramatizar para produzir uma reação. Deixe espaço para a pessoa imaginar, não imaginar ou atribuir outro sentido ao texto.</p></article>
+            <article className="rounded-xl border border-border/50 bg-card/60 p-5"><h3 className="font-heading text-lg font-semibold text-foreground mb-2">4. Faça perguntas abertas</h3><p className="text-sm leading-relaxed text-muted-foreground">Ao terminar, pergunte: “O que você notou, se algo?” ou “Houve uma imagem de que gostou ou que preferiu deixar de lado?”. Evite sugerir o que deveria ter sentido ou lembrado.</p></article>
+            <article className="rounded-xl border border-border/50 bg-card/60 p-5"><h3 className="font-heading text-lg font-semibold text-foreground mb-2">5. Retorne ao presente</h3><p className="text-sm leading-relaxed text-muted-foreground">Convide a observar a sala, movimentar mãos e pés ou conversar sobre algo concreto. Pergunte se prefere continuar, fazer uma pausa ou terminar.</p></article>
+            <article className="rounded-xl border border-border/50 bg-card/60 p-5"><h3 className="font-heading text-lg font-semibold text-foreground mb-2">6. Registre sem interpretar</h3><p className="text-sm leading-relaxed text-muted-foreground">Se a pessoa quiser, pode anotar uma palavra ou frase. Não trate imagens, emoções ou silêncio como prova de lembranças ocultas, diagnóstico ou concordância.</p></article>
+          </div>
+          <article className="mt-4 rounded-xl border border-primary/20 bg-primary/[0.03] p-5"><h3 className="font-heading text-lg font-semibold text-foreground mb-2">Exemplo de texto breve</h3><p className="text-sm leading-relaxed text-muted-foreground whitespace-pre-line">“Se desejar, escolha um ponto da sala para observar. Talvez uma cor chame sua atenção; talvez não. Você pode acompanhar estas palavras ou deixá-las passar. Uma imagem pode fazer sentido, mudar de sentido ou não significar nada especial. Ao terminar, volte ao ambiente no seu próprio ritmo e escolha o que prefere fazer em seguida.”</p></article>
+          <p className="mt-5 text-sm leading-relaxed text-muted-foreground border-l-2 border-primary/40 pl-4">Não utilize a atividade para pressionar decisões, sugerir falsas lembranças ou substituir avaliação e cuidado profissional. Se houver desconforto, interrompa a leitura e ofereça opções concretas de apoio.</p>
+        </div></div>
+      </section>
       <ScientificValidation tool="poesia-hipnotica" />{" "}
     </PageLayout>
   );
