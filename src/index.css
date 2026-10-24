@@ -135,7 +135,7 @@
   }
   
   .glass-card {
-    @apply bg-card/60 backdrop-blur-xl border border-white/10 rounded-[var(--radius)] transition-all duration-300;
+    @apply bg-card/60 backdrop-blur-xl border border-border rounded-[var(--radius)] transition-all duration-300;
   }
   
   /* Component Presets */
