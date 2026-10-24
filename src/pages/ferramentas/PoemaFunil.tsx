@@ -84,10 +84,9 @@ const PoemaFunil = () => {
                   {" "}
                   Ele prepara o campo psíquico para o trabalho terapêutico. É um{" "}
                   <strong className="text-foreground">
-                    pré-transe poético
+                    recurso de preparação poética
                   </strong>
-                  , onde o hemisfério direito do cérebro (intuitivo,
-                  associativo) se torna mais ativo.{" "}
+                  , que convida à associação livre entre imagens, sentimentos e significados pessoais, sem pressupor um mecanismo cerebral específico.{" "}
                 </p>{" "}
               </CardContent>{" "}
             </Card>{" "}
