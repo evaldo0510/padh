@@ -1,0 +1,95 @@
+{
+  "name": "padh-content-quality-pipeline",
+  "version": "1.0.0",
+  "language": "pt-BR",
+  "purpose": "Produzir rascunhos originais e auditáveis para revisão humana, com referências verificáveis e linguagem responsável.",
+  "publish_automatically": false,
+  "agents": [
+    {
+      "id": "bibliographic_researcher",
+      "role": "Pesquisador bibliográfico",
+      "task": "Encontrar fontes primárias ou sínteses de boa qualidade para as afirmações propostas.",
+      "required_output": ["claim", "source_title", "authors", "year", "publication", "doi_or_url", "source_type", "limitations", "verification_status"],
+      "hard_rules": [
+        "Não inventar referências, DOI, autores, títulos, páginas ou resultados.",
+        "Marcar como unverified qualquer metadado que não foi confirmado.",
+        "Diferenciar evidência publicada, fonte secundária, opinião e hipótese."
+      ]
+    },
+    {
+      "id": "pedagogical_writer",
+      "role": "Redator pedagógico",
+      "task": "Criar um rascunho didático original a partir de material aprovado e fontes recuperadas.",
+      "required_output": ["title", "learning_objectives", "draft", "original_contributions", "claims_requiring_citations", "limitations"],
+      "hard_rules": [
+        "Não atribuir conteúdo recém-gerado a autores reais sem confirmação.",
+        "Não apresentar proposta autoral como resultado científico estabelecido.",
+        "Não reproduzir longos trechos de obras protegidas."
+      ]
+    },
+    {
+      "id": "evidence_reviewer",
+      "role": "Revisor de evidências",
+      "task": "Conferir cada afirmação empírica relevante contra as fontes fornecidas.",
+      "required_output": ["claim_reviews", "unsupported_claims", "overstated_conclusions", "citation_gaps", "decision"],
+      "hard_rules": [
+        "A fonte precisa sustentar a afirmação específica, não apenas tratar de tema parecido.",
+        "Sinalizar associação versus causalidade e resultados preliminares ou mistos.",
+        "Não transformar evidência sobre técnica relacionada em validação da PCH como um todo."
+      ]
+    },
+    {
+      "id": "ethics_safety_reviewer",
+      "role": "Revisor de ética e segurança",
+      "task": "Identificar promessas de cura, diagnóstico, garantias, mecanismos não demonstrados, risco de dano e privacidade.",
+      "required_output": ["risk_flags", "recommended_changes", "professional_review_required", "decision"],
+      "hard_rules": [
+        "Não recomendar substituir avaliação ou cuidado profissional.",
+        "Não inserir dados pessoais ou sensíveis de pacientes em serviços externos.",
+        "Encaminhar conteúdo clínico para revisão humana qualificada."
+      ]
+    },
+    {
+      "id": "human_editor",
+      "role": "Aprovação humana",
+      "task": "Revisar o texto, fontes, limitações e direitos autorais antes de qualquer publicação.",
+      "required_output": ["reviewer_id", "decision", "notes", "approved_version"],
+      "hard_rules": [
+        "A publicação exige aprovação humana explícita.",
+        "Agentes não podem mudar permissões, usuários administradores ou políticas de segurança."
+      ]
+    }
+  ],
+  "workflow": [
+    "draft_request",
+    "retrieve_approved_knowledge",
+    "bibliographic_research",
+    "pedagogical_draft",
+    "claim_level_evidence_review",
+    "ethics_and_safety_review",
+    "human_approval",
+    "versioned_publication"
+  ],
+  "states": ["draft", "needs_sources", "in_review", "approved", "published", "needs_update", "rejected"],
+  "minimum_content_metadata": [
+    "content_id",
+    "title",
+    "author",
+    "created_at",
+    "version",
+    "content_type",
+    "learning_objectives",
+    "references",
+    "limitations",
+    "reviewer",
+    "editorial_status",
+    "review_due_at"
+  ],
+  "security": {
+    "api_keys_in_frontend": false,
+    "human_approval_required": true,
+    "patient_data_allowed": false,
+    "agent_can_publish_directly": false,
+    "agent_can_modify_access_control": false
+  }
+}
