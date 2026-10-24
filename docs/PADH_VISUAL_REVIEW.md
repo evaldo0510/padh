@@ -12,7 +12,7 @@ Inspeção estática das páginas e componentes, apoiada nos relatórios AUDIT/A
 - A pena/folha já existente em `Logo` foi preservada, sem criação de marca ou slogan. Removidos texto microscópico, filtros e ring animado; aumentado o eixo dourado. Cabeçalho, rodapé, menus, login, splash, variantes feather e ícones favicon/PWA compartilham esse desenho. Os ícones maskable mantêm o desenho na área segura. Variantes flow/glow continuam decorativas, com IDs SVG únicos.
 - Fontes já declaradas Playfair Display/Source Sans 3 passaram a ser carregadas; cores de controles, campos, badges e navegação usam tokens com suporte a tema claro/escuro.
 - Corrigida sobreposição entre cabeçalho e barra de retorno no celular, título redundante de navegação e ausência de main na home pública.
-- Corrigido estouro de largura na Formação e botões longos dos módulos.
+- Corrigido estouro de largura na Formação, botões longos dos módulos e lista teórica de Encenação Poética, sem mudar suas palavras.
 - A apresentação de boas-vindas não bloqueia mais login ou páginas públicas: permanece nas entradas autenticadas de início/jornada. OAuth retorna pela página pública de login, preservando o destino solicitado.
 - Corrigido seletor e espera de redirecionamento no setup de autenticação dos testes.
 
@@ -37,7 +37,7 @@ Inspeção estática das páginas e componentes, apoiada nos relatórios AUDIT/A
 - PWA instalado, atualização entre versões e cache em produção exigem publicação concluída.
 - Há links sociais `#` e contato sem confirmação no rodapé, imagem externa apresentada como autor na Formação e cartões administrativos sem ação. Não foram inventados destinos, fotos ou funcionalidades para preencher esses pontos.
 - Ainda existem estilos legados e classes sem token em páginas específicas. A revisão segura não foi uma migração visual ampla.
-- Publicação será solicitada após estas verificações; sucesso do pedido não prova implantação concluída. Resultado final deve ser confirmado separadamente.
+- Primeira publicação solicitada: endereço respondeu HTTP 200 e HTML incluiu as fontes desta revisão. Correção residual de Encenação Poética aplicada depois exige nova publicação; resultado final deve ser confirmado separadamente.
 
 ## Arquivos alterados
 
