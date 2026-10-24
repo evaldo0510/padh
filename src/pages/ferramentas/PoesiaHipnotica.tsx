@@ -2308,6 +2308,38 @@ const PoesiaHipnotica = () => {
           </div>{" "}
         </div>{" "}
       </section>{" "}
+      
+      <section className="py-16 border-t border-border/30">
+        <div className="container mx-auto px-6">
+          <div className="max-w-4xl mx-auto">
+            <div className="mb-8">
+              <p className="text-xs uppercase tracking-[0.2em] text-primary mb-3 font-medium">Prática ampliada</p>
+              <h2 className="text-2xl md:text-3xl font-heading font-bold text-foreground">Aprofundamento: leitura contemplativa com autonomia</h2>
+              <p className="mt-4 text-muted-foreground leading-relaxed">A poesia pode apoiar atenção e contemplação, mas seus efeitos variam. A leitura é um convite: a pessoa mantém controle, pode manter os olhos abertos, discordar do texto ou parar quando quiser.</p>
+            </div>
+            <div className="space-y-5">
+              <article className="rounded-xl border border-border/50 bg-card/60 p-5 md:p-6">
+                <h3 className="font-heading text-lg font-semibold text-foreground mb-3">Preparar o momento</h3>
+                <p className="text-sm md:text-base leading-relaxed text-muted-foreground whitespace-pre-line">Escolha um lugar confortável e um tempo breve. Não é necessário fechar os olhos nem alterar a respiração. Se focar no corpo causar desconforto, mantenha a atenção nos objetos e sons do ambiente.</p>
+              </article>
+              <article className="rounded-xl border border-border/50 bg-card/60 p-5 md:p-6">
+                <h3 className="font-heading text-lg font-semibold text-foreground mb-3">Texto original para leitura lenta</h3>
+                <p className="text-sm md:text-base leading-relaxed text-muted-foreground whitespace-pre-line">Talvez exista, neste instante, um espaço entre o que aconteceu e o próximo gesto.\nNesse espaço, você não precisa resolver tudo.\nPode apenas notar uma palavra que lhe faça sentido.\nE deixar passar aquela que não combina com você.\n\nComo uma janela que pode ser aberta ou permanecer fechada,\nsua atenção continua sendo sua.\nVocê escolhe o que acolher, o que questionar\ne o que deixar para outro dia.\n\nQuando estiver pronto(a), volte ao que está ao redor.\nLeve apenas o que lhe for útil —\ne permita que o restante siga seu caminho.</p>
+              </article>
+              <article className="rounded-xl border border-border/50 bg-card/60 p-5 md:p-6">
+                <h3 className="font-heading text-lg font-semibold text-foreground mb-3">Depois da leitura</h3>
+                <p className="text-sm md:text-base leading-relaxed text-muted-foreground whitespace-pre-line">Pergunte: “Que palavra ficou?”; “Algo não combinou com você?”; “O que percebe no ambiente agora?”; “Há um gesto simples que gostaria de escolher?”. Não atribua respostas nem prometa mudança automática.</p>
+              </article>
+              <article className="rounded-xl border border-border/50 bg-card/60 p-5 md:p-6">
+                <h3 className="font-heading text-lg font-semibold text-foreground mb-3">Uso responsável</h3>
+                <p className="text-sm md:text-base leading-relaxed text-muted-foreground whitespace-pre-line">Evite comandos que sugiram perda de controle, recordações ocultas ou resultados garantidos. Não use a leitura para substituir cuidado clínico, induzir decisões ou afirmar que a pessoa entrou em um estado específico.</p>
+              </article>
+            </div>
+            <p className="mt-6 text-sm leading-relaxed text-muted-foreground border-l-2 border-primary/40 pl-4">A pessoa conduz a própria experiência. A qualquer momento, pode parar, conversar, mudar de atividade ou não responder.</p>
+          </div>
+        </div>
+      </section>
+      
       <ScientificValidation tool="poesia-hipnotica" />{" "}
     </PageLayout>
   );
