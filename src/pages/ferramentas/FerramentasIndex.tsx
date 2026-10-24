@@ -24,7 +24,7 @@ const FerramentasIndex = () => {
       titulo: "Poema-Funil",
       subtitulo: "A Espiral da Palavra que Desce",
       descricao:
-        "Induzir uma jornada interna progressiva, do externo ao mais profundo. Pré-transe poético que ativa o hemisfério direito do cérebro.",
+        "Conduzir uma exploração gradual, do contexto externo às percepções e aos significados pessoais, respeitando o ritmo de cada pessoa.",
       verso:
         '"Começo com o que se vê. Sigo com o que se sente. Termino com o que não se diz."',
       link: "/ferramentas/poema-funil",
@@ -35,7 +35,7 @@ const FerramentasIndex = () => {
       titulo: "Verso-Gatilho",
       subtitulo: "A Palavra-Chave que Liberta",
       descricao:
-        "Criar uma âncora emocional rápida — um verso memorável que funciona como botão de emergência emocional.",
+        "Criar um verso memorável que a pessoa possa usar como lembrete pessoal de pausa, escolha e autorregulação — sem promessa de efeito imediato.",
       verso: '"Eu não sou o que me prende, sou o que se solta depois."',
       link: "/ferramentas/verso-gatilho",
     },
@@ -45,7 +45,7 @@ const FerramentasIndex = () => {
       titulo: "Poemadiagnóstico",
       subtitulo: "O Espelho Emocional",
       descricao:
-        "Identificar a paisagem emocional do cliente por meio da escolha espontânea entre poemas — o inconsciente revela sem constrangimento.",
+        "Explorar quais temas e imagens despertam identificação por meio da escolha livre entre poemas. A escolha oferece pistas para conversar, não um diagnóstico nem uma leitura comprovada do inconsciente.",
       verso: '"Qual desses poemas te escolhe hoje?"',
       link: "/ferramentas/poemadiagnostico",
     },
@@ -76,7 +76,7 @@ const FerramentasIndex = () => {
       titulo: "Reescrita Poética de Narrativas",
       subtitulo: "O Alquimista do Passado",
       descricao:
-        "Modificar narrativas traumáticas traduzindo-as em linguagem simbólica e ressignificadora. A dor não é negada — é alquimizada.",
+        "Explorar outras formas de narrar uma experiência difícil por meio de imagens e linguagem simbólica, sem apagar a dor, impor uma interpretação ou exigir que a pessoa reviva acontecimentos.",
       verso: '"Fiquei com os espaços vazios que ele não soube preencher."',
       link: "/ferramentas/reescrita-poetica",
     },
@@ -86,7 +86,7 @@ const FerramentasIndex = () => {
       titulo: "Ritual do Silêncio Poético",
       subtitulo: "A Vela que Fecha a Caverna",
       descricao:
-        "Fechar sessões com sacralidade — criar uma impressão emocional duradoura que ritualiza o processo terapêutico.",
+        "Encerrar uma atividade com uma pausa intencional, uma palavra escolhida e um próximo passo possível, sem pressupor um efeito emocional específico.",
       verso:
         '"Se uma só palavra tua pudesse morar em mim, qual você deixaria?"',
       link: "/ferramentas/ritual-silencio",
@@ -97,7 +97,7 @@ const FerramentasIndex = () => {
       titulo: "Poesia Hipnótica",
       subtitulo: "O Poder das Palavras",
       descricao:
-        "A PCH combina linguagem sugestiva, metáforas e afirmações para reformular padrões mentais limitantes e estimular mudanças emocionais positivas.",
+        "A PCH utiliza linguagem poética, metáforas e sugestões contemplativas como convites à reflexão e à exploração de possibilidades. A experiência varia de pessoa para pessoa e não substitui avaliação ou cuidado profissional quando necessário.",
       verso:
         '"Combinando a palavra com intenção e ritmo, criamos um espaço para o florescimento de novas possibilidades."',
       link: "/ferramentas/poesia-hipnotica",
@@ -129,9 +129,7 @@ const FerramentasIndex = () => {
             </h1>{" "}
             <p className="text-lg text-muted-foreground leading-relaxed max-w-2xl mx-auto mb-6">
               {" "}
-              Cada ferramenta é um nome simbólico, um objetivo terapêutico, um
-              modo de uso prático — instrumentos vivos como arquétipos em ação
-              dentro da alma do leitor-terapeuta.{" "}
+              Cada ferramenta reúne uma proposta simbólica e um modo de uso prático para apoiar a reflexão, a escrita e a exploração de significados pessoais. A experiência é individual: use apenas o que fizer sentido e interrompa qualquer exercício que cause desconforto.{" "}
             </p>{" "}
             <div className="poem-block max-w-md mx-auto">
               {" "}
