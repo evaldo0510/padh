@@ -21,6 +21,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { supabaseConfig } from "@/integrations/supabase/config";
 import { toast } from "sonner";
 import { useNavigate } from "react-router-dom";
+import Logo from "@/components/ui/Logo";
 import { useNavBadges } from "@/hooks/useNavBadges";
 
 
@@ -48,21 +49,21 @@ const NavigationSheet: React.FC<NavigationSheetProps> = ({
   const renderBadge = (sectionId: string) => {
     if (sectionId === "jornadas" && badges.jornadasPercent > 0) {
       return (
-        <span className="text-[11px] font-medium text-white/50 tabular-nums">
+        <span className="text-[11px] font-medium text-muted-foreground tabular-nums">
           {badges.jornadasPercent}%
         </span>
       );
     }
     if (sectionId === "formacao") {
       return (
-        <span className="text-[11px] font-medium text-white/50 tabular-nums">
+        <span className="text-[11px] font-medium text-muted-foreground tabular-nums">
           {badges.formacaoCompleted}/{badges.formacaoTotal}
         </span>
       );
     }
     if (sectionId === "evolucao" && badges.streak > 0) {
       return (
-        <span className="inline-flex items-center gap-1 text-[11px] font-medium text-accent-warm tabular-nums">
+        <span className="inline-flex items-center gap-1 text-[11px] font-medium text-warm tabular-nums">
           <Flame className="w-3 h-3" />
           {badges.streak}
         </span>
@@ -89,10 +90,10 @@ const NavigationSheet: React.FC<NavigationSheetProps> = ({
           aria-label="Abrir menu de navegação"
           className={
             triggerClassName ??
-            "h-9 w-9 p-0 rounded-full hover:bg-white/10 bg-white/5 border border-white/10"
+            "h-9 w-9 p-0 rounded-full hover:bg-accent bg-muted border border-border"
           }
         >
-          <Menu className="w-4 h-4 text-white/80" />
+          <Menu className="w-4 h-4 text-foreground" aria-hidden="true" />
           {triggerLabel && (
             <span className="sr-only">{triggerLabel}</span>
           )}
@@ -100,10 +101,10 @@ const NavigationSheet: React.FC<NavigationSheetProps> = ({
       </SheetTrigger>
       <SheetContent
         side="right"
-        className="w-[320px] sm:w-[380px] overflow-y-auto bg-background/95 backdrop-blur-2xl border-l border-white/10"
+        className="w-[320px] sm:w-[380px] overflow-y-auto bg-background/95 backdrop-blur-2xl border-l border-border"
       >
         <SheetHeader>
-          <SheetTitle className="text-left">Navegação</SheetTitle>
+          <SheetTitle className="flex items-center gap-2 text-left"><Logo size="sm" />Navegação</SheetTitle>
         </SheetHeader>
 
         <nav className="mt-6 flex flex-col gap-0.5">
@@ -113,24 +114,24 @@ const NavigationSheet: React.FC<NavigationSheetProps> = ({
             const badge = renderBadge(section.id);
             return (
               <Collapsible key={section.id} defaultOpen={active}>
-                <CollapsibleTrigger className="group flex w-full items-center justify-between rounded-xl px-3 py-2.5 text-left hover:bg-white/5 transition-colors">
+                <CollapsibleTrigger className="group flex w-full items-center justify-between rounded-xl px-3 py-2.5 text-left hover:bg-accent transition-colors">
                   <span className="flex min-w-0 items-center gap-3">
                     <Icon
-                      className={`w-4 h-4 shrink-0 ${active ? "text-primary" : "text-white/60"}`}
+                      className={`w-4 h-4 shrink-0 ${active ? "text-primary" : "text-muted-foreground"}`}
                     />
                     <span
-                      className={`truncate text-sm font-semibold tracking-tight ${active ? "text-primary" : "text-white/90"}`}
+                      className={`truncate text-sm font-semibold tracking-tight ${active ? "text-primary" : "text-foreground"}`}
                     >
                       {section.label}
                     </span>
                   </span>
                   <span className="flex items-center gap-2.5">
                     {badge}
-                    <ChevronDown className="w-4 h-4 text-white/40 transition-transform group-data-[state=open]:rotate-180" />
+                    <ChevronDown className="w-4 h-4 text-muted-foreground transition-transform group-data-[state=open]:rotate-180" />
                   </span>
                 </CollapsibleTrigger>
                 <CollapsibleContent>
-                  <ul className="ml-7 mt-0.5 mb-1.5 flex flex-col gap-0.5 border-l border-white/10 pl-3">
+                  <ul className="ml-7 mt-0.5 mb-1.5 flex flex-col gap-0.5 border-l border-border pl-3">
 
                     {section.items.map((item) => {
                       const itemActive =
@@ -144,7 +145,7 @@ const NavigationSheet: React.FC<NavigationSheetProps> = ({
                             className={`block rounded-lg px-3 py-1.5 text-sm transition-colors ${
                               itemActive
                                 ? "text-primary bg-primary/10 font-medium"
-                                : "text-white/70 hover:text-white hover:bg-white/5"
+                                : "text-muted-foreground hover:text-foreground hover:bg-accent"
                             }`}
                           >
                             {item.label}
@@ -160,12 +161,12 @@ const NavigationSheet: React.FC<NavigationSheetProps> = ({
         </nav>
 
         {isLoggedIn && (
-          <div className="mt-6 pt-4 border-t border-white/10">
+          <div className="mt-6 pt-4 border-t border-border">
             <Button
               variant="ghost"
               size="sm"
               onClick={handleLogout}
-              className="w-full justify-start gap-2 text-white/70 hover:text-white"
+              className="w-full justify-start gap-2 text-muted-foreground hover:text-foreground"
             >
               <LogOut className="w-4 h-4" />
               Sair

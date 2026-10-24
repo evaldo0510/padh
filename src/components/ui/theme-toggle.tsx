@@ -10,7 +10,7 @@ export function ThemeToggle() {
   }, []);
   if (!mounted) {
     return (
-      <Button variant="ghost" size="sm" className="w-9 h-9 px-0">
+      <Button variant="ghost" size="icon" aria-label="Alternar tema" disabled>
         {" "}
         <Sun className="spiritual-icon" />{" "}
       </Button>
