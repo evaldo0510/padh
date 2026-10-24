@@ -9,7 +9,7 @@ import {  BookOpenCheck, DoorOpen, KeyRound } from 'lucide-react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { toast } from 'sonner';
 import { supabase } from '@/integrations/supabase/client';
-import { lovable } from '@/integrations/lovable/index';
+
 
 const getSafeReturnPath = (value: unknown): string | null => {
   if (
@@ -104,12 +104,13 @@ const LoginPage = () => {
     setFormError('');
     setIsGoogleLoading(true);
     try {
-      const result = await lovable.auth.signInWithOAuth('google', {
-        redirect_uri: window.location.origin + '/login?next=' + encodeURIComponent(from),
+      const { error } = await supabase.auth.signInWithOAuth({
+        provider: 'google',
+        options: {
+          redirectTo: window.location.origin + '/login?next=' + encodeURIComponent(from),
+        },
       });
-      if (result.error) throw result.error;
-      if (result.redirected) return;
-      navigate(from, { replace: true });
+      if (error) throw error;
     } catch (error: unknown) {
       const message = error instanceof Error ? error.message : 'Não foi possível entrar com Google. Tente novamente.';
       setFormError(message);
