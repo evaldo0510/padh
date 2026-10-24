@@ -23,7 +23,7 @@ const PoemaFunil = () => {
           </>
         }
         subtitle="A Espiral da Palavra que Desce"
-        description="O convite poético para o mergulho interior — induzir o cliente a abandonar a superfície e descer pelas camadas internas do ser."
+        description="Um roteiro poético opcional para observar sensações e pensamentos gradualmente, sem pressionar a pessoa a revelar conteúdos íntimos ou encontrar significados ocultos."
         image={{
           src: toolImage,
           alt: "Poema-Funil — espiral descendente de palavras",
