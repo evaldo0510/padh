@@ -494,6 +494,42 @@ const CadernoVozInterna = () => {
           </div>{" "}
         </div>{" "}
       </section>{" "}
+      
+      <section className="py-16 border-t border-border/30">
+        <div className="container mx-auto px-6">
+          <div className="max-w-4xl mx-auto">
+            <div className="mb-8">
+              <p className="text-xs uppercase tracking-[0.2em] text-primary mb-3 font-medium">Prática ampliada</p>
+              <h2 className="text-2xl md:text-3xl font-heading font-bold text-foreground">Aprofundamento: registrar, escutar e responder</h2>
+              <p className="mt-4 text-muted-foreground leading-relaxed">O caderno é um espaço de observação, não uma prova de positividade. Pensamentos podem ser intensos sem serem fatos; a pessoa pode registrar dúvida, ambivalência ou ausência de palavras.</p>
+            </div>
+            <div className="space-y-5">
+              <article className="rounded-xl border border-border/50 bg-card/60 p-5 md:p-6">
+                <h3 className="font-heading text-lg font-semibold text-foreground mb-3">Modelo de registro</h3>
+                <p className="text-sm md:text-base leading-relaxed text-muted-foreground whitespace-pre-line">Situação (o que aconteceu, de forma observável); voz ou pensamento que apareceu; emoção que reconheço; necessidade ou valor importante; resposta mais realista e respeitosa; próximo passo escolhido.</p>
+              </article>
+              <article className="rounded-xl border border-border/50 bg-card/60 p-5 md:p-6">
+                <h3 className="font-heading text-lg font-semibold text-foreground mb-3">Perguntas para aprofundar</h3>
+                <p className="text-sm md:text-base leading-relaxed text-muted-foreground whitespace-pre-line">“O que essa voz diz exatamente?”; “Que evidências tenho e o que estou supondo?”; “Eu falaria assim com alguém de quem gosto?”; “Que resposta reconhece a dificuldade sem me atacar?”; “O que está sob meu controle agora?”.</p>
+              </article>
+              <article className="rounded-xl border border-border/50 bg-card/60 p-5 md:p-6">
+                <h3 className="font-heading text-lg font-semibold text-foreground mb-3">Exemplo</h3>
+                <p className="text-sm md:text-base leading-relaxed text-muted-foreground whitespace-pre-line">Voz automática: “Eu estrago tudo.” Resposta cuidadosa: “Estou frustrado com este resultado; isso não resume quem sou. Posso identificar uma coisa para ajustar.” A resposta não precisa soar positiva, apenas mais justa e concreta.</p>
+              </article>
+              <article className="rounded-xl border border-border/50 bg-card/60 p-5 md:p-6">
+                <h3 className="font-heading text-lg font-semibold text-foreground mb-3">Revisão sem cobrança</h3>
+                <p className="text-sm md:text-base leading-relaxed text-muted-foreground whitespace-pre-line">Ao reler, procure padrões e necessidades, não defeitos. É permitido não reler, apagar um rascunho ou escrever “não sei”. Não transforme uma entrada isolada em conclusão sobre a personalidade.</p>
+              </article>
+              <article className="rounded-xl border border-border/50 bg-card/60 p-5 md:p-6">
+                <h3 className="font-heading text-lg font-semibold text-foreground mb-3">Privacidade e continuidade</h3>
+                <p className="text-sm md:text-base leading-relaxed text-muted-foreground whitespace-pre-line">Registre apenas o que deseja guardar. A disponibilidade de histórico e a privacidade dependem de como o aplicativo armazena os dados; não prometa confidencialidade absoluta se isso não estiver tecnicamente garantido.</p>
+              </article>
+            </div>
+            <p className="mt-6 text-sm leading-relaxed text-muted-foreground border-l-2 border-primary/40 pl-4">Se a escrita aumentar o sofrimento, pause e escolha uma atividade de aterramento ou apoio humano. O caderno não substitui atendimento profissional quando necessário.</p>
+          </div>
+        </div>
+      </section>
+      
       <ScientificValidation tool="caderno-voz-interna" />{" "}
     </PageLayout>
   );
