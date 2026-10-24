@@ -43,7 +43,7 @@ const VersoGatilho = () => {
           </>
         }
         subtitle="A Palavra-Chave que Liberta"
-        description="Uma âncora emocional rápida — um verso curto e memorável que funciona como um botão de emergência emocional, um microtransplante de consciência."
+        description="Um verso curto, pessoal e memorável para ajudar a pausar, nomear o que se sente e recordar uma resposta escolhida com consciência. Não substitui cuidado profissional nem garante alívio imediato."
         image={{
           src: toolImage,
           alt: "Verso-Gatilho — âncora emocional poética",
@@ -85,11 +85,13 @@ const VersoGatilho = () => {
                   {" "}
                   Criar uma{" "}
                   <strong className="text-foreground">
-                    âncora emocional positiva e rápida
+                    frase poética de apoio e orientação
                   </strong>
-                  . Um verso curto e memorável que funcione como um botão de
-                  emergência emocional. É como uma vacina verbal contra o
-                  pânico, a paralisia ou a autoacusação.{" "}
+                  . Um verso curto, memorável e escolhido pela própria pessoa
+                  pode ajudar a interromper o automatismo por alguns instantes,
+                  reconhecer a emoção e lembrar uma resposta possível. Seu
+                  efeito varia de pessoa para pessoa e não deve ser apresentado
+                  como solução imediata para pânico ou sofrimento intenso.{" "}
                 </p>{" "}
                 <p>
                   {" "}
