@@ -24,7 +24,7 @@ const RitualSilencio = () => {
           </>
         }
         subtitle="A Vela que Fecha a Caverna"
-        description="Onde a poesia vira altar e o silêncio vira resposta — encerrar sessões com sacralidade, criando uma impressão emocional duradoura."
+        description="Um convite opcional para encerrar uma prática com pausa, leitura ou silêncio, respeitando as crenças, os limites e a escolha de cada pessoa."
         image={{
           src: toolImage,
           alt: "Ritual do Silêncio — vela na caverna",
