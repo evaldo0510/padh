@@ -478,6 +478,40 @@ const Poemadiagnostico = () => {
         </div>
       </section>
       
+
+      <section className="py-16 border-t border-border/30">
+        <div className="container mx-auto px-6">
+          <div className="max-w-4xl mx-auto">
+            <p className="text-xs uppercase tracking-[0.2em] text-primary mb-3 font-medium">Roteiro para facilitadores</p>
+            <h2 className="text-2xl md:text-3xl font-heading font-bold text-foreground">Como conduzir uma leitura sem transformar poesia em teste</h2>
+            <p className="mt-4 mb-8 text-muted-foreground leading-relaxed">O poema pode abrir uma conversa, mas não comprova personalidade, trauma, intenção ou diagnóstico. A interpretação pertence à pessoa que lê e pode permanecer em aberto.</p>
+            <div className="space-y-5">
+              <article className="rounded-xl border border-border/50 bg-card/60 p-5 md:p-6">
+                <h3 className="font-heading text-lg font-semibold text-foreground mb-2">1. Apresente o enquadramento</h3>
+                <p className="text-sm leading-relaxed text-muted-foreground">Diga: “Vou oferecer algumas imagens poéticas. Não existe resposta certa, e elas não são um teste. Você pode escolher uma, trocar de ideia ou não participar.”</p>
+              </article>
+              <article className="rounded-xl border border-border/50 bg-card/60 p-5 md:p-6">
+                <h3 className="font-heading text-lg font-semibold text-foreground mb-2">2. Observe a escolha sem pontuar</h3>
+                <p className="text-sm leading-relaxed text-muted-foreground">Pergunte qual palavra, ritmo ou imagem chamou atenção. Não atribua significado fixo a uma escolha e não compare respostas entre pessoas como se fossem resultados padronizados.</p>
+              </article>
+              <article className="rounded-xl border border-border/50 bg-card/60 p-5 md:p-6">
+                <h3 className="font-heading text-lg font-semibold text-foreground mb-2">3. Explore com permissão</h3>
+                <p className="text-sm leading-relaxed text-muted-foreground">Antes de aprofundar, pergunte: “Você gostaria de falar sobre isso ou prefere ficar na imagem?”. Use perguntas abertas; evite sugerir que a pessoa esteja escondendo algo ou que a poesia revele uma verdade que ela desconhece.</p>
+              </article>
+              <article className="rounded-xl border border-border/50 bg-card/60 p-5 md:p-6">
+                <h3 className="font-heading text-lg font-semibold text-foreground mb-2">4. Encerre com escolha e contexto</h3>
+                <p className="text-sm leading-relaxed text-muted-foreground">Convide a pessoa a completar: “O que levo desta leitura é…” ou “Prefiro deixar esta imagem em aberto”. Se surgir uma necessidade concreta, conversem sobre opções realistas e apoio adequado, sem transformar a resposta em diagnóstico.</p>
+              </article>
+              <article className="rounded-xl border border-border/50 bg-card/60 p-5 md:p-6">
+                <h3 className="font-heading text-lg font-semibold text-foreground mb-2">Exemplo de pergunta não indutiva</h3>
+                <p className="text-sm leading-relaxed text-muted-foreground">Diante do verso “A janela guarda um pedaço do céu”, pergunte “Que associações aparecem para você, se alguma?”. Evite afirmar “Você escolheu isso porque se sente preso”. A primeira pergunta abre possibilidades; a segunda impõe uma explicação.</p>
+              </article>
+            </div>
+            <p className="mt-6 text-sm leading-relaxed text-muted-foreground border-l-2 border-primary/40 pl-4">Registre apenas o necessário, com consentimento e respeito à privacidade. Em contexto profissional, siga os deveres éticos e os limites de atuação aplicáveis; a ferramenta não substitui instrumentos validados nem avaliação clínica.</p>
+          </div>
+        </div>
+      </section>
+
       <ScientificValidation tool="poemadiagnostico" />{" "}
     </PageLayout>
   );
