@@ -447,6 +447,38 @@ const Poemadiagnostico = () => {
           </div>{" "}
         </div>{" "}
       </section>{" "}
+      
+      <section className="py-16 border-t border-border/30">
+        <div className="container mx-auto px-6">
+          <div className="max-w-4xl mx-auto">
+            <div className="mb-8">
+              <p className="text-xs uppercase tracking-[0.2em] text-primary mb-3 font-medium">Prática ampliada</p>
+              <h2 className="text-2xl md:text-3xl font-heading font-bold text-foreground">Aprofundamento: escuta sem rótulos</h2>
+              <p className="mt-4 text-muted-foreground leading-relaxed">Use os poemas como convites à auto-observação, nunca como teste que revela uma verdade escondida. A escolha pertence à pessoa e pode mudar de um dia para outro.</p>
+            </div>
+            <div className="space-y-5">
+              <article className="rounded-xl border border-border/50 bg-card/60 p-5 md:p-6">
+                <h3 className="font-heading text-lg font-semibold text-foreground mb-3">1. Antes da escolha</h3>
+                <p className="text-sm md:text-base leading-relaxed text-muted-foreground whitespace-pre-line">Convide a pessoa a ler os poemas sem procurar a resposta certa. Pergunte: “Qual imagem ficou com você?”; “O que chamou sua atenção: uma palavra, uma cena ou o ritmo?”; “Algum poema não combina com você hoje?”.</p>
+              </article>
+              <article className="rounded-xl border border-border/50 bg-card/60 p-5 md:p-6">
+                <h3 className="font-heading text-lg font-semibold text-foreground mb-3">2. Da imagem à experiência</h3>
+                <p className="text-sm md:text-base leading-relaxed text-muted-foreground whitespace-pre-line">Explore uma situação concreta e recente: “Em que momento essa imagem pareceu familiar?”; “Que emoção você reconhece — se alguma?”; “O que você precisa que seja ouvido agora?”. A pessoa pode responder “não sei”, escolher outro poema ou não compartilhar.</p>
+              </article>
+              <article className="rounded-xl border border-border/50 bg-card/60 p-5 md:p-6">
+                <h3 className="font-heading text-lg font-semibold text-foreground mb-3">3. Transformar em cuidado possível</h3>
+                <p className="text-sm md:text-base leading-relaxed text-muted-foreground whitespace-pre-line">Convide a completar: “A imagem que levo é…”; “Ela me faz pensar em…”; “Hoje, um passo pequeno e possível seria…”. O passo deve ser escolhido pela própria pessoa e pode ser apenas descansar, observar ou conversar com alguém de confiança.</p>
+              </article>
+              <article className="rounded-xl border border-border/50 bg-card/60 p-5 md:p-6">
+                <h3 className="font-heading text-lg font-semibold text-foreground mb-3">Exemplo de leitura aberta</h3>
+                <p className="text-sm md:text-base leading-relaxed text-muted-foreground whitespace-pre-line">Poema: “Tenho um relógio que não marca horas — só silêncios acumulados.” Pergunta: “O que essa imagem significa para você?”. Uma pessoa pode pensar em espera; outra, em tranquilidade; outra pode não se identificar. Não atribua significado sem perguntar.</p>
+              </article>
+            </div>
+            <p className="mt-6 text-sm leading-relaxed text-muted-foreground border-l-2 border-primary/40 pl-4">Importante: esta ferramenta apoia reflexão e expressão pessoal; não produz diagnóstico clínico, não comprova causas inconscientes e não substitui avaliação profissional.</p>
+          </div>
+        </div>
+      </section>
+      
       <ScientificValidation tool="poemadiagnostico" />{" "}
     </PageLayout>
   );
