@@ -11,7 +11,7 @@ const todosPoemas = [
     verso:
       "Guardo embaixo da língua\no grito que nunca saiu.\nTenho medo do eco —\ndo que ele pode acordar.",
     diagnostico:
-      "Você carrega emoções silenciadas. Há algo que precisa ser dito, mas o medo do impacto mantém tudo preso. Seu inconsciente pede permissão para falar.",
+      "Esse poema pode lembrar momentos em que algo ficou por dizer. Se fizer sentido para você, pergunte: o que eu gostaria de expressar e qual seria uma forma segura de fazê-lo? Se não combinar com sua experiência, deixe essa leitura de lado.",
     cor: "from-red-500/20 to-orange-500/10",
     borda: "border-red-400/30",
   },
@@ -21,7 +21,7 @@ const todosPoemas = [
     verso:
       "Tenho um relógio que não marca horas —\nsó silêncios acumulados.\nEspero algo que já veio,\nmas não reconheci.",
     diagnostico:
-      "Você está em estado de suspensão emocional — entre o passado e o futuro, mas sem presença. Algo já chegou à sua vida, mas a ansiedade da espera impede de enxergar.",
+      "A imagem da espera pode convidar você a observar onde sua atenção está hoje: no que já aconteceu, no que ainda não chegou ou no que está disponível agora. Não é uma conclusão sobre seu estado emocional; é uma pergunta para explorar.",
     cor: "from-blue-500/20 to-indigo-500/10",
     borda: "border-blue-400/30",
   },
@@ -31,7 +31,7 @@ const todosPoemas = [
     verso:
       "Troquei a gaiola aberta\npelo vento que ainda me assusta.\nNão sei se estou voando\nou apenas caindo bonito.",
     diagnostico:
-      "Você está em transição. Já fez a escolha de mudar, mas ainda não confia no processo. O novo assusta porque não tem paredes — e a liberdade, às vezes, parece queda.",
+      "Se a imagem da mudança tocar em algo seu, reflita: o que está mudando, o que ainda parece incerto e de que apoio você precisa? Você não precisa estar pronto para tudo nem avançar antes de se sentir seguro.",
     cor: "from-emerald-500/20 to-teal-500/10",
     borda: "border-emerald-400/30",
   },
@@ -41,7 +41,7 @@ const todosPoemas = [
     verso:
       "Tenho gente ao redor\ne um deserto por dentro.\nMinha solidão não é falta de alguém —\né sobra de mim sem destino.",
     diagnostico:
-      "Você sente um vazio que não se preenche com presença alheia. Sua solidão é existencial — um chamado para se encontrar consigo mesmo antes de se entregar ao outro.",
+      "O poema distingue estar acompanhado de sentir conexão. Se isso conversar com você, pense em que tipo de vínculo, descanso ou conversa faria diferença. A escolha do poema, sozinha, não define a causa nem a intensidade de uma possível solidão.",
     cor: "from-slate-500/20 to-zinc-500/10",
     borda: "border-slate-400/30",
   },
@@ -51,7 +51,7 @@ const todosPoemas = [
     verso:
       "Hoje acordei e o sol\nnão pediu licença para entrar.\nEntendi que a vida\ntambém chega sem convite — e fica.",
     diagnostico:
-      "Você está num momento de abertura e reconhecimento. Há uma parte sua que já começou a acolher o que é, sem exigir que fosse diferente. A gratidão é seu portal de presença.",
+      "A cena pode despertar atenção para algo simples que você valoriza. Se quiser, nomeie uma coisa concreta que trouxe conforto ou sentido hoje. Você não precisa sentir gratidão quando estiver sofrendo nem usar gratidão para negar dificuldades reais.",
     cor: "from-amber-500/20 to-yellow-500/10",
     borda: "border-amber-400/30",
   },
@@ -61,7 +61,7 @@ const todosPoemas = [
     verso:
       "Morri tantas vezes por dentro\nque já perdi a conta das cinzas.\nMas hoje acordei com sementes\nonde antes só havia ferida.",
     diagnostico:
-      "Você está emergindo de um ciclo de dor. Algo novo começa a brotar — não apesar da ferida, mas a partir dela. Seu inconsciente reconhece que transformação nasce do que dói.",
+      "A imagem das sementes pode representar a possibilidade de mudança, mas não exige encontrar um lado positivo na dor. Se fizer sentido, pergunte o que você precisa para cuidar de si agora; a recuperação não tem prazo único.",
     cor: "from-violet-500/20 to-purple-500/10",
     borda: "border-violet-400/30",
   },
@@ -71,7 +71,7 @@ const todosPoemas = [
     verso:
       "Carrego um nome que não posso chamar\nsem que o peito se parta ao meio.\nA saudade não diminui —\napenas aprende a respirar baixo.",
     diagnostico:
-      "Você está processando uma perda que ainda pulsa. O luto não acabou — ele apenas mudou de forma. Seu inconsciente pede espaço para honrar o que foi, sem pressa de seguir em frente.",
+      "O poema oferece uma imagem para falar de saudade e perda. Se ela se aproximar da sua experiência, você pode lembrar o que gostaria de preservar dessa relação e de que apoio precisa hoje. Não há uma forma única nem um calendário obrigatório para viver o luto.",
     cor: "from-gray-500/20 to-stone-500/10",
     borda: "border-gray-400/30",
   },
@@ -81,7 +81,7 @@ const todosPoemas = [
     verso:
       "Não é que o medo tenha ido embora —\né que aprendi a tremer de pé.\nCoragem não é ausência de abismo.\nÉ saltar sabendo que o chão é incerto.",
     diagnostico:
-      "Você está num momento de enfrentamento. Algo dentro de você já decidiu avançar, mesmo sem garantias. Sua coragem não nega o medo — ela o atravessa.",
+      "A imagem pode ajudar a pensar em uma atitude corajosa e realista. Pergunte: qual seria um passo pequeno, possível e seguro? Coragem não significa ignorar riscos nem enfrentar tudo sem apoio.",
     cor: "from-orange-500/20 to-red-500/10",
     borda: "border-orange-400/30",
   },
@@ -91,7 +91,7 @@ const todosPoemas = [
     verso:
       "Devolvi a pedra que guardava\npara atirar em quem me feriu.\nMinhas mãos, agora vazias,\nfinalmente podem abraçar.",
     diagnostico:
-      "Você está num processo de soltar o peso da mágoa. O perdão que emerge não é esquecimento — é a decisão de não carregar mais o que o outro deixou. Suas mãos querem ser livres.",
+      "O poema apresenta uma possibilidade de relação com a mágoa, não uma obrigação de perdoar. Você pode estabelecer limites, buscar reparação ou ainda não estar pronto para decidir. Perdoar não exige retomar contato nem minimizar o que aconteceu.",
     cor: "from-rose-500/20 to-pink-500/10",
     borda: "border-rose-400/30",
   },
@@ -142,6 +142,9 @@ const PoemadiagnosticoInterativo = () => {
               Não pense. Leia os três poemas abaixo e sinta qual deles fala por
               você neste momento.{" "}
             </p>{" "}
+            <p className="text-xs text-muted-foreground max-w-xl mx-auto mt-3">
+              Esta atividade é um exercício de reflexão poética, não um teste psicológico nem um diagnóstico. A escolha pode refletir preferências, lembranças ou o acaso; só você pode dizer o que faz sentido na sua experiência.
+            </p>
           </div>{" "}
           {/* Poemas */}
           <AnimatePresence mode="wait">
@@ -247,7 +250,7 @@ ${selecionado && selecionado !== poema.id ? "opacity-40" : ""}`}
                 className="bg-primary text-primary-foreground hover:bg-primary-dark"
               >
                 {" "}
-                Revelar meu espelho emocional{" "}
+                Explorar uma possível leitura{" "}
                 <ArrowRight className="ml-2 spiritual-icon" />{" "}
               </Button>{" "}
             </motion.div>
@@ -284,7 +287,7 @@ backdrop-blur-sm`}
                   </p>{" "}
                   <h3 className="text-xl font-heading font-semibold text-foreground">
                     {" "}
-                    Seu Espelho Emocional{" "}
+                    Uma leitura para refletir{" "}
                   </h3>{" "}
                   <p className="text-muted-foreground leading-relaxed max-w-lg mx-auto">
                     {" "}
