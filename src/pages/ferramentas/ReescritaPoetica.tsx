@@ -586,6 +586,40 @@ const ReescritaPoetica = () => {
         </div>
       </section>
  
+      <section className="py-16 border-t border-border/30">
+        <div className="container mx-auto px-6">
+          <div className="max-w-4xl mx-auto">
+            <p className="text-xs uppercase tracking-[0.2em] text-primary mb-3 font-medium">Roteiro completo de aplicação</p>
+            <h2 className="text-2xl md:text-3xl font-heading font-bold text-foreground">Da primeira versão à escolha possível</h2>
+            <p className="mt-4 text-muted-foreground leading-relaxed">Reserve de 10 a 20 minutos, se isso for confortável. A pessoa pode escrever, desenhar, ditar ou apenas pensar. Não é necessário compartilhar o texto com ninguém.</p>
+            <div className="mt-6 grid gap-4 md:grid-cols-2">
+              <article className="rounded-xl border border-border/50 bg-card/60 p-5">
+                <h3 className="font-heading text-lg font-semibold text-foreground mb-2">A. Nomeie o recorte</h3>
+                <p className="text-sm leading-relaxed text-muted-foreground">Complete: “Quero escrever sobre uma situação específica em que…”. Limite-se ao que deseja abordar hoje. Se a lembrança parecer intensa demais, escolha um acontecimento cotidiano ou pule esta etapa.</p>
+              </article>
+              <article className="rounded-xl border border-border/50 bg-card/60 p-5">
+                <h3 className="font-heading text-lg font-semibold text-foreground mb-2">B. Separe fato e interpretação</h3>
+                <p className="text-sm leading-relaxed text-muted-foreground">Anote duas frases: “O que consigo descrever como fato é…” e “O significado que dei a isso foi…”. As interpretações podem ser importantes, mas não são necessariamente a única leitura possível.</p>
+              </article>
+              <article className="rounded-xl border border-border/50 bg-card/60 p-5">
+                <h3 className="font-heading text-lg font-semibold text-foreground mb-2">C. Construa a imagem poética</h3>
+                <p className="text-sm leading-relaxed text-muted-foreground">Escolha uma imagem que combine com sua experiência — uma porta, uma estação, uma árvore, uma casa em reforma ou outra. Escreva de quatro a oito linhas. Não procure rima nem beleza; procure uma linguagem que pareça sua.</p>
+              </article>
+              <article className="rounded-xl border border-border/50 bg-card/60 p-5">
+                <h3 className="font-heading text-lg font-semibold text-foreground mb-2">D. Acrescente a perspectiva de hoje</h3>
+                <p className="text-sm leading-relaxed text-muted-foreground">Experimente: “Naquele momento eu acreditava…”; “Hoje também consigo considerar…”; “Ainda não sei…”; “O que não aceito minimizar é…”. Você não precisa perdoar, reconciliar-se ou terminar com esperança.</p>
+              </article>
+            </div>
+            <article className="mt-4 rounded-xl border border-primary/20 bg-primary/[0.03] p-5">
+              <h3 className="font-heading text-lg font-semibold text-foreground mb-2">Exemplo desenvolvido</h3>
+              <p className="text-sm text-muted-foreground leading-relaxed"><strong className="text-foreground">Primeira versão:</strong> “Recebi uma crítica diante da equipe e concluí que não sou competente.”</p>
+              <p className="text-sm text-muted-foreground leading-relaxed mt-3"><strong className="text-foreground">Imagem poética:</strong> “Uma frase caiu como chuva forte sobre o papel que eu desenhava.”</p>
+              <p className="text-sm text-muted-foreground leading-relaxed mt-3"><strong className="text-foreground">Segunda versão:</strong> “A crítica me atingiu e ainda preciso entender o que foi justo nela. Uma fala não resume todo o meu trabalho. Posso separar o que devo corrigir da forma como fui tratado e decidir o próximo passo com mais clareza.”</p>
+            </article>
+            <p className="mt-5 text-sm leading-relaxed text-muted-foreground border-l-2 border-primary/40 pl-4">Fechamento: escolha uma frase para guardar, uma ação pequena ou a decisão de não agir agora. Se a atividade elevar o desconforto, interrompa, volte a atenção ao ambiente e procure apoio de confiança quando necessário.</p>
+          </div>
+        </div>
+      </section>
       <ScientificValidation tool="reescrita-poetica" />{" "}
     </PageLayout>
   );
