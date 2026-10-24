@@ -355,24 +355,37 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
+      is_designated_admin: {
+        Args: never
+        Returns: boolean
+      }
       admin_funnel_matrix: {
-        Args: { _since: string; _stage?: string }
+        Args: { _since: string; _stage?: string | null }
         Returns: {
-          conversion_from_prev: number
-          conversion_from_top: number
+          conversion_from_prev: number | null
+          conversion_from_top: number | null
           stage: string
           stage_order: number
           users: number
         }[]
       }
       admin_weekly_cohort: {
-        Args: { _max_day?: number; _since: string; _stage?: string }
+        Args: { _max_day?: number; _since: string; _stage?: string | null }
         Returns: {
           cohort_size: number
           day_offset: number
           retained: number
-          retention: number
+          retention: number | null
           week_start: string
+        }[]
+      }
+      admin_retention_summary: {
+        Args: { _since: string; _stage?: string }
+        Returns: {
+          cohort_size: number
+          d1: number | null
+          d7: number | null
+          d30: number | null
         }[]
       }
       audit_policy_check: { Args: { target_user_id: string }; Returns: boolean }
