@@ -1,11 +1,11 @@
 import {
-  Home,
-  Compass,
-  Wrench,
-  BookOpen,
-  TrendingUp,
-  UserCircle,
-  GraduationCap,
+  LayoutDashboard,
+  Route,
+  PencilRuler,
+  LibraryBig,
+  ChartNoAxesCombined,
+  ContactRound,
+  School,
   LucideIcon,
 } from "lucide-react";
 
@@ -27,7 +27,7 @@ export const NAV_SECTIONS: NavSection[] = [
   {
     id: "inicio",
     label: "Início",
-    icon: Home,
+    icon: LayoutDashboard,
     path: "/dashboard",
     items: [
       { label: "Dashboard", path: "/dashboard" },
@@ -37,7 +37,7 @@ export const NAV_SECTIONS: NavSection[] = [
   {
     id: "jornadas",
     label: "Jornadas",
-    icon: Compass,
+    icon: Route,
     path: "/jornada",
     items: [
       { label: "Visão geral", path: "/jornada" },
@@ -48,7 +48,7 @@ export const NAV_SECTIONS: NavSection[] = [
   {
     id: "ferramentas",
     label: "Ferramentas PCH",
-    icon: Wrench,
+    icon: PencilRuler,
     path: "/ferramentas",
     items: [
       { label: "Todas as ferramentas", path: "/ferramentas" },
@@ -65,7 +65,7 @@ export const NAV_SECTIONS: NavSection[] = [
   {
     id: "biblioteca",
     label: "Biblioteca",
-    icon: BookOpen,
+    icon: LibraryBig,
     path: "/explorar",
     items: [
       { label: "Explorar conteúdo", path: "/explorar" },
@@ -80,7 +80,7 @@ export const NAV_SECTIONS: NavSection[] = [
   {
     id: "formacao",
     label: "Formação",
-    icon: GraduationCap,
+    icon: School,
     path: "/formacao",
     items: [
       { label: "Visão geral", path: "/formacao" },
@@ -97,7 +97,7 @@ export const NAV_SECTIONS: NavSection[] = [
   {
     id: "evolucao",
     label: "Minha Evolução",
-    icon: TrendingUp,
+    icon: ChartNoAxesCombined,
     path: "/dashboard",
     items: [
       { label: "Progresso", path: "/dashboard" },
@@ -109,7 +109,7 @@ export const NAV_SECTIONS: NavSection[] = [
   {
     id: "perfil",
     label: "Perfil",
-    icon: UserCircle,
+    icon: ContactRound,
     path: "/meu-produto",
     items: [
       { label: "Meu produto", path: "/meu-produto" },

@@ -1,5 +1,5 @@
 import React, { useMemo, useState } from 'react';
-import { Home, BookOpen, User, Play, Menu as MenuIcon } from 'lucide-react';
+import { House, BookOpenText, LayoutDashboard, Route, PanelsTopLeft } from 'lucide-react';
 import { useLocation } from 'react-router-dom';
 import PrefetchLink from './PrefetchLink';
 import { motion } from 'framer-motion';
@@ -30,27 +30,27 @@ const MobileNav = () => {
       {
         name: 'Início',
         path: '/',
-        icon: <Home className="w-5 h-5" />,
-        activeIcon: <Home className="w-5 h-5 fill-primary" />,
+        icon: <House className="w-5 h-5" aria-hidden="true" />,
+        activeIcon: <House className="w-5 h-5" aria-hidden="true" />,
       },
       {
         name: 'Teoria',
         path: '/fundamentacao',
-        icon: <BookOpen className="w-5 h-5" />,
-        activeIcon: <BookOpen className="w-5 h-5 fill-primary" />,
+        icon: <BookOpenText className="w-5 h-5" aria-hidden="true" />,
+        activeIcon: <BookOpenText className="w-5 h-5" aria-hidden="true" />,
       },
       {
         name: nextSession ? 'Continuar' : 'Jornada',
         path: continuePath,
-        icon: <Play className="w-5 h-5" />,
-        activeIcon: <Play className="w-5 h-5 fill-primary" />,
+        icon: <Route className="w-5 h-5" aria-hidden="true" />,
+        activeIcon: <Route className="w-5 h-5" aria-hidden="true" />,
         match: (pathname: string) => pathname.startsWith('/jornada'),
       },
       {
         name: 'Área',
         path: '/dashboard',
-        icon: <User className="w-5 h-5" />,
-        activeIcon: <User className="w-5 h-5 fill-primary" />,
+        icon: <LayoutDashboard className="w-5 h-5" aria-hidden="true" />,
+        activeIcon: <LayoutDashboard className="w-5 h-5" aria-hidden="true" />,
       },
     ];
   }, [nextSession, continuePath]);
@@ -106,7 +106,7 @@ const MobileNav = () => {
               aria-label="Abrir menu completo"
               className="relative flex flex-col items-center justify-center gap-1.5 h-full w-full transition-all duration-500 py-2 text-muted-foreground hover:text-foreground"
             >
-              <MenuIcon className="w-5 h-5" />
+              <PanelsTopLeft className="w-5 h-5" aria-hidden="true" />
               <span className="text-[9px] font-black uppercase tracking-[0.15em] opacity-100">
                 Menu
               </span>

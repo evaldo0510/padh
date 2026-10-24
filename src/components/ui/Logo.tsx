@@ -20,7 +20,7 @@ const Logo: React.FC<LogoProps> = ({ className = "", size = "md" }) => {
       aria-label="PADH - Poesia Aplicada ao Desenvolvimento Humano Logo"
     >
       <svg
-        viewBox="0 0 100 100"
+        viewBox="20 8 60 84"
         fill="none"
         xmlns="http://www.w3.org/2000/svg"
         className="w-full h-full relative z-10"
