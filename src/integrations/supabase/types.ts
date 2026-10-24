@@ -380,7 +380,7 @@ export type Database = {
         }[]
       }
       admin_retention_summary: {
-        Args: { _since: string; _stage?: string }
+        Args: { _since: string; _stage?: string | null }
         Returns: {
           cohort_size: number
           d1: number | null
