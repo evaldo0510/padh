@@ -13,6 +13,7 @@
     "test:pwa": "playwright test",
     "test:smoke": "node scripts/pwa-smoke-test.mjs",
     "test:jornada": "node scripts/test-jornada-data.mjs",
+    "test:study": "node scripts/test-study-curriculum.mjs",
     "lighthouse:mobile": "node scripts/lighthouse.mjs mobile",
     "lighthouse:desktop": "node scripts/lighthouse.mjs desktop"
   },
