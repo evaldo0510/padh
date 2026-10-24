@@ -501,6 +501,42 @@ const RitualSilencio = () => {
           </div>{" "}
         </div>{" "}
       </section>{" "}
+      
+      <section className="py-16 border-t border-border/30">
+        <div className="container mx-auto px-6">
+          <div className="max-w-4xl mx-auto">
+            <div className="mb-8">
+              <p className="text-xs uppercase tracking-[0.2em] text-primary mb-3 font-medium">Prática ampliada</p>
+              <h2 className="text-2xl md:text-3xl font-heading font-bold text-foreground">Aprofundamento: pausa, observação e retorno</h2>
+              <p className="mt-4 text-muted-foreground leading-relaxed">Silêncio aqui não significa ausência perfeita de sons ou pensamentos. É uma pausa curta para notar o momento presente sem exigir desempenho.</p>
+            </div>
+            <div className="space-y-5">
+              <article className="rounded-xl border border-border/50 bg-card/60 p-5 md:p-6">
+                <h3 className="font-heading text-lg font-semibold text-foreground mb-3">1. Chegada</h3>
+                <p className="text-sm md:text-base leading-relaxed text-muted-foreground whitespace-pre-line">Escolha uma duração confortável, por exemplo, um ou três minutos. Mantenha os olhos abertos se preferir. Observe o apoio dos pés ou escolha um som no ambiente.</p>
+              </article>
+              <article className="rounded-xl border border-border/50 bg-card/60 p-5 md:p-6">
+                <h3 className="font-heading text-lg font-semibold text-foreground mb-3">2. Observar sem corrigir</h3>
+                <p className="text-sm md:text-base leading-relaxed text-muted-foreground whitespace-pre-line">Perceba sons, pensamentos e sensações como acontecimentos que podem mudar. Não é necessário esvaziar a mente, relaxar à força nem julgar o que aparecer.</p>
+              </article>
+              <article className="rounded-xl border border-border/50 bg-card/60 p-5 md:p-6">
+                <h3 className="font-heading text-lg font-semibold text-foreground mb-3">3. Uma frase de registro</h3>
+                <p className="text-sm md:text-base leading-relaxed text-muted-foreground whitespace-pre-line">Se quiser, escreva: “Neste momento, noto…”; “O que pede minha atenção é…”; “Posso deixar para depois…”. Uma palavra já é suficiente.</p>
+              </article>
+              <article className="rounded-xl border border-border/50 bg-card/60 p-5 md:p-6">
+                <h3 className="font-heading text-lg font-semibold text-foreground mb-3">4. Encerramento e retorno</h3>
+                <p className="text-sm md:text-base leading-relaxed text-muted-foreground whitespace-pre-line">Olhe ao redor, identifique onde está e escolha o próximo gesto cotidiano: beber água, levantar-se, retomar uma tarefa ou falar com alguém. Se a pausa aumentar o desconforto, encerre antes.</p>
+              </article>
+              <article className="rounded-xl border border-border/50 bg-card/60 p-5 md:p-6">
+                <h3 className="font-heading text-lg font-semibold text-foreground mb-3">Versão sem foco interno</h3>
+                <p className="text-sm md:text-base leading-relaxed text-muted-foreground whitespace-pre-line">Se observar a respiração ou o corpo não for confortável, não faça isso. Concentre-se em cores, formas, sons ou em descrever o ambiente externo.</p>
+              </article>
+            </div>
+            <p className="mt-6 text-sm leading-relaxed text-muted-foreground border-l-2 border-primary/40 pl-4">A prática é opcional e adaptável. Não é uma intervenção médica nem precisa produzir calma para ser considerada válida.</p>
+          </div>
+        </div>
+      </section>
+      
       <ScientificValidation tool="ritual-silencio" />{" "}
     </PageLayout>
   );
