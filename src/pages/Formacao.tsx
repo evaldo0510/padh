@@ -15,8 +15,6 @@ import {
   ArrowRight,
   Search,
   Download,
-  Plus,
-  Minus,
 } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -25,6 +23,8 @@ import { Input } from "@/components/ui/input";
 import PageLayout from "@/components/layout/PageLayout";
 import { pagesSEO } from "@/lib/seo-config";
 import { MODULOS, PILARES_INFO } from "@/lib/dados-clinicos";
+import { COMPLEMENTOS_ESTUDO_PCH, ETAPAS_ESTUDO_PCH } from "@/lib/estudo-curricular";
+import { useCourseProgress } from "@/hooks/useCourseProgress";
 import { Link, useNavigate } from "react-router-dom";
 import { useScrollAnimation } from "@/hooks/useScrollAnimation";
 import { FormacaoLeadForm } from "@/components/sales/FormacaoLeadForm";
@@ -43,6 +43,13 @@ const Formacao = () => {
   const curriculumSection = useScrollAnimation(0.1);
   const teacherSection = useScrollAnimation(0.15);
   const [faqSearch, setFaqSearch] = useState("");
+  const { progress } = useCourseProgress();
+  const completedModulesCount = MODULOS.filter((modulo) =>
+    progress.completedModules.includes(modulo.id),
+  ).length;
+  const curriculumProgress = Math.round(
+    (completedModulesCount / MODULOS.length) * 100,
+  );
 
   const faqs = [
     {
@@ -114,6 +121,9 @@ const Formacao = () => {
             <Button size="lg" variant="outline" onClick={generateCurriculumPDF} className="px-8 rounded-full border-primary/20 hover:bg-primary/5">
               <Download className="w-4 h-4 mr-2" /> Baixar Grade Curricular
             </Button>
+            <Button size="lg" variant="ghost" asChild className="px-8 rounded-full">
+              <a href="#trilha-pch">Explorar trilha de estudos <ArrowRight className="ml-2 w-4 h-4" /></a>
+            </Button>
           </div>
         </div>
       </section>
@@ -146,8 +156,8 @@ const Formacao = () => {
         </div>
       </section>
 
-      {/* Curriculum Section */}
-      <section className="py-24">
+      {/* Study Path and Curriculum Section */}
+      <section id="trilha-pch" className="py-24 scroll-mt-24">
         <div 
           ref={curriculumSection.ref}
           className={`container mx-auto px-6 max-w-6xl transition-all duration-1000 ${
@@ -156,8 +166,9 @@ const Formacao = () => {
         >
           <div className="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-6">
             <div className="max-w-2xl">
-              <p className="text-primary font-bold tracking-widest uppercase text-xs mb-4">Currículo Profissional</p>
-              <h2 className="text-3xl md:text-5xl font-heading font-bold">Grade <span className="text-primary italic">Curricular</span></h2>
+              <p className="text-primary font-bold tracking-widest uppercase text-xs mb-4">Trilha de estudos profissional</p>
+              <h2 className="text-3xl md:text-5xl font-heading font-bold">Do fundamento à <span className="text-primary italic">integração</span></h2>
+              <p className="text-muted-foreground mt-4 leading-relaxed">Os oito módulos mantêm seus nomes e números originais, agora agrupados em etapas para mostrar como os temas se complementam. Esta é uma ordem didática sugerida; os dados dos módulos não declaram pré-requisitos formais entre eles.</p>
             </div>
             <div className="text-sm text-muted-foreground flex items-center gap-4">
               <div className="flex items-center gap-1">
@@ -171,53 +182,107 @@ const Formacao = () => {
             </div>
           </div>
 
-          <div className="grid md:grid-cols-2 gap-8">
-            {MODULOS.map((modulo) => (
-              <Link key={modulo.id} to={`/formacao/modulo/${modulo.id}`}>
-                <Card className="border-border/50 hover:border-primary/20 transition-all duration-300 group overflow-hidden bg-card/50 backdrop-blur-sm cursor-pointer h-full">
-                  <CardHeader className="pb-4 relative">
-                    <div className="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity">
-                      <span className="text-8xl font-heading font-bold">{modulo.numero}</span>
-                    </div>
-                    <div className="flex justify-between items-start mb-4">
-                      <Badge variant="secondary" className="bg-primary/10 text-primary border-none font-bold">
-                        Módulo {modulo.numero}
-                      </Badge>
-                      <div className="flex items-center gap-1 text-[10px] text-muted-foreground uppercase tracking-wider">
-                        <Clock className="w-3 h-3" /> {modulo.tempoEstimado} min
+          <div className="mb-10 rounded-2xl border border-primary/15 bg-primary/[0.03] p-5 md:p-6">
+            <div className="flex flex-wrap items-center justify-between gap-3 mb-3">
+              <p className="font-semibold">Progresso da sua formação</p>
+              <p className="text-sm text-muted-foreground">{completedModulesCount} de {MODULOS.length} módulos concluídos · {curriculumProgress}%</p>
+            </div>
+            <div
+              className="h-2 overflow-hidden rounded-full bg-muted"
+              role="progressbar"
+              aria-label="Progresso da formação PCH"
+              aria-valuemin={0}
+              aria-valuemax={100}
+              aria-valuenow={curriculumProgress}
+            >
+              <div className="h-full rounded-full bg-primary transition-all" style={{ width: `${curriculumProgress}%` }} />
+            </div>
+            <p className="text-xs text-muted-foreground mt-3">O progresso é salvo neste navegador e não sincroniza entre dispositivos.</p>
+          </div>
+
+          <div className="space-y-10">
+            {ETAPAS_ESTUDO_PCH.map((etapa) => {
+              const modulosDaEtapa = etapa.moduleIds
+                .map((moduleId) => MODULOS.find((modulo) => modulo.id === moduleId))
+                .filter((modulo): modulo is (typeof MODULOS)[number] => Boolean(modulo));
+              const concluidosNaEtapa = modulosDaEtapa.filter((modulo) =>
+                progress.completedModules.includes(modulo.id),
+              ).length;
+
+              return (
+                <section key={etapa.numero} aria-labelledby={`etapa-pch-${etapa.numero}`} className="rounded-3xl border border-border/50 bg-muted/10 p-5 md:p-8">
+                  <div className="flex flex-col md:flex-row md:items-start justify-between gap-4 mb-6">
+                    <div className="max-w-3xl">
+                      <div className="flex flex-wrap items-center gap-3 mb-3">
+                        <Badge className="bg-primary/10 text-primary border-none">Etapa {etapa.numero}</Badge>
+                        <span className="text-xs text-muted-foreground">{concluidosNaEtapa}/{modulosDaEtapa.length} concluídos</span>
                       </div>
+                      <h3 id={`etapa-pch-${etapa.numero}`} className="text-2xl md:text-3xl font-heading font-bold">{etapa.titulo}</h3>
+                      <p className="text-sm text-muted-foreground leading-relaxed mt-3">{etapa.descricao}</p>
+                      {etapa.nota && <p className="text-xs text-muted-foreground leading-relaxed mt-3 border-l-2 border-primary/40 pl-3">{etapa.nota}</p>}
                     </div>
-                    <CardTitle className="text-2xl font-heading group-hover:text-primary transition-colors">{modulo.titulo}</CardTitle>
-                  </CardHeader>
-                  <CardContent className="space-y-6">
-                    <p className="text-sm text-muted-foreground italic border-l-2 border-primary/30 pl-4">
-                      "{modulo.foco}"
-                    </p>
-                    
-                    <div className="space-y-4">
-                      <div>
-                        <h4 className="text-[10px] font-bold text-foreground uppercase tracking-[0.2em] mb-3 flex items-center gap-2">
-                          <Sparkles className="w-3 h-3 text-primary" /> O que você vai aprender
-                        </h4>
-                        <ul className="grid grid-cols-1 gap-2">
-                          {modulo.atividades.slice(0, 3).map((atv) => (
-                            <li key={atv.id} className="text-xs text-muted-foreground flex items-center gap-2">
-                              <CheckCircle2 className="w-3 h-3 text-primary/60 shrink-0" />
-                              {atv.label}
-                            </li>
-                          ))}
-                        </ul>
-                      </div>
-                    </div>
-                    <div className="pt-4 flex justify-end">
-                      <span className="text-xs text-primary font-bold flex items-center gap-1 group-hover:translate-x-1 transition-transform">
-                        Ver detalhes <ArrowRight className="w-3 h-3" />
-                      </span>
-                    </div>
-                  </CardContent>
-                </Card>
-              </Link>
-            ))}
+                  </div>
+
+                  <div className="grid md:grid-cols-2 gap-6">
+                    {modulosDaEtapa.map((modulo) => {
+                      const relacionados = (COMPLEMENTOS_ESTUDO_PCH[modulo.id] ?? [])
+                        .map((moduleId) => MODULOS.find((item) => item.id === moduleId))
+                        .filter((item): item is (typeof MODULOS)[number] => Boolean(item));
+                      const isCompleted = progress.completedModules.includes(modulo.id);
+
+                      return (
+                        <Link key={modulo.id} to={`/formacao/modulo/${modulo.id}`} className="block h-full focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary rounded-2xl">
+                          <Card className="border-border/50 hover:border-primary/30 transition-all duration-300 group overflow-hidden bg-card/70 backdrop-blur-sm h-full">
+                            <CardHeader className="pb-4 relative">
+                              <div className="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity">
+                                <span className="text-8xl font-heading font-bold">{modulo.numero}</span>
+                              </div>
+                              <div className="flex flex-wrap justify-between items-start gap-2 mb-4">
+                                <Badge variant="secondary" className="bg-primary/10 text-primary border-none font-bold">Módulo {modulo.numero}</Badge>
+                                <div className="flex items-center gap-3">
+                                  {isCompleted && <span className="text-xs text-primary font-medium inline-flex items-center gap-1"><CheckCircle2 className="w-3 h-3" /> Concluído</span>}
+                                  <div className="flex items-center gap-1 text-[10px] text-muted-foreground uppercase tracking-wider"><Clock className="w-3 h-3" /> {modulo.tempoEstimado} min</div>
+                                </div>
+                              </div>
+                              <CardTitle className="text-2xl font-heading group-hover:text-primary transition-colors">{modulo.titulo}</CardTitle>
+                            </CardHeader>
+                            <CardContent className="space-y-5">
+                              <p className="text-sm text-muted-foreground italic border-l-2 border-primary/30 pl-4">“{modulo.foco}”</p>
+                              <div>
+                                <h4 className="text-[10px] font-bold text-foreground uppercase tracking-[0.2em] mb-3 flex items-center gap-2"><Sparkles className="w-3 h-3 text-primary" /> O que você vai aprender</h4>
+                                <ul className="grid grid-cols-1 gap-2">
+                                  {modulo.atividades.map((atividade) => (
+                                    <li key={atividade.id} className="text-xs text-muted-foreground flex items-center gap-2"><CheckCircle2 className="w-3 h-3 text-primary/60 shrink-0" />{atividade.label}</li>
+                                  ))}
+                                </ul>
+                              </div>
+                              {relacionados.length > 0 && (
+                                <p className="text-xs text-muted-foreground border-t border-border/50 pt-4">
+                                  <span className="font-semibold text-foreground">Complementa:</span> {relacionados.map((item) => `Módulo ${item.numero} — ${item.titulo}`).join(" · ")}
+                                </p>
+                              )}
+                              <div className="pt-1 flex justify-end">
+                                <span className="text-xs text-primary font-bold flex items-center gap-1 group-hover:translate-x-1 transition-transform">Estudar módulo <ArrowRight className="w-3 h-3" /></span>
+                              </div>
+                            </CardContent>
+                          </Card>
+                        </Link>
+                      );
+                    })}
+                  </div>
+                </section>
+              );
+            })}
+          </div>
+
+          <div className="mt-10 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 rounded-2xl border border-border/50 bg-card/40 p-5">
+            <div>
+              <p className="font-semibold">Quer consultar o guia técnico completo?</p>
+              <p className="text-sm text-muted-foreground mt-1">A Formação profissional, a Jornada pessoal e as Ferramentas permanecem em áreas distintas.</p>
+            </div>
+            <Button asChild variant="outline" className="shrink-0">
+              <Link to="/curso-padh"><BookOpen className="w-4 h-4 mr-2" />Abrir guia técnico</Link>
+            </Button>
           </div>
         </div>
       </section>

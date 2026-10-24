@@ -40,5 +40,8 @@ jobs:
       - name: Journey data invariants
         run: npm run test:jornada
 
+      - name: Study curriculum invariants
+        run: npm run test:study
+
       - name: Build
         run: npm run build
