@@ -1,5 +1,5 @@
 import React from "react";
-import { BookOpen, Brain, PenTool, Lightbulb } from "lucide-react";
+import { NotebookPen, BookOpen, Brain, PenTool, Lightbulb } from "lucide-react";
 import FerramentaHero from "@/components/ferramentas/FerramentaHero";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import PageLayout from "@/components/layout/PageLayout";
@@ -40,7 +40,7 @@ const CadernoVozInterna = () => {
     >
       {" "}
       <FerramentaHero
-        icon={PenTool}
+        icon={NotebookPen}
         badgeLabel="Ferramenta 4 — P.A.D.H."
         title={
           <>

@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import {
   GraduationCap,
+  BookOpenCheck,
+  Timer,
   Clock,
   Users,
   BookOpen,
@@ -238,10 +240,10 @@ const Formacao = () => {
                                 <span className="text-8xl lg:text-7xl font-heading font-bold">{modulo.numero}</span>
                               </div>
                               <div className="flex flex-wrap justify-between items-start gap-2 mb-4">
-                                <Badge variant="secondary" className="bg-primary/10 text-primary border-none font-bold">Módulo {modulo.numero}</Badge>
+                                <Badge variant="secondary" className="bg-primary/10 text-primary border-none font-bold gap-2"><BookOpenCheck className="w-5 h-5" aria-hidden="true" />Módulo {modulo.numero}</Badge>
                                 <div className="flex items-center gap-3">
                                   {isCompleted && <span className="text-xs text-primary font-medium inline-flex items-center gap-1"><CheckCircle2 className="w-3 h-3" /> Concluído</span>}
-                                  <div className="flex items-center gap-1 text-[10px] text-muted-foreground uppercase tracking-wider"><Clock className="w-3 h-3" /> {modulo.tempoEstimado} min</div>
+                                  <div className="flex items-center gap-1 text-[10px] text-muted-foreground uppercase tracking-wider"><Timer className="w-4 h-4" aria-hidden="true" /> {modulo.tempoEstimado} min</div>
                                 </div>
                               </div>
                               <CardTitle className="text-2xl font-heading group-hover:text-primary transition-colors">{modulo.titulo}</CardTitle>
@@ -350,8 +352,8 @@ const Formacao = () => {
       <section className="py-24 relative overflow-hidden">
         <div className="absolute inset-0 bg-primary/5 -z-10" />
         <div className="container mx-auto px-6 max-w-6xl">
-          <div className="grid lg:grid-cols-2 gap-16 items-center">
-            <div className="space-y-8">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+            <div className="min-w-0 space-y-8">
               <h2 className="text-4xl md:text-6xl font-heading font-bold leading-tight">Sua trilha de estudos começa <span className="text-primary italic">aqui</span>.</h2>
               <p className="text-xl text-muted-foreground leading-relaxed">
                 Conheça a estrutura dos oito módulos e, quando quiser aprofundar, crie uma conta no PADH para abrir o conteúdo de estudo completo.
@@ -392,6 +394,7 @@ const Formacao = () => {
             <div className="relative max-w-md mx-auto">
               <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
               <Input 
+                aria-label="Buscar dúvida"
                 placeholder="Buscar dúvida..." 
                 className="pl-10 h-12 bg-muted/50 border-border/50 focus:border-primary/50"
                 value={faqSearch}
@@ -430,7 +433,7 @@ const Formacao = () => {
             As vagas para a próxima turma da Formação em PCH são limitadas para garantir a qualidade da supervisão e mentoria.
           </p>
           <div className="flex flex-col items-center gap-6">
-            <Button size="lg" onClick={() => navigate("/planos?product=formacao")} className="px-12 py-8 text-xl bg-primary hover:bg-primary/90 text-white rounded-full group shadow-2xl shadow-primary/20 scale-105 hover:scale-110 transition-all">
+            <Button size="lg" onClick={() => navigate("/planos?product=formacao")} className="max-w-full h-auto min-h-14 whitespace-normal px-6 md:px-12 py-5 text-base md:text-xl bg-primary hover:bg-primary/90 text-primary-foreground rounded-full group shadow-2xl shadow-primary/20 transition-all">
               Garantir minha vaga na Formação <ArrowRight className="ml-3 w-6 h-6 group-hover:translate-x-1 transition-transform" />
             </Button>
             <p className="text-xs text-muted-foreground flex items-center gap-2">

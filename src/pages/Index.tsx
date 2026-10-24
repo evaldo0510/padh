@@ -170,6 +170,7 @@ const Index = () => {
         path={pagesSEO.home.path}
       />
       <Header />
+      <main>
       
       {/* Hero Section */}
       <section className="relative overflow-hidden min-h-[90vh] lg:min-h-[80vh] flex items-center">
@@ -453,6 +454,7 @@ const Index = () => {
         </div>
       </section>
 
+      </main>
       <div className="hidden lg:block">
         <Footer />
       </div>

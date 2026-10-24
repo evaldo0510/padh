@@ -42,7 +42,7 @@ const PageLayout: React.FC<PageLayoutProps> = ({
   if (isLoading) return <PageSkeleton />;
 
   return (
-    <div className="min-h-screen bg-background flex flex-col">
+    <div className="min-h-dvh bg-background flex flex-col">
       <SEOHead
         title={seo.title}
         description={seo.description}
@@ -59,7 +59,7 @@ const PageLayout: React.FC<PageLayoutProps> = ({
         />
       )}
       <main 
-        className={`flex-1 ${!hideMobileNav ? "pb-24 lg:pb-0" : ""} ${currentPage ? "pt-20 md:pt-0" : ""} transition-all duration-500`}
+        className={`flex-1 ${!hideMobileNav ? "pb-24 lg:pb-0" : ""} ${currentPage ? "pt-28 md:pt-0" : ""} transition-all duration-500`}
       >
         {children}
       </main>

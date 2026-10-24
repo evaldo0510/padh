@@ -2,14 +2,14 @@ import React from "react";
 import { Link } from "react-router-dom";
 import {
   ArrowRight,
-  Feather,
-  Anchor,
-  Eye,
-  PenTool,
-  Drama,
-  RefreshCw,
-  Flame,
-  Sparkles,
+  ListFilter,
+  KeyRound,
+  ScanSearch,
+  NotebookPen,
+  MessagesSquare,
+  FilePenLine,
+  VolumeX,
+  AudioLines,
 } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
 import PageLayout from "@/components/layout/PageLayout";
@@ -20,7 +20,7 @@ const FerramentasIndex = () => {
   const ferramentas = [
     {
       numero: 1,
-      icon: <Feather className="spiritual-icon spiritual-icon-lg" />,
+      icon: <ListFilter className="spiritual-icon spiritual-icon-lg" />,
       titulo: "Poema-Funil",
       subtitulo: "A Espiral da Palavra que Desce",
       descricao:
@@ -31,7 +31,7 @@ const FerramentasIndex = () => {
     },
     {
       numero: 2,
-      icon: <Anchor className="spiritual-icon spiritual-icon-lg" />,
+      icon: <KeyRound className="spiritual-icon spiritual-icon-lg" />,
       titulo: "Verso-Gatilho",
       subtitulo: "A Palavra-Chave que Liberta",
       descricao:
@@ -41,7 +41,7 @@ const FerramentasIndex = () => {
     },
     {
       numero: 3,
-      icon: <Eye className="spiritual-icon spiritual-icon-lg" />,
+      icon: <ScanSearch className="spiritual-icon spiritual-icon-lg" />,
       titulo: "Poemadiagnóstico",
       subtitulo: "O Espelho Emocional",
       descricao:
@@ -51,7 +51,7 @@ const FerramentasIndex = () => {
     },
     {
       numero: 4,
-      icon: <PenTool className="spiritual-icon spiritual-icon-lg" />,
+      icon: <NotebookPen className="spiritual-icon spiritual-icon-lg" />,
       titulo: "Caderno de Voz Interna",
       subtitulo: "O Diário do Oráculo",
       descricao:
@@ -61,7 +61,7 @@ const FerramentasIndex = () => {
     },
     {
       numero: 5,
-      icon: <Drama className="spiritual-icon spiritual-icon-lg" />,
+      icon: <MessagesSquare className="spiritual-icon spiritual-icon-lg" />,
       titulo: "Encenação Poética Interna",
       subtitulo: "O Teatro dos Eus",
       descricao:
@@ -72,7 +72,7 @@ const FerramentasIndex = () => {
     },
     {
       numero: 6,
-      icon: <RefreshCw className="spiritual-icon spiritual-icon-lg" />,
+      icon: <FilePenLine className="spiritual-icon spiritual-icon-lg" />,
       titulo: "Reescrita Poética de Narrativas",
       subtitulo: "O Alquimista do Passado",
       descricao:
@@ -82,7 +82,7 @@ const FerramentasIndex = () => {
     },
     {
       numero: 7,
-      icon: <Flame className="spiritual-icon spiritual-icon-lg" />,
+      icon: <VolumeX className="spiritual-icon spiritual-icon-lg" />,
       titulo: "Ritual do Silêncio Poético",
       subtitulo: "A Vela que Fecha a Caverna",
       descricao:
@@ -93,7 +93,7 @@ const FerramentasIndex = () => {
     },
     {
       numero: 8,
-      icon: <Sparkles className="spiritual-icon spiritual-icon-lg" />,
+      icon: <AudioLines className="spiritual-icon spiritual-icon-lg" />,
       titulo: "Poesia Hipnótica",
       subtitulo: "O Poder das Palavras",
       descricao:

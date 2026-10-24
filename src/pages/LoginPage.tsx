@@ -4,7 +4,8 @@ import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/com
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { Feather, Sparkles, ArrowRight, LogIn } from 'lucide-react';
+import Logo from '@/components/ui/Logo';
+import {  BookOpenCheck, DoorOpen, KeyRound } from 'lucide-react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { toast } from 'sonner';
 import { supabase } from '@/integrations/supabase/client';
@@ -104,7 +105,7 @@ const LoginPage = () => {
     setIsGoogleLoading(true);
     try {
       const result = await lovable.auth.signInWithOAuth('google', {
-        redirect_uri: window.location.origin + from,
+        redirect_uri: window.location.origin + '/login?next=' + encodeURIComponent(from),
       });
       if (result.error) throw result.error;
       if (result.redirected) return;
@@ -132,7 +133,7 @@ const LoginPage = () => {
         <div className="w-full max-w-md">
           <div className="mb-8 text-center">
             <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-2xl bg-primary/10">
-              <Feather className="h-8 w-8 text-primary" aria-hidden="true" />
+              <Logo size="lg" />
             </div>
             <h1 className="text-3xl font-heading font-bold">Acesse os estudos PCH</h1>
             <p className="mt-2 text-muted-foreground">Crie uma conta ou entre para continuar na página de estudo escolhida.</p>
@@ -141,7 +142,7 @@ const LoginPage = () => {
           <Card className="border-primary/10 shadow-xl">
             <CardHeader>
               <CardTitle className="flex items-center gap-2">
-                <LogIn className="spiritual-icon spiritual-icon-lg" aria-hidden="true" />
+                <KeyRound className="spiritual-icon spiritual-icon-lg" aria-hidden="true" />
                 {mode === 'signup' ? 'Criar conta' : 'Entrar'}
               </CardTitle>
               <CardDescription>
@@ -224,12 +225,12 @@ const LoginPage = () => {
                 </div>
                 <Button type="submit" className="w-full gap-2 py-6" disabled={isLoading || isGoogleLoading}>
                   {isLoading ? 'Aguarde...' : mode === 'signup' ? 'Criar conta e continuar' : 'Entrar e continuar'}
-                  {!isLoading && <ArrowRight className="spiritual-icon" aria-hidden="true" />}
+                  {!isLoading && <DoorOpen className="spiritual-icon" aria-hidden="true" />}
                 </Button>
               </form>
 
               <div className="mt-6 border-t border-primary/5 pt-6 text-center">
-                <button
+                <Button variant="link"
                   type="button"
                   onClick={toggleMode}
                   className="text-sm text-muted-foreground transition-colors hover:text-primary"
@@ -239,14 +240,14 @@ const LoginPage = () => {
                   ) : (
                     <>Já tem conta? <span className="font-bold text-primary">Entrar</span></>
                   )}
-                </button>
+                </Button>
               </div>
             </CardContent>
           </Card>
 
           <div className="mt-8 flex justify-center">
             <p className="flex items-center gap-2 text-[10px] text-muted-foreground">
-              <Sparkles className="h-3 w-3" aria-hidden="true" /> Sua trilha de estudos continua após o acesso.
+              <BookOpenCheck className="h-3 w-3" aria-hidden="true" /> Sua trilha de estudos continua após o acesso.
             </p>
           </div>
         </div>

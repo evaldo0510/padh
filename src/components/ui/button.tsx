@@ -14,17 +14,17 @@ const buttonVariants = cva(
         destructive:
           "bg-destructive text-destructive-foreground hover:bg-destructive/90 hover:shadow-lg hover:shadow-destructive/20",
         outline:
-          "border border-white/10 bg-white/5 text-foreground hover:bg-white/10 hover:border-white/20",
+          "border border-border bg-card text-foreground hover:bg-accent hover:border-ring/40",
         secondary:
           "bg-secondary text-secondary-foreground hover:bg-secondary/80",
-        ghost: "text-foreground hover:bg-white/5",
+        ghost: "text-foreground hover:bg-accent",
         link: "text-primary underline-offset-4 hover:underline",
         premium:
-          "bg-gradient-to-r from-primary to-secondary text-white font-bold hover:scale-[1.02] shadow-xl shadow-primary/10 transition-transform duration-500",
+          "bg-primary text-primary-foreground font-bold shadow-xl shadow-primary/10 transition-transform duration-500",
         streaming:
-          "bg-white text-black font-black uppercase tracking-widest hover:bg-primary hover:text-white rounded-full px-10 h-14 text-lg shadow-2xl transition-all duration-500",
+          "bg-foreground text-background font-black uppercase tracking-widest hover:bg-primary hover:text-primary-foreground rounded-full px-10 h-14 text-lg shadow-2xl transition-all duration-500",
         glass:
-          "bg-white/5 backdrop-blur-md border border-white/5 text-foreground hover:bg-white/10 hover:border-white/10",
+          "bg-card/60 backdrop-blur-md border border-border text-foreground hover:bg-accent hover:border-ring/40",
       },
       size: {
         default: "h-11 px-6",

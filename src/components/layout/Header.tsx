@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
-import { User, LogOut, ArrowRight, Loader2 } from 'lucide-react';
+import { ContactRound, LogOut, Route, Loader2 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { ThemeToggle } from '@/components/ui/theme-toggle';
 import PrefetchLink from './PrefetchLink';
@@ -74,7 +74,7 @@ const Header = () => {
     <header
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
         scrolled
-          ? 'bg-background/80 backdrop-blur-2xl border-b border-white/5 shadow-2xl'
+          ? 'bg-background/80 backdrop-blur-2xl border-b border-border shadow-2xl'
           : 'bg-transparent border-b border-transparent'
       }`}
     >
@@ -83,7 +83,7 @@ const Header = () => {
           {/* LEFT — Logo */}
           <PrefetchLink to="/" className="flex items-center gap-2 group shrink-0">
             <Logo size="sm" className="w-8 h-8" />
-            <span className="hidden sm:inline text-sm font-bold tracking-tight text-white/90 group-hover:text-primary transition-colors">
+            <span className="hidden sm:inline text-sm font-bold tracking-tight text-foreground group-hover:text-primary transition-colors">
               P.A.D.H.
             </span>
           </PrefetchLink>
@@ -93,7 +93,7 @@ const Header = () => {
             {isLoggedIn ? (
               <Button
                 size="sm"
-                className="h-9 px-5 rounded-full font-bold gap-2 bg-primary text-white hover:bg-primary/90 shadow-glow disabled:opacity-70"
+                className="h-9 px-5 rounded-full font-bold gap-2 bg-primary text-primary-foreground hover:bg-primary/90 shadow-glow disabled:opacity-70"
                 disabled={isNavigating}
                 asChild
               >
@@ -104,7 +104,7 @@ const Header = () => {
                     <>
                       <span className="hidden xs:inline">{nextSession ? 'Continuar jornada' : 'Ver jornada'}</span>
                       <span className="xs:hidden">{nextSession ? 'Continuar' : 'Jornada'}</span>
-                      <ArrowRight className="w-4 h-4" />
+                      <Route className="w-5 h-5" aria-hidden="true" />
                     </>
                   )}
                 </PrefetchLink>
@@ -117,7 +117,7 @@ const Header = () => {
               >
                 <Link to="/formacao">
                   Ver trilha
-                  <ArrowRight className="w-4 h-4" />
+                  <Route className="w-5 h-5" aria-hidden="true" />
                 </Link>
               </Button>
             )}
@@ -130,12 +130,12 @@ const Header = () => {
                 <SyncIndicator className="hidden md:flex" />
                 <div className="flex items-center gap-2">
                   <div
-                    className="hidden lg:flex items-center gap-3 px-4 h-9 rounded-full bg-white/5 border border-white/10"
+                    className="hidden lg:flex items-center gap-3 px-4 h-9 rounded-full bg-muted border border-border"
                   >
-                    <span className="text-[10px] font-bold text-white/40 uppercase tracking-widest">
+                    <span className="text-[10px] font-bold text-muted-foreground uppercase tracking-widest">
                       {dayLabel}
                     </span>
-                    <div className="w-12 h-1 rounded-full bg-white/10 overflow-hidden">
+                    <div className="w-12 h-1 rounded-full bg-muted overflow-hidden">
                       <div
                         className="h-full bg-primary transition-all duration-500"
                         style={{ width: `${percent}%` }}
@@ -146,11 +146,11 @@ const Header = () => {
                   <Button
                     variant="ghost"
                     size="sm"
-                    className="h-9 w-9 p-0 rounded-full hover:bg-white/10 bg-white/5 border border-white/10"
+                    className="h-9 w-9 p-0 rounded-full hover:bg-muted bg-muted border border-border"
                     asChild
                   >
                     <Link to="/dashboard" aria-label="Área do usuário">
-                      <User className="w-4 h-4 text-white/80" />
+                      <ContactRound className="w-5 h-5 text-foreground" aria-hidden="true" />
                     </Link>
                   </Button>
                   <NavigationSheet isLoggedIn />
@@ -158,7 +158,7 @@ const Header = () => {
               </div>
             ) : (
               <>
-                <Button size="sm" variant="ghost" className="h-9 px-4 text-xs font-bold uppercase tracking-widest text-white/60 hover:text-white" asChild>
+                <Button size="sm" variant="ghost" className="h-9 px-4 text-xs font-bold uppercase tracking-widest text-muted-foreground hover:text-foreground" asChild>
                   <Link to="/login">Entrar</Link>
                 </Button>
                 <NavigationSheet />

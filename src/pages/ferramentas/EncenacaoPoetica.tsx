@@ -1,5 +1,5 @@
 import React from "react";
-import { Drama, Brain, BookOpen, MessageSquare } from "lucide-react";
+import { MessagesSquare, Drama, Brain, BookOpen, MessageSquare } from "lucide-react";
 import FerramentaHero from "@/components/ferramentas/FerramentaHero";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import PageLayout from "@/components/layout/PageLayout";
@@ -15,7 +15,7 @@ const EncenacaoPoetica = () => {
     <PageLayout seo={pagesSEO.encenacaoPoetica} currentPage="Encenação Poética">
       {" "}
       <FerramentaHero
-        icon={Drama}
+        icon={MessagesSquare}
         badgeLabel="Ferramenta 5 — P.A.D.H."
         title={
           <>
@@ -253,8 +253,8 @@ const EncenacaoPoetica = () => {
                 {" "}
                 <ul className="space-y-2 text-sm text-muted-foreground">
                   {" "}
-                  <li className="flex items-start gap-2">
-                    <span className="text-primary mt-1">•</span>Inspirado nos{" "}
+                  <li>
+                    <span className="text-primary mr-2" aria-hidden="true">•</span>Inspirado nos{" "}
                     <strong className="text-foreground">Estados do Ego</strong>{" "}
                     (Análise Transacional),{" "}
                     <strong className="text-foreground">IFS</strong> (Internal
@@ -264,15 +264,15 @@ const EncenacaoPoetica = () => {
                     </strong>{" "}
                     (Moreno).
                   </li>{" "}
-                  <li className="flex items-start gap-2">
-                    <span className="text-primary mt-1">•</span>Trabalha a{" "}
+                  <li>
+                    <span className="text-primary mr-2" aria-hidden="true">•</span>Trabalha a{" "}
                     <strong className="text-foreground">
                       autonomia emocional
                     </strong>{" "}
                     e o respeito interno: cada parte tem sua verdade.
                   </li>{" "}
-                  <li className="flex items-start gap-2">
-                    <span className="text-primary mt-1">•</span>Reduz a{" "}
+                  <li>
+                    <span className="text-primary mr-2" aria-hidden="true">•</span>Reduz a{" "}
                     <strong className="text-foreground">
                       autocrítica paralisante
                     </strong>

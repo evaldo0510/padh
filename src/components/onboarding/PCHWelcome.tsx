@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import PCHSymbol from "@/components/ui/PCHSymbol";
@@ -198,11 +198,12 @@ const PCHWelcome: React.FC<{ onComplete?: () => void }> = ({ onComplete }) => {
 
 export const PCHWelcomeGate: React.FC = () => {
   const [show, setShow] = useState(false);
-  const { loading: authLoading } = useAuth();
+  const { loading: authLoading, isAuthenticated } = useAuth();
+  const { pathname } = useLocation();
   const { profile, loading: profileLoading } = useProfile();
 
   useEffect(() => {
-    if (authLoading || profileLoading) return;
+    if (authLoading || profileLoading || !isAuthenticated) return;
 
     try {
       const seen = localStorage.getItem(STORAGE_KEY);
@@ -215,9 +216,9 @@ export const PCHWelcomeGate: React.FC = () => {
 
       if (!seen) setShow(true);
     } catch { /* noop */ }
-  }, [authLoading, profileLoading, profile]);
+  }, [authLoading, profileLoading, profile, isAuthenticated]);
 
-  if (!show) return null;
+  if (!show || !isAuthenticated || (pathname !== '/' && pathname !== '/jornada')) return null;
   return <PCHWelcome onComplete={() => setShow(false)} />;
 };
 

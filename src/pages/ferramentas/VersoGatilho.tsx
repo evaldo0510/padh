@@ -1,5 +1,5 @@
 import React from "react";
-import { Anchor, Brain, BookOpen, Lightbulb, Zap } from "lucide-react";
+import { KeyRound, Anchor, Brain, BookOpen, Lightbulb, Zap } from "lucide-react";
 import FerramentaHero from "@/components/ferramentas/FerramentaHero";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import PageLayout from "@/components/layout/PageLayout";
@@ -35,7 +35,7 @@ const VersoGatilho = () => {
     <PageLayout seo={pagesSEO.versoGatilho} currentPage="Verso-Gatilho">
       {" "}
       <FerramentaHero
-        icon={Anchor}
+        icon={KeyRound}
         badgeLabel="Ferramenta 2 — P.A.D.H."
         title={
           <>

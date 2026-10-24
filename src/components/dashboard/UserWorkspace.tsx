@@ -1,16 +1,15 @@
 import React, { useMemo } from "react";
 import { motion } from "framer-motion";
 import {
-  Play,
-  Sparkles,
-  Flame,
-  Target,
-  GraduationCap,
-  Feather,
-  BookOpen,
+  Navigation,
+  Route,
+  CalendarCheck2,
+  ClipboardList,
+  School,
+  PencilRuler,
+  LibraryBig,
   ArrowRight,
-  TrendingUp,
-  Compass,
+  ChartNoAxesCombined,
 } from "lucide-react";
 import { useNavigate, Link } from "react-router-dom";
 import { useJornada } from "@/hooks/useJornada";
@@ -34,37 +33,37 @@ const SHORTCUTS = [
     to: "/jornada",
     label: "Continuar Jornada",
     desc: "Retome de onde parou",
-    icon: Compass,
+    icon: Route,
   },
   {
     to: "/ferramentas",
     label: "Ferramentas PCH",
     desc: "8 instrumentos vivos",
-    icon: Feather,
+    icon: PencilRuler,
   },
   {
     to: "/formacao",
     label: "Formação",
     desc: "Módulos técnicos",
-    icon: GraduationCap,
+    icon: School,
   },
   {
     to: "/biblioteca-exercicios",
     label: "Biblioteca",
     desc: "Exercícios e leituras",
-    icon: BookOpen,
+    icon: LibraryBig,
   },
   {
     to: "/dashboard",
     label: "Minha Evolução",
     desc: "Métricas e histórico",
-    icon: TrendingUp,
+    icon: ChartNoAxesCombined,
   },
   {
     to: "/prontuario-pch",
     label: "Prontuário PCH",
     desc: "Ferramenta clínica",
-    icon: Target,
+    icon: ClipboardList,
   },
 ];
 
@@ -119,11 +118,11 @@ const UserWorkspace: React.FC = () => {
           <p className="text-[10px] md:text-xs font-bold uppercase tracking-[0.4em] text-primary/70">
             {greetingByHour()}
           </p>
-          <h1 className="text-4xl md:text-6xl font-black tracking-tighter text-white leading-[0.95]">
+          <h1 className="text-3xl md:text-6xl font-black break-words text-foreground leading-[0.95]">
             Olá,{" "}
             <span className="text-primary italic capitalize">{firstName}</span>
           </h1>
-          <p className="text-sm md:text-base text-white/50 max-w-xl">
+          <p className="text-sm md:text-base text-muted-foreground max-w-xl">
             Seu espaço pessoal na jornada PCH. Continue de onde parou ou explore
             um novo caminho.
           </p>
@@ -138,19 +137,19 @@ const UserWorkspace: React.FC = () => {
           aria-label="Suas métricas"
         >
           <StatCard
-            icon={<Flame className="w-4 h-4" />}
+            icon={<CalendarCheck2 className="w-4 h-4" />}
             label="Sequência"
             value={`${badges.streak}`}
             suffix={badges.streak === 1 ? "dia" : "dias"}
             accent
           />
           <StatCard
-            icon={<Sparkles className="w-4 h-4" />}
+            icon={<Route className="w-4 h-4" />}
             label="Jornada"
             value={`${badges.jornadasPercent}%`}
           />
           <StatCard
-            icon={<GraduationCap className="w-4 h-4" />}
+            icon={<School className="w-4 h-4" />}
             label="Formação"
             value={`${badges.formacaoCompleted}/${badges.formacaoTotal}`}
           />
@@ -174,11 +173,11 @@ const UserWorkspace: React.FC = () => {
                   <p className="text-[10px] font-bold uppercase tracking-[0.3em] text-primary/70">
                     {nextSession.faseTitulo || nextSession.phaseId}
                   </p>
-                  <h3 className="text-2xl md:text-4xl font-black tracking-tight text-white leading-tight">
+                  <h3 className="text-2xl md:text-4xl font-black tracking-tight text-foreground leading-tight">
                     {nextSession.titulo}
                   </h3>
                   {nextSession.descricao && (
-                    <p className="text-sm text-white/50 line-clamp-2">
+                    <p className="text-sm text-muted-foreground line-clamp-2">
                       {nextSession.descricao}
                     </p>
                   )}
@@ -192,7 +191,7 @@ const UserWorkspace: React.FC = () => {
                     to={`/jornada/${nextSession.phaseId}/${nextSession.sessionId}`}
                     aria-label={`Continuar: ${nextSession.titulo}`}
                   >
-                    <Play className="w-5 h-5 fill-current mr-2" />
+                    <Navigation className="w-5 h-5 mr-2" />
                     <span className="font-black uppercase tracking-wider text-sm">
                       Continuar agora
                     </span>
@@ -202,10 +201,10 @@ const UserWorkspace: React.FC = () => {
             ) : (
               <div className="relative flex flex-col md:flex-row md:items-center md:justify-between gap-6">
                 <div className="space-y-2 max-w-xl">
-                  <h3 className="text-2xl md:text-3xl font-black tracking-tight text-white">
+                  <h3 className="text-2xl md:text-3xl font-black tracking-tight text-foreground">
                     Você completou todas as fases atuais
                   </h3>
-                  <p className="text-sm text-white/50">
+                  <p className="text-sm text-muted-foreground">
                     Revise seus insights ou explore ferramentas complementares.
                   </p>
                 </div>
@@ -213,7 +212,7 @@ const UserWorkspace: React.FC = () => {
                   asChild
                   variant="outline"
                   size="lg"
-                  className="rounded-full border-white/10 text-white hover:bg-white/5"
+                  className="rounded-full border-border text-foreground hover:bg-accent"
                 >
                   <Link to="/dashboard">
                     Ver evolução <ArrowRight className="ml-2 w-4 h-4" />
@@ -241,18 +240,18 @@ const UserWorkspace: React.FC = () => {
                 <PrefetchLink
                   key={s.to}
                   to={s.to}
-                  className="group glass-card p-5 md:p-6 flex flex-col gap-3 hover:bg-white/[0.04] transition-colors"
+                  className="group glass-card p-5 md:p-6 flex flex-col gap-3 hover:bg-accent transition-colors"
                 >
                   <div className="w-9 h-9 rounded-lg bg-primary/10 border border-primary/20 flex items-center justify-center text-primary group-hover:bg-primary/20 transition-colors">
                     <Icon className="w-4 h-4" />
                   </div>
                   <div className="space-y-0.5">
-                    <p className="text-sm font-semibold text-white tracking-tight">
+                    <p className="text-sm font-semibold text-foreground tracking-tight">
                       {s.label}
                     </p>
-                    <p className="text-xs text-white/40">{s.desc}</p>
+                    <p className="text-xs text-muted-foreground">{s.desc}</p>
                   </div>
-                  <ArrowRight className="w-4 h-4 text-white/30 group-hover:text-primary group-hover:translate-x-1 transition-all mt-auto" />
+                  <ArrowRight className="w-4 h-4 text-muted-foreground group-hover:text-primary group-hover:translate-x-1 transition-all mt-auto" />
                 </PrefetchLink>
               );
             })}
@@ -296,10 +295,10 @@ const SectionHeader: React.FC<{ eyebrow: string; title: string }> = ({
   title,
 }) => (
   <div className="flex flex-col gap-1.5 mb-6 md:mb-8">
-    <p className="text-[10px] md:text-xs font-bold uppercase tracking-[0.4em] text-white/30 px-1">
+    <p className="text-[10px] md:text-xs font-bold uppercase tracking-[0.4em] text-muted-foreground px-1">
       {eyebrow}
     </p>
-    <h2 className="text-2xl md:text-3xl font-black tracking-tighter text-white px-1">
+    <h2 className="text-2xl md:text-3xl font-black tracking-tighter text-foreground px-1">
       {title}
     </h2>
   </div>
@@ -314,17 +313,17 @@ const StatCard: React.FC<{
 }> = ({ icon, label, value, suffix, accent }) => (
   <div className="glass-card p-4 md:p-5 flex flex-col gap-2">
     <div
-      className={`flex items-center gap-1.5 text-[9px] md:text-[10px] font-bold uppercase tracking-[0.25em] ${accent ? "text-accent-warm" : "text-white/40"}`}
+      className={`flex items-center gap-1.5 text-[9px] md:text-[10px] font-bold uppercase tracking-[0.25em] ${accent ? "text-warm" : "text-muted-foreground"}`}
     >
       {icon}
       <span>{label}</span>
     </div>
     <div className="flex items-baseline gap-1.5">
-      <span className="text-2xl md:text-4xl font-black tracking-tighter text-white tabular-nums">
+      <span className="text-2xl md:text-4xl font-black tracking-tighter text-foreground tabular-nums">
         {value}
       </span>
       {suffix && (
-        <span className="text-xs text-white/40 font-medium">{suffix}</span>
+        <span className="text-xs text-muted-foreground font-medium">{suffix}</span>
       )}
     </div>
   </div>

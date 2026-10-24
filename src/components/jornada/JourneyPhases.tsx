@@ -3,7 +3,7 @@ import { motion, useScroll, useTransform } from "framer-motion";
 import { JORNADA_DATA, FaseJornada } from "@/lib/jornada-data";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { Play, Lock, CheckCircle2, Star, Sparkles, Flame, Moon, Sun, ChevronRight } from "lucide-react";
+import { Navigation, Lock, CheckCircle2, Sprout, Milestone, HeartHandshake, BrainCircuit, ScanEye, ChevronRight } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { PCHObjectiveId } from "@/types/objectives";
 
@@ -41,13 +41,13 @@ const SeasonBackground = ({ color }: { color: string }) => {
 
 const SeasonIcon = ({ color }: { color: string }) => {
   const icons: Record<string, any> = {
-    amber: Sun,
-    indigo: Moon,
-    emerald: Star,
-    rose: Flame,
-    purple: Sparkles,
+    amber: ScanEye,
+    indigo: BrainCircuit,
+    emerald: Sprout,
+    rose: HeartHandshake,
+    purple: Milestone,
   };
-  const Icon = icons[color] || Sparkles;
+  const Icon = icons[color] || Milestone;
   const { scrollYProgress } = useScroll();
   const rotate = useTransform(scrollYProgress, [0, 1], [0, 45]);
   const y = useTransform(scrollYProgress, [0, 1], [0, -100]);
@@ -202,7 +202,7 @@ const JourneyPhases: React.FC<JourneyPhasesProps> = ({
                         className="h-16 px-10 rounded-full bg-primary text-black hover:scale-105 transition-all duration-500 font-black uppercase tracking-[0.2em] text-sm group shadow-[0_10px_30px_rgba(234,179,8,0.3)]"
                         aria-label={`${episodesCompleted === 0 ? "Iniciar" : "Retomar"} Temporada ${fase.numero}: ${fase.titulo}. Próximo episódio: ${fase.sessoes.find(s => !completedSessions.includes(s.id))?.titulo}`}
                       >
-                        <Play className="w-5 h-5 mr-3 fill-current" />
+                        <Navigation className="w-5 h-5 mr-3" />
                         {episodesCompleted === 0 ? "Iniciar Temporada" : "Retomar a temporada"}
                         <ChevronRight className="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform" />
                       </Button>
@@ -219,7 +219,7 @@ const JourneyPhases: React.FC<JourneyPhasesProps> = ({
                           transition={{ delay: 0.5 + ridx * 0.1 }}
                           className="flex items-center gap-2 text-[10px] font-bold uppercase tracking-widest text-white/60 bg-white/5 border border-white/10 px-4 py-2 rounded-full backdrop-blur-sm"
                         >
-                          <Sparkles className="w-3 h-3 text-primary" />
+                          <Milestone className="w-3 h-3 text-primary" />
                           {res}
                         </motion.div>
                       ))}
@@ -305,7 +305,7 @@ const JourneyPhases: React.FC<JourneyPhasesProps> = ({
                         {sessionUnlocked && (
                           <div className="absolute inset-0 flex items-center justify-center z-30 opacity-0 group-hover:opacity-100 transition-all duration-500 translate-y-4 group-hover:translate-y-0">
                             <div className="w-16 h-16 rounded-full bg-primary flex items-center justify-center shadow-[0_0_30px_rgba(234,179,8,0.4)] group-hover:scale-110 transition-transform">
-                              <Play className="w-7 h-7 text-white fill-current ml-1" />
+                              <Navigation className="w-7 h-7 text-primary-foreground" />
                             </div>
                           </div>
                         )}

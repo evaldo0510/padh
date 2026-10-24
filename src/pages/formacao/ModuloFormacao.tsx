@@ -4,15 +4,15 @@ import { MODULOS, PILARES_INFO } from "@/lib/dados-clinicos";
 import { COMPLEMENTOS_ESTUDO_PCH, getEtapaEstudoPCH, NOTAS_ESTUDO_PCH } from "@/lib/estudo-curricular";
 import { useCourseProgress } from "@/hooks/useCourseProgress";
 import PageLayout from "@/components/layout/PageLayout";
-import { 
-  ArrowLeft, 
-  Clock, 
-  Target, 
-  Brain, 
-  CheckCircle2, 
-  AlertTriangle, 
+import {
+  ArrowLeft,
+  Timer,
+  ListChecks,
+  Brain,
+  ClipboardCheck,
+  AlertTriangle,
   ArrowRight,
-  ShieldCheck,
+  BadgeCheck,
   Zap,
   Star
 } from "lucide-react";
@@ -94,11 +94,11 @@ const ModuloFormacao = () => {
               
               <div className="flex flex-wrap gap-6 pt-4">
                 <div className="flex items-center gap-2">
-                  <Clock className="w-5 h-5 text-primary" />
+                  <Timer className="w-5 h-5 text-primary" />
                   <span className="font-medium">{modulo.tempoEstimado} minutos de estudo</span>
                 </div>
                 <div className="flex items-center gap-2">
-                  <ShieldCheck className="w-5 h-5 text-primary" />
+                  <BadgeCheck className="w-5 h-5 text-primary" />
                   <span className="font-medium">Certificação Inclusa</span>
                 </div>
               </div>
@@ -109,16 +109,16 @@ const ModuloFormacao = () => {
                   variant={isCompleted || !isReadyToComplete ? "outline" : "default"}
                   disabled={isCompleted || !isReadyToComplete}
                   onClick={() => completeModule(modulo.id)}
-                  className="h-14 rounded-full"
+                  className="h-auto min-h-14 whitespace-normal px-4 py-4 rounded-full"
                 >
-                  <CheckCircle2 className="mr-2 h-5 w-5" />
+                  <ClipboardCheck className="mr-2 h-5 w-5" />
                   {isCompleted
                     ? "Módulo concluído"
                     : isReadyToComplete
                       ? "Marcar módulo como concluído"
                       : `Conclua o Módulo ${modulo.numero - 1} antes de registrar este`}
                 </Button>
-                <Button asChild size="lg" variant="outline" className="h-14 rounded-full">
+                <Button asChild size="lg" variant="outline" className="h-auto min-h-14 whitespace-normal px-4 py-4 rounded-full">
                   <Link to="/curso-padh">
                     Abrir guia técnico completo <ArrowRight className="ml-2 w-5 h-5" />
                   </Link>
@@ -137,14 +137,14 @@ const ModuloFormacao = () => {
             <Card className="border-border/50 shadow-2xl bg-card/50 backdrop-blur-sm overflow-hidden sticky top-24">
               <CardHeader className="bg-primary/5 pb-6">
                   <CardTitle className="flex items-center gap-2 text-xl">
-                    <Target className="w-5 h-5 text-primary" /> Roteiro de estudo
+                    <ListChecks className="w-5 h-5 text-primary" /> Roteiro de estudo
                 </CardTitle>
               </CardHeader>
               <CardContent className="pt-6 space-y-4">
                 {modulo.atividades.map((atv) => (
                   <div key={atv.id} className="flex items-start gap-3 p-3 rounded-xl hover:bg-primary/5 transition-colors border border-transparent hover:border-primary/10">
                     <div className="w-6 h-6 rounded-full bg-primary/20 flex items-center justify-center shrink-0 mt-0.5">
-                      <CheckCircle2 className="w-4 h-4 text-primary" />
+                      <ClipboardCheck className="w-4 h-4 text-primary" />
                     </div>
                     <span className="font-medium text-sm">{atv.label}</span>
                   </div>
@@ -190,7 +190,7 @@ const ModuloFormacao = () => {
 
               <div className="space-y-6">
                 <h3 className="text-2xl font-heading font-bold flex items-center gap-3">
-                  <Target className="w-6 h-6 text-primary" /> Sinais e mapa de observação
+                  <ListChecks className="w-6 h-6 text-primary" /> Sinais e mapa de observação
                 </h3>
                 <ul className="space-y-3">
                   {modulo.sinais.map((sinal, i) => (
@@ -205,7 +205,7 @@ const ModuloFormacao = () => {
                   <ul className="space-y-2">
                     {modulo.checklistSinais.map((item, i) => (
                       <li key={`check-${i}`} className="flex items-start gap-2 text-sm text-muted-foreground">
-                        <CheckCircle2 className="w-4 h-4 text-primary shrink-0 mt-0.5" />{item}
+                        <ClipboardCheck className="w-4 h-4 text-primary shrink-0 mt-0.5" />{item}
                       </li>
                     ))}
                   </ul>
@@ -221,7 +221,7 @@ const ModuloFormacao = () => {
                 <ul className="space-y-4">
                   {modulo.cuidados.map((c, i) => (
                     <li key={i} className="flex items-start gap-3 text-sm text-muted-foreground leading-relaxed italic">
-                      <ShieldCheck className="w-4 h-4 text-primary shrink-0 mt-1" />
+                      <BadgeCheck className="w-4 h-4 text-primary shrink-0 mt-1" />
                       {c}
                     </li>
                   ))}
@@ -243,7 +243,7 @@ const ModuloFormacao = () => {
 
               <div className="space-y-6 rounded-3xl border border-border/50 bg-muted/30 p-6 md:p-8">
                 <h3 className="text-2xl font-heading font-bold flex items-center gap-3">
-                  <CheckCircle2 className="w-6 h-6 text-primary" /> Tarefas sugeridas ao paciente
+                  <ClipboardCheck className="w-6 h-6 text-primary" /> Tarefas sugeridas ao paciente
                 </h3>
                 <ul className="space-y-3">
                   {modulo.tarefasPaciente.map((tarefa, i) => (

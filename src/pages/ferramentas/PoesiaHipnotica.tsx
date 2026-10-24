@@ -1,5 +1,5 @@
 import React from "react";
-import {
+import { AudioLines,
   Sparkles,
   Brain,
   BookOpen,
@@ -39,7 +39,7 @@ const PoesiaHipnotica = () => {
     <PageLayout seo={pagesSEO.poesiaHipnotica} currentPage="Poesia Hipnótica">
       {" "}
       <FerramentaHero
-        icon={Sparkles}
+        icon={AudioLines}
         badgeLabel="Poesia Aplicada ao Desenvolvimento Humano"
         title={
           <>
@@ -109,27 +109,27 @@ const PoesiaHipnotica = () => {
               {" "}
               {[
                 {
-                  icon: "🌀",
+                  icon: Waves,
                   titulo: "Hipnose e PNL",
                   desc: "Utilizam sugestões verbais para reprogramar padrões inconscientes e estimular mudanças positivas.",
                 },
                 {
-                  icon: "🧠",
+                  icon: Brain,
                   titulo: "Psicoterapia",
                   desc: "A palavra auxilia no autoconhecimento, na ressignificação e na cura emocional.",
                 },
                 {
-                  icon: "🧘‍♂️",
+                  icon: Eye,
                   titulo: "Mindfulness e Meditação",
                   desc: "Afirmações e mantras promovem equilíbrio emocional e conexão interior.",
                 },
                 {
-                  icon: "📖",
+                  icon: BookOpen,
                   titulo: "Terapia Narrativa",
                   desc: "Reescrever histórias pessoais transforma a forma de viver a própria trajetória.",
                 },
                 {
-                  icon: "✍️",
+                  icon: PenTool,
                   titulo: "Escrita Terapêutica",
                   desc: "Escrever pensamentos e emoções auxilia no processamento emocional e na redução do estresse.",
                 },
@@ -138,9 +138,7 @@ const PoesiaHipnotica = () => {
                   {" "}
                   <CardContent className="p-5">
                     {" "}
-                    <span className="text-2xl mb-2 block">
-                      {area.icon}
-                    </span>{" "}
+                    <area.icon className="spiritual-icon-lg text-primary mb-2" aria-hidden="true" />{" "}
                     <h3 className="font-heading font-semibold text-foreground mb-1">
                       {area.titulo}
                     </h3>{" "}
