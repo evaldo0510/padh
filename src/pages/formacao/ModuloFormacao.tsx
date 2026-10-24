@@ -109,7 +109,7 @@ const ModuloFormacao = () => {
                   variant={isCompleted || !isReadyToComplete ? "outline" : "default"}
                   disabled={isCompleted || !isReadyToComplete}
                   onClick={() => completeModule(modulo.id)}
-                  className="h-14 rounded-full"
+                  className="h-auto min-h-14 whitespace-normal px-4 py-4 rounded-full"
                 >
                   <CheckCircle2 className="mr-2 h-5 w-5" />
                   {isCompleted
@@ -118,7 +118,7 @@ const ModuloFormacao = () => {
                       ? "Marcar módulo como concluído"
                       : `Conclua o Módulo ${modulo.numero - 1} antes de registrar este`}
                 </Button>
-                <Button asChild size="lg" variant="outline" className="h-14 rounded-full">
+                <Button asChild size="lg" variant="outline" className="h-auto min-h-14 whitespace-normal px-4 py-4 rounded-full">
                   <Link to="/curso-padh">
                     Abrir guia técnico completo <ArrowRight className="ml-2 w-5 h-5" />
                   </Link>
