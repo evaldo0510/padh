@@ -141,7 +141,7 @@ const LivroCurso = () => {
   const [completed, setCompleted] = useState<string[]>([]);
   const toggle = (id: string) => setExpanded(current => current.includes(id) ? current.filter(item => item !== id) : [...current, id]);
   const toggleComplete = (id: string) => setCompleted(current => current.includes(id) ? current.filter(item => item !== id) : [...current, id]);
-  const allText = chapters.map(ch => ch.title + ". " + ch.sections.map(s => s.title + ". " + s.paragraphs.join(" ") + (s.bullets || []).join(" ")).join(" ")).join(" ");
+  const allText = chapters.map(ch => ch.title + ". " + ch.sections.map(s => s.title + ". " + (s.paragraphs || []).join(" ") + (s.bullets || []).join(" ")).join(" ")).join(" ");
   return (
     <PageLayout seo={pagesSEO.livroCurso} currentPage="Livro-Curso">
       <section className="relative overflow-hidden">
