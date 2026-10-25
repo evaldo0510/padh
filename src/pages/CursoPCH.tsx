@@ -229,22 +229,22 @@ const ExerciseStep = ({
                   pillar: "P",
                   name: "Poesia",
                   action:
-                    "Escutar a linguagem do paciente para mapear seu mundo simbólico e emocional.",
-                  tool: "Módulos 1-2",
+                    "Escutar imagens, ritmo, escolhas lexicais e silêncios como expressões subjetivas. Perguntar o significado que a própria pessoa atribui às palavras; não inferir diagnóstico, trauma ou personalidade por símbolos isolados. Distinguir relato, metáfora e hipótese clínica.",
+                  tool: "Módulos 1-2 · escuta e registro",
                 },
                 {
                   pillar: "C",
                   name: "Cognitiva",
                   action:
-                    "Ressignificar crenças e padrões mentais através da metáfora e da ciência.",
-                  tool: "Módulos 3-5",
+                    "Investigar situação, pensamento, emoção, corpo e comportamento; examinar evidências e exceções; criar formulações alternativas críveis e culturalmente adequadas. A metáfora é um recurso de reflexão, não um teste projetivo validado.",
+                  tool: "Módulos 3-5 · hipótese e reavaliação",
                 },
                 {
                   pillar: "H",
                   name: "Hipnótica",
                   action:
-                    "Conduzir à libertação emocional e ao estado de fluxo transformador.",
-                  tool: "Módulos 6-8",
+                    "Usar atenção focalizada, cadência, pausas e imaginação guiada apenas com consentimento, linguagem permissiva e opção de interromper. Não prometer transe, recuperação de memórias ou libertação emocional; monitorar desconforto e priorizar estabilização.",
+                  tool: "Módulos 6-8 · atenção e integração",
                 },
               ].map((p, i) => (
                 <div
