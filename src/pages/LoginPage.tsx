@@ -74,7 +74,7 @@ const LoginPage = () => {
           email,
           password,
           options: {
-            emailRedirectTo: window.location.origin + from,
+            emailRedirectTo: `${window.location.origin}/login?next=${encodeURIComponent(from)}`,
             data: { name },
           },
         });
