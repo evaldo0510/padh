@@ -29,28 +29,31 @@ export default defineConfig(({ mode }) => ({
       },
       includeAssets: ['favicon.png', 'robots.txt', 'apple-touch-icon.png', 'logo-pwa.svg', 'pwa-192x192.png', 'pwa-512x512.png', 'maskable-icon-512x512.png', 'og-image.png', 'og-image.svg', 'pch-logo-180.png', 'pch-logo-192.png', 'pch-logo-32.png', 'pch-logo-48.png', 'pch-logo-512.png', 'pch-logo-96.png', 'pch-logo.svg', 'placeholder.svg'],
       manifest: {
-        name: 'P.A.D.H. — Poesia Aplicada ao Desenvolvimento Humano',
-        short_name: 'P.A.D.H.',
-        description: 'Metodologia que une neurociência, hipnose ericksoniana e linguagem poética para transformação interior.',
-        theme_color: '#8B5CF6',
-        background_color: '#ffffff',
+        id: '/',
+        name: 'PADH — Poesia Aplicada ao Desenvolvimento Humano',
+        short_name: 'PADH',
+        description: 'A palavra como instrumento de consciência, expressão e transformação.',
+        lang: 'pt-BR',
+        theme_color: '#170D2B',
+        background_color: '#170D2B',
         display: 'standalone',
-        orientation: 'portrait',
         scope: '/',
         start_url: '/',
         icons: [
           {
-            src: 'pwa-192x192.png',
+            src: '/pwa-192x192.png',
             sizes: '192x192',
-            type: 'image/png'
+            type: 'image/png',
+            purpose: 'any'
           },
           {
-            src: 'pwa-512x512.png',
+            src: '/pwa-512x512.png',
             sizes: '512x512',
-            type: 'image/png'
+            type: 'image/png',
+            purpose: 'any'
           },
           {
-            src: 'maskable-icon-512x512.png',
+            src: '/maskable-icon-512x512.png',
             sizes: '512x512',
             type: 'image/png',
             purpose: 'maskable'
