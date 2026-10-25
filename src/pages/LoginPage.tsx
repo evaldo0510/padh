@@ -45,6 +45,7 @@ const LoginPage = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [isGoogleLoading, setIsGoogleLoading] = useState(false);
   const [formError, setFormError] = useState('');
+  const [showSignupCta, setShowSignupCta] = useState(false);
   const [confirmationEmail, setConfirmationEmail] = useState('');
   const requestedNext = getSafeReturnPath(searchParams.get('next'));
   const stateFrom = (location.state as { from?: unknown } | null)?.from;
@@ -66,6 +67,7 @@ const LoginPage = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setFormError('');
+    setShowSignupCta(false);
     setConfirmationEmail('');
     setIsLoading(true);
     try {
@@ -93,8 +95,21 @@ const LoginPage = () => {
         navigate(from, { replace: true });
       }
     } catch (error: unknown) {
-      const message = error instanceof Error ? error.message : 'Verifique seus dados e tente novamente.';
-      setFormError(message);
+      const rawMessage = error instanceof Error ? error.message : '';
+      const normalizedMessage = rawMessage.toLowerCase();
+      const isSigninCredentialError = mode === 'signin' && (
+        normalizedMessage.includes('invalid login credentials') ||
+        normalizedMessage.includes('user not found') ||
+        normalizedMessage.includes('email not confirmed')
+      );
+      if (isSigninCredentialError) {
+        setFormError(normalizedMessage.includes('email not confirmed')
+          ? 'Este e-mail ainda precisa ser confirmado. Verifique sua caixa de entrada e spam.'
+          : 'Não foi possível entrar com esses dados. Se você ainda não tem uma conta, pode criar uma agora usando este e-mail.');
+        setShowSignupCta(!normalizedMessage.includes('email not confirmed'));
+      } else {
+        setFormError(rawMessage || 'Verifique seus dados e tente novamente.');
+      }
     } finally {
       setIsLoading(false);
     }
@@ -121,6 +136,7 @@ const LoginPage = () => {
   const toggleMode = () => {
     setMode((current) => current === 'signin' ? 'signup' : 'signin');
     setFormError('');
+    setShowSignupCta(false);
     setConfirmationEmail('');
   };
 
@@ -157,6 +173,21 @@ const LoginPage = () => {
                 <p role="alert" aria-live="assertive" className="mb-4 rounded-lg border border-destructive/30 bg-destructive/10 p-3 text-sm text-destructive">
                   {formError}
                 </p>
+              )}
+              {showSignupCta && mode === 'signin' && (
+                <Button
+                  type="button"
+                  variant="outline"
+                  className="mb-4 w-full"
+                  onClick={() => {
+                    setMode('signup');
+                    setShowSignupCta(false);
+                    setFormError('');
+                    setConfirmationEmail('');
+                  }}
+                >
+                  Criar conta com este e-mail
+                </Button>
               )}
               {confirmationEmail && (
                 <p role="status" aria-live="polite" className="mb-4 rounded-lg border border-primary/20 bg-primary/5 p-3 text-sm leading-relaxed text-foreground">
