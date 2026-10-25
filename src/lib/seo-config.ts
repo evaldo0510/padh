@@ -1,4 +1,4 @@
-export const SITE_URL = "https://padhpoesia.lovable.app";
+export const SITE_URL = "https://padhpoesia.vercel.app";
 
 export interface PageSEO {
   title: string;
