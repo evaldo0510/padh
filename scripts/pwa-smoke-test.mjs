@@ -7,11 +7,11 @@
  *  4. APP_VERSION do bundle bate com o esperado (opcional via env)
  *
  * Uso:
- *   node scripts/pwa-smoke-test.mjs https://padhpoesia.lovable.app
- *   EXPECTED_VERSION=1.2.0 node scripts/pwa-smoke-test.mjs https://padhpoesia.lovable.app
+ *   node scripts/pwa-smoke-test.mjs https://padhpoesia.vercel.app
+ *   EXPECTED_VERSION=1.2.0 node scripts/pwa-smoke-test.mjs https://padhpoesia.vercel.app
  */
 
-const url = process.argv[2] || "https://padhpoesia.lovable.app";
+const url = process.argv[2] || "https://padhpoesia.vercel.app";
 const expected = process.env.EXPECTED_VERSION;
 
 const results = [];
