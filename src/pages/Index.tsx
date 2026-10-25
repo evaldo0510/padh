@@ -36,6 +36,7 @@ import { pagesSEO } from "@/lib/seo-config";
 import TextReader from "@/components/ui/text-reader";
 import UserWorkspace from "@/components/dashboard/UserWorkspace";
 import { supabase } from "@/integrations/supabase/client";
+import Logo from "@/components/ui/Logo";
 
 const DEBUG_FLICKER = import.meta.env.DEV;
 const flickerLog = (label: string, extra?: Record<string, unknown>) => {
@@ -184,15 +185,9 @@ const Index = () => {
         />
         <div className="relative container mx-auto px-6 md:px-8 py-24 z-10">
           <div className="max-w-4xl mx-auto text-center animate-fade-in-up space-y-10">
-            {/* Hero Image */}
-            <div className="mx-auto w-32 h-32 md:w-40 md:h-40 mb-4">
-              <img
-                src={heroImage}
-                alt="PCH — Poesia Cognitiva Hipnótica"
-                className="w-full h-full object-contain drop-shadow-lg"
-                fetchPriority="high"
-                decoding="async"
-              />
+            {/* Selected PADH brand mark */}
+            <div className="mx-auto w-32 h-32 md:w-40 md:h-40 mb-4 flex items-center justify-center drop-shadow-lg" aria-label="PADH — Poesia Aplicada ao Desenvolvimento Humano">
+              <Logo size="xl" className="w-full h-full" />
             </div>
             {/* Tagline */}
             <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-primary/20 bg-primary/5 text-primary text-sm font-medium">
