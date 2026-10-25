@@ -7,7 +7,7 @@ import PageLayout from "@/components/layout/PageLayout";
 import { pagesSEO } from "@/lib/seo-config";
 import TextReader from "@/components/ui/text-reader";
 
-type Chapter = { id: string; title: string; subtitle: string; icon: React.ElementType; sections: { title: string; paragraphs: string[]; bullets?: string[] }[]; practice: string[]; reflection: string[] };
+type Chapter = { id: string; title: string; subtitle: string; icon: React.ElementType; sections: { title: string; paragraphs?: string[]; bullets?: string[] }[]; practice: string[]; reflection: string[] };
 const chapters: Chapter[] = [
   {
     id: "capitulo-1", title: "Capítulo 1 — O que é a Poesia Cognitivo-Hipnótica?", subtitle: "Conceitos, pilares, limites e postura de trabalho", icon: BookOpen,
@@ -141,7 +141,7 @@ const LivroCurso = () => {
   const [completed, setCompleted] = useState<string[]>([]);
   const toggle = (id: string) => setExpanded(current => current.includes(id) ? current.filter(item => item !== id) : [...current, id]);
   const toggleComplete = (id: string) => setCompleted(current => current.includes(id) ? current.filter(item => item !== id) : [...current, id]);
-  const allText = chapters.map(ch => ch.title + ". " + ch.sections.map(s => s.title + ". " + s.paragraphs.join(" ") + (s.bullets || []).join(" ")).join(" ")).join(" ");
+  const allText = chapters.map(ch => ch.title + ". " + ch.sections.map(s => s.title + ". " + (s.paragraphs ?? []).join(" ") + (s.bullets || []).join(" ")).join(" ")).join(" ");
   return (
     <PageLayout seo={pagesSEO.livroCurso} currentPage="Livro-Curso">
       <section className="relative overflow-hidden">
@@ -184,7 +184,7 @@ const LivroCurso = () => {
                 {isOpen && <CardContent className="pt-0 pb-7 px-5 md:px-8 space-y-7">
                   {chapter.sections.map((section, sectionIndex) => <section key={section.title} className="space-y-3">
                     <h3 className="text-lg font-heading font-semibold text-foreground">{section.title}</h3>
-                    {section.paragraphs.map((paragraph, i) => <p key={i} className="text-sm md:text-base text-muted-foreground leading-7">{paragraph}</p>)}
+                    {(section.paragraphs ?? []).map((paragraph, i) => <p key={i} className="text-sm md:text-base text-muted-foreground leading-7">{paragraph}</p>)}
                     {section.bullets && <ul className="list-disc pl-6 space-y-2 text-sm md:text-base text-muted-foreground leading-7">{section.bullets.map((bullet, i) => <li key={i}>{bullet}</li>)}</ul>}
                     {sectionIndex < chapter.sections.length - 1 && <Separator className="mt-5 opacity-50" />}
                   </section>)}
