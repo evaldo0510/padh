@@ -2263,6 +2263,38 @@ const ExerciseStep = ({
                 </AccordionContent>{" "}
               </AccordionItem>{" "}
             </Accordion>{" "}
+            {/* Encerramento pedagógico da trilha PCH */}
+            <section aria-labelledby="encerramento-pch" className="mt-16 rounded-2xl border border-primary/20 bg-primary/[0.04] p-6 md:p-10">
+              <div className="max-w-3xl mx-auto space-y-5">
+                <div className="flex items-center gap-2 text-primary text-sm font-semibold">
+                  <CheckCircle2 className="h-5 w-5" />
+                  Síntese e próximos passos
+                </div>
+                <h2 id="encerramento-pch" className="text-2xl md:text-3xl font-heading font-bold text-foreground">
+                  Encerramento do percurso PCH
+                </h2>
+                <p className="text-muted-foreground leading-7">
+                  Ao concluir esta trilha, retome os três pilares: escutar a linguagem poética sem impor significados; investigar pensamentos com curiosidade e evidências; e conduzir práticas de atenção apenas com consentimento, autonomia e possibilidade de interrupção.
+                </p>
+                <div className="grid sm:grid-cols-3 gap-3">
+                  <div className="rounded-xl border border-border/60 bg-background/70 p-4">
+                    <p className="font-semibold text-foreground mb-1">1. Observar</p>
+                    <p className="text-sm text-muted-foreground">Registre palavras, emoções e contexto sem transformar metáforas em diagnóstico.</p>
+                  </div>
+                  <div className="rounded-xl border border-border/60 bg-background/70 p-4">
+                    <p className="font-semibold text-foreground mb-1">2. Investigar</p>
+                    <p className="text-sm text-muted-foreground">Separe fatos de interpretações e procure alternativas realistas, sem positividade forçada.</p>
+                  </div>
+                  <div className="rounded-xl border border-border/60 bg-background/70 p-4">
+                    <p className="font-semibold text-foreground mb-1">3. Integrar</p>
+                    <p className="text-sm text-muted-foreground">Escolha um passo pequeno, avalie seu efeito e adapte ou interrompa a prática se causar desconforto.</p>
+                  </div>
+                </div>
+                <p className="text-sm text-muted-foreground leading-6">
+                  Este percurso é educativo e não certifica competência clínica. A PCH, como combinação metodológica específica, não deve ser apresentada como clinicamente validada sem estudos diretos. A aplicação profissional exige formação, consentimento, supervisão quando pertinente e atuação dentro das normas da profissão.
+                </p>
+              </div>
+            </section>
             {/* CTA final */}
             <div className="text-center mt-16 py-12">
               {" "}
