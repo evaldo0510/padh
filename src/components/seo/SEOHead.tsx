@@ -1,6 +1,6 @@
 import { Helmet } from "react-helmet-async";
 
-const SITE_URL = "https://padhpoesia.lovable.app";
+const SITE_URL = "https://padhpoesia.vercel.app";
 const SITE_NAME = "PCH — Poesia Cognitiva Hipnótica";
 const DEFAULT_IMAGE = `${SITE_URL}/og-image.svg`;
 
