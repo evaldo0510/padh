@@ -1,0 +1,20 @@
+{
+  "id": "/",
+  "name": "PADH — Poesia Aplicada ao Desenvolvimento Humano",
+  "short_name": "PADH",
+  "description": "A palavra como instrumento de consciência, expressão e transformação.",
+  "lang": "pt-BR",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "background_color": "#170D2B",
+  "theme_color": "#170D2B",
+  "icons": [
+    {
+      "src": "/logo-pwa.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    }
+  ]
+}
