@@ -73,7 +73,9 @@ jobs:
       - name: Export proposed changes as patch
         if: always()
         run: |
-          git diff --binary > pch-fixer.patch
+          # Include newly-created files in the diff without staging their contents.
+          git add -N -- .
+          git diff --binary -- . ':!pch-fixer-report.md' ':!pch-fixer-final-message.md' ':!pch-fixer.patch' ':!pch-fixer-no-changes.txt' > pch-fixer.patch
           if [ -s pch-fixer.patch ]; then
             echo "Patch generated."
           else
