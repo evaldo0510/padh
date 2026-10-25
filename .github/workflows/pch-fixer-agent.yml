@@ -1,0 +1,155 @@
+name: PCH Fixer Agent
+
+on:
+  workflow_dispatch:
+  workflow_run:
+    workflows: ["CI"]
+    types: [completed]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: pch-fixer-${{ github.event.workflow_run.head_sha || github.sha }}
+  cancel-in-progress: true
+
+jobs:
+  repair:
+    name: Diagnose and prepare a verified patch
+    if: >-
+      vars.PCH_FIXER_ENABLED == 'true' &&
+      (
+        (github.event_name == 'workflow_dispatch' && github.ref == 'refs/heads/main') ||
+        (
+          github.event_name == 'workflow_run' &&
+          github.event.workflow_run.conclusion == 'failure' &&
+          github.event.workflow_run.head_branch == 'main' &&
+          github.event.workflow_run.head_repository.full_name == github.repository
+        )
+      )
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    outputs:
+      base_sha: ${{ steps.base.outputs.sha }}
+    steps:
+      - name: Resolve trusted base commit
+        id: base
+        env:
+          EVENT_NAME: ${{ github.event_name }}
+          FAILED_SHA: ${{ github.event.workflow_run.head_sha }}
+          DISPATCH_SHA: ${{ github.sha }}
+        run: |
+          if [ "$EVENT_NAME" = "workflow_run" ]; then
+            echo "sha=$FAILED_SHA" >> "$GITHUB_OUTPUT"
+          else
+            echo "sha=$DISPATCH_SHA" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Checkout trusted repository commit
+        uses: actions/checkout@v5
+        with:
+          ref: ${{ steps.base.outputs.sha }}
+          persist-credentials: false
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run PCH Fixer through Codex
+        uses: openai/codex-action@v1
+        with:
+          openai-api-key: ${{ secrets.OPENAI_API_KEY }}
+          prompt-file: .github/codex/prompts/fix-ci.md
+          output-file: pch-fixer-final-message.md
+          permission-profile: ":workspace"
+          safety-strategy: drop-sudo
+
+      - name: Export proposed changes as patch
+        if: always()
+        run: |
+          # Include newly-created files in the diff without staging their contents.
+          git add -N -- .
+          git diff --binary -- . ':!pch-fixer-report.md' ':!pch-fixer-final-message.md' ':!pch-fixer.patch' ':!pch-fixer-no-changes.txt' > pch-fixer.patch
+          if [ -s pch-fixer.patch ]; then
+            echo "Patch generated."
+          else
+            echo "No source changes were produced."
+            : > pch-fixer-no-changes.txt
+          fi
+
+      - name: Upload patch and report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: pch-fixer-output-${{ github.run_id }}
+          path: |
+            pch-fixer.patch
+            pch-fixer-report.md
+            pch-fixer-final-message.md
+            pch-fixer-no-changes.txt
+          if-no-files-found: warn
+          retention-days: 7
+
+  open-pull-request:
+    name: Open a reviewable repair pull request
+    needs: repair
+    if: >-
+      needs.repair.result == 'success' &&
+      vars.PCH_FIXER_ENABLED == 'true'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
+    steps:
+      - name: Checkout latest main before applying the proposed patch
+        uses: actions/checkout@v5
+        with:
+          ref: main
+          persist-credentials: true
+
+      - name: Download proposed patch
+        uses: actions/download-artifact@v4
+        with:
+          name: pch-fixer-output-${{ github.run_id }}
+          path: pch-fixer-output
+
+      - name: Apply patch if one was generated
+        id: patch
+        run: |
+          if [ ! -s pch-fixer-output/pch-fixer.patch ]; then
+            echo "has_changes=false" >> "$GITHUB_OUTPUT"
+            echo "No patch to apply; no pull request will be opened."
+            exit 0
+          fi
+          git apply --check pch-fixer-output/pch-fixer.patch
+          git apply pch-fixer-output/pch-fixer.patch
+          echo "has_changes=true" >> "$GITHUB_OUTPUT"
+
+      - name: Open pull request for review
+        if: steps.patch.outputs.has_changes == 'true'
+        uses: peter-evans/create-pull-request@v7
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          branch: bot/pch-fixer-${{ github.run_id }}
+          delete-branch: true
+          title: "fix: PCH Fixer automated repair"
+          commit-message: "fix: apply PCH Fixer proposed repair"
+          body: |
+            ## PCH Fixer Agent — proposed repair
+
+            This pull request was generated after an explicit manual run or a failed CI run on `main`.
+
+            - The agent was instructed to identify root causes, make the smallest safe correction, and run relevant checks.
+            - Review the diff and the attached workflow artifact before merging.
+            - A generated patch is a proposal, not proof of correctness; CI must pass and a human must review it.
+            - The workflow does not merge or deploy this pull request automatically.
+
+            See the `PCH Fixer Agent` workflow run for the diagnostic report.
+          base: main
+          draft: true
