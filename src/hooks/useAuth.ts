@@ -30,14 +30,32 @@ export const useAuth = () => {
       }
     };
 
-    const { data: sub } = supabase.auth.onAuthStateChange((_e, session) => {
+    const { data: sub } = supabase.auth.onAuthStateChange((_event, session) => {
       apply(session);
+      if (mounted) setLoading(false);
     });
 
-    supabase.auth.getSession().then(({ data: { session } }) => {
-      apply(session);
-      setLoading(false);
-    });
+    // Always release the loading state, even if session restoration fails.
+    // The auth-state listener also handles sessions restored or changed later.
+    void supabase.auth
+      .getSession()
+      .then(({ data: { session }, error }) => {
+        if (!mounted) return;
+        if (error) {
+          console.error("Supabase getSession failed:", error.message);
+          setUser(null);
+        } else {
+          apply(session);
+        }
+      })
+      .catch((error: unknown) => {
+        if (!mounted) return;
+        console.error("Supabase getSession failed:", error);
+        setUser(null);
+      })
+      .finally(() => {
+        if (mounted) setLoading(false);
+      });
 
     return () => {
       mounted = false;
