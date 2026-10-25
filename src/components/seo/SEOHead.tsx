@@ -2,7 +2,7 @@ import { Helmet } from "react-helmet-async";
 
 const SITE_URL = "https://padhpoesia.lovable.app";
 const SITE_NAME = "PCH — Poesia Cognitiva Hipnótica";
-const DEFAULT_IMAGE = `${SITE_URL}/og-image.png`;
+const DEFAULT_IMAGE = `${SITE_URL}/og-image.svg`;
 
 const breadcrumbLabels: Record<string, string> = {
   "/": "Início",
