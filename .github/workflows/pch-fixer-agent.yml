@@ -105,10 +105,10 @@ jobs:
       contents: write
       pull-requests: write
     steps:
-      - name: Checkout the same trusted base commit
+      - name: Checkout latest main before applying the proposed patch
         uses: actions/checkout@v5
         with:
-          ref: ${{ needs.repair.outputs.base_sha }}
+          ref: main
           persist-credentials: true
 
       - name: Download proposed patch
