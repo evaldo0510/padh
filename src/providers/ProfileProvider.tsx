@@ -140,11 +140,32 @@ export const ProfileProvider: React.FC<{ children: React.ReactNode }> = ({ child
           .select()
           .single();
 
-        if (insertError) throw insertError;
-        setProfile(newProfile as Profile);
-        setSource("database");
-        setLastSync(new Date());
-        addLog({ action: "Perfil criado", source: "local", objectives: validatedLocal });
+        // Another mounted provider/tab may have created this user's profile
+        // after the initial read. Recover from that unique-key race by loading
+        // the existing row instead of treating registration as a profile failure.
+        if (insertError?.code === "23505") {
+          const { data: existingProfile, error: reloadError } = await supabase
+            .from("profiles")
+            .select("*")
+            .eq("user_id", user.id)
+            .maybeSingle();
+          if (reloadError) throw reloadError;
+          if (!existingProfile) throw insertError;
+          setProfile(existingProfile as Profile);
+          setSource("database");
+          setLastSync(new Date());
+          addLog({
+            action: "Perfil existente recuperado",
+            source: "database",
+            objectives: (existingProfile as Profile).objectives || [],
+          });
+        } else {
+          if (insertError) throw insertError;
+          setProfile(newProfile as Profile);
+          setSource("database");
+          setLastSync(new Date());
+          addLog({ action: "Perfil criado", source: "local", objectives: validatedLocal });
+        }
       }
     } catch (err) {
       console.error("fetchProfile error", err);
