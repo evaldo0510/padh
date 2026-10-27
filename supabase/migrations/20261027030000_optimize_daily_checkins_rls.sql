@@ -11,17 +11,17 @@ DROP POLICY IF EXISTS "Users can view their own checkins"
 
 ALTER POLICY "Users can create their own check-ins"
   ON public.daily_checkins
-  TO authenticated
+  TO public
   WITH CHECK ((SELECT auth.uid()) = user_id);
 
 ALTER POLICY "Users can view their own check-ins"
   ON public.daily_checkins
-  TO authenticated
+  TO public
   USING ((SELECT auth.uid()) = user_id);
 
 ALTER POLICY "Users can update their own check-ins"
   ON public.daily_checkins
-  TO authenticated
+  TO public
   USING ((SELECT auth.uid()) = user_id)
   WITH CHECK ((SELECT auth.uid()) = user_id);
 
