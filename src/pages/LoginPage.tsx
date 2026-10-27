@@ -10,6 +10,9 @@ import { useNavigate, useLocation } from 'react-router-dom';
 import { toast } from 'sonner';
 import { supabase } from '@/integrations/supabase/client';
 
+// Keep auth callbacks on the canonical production domain, even when users open an old deployment.
+const AUTH_CANONICAL_ORIGIN = 'https://padhpoesia.vercel.app';
+
 
 const getSafeReturnPath = (value: unknown): string | null => {
   if (
@@ -74,7 +77,7 @@ const LoginPage = () => {
           email,
           password,
           options: {
-            emailRedirectTo: window.location.origin + from,
+            emailRedirectTo: AUTH_CANONICAL_ORIGIN + from,
             data: { name },
           },
         });
@@ -107,7 +110,7 @@ const LoginPage = () => {
       const { error } = await supabase.auth.signInWithOAuth({
         provider: 'google',
         options: {
-          redirectTo: `${window.location.origin}/login?next=${encodeURIComponent(from)}`,
+          redirectTo: `${AUTH_CANONICAL_ORIGIN}/login?next=${encodeURIComponent(from)}`,
         },
       });
       if (error) throw error;
