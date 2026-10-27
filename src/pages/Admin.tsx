@@ -23,17 +23,11 @@ const Admin = () => {
         const { data: tables, error: tableError } = await supabase.rpc('get_tables_security' as any);
         
         if (tableError) {
-          console.error("Error fetching security status", tableError);
-          // Fallback static list for protected tables
-          const protectedTables = ['episode_favorites', 'episode_progress', 'exercise_responses', 'purchases'];
-          const status = protectedTables.map(name => ({
-            tablename: name,
-            rowsecurity: true, 
-            policies: ["Owner access only"]
-          }));
-          setSecurityStatus(status as TableSecurity[]);
+          // Never report a static "secure" status when the database could not be inspected.
+          console.error("Unable to verify database security status", tableError);
+          setSecurityStatus([]);
         } else {
-          setSecurityStatus((tables as any) || []);
+          setSecurityStatus(Array.isArray(tables) ? (tables as TableSecurity[]) : []);
         }
       } catch (e) {
         console.error(e);
@@ -91,6 +85,10 @@ const Admin = () => {
                   <div className="grid sm:grid-cols-2 gap-4">
                     {loading ? (
                       <p>Carregando status de segurança...</p>
+                    ) : securityStatus.length === 0 ? (
+                      <div role="status" className="sm:col-span-2 rounded-xl border border-amber-500/30 bg-amber-500/5 p-4 text-sm text-muted-foreground">
+                        Não foi possível verificar a segurança do banco agora. O status não será presumido como seguro; tente novamente mais tarde ou verifique a função de auditoria no Supabase.
+                      </div>
                     ) : securityStatus.map((table) => (
                       <div key={table.tablename} className="p-4 rounded-xl border border-border bg-background flex items-center justify-between">
                         <div className="flex items-center gap-3">
