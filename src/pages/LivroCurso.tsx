@@ -141,7 +141,8 @@ const LivroCurso = () => {
   const [completed, setCompleted] = useState<string[]>([]);
   const toggle = (id: string) => setExpanded(current => current.includes(id) ? current.filter(item => item !== id) : [...current, id]);
   const toggleComplete = (id: string) => setCompleted(current => current.includes(id) ? current.filter(item => item !== id) : [...current, id]);
-  const safeChapters = Array.isArray(chapters) ? chapters : [];\n  const allText = safeChapters.map(ch => `${ch.title || ""}. ${(Array.isArray(ch.sections) ? ch.sections : []).map(s => `${s.title || ""}. ${(Array.isArray(s.paragraphs) ? s.paragraphs : []).join(" ")} ${(Array.isArray(s.bullets) ? s.bullets : []).join(" ")}`).join(" ")}`).join(" ");
+  const safeChapters = Array.isArray(chapters) ? chapters : [];
+  const allText = safeChapters.map(ch => `${ch.title || ""}. ${(Array.isArray(ch.sections) ? ch.sections : []).map(s => `${s.title || ""}. ${(Array.isArray(s.paragraphs) ? s.paragraphs : []).join(" ")} ${(Array.isArray(s.bullets) ? s.bullets : []).join(" ")}`).join(" ")}`).join(" ");
   return (
     <PageLayout seo={pagesSEO.livroCurso} currentPage="Livro-Curso">
       <section className="relative overflow-hidden">
