@@ -57,7 +57,7 @@ const Admin = () => {
               Painel Administrativo
             </h1>
             <Badge variant="outline" className="bg-primary/5 text-primary border-primary/20 gap-2 px-3 py-1">
-              <ShieldCheck className="w-3 h-3" /> Sistema Protegido
+              <ShieldCheck className="w-3 h-3" /> Acesso administrativo
             </Badge>
           </div>
 
@@ -118,7 +118,7 @@ const Admin = () => {
 
             {/* Main Admin Links */}
             <div className="grid sm:grid-cols-3 gap-6">
-              <div className="p-6 rounded-xl border border-border/50 bg-card hover:border-primary/30 transition-colors cursor-pointer group">
+              <div className="p-6 rounded-xl border border-border/50 bg-card transition-colors">
                 <h3 className="font-heading font-semibold text-foreground mb-2 group-hover:text-primary">
                   Conteúdo
                 </h3>
@@ -126,7 +126,7 @@ const Admin = () => {
                   Gerenciar jornadas e episódios
                 </p>
               </div>
-              <div className="p-6 rounded-xl border border-border/50 bg-card hover:border-primary/30 transition-colors cursor-pointer group">
+              <div className="p-6 rounded-xl border border-border/50 bg-card transition-colors">
                 <h3 className="font-heading font-semibold text-foreground mb-2 group-hover:text-primary">
                   Usuários
                 </h3>
@@ -134,7 +134,7 @@ const Admin = () => {
                   Visualizar progresso e alunos
                 </p>
               </div>
-              <div className="p-6 rounded-xl border border-border/50 bg-card hover:border-primary/30 transition-colors cursor-pointer group">
+              <div className="p-6 rounded-xl border border-border/50 bg-card transition-colors">
                 <h3 className="font-heading font-semibold text-foreground mb-2 group-hover:text-primary">
                   Vendas
                 </h3>
