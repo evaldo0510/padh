@@ -122,7 +122,7 @@ const LoginPage = () => {
       const { error } = await supabase.auth.signInWithOAuth({
         provider: 'google',
         options: {
-          redirectTo: `${window.location.origin}/login?next=${encodeURIComponent(from)}`,
+          redirectTo: `${window.location.hostname === 'padh-two.vercel.app' ? 'https://padhpoesia.vercel.app' : window.location.origin}/login?next=${encodeURIComponent(from)}`,
         },
       });
       if (error) throw error;
