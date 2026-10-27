@@ -12,7 +12,7 @@ import { useAuth } from "@/hooks/useAuth";
 export function useIsAdmin() {
   // A conta precisa corresponder ao e-mail explicitamente configurado no ambiente
   // e também possuir a role admin no banco. Não confiar apenas em dados do navegador.
-  const configuredAdminEmail = "mentefelizterapias@gmail.com";
+  const configuredAdminEmail = (import.meta.env.VITE_PADH_ADMIN_EMAIL ?? "mentefelizterapias@gmail.com").trim().toLowerCase();
   const { user, loading: authLoading } = useAuth();
 
   const { data, isLoading, error } = useQuery({
