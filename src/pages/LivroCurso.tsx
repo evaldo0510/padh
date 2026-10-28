@@ -341,7 +341,7 @@ const LivroCurso = () => {
       }
 
       const { data, error } = await supabase
-        .from("padh_livro_curso_progress" as any)
+        .from("padh_livro_curso_progress")
         .select("chapter_id")
         .eq("user_id", authData.user.id)
         .eq("completed", true);
@@ -353,7 +353,7 @@ const LivroCurso = () => {
         return;
       }
 
-      setCompleted(Array.isArray(data) ? data.map((row: { chapter_id: string }) => row.chapter_id) : []);
+      setCompleted(Array.isArray(data) ? data.map(row => row.chapter_id) : []);
       setProgressLoaded(true);
     };
 
@@ -373,7 +373,7 @@ const LivroCurso = () => {
 
       if (wasCompleted) {
         const { error } = await supabase
-          .from("padh_livro_curso_progress" as any)
+          .from("padh_livro_curso_progress")
           .delete()
           .eq("user_id", authData.user.id)
           .eq("chapter_id", id);
@@ -381,7 +381,7 @@ const LivroCurso = () => {
         setCompleted(current => current.filter(chapterId => chapterId !== id));
       } else {
         const { error } = await supabase
-          .from("padh_livro_curso_progress" as any)
+          .from("padh_livro_curso_progress")
           .upsert({
             user_id: authData.user.id,
             chapter_id: id,
