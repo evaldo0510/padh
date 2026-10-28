@@ -183,11 +183,11 @@ const LivroCurso = () => {
                   {isDone && <CheckCircle2 className="h-5 w-5 text-primary shrink-0" />}<ChevronDown className={"h-5 w-5 text-muted-foreground shrink-0 transition-transform " + (isOpen ? "rotate-180" : "")} />
                 </button>
                 {isOpen && <CardContent className="pt-0 pb-7 px-5 md:px-8 space-y-7">
-                  {(Array.isArray(chapter.sections) ? chapter.sections : []).map((section, sectionIndex) => <section key={section.title} className="space-y-3">
+                  {(Array.isArray(chapter.sections) ? chapter.sections : []).map((section, sectionIndex, safeSections) => <section key={section.title} className="space-y-3">
                     <h3 className="text-lg font-heading font-semibold text-foreground">{section.title}</h3>
                     {(Array.isArray(section.paragraphs) ? section.paragraphs : []).map((paragraph, i) => <p key={i} className="text-sm md:text-base text-muted-foreground leading-7">{paragraph}</p>)}
                     {Array.isArray(section.bullets) && section.bullets.length > 0 && <ul className="list-disc pl-6 space-y-2 text-sm md:text-base text-muted-foreground leading-7">{(Array.isArray(section.bullets) ? section.bullets : []).map((bullet, i) => <li key={i}>{bullet}</li>)}</ul>}
-                    {sectionIndex < chapter.sections.length - 1 && <Separator className="mt-5 opacity-50" />}
+                    {sectionIndex < safeSections.length - 1 && <Separator className="mt-5 opacity-50" />}
                   </section>)}
                   <div className="rounded-xl border border-primary/20 bg-primary/[0.04] p-5 space-y-4">
                     <h3 className="font-heading font-semibold text-foreground flex items-center gap-2"><Lightbulb className="h-5 w-5 text-primary" /> Prática guiada</h3>
