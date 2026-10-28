@@ -286,6 +286,16 @@ const chapters: Chapter[] = [
         "Verificar a referência original, a metodologia, a amostra, as limitações e a replicação antes de publicar uma afirmação.",
         "Quando a evidência não for suficiente, declarar a incerteza em vez de preencher a lacuna com linguagem neurocientífica."
       ]},
+      { title: "5.9. Síntese e perguntas de revisão", paragraphs: [
+        "O leitor poético não é um cérebro que precisa ser decifrado, mas uma pessoa que lê a partir de linguagem, atenção, corpo, contexto e experiência. O mapa proposto neste capítulo ajuda a formular perguntas sobre o processo de leitura; não localiza emoções em pontos fixos nem transforma metáforas em exames.",
+        "A leitura pode ser significativa mesmo quando não produz mudança perceptível. A qualidade da experiência está em poder observar, interpretar, discordar e escolher livremente — com curiosidade e sem promessas que ultrapassem a evidência."
+      ], bullets: [
+        "Por que “mapa cerebral” é uma metáfora didática neste capítulo, e não um mapa anatômico individual?",
+        "Como diferenciar o que o poema apresenta da associação que o leitor acrescenta?",
+        "Por que uma emoção durante a leitura não constitui diagnóstico?",
+        "Que evidência seria necessária para sustentar uma afirmação de eficácia clínica da PCH?",
+        "Como adaptar ou interromper o exercício respeitando a autonomia do leitor?"
+      ]}
       { title: "5.10. O mapa é um ciclo, não uma sequência obrigatória", paragraphs: [
         "Os cinco processos apresentados neste capítulo são categorias didáticas para observar a leitura, não etapas rígidas nem compartimentos independentes. A atenção pode mudar quando uma palavra ganha outro sentido; uma associação pode levar o leitor de volta ao texto; o ritmo pode alterar o que ele percebe; e o contexto pode modificar a interpretação. O leitor pode avançar, voltar, pausar ou encerrar sem completar todas as etapas.",
         "Uma forma prática de representar o percurso é: orientar-se no texto → notar um detalhe → descrever o que está presente → reconhecer associações próprias → testar outra interpretação → escolher se deseja continuar. As setas indicam possibilidades de circulação, não uma lei sobre o cérebro. Não se deve atribuir cada movimento a uma região cerebral específica sem evidência adequada.",
@@ -310,16 +320,6 @@ const chapters: Chapter[] = [
         "Não avalie a qualidade da leitura pela intensidade emocional, pelo grau de exposição pessoal ou pela concordância com o facilitador.",
         "Encerre com uma escolha livre: compartilhar uma observação sobre o poema, guardar uma pergunta, mudar de atividade ou não tirar nenhuma conclusão."
       ]},
-      { title: "5.9. Síntese e perguntas de revisão", paragraphs: [
-        "O leitor poético não é um cérebro que precisa ser decifrado, mas uma pessoa que lê a partir de linguagem, atenção, corpo, contexto e experiência. O mapa proposto neste capítulo ajuda a formular perguntas sobre o processo de leitura; não localiza emoções em pontos fixos nem transforma metáforas em exames.",
-        "A leitura pode ser significativa mesmo quando não produz mudança perceptível. A qualidade da experiência está em poder observar, interpretar, discordar e escolher livremente — com curiosidade e sem promessas que ultrapassem a evidência."
-      ], bullets: [
-        "Por que “mapa cerebral” é uma metáfora didática neste capítulo, e não um mapa anatômico individual?",
-        "Como diferenciar o que o poema apresenta da associação que o leitor acrescenta?",
-        "Por que uma emoção durante a leitura não constitui diagnóstico?",
-        "Que evidência seria necessária para sustentar uma afirmação de eficácia clínica da PCH?",
-        "Como adaptar ou interromper o exercício respeitando a autonomia do leitor?"
-      ]}
     ],
     practice: [
       "Escolha um poema curto e marque uma palavra ou imagem que chamou sua atenção, sem tentar explicar imediatamente o motivo.",
