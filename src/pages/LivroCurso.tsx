@@ -7,7 +7,7 @@ import PageLayout from "@/components/layout/PageLayout";
 import { pagesSEO } from "@/lib/seo-config";
 import TextReader from "@/components/ui/text-reader";
 
-type Chapter = { id: string; title: string; subtitle: string; icon: React.ElementType; sections: { title: string; paragraphs: string[]; bullets?: string[] }[]; practice: string[]; reflection: string[] };
+type Chapter = { id: string; title: string; subtitle: string; icon: React.ElementType; sections: { title: string; paragraphs?: string[]; bullets?: string[] }[]; practice: string[]; reflection: string[] };
 const chapters: Chapter[] = [
   {
     id: "capitulo-1", title: "Capítulo 1 — O que é a Poesia Cognitivo-Hipnótica?", subtitle: "Conceitos, pilares, limites e postura de trabalho", icon: BookOpen,
@@ -141,7 +141,8 @@ const LivroCurso = () => {
   const [completed, setCompleted] = useState<string[]>([]);
   const toggle = (id: string) => setExpanded(current => current.includes(id) ? current.filter(item => item !== id) : [...current, id]);
   const toggleComplete = (id: string) => setCompleted(current => current.includes(id) ? current.filter(item => item !== id) : [...current, id]);
-  const allText = chapters.map(ch => ch.title + ". " + ch.sections.map(s => s.title + ". " + (s.paragraphs || []).join(" ") + (s.bullets || []).join(" ")).join(" ")).join(" ");
+  const safeChapters = Array.isArray(chapters) ? chapters : [];
+  const allText = safeChapters.map(ch => `${ch.title || ""}. ${(Array.isArray(ch.sections) ? ch.sections : []).map(s => `${s.title || ""}. ${(Array.isArray(s.paragraphs) ? s.paragraphs : []).join(" ")} ${(Array.isArray(s.bullets) ? s.bullets : []).join(" ")}`).join(" ")}`).join(" ");
   return (
     <PageLayout seo={pagesSEO.livroCurso} currentPage="Livro-Curso">
       <section className="relative overflow-hidden">
@@ -153,7 +154,7 @@ const LivroCurso = () => {
             <p className="text-lg text-muted-foreground mb-6 leading-relaxed">Quatro capítulos para estudar a linguagem poética, observar padrões de pensamento, compreender metáforas com rigor científico e praticar autocuidado com autonomia e segurança.</p>
             <div className="poem-block max-w-md mx-auto my-8"><p className="poem-text text-sm text-muted-foreground">Quando se olha no espelho, o que é que você vê?\nEu vi grades onde havia janelas.\nAté que um verso abriu a porta\nque eu mesmo havia trancado por dentro.</p><cite className="text-xs text-primary/70 mt-2 block not-italic">— Prisão Interior</cite></div>
             <div className="flex flex-wrap justify-center gap-3">
-              <Button size="lg" onClick={() => { setExpanded(chapters.map(c => c.id)); document.getElementById("trilha-aprendizado")?.scrollIntoView({ behavior: "smooth" }); }} className="bg-primary text-primary-foreground hover:bg-primary-dark"><BookOpen className="mr-2 h-5 w-5" /> Estudar os capítulos</Button>
+              <Button size="lg" onClick={() => { setExpanded(safeChapters.map(c => c.id)); document.getElementById("trilha-aprendizado")?.scrollIntoView({ behavior: "smooth" }); }} className="bg-primary text-primary-foreground hover:bg-primary-dark"><BookOpen className="mr-2 h-5 w-5" /> Estudar os capítulos</Button>
               <TextReader text={allText} label="Ouvir narração" />
             </div>
             <p className="text-xs text-muted-foreground mt-4">Conteúdo educativo. Não substitui avaliação, diagnóstico ou tratamento profissional.</p>
@@ -167,11 +168,11 @@ const LivroCurso = () => {
             <CardContent className="space-y-3 text-muted-foreground leading-relaxed">
               <p>Estude um capítulo por vez. Leia a teoria, faça a prática apenas se for confortável e responda às perguntas de reflexão. Não é necessário compartilhar textos pessoais. A trilha é uma estrutura educativa e não uma certificação de competência clínica.</p>
               <p><strong className="text-foreground">Objetivos de aprendizagem:</strong> explicar os três pilares da PCH; observar linguagem sem transformar metáforas em diagnósticos; distinguir evidência científica de hipótese; e montar uma rotina de autocuidado flexível e segura.</p>
-              <div className="flex items-center gap-3"><div className="h-2 rounded-full bg-muted flex-1 overflow-hidden"><div className="h-full bg-primary transition-all" style={{ width: ((completed.length / chapters.length) * 100) + "%" }} /></div><span className="text-xs whitespace-nowrap">{completed.length} de {chapters.length} capítulos concluídos</span></div>
+              <div className="flex items-center gap-3"><div className="h-2 rounded-full bg-muted flex-1 overflow-hidden"><div className="h-full bg-primary transition-all" style={{ width: ((completed.length / Math.max(safeChapters.length, 1)) * 100) + "%" }} /></div><span className="text-xs whitespace-nowrap">{completed.length} de {safeChapters.length} capítulos concluídos</span></div>
             </CardContent>
           </Card>
           <div className="space-y-4">
-            {chapters.map((chapter, index) => {
+            {safeChapters.map((chapter, index) => {
               const Icon = chapter.icon;
               const isOpen = expanded.includes(chapter.id);
               const isDone = completed.includes(chapter.id);
@@ -182,17 +183,17 @@ const LivroCurso = () => {
                   {isDone && <CheckCircle2 className="h-5 w-5 text-primary shrink-0" />}<ChevronDown className={"h-5 w-5 text-muted-foreground shrink-0 transition-transform " + (isOpen ? "rotate-180" : "")} />
                 </button>
                 {isOpen && <CardContent className="pt-0 pb-7 px-5 md:px-8 space-y-7">
-                  {chapter.sections.map((section, sectionIndex) => <section key={section.title} className="space-y-3">
+                  {(Array.isArray(chapter.sections) ? chapter.sections : []).map((section, sectionIndex, safeSections) => <section key={section.title} className="space-y-3">
                     <h3 className="text-lg font-heading font-semibold text-foreground">{section.title}</h3>
-                    {section.paragraphs.map((paragraph, i) => <p key={i} className="text-sm md:text-base text-muted-foreground leading-7">{paragraph}</p>)}
-                    {section.bullets && <ul className="list-disc pl-6 space-y-2 text-sm md:text-base text-muted-foreground leading-7">{section.bullets.map((bullet, i) => <li key={i}>{bullet}</li>)}</ul>}
-                    {sectionIndex < chapter.sections.length - 1 && <Separator className="mt-5 opacity-50" />}
+                    {(Array.isArray(section.paragraphs) ? section.paragraphs : []).map((paragraph, i) => <p key={i} className="text-sm md:text-base text-muted-foreground leading-7">{paragraph}</p>)}
+                    {Array.isArray(section.bullets) && section.bullets.length > 0 && <ul className="list-disc pl-6 space-y-2 text-sm md:text-base text-muted-foreground leading-7">{(Array.isArray(section.bullets) ? section.bullets : []).map((bullet, i) => <li key={i}>{bullet}</li>)}</ul>}
+                    {sectionIndex < safeSections.length - 1 && <Separator className="mt-5 opacity-50" />}
                   </section>)}
                   <div className="rounded-xl border border-primary/20 bg-primary/[0.04] p-5 space-y-4">
                     <h3 className="font-heading font-semibold text-foreground flex items-center gap-2"><Lightbulb className="h-5 w-5 text-primary" /> Prática guiada</h3>
-                    <ol className="list-decimal pl-5 space-y-2 text-sm text-muted-foreground leading-6">{chapter.practice.map((item, i) => <li key={i}>{item}</li>)}</ol>
+                    <ol className="list-decimal pl-5 space-y-2 text-sm text-muted-foreground leading-6">{(Array.isArray(chapter.practice) ? chapter.practice : []).map((item, i) => <li key={i}>{item}</li>)}</ol>
                     <h4 className="font-semibold text-foreground pt-2">Perguntas de reflexão</h4>
-                    <ul className="list-disc pl-5 space-y-2 text-sm text-muted-foreground leading-6">{chapter.reflection.map((item, i) => <li key={i}>{item}</li>)}</ul>
+                    <ul className="list-disc pl-5 space-y-2 text-sm text-muted-foreground leading-6">{(Array.isArray(chapter.reflection) ? chapter.reflection : []).map((item, i) => <li key={i}>{item}</li>)}</ul>
                     <Button variant={isDone ? "outline" : "default"} onClick={() => toggleComplete(chapter.id)} className="gap-2">{isDone ? "Marcar como não concluído" : "Marcar capítulo como concluído"}</Button>
                   </div>
                 </CardContent>}
