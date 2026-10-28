@@ -27,7 +27,7 @@ export type Database = {
           completed?: boolean
           completed_at?: string | null
           updated_at?: string
-          user_id?: string
+          user_id: string
         }
         Update: {
           chapter_id?: string
