@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { BookOpen, Brain, Feather, Heart, Lightbulb, CheckCircle2, ChevronDown } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -6,6 +6,7 @@ import { Separator } from "@/components/ui/separator";
 import PageLayout from "@/components/layout/PageLayout";
 import { pagesSEO } from "@/lib/seo-config";
 import TextReader from "@/components/ui/text-reader";
+import { supabase } from "@/integrations/supabase/client";
 
 type Chapter = { id: string; title: string; subtitle: string; icon: React.ElementType; sections: { title: string; paragraphs?: string[]; bullets?: string[] }[]; practice: string[]; reflection: string[] };
 const chapters: Chapter[] = [
@@ -317,8 +318,86 @@ const chapters: Chapter[] = [
 const LivroCurso = () => {
   const [expanded, setExpanded] = useState<string[]>(["capitulo-1"]);
   const [completed, setCompleted] = useState<string[]>([]);
+  const [progressLoaded, setProgressLoaded] = useState(false);
+  const [progressError, setProgressError] = useState<string | null>(null);
+  const [savingChapter, setSavingChapter] = useState<string | null>(null);
+  const [reloadProgressKey, setReloadProgressKey] = useState(0);
   const toggle = (id: string) => setExpanded(current => current.includes(id) ? current.filter(item => item !== id) : [...current, id]);
-  const toggleComplete = (id: string) => setCompleted(current => current.includes(id) ? current.filter(item => item !== id) : [...current, id]);
+
+  useEffect(() => {
+    let cancelled = false;
+
+    const loadProgress = async () => {
+      setProgressLoaded(false);
+      setProgressError(null);
+
+      const { data: authData, error: authError } = await supabase.auth.getUser();
+      if (authError || !authData.user) {
+        if (!cancelled) {
+          setProgressError("Não foi possível confirmar sua sessão. Entre novamente e tente recarregar o progresso.");
+          setProgressLoaded(true);
+        }
+        return;
+      }
+
+      const { data, error } = await supabase
+        .from("padh_livro_curso_progress" as any)
+        .select("chapter_id")
+        .eq("user_id", authData.user.id)
+        .eq("completed", true);
+
+      if (cancelled) return;
+      if (error) {
+        setProgressError("Não foi possível carregar seu progresso salvo. Nenhum capítulo será marcado como concluído até a leitura funcionar.");
+        setProgressLoaded(true);
+        return;
+      }
+
+      setCompleted(Array.isArray(data) ? data.map((row: { chapter_id: string }) => row.chapter_id) : []);
+      setProgressLoaded(true);
+    };
+
+    void loadProgress();
+    return () => { cancelled = true; };
+  }, [reloadProgressKey]);
+
+  const toggleComplete = async (id: string) => {
+    if (!progressLoaded || progressError || savingChapter) return;
+    const wasCompleted = completed.includes(id);
+    setSavingChapter(id);
+    setProgressError(null);
+
+    try {
+      const { data: authData, error: authError } = await supabase.auth.getUser();
+      if (authError || !authData.user) throw new Error("Sua sessão expirou. Entre novamente e tente outra vez.");
+
+      if (wasCompleted) {
+        const { error } = await supabase
+          .from("padh_livro_curso_progress" as any)
+          .delete()
+          .eq("user_id", authData.user.id)
+          .eq("chapter_id", id);
+        if (error) throw error;
+        setCompleted(current => current.filter(chapterId => chapterId !== id));
+      } else {
+        const { error } = await supabase
+          .from("padh_livro_curso_progress" as any)
+          .upsert({
+            user_id: authData.user.id,
+            chapter_id: id,
+            completed: true,
+            completed_at: new Date().toISOString(),
+            updated_at: new Date().toISOString(),
+          }, { onConflict: "user_id,chapter_id" });
+        if (error) throw error;
+        setCompleted(current => current.includes(id) ? current : [...current, id]);
+      }
+    } catch {
+      setProgressError("Não foi possível salvar essa alteração. O estado exibido foi mantido como estava; verifique sua conexão e tente recarregar.");
+    } finally {
+      setSavingChapter(null);
+    }
+  };
   const safeChapters = Array.isArray(chapters) ? chapters : [];
   const allText = safeChapters.map(ch => `${ch.title || ""}. ${(Array.isArray(ch.sections) ? ch.sections : []).map(s => `${s.title || ""}. ${(Array.isArray(s.paragraphs) ? s.paragraphs : []).join(" ")} ${(Array.isArray(s.bullets) ? s.bullets : []).join(" ")}`).join(" ")} Prática guiada. ${(Array.isArray(ch.practice) ? ch.practice : []).map((item, i) => `Etapa ${i + 1}. ${item}`).join(" ")} Perguntas de reflexão. ${(Array.isArray(ch.reflection) ? ch.reflection : []).map((item, i) => `Pergunta ${i + 1}. ${item}`).join(" ")}`).join(" ");
   return (
@@ -346,7 +425,8 @@ const LivroCurso = () => {
             <CardContent className="space-y-3 text-muted-foreground leading-relaxed">
               <p>Estude um capítulo por vez. Leia a teoria, faça a prática apenas se for confortável e responda às perguntas de reflexão. Não é necessário compartilhar textos pessoais. A trilha é uma estrutura educativa e não uma certificação de competência clínica.</p>
               <p><strong className="text-foreground">Objetivos de aprendizagem:</strong> explicar os três pilares da PCH; observar linguagem sem transformar metáforas em diagnósticos; distinguir evidência científica de hipótese; e montar uma rotina de autocuidado flexível e segura.</p>
-              <div className="flex items-center gap-3"><div className="h-2 rounded-full bg-muted flex-1 overflow-hidden"><div className="h-full bg-primary transition-all" style={{ width: ((completed.length / Math.max(safeChapters.length, 1)) * 100) + "%" }} /></div><span className="text-xs whitespace-nowrap">{completed.length} de {safeChapters.length} capítulos concluídos</span></div>
+              {progressError && <div role="alert" className="rounded-lg border border-destructive/30 bg-destructive/5 p-3 text-sm text-destructive space-y-2"><p>{progressError}</p><Button type="button" size="sm" variant="outline" onClick={() => setReloadProgressKey(key => key + 1)}>Tentar carregar novamente</Button></div>}
+              <div className="flex items-center gap-3"><div className="h-2 rounded-full bg-muted flex-1 overflow-hidden"><div className="h-full bg-primary transition-all" style={{ width: (progressLoaded && !progressError ? (completed.length / Math.max(safeChapters.length, 1)) * 100 : 0) + "%" }} /></div><span className="text-xs whitespace-nowrap">{!progressLoaded ? "Carregando progresso…" : progressError ? "Progresso indisponível" : `${completed.length} de ${safeChapters.length} capítulos concluídos`}</span></div>
             </CardContent>
           </Card>
           <div className="space-y-4">
@@ -372,7 +452,7 @@ const LivroCurso = () => {
                     <ol className="list-decimal pl-5 space-y-2 text-sm text-muted-foreground leading-6">{(Array.isArray(chapter.practice) ? chapter.practice : []).map((item, i) => <li key={i}>{item}</li>)}</ol>
                     <h4 className="font-semibold text-foreground pt-2">Perguntas de reflexão</h4>
                     <ul className="list-disc pl-5 space-y-2 text-sm text-muted-foreground leading-6">{(Array.isArray(chapter.reflection) ? chapter.reflection : []).map((item, i) => <li key={i}>{item}</li>)}</ul>
-                    <Button variant={isDone ? "outline" : "default"} onClick={() => toggleComplete(chapter.id)} className="gap-2">{isDone ? "Marcar como não concluído" : "Marcar capítulo como concluído"}</Button>
+                    <Button type="button" variant={isDone ? "outline" : "default"} disabled={!progressLoaded || Boolean(progressError) || savingChapter !== null} onClick={() => void toggleComplete(chapter.id)} className="gap-2">{savingChapter === chapter.id ? "Salvando…" : isDone ? "Marcar como não concluído" : "Marcar capítulo como concluído"}</Button>
                   </div>
                 </CardContent>}
               </Card>;
