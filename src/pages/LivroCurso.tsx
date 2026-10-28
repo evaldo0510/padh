@@ -235,8 +235,7 @@ const chapters: Chapter[] = [
     ],
     practice: ["Durante sete dias, se isso fizer sentido para você, experimente a jornada flexível descrita neste capítulo. Registre uma palavra, uma imagem e uma ação pequena; pular um dia não é falha.", "No final da semana, observe quais práticas foram úteis, neutras ou desconfortáveis e decida o que manter, adaptar ou abandonar.", "Escreva um compromisso de autocuidado que seja específico, gentil e possível — e inclua como pedirá ajuda caso não consiga realizá-lo sozinho.", "Escolha uma das práticas para um dia agitado, um dia de autocrítica ou um dia de incerteza. Adapte-a à sua realidade e interrompa se aumentar o desconforto.", "Defina como avaliará a prática sem exigir melhora: utilidade, neutralidade, desconforto ou necessidade de apoio."],
     reflection: ["Esta prática está me apoiando ou virou mais uma exigência?", "Que sinais me mostram que preciso de pausa ou apoio?", "Qual hábito pequeno é sustentável na minha realidade atual?"]
-  }
-
+  },
   {
     id: "capitulo-5", title: "Capítulo 5 — O Mapa Cerebral do Leitor Poético", subtitle: "Atenção, emoção, memória, imaginação e construção de sentido sem neuromitos", icon: Brain,
     sections: [
