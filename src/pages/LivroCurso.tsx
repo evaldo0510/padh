@@ -340,7 +340,7 @@ const chapters: Chapter[] = [
 ]; 
 
 const LivroCurso = () => {
-  const [expanded, setExpanded] = useState<string[]>(["capitulo-1"]);
+  const [expanded, setExpanded] = useState<string[]>(["capitulo-1", "capitulo-5"]);
   const [completed, setCompleted] = useState<string[]>([]);
   const [progressLoaded, setProgressLoaded] = useState(false);
   const [progressError, setProgressError] = useState<string | null>(null);
