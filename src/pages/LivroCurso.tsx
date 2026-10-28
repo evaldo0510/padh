@@ -37,8 +37,7 @@ const chapters: Chapter[] = [
         "Não induzir memórias, não afirmar que imagens são lembranças reais e não sugerir interpretações como fatos.",
         "Distinguir educação, autocuidado e intervenção clínica; encaminhar quando a demanda exceder a competência.",
         "Registrar objetivo, procedimento, resposta observada e próximos passos, sem prometer cura."
-      ]}
-    ],
+      ]},
       { title: "1.6. Roteiro comentado: da imagem à escolha", paragraphs: [
         "Considere uma atividade educativa com uma pessoa que diz: “Sinto que estou andando em círculos”. O facilitador não conclui que a pessoa tem medo de avançar nem presume uma causa escondida. Primeiro pergunta: “Quando você diz círculos, o que essa imagem descreve para você?”. A resposta pode ser repetição de tarefas, falta de informação, pressão externa ou apenas cansaço. A metáfora abre investigação; não entrega uma explicação pronta.",
         "Em seguida, a pessoa escolhe o foco: compreender a situação, organizar opções ou simplesmente encontrar palavras para o que sente. O facilitador explica que o exercício é voluntário, combina um tempo curto e reforça que é possível parar. A pessoa pode escrever, falar, desenhar ou apenas ouvir.",
@@ -65,6 +64,7 @@ const chapters: Chapter[] = [
         "Como o participante pode demonstrar que deseja interromper ou adaptar um exercício?",
         "Qual é a diferença entre uma experiência subjetivamente útil e uma eficácia clínica demonstrada?"
       ]},
+    ],
     practice: ["Escolha uma emoção presente e descreva-a em três imagens concretas, sem tentar explicar sua causa.", "Escreva duas versões de uma frase interna: a primeira como ela surge espontaneamente; a segunda como uma pergunta curiosa, não como uma afirmação positiva forçada.", "Leia cada versão em voz baixa, se for confortável, e anote o que mudou na atenção, no corpo ou na interpretação. Não existe resposta correta.", "Descreva uma situação concreta em uma frase sem adjetivos sobre sua identidade. Depois identifique uma interpretação possível e uma informação que ainda falta.", "Escolha uma ação pequena ou decida conscientemente que, por enquanto, não precisa agir. Registre o motivo sem transformar a escolha em obrigação."],
     reflection: ["Qual é a diferença entre explorar uma metáfora e interpretar a pessoa por ela?", "Que sinal me indicaria diminuir a intensidade ou interromper a prática?", "Como explicaria a PCH sem prometer efeitos que não foram demonstrados?"]
   },
@@ -92,8 +92,7 @@ const chapters: Chapter[] = [
       { title: "2.5. Diário poético de observação", paragraphs: [
         "Use uma entrada curta com cinco campos: situação, frase automática, emoção percebida, imagem ou metáfora escolhida pela pessoa e uma pergunta para continuar a investigação. Termine com uma ação pequena e realista, se houver. O registro deve ser voluntário; não é necessário escrever sobre eventos traumáticos nem entregar o texto a outra pessoa.",
         "Releia procurando padrões com curiosidade, não para vigiar a si mesmo. Se a atividade se tornar ruminação repetitiva, autocrítica intensa ou obrigação, faça uma pausa e considere uma alternativa menos introspectiva."
-      ]}
-    ],
+      ]},
       { title: "2.6. Três estudos de caso fictícios", paragraphs: [
         "CASO A — FEEDBACK NO TRABALHO. Situação: Marina recebe uma mensagem pedindo revisão de uma apresentação. Frase interna: “Sou péssima no que faço”. Padrão observado: um pedido específico foi transformado em julgamento global de identidade. Perguntas: “O que exatamente foi solicitado?”, “Há informação de que todo o trabalho está ruim?”, “O que ainda preciso esclarecer?”. Reescrita possível: “Recebi um pedido de revisão; isso não define toda a minha competência. Vou identificar os pontos solicitados e perguntar sobre o que estiver ambíguo”. Limite: não se conclui que Marina é insegura ou perfeccionista a partir de uma frase. Próxima ação: revisar os itens e solicitar critérios claros.",
         "CASO B — INDECISÃO. Situação: Paulo precisa escolher entre dois cursos e teme desperdiçar dinheiro. Frase interna: “Se eu escolher errado, estraguei meu futuro”. Padrão observado: previsão catastrófica e linguagem definitiva. Perguntas: “Quais consequências são reversíveis?”, “Que informação falta?”, “Qual é o custo de esperar?”. Reescrita possível: “A escolha importa, mas não determina sozinha todo o meu futuro. Posso comparar custo, duração e oportunidades e decidir quando tiver informação suficiente”. Limite: a reescrita não elimina restrições financeiras reais. Próxima ação: montar uma tabela de custos e conversar com alguém experiente.",
@@ -117,6 +116,7 @@ const chapters: Chapter[] = [
         "O problema depende apenas de uma interpretação ou também exige uma mudança externa?",
         "A alternativa proposta é crível e respeita a emoção que existe?"
       ]},
+    ],
     practice: ["Complete: “Hoje, minha mente contou a história de que…”.", "Circule palavras absolutas e pergunte: “Isso é literalmente sempre verdadeiro? Que exceções existem? O que ainda não sei?”.", "Escreva uma versão alternativa que reconheça a dificuldade e inclua apenas uma possibilidade sob seu controle.", "Preencha o diário com situação, frase automática, emoção, metáfora escolhida, pergunta investigativa e próxima ação.", "Leia sua reescrita e avalie: ela é específica, crível, respeita os fatos e preserva o direito de sentir o que sente? Se não, ajuste-a."],
     reflection: ["Que diferença existe entre um fato e a história que construí sobre ele?", "Que interpretações eu estava prestes a impor ao texto de outra pessoa?", "A reescrita ficou crível ou apenas positiva?"]
   },
@@ -147,8 +147,7 @@ const chapters: Chapter[] = [
       { title: "3.5. Alfabetização científica para a prática", paragraphs: [
         "Ao ler um estudo, confira população, tamanho da amostra, grupo de comparação, medida usada, duração do acompanhamento, limitações e conflitos de interesse. Diferencie associação de causalidade, resultado estatístico de relevância clínica e estudo preliminar de evidência replicada.",
         "Na comunicação pública, diga com precisão qual intervenção foi estudada. Se não houver ensaio específico da PCH, descreva-a como uma proposta que combina princípios de campos relacionados e que necessita de avaliação direta. A transparência fortalece a metodologia e protege o público."
-      ]}
-    ],
+      ]},
       { title: "3.6. Exemplos de metáforas e interpretações alternativas", paragraphs: [
         "“Minha preocupação é um alarme que não desliga.” Uma possibilidade é que a pessoa esteja percebendo alerta constante; outra é que existam tarefas concretas sem solução; outra, ainda, é que a imagem não represente bem sua experiência. Perguntas úteis: “O que o alarme está sinalizando?”, “Existe perigo atual ou uma pendência?”, “Que recurso pode ajudar a avaliar isso?”. Não se presume que a metáfora revele um mecanismo cerebral.",
         "“Estou carregando uma montanha.” A imagem pode falar de excesso de responsabilidades, luto, cansaço, expectativa alheia ou uma dificuldade física concreta. Pergunte: “Qual parte pesa mais?”, “O que é seu e o que pode ser compartilhado?”, “Há algo que precise ser retirado do caminho?”. Não diga à pessoa que ela deve simplesmente largar a montanha: pode haver obrigações reais e limitações de escolha.",
@@ -180,6 +179,7 @@ const chapters: Chapter[] = [
         "Que evidência seria necessária para afirmar eficácia clínica de uma metodologia integrada?",
         "Como explicar uma metáfora sem atribuir a ela um significado universal?"
       ]},
+    ],
     practice: ["Crie uma metáfora para uma preocupação cotidiana e pergunte se ela representa sua experiência com precisão.", "Escreva duas metáforas alternativas: uma que enfatize o peso e outra que destaque recursos disponíveis.", "Compare-as: qual abre uma possibilidade sem negar a realidade? Que ação pequena decorre dela?", "Escolha uma afirmação científica relacionada à linguagem ou à hipnose e procure a fonte original. Registre o tipo de estudo, a população e uma limitação.", "Reescreva a afirmação como uma frase proporcional à evidência, distinguindo o que foi observado do que ainda é hipótese."],
     reflection: ["Qual afirmação sobre cérebro ou hipnose eu precisaria de evidência direta para sustentar?", "Estou tratando uma metáfora como hipótese ou como diagnóstico?", "Como explicaria os limites científicos sem desvalorizar a experiência subjetiva?"]
   },
@@ -209,8 +209,7 @@ const chapters: Chapter[] = [
       { title: "4.5. Quando procurar apoio", paragraphs: [
         "A poesia pode complementar o cuidado, mas não substitui psicoterapia, avaliação médica ou outros serviços indicados. Procure ajuda qualificada se sintomas persistirem, afetarem sono, trabalho, relações ou autocuidado, ou se houver sensação de perda de controle. Em perigo imediato, busque o serviço de emergência local e uma pessoa de confiança.",
         "Se você conduz atividades com outras pessoas, explique os limites do exercício, proteja a privacidade, evite promessas terapêuticas e saiba como encaminhar. Não recolha textos íntimos sem necessidade e consentimento."
-      ]}
-    ],
+      ]},
       { title: "4.6. Jornada flexível de sete dias", bullets: [
         "Dia 1 — Chegar ao presente. Objetivo: observar sem resolver tudo. Instrução: nomeie uma palavra para o estado atual e note três coisas que vê ao redor. Pergunta: “O que merece minha atenção neste momento?”. Alternativa: diga a palavra mentalmente, sem escrever.",
         "Dia 2 — Separar fato e interpretação. Objetivo: reconhecer a diferença entre evento e conclusão. Instrução: escolha uma situação cotidiana e escreva o que uma câmera poderia registrar, depois a interpretação que você fez. Pergunta: “O que sei e o que estou supondo?”. Alternativa: conte a diferença em voz alta para si.",
@@ -233,6 +232,7 @@ const chapters: Chapter[] = [
         "Que ação realista posso escolher sem prometer um resultado?",
         "Que tipo de apoio posso procurar se o sofrimento persistir?"
       ]},
+    ],
     practice: ["Durante sete dias, se isso fizer sentido para você, experimente a jornada flexível descrita neste capítulo. Registre uma palavra, uma imagem e uma ação pequena; pular um dia não é falha.", "No final da semana, observe quais práticas foram úteis, neutras ou desconfortáveis e decida o que manter, adaptar ou abandonar.", "Escreva um compromisso de autocuidado que seja específico, gentil e possível — e inclua como pedirá ajuda caso não consiga realizá-lo sozinho.", "Escolha uma das práticas para um dia agitado, um dia de autocrítica ou um dia de incerteza. Adapte-a à sua realidade e interrompa se aumentar o desconforto.", "Defina como avaliará a prática sem exigir melhora: utilidade, neutralidade, desconforto ou necessidade de apoio."],
     reflection: ["Esta prática está me apoiando ou virou mais uma exigência?", "Que sinais me mostram que preciso de pausa ou apoio?", "Qual hábito pequeno é sustentável na minha realidade atual?"]
   }
