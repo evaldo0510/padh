@@ -295,7 +295,7 @@ const chapters: Chapter[] = [
         "Por que uma emoção durante a leitura não constitui diagnóstico?",
         "Que evidência seria necessária para sustentar uma afirmação de eficácia clínica da PCH?",
         "Como adaptar ou interromper o exercício respeitando a autonomia do leitor?"
-      ]}
+      ]},
       { title: "5.10. O mapa é um ciclo, não uma sequência obrigatória", paragraphs: [
         "Os cinco processos apresentados neste capítulo são categorias didáticas para observar a leitura, não etapas rígidas nem compartimentos independentes. A atenção pode mudar quando uma palavra ganha outro sentido; uma associação pode levar o leitor de volta ao texto; o ritmo pode alterar o que ele percebe; e o contexto pode modificar a interpretação. O leitor pode avançar, voltar, pausar ou encerrar sem completar todas as etapas.",
         "Uma forma prática de representar o percurso é: orientar-se no texto → notar um detalhe → descrever o que está presente → reconhecer associações próprias → testar outra interpretação → escolher se deseja continuar. As setas indicam possibilidades de circulação, não uma lei sobre o cérebro. Não se deve atribuir cada movimento a uma região cerebral específica sem evidência adequada.",
