@@ -7,7 +7,7 @@ import PageLayout from "@/components/layout/PageLayout";
 import { pagesSEO } from "@/lib/seo-config";
 import TextReader from "@/components/ui/text-reader";
 
-type Chapter = { id: string; title: string; subtitle: string; icon: React.ElementType; sections: { title: string; paragraphs: string[]; bullets?: string[] }[]; practice: string[]; reflection: string[] };
+type Chapter = { id: string; title: string; subtitle: string; icon: React.ElementType; sections: { title: string; paragraphs?: string[]; bullets?: string[] }[]; practice: string[]; reflection: string[] };
 const chapters: Chapter[] = [
   {
     id: "capitulo-1", title: "Capítulo 1 — O que é a Poesia Cognitivo-Hipnótica?", subtitle: "Conceitos, pilares, limites e postura de trabalho", icon: BookOpen,
