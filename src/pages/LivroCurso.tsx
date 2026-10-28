@@ -296,7 +296,31 @@ const chapters: Chapter[] = [
         "Por que uma emoção durante a leitura não constitui diagnóstico?",
         "Que evidência seria necessária para sustentar uma afirmação de eficácia clínica da PCH?",
         "Como adaptar ou interromper o exercício respeitando a autonomia do leitor?"
-      ]}
+      ]},
+      { title: "5.10. O mapa é um ciclo, não uma sequência obrigatória", paragraphs: [
+        "Os cinco processos apresentados neste capítulo são categorias didáticas para observar a leitura, não etapas rígidas nem compartimentos independentes. A atenção pode mudar quando uma palavra ganha outro sentido; uma associação pode levar o leitor de volta ao texto; o ritmo pode alterar o que ele percebe; e o contexto pode modificar a interpretação. O leitor pode avançar, voltar, pausar ou encerrar sem completar todas as etapas.",
+        "Uma forma prática de representar o percurso é: orientar-se no texto → notar um detalhe → descrever o que está presente → reconhecer associações próprias → testar outra interpretação → escolher se deseja continuar. As setas indicam possibilidades de circulação, não uma lei sobre o cérebro. Não se deve atribuir cada movimento a uma região cerebral específica sem evidência adequada.",
+        "A utilidade do mapa está nas perguntas que ele permite fazer. Se a leitura ficar confusa, volte ao texto; se a associação parecer uma certeza, marque-a como hipótese; se o exercício deixar de ser útil, pare. A autonomia do leitor é parte do método, não uma etapa opcional."
+      ]},
+      { title: "5.11. Ficha de cartografia: do texto à interpretação", paragraphs: [
+        "Use esta ficha com um poema curto, de preferência escolhido pelo próprio leitor. A atividade pode ser feita mentalmente, por escrito, com desenho, por áudio ou em conversa. Não é necessário revelar experiências pessoais nem responder a todos os campos.",
+        "1. TEXTO — copie uma palavra ou descreva um detalhe que realmente aparece no poema. 2. ATENÇÃO — registre o que chamou sua atenção primeiro, sem concluir por que isso aconteceu. 3. ASSOCIAÇÃO — anote uma lembrança, imagem ou ideia que surgiu e identifique-a como associação pessoal, não como informação contida no poema. 4. INTERPRETAÇÃO — escreva uma leitura possível e aponte qual detalhe do texto a sustenta. 5. ALTERNATIVA — formule outra leitura plausível. 6. ESCOLHA — decida se quer continuar, mudar de poema, fazer uma pausa ou encerrar sem conclusão.",
+        "Exemplo com verso original criado para esta atividade: “A chuva desenhou caminhos no vidro”. Observação textual: há chuva e marcas no vidro descritas como caminhos. Associação possível: alguém pode lembrar uma viagem; outra pessoa pode imaginar apenas linhas se formando. Interpretação possível: o verso sugere movimento ou passagem. Limite: nenhuma dessas respostas comprova um fato da biografia do leitor nem revela um significado universal.",
+        "Ao revisar a ficha, diferencie observação, associação e conclusão. Pergunte: “Que palavra do poema sustenta essa leitura?”, “Que outra leitura também cabe?” e “Estou afirmando algo sobre mim que o texto não pode provar?”. A ficha organiza a reflexão; não mede saúde mental, profundidade emocional ou atividade cerebral."
+      ]},
+      { title: "5.12. Diferenças individuais, contexto e acessibilidade", paragraphs: [
+        "A leitura é influenciada por familiaridade com o gênero, idioma, repertório cultural, escolarização, contexto social, atenção disponível, cansaço, visão, audição e preferências pessoais. Essas diferenças não devem ser tratadas automaticamente como falhas ou déficits. Duas pessoas podem compreender o mesmo poema de maneiras distintas e ambas podem apresentar razões coerentes para suas leituras.",
+        "Adapte o formato sem mudar a finalidade: ofereça texto ampliado ou com espaçamento, leitura silenciosa ou em voz alta, pausas, linguagem mais simples, apoio de áudio ou a possibilidade de escolher apenas um verso. Não presuma que toda pessoa queira ouvir, falar, fechar os olhos, respirar de determinada maneira ou compartilhar algo íntimo.",
+        "Se a compreensão estiver difícil, retorne a uma palavra concreta, explique o vocabulário ou ofereça mais contexto antes de interpretar. Se a pessoa não gostar do poema, não sentir emoção ou preferir não participar, aceite a resposta sem tentar convencê-la de que existe uma mensagem escondida."
+      ]},
+      { title: "5.13. Como facilitar uma leitura compartilhada com responsabilidade", bullets: [
+        "Explique o objetivo e combine que cada participante pode passar a vez, discordar ou sair da atividade sem se justificar.",
+        "Pergunte o que a pessoa percebeu antes de oferecer qualquer hipótese; se oferecer uma hipótese, identifique-a claramente como possibilidade e aceite a correção.",
+        "Não peça relatos traumáticos, não faça interpretações sobre infância ou inconsciente e não transforme silêncio, choro ou ausência de emoção em prova de um resultado.",
+        "Separe comentário sobre o texto de afirmações sobre a pessoa. Prefira “que leitura você faz desta imagem?” a “essa imagem mostra que você tem medo de…”.",
+        "Não avalie a qualidade da leitura pela intensidade emocional, pelo grau de exposição pessoal ou pela concordância com o facilitador.",
+        "Encerre com uma escolha livre: compartilhar uma observação sobre o poema, guardar uma pergunta, mudar de atividade ou não tirar nenhuma conclusão."
+      ]},
     ],
     practice: [
       "Escolha um poema curto e marque uma palavra ou imagem que chamou sua atenção, sem tentar explicar imediatamente o motivo.",
