@@ -236,7 +236,84 @@ const chapters: Chapter[] = [
     practice: ["Durante sete dias, se isso fizer sentido para você, experimente a jornada flexível descrita neste capítulo. Registre uma palavra, uma imagem e uma ação pequena; pular um dia não é falha.", "No final da semana, observe quais práticas foram úteis, neutras ou desconfortáveis e decida o que manter, adaptar ou abandonar.", "Escreva um compromisso de autocuidado que seja específico, gentil e possível — e inclua como pedirá ajuda caso não consiga realizá-lo sozinho.", "Escolha uma das práticas para um dia agitado, um dia de autocrítica ou um dia de incerteza. Adapte-a à sua realidade e interrompa se aumentar o desconforto.", "Defina como avaliará a prática sem exigir melhora: utilidade, neutralidade, desconforto ou necessidade de apoio."],
     reflection: ["Esta prática está me apoiando ou virou mais uma exigência?", "Que sinais me mostram que preciso de pausa ou apoio?", "Qual hábito pequeno é sustentável na minha realidade atual?"]
   }
-];
+
+  {
+    id: "capitulo-5", title: "Capítulo 5 — O Mapa Cerebral do Leitor Poético", subtitle: "Atenção, emoção, memória, imaginação e construção de sentido sem neuromitos", icon: Brain,
+    sections: [
+      { title: "5.1. O cérebro não lê poesia em uma única região", paragraphs: [
+        "Ler um poema é uma atividade distribuída: o leitor reconhece palavras, acompanha relações sintáticas, integra sentidos, antecipa possibilidades, percebe ritmo e associa o texto a conhecimentos e experiências. Esses processos dependem de redes que cooperam dinamicamente. Não existe um único “centro da poesia” nem um mapa cerebral universal que permita decifrar a personalidade de quem lê.",
+        "O que cada pessoa percebe depende também de fluência de leitura, língua, cultura, familiaridade com o gênero, estado de atenção, contexto e história individual. Por isso, duas pessoas podem ler o mesmo verso e construir sentidos diferentes, sem que uma delas esteja necessariamente lendo de forma errada.",
+        "Neste capítulo, “mapa cerebral” é uma metáfora didática para organizar processos envolvidos na leitura poética. Não é um exame neurológico, um instrumento diagnóstico nem uma descrição literal de regiões cerebrais ativadas em cada leitor."
+      ]},
+      { title: "5.2. Cinco processos para observar durante a leitura", bullets: [
+        "LINGUAGEM — reconhecer palavras, relações e ambiguidades. Pergunta: “Que palavras sustentam minha interpretação?”.",
+        "ATENÇÃO — selecionar aspectos do texto, como uma imagem, uma pausa, uma repetição ou um contraste. Pergunta: “O que chamou minha atenção primeiro?”.",
+        "EMOÇÃO E CORPO — perceber a resposta subjetiva, que pode ser intensa, discreta, neutra ou ausente. Pergunta: “O que noto em mim, se noto algo?”.",
+        "MEMÓRIA E ASSOCIAÇÃO — relacionar o verso a experiências, histórias, músicas, lugares ou outras leituras. Pergunta: “Que associação apareceu e ela é lembrança, imaginação ou comparação?”.",
+        "INTERPRETAÇÃO E ESCOLHA — construir uma leitura provisória e decidir se ela merece ser explorada. Pergunta: “Que outras leituras cabem no texto e nos fatos que conheço?”."
+      ]},
+      { title: "5.3. O poema como encontro entre texto e leitor", paragraphs: [
+        "Um poema oferece pistas — palavras, imagens, ritmo, estrutura e silêncios —, mas não determina sozinho a experiência de quem lê. O sentido emerge do encontro entre essas pistas e o repertório do leitor. Uma interpretação pode ser pessoal sem ser arbitrária: ela pode ser examinada à luz do texto, do contexto e de outras leituras possíveis.",
+        "Separe três camadas: o que o poema literalmente apresenta; o que você associa a ele; e o que conclui sobre sua própria vida. Por exemplo, ler “uma janela fechada” é diferente de associá-la à solidão e diferente ainda de concluir “ninguém me quer”. A última conclusão precisa ser examinada como pensamento, não tratada como prova fornecida pelo verso.",
+        "O leitor também pode não se identificar com o poema. Não sentir emoção, não gostar ou interromper a leitura são respostas legítimas. Não há obrigação de encontrar uma mensagem escondida nem de transformar toda leitura em exercício terapêutico."
+      ]},
+      { title: "5.4. Emoção não é diagnóstico", paragraphs: [
+        "Um verso pode despertar alegria, tristeza, irritação, saudade, curiosidade, desconforto ou nenhuma reação evidente. A resposta pode mudar conforme o dia e o contexto. Uma emoção momentânea não define a personalidade, não confirma um trauma e não permite concluir que determinada região cerebral foi ativada de maneira específica.",
+        "Se uma imagem provocar sofrimento, o leitor pode parar, escolher outro texto, olhar ao redor e retomar uma atividade cotidiana. Não é necessário insistir para “atravessar a resistência”. Se o desconforto for persistente, intenso ou afetar a vida diária, considere procurar apoio profissional qualificado.",
+        "Ao conduzir uma leitura com outra pessoa, pergunte antes de explorar conteúdos pessoais. Não interprete símbolos como fatos sobre a infância, a memória ou o inconsciente. A própria pessoa tem o direito de dizer “não sei”, discordar ou não compartilhar."
+      ]},
+      { title: "5.5. Ritmo, pausa e atenção: experiência não é prova", paragraphs: [
+        "Rima, repetição, aliteração, métrica e pausas podem orientar a atenção e influenciar a experiência estética. Ler em voz alta pode tornar audíveis sons e cadências que passam despercebidos na leitura silenciosa. Esses efeitos variam: um ritmo pode ser acolhedor para alguém e irritante ou cansativo para outra pessoa.",
+        "Experimente comparar uma leitura silenciosa com uma leitura em voz alta, sem presumir que uma seja superior. Observe compreensão, interesse e conforto. Se ler em voz alta não for adequado, leia mentalmente, acompanhe o texto com os olhos ou escolha apenas um verso.",
+        "Uma mudança subjetiva depois da leitura é um dado da experiência pessoal, não uma demonstração automática de alteração neural, eficácia clínica ou causalidade. Para fazer afirmações científicas mais fortes, seriam necessários estudos apropriados, medidas claras, comparação adequada e replicação."
+      ]},
+      { title: "5.6. Exercício guiado: cartografia de um poema", paragraphs: [
+        "Escolha um poema curto que pareça seguro para você. Antes de começar, decida se quer escrever, pensar em silêncio ou apenas ler. Não use este exercício para forçar recordações difíceis. Você pode pular qualquer etapa.",
+        "Na primeira passagem, registre uma palavra ou imagem que chamou sua atenção. Na segunda, descreva o que o texto efetivamente diz, sem explicar sua vida. Na terceira, anote uma associação pessoal, identificando-a como associação. Na quarta, proponha uma leitura alternativa. Na quinta, decida se deseja levar consigo uma pergunta, uma frase ou nenhuma conclusão.",
+        "Finalize com três perguntas: “O que o poema diz?”, “O que eu acrescentei a partir da minha experiência?” e “O que ainda não sei?”. Se perceber que está tratando uma interpretação como fato, volte ao texto e diferencie observação de inferência."
+      ]},
+      { title: "5.7. Exemplo prático: um verso, leituras diferentes", paragraphs: [
+        "Verso ilustrativo: “A casa guardava o silêncio da tarde”. Leitura textual: há uma casa e o silêncio é descrito como se pudesse ser guardado. Associação de uma leitora: a casa lembra o período em que estudava com a avó. Associação de outro leitor: o verso sugere uma sala vazia depois de uma mudança. Um terceiro leitor pode perceber apenas a sonoridade da frase.",
+        "Nenhuma dessas associações, isoladamente, prova um fato biográfico ou uma condição psicológica. Para explorar a leitura, pergunte: “Que detalhe do verso sustenta essa interpretação?”, “Que outra possibilidade existe?” e “Você prefere continuar ou deixar o poema como está?”.",
+        "A finalidade é aumentar a consciência sobre o processo de leitura, não descobrir uma resposta secreta. O poema não precisa ser convertido em conselho, diagnóstico ou plano de ação."
+      ]},
+      { title: "5.8. O que a pesquisa permite afirmar", paragraphs: [
+        "A investigação científica sobre leitura literária, compreensão de metáforas, cognição e emoção estuda tarefas específicas e utiliza métodos diferentes. Resultados sobre um tipo de leitura, uma amostra ou uma intervenção não devem ser generalizados para toda poesia nem para a PCH como metodologia integrada.",
+        "Ao comunicar resultados, identifique exatamente o que foi estudado, quem participou, qual medida foi utilizada e quais limitações foram reconhecidas. Evite afirmações como “este poema ativa o cérebro emocional”, “a leitura reorganiza os neurônios em minutos” ou “a reação revela o inconsciente” quando não houver evidência direta adequada.",
+        "Referências introdutórias: Zeman, A.; Milton, F.; Smith, A.; Rylance, R. (2013). By heart: an fMRI study of the brain network that recites poems. Journal of Consciousness Studies, 20(9–10), 132–158. A pesquisa examina recitação de poemas conhecidos, não valida uma terapia poética. DOI e acesso devem ser conferidos na fonte editorial antes de citação formal. Também é útil consultar Thibodeau, P. H.; Boroditsky, L. (2011), Metaphors we think with: the role of metaphor in reasoning. PLOS ONE, 6(2), e16782. DOI: 10.1371/journal.pone.0016782. Esses trabalhos não demonstram eficácia clínica da PCH."
+      ], bullets: [
+        "Distinguir atividade cerebral observada em uma tarefa de explicação causal sobre a experiência.",
+        "Distinguir resultado sobre leitura ou metáfora de evidência direta sobre uma intervenção clínica.",
+        "Verificar a referência original, a metodologia, a amostra, as limitações e a replicação antes de publicar uma afirmação.",
+        "Quando a evidência não for suficiente, declarar a incerteza em vez de preencher a lacuna com linguagem neurocientífica."
+      ]},
+      { title: "5.9. Síntese e perguntas de revisão", paragraphs: [
+        "O leitor poético não é um cérebro que precisa ser decifrado, mas uma pessoa que lê a partir de linguagem, atenção, corpo, contexto e experiência. O mapa proposto neste capítulo ajuda a formular perguntas sobre o processo de leitura; não localiza emoções em pontos fixos nem transforma metáforas em exames.",
+        "A leitura pode ser significativa mesmo quando não produz mudança perceptível. A qualidade da experiência está em poder observar, interpretar, discordar e escolher livremente — com curiosidade e sem promessas que ultrapassem a evidência."
+      ], bullets: [
+        "Por que “mapa cerebral” é uma metáfora didática neste capítulo, e não um mapa anatômico individual?",
+        "Como diferenciar o que o poema apresenta da associação que o leitor acrescenta?",
+        "Por que uma emoção durante a leitura não constitui diagnóstico?",
+        "Que evidência seria necessária para sustentar uma afirmação de eficácia clínica da PCH?",
+        "Como adaptar ou interromper o exercício respeitando a autonomia do leitor?"
+      ]}
+    ],
+    practice: [
+      "Escolha um poema curto e marque uma palavra ou imagem que chamou sua atenção, sem tentar explicar imediatamente o motivo.",
+      "Escreva três linhas separadas: “O texto diz…”, “Eu associei…” e “Ainda não sei…”.",
+      "Crie uma segunda interpretação possível e identifique qual detalhe do poema a sustenta.",
+      "Se for confortável, compare leitura silenciosa e leitura em voz alta. Observe compreensão, atenção e conforto, sem exigir uma mudança emocional.",
+      "Finalize escolhendo uma pergunta que deseja guardar — ou registre que não precisa tirar nenhuma conclusão."
+    ],
+    reflection: [
+      "Estou descrevendo o poema ou transformando minha associação em fato?",
+      "Que outras interpretações são possíveis sem negar o que o texto diz?",
+      "Estou usando termos sobre o cérebro com evidência suficiente?",
+      "A leitura me ajuda, é neutra ou aumenta meu desconforto?",
+      "Como posso preservar a liberdade do leitor para discordar, parar ou não compartilhar?"
+    ]
+  },
+]; 
 
 const LivroCurso = () => {
   const [expanded, setExpanded] = useState<string[]>(["capitulo-1"]);
@@ -253,7 +330,7 @@ const LivroCurso = () => {
           <div className="max-w-4xl mx-auto">
             <p className="text-sm uppercase tracking-[0.2em] text-primary mb-4 font-medium">Livro-Curso PCH · Trilha de aprendizado</p>
             <h1 className="text-4xl md:text-6xl font-heading font-bold mb-6 text-foreground">Poesia Cognitivo-<span className="text-primary italic">Hipnótica</span></h1>
-            <p className="text-lg text-muted-foreground mb-6 leading-relaxed">Quatro capítulos para estudar a linguagem poética, observar padrões de pensamento, compreender metáforas com rigor científico e praticar autocuidado com autonomia e segurança.</p>
+            <p className="text-lg text-muted-foreground mb-6 leading-relaxed">Cinco capítulos para estudar a linguagem poética, observar padrões de pensamento, compreender metáforas com rigor científico, mapear processos da leitura poética e praticar autocuidado com autonomia e segurança.</p>
             <div className="poem-block max-w-md mx-auto my-8"><p className="poem-text text-sm text-muted-foreground">Quando se olha no espelho, o que é que você vê?\nEu vi grades onde havia janelas.\nAté que um verso abriu a porta\nque eu mesmo havia trancado por dentro.</p><cite className="text-xs text-primary/70 mt-2 block not-italic">— Prisão Interior</cite></div>
             <div className="flex flex-wrap justify-center gap-3">
               <Button size="lg" onClick={() => { setExpanded(safeChapters.map(c => c.id)); document.getElementById("trilha-aprendizado")?.scrollIntoView({ behavior: "smooth" }); }} className="bg-primary text-primary-foreground hover:bg-primary-dark"><BookOpen className="mr-2 h-5 w-5" /> Estudar os capítulos</Button>
