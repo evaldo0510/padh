@@ -14,6 +14,30 @@ export type Database = {
   }
   public: {
     Tables: {
+      padh_livro_curso_progress: {
+        Row: {
+          chapter_id: string
+          completed: boolean
+          completed_at: string | null
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          chapter_id: string
+          completed?: boolean
+          completed_at?: string | null
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          chapter_id?: string
+          completed?: boolean
+          completed_at?: string | null
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
       audit_logs: {
         Row: {
           created_at: string

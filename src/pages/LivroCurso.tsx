@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { BookOpen, Brain, Feather, Heart, Lightbulb, CheckCircle2, ChevronDown } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -6,6 +6,7 @@ import { Separator } from "@/components/ui/separator";
 import PageLayout from "@/components/layout/PageLayout";
 import { pagesSEO } from "@/lib/seo-config";
 import TextReader from "@/components/ui/text-reader";
+import { supabase } from "@/integrations/supabase/client";
 
 type Chapter = { id: string; title: string; subtitle: string; icon: React.ElementType; sections: { title: string; paragraphs?: string[]; bullets?: string[] }[]; practice: string[]; reflection: string[] };
 const chapters: Chapter[] = [
@@ -37,9 +38,35 @@ const chapters: Chapter[] = [
         "Não induzir memórias, não afirmar que imagens são lembranças reais e não sugerir interpretações como fatos.",
         "Distinguir educação, autocuidado e intervenção clínica; encaminhar quando a demanda exceder a competência.",
         "Registrar objetivo, procedimento, resposta observada e próximos passos, sem prometer cura."
-      ]}
+      ]},
+      { title: "1.6. Roteiro comentado: da imagem à escolha", paragraphs: [
+        "Considere uma atividade educativa com uma pessoa que diz: “Sinto que estou andando em círculos”. O facilitador não conclui que a pessoa tem medo de avançar nem presume uma causa escondida. Primeiro pergunta: “Quando você diz círculos, o que essa imagem descreve para você?”. A resposta pode ser repetição de tarefas, falta de informação, pressão externa ou apenas cansaço. A metáfora abre investigação; não entrega uma explicação pronta.",
+        "Em seguida, a pessoa escolhe o foco: compreender a situação, organizar opções ou simplesmente encontrar palavras para o que sente. O facilitador explica que o exercício é voluntário, combina um tempo curto e reforça que é possível parar. A pessoa pode escrever, falar, desenhar ou apenas ouvir.",
+        "A investigação segue em cinco movimentos: descrever a cena concreta; nomear a interpretação; reconhecer a emoção sem julgá-la; criar uma imagem alternativa que não negue os fatos; escolher uma ação possível. Se a pessoa perceber que está em um ambiente injusto ou inseguro, a resposta adequada pode ser buscar apoio ou mudar as condições, não reinterpretar o problema como falha pessoal.",
+        "No encerramento, pergunta-se: “O que ficou mais claro, o que continua sem resposta e do que você precisa agora?”. Não se conclui que houve transformação profunda por causa de uma frase ou emoção momentânea. Registra-se apenas o que a pessoa relatou e qual próximo passo escolheu."
+      ]},
+      { title: "1.7. Glossário essencial", bullets: [
+        "Poesia: organização expressiva da linguagem por imagens, ritmo, som, contraste e escolhas de forma.",
+        "Cognição: processos como perceber, interpretar, lembrar, avaliar e planejar; não é sinônimo de pensamento racional perfeito.",
+        "Atenção focalizada: direcionamento temporário da atenção a uma experiência, tarefa ou estímulo.",
+        "Sugestão: convite ou formulação que pode influenciar a expectativa ou a interpretação; deve ser transparente e não coercitiva.",
+        "Metáfora: aproximação entre domínios de experiência que pode gerar sentidos, sem possuir significado universal.",
+        "Reavaliação: examinar uma interpretação e considerar alternativas compatíveis com os fatos, sem negar emoções ou condições externas.",
+        "Consentimento: escolha informada, voluntária e revogável de participar de uma atividade.",
+        "Evidência direta: pesquisa que investiga a própria intervenção e seus resultados, não apenas práticas parecidas."
+      ]},
+      { title: "1.8. Objetivos e síntese do capítulo", paragraphs: [
+        "Ao concluir este capítulo, o leitor deverá conseguir explicar os três pilares da PCH, descrever uma prática educativa em etapas, distinguir metáfora de diagnóstico e identificar situações em que é necessário interromper ou encaminhar para apoio.",
+        "Em síntese: a poesia oferece linguagem; a investigação cognitiva oferece perguntas; a atenção focalizada oferece uma estrutura de observação. Nenhum desses elementos autoriza impor significados ou prometer resultados. O valor da prática depende de consentimento, contexto, qualidade da condução e avaliação honesta do que aconteceu."
+      ]},
+      { title: "1.9. Perguntas de revisão", bullets: [
+        "Por que uma metáfora não deve ser tratada como prova de uma causa psicológica?",
+        "Quais são os três pilares da PCH e o que cada um acrescenta à atividade?",
+        "Como o participante pode demonstrar que deseja interromper ou adaptar um exercício?",
+        "Qual é a diferença entre uma experiência subjetivamente útil e uma eficácia clínica demonstrada?"
+      ]},
     ],
-    practice: ["Escolha uma emoção presente e descreva-a em três imagens concretas, sem tentar explicar sua causa.", "Escreva duas versões de uma frase interna: a primeira como ela surge espontaneamente; a segunda como uma pergunta curiosa, não como uma afirmação positiva forçada.", "Leia cada versão em voz baixa, se for confortável, e anote o que mudou na atenção, no corpo ou na interpretação. Não existe resposta correta."],
+    practice: ["Escolha uma emoção presente e descreva-a em três imagens concretas, sem tentar explicar sua causa.", "Escreva duas versões de uma frase interna: a primeira como ela surge espontaneamente; a segunda como uma pergunta curiosa, não como uma afirmação positiva forçada.", "Leia cada versão em voz baixa, se for confortável, e anote o que mudou na atenção, no corpo ou na interpretação. Não existe resposta correta.", "Descreva uma situação concreta em uma frase sem adjetivos sobre sua identidade. Depois identifique uma interpretação possível e uma informação que ainda falta.", "Escolha uma ação pequena ou decida conscientemente que, por enquanto, não precisa agir. Registre o motivo sem transformar a escolha em obrigação."],
     reflection: ["Qual é a diferença entre explorar uma metáfora e interpretar a pessoa por ela?", "Que sinal me indicaria diminuir a intensidade ou interromper a prática?", "Como explicaria a PCH sem prometer efeitos que não foram demonstrados?"]
   },
   {
@@ -66,9 +93,32 @@ const chapters: Chapter[] = [
       { title: "2.5. Diário poético de observação", paragraphs: [
         "Use uma entrada curta com cinco campos: situação, frase automática, emoção percebida, imagem ou metáfora escolhida pela pessoa e uma pergunta para continuar a investigação. Termine com uma ação pequena e realista, se houver. O registro deve ser voluntário; não é necessário escrever sobre eventos traumáticos nem entregar o texto a outra pessoa.",
         "Releia procurando padrões com curiosidade, não para vigiar a si mesmo. Se a atividade se tornar ruminação repetitiva, autocrítica intensa ou obrigação, faça uma pausa e considere uma alternativa menos introspectiva."
-      ]}
+      ]},
+      { title: "2.6. Três estudos de caso fictícios", paragraphs: [
+        "CASO A — FEEDBACK NO TRABALHO. Situação: Marina recebe uma mensagem pedindo revisão de uma apresentação. Frase interna: “Sou péssima no que faço”. Padrão observado: um pedido específico foi transformado em julgamento global de identidade. Perguntas: “O que exatamente foi solicitado?”, “Há informação de que todo o trabalho está ruim?”, “O que ainda preciso esclarecer?”. Reescrita possível: “Recebi um pedido de revisão; isso não define toda a minha competência. Vou identificar os pontos solicitados e perguntar sobre o que estiver ambíguo”. Limite: não se conclui que Marina é insegura ou perfeccionista a partir de uma frase. Próxima ação: revisar os itens e solicitar critérios claros.",
+        "CASO B — INDECISÃO. Situação: Paulo precisa escolher entre dois cursos e teme desperdiçar dinheiro. Frase interna: “Se eu escolher errado, estraguei meu futuro”. Padrão observado: previsão catastrófica e linguagem definitiva. Perguntas: “Quais consequências são reversíveis?”, “Que informação falta?”, “Qual é o custo de esperar?”. Reescrita possível: “A escolha importa, mas não determina sozinha todo o meu futuro. Posso comparar custo, duração e oportunidades e decidir quando tiver informação suficiente”. Limite: a reescrita não elimina restrições financeiras reais. Próxima ação: montar uma tabela de custos e conversar com alguém experiente.",
+        "CASO C — DESRESPEITO EXTERNO. Situação: Joana relata que um colega faz comentários humilhantes repetidamente. Frase interna: “Talvez eu seja sensível demais”. Padrão observado: a linguagem desloca toda a responsabilidade para si, embora haja comportamento externo concreto. Perguntas: “O que foi dito ou feito?”, “Isso se repetiu?”, “Que limites e apoios estão disponíveis?”. Reescrita possível: “Posso examinar minha reação sem minimizar o comportamento do colega. Tenho direito a respeito e posso registrar os fatos e procurar apoio”. Limite: o exercício não determina juridicamente o que ocorreu nem substitui orientação institucional. Próxima ação: documentar episódios e buscar uma pessoa ou canal confiável."
+      ]},
+      { title: "2.7. Modelo preenchido de diário poético", bullets: [
+        "Situação: apresentei uma ideia e ninguém respondeu imediatamente.",
+        "Frase automática: “Minha ideia não tem valor”.",
+        "Emoção e corpo: vergonha e tensão nos ombros, conforme identificadas pela pessoa.",
+        "Imagem própria: “uma carta ainda fechada”.",
+        "Pergunta investigativa: “O silêncio significa rejeição ou ainda não sei o que as pessoas pensaram?”.",
+        "Formulação alternativa: “Não recebi resposta ainda. Posso pedir retorno ou esperar até o momento combinado”.",
+        "Próxima ação: perguntar quando a equipe poderá comentar a proposta."
+      ]},
+      { title: "2.8. Objetivos, síntese e revisão", paragraphs: [
+        "Ao concluir este capítulo, o leitor deverá separar acontecimento de interpretação, reconhecer generalizações sem se diagnosticar, formular perguntas abertas e produzir uma alternativa crível. A escrita funciona como registro para investigação, não como veredito sobre identidade.",
+        "Uma reescrita útil não precisa ser bonita nem otimista. Precisa ser mais específica, justa com os fatos e capaz de manter abertas as opções reais."
+      ], bullets: [
+        "Que palavras transformam um episódio em uma conclusão sobre toda a identidade?",
+        "Que informação sustenta minha interpretação e que informação ainda falta?",
+        "O problema depende apenas de uma interpretação ou também exige uma mudança externa?",
+        "A alternativa proposta é crível e respeita a emoção que existe?"
+      ]},
     ],
-    practice: ["Complete: “Hoje, minha mente contou a história de que…”.", "Circule palavras absolutas e pergunte: “Isso é literalmente sempre verdadeiro? Que exceções existem? O que ainda não sei?”.", "Escreva uma versão alternativa que reconheça a dificuldade e inclua apenas uma possibilidade sob seu controle."],
+    practice: ["Complete: “Hoje, minha mente contou a história de que…”.", "Circule palavras absolutas e pergunte: “Isso é literalmente sempre verdadeiro? Que exceções existem? O que ainda não sei?”.", "Escreva uma versão alternativa que reconheça a dificuldade e inclua apenas uma possibilidade sob seu controle.", "Preencha o diário com situação, frase automática, emoção, metáfora escolhida, pergunta investigativa e próxima ação.", "Leia sua reescrita e avalie: ela é específica, crível, respeita os fatos e preserva o direito de sentir o que sente? Se não, ajuste-a."],
     reflection: ["Que diferença existe entre um fato e a história que construí sobre ele?", "Que interpretações eu estava prestes a impor ao texto de outra pessoa?", "A reescrita ficou crível ou apenas positiva?"]
   },
   {
@@ -98,9 +148,40 @@ const chapters: Chapter[] = [
       { title: "3.5. Alfabetização científica para a prática", paragraphs: [
         "Ao ler um estudo, confira população, tamanho da amostra, grupo de comparação, medida usada, duração do acompanhamento, limitações e conflitos de interesse. Diferencie associação de causalidade, resultado estatístico de relevância clínica e estudo preliminar de evidência replicada.",
         "Na comunicação pública, diga com precisão qual intervenção foi estudada. Se não houver ensaio específico da PCH, descreva-a como uma proposta que combina princípios de campos relacionados e que necessita de avaliação direta. A transparência fortalece a metodologia e protege o público."
-      ]}
+      ]},
+      { title: "3.6. Exemplos de metáforas e interpretações alternativas", paragraphs: [
+        "“Minha preocupação é um alarme que não desliga.” Uma possibilidade é que a pessoa esteja percebendo alerta constante; outra é que existam tarefas concretas sem solução; outra, ainda, é que a imagem não represente bem sua experiência. Perguntas úteis: “O que o alarme está sinalizando?”, “Existe perigo atual ou uma pendência?”, “Que recurso pode ajudar a avaliar isso?”. Não se presume que a metáfora revele um mecanismo cerebral.",
+        "“Estou carregando uma montanha.” A imagem pode falar de excesso de responsabilidades, luto, cansaço, expectativa alheia ou uma dificuldade física concreta. Pergunte: “Qual parte pesa mais?”, “O que é seu e o que pode ser compartilhado?”, “Há algo que precise ser retirado do caminho?”. Não diga à pessoa que ela deve simplesmente largar a montanha: pode haver obrigações reais e limitações de escolha.",
+        "“Estou diante de uma ponte.” Para uma pessoa, a ponte pode significar transição; para outra, risco, distância, oportunidade ou lembrança desagradável. O sentido vem da associação individual e do contexto. A metáfora é produtiva quando amplia perguntas, não quando fecha a interpretação."
+      ]},
+      { title: "3.7. Como avaliar uma fonte científica", bullets: [
+        "Leia a pergunta da pesquisa e verifique se ela corresponde à afirmação que você pretende fazer.",
+        "Confira o tipo de estudo: ensaio, estudo observacional, revisão sistemática, estudo qualitativo ou hipótese teórica.",
+        "Observe quem participou, quantas pessoas foram estudadas, quais comparações foram feitas e por quanto tempo.",
+        "Procure limitações, conflitos de interesse e se os resultados foram replicados.",
+        "Não transforme mudanças em autorrelato em prova de alteração cerebral, nem associação em causalidade.",
+        "Diferencie evidência sobre uma técnica específica de evidência sobre a PCH como conjunto."
+      ]},
+      { title: "3.8. Referências para leitura e limites da aplicação", paragraphs: [
+        "As referências a seguir tratam de áreas relacionadas, não de ensaios que comprovem a eficácia clínica da PCH. Devem ser lidas conforme o desenho, a população e a intervenção estudada. A aplicação ao livro-curso é conceitual e não equivale a validação da metodologia."
+      ], bullets: [
+        "Pennebaker, J. W.; Beall, S. K. (1986). Confronting a traumatic event: Toward an understanding of inhibition and disease. Journal of Abnormal Psychology, 95(3), 274–281. DOI: 10.1037/0021-843X.95.3.274.",
+        "Frattaroli, J. (2006). Experimental disclosure and its moderators: A meta-analysis. Psychological Bulletin, 132(6), 823–865. DOI: 10.1037/0033-2909.132.6.823.",
+        "Thibodeau, P. H.; Boroditsky, L. (2011). Metaphors we think with: The role of metaphor in reasoning. PLOS ONE, 6(2), e16782. DOI: 10.1371/journal.pone.0016782.",
+        "Oakley, D. A.; Halligan, P. W. (2013). Hypnotic suggestion: Opportunities for cognitive neuroscience. Nature Reviews Neuroscience, 14, 565–576. DOI: 10.1038/nrn3538.",
+        "Lakoff, G.; Johnson, M. (1980). Metaphors We Live By. University of Chicago Press. Obra teórica de referência sobre metáforas conceptuais; não é, por si só, prova de eficácia terapêutica."
+      ]},
+      { title: "3.9. Objetivos, síntese e revisão", paragraphs: [
+        "Ao concluir este capítulo, o leitor deverá explicar por que metáforas podem organizar significados sem ter sentido universal, distinguir hipótese de evidência e avaliar a qualidade de uma fonte. A linguagem poética pode ser significativa sem que cada efeito subjetivo precise ser explicado por uma afirmação cerebral.",
+        "O rigor científico não diminui a poesia. Ele separa o que observamos, o que interpretamos e o que ainda precisamos investigar."
+      ], bullets: [
+        "Qual é a diferença entre uma hipótese plausível e uma conclusão demonstrada?",
+        "Uma pesquisa sobre escrita expressiva comprova automaticamente a PCH? Por quê?",
+        "Que evidência seria necessária para afirmar eficácia clínica de uma metodologia integrada?",
+        "Como explicar uma metáfora sem atribuir a ela um significado universal?"
+      ]},
     ],
-    practice: ["Crie uma metáfora para uma preocupação cotidiana e pergunte se ela representa sua experiência com precisão.", "Escreva duas metáforas alternativas: uma que enfatize o peso e outra que destaque recursos disponíveis.", "Compare-as: qual abre uma possibilidade sem negar a realidade? Que ação pequena decorre dela?"],
+    practice: ["Crie uma metáfora para uma preocupação cotidiana e pergunte se ela representa sua experiência com precisão.", "Escreva duas metáforas alternativas: uma que enfatize o peso e outra que destaque recursos disponíveis.", "Compare-as: qual abre uma possibilidade sem negar a realidade? Que ação pequena decorre dela?", "Escolha uma afirmação científica relacionada à linguagem ou à hipnose e procure a fonte original. Registre o tipo de estudo, a população e uma limitação.", "Reescreva a afirmação como uma frase proporcional à evidência, distinguindo o que foi observado do que ainda é hipótese."],
     reflection: ["Qual afirmação sobre cérebro ou hipnose eu precisaria de evidência direta para sustentar?", "Estou tratando uma metáfora como hipótese ou como diagnóstico?", "Como explicaria os limites científicos sem desvalorizar a experiência subjetiva?"]
   },
   {
@@ -129,20 +210,243 @@ const chapters: Chapter[] = [
       { title: "4.5. Quando procurar apoio", paragraphs: [
         "A poesia pode complementar o cuidado, mas não substitui psicoterapia, avaliação médica ou outros serviços indicados. Procure ajuda qualificada se sintomas persistirem, afetarem sono, trabalho, relações ou autocuidado, ou se houver sensação de perda de controle. Em perigo imediato, busque o serviço de emergência local e uma pessoa de confiança.",
         "Se você conduz atividades com outras pessoas, explique os limites do exercício, proteja a privacidade, evite promessas terapêuticas e saiba como encaminhar. Não recolha textos íntimos sem necessidade e consentimento."
-      ]}
+      ]},
+      { title: "4.6. Jornada flexível de sete dias", bullets: [
+        "Dia 1 — Chegar ao presente. Objetivo: observar sem resolver tudo. Instrução: nomeie uma palavra para o estado atual e note três coisas que vê ao redor. Pergunta: “O que merece minha atenção neste momento?”. Alternativa: diga a palavra mentalmente, sem escrever.",
+        "Dia 2 — Separar fato e interpretação. Objetivo: reconhecer a diferença entre evento e conclusão. Instrução: escolha uma situação cotidiana e escreva o que uma câmera poderia registrar, depois a interpretação que você fez. Pergunta: “O que sei e o que estou supondo?”. Alternativa: conte a diferença em voz alta para si.",
+        "Dia 3 — Encontrar uma imagem própria. Objetivo: dar forma à experiência sem impor significado. Instrução: escolha uma metáfora para uma preocupação e pergunte o que ela significa para você. Pergunta: “A imagem me ajuda ou me limita?”. Alternativa: escolha um objeto real que represente o momento.",
+        "Dia 4 — Responder à autocrítica. Objetivo: criar linguagem específica e respeitosa. Instrução: anote uma frase julgadora e reescreva-a sem apagar a responsabilidade. Pergunta: “Como eu diria isso a alguém que respeito?”. Alternativa: imagine a resposta sem registrá-la.",
+        "Dia 5 — Reconhecer recursos e limites. Objetivo: diferenciar o que depende de você e o que depende de outras condições. Instrução: faça duas listas curtas: “posso influenciar” e “não controlo sozinho”. Pergunta: “Que apoio ou limite é necessário?”. Alternativa: escolha mentalmente um item de cada grupo.",
+        "Dia 6 — Escolher um próximo passo. Objetivo: transformar reflexão em ação realista. Instrução: selecione uma ação pequena, observável e possível para as próximas 24 horas. Pergunta: “Qual é o menor passo útil?”. Alternativa: peça a alguém de confiança para ajudar a definir a ação.",
+        "Dia 7 — Revisar sem cobrança. Objetivo: avaliar a experiência com honestidade. Instrução: observe o que foi útil, neutro ou desconfortável e decida o que manter, adaptar ou abandonar. Pergunta: “O que aprendi sobre minhas necessidades, sem transformar isso em julgamento?”. Alternativa: faça uma revisão mental de um minuto. Não cumprir todos os dias não é falha."
+      ]},
+      { title: "4.7. Exemplo completo: escolher uma prática adequada", paragraphs: [
+        "Se alguém chega agitado, não é obrigatório começar por uma escrita introspectiva. Pode ser mais adequado orientar a pessoa a observar o ambiente, nomear uma necessidade prática ou simplesmente interromper a atividade. Se a pessoa prefere falar, não imponha papel e caneta. Se a metáfora aumenta o desconforto, abandone-a sem tentar convencer a pessoa de que ela deveria ajudar.",
+        "Ao final, pergunte se a prática foi útil, neutra ou desconfortável e o que a pessoa deseja fazer agora. A avaliação é um relato subjetivo, não uma escala clínica validada. Quando há sofrimento persistente, risco ou prejuízo importante na vida cotidiana, o livro-curso não substitui apoio profissional."
+      ]},
+      { title: "4.8. Objetivos, síntese e revisão", paragraphs: [
+        "Ao concluir este capítulo, o leitor deverá escolher uma prática compatível com o contexto, adaptar ou interromper um exercício e identificar quando procurar apoio. Autocuidado não é uma obrigação de resolver tudo sozinho: pode incluir descanso, proteção, ajuda e mudança de condições externas.",
+        "A prática poética é uma possibilidade, não uma prova de disciplina nem um substituto para cuidado especializado."
+      ], bullets: [
+        "Que sinais indicam que devo adaptar ou interromper um exercício?",
+        "Como distinguir autocuidado educativo de atendimento clínico?",
+        "Que ação realista posso escolher sem prometer um resultado?",
+        "Que tipo de apoio posso procurar se o sofrimento persistir?"
+      ]},
     ],
-    practice: ["Durante sete dias, se isso fizer sentido para você, registre uma palavra, uma imagem e uma ação pequena. Pular um dia não é falha.", "No final da semana, observe quais práticas foram úteis, neutras ou desconfortáveis e decida o que manter, adaptar ou abandonar.", "Escreva um compromisso de autocuidado que seja específico, gentil e possível — e inclua como pedirá ajuda caso não consiga realizá-lo sozinho."],
+    practice: ["Durante sete dias, se isso fizer sentido para você, experimente a jornada flexível descrita neste capítulo. Registre uma palavra, uma imagem e uma ação pequena; pular um dia não é falha.", "No final da semana, observe quais práticas foram úteis, neutras ou desconfortáveis e decida o que manter, adaptar ou abandonar.", "Escreva um compromisso de autocuidado que seja específico, gentil e possível — e inclua como pedirá ajuda caso não consiga realizá-lo sozinho.", "Escolha uma das práticas para um dia agitado, um dia de autocrítica ou um dia de incerteza. Adapte-a à sua realidade e interrompa se aumentar o desconforto.", "Defina como avaliará a prática sem exigir melhora: utilidade, neutralidade, desconforto ou necessidade de apoio."],
     reflection: ["Esta prática está me apoiando ou virou mais uma exigência?", "Que sinais me mostram que preciso de pausa ou apoio?", "Qual hábito pequeno é sustentável na minha realidade atual?"]
-  }
-];
+  },
+  {
+    id: "capitulo-5", title: "Capítulo 5 — O Mapa Cerebral do Leitor Poético", subtitle: "Atenção, emoção, memória, imaginação e construção de sentido sem neuromitos", icon: Brain,
+    sections: [
+      { title: "5.1. O cérebro não lê poesia em uma única região", paragraphs: [
+        "Ler um poema é uma atividade distribuída: o leitor reconhece palavras, acompanha relações sintáticas, integra sentidos, antecipa possibilidades, percebe ritmo e associa o texto a conhecimentos e experiências. Esses processos dependem de redes que cooperam dinamicamente. Não existe um único “centro da poesia” nem um mapa cerebral universal que permita decifrar a personalidade de quem lê.",
+        "O que cada pessoa percebe depende também de fluência de leitura, língua, cultura, familiaridade com o gênero, estado de atenção, contexto e história individual. Por isso, duas pessoas podem ler o mesmo verso e construir sentidos diferentes, sem que uma delas esteja necessariamente lendo de forma errada.",
+        "Neste capítulo, “mapa cerebral” é uma metáfora didática para organizar processos envolvidos na leitura poética. Não é um exame neurológico, um instrumento diagnóstico nem uma descrição literal de regiões cerebrais ativadas em cada leitor."
+      ]},
+      { title: "5.2. Cinco processos para observar durante a leitura", bullets: [
+        "LINGUAGEM — reconhecer palavras, relações e ambiguidades. Pergunta: “Que palavras sustentam minha interpretação?”.",
+        "ATENÇÃO — selecionar aspectos do texto, como uma imagem, uma pausa, uma repetição ou um contraste. Pergunta: “O que chamou minha atenção primeiro?”.",
+        "EMOÇÃO E CORPO — perceber a resposta subjetiva, que pode ser intensa, discreta, neutra ou ausente. Pergunta: “O que noto em mim, se noto algo?”.",
+        "MEMÓRIA E ASSOCIAÇÃO — relacionar o verso a experiências, histórias, músicas, lugares ou outras leituras. Pergunta: “Que associação apareceu e ela é lembrança, imaginação ou comparação?”.",
+        "INTERPRETAÇÃO E ESCOLHA — construir uma leitura provisória e decidir se ela merece ser explorada. Pergunta: “Que outras leituras cabem no texto e nos fatos que conheço?”."
+      ]},
+      { title: "5.3. O poema como encontro entre texto e leitor", paragraphs: [
+        "Um poema oferece pistas — palavras, imagens, ritmo, estrutura e silêncios —, mas não determina sozinho a experiência de quem lê. O sentido emerge do encontro entre essas pistas e o repertório do leitor. Uma interpretação pode ser pessoal sem ser arbitrária: ela pode ser examinada à luz do texto, do contexto e de outras leituras possíveis.",
+        "Separe três camadas: o que o poema literalmente apresenta; o que você associa a ele; e o que conclui sobre sua própria vida. Por exemplo, ler “uma janela fechada” é diferente de associá-la à solidão e diferente ainda de concluir “ninguém me quer”. A última conclusão precisa ser examinada como pensamento, não tratada como prova fornecida pelo verso.",
+        "O leitor também pode não se identificar com o poema. Não sentir emoção, não gostar ou interromper a leitura são respostas legítimas. Não há obrigação de encontrar uma mensagem escondida nem de transformar toda leitura em exercício terapêutico."
+      ]},
+      { title: "5.4. Emoção não é diagnóstico", paragraphs: [
+        "Um verso pode despertar alegria, tristeza, irritação, saudade, curiosidade, desconforto ou nenhuma reação evidente. A resposta pode mudar conforme o dia e o contexto. Uma emoção momentânea não define a personalidade, não confirma um trauma e não permite concluir que determinada região cerebral foi ativada de maneira específica.",
+        "Se uma imagem provocar sofrimento, o leitor pode parar, escolher outro texto, olhar ao redor e retomar uma atividade cotidiana. Não é necessário insistir para “atravessar a resistência”. Se o desconforto for persistente, intenso ou afetar a vida diária, considere procurar apoio profissional qualificado.",
+        "Ao conduzir uma leitura com outra pessoa, pergunte antes de explorar conteúdos pessoais. Não interprete símbolos como fatos sobre a infância, a memória ou o inconsciente. A própria pessoa tem o direito de dizer “não sei”, discordar ou não compartilhar."
+      ]},
+      { title: "5.5. Ritmo, pausa e atenção: experiência não é prova", paragraphs: [
+        "Rima, repetição, aliteração, métrica e pausas podem orientar a atenção e influenciar a experiência estética. Ler em voz alta pode tornar audíveis sons e cadências que passam despercebidos na leitura silenciosa. Esses efeitos variam: um ritmo pode ser acolhedor para alguém e irritante ou cansativo para outra pessoa.",
+        "Experimente comparar uma leitura silenciosa com uma leitura em voz alta, sem presumir que uma seja superior. Observe compreensão, interesse e conforto. Se ler em voz alta não for adequado, leia mentalmente, acompanhe o texto com os olhos ou escolha apenas um verso.",
+        "Uma mudança subjetiva depois da leitura é um dado da experiência pessoal, não uma demonstração automática de alteração neural, eficácia clínica ou causalidade. Para fazer afirmações científicas mais fortes, seriam necessários estudos apropriados, medidas claras, comparação adequada e replicação."
+      ]},
+      { title: "5.6. Exercício guiado: cartografia de um poema", paragraphs: [
+        "Escolha um poema curto que pareça seguro para você. Antes de começar, decida se quer escrever, pensar em silêncio ou apenas ler. Não use este exercício para forçar recordações difíceis. Você pode pular qualquer etapa.",
+        "Na primeira passagem, registre uma palavra ou imagem que chamou sua atenção. Na segunda, descreva o que o texto efetivamente diz, sem explicar sua vida. Na terceira, anote uma associação pessoal, identificando-a como associação. Na quarta, proponha uma leitura alternativa. Na quinta, decida se deseja levar consigo uma pergunta, uma frase ou nenhuma conclusão.",
+        "Finalize com três perguntas: “O que o poema diz?”, “O que eu acrescentei a partir da minha experiência?” e “O que ainda não sei?”. Se perceber que está tratando uma interpretação como fato, volte ao texto e diferencie observação de inferência."
+      ]},
+      { title: "5.7. Exemplo prático: um verso, leituras diferentes", paragraphs: [
+        "Verso ilustrativo: “A casa guardava o silêncio da tarde”. Leitura textual: há uma casa e o silêncio é descrito como se pudesse ser guardado. Associação de uma leitora: a casa lembra o período em que estudava com a avó. Associação de outro leitor: o verso sugere uma sala vazia depois de uma mudança. Um terceiro leitor pode perceber apenas a sonoridade da frase.",
+        "Nenhuma dessas associações, isoladamente, prova um fato biográfico ou uma condição psicológica. Para explorar a leitura, pergunte: “Que detalhe do verso sustenta essa interpretação?”, “Que outra possibilidade existe?” e “Você prefere continuar ou deixar o poema como está?”.",
+        "A finalidade é aumentar a consciência sobre o processo de leitura, não descobrir uma resposta secreta. O poema não precisa ser convertido em conselho, diagnóstico ou plano de ação."
+      ]},
+      { title: "5.8. O que a pesquisa permite afirmar", paragraphs: [
+        "A investigação científica sobre leitura literária, compreensão de metáforas, cognição e emoção estuda tarefas específicas e utiliza métodos diferentes. Resultados sobre um tipo de leitura, uma amostra ou uma intervenção não devem ser generalizados para toda poesia nem para a PCH como metodologia integrada.",
+        "Ao comunicar resultados, identifique exatamente o que foi estudado, quem participou, qual medida foi utilizada e quais limitações foram reconhecidas. Evite afirmações como “este poema ativa o cérebro emocional”, “a leitura reorganiza os neurônios em minutos” ou “a reação revela o inconsciente” quando não houver evidência direta adequada.",
+        "Referências introdutórias: Zeman, A.; Milton, F.; Smith, A.; Rylance, R. (2013). By heart: an fMRI study of the brain network that recites poems. Journal of Consciousness Studies, 20(9–10), 132–158. A pesquisa examina recitação de poemas conhecidos, não valida uma terapia poética. DOI e acesso devem ser conferidos na fonte editorial antes de citação formal. Também é útil consultar Thibodeau, P. H.; Boroditsky, L. (2011), Metaphors we think with: the role of metaphor in reasoning. PLOS ONE, 6(2), e16782. DOI: 10.1371/journal.pone.0016782. Esses trabalhos não demonstram eficácia clínica da PCH."
+      ], bullets: [
+        "Distinguir atividade cerebral observada em uma tarefa de explicação causal sobre a experiência.",
+        "Distinguir resultado sobre leitura ou metáfora de evidência direta sobre uma intervenção clínica.",
+        "Verificar a referência original, a metodologia, a amostra, as limitações e a replicação antes de publicar uma afirmação.",
+        "Quando a evidência não for suficiente, declarar a incerteza em vez de preencher a lacuna com linguagem neurocientífica."
+      ]},
+      { title: "5.9. Síntese e perguntas de revisão", paragraphs: [
+        "O leitor poético não é um cérebro que precisa ser decifrado, mas uma pessoa que lê a partir de linguagem, atenção, corpo, contexto e experiência. O mapa proposto neste capítulo ajuda a formular perguntas sobre o processo de leitura; não localiza emoções em pontos fixos nem transforma metáforas em exames.",
+        "A leitura pode ser significativa mesmo quando não produz mudança perceptível. A qualidade da experiência está em poder observar, interpretar, discordar e escolher livremente — com curiosidade e sem promessas que ultrapassem a evidência."
+      ], bullets: [
+        "Por que “mapa cerebral” é uma metáfora didática neste capítulo, e não um mapa anatômico individual?",
+        "Como diferenciar o que o poema apresenta da associação que o leitor acrescenta?",
+        "Por que uma emoção durante a leitura não constitui diagnóstico?",
+        "Que evidência seria necessária para sustentar uma afirmação de eficácia clínica da PCH?",
+        "Como adaptar ou interromper o exercício respeitando a autonomia do leitor?"
+      ]},
+      { title: "5.10. O mapa é um ciclo, não uma sequência obrigatória", paragraphs: [
+        "Os cinco processos apresentados neste capítulo são categorias didáticas para observar a leitura, não etapas rígidas nem compartimentos independentes. A atenção pode mudar quando uma palavra ganha outro sentido; uma associação pode levar o leitor de volta ao texto; o ritmo pode alterar o que ele percebe; e o contexto pode modificar a interpretação. O leitor pode avançar, voltar, pausar ou encerrar sem completar todas as etapas.",
+        "Uma forma prática de representar o percurso é: orientar-se no texto → notar um detalhe → descrever o que está presente → reconhecer associações próprias → testar outra interpretação → escolher se deseja continuar. As setas indicam possibilidades de circulação, não uma lei sobre o cérebro. Não se deve atribuir cada movimento a uma região cerebral específica sem evidência adequada.",
+        "A utilidade do mapa está nas perguntas que ele permite fazer. Se a leitura ficar confusa, volte ao texto; se a associação parecer uma certeza, marque-a como hipótese; se o exercício deixar de ser útil, pare. A autonomia do leitor é parte do método, não uma etapa opcional."
+      ]},
+      { title: "5.11. Ficha de cartografia: do texto à interpretação", paragraphs: [
+        "Use esta ficha com um poema curto, de preferência escolhido pelo próprio leitor. A atividade pode ser feita mentalmente, por escrito, com desenho, por áudio ou em conversa. Não é necessário revelar experiências pessoais nem responder a todos os campos.",
+        "1. TEXTO — copie uma palavra ou descreva um detalhe que realmente aparece no poema. 2. ATENÇÃO — registre o que chamou sua atenção primeiro, sem concluir por que isso aconteceu. 3. ASSOCIAÇÃO — anote uma lembrança, imagem ou ideia que surgiu e identifique-a como associação pessoal, não como informação contida no poema. 4. INTERPRETAÇÃO — escreva uma leitura possível e aponte qual detalhe do texto a sustenta. 5. ALTERNATIVA — formule outra leitura plausível. 6. ESCOLHA — decida se quer continuar, mudar de poema, fazer uma pausa ou encerrar sem conclusão.",
+        "Exemplo com verso original criado para esta atividade: “A chuva desenhou caminhos no vidro”. Observação textual: há chuva e marcas no vidro descritas como caminhos. Associação possível: alguém pode lembrar uma viagem; outra pessoa pode imaginar apenas linhas se formando. Interpretação possível: o verso sugere movimento ou passagem. Limite: nenhuma dessas respostas comprova um fato da biografia do leitor nem revela um significado universal.",
+        "Ao revisar a ficha, diferencie observação, associação e conclusão. Pergunte: “Que palavra do poema sustenta essa leitura?”, “Que outra leitura também cabe?” e “Estou afirmando algo sobre mim que o texto não pode provar?”. A ficha organiza a reflexão; não mede saúde mental, profundidade emocional ou atividade cerebral."
+      ]},
+      { title: "5.12. Diferenças individuais, contexto e acessibilidade", paragraphs: [
+        "A leitura é influenciada por familiaridade com o gênero, idioma, repertório cultural, escolarização, contexto social, atenção disponível, cansaço, visão, audição e preferências pessoais. Essas diferenças não devem ser tratadas automaticamente como falhas ou déficits. Duas pessoas podem compreender o mesmo poema de maneiras distintas e ambas podem apresentar razões coerentes para suas leituras.",
+        "Adapte o formato sem mudar a finalidade: ofereça texto ampliado ou com espaçamento, leitura silenciosa ou em voz alta, pausas, linguagem mais simples, apoio de áudio ou a possibilidade de escolher apenas um verso. Não presuma que toda pessoa queira ouvir, falar, fechar os olhos, respirar de determinada maneira ou compartilhar algo íntimo.",
+        "Se a compreensão estiver difícil, retorne a uma palavra concreta, explique o vocabulário ou ofereça mais contexto antes de interpretar. Se a pessoa não gostar do poema, não sentir emoção ou preferir não participar, aceite a resposta sem tentar convencê-la de que existe uma mensagem escondida."
+      ]},
+      { title: "5.13. Como facilitar uma leitura compartilhada com responsabilidade", bullets: [
+        "Explique o objetivo e combine que cada participante pode passar a vez, discordar ou sair da atividade sem se justificar.",
+        "Pergunte o que a pessoa percebeu antes de oferecer qualquer hipótese; se oferecer uma hipótese, identifique-a claramente como possibilidade e aceite a correção.",
+        "Não peça relatos traumáticos, não faça interpretações sobre infância ou inconsciente e não transforme silêncio, choro ou ausência de emoção em prova de um resultado.",
+        "Separe comentário sobre o texto de afirmações sobre a pessoa. Prefira “que leitura você faz desta imagem?” a “essa imagem mostra que você tem medo de…”.",
+        "Não avalie a qualidade da leitura pela intensidade emocional, pelo grau de exposição pessoal ou pela concordância com o facilitador.",
+        "Encerre com uma escolha livre: compartilhar uma observação sobre o poema, guardar uma pergunta, mudar de atividade ou não tirar nenhuma conclusão."
+      ]},
+      { title: "5.14. Roteiro de aula — Mapa Cerebral do Leitor Poético (65 minutos)", paragraphs: [
+        "OBJETIVO — usar um mapa didático para observar linguagem, atenção, associações, emoção e interpretação durante a leitura poética. Este roteiro é educativo; não é exame cerebral, protocolo clínico validado ou método de diagnóstico.",
+        "1. ANATOMIA POÉTICA DO CÉREBRO — 15 minutos. Apresente as áreas de Broca e Wernicke no contexto da linguagem, redes distribuídas envolvidas no processamento emocional, funções do córtex pré-frontal e a Rede de Modo Padrão (Default Mode Network), investigada em processos como pensamento interno e autorreferência. Explique que não existe um único centro cerebral da poesia e que funções complexas dependem de redes, tarefa e contexto.",
+        "2. O QUE A CIÊNCIA JÁ INVESTIGA — 10 minutos. Introduza neuroestética, psicolinguística, estudos de neuroimagem sobre leitura e recitação poética e pesquisas sobre metáforas. Contextualize George Lakoff e Oliver Sacks em seus campos relevantes. Diferencie estudos sobre leitura, metáfora ou recitação de evidência direta sobre eficácia clínica da PCH.",
+        "3. LEITURA COMO EXPERIÊNCIA MULTISSENSORIAL — 15 minutos. Leia ou recite um poema curto com o texto acessível. Convide cada pessoa, sem obrigação de compartilhar, a notar imagens mentais, palavras que chamaram atenção, emoções ou sensações e associações pessoais. Explique que essas observações descrevem a experiência subjetiva e não identificam, por si só, quais áreas cerebrais foram ativadas.",
+        "4. APLICAÇÕES DO MAPA À CRIAÇÃO POÉTICA — 15 minutos. Explore imagem concreta, metáfora, ritmo, repetição e contraste como recursos que podem influenciar a experiência de leitura. Trate essas relações como possibilidades, não como a fórmula “zona cerebral → verso → efeito garantido”. Proponha criação individual e, se houver consentimento, construção colaborativa de versos.",
+        "5. VIVÊNCIA GUIADA — 10 minutos. Ofereça respiração confortável sem exigir fechar os olhos ou seguir um padrão específico. Faça uma leitura pausada de poema autoral, convide ao registro opcional de imagens, emoções ou perguntas e proponha transformar uma observação em minipoema. Cada pessoa pode pular etapas, escolher outro texto ou interromper a atividade.",
+        "ENCERRAMENTO — diferencie o que o poema efetivamente diz, o que o leitor associa e o que conclui sobre a própria vida. Não trate associações como diagnóstico, lembranças comprovadas ou revelações do inconsciente. A utilidade do mapa está em apoiar perguntas e escolhas, não em determinar o significado da experiência."
+      ], bullets: [
+        "Abertura: “Ler poesia não é apenas ler palavras. É encontrar a si mesmo em um espelho feito de símbolos.”",
+        "Reflexão: “Que palavras você usa para esconder de si mesmo aquilo que ainda não conseguiu nomear?”",
+        "Aprofundamento: “E se o verso fosse uma ferramenta delicada para se aproximar de sentimentos que você ainda não conseguiu expressar?”",
+        "Chamada para a prática: “Agora que você começou a compreender o mapa, que tal escrever o seu próprio caminho?”",
+        "Materiais: poema curto em formato acessível, papel ou bloco de notas e opção de participação silenciosa.",
+        "Critérios de condução: consentimento, nenhuma interpretação imposta, direito de interromper e afirmações científicas proporcionais às evidências."
+      ]},
+    ],
+    practice: [
+      "Escolha um poema curto e marque uma palavra ou imagem que chamou sua atenção, sem tentar explicar imediatamente o motivo.",
+      "Escreva três linhas separadas: “O texto diz…”, “Eu associei…” e “Ainda não sei…”.",
+      "Crie uma segunda interpretação possível e identifique qual detalhe do poema a sustenta.",
+      "Se for confortável, compare leitura silenciosa e leitura em voz alta. Observe compreensão, atenção e conforto, sem exigir uma mudança emocional.",
+      "Finalize escolhendo uma pergunta que deseja guardar — ou registre que não precisa tirar nenhuma conclusão."
+    ],
+    reflection: [
+      "Estou descrevendo o poema ou transformando minha associação em fato?",
+      "Que outras interpretações são possíveis sem negar o que o texto diz?",
+      "Estou usando termos sobre o cérebro com evidência suficiente?",
+      "A leitura me ajuda, é neutra ou aumenta meu desconforto?",
+      "Como posso preservar a liberdade do leitor para discordar, parar ou não compartilhar?"
+    ]
+  },
+]; 
 
 const LivroCurso = () => {
-  const [expanded, setExpanded] = useState<string[]>(["capitulo-1"]);
+  const [expanded, setExpanded] = useState<string[]>(["capitulo-1", "capitulo-5"]);
   const [completed, setCompleted] = useState<string[]>([]);
+  const [progressLoaded, setProgressLoaded] = useState(false);
+  const [progressError, setProgressError] = useState<string | null>(null);
+  const [savingChapter, setSavingChapter] = useState<string | null>(null);
+  const [reloadProgressKey, setReloadProgressKey] = useState(0);
   const toggle = (id: string) => setExpanded(current => current.includes(id) ? current.filter(item => item !== id) : [...current, id]);
-  const toggleComplete = (id: string) => setCompleted(current => current.includes(id) ? current.filter(item => item !== id) : [...current, id]);
+
+  useEffect(() => {
+    let cancelled = false;
+
+    const loadProgress = async () => {
+      setProgressLoaded(false);
+      setProgressError(null);
+
+      try {
+        const { data: authData, error: authError } = await supabase.auth.getUser();
+        if (authError || !authData.user) {
+          if (!cancelled) {
+            setProgressError("Não foi possível confirmar sua sessão. Entre novamente e tente recarregar o progresso.");
+            setProgressLoaded(true);
+          }
+          return;
+        }
+
+        const { data, error } = await supabase
+          .from("padh_livro_curso_progress")
+          .select("chapter_id")
+          .eq("user_id", authData.user.id)
+          .eq("completed", true);
+
+        if (cancelled) return;
+        if (error) {
+          setProgressError("Não foi possível carregar seu progresso salvo. Nenhum capítulo será marcado como concluído até a leitura funcionar.");
+          setProgressLoaded(true);
+          return;
+        }
+
+        setCompleted(Array.isArray(data) ? data.map(row => row.chapter_id) : []);
+        setProgressLoaded(true);
+      } catch {
+        if (!cancelled) {
+          setProgressError("Ocorreu uma falha inesperada ao carregar o progresso. Verifique sua conexão e tente novamente.");
+          setProgressLoaded(true);
+        }
+      }
+    };
+
+    void loadProgress();
+    return () => { cancelled = true; };
+  }, [reloadProgressKey]);
+
+  const toggleComplete = async (id: string) => {
+    if (!progressLoaded || progressError || savingChapter) return;
+    const wasCompleted = completed.includes(id);
+    setSavingChapter(id);
+    setProgressError(null);
+
+    try {
+      const { data: authData, error: authError } = await supabase.auth.getUser();
+      if (authError || !authData.user) throw new Error("Sua sessão expirou. Entre novamente e tente outra vez.");
+
+      if (wasCompleted) {
+        const { error } = await supabase
+          .from("padh_livro_curso_progress")
+          .delete()
+          .eq("user_id", authData.user.id)
+          .eq("chapter_id", id);
+        if (error) throw error;
+        setCompleted(current => current.filter(chapterId => chapterId !== id));
+      } else {
+        const { error } = await supabase
+          .from("padh_livro_curso_progress")
+          .upsert({
+            user_id: authData.user.id,
+            chapter_id: id,
+            completed: true,
+            completed_at: new Date().toISOString(),
+            updated_at: new Date().toISOString(),
+          }, { onConflict: "user_id,chapter_id" });
+        if (error) throw error;
+        setCompleted(current => current.includes(id) ? current : [...current, id]);
+      }
+    } catch {
+      setProgressError("Não foi possível salvar essa alteração. O estado exibido foi mantido como estava; verifique sua conexão e tente recarregar.");
+    } finally {
+      setSavingChapter(null);
+    }
+  };
   const safeChapters = Array.isArray(chapters) ? chapters : [];
-  const allText = safeChapters.map(ch => `${ch.title || ""}. ${(Array.isArray(ch.sections) ? ch.sections : []).map(s => `${s.title || ""}. ${(Array.isArray(s.paragraphs) ? s.paragraphs : []).join(" ")} ${(Array.isArray(s.bullets) ? s.bullets : []).join(" ")}`).join(" ")}`).join(" ");
+  const allText = safeChapters.map(ch => `${ch.title || ""}. ${(Array.isArray(ch.sections) ? ch.sections : []).map(s => `${s.title || ""}. ${(Array.isArray(s.paragraphs) ? s.paragraphs : []).join(" ")} ${(Array.isArray(s.bullets) ? s.bullets : []).join(" ")}`).join(" ")} Prática guiada. ${(Array.isArray(ch.practice) ? ch.practice : []).map((item, i) => `Etapa ${i + 1}. ${item}`).join(" ")} Perguntas de reflexão. ${(Array.isArray(ch.reflection) ? ch.reflection : []).map((item, i) => `Pergunta ${i + 1}. ${item}`).join(" ")}`).join(" ");
   return (
     <PageLayout seo={pagesSEO.livroCurso} currentPage="Livro-Curso">
       <section className="relative overflow-hidden">
@@ -151,7 +455,7 @@ const LivroCurso = () => {
           <div className="max-w-4xl mx-auto">
             <p className="text-sm uppercase tracking-[0.2em] text-primary mb-4 font-medium">Livro-Curso PCH · Trilha de aprendizado</p>
             <h1 className="text-4xl md:text-6xl font-heading font-bold mb-6 text-foreground">Poesia Cognitivo-<span className="text-primary italic">Hipnótica</span></h1>
-            <p className="text-lg text-muted-foreground mb-6 leading-relaxed">Quatro capítulos para estudar a linguagem poética, observar padrões de pensamento, compreender metáforas com rigor científico e praticar autocuidado com autonomia e segurança.</p>
+            <p className="text-lg text-muted-foreground mb-6 leading-relaxed">Cinco capítulos para estudar a linguagem poética, observar padrões de pensamento, compreender metáforas com rigor científico, mapear processos da leitura poética e praticar autocuidado com autonomia e segurança.</p>
             <div className="poem-block max-w-md mx-auto my-8"><p className="poem-text text-sm text-muted-foreground">Quando se olha no espelho, o que é que você vê?\nEu vi grades onde havia janelas.\nAté que um verso abriu a porta\nque eu mesmo havia trancado por dentro.</p><cite className="text-xs text-primary/70 mt-2 block not-italic">— Prisão Interior</cite></div>
             <div className="flex flex-wrap justify-center gap-3">
               <Button size="lg" onClick={() => { setExpanded(safeChapters.map(c => c.id)); document.getElementById("trilha-aprendizado")?.scrollIntoView({ behavior: "smooth" }); }} className="bg-primary text-primary-foreground hover:bg-primary-dark"><BookOpen className="mr-2 h-5 w-5" /> Estudar os capítulos</Button>
@@ -168,7 +472,8 @@ const LivroCurso = () => {
             <CardContent className="space-y-3 text-muted-foreground leading-relaxed">
               <p>Estude um capítulo por vez. Leia a teoria, faça a prática apenas se for confortável e responda às perguntas de reflexão. Não é necessário compartilhar textos pessoais. A trilha é uma estrutura educativa e não uma certificação de competência clínica.</p>
               <p><strong className="text-foreground">Objetivos de aprendizagem:</strong> explicar os três pilares da PCH; observar linguagem sem transformar metáforas em diagnósticos; distinguir evidência científica de hipótese; e montar uma rotina de autocuidado flexível e segura.</p>
-              <div className="flex items-center gap-3"><div className="h-2 rounded-full bg-muted flex-1 overflow-hidden"><div className="h-full bg-primary transition-all" style={{ width: ((completed.length / Math.max(safeChapters.length, 1)) * 100) + "%" }} /></div><span className="text-xs whitespace-nowrap">{completed.length} de {safeChapters.length} capítulos concluídos</span></div>
+              {progressError && <div role="alert" className="rounded-lg border border-destructive/30 bg-destructive/5 p-3 text-sm text-destructive space-y-2"><p>{progressError}</p><Button type="button" size="sm" variant="outline" onClick={() => setReloadProgressKey(key => key + 1)}>Tentar carregar novamente</Button></div>}
+              <div className="flex items-center gap-3"><div className="h-2 rounded-full bg-muted flex-1 overflow-hidden"><div className="h-full bg-primary transition-all" style={{ width: (progressLoaded && !progressError ? (completed.length / Math.max(safeChapters.length, 1)) * 100 : 0) + "%" }} /></div><span className="text-xs whitespace-nowrap">{!progressLoaded ? "Carregando progresso…" : progressError ? "Progresso indisponível" : `${completed.length} de ${safeChapters.length} capítulos concluídos`}</span></div>
             </CardContent>
           </Card>
           <div className="space-y-4">
@@ -194,7 +499,7 @@ const LivroCurso = () => {
                     <ol className="list-decimal pl-5 space-y-2 text-sm text-muted-foreground leading-6">{(Array.isArray(chapter.practice) ? chapter.practice : []).map((item, i) => <li key={i}>{item}</li>)}</ol>
                     <h4 className="font-semibold text-foreground pt-2">Perguntas de reflexão</h4>
                     <ul className="list-disc pl-5 space-y-2 text-sm text-muted-foreground leading-6">{(Array.isArray(chapter.reflection) ? chapter.reflection : []).map((item, i) => <li key={i}>{item}</li>)}</ul>
-                    <Button variant={isDone ? "outline" : "default"} onClick={() => toggleComplete(chapter.id)} className="gap-2">{isDone ? "Marcar como não concluído" : "Marcar capítulo como concluído"}</Button>
+                    <Button type="button" variant={isDone ? "outline" : "default"} disabled={!progressLoaded || Boolean(progressError) || savingChapter !== null} onClick={() => void toggleComplete(chapter.id)} className="gap-2">{savingChapter === chapter.id ? "Salvando…" : isDone ? "Marcar como não concluído" : "Marcar capítulo como concluído"}</Button>
                   </div>
                 </CardContent>}
               </Card>;
