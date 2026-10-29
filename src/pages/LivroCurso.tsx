@@ -355,30 +355,37 @@ const LivroCurso = () => {
       setProgressLoaded(false);
       setProgressError(null);
 
-      const { data: authData, error: authError } = await supabase.auth.getUser();
-      if (authError || !authData.user) {
+      try {
+        const { data: authData, error: authError } = await supabase.auth.getUser();
+        if (authError || !authData.user) {
+          if (!cancelled) {
+            setProgressError("Não foi possível confirmar sua sessão. Entre novamente e tente recarregar o progresso.");
+            setProgressLoaded(true);
+          }
+          return;
+        }
+
+        const { data, error } = await supabase
+          .from("padh_livro_curso_progress")
+          .select("chapter_id")
+          .eq("user_id", authData.user.id)
+          .eq("completed", true);
+
+        if (cancelled) return;
+        if (error) {
+          setProgressError("Não foi possível carregar seu progresso salvo. Nenhum capítulo será marcado como concluído até a leitura funcionar.");
+          setProgressLoaded(true);
+          return;
+        }
+
+        setCompleted(Array.isArray(data) ? data.map(row => row.chapter_id) : []);
+        setProgressLoaded(true);
+      } catch {
         if (!cancelled) {
-          setProgressError("Não foi possível confirmar sua sessão. Entre novamente e tente recarregar o progresso.");
+          setProgressError("Ocorreu uma falha inesperada ao carregar o progresso. Verifique sua conexão e tente novamente.");
           setProgressLoaded(true);
         }
-        return;
       }
-
-      const { data, error } = await supabase
-        .from("padh_livro_curso_progress")
-        .select("chapter_id")
-        .eq("user_id", authData.user.id)
-        .eq("completed", true);
-
-      if (cancelled) return;
-      if (error) {
-        setProgressError("Não foi possível carregar seu progresso salvo. Nenhum capítulo será marcado como concluído até a leitura funcionar.");
-        setProgressLoaded(true);
-        return;
-      }
-
-      setCompleted(Array.isArray(data) ? data.map(row => row.chapter_id) : []);
-      setProgressLoaded(true);
     };
 
     void loadProgress();
