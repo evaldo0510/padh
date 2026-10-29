@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { BookOpen, Brain, Feather, Heart, Lightbulb, CheckCircle2, ChevronDown } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -6,6 +6,7 @@ import { Separator } from "@/components/ui/separator";
 import PageLayout from "@/components/layout/PageLayout";
 import { pagesSEO } from "@/lib/seo-config";
 import TextReader from "@/components/ui/text-reader";
+import { supabase } from "@/integrations/supabase/client";
 
 type Chapter = { id: string; title: string; subtitle: string; icon: React.ElementType; sections: { title: string; paragraphs?: string[]; bullets?: string[] }[]; practice: string[]; reflection: string[] };
 const chapters: Chapter[] = [
@@ -295,7 +296,31 @@ const chapters: Chapter[] = [
         "Por que uma emoção durante a leitura não constitui diagnóstico?",
         "Que evidência seria necessária para sustentar uma afirmação de eficácia clínica da PCH?",
         "Como adaptar ou interromper o exercício respeitando a autonomia do leitor?"
-      ]}
+      ]},
+      { title: "5.10. O mapa é um ciclo, não uma sequência obrigatória", paragraphs: [
+        "Os cinco processos apresentados neste capítulo são categorias didáticas para observar a leitura, não etapas rígidas nem compartimentos independentes. A atenção pode mudar quando uma palavra ganha outro sentido; uma associação pode levar o leitor de volta ao texto; o ritmo pode alterar o que ele percebe; e o contexto pode modificar a interpretação. O leitor pode avançar, voltar, pausar ou encerrar sem completar todas as etapas.",
+        "Uma forma prática de representar o percurso é: orientar-se no texto → notar um detalhe → descrever o que está presente → reconhecer associações próprias → testar outra interpretação → escolher se deseja continuar. As setas indicam possibilidades de circulação, não uma lei sobre o cérebro. Não se deve atribuir cada movimento a uma região cerebral específica sem evidência adequada.",
+        "A utilidade do mapa está nas perguntas que ele permite fazer. Se a leitura ficar confusa, volte ao texto; se a associação parecer uma certeza, marque-a como hipótese; se o exercício deixar de ser útil, pare. A autonomia do leitor é parte do método, não uma etapa opcional."
+      ]},
+      { title: "5.11. Ficha de cartografia: do texto à interpretação", paragraphs: [
+        "Use esta ficha com um poema curto, de preferência escolhido pelo próprio leitor. A atividade pode ser feita mentalmente, por escrito, com desenho, por áudio ou em conversa. Não é necessário revelar experiências pessoais nem responder a todos os campos.",
+        "1. TEXTO — copie uma palavra ou descreva um detalhe que realmente aparece no poema. 2. ATENÇÃO — registre o que chamou sua atenção primeiro, sem concluir por que isso aconteceu. 3. ASSOCIAÇÃO — anote uma lembrança, imagem ou ideia que surgiu e identifique-a como associação pessoal, não como informação contida no poema. 4. INTERPRETAÇÃO — escreva uma leitura possível e aponte qual detalhe do texto a sustenta. 5. ALTERNATIVA — formule outra leitura plausível. 6. ESCOLHA — decida se quer continuar, mudar de poema, fazer uma pausa ou encerrar sem conclusão.",
+        "Exemplo com verso original criado para esta atividade: “A chuva desenhou caminhos no vidro”. Observação textual: há chuva e marcas no vidro descritas como caminhos. Associação possível: alguém pode lembrar uma viagem; outra pessoa pode imaginar apenas linhas se formando. Interpretação possível: o verso sugere movimento ou passagem. Limite: nenhuma dessas respostas comprova um fato da biografia do leitor nem revela um significado universal.",
+        "Ao revisar a ficha, diferencie observação, associação e conclusão. Pergunte: “Que palavra do poema sustenta essa leitura?”, “Que outra leitura também cabe?” e “Estou afirmando algo sobre mim que o texto não pode provar?”. A ficha organiza a reflexão; não mede saúde mental, profundidade emocional ou atividade cerebral."
+      ]},
+      { title: "5.12. Diferenças individuais, contexto e acessibilidade", paragraphs: [
+        "A leitura é influenciada por familiaridade com o gênero, idioma, repertório cultural, escolarização, contexto social, atenção disponível, cansaço, visão, audição e preferências pessoais. Essas diferenças não devem ser tratadas automaticamente como falhas ou déficits. Duas pessoas podem compreender o mesmo poema de maneiras distintas e ambas podem apresentar razões coerentes para suas leituras.",
+        "Adapte o formato sem mudar a finalidade: ofereça texto ampliado ou com espaçamento, leitura silenciosa ou em voz alta, pausas, linguagem mais simples, apoio de áudio ou a possibilidade de escolher apenas um verso. Não presuma que toda pessoa queira ouvir, falar, fechar os olhos, respirar de determinada maneira ou compartilhar algo íntimo.",
+        "Se a compreensão estiver difícil, retorne a uma palavra concreta, explique o vocabulário ou ofereça mais contexto antes de interpretar. Se a pessoa não gostar do poema, não sentir emoção ou preferir não participar, aceite a resposta sem tentar convencê-la de que existe uma mensagem escondida."
+      ]},
+      { title: "5.13. Como facilitar uma leitura compartilhada com responsabilidade", bullets: [
+        "Explique o objetivo e combine que cada participante pode passar a vez, discordar ou sair da atividade sem se justificar.",
+        "Pergunte o que a pessoa percebeu antes de oferecer qualquer hipótese; se oferecer uma hipótese, identifique-a claramente como possibilidade e aceite a correção.",
+        "Não peça relatos traumáticos, não faça interpretações sobre infância ou inconsciente e não transforme silêncio, choro ou ausência de emoção em prova de um resultado.",
+        "Separe comentário sobre o texto de afirmações sobre a pessoa. Prefira “que leitura você faz desta imagem?” a “essa imagem mostra que você tem medo de…”.",
+        "Não avalie a qualidade da leitura pela intensidade emocional, pelo grau de exposição pessoal ou pela concordância com o facilitador.",
+        "Encerre com uma escolha livre: compartilhar uma observação sobre o poema, guardar uma pergunta, mudar de atividade ou não tirar nenhuma conclusão."
+      ]},
     ],
     practice: [
       "Escolha um poema curto e marque uma palavra ou imagem que chamou sua atenção, sem tentar explicar imediatamente o motivo.",
@@ -315,10 +340,95 @@ const chapters: Chapter[] = [
 ]; 
 
 const LivroCurso = () => {
-  const [expanded, setExpanded] = useState<string[]>(["capitulo-1"]);
+  const [expanded, setExpanded] = useState<string[]>(["capitulo-1", "capitulo-5"]);
   const [completed, setCompleted] = useState<string[]>([]);
+  const [progressLoaded, setProgressLoaded] = useState(false);
+  const [progressError, setProgressError] = useState<string | null>(null);
+  const [savingChapter, setSavingChapter] = useState<string | null>(null);
+  const [reloadProgressKey, setReloadProgressKey] = useState(0);
   const toggle = (id: string) => setExpanded(current => current.includes(id) ? current.filter(item => item !== id) : [...current, id]);
-  const toggleComplete = (id: string) => setCompleted(current => current.includes(id) ? current.filter(item => item !== id) : [...current, id]);
+
+  useEffect(() => {
+    let cancelled = false;
+
+    const loadProgress = async () => {
+      setProgressLoaded(false);
+      setProgressError(null);
+
+      try {
+        const { data: authData, error: authError } = await supabase.auth.getUser();
+        if (authError || !authData.user) {
+          if (!cancelled) {
+            setProgressError("Não foi possível confirmar sua sessão. Entre novamente e tente recarregar o progresso.");
+            setProgressLoaded(true);
+          }
+          return;
+        }
+
+        const { data, error } = await supabase
+          .from("padh_livro_curso_progress")
+          .select("chapter_id")
+          .eq("user_id", authData.user.id)
+          .eq("completed", true);
+
+        if (cancelled) return;
+        if (error) {
+          setProgressError("Não foi possível carregar seu progresso salvo. Nenhum capítulo será marcado como concluído até a leitura funcionar.");
+          setProgressLoaded(true);
+          return;
+        }
+
+        setCompleted(Array.isArray(data) ? data.map(row => row.chapter_id) : []);
+        setProgressLoaded(true);
+      } catch {
+        if (!cancelled) {
+          setProgressError("Ocorreu uma falha inesperada ao carregar o progresso. Verifique sua conexão e tente novamente.");
+          setProgressLoaded(true);
+        }
+      }
+    };
+
+    void loadProgress();
+    return () => { cancelled = true; };
+  }, [reloadProgressKey]);
+
+  const toggleComplete = async (id: string) => {
+    if (!progressLoaded || progressError || savingChapter) return;
+    const wasCompleted = completed.includes(id);
+    setSavingChapter(id);
+    setProgressError(null);
+
+    try {
+      const { data: authData, error: authError } = await supabase.auth.getUser();
+      if (authError || !authData.user) throw new Error("Sua sessão expirou. Entre novamente e tente outra vez.");
+
+      if (wasCompleted) {
+        const { error } = await supabase
+          .from("padh_livro_curso_progress")
+          .delete()
+          .eq("user_id", authData.user.id)
+          .eq("chapter_id", id);
+        if (error) throw error;
+        setCompleted(current => current.filter(chapterId => chapterId !== id));
+      } else {
+        const { error } = await supabase
+          .from("padh_livro_curso_progress")
+          .upsert({
+            user_id: authData.user.id,
+            chapter_id: id,
+            completed: true,
+            completed_at: new Date().toISOString(),
+            updated_at: new Date().toISOString(),
+          }, { onConflict: "user_id,chapter_id" });
+        if (error) throw error;
+        setCompleted(current => current.includes(id) ? current : [...current, id]);
+      }
+    } catch {
+      setProgressError("Não foi possível salvar essa alteração. O estado exibido foi mantido como estava; verifique sua conexão e tente recarregar.");
+    } finally {
+      setSavingChapter(null);
+    }
+  };
   const safeChapters = Array.isArray(chapters) ? chapters : [];
   const allText = safeChapters.map(ch => `${ch.title || ""}. ${(Array.isArray(ch.sections) ? ch.sections : []).map(s => `${s.title || ""}. ${(Array.isArray(s.paragraphs) ? s.paragraphs : []).join(" ")} ${(Array.isArray(s.bullets) ? s.bullets : []).join(" ")}`).join(" ")} Prática guiada. ${(Array.isArray(ch.practice) ? ch.practice : []).map((item, i) => `Etapa ${i + 1}. ${item}`).join(" ")} Perguntas de reflexão. ${(Array.isArray(ch.reflection) ? ch.reflection : []).map((item, i) => `Pergunta ${i + 1}. ${item}`).join(" ")}`).join(" ");
   return (
@@ -346,7 +456,8 @@ const LivroCurso = () => {
             <CardContent className="space-y-3 text-muted-foreground leading-relaxed">
               <p>Estude um capítulo por vez. Leia a teoria, faça a prática apenas se for confortável e responda às perguntas de reflexão. Não é necessário compartilhar textos pessoais. A trilha é uma estrutura educativa e não uma certificação de competência clínica.</p>
               <p><strong className="text-foreground">Objetivos de aprendizagem:</strong> explicar os três pilares da PCH; observar linguagem sem transformar metáforas em diagnósticos; distinguir evidência científica de hipótese; e montar uma rotina de autocuidado flexível e segura.</p>
-              <div className="flex items-center gap-3"><div className="h-2 rounded-full bg-muted flex-1 overflow-hidden"><div className="h-full bg-primary transition-all" style={{ width: ((completed.length / Math.max(safeChapters.length, 1)) * 100) + "%" }} /></div><span className="text-xs whitespace-nowrap">{completed.length} de {safeChapters.length} capítulos concluídos</span></div>
+              {progressError && <div role="alert" className="rounded-lg border border-destructive/30 bg-destructive/5 p-3 text-sm text-destructive space-y-2"><p>{progressError}</p><Button type="button" size="sm" variant="outline" onClick={() => setReloadProgressKey(key => key + 1)}>Tentar carregar novamente</Button></div>}
+              <div className="flex items-center gap-3"><div className="h-2 rounded-full bg-muted flex-1 overflow-hidden"><div className="h-full bg-primary transition-all" style={{ width: (progressLoaded && !progressError ? (completed.length / Math.max(safeChapters.length, 1)) * 100 : 0) + "%" }} /></div><span className="text-xs whitespace-nowrap">{!progressLoaded ? "Carregando progresso…" : progressError ? "Progresso indisponível" : `${completed.length} de ${safeChapters.length} capítulos concluídos`}</span></div>
             </CardContent>
           </Card>
           <div className="space-y-4">
@@ -372,7 +483,7 @@ const LivroCurso = () => {
                     <ol className="list-decimal pl-5 space-y-2 text-sm text-muted-foreground leading-6">{(Array.isArray(chapter.practice) ? chapter.practice : []).map((item, i) => <li key={i}>{item}</li>)}</ol>
                     <h4 className="font-semibold text-foreground pt-2">Perguntas de reflexão</h4>
                     <ul className="list-disc pl-5 space-y-2 text-sm text-muted-foreground leading-6">{(Array.isArray(chapter.reflection) ? chapter.reflection : []).map((item, i) => <li key={i}>{item}</li>)}</ul>
-                    <Button variant={isDone ? "outline" : "default"} onClick={() => toggleComplete(chapter.id)} className="gap-2">{isDone ? "Marcar como não concluído" : "Marcar capítulo como concluído"}</Button>
+                    <Button type="button" variant={isDone ? "outline" : "default"} disabled={!progressLoaded || Boolean(progressError) || savingChapter !== null} onClick={() => void toggleComplete(chapter.id)} className="gap-2">{savingChapter === chapter.id ? "Salvando…" : isDone ? "Marcar como não concluído" : "Marcar capítulo como concluído"}</Button>
                   </div>
                 </CardContent>}
               </Card>;

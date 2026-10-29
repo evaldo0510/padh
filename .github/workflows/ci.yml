@@ -43,5 +43,8 @@ jobs:
       - name: Study curriculum invariants
         run: npm run test:study
 
+      - name: Livro-Curso progress invariants
+        run: npm run test:livro-curso-progress
+
       - name: Build
         run: npm run build
