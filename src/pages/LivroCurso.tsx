@@ -321,6 +321,22 @@ const chapters: Chapter[] = [
         "Não avalie a qualidade da leitura pela intensidade emocional, pelo grau de exposição pessoal ou pela concordância com o facilitador.",
         "Encerre com uma escolha livre: compartilhar uma observação sobre o poema, guardar uma pergunta, mudar de atividade ou não tirar nenhuma conclusão."
       ]},
+      { title: "5.14. Roteiro de aula — Mapa Cerebral do Leitor Poético (65 minutos)", paragraphs: [
+        "OBJETIVO — usar um mapa didático para observar linguagem, atenção, associações, emoção e interpretação durante a leitura poética. Este roteiro é educativo; não é exame cerebral, protocolo clínico validado ou método de diagnóstico.",
+        "1. ANATOMIA POÉTICA DO CÉREBRO — 15 minutos. Apresente as áreas de Broca e Wernicke no contexto da linguagem, redes distribuídas envolvidas no processamento emocional, funções do córtex pré-frontal e a Rede de Modo Padrão (Default Mode Network), investigada em processos como pensamento interno e autorreferência. Explique que não existe um único centro cerebral da poesia e que funções complexas dependem de redes, tarefa e contexto.",
+        "2. O QUE A CIÊNCIA JÁ INVESTIGA — 10 minutos. Introduza neuroestética, psicolinguística, estudos de neuroimagem sobre leitura e recitação poética e pesquisas sobre metáforas. Contextualize George Lakoff e Oliver Sacks em seus campos relevantes. Diferencie estudos sobre leitura, metáfora ou recitação de evidência direta sobre eficácia clínica da PCH.",
+        "3. LEITURA COMO EXPERIÊNCIA MULTISSENSORIAL — 15 minutos. Leia ou recite um poema curto com o texto acessível. Convide cada pessoa, sem obrigação de compartilhar, a notar imagens mentais, palavras que chamaram atenção, emoções ou sensações e associações pessoais. Explique que essas observações descrevem a experiência subjetiva e não identificam, por si só, quais áreas cerebrais foram ativadas.",
+        "4. APLICAÇÕES DO MAPA À CRIAÇÃO POÉTICA — 15 minutos. Explore imagem concreta, metáfora, ritmo, repetição e contraste como recursos que podem influenciar a experiência de leitura. Trate essas relações como possibilidades, não como a fórmula “zona cerebral → verso → efeito garantido”. Proponha criação individual e, se houver consentimento, construção colaborativa de versos.",
+        "5. VIVÊNCIA GUIADA — 10 minutos. Ofereça respiração confortável sem exigir fechar os olhos ou seguir um padrão específico. Faça uma leitura pausada de poema autoral, convide ao registro opcional de imagens, emoções ou perguntas e proponha transformar uma observação em minipoema. Cada pessoa pode pular etapas, escolher outro texto ou interromper a atividade.",
+        "ENCERRAMENTO — diferencie o que o poema efetivamente diz, o que o leitor associa e o que conclui sobre a própria vida. Não trate associações como diagnóstico, lembranças comprovadas ou revelações do inconsciente. A utilidade do mapa está em apoiar perguntas e escolhas, não em determinar o significado da experiência."
+      ], bullets: [
+        "Abertura: “Ler poesia não é apenas ler palavras. É encontrar a si mesmo em um espelho feito de símbolos.”",
+        "Reflexão: “Que palavras você usa para esconder de si mesmo aquilo que ainda não conseguiu nomear?”",
+        "Aprofundamento: “E se o verso fosse uma ferramenta delicada para se aproximar de sentimentos que você ainda não conseguiu expressar?”",
+        "Chamada para a prática: “Agora que você começou a compreender o mapa, que tal escrever o seu próprio caminho?”",
+        "Materiais: poema curto em formato acessível, papel ou bloco de notas e opção de participação silenciosa.",
+        "Critérios de condução: consentimento, nenhuma interpretação imposta, direito de interromper e afirmações científicas proporcionais às evidências."
+      ]},
     ],
     practice: [
       "Escolha um poema curto e marque uma palavra ou imagem que chamou sua atenção, sem tentar explicar imediatamente o motivo.",
