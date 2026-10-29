@@ -68,8 +68,9 @@ test('Livro-Curso renderiza e permite abrir/fechar todos os capítulos em sessã
     { title: '2.1. O texto como registro, não como veredito', bulletOnly: '2.2. Quatro camadas de leitura' },
     { title: '3.1. Por que metáforas importam', bulletOnly: '3.4. Como formular e avaliar uma metáfora' },
     { title: '4.1. Autocuidado sem cobrança de desempenho', bulletOnly: '4.2. Ritual breve em cinco movimentos' },
+    { title: '5.1 — O que é o mapa cerebral do leitor poético?', bulletOnly: '5.13 — Síntese: ler poesia é construir caminhos de sentido' },
   ];
-  const chapterButtons = page.locator('#trilha-aprendizado').getByRole('button', { name: /Capítulo [1-4]/ });
+  const chapterButtons = page.locator('#trilha-aprendizado').getByRole('button', { name: /Capítulo [1-5] —/ });
   await expect(chapterButtons).toHaveCount(chapters.length);
 
   for (const [index, chapter] of chapters.entries()) {
@@ -83,14 +84,42 @@ test('Livro-Curso renderiza e permite abrir/fechar todos os capítulos em sessã
     await expect(sectionHeading).toBeVisible();
     await expect(page.getByRole('heading', { name: chapter.bulletOnly, exact: true })).toBeVisible();
 
+    if (index === 4) {
+      const chapter5Headings = page.locator('#chapter-content-capitulo-5 article h3');
+      await expect(chapter5Headings.filter({ hasText: /^5\.\d+ —/ })).toHaveCount(13);
+      await expect(page.getByRole('heading', { name: 'PRÁTICA GUIADA — CARTOGRAFIA DE UM POEMA', exact: true })).toBeVisible();
+      await expect(page.getByRole('heading', { name: 'EXERCÍCIO DE FIXAÇÃO', exact: true })).toBeVisible();
+      await expect(page.getByRole('heading', { name: 'REFLEXÃO FINAL', exact: true })).toBeVisible();
+      await expect(page.getByText('Resposta correta: C.', { exact: true }).first()).toBeVisible();
+      await expect(page.getByRole('button', { name: 'Ouvir capítulo 5' })).toBeVisible();
+
+      const chapter5Region = page.locator('#chapter-content-capitulo-5');
+      await chapter5Region.getByRole('button', { name: 'Marcar capítulo como concluído', exact: true }).click();
+      await expect(chapter5Region.getByRole('button', { name: 'Marcar como não concluído', exact: true })).toBeVisible();
+      await expect.poll(() => page.evaluate(() => localStorage.getItem('padh-livro-curso-progress:00000000-0000-4000-8000-000000000001'))).toContain('capitulo-5');
+      await page.reload();
+      await expect(page).not.toHaveURL(/\/login/);
+      await page.getByRole('button', { name: /Capítulo 5 —/ }).click();
+      await expect(page.locator('#chapter-content-capitulo-5').getByRole('button', { name: 'Marcar como não concluído', exact: true })).toBeVisible();
+      await expect(page.getByText('1 de 5 capítulos concluídos')).toBeVisible();
+    }
+
     await button.click();
     await expect(button).toHaveAttribute('aria-expanded', 'false');
     await expect(sectionHeading).toBeHidden();
-
     await button.click();
     await expect(button).toHaveAttribute('aria-expanded', 'true');
     await expect(sectionHeading).toBeVisible();
   }
+
+  await page.goto('/mapa-cerebral');
+  await expect(page.getByRole('heading', { name: 'O Mapa Cerebral do Leitor Poético' })).toBeVisible();
+  await expect(page.getByRole('heading', { name: 'Um mapa de leitura, não de regiões cerebrais' })).toBeVisible();
+  await expect(page.getByRole('heading', { name: 'Referências comentadas' })).toBeVisible();
+  await expect(page.getByRole('link', { name: 'Texto integral no PubMed Central' }).first()).toBeVisible();
+  await expect(page.getByText('Áreas Cerebrais Ativadas', { exact: true })).toHaveCount(0);
+  await expect(page.getByText(/Desbloqueio afetivo|ressignificação simbólica|estado semelhante à leve hipnose/i)).toHaveCount(0);
+  expect(await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth)).toBe(true);
 
   await expect(page.getByText('Ocorreu um erro inesperado ao carregar esta página.')).toHaveCount(0);
   expect(pageErrors).toEqual([]);
