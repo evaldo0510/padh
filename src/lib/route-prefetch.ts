@@ -69,6 +69,7 @@ const triggerPrefetch = (path: string) => {
 };
 
 export const cancelAllPrefetches = () => {
-  // Dynamic imports cannot be canceled. Keep their promises tracked so the
-  // route can reuse the same in-flight module load after navigation.
+  // Dynamic imports cannot be canceled, but clearing tracking prevents
+  // obsolete low-priority prefetches from blocking a later explicit request.
+  pendingPrefetches.clear();
 };
