@@ -26,8 +26,9 @@ BEGIN
     FROM pg_policies
     WHERE schemaname = 'public'
       AND (
-        coalesce(qual, '') ~ 'auth\\.uid\\(\\)|is_padh_admin\\(\\)|has_role\\('
-        OR coalesce(with_check, '') ~ 'auth\\.uid\\(\\)|is_padh_admin\\(\\)|has_role\\('
+        position('auth.uid()' in coalesce(qual, '') || coalesce(with_check, '')) > 0
+        OR position('is_padh_admin()' in coalesce(qual, '') || coalesce(with_check, '')) > 0
+        OR position('has_role(' in coalesce(qual, '') || coalesce(with_check, '')) > 0
       )
   LOOP
     rewritten_using := policy_row.qual;
