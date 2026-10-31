@@ -119,3 +119,24 @@ O repositório contém 29 arquivos em `supabase/migrations`; o histórico do pro
 ## Regra de publicação
 
 Nenhuma migration de produção, alteração de RLS, revogação de privilégios ou remoção de índices deve ser aplicada sem ambiente isolado, testes de autorização e aprovação do diff. O merge no `main` pode disparar deploy automático pelo Vercel; somente alterações aprovadas e verificadas devem ser integradas.
+
+
+### REPO-03 — Vulnerabilidades no lockfile (npm audit)
+**Severidade:** Alta / bloqueador de merge.  
+O novo workflow executou `npm ci` e `npm audit --audit-level=high`; a primeira execução falhou com **30 vulnerabilidades reportadas: 2 high, 26 moderate e 2 low**. O relatório identifica `zod <4.6.6` (GHSA-mrhx-c7xc-m3w5), vulnerável a consumo descontrolado de memória na validação de arrays sem limite; a versão corrigida indicada pelo advisory é 4.6.6 ou superior. Também identifica `deepmerge 4.2.0–4.3.1` (GHSA-gcqx-w48m-w2h4), com prototype poisoning e sem versão corrigida publicada no advisory consultado. Outros pacotes transitivos reportados incluem `esbuild`, `glob`, `minimatch`, `postcss-selector-parser` e `react-router`.
+**Impacto:** risco de indisponibilidade por validação de payloads excessivos em Zod; risco de integridade em contextos que mesclem objetos controlados pelo atacante com deepmerge; demais alertas exigem avaliar se o código vulnerável é alcançável em produção ou apenas em tooling.
+**Correção proposta:** atualizar Zod para versão corrigida e verificar compatibilidade da API; mapear todas as cópias transitivas; atualizar a cadeia Vite/Workbox e React Router em etapas; documentar deepmerge enquanto não houver correção upstream e verificar se permanece somente em dependências de build. Não executar `npm audit fix --force`: o log propõe mudanças major (Vite 8, React Router 7, Zod 4 e versões incompatíveis de plugins) sem prova de compatibilidade.
+**Teste:** repetir `npm ci`, `npm audit --audit-level=high`, lint, typecheck, invariantes, build e E2E; comparar bundle e fluxos de autenticação.
+**Evidência:** execução GitHub Actions Security no commit `a14567780537b58674cd64faee0f6f93085d8228`, job Dependency vulnerability audit, falha por exit code 1. O segundo run para o head atualizado ainda estava em execução no momento do registro.
+
+### PERF-05 — Bundle principal acima de 500 kB
+**Severidade:** Média.  
+O build Preview do Vercel concluiu com sucesso, mas Vite alertou que há chunks maiores que 500 kB após minificação. Também apontou que `src/integrations/supabase/client.ts` é importado dinamicamente por `pwa-metrics.ts`, mas estaticamente por diversos componentes/hooks/páginas; por isso, o import dinâmico não separa o cliente Supabase em outro chunk.
+**Impacto:** maior transferência inicial, parsing e execução de JavaScript; possível aumento de LCP/INP em dispositivos móveis e conexões lentas.
+**Correção proposta:** medir o tamanho dos chunks e rotas; separar dependências pesadas por rota e evitar import dinâmico contraditório; não aumentar apenas `chunkSizeWarningLimit` para ocultar o alerta.
+**Teste:** comparar bundle analyzer, Lighthouse/Web Vitals e carregamento de rotas principais em mobile.
+
+### SUPPLY-01 — Scripts de instalação e configuração npm
+**Severidade:** Baixa / revisão de supply chain.  
+O build Vercel emitiu aviso de quatro pacotes com scripts de instalação ainda não aprovados por `allowScripts` (`@swc/core`, `core-js`, `esbuild@0.21.5` e `esbuild@0.25.0`) e aviso de configuração npm desconhecida `cache-dir`.
+**Ação:** revisar a origem e necessidade de cada script antes de aprová-lo; identificar a origem da configuração `cache-dir` e removê-la ou substituí-la por opção suportada. Não aprovar scripts automaticamente.
