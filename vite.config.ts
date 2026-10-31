@@ -1,13 +1,12 @@
 import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react-swc";
 import path from "path";
-import { componentTagger } from "lovable-tagger";
 import { VitePWA } from "vite-plugin-pwa";
 
 // https://vitejs.dev/config/
 const BUILD_ID = `${Date.now()}`;
 
-export default defineConfig(({ mode }) => ({
+export default defineConfig(() => ({
   define: {
     __BUILD_ID__: JSON.stringify(BUILD_ID),
   },
@@ -17,7 +16,6 @@ export default defineConfig(({ mode }) => ({
   },
   plugins: [
     react(),
-    mode === "development" && componentTagger(),
     VitePWA({
       strategies: 'injectManifest',
       srcDir: 'src',
@@ -62,70 +60,4 @@ export default defineConfig(({ mode }) => ({
       },
       workbox: {
         cacheId: `padh-v${Date.now()}`, // Versioned cache name on every build
-        globPatterns: ['**/*.{js,css,html,ico,png,svg,woff,woff2}'],
-        navigateFallback: 'index.html',
-        navigateFallbackDenylist: [/^\/~oauth/, /^\/api/],
-        cleanupOutdatedCaches: true,
-        skipWaiting: true,
-        clientsClaim: true,
-        runtimeCaching: [
-          {
-            // Aggressive Freshness for HTML: Network-First with minimal timeout.
-            urlPattern: ({ request }) => request.mode === 'navigate' || request.destination === 'document',
-            handler: 'NetworkFirst',
-            options: {
-              cacheName: 'html-freshness',
-              networkTimeoutSeconds: 2, // Fail fast to cache if network is slow, but prefer network.
-              expiration: { maxEntries: 5, maxAgeSeconds: 60 * 60 },
-              cacheableResponse: { statuses: [0, 200] },
-            },
-          },
-          {
-            // JS, CSS and Workers: hashed by Vite so they're immutable — SWR
-            // returns cache instantly (fast TTFB) and revalidates in background.
-            urlPattern: ({ request }) =>
-              request.destination === 'script' ||
-              request.destination === 'style' ||
-              request.destination === 'worker',
-            handler: 'StaleWhileRevalidate',
-            options: {
-              cacheName: 'bundles-swr',
-              expiration: { maxEntries: 60, maxAgeSeconds: 60 * 60 * 24 * 7 },
-              cacheableResponse: { statuses: [0, 200] },
-            },
-          },
-          {
-            // Stale-While-Revalidate for non-critical informational pages
-            urlPattern: ({ url }) => url.pathname === '/changelog' || url.pathname === '/sobre',
-            handler: 'StaleWhileRevalidate',
-            options: {
-              cacheName: 'informational-swr',
-              expiration: { maxEntries: 10, maxAgeSeconds: 60 * 60 * 24 },
-              cacheableResponse: { statuses: [0, 200] },
-            },
-          },
-          {
-            // Static assets (images/fonts): Cache-First for performance.
-            urlPattern: /\.(?:png|jpg|jpeg|svg|gif|webp|woff2?|ttf|otf)$/i,
-            handler: 'CacheFirst',
-            options: {
-              cacheName: 'static-assets-v1',
-              expiration: { maxEntries: 100, maxAgeSeconds: 60 * 60 * 24 * 30 },
-              cacheableResponse: { statuses: [0, 200] },
-            },
-          },
-        ],
-      },
-    })
-  ].filter(Boolean),
-  optimizeDeps: {
-    force: true,
-    include: ["react", "react-dom", "react-dom/client", "@tanstack/react-query"],
-  },
-  resolve: {
-    dedupe: ["react", "react-dom"],
-    alias: {
-      "@": path.resolve(__dirname, "./src"),
-    },
-  },
-}));
+        globPatterns: ['**/*.{js,c...[truncated]
