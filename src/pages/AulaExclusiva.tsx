@@ -1,5 +1,5 @@
 import React from "react";
-import { BookOpen, Clock, Target, Brain, FlaskConical, ArrowRight, Lightbulb, PenLine, Eye, ShieldCheck, CheckCircle2, Layers, MessageCircle, Sparkles } from "lucide-react";
+import { BookOpen, Clock, Target, FlaskConical, ArrowRight, Lightbulb, PenLine, ShieldCheck, CheckCircle2, Sparkles } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
