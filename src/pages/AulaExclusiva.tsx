@@ -260,12 +260,6 @@ const parts: LessonPart[] = [
           { label: "Bion e poesia (Paulo Cesar Sandler, 2010)", url: "https://pepsic.bvsalud.org/scielo.php?pid=S0103-58352010000100011&script=sci_arttext", note: "Estudo secundário sobre referências poéticas e literárias identificadas na obra de Bion." },
           { label: "Sobre a linguagem poética e escuta na clínica psicanalítica (Eliane Christo Oliveira, 2021)", url: "https://revistas.pucsp.br/index.php/intercambio/article/view/48522", note: "Artigo brasileiro que articula linguagem poética, escuta clínica e referências a Freud e Lacan." }
         ]
-      },
-
-        paragraphs: [
-          "A primeira versão serve para colocar ideias no papel. A revisão permite observar precisão, ritmo, coerência e autenticidade. Não é necessário transformar toda escrita em poema rimado nem substituir a linguagem cotidiana por palavras rebuscadas.",
-          "Na proposta PCH, a linguagem deve respeitar o repertório e a autoria da pessoa. O facilitador pode oferecer alternativas, mas não deve tomar posse do texto nem impor uma interpretação como se fosse a única correta."
-        ]
       }
     ],
     example: {
