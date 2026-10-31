@@ -239,7 +239,13 @@ const parts: LessonPart[] = [
         ]
       },
       {
-        {
+        heading: "4.4 Revisão: preservar a voz de quem escreve",
+        paragraphs: [
+          "A primeira versão serve para colocar ideias no papel. A revisão permite observar precisão, ritmo, coerência e autenticidade. Não é necessário transformar toda escrita em poema rimado nem substituir a linguagem cotidiana por palavras rebuscadas.",
+          "Na proposta PCH, a linguagem deve respeitar o repertório e a autoria da pessoa. O facilitador pode oferecer alternativas, mas não deve tomar posse do texto nem impor uma interpretação como se fosse a única correta."
+        ]
+      },
+      {
         heading: "4.5 Diálogo com a psicanálise: criação, brincar, símbolo e palavra",
         paragraphs: [
           "A psicanálise oferece leituras teóricas importantes para pensar a criação e a linguagem, mas essas formulações pertencem a tradições conceituais específicas. Elas não devem ser apresentadas como resultados de neurociência nem como comprovação experimental de que escrever poesia produz determinado efeito.",
@@ -255,7 +261,7 @@ const parts: LessonPart[] = [
           { label: "Sobre a linguagem poética e escuta na clínica psicanalítica (Eliane Christo Oliveira, 2021)", url: "https://revistas.pucsp.br/index.php/intercambio/article/view/48522", note: "Artigo brasileiro que articula linguagem poética, escuta clínica e referências a Freud e Lacan." }
         ]
       },
-      heading: "4.4 Revisão: preservar a voz de quem escreve",
+
         paragraphs: [
           "A primeira versão serve para colocar ideias no papel. A revisão permite observar precisão, ritmo, coerência e autenticidade. Não é necessário transformar toda escrita em poema rimado nem substituir a linguagem cotidiana por palavras rebuscadas.",
           "Na proposta PCH, a linguagem deve respeitar o repertório e a autoria da pessoa. O facilitador pode oferecer alternativas, mas não deve tomar posse do texto nem impor uma interpretação como se fosse a única correta."
