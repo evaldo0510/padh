@@ -13,7 +13,7 @@ type LessonPart = {
   duration: string;
   objective: string;
   introduction: string;
-  sections: { heading: string; paragraphs: string[]; bullets?: string[] }[];
+  sections: { heading: string; paragraphs: string[]; bullets?: string[]; references?: { label: string; url: string; note: string }[] }[];
   example: { title: string; text: string; analysis: string[] };
   practice: { title: string; instructions: string[]; expected: string };
   reflection: string;
@@ -53,6 +53,7 @@ const parts: LessonPart[] = [
       },
       {
         heading: "1.4 A rede de modo padrão e a reflexão interna",
+        references: [{ label: "Poetic brain: The neural substrates underlying imaginative and philosophical poem reading (Wu et al., 2026)", url: "https://www.nature.com/articles/s41599-026-07217-9", note: "Estudo de neuroimagem sobre leitura imaginativa e filosófica; associações neurais em tarefas experimentais não demonstram efeitos terapêuticos." },{ label: "Neural substrates of ambiguity and beauty in haiku poetry: an fMRI study (2026)", url: "https://pubmed.ncbi.nlm.nih.gov/42729248/", note: "Estudo com 39 participantes sobre ambiguidade, apreciação estética e regiões associadas à rede de modo padrão." },{ label: "The impact of knowledge on poetry composition: An fMRI investigation (2022)", url: "https://pubmed.ncbi.nlm.nih.gov/36399814/", note: "Investiga conectividade funcional durante a composição poética; não demonstra benefício clínico." }],
         paragraphs: [
           "A rede de modo padrão (Default Mode Network, DMN) é um conjunto de regiões que costuma ser estudado em atividades como pensamento autorreferencial, lembranças autobiográficas, imaginação de cenários e reflexão sobre outras pessoas. Ela não é um “centro da poesia” e não trabalha isoladamente.",
           "A leitura pode alternar momentos de foco no texto com momentos de associação e reflexão. A participação de redes cerebrais depende da tarefa, do leitor e do contexto. Por isso, não é correto afirmar que todo poema ativa a DMN da mesma maneira ou que essa atividade comprova um efeito terapêutico."
@@ -91,6 +92,7 @@ const parts: LessonPart[] = [
     sections: [
       {
         heading: "2.1 Quatro níveis de afirmação",
+        references: [{ label: "Identifying the mechanisms of poetry therapy and associated effects on participants (Alfrey et al., 2021)", url: "https://www.sciencedirect.com/science/article/pii/S0197455621000770", note: "Revisão da literatura empírica e modelo EFECT; destaca heterogeneidade e limites da base de evidências." },{ label: "The therapeutic functions of poetry in mental health: a systematic review and meta-analysis (Kassab, Jayatunge & Bou Khalil, 2026)", url: "https://pubmed.ncbi.nlm.nih.gov/41411711/", note: "Metanálise de 15 estudos; resultados promissores em alguns desfechos, mas amostras pequenas, risco de viés e heterogeneidade limitam conclusões." }],
         paragraphs: [
           "Observação: descreve algo que foi registrado. Exemplo: participantes relataram que determinado poema lhes trouxe uma lembrança.",
           "Hipótese: apresenta uma explicação possível que ainda precisa ser testada. Exemplo: certos recursos poéticos podem favorecer associações autobiográficas em algumas condições.",
@@ -100,6 +102,7 @@ const parts: LessonPart[] = [
       },
       {
         heading: "2.2 O que a neuroimagem pode mostrar",
+        references: [{ label: "Prosodic recitation training selectively enhances sensorimotor connectivity during poetry reading (Xu, Jia & Zheng, 2026)", url: "https://www.nature.com/articles/s42003-026-10664-4", note: "Estudo longitudinal com 70 participantes sobre recitação prosódica e conectividade sensório-motora; não é ensaio de tratamento." },{ label: "Neural dynamics of aesthetic appreciation: fNIRS evidence from poetry reading (Liu et al., 2026)", url: "https://www.sciencedirect.com/science/article/pii/S1053811926003290", note: "Pesquisa com fNIRS sobre dinâmica neural durante apreciação estética de poesia." }],
         paragraphs: [
           "Técnicas como a ressonância magnética funcional identificam mudanças indiretas associadas à atividade cerebral durante tarefas. Elas ajudam pesquisadores a comparar condições e investigar padrões, mas não leem pensamentos, não revelam automaticamente o significado de uma experiência e não diagnosticam o estado emocional de uma pessoa.",
           "Quando um estudo encontra associação entre uma tarefa e uma rede cerebral, isso não significa que essa rede seja exclusiva da tarefa. Muitas redes participam de diferentes atividades. Também é importante observar o tamanho da amostra, o grupo de comparação, a tarefa utilizada e as limitações descritas pelos autores."
@@ -115,6 +118,7 @@ const parts: LessonPart[] = [
       },
       {
         heading: "2.4 Da pesquisa à prática educativa",
+        references: [{ label: "Journal of Poetry Therapy — escopo e revisão por pares", url: "https://www.tandfonline.com/journals/tjpt20/about-this-journal", note: "Periódico interdisciplinar associado à National Association for Poetry Therapy; publica pesquisas quantitativas e qualitativas, prática, teoria e estudos literários." },{ label: "National Association for Poetry Therapy — Journal of Poetry Therapy", url: "https://poetrytherapy.org/Journal-of-Poetry-Therapy", note: "Página institucional da associação sobre seu periódico." }],
         paragraphs: [
           "A pesquisa pode inspirar perguntas e práticas de leitura, mas uma atividade de formação não se transforma em tratamento clínico só porque utiliza conceitos da neurociência. A prática deve explicitar seu objetivo, respeitar a autonomia e não prometer resultados que não foram demonstrados.",
           "Na PCH, a poesia pode ser apresentada como recurso de linguagem, reflexão e expressão. O uso em contexto clínico exige qualificação compatível, consentimento, avaliação de adequação e respeito às normas profissionais aplicáveis."
@@ -167,6 +171,7 @@ const parts: LessonPart[] = [
       },
       {
         heading: "3.3 Separar sensação, lembrança e interpretação",
+        references: [{ label: "Bion e poesia (Paulo Cesar Sandler, 2010)", url: "https://pepsic.bvsalud.org/scielo.php?pid=S0103-58352010000100011&script=sci_arttext", note: "Artigo do Jornal de Psicanálise sobre referências poéticas e literárias na obra e no pensamento de Wilfred Bion." },{ label: "Sobre a linguagem poética e escuta na clínica psicanalítica (Eliane Christo Oliveira, 2021)", url: "https://revistas.pucsp.br/index.php/intercambio/article/view/48522", note: "Discute o uso de versos, rap e canções na fala de pacientes e na escuta clínica." }],
         paragraphs: [
           "Sensação é o que a pessoa percebe no momento: tensão, leveza, calor, inquietação ou ausência de sensação identificável. Lembrança é uma recordação que veio à mente. Interpretação é o significado que a pessoa atribui ao que ocorreu.",
           "Essas dimensões podem se misturar, mas não são a mesma coisa. Um facilitador pode perguntar “você gostaria de falar mais sobre essa associação?”; não deve concluir que uma imagem revela um trauma, uma crença inconsciente ou uma necessidade específica."
@@ -213,6 +218,7 @@ const parts: LessonPart[] = [
     sections: [
       {
         heading: "4.1 Metáfora: aproximar campos de sentido",
+        references: [{ label: "Towards psychoanalytic contribution to linguistic metaphor theory (Tair Caspi, 2018)", url: "https://pubmed.ncbi.nlm.nih.gov/33951787/", note: "Discute contribuições de Klein, Winnicott e Ogden para dimensões afetivas e intersubjetivas da metáfora; é trabalho teórico." },{ label: "Experiencing language: some thoughts on poetry and psychoanalysis (A. A. Jones, 1997)", url: "https://pubmed.ncbi.nlm.nih.gov/9385659/", note: "Reflete sobre ritmo, som, imagem e escuta na relação entre poesia e psicanálise." }],
         paragraphs: [
           "A metáfora aproxima elementos de campos diferentes para produzir uma nova compreensão. Dizer “carrego uma pedra no peito” pode expressar peso emocional sem afirmar que existe uma pedra física. O leitor interpreta a imagem com apoio do contexto e de seu repertório.",
           "Uma metáfora eficaz não precisa ser complicada. Ela precisa servir ao sentido que o autor deseja construir. Na revisão, pergunte se a imagem esclarece, surpreende ou confunde de maneira intencional."
@@ -233,7 +239,23 @@ const parts: LessonPart[] = [
         ]
       },
       {
-        heading: "4.4 Revisão: preservar a voz de quem escreve",
+        {
+        heading: "4.5 Diálogo com a psicanálise: criação, brincar, símbolo e palavra",
+        paragraphs: [
+          "A psicanálise oferece leituras teóricas importantes para pensar a criação e a linguagem, mas essas formulações pertencem a tradições conceituais específicas. Elas não devem ser apresentadas como resultados de neurociência nem como comprovação experimental de que escrever poesia produz determinado efeito.",
+          "Em Escritores criativos e devaneio (1908), Sigmund Freud aproxima a atividade imaginativa do escritor do brincar infantil e examina como fantasias e desejos podem participar da criação literária. Trata-se de uma hipótese metapsicológica sobre a criação, não de uma regra para interpretar a biografia ou o inconsciente de quem escreve.",
+          "Donald W. Winnicott, em O brincar e a realidade (1971), desenvolve a ideia de espaço potencial e relaciona brincar, criatividade e experiência cultural. Essa contribuição permite pensar a escrita como experiência criativa em uma área intermediária entre realidade compartilhada e mundo subjetivo; não autoriza concluir que todo texto seja um objeto transicional.",
+          "Wilfred Bion dedicou atenção à experiência emocional, à capacidade de pensar e à transformação de experiências. A literatura psicanalítica também investiga relações entre sua obra e a poesia. É importante distinguir o pensamento original de Bion das leituras posteriores feitas por comentadores.",
+          "Na prática PCH, esses autores podem inspirar perguntas sobre imaginação, simbolização, linguagem e criação. O facilitador, porém, não deve usar um poema isolado para diagnosticar conflitos inconscientes, reconstruir traumas ou afirmar o significado definitivo de um símbolo."
+        ],
+        references: [
+          { label: "Creative Writers and Day-Dreaming (Sigmund Freud, 1908)", url: "https://www.lutecium.org/ftp/Freud/pdf/1908_creative_writers_and_day_dreaming.pdf", note: "Texto clássico em que Freud examina relações entre brincar, fantasia e criação literária." },
+          { label: "Playing and Reality (D. W. Winnicott, 1971) — capítulo sobre objetos e fenômenos transicionais", url: "https://www.mit.edu/~allanmc/winnicott1.pdf", note: "Texto de Winnicott sobre fenômenos transicionais; a aplicação à poesia é diálogo conceitual, não equivalência literal." },
+          { label: "Bion e poesia (Paulo Cesar Sandler, 2010)", url: "https://pepsic.bvsalud.org/scielo.php?pid=S0103-58352010000100011&script=sci_arttext", note: "Estudo secundário sobre referências poéticas e literárias identificadas na obra de Bion." },
+          { label: "Sobre a linguagem poética e escuta na clínica psicanalítica (Eliane Christo Oliveira, 2021)", url: "https://revistas.pucsp.br/index.php/intercambio/article/view/48522", note: "Artigo brasileiro que articula linguagem poética, escuta clínica e referências a Freud e Lacan." }
+        ]
+      },
+      heading: "4.4 Revisão: preservar a voz de quem escreve",
         paragraphs: [
           "A primeira versão serve para colocar ideias no papel. A revisão permite observar precisão, ritmo, coerência e autenticidade. Não é necessário transformar toda escrita em poema rimado nem substituir a linguagem cotidiana por palavras rebuscadas.",
           "Na proposta PCH, a linguagem deve respeitar o repertório e a autoria da pessoa. O facilitador pode oferecer alternativas, mas não deve tomar posse do texto nem impor uma interpretação como se fosse a única correta."
@@ -297,6 +319,7 @@ const parts: LessonPart[] = [
       },
       {
         heading: "5.4 Como avaliar a aprendizagem",
+        references: [{ label: "Poetry Therapy: Theory and Practice, 3rd edition (Nicholas F. Mazza, 2022)", url: "https://www.routledge.com/Poetry-Therapy-Theory-and-Practice/Mazza/p/book/9781003022640", note: "Obra de referência que apresenta o modelo RES: receptivo/prescritivo, expressivo/criativo e simbólico/cerimonial." },{ label: "Poetry therapy: An investigation of a multidimensional clinical model (Mazza & Hayton, 2013)", url: "https://www.sciencedirect.com/science/article/pii/S0197455612001505", note: "Estudo sobre a estrutura do modelo RES e seu uso para descrever métodos baseados nas artes da linguagem." },{ label: "Nicholas Mazza — perfil acadêmico e publicações selecionadas", url: "https://csw.fsu.edu/person/nicholas-mazza", note: "Perfil institucional da Florida State University com trajetória acadêmica e bibliografia." }],
         paragraphs: [
           "A avaliação desta aula é formativa. O aluno demonstra aprendizagem quando consegue descrever recursos de linguagem, distinguir observação de interpretação, reconhecer limites das afirmações científicas e conduzir uma atividade sem induzir respostas.",
           "O critério não é a intensidade da emoção relatada nem a qualidade literária do poema. O critério é a clareza do raciocínio, o respeito à autonomia e a capacidade de justificar escolhas."
@@ -392,6 +415,7 @@ const AulaExclusiva = () => (
                     <h3 className="text-lg font-semibold flex items-center gap-2"><span className="text-primary text-sm">{part.number}.{index + 1}</span>{section.heading}</h3>
                     {section.paragraphs.map((paragraph, paragraphIndex) => <p key={paragraphIndex} className="text-sm md:text-base leading-relaxed text-muted-foreground">{paragraph}</p>)}
                     {section.bullets && <ul className="list-disc pl-5 space-y-2 text-sm text-muted-foreground">{section.bullets.map((bullet) => <li key={bullet}>{bullet}</li>)}</ul>}
+                    {section.references && <div className="rounded-lg border bg-muted/20 p-4 space-y-3"><p className="text-xs uppercase tracking-wider font-semibold text-primary">Referências para aprofundamento</p>{section.references.map((reference) => <div key={reference.label} className="space-y-1"><a href={reference.url} target="_blank" rel="noreferrer" className="text-sm font-medium text-primary underline underline-offset-4">{reference.label}</a><p className="text-xs leading-relaxed text-muted-foreground">{reference.note}</p></div>)}</div>}
                   </section>
                 ))}
                 <Card className="bg-muted/30 border-border/70">
