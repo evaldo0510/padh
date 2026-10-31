@@ -98,6 +98,22 @@ Os dois workflows existentes cobrem lint, typecheck, invariantes, build e smoke/
 Há `package-lock.json`, `bun.lock` e `bun.lockb`; CI e README usam npm. Isso pode gerar resoluções divergentes se os arquivos não forem mantidos em sincronia.
 **Ação:** definir npm como gerenciador canônico (se confirmado) e remover lockfiles Bun apenas após confirmar que não existe fluxo de build dependente deles.
 
+### ENV-02 — Referência do Supabase CLI aponta para projeto antigo
+**Severidade:** Alta de governança/configuração.  
+`supabase/config.toml` aponta para o projeto `zaijcanyfgwsvgkbaybm`, enquanto o projeto de produção auditado é `njbgkrgynskcbwomipua`. As variáveis da Vercel (Production, Preview e Development) apontam para o projeto atual, então não há evidência de que o frontend publicado esteja usando o projeto antigo. Entretanto, comandos Supabase CLI executados a partir deste repositório podem selecionar o projeto antigo por padrão.
+**Ação:** não executar `supabase db push`, deploy de Edge Functions ou migrations até reconciliar a referência, os 29 arquivos SQL e as 7 versões registradas no projeto atual. Não alteramos `project_id` nesta etapa para evitar direcionar migrations legadas diretamente à produção.
+
+### OBS-01 — Pipeline de Web Vitals/PWA não está implantado no Supabase atual
+**Severidade:** Média funcional/observabilidade.  
+O projeto atual não lista Edge Functions implantadas. As tabelas `web_vitals` e `pwa_health_events` existem, mas ambas têm zero registros. O frontend chama `supabase.functions.invoke('ingest-telemetry')` para enviar essas métricas. Isso indica que a coleta não está chegando ao banco de produção atual.
+**Ação:** reconciliar o destino do CLI e a implantação da função. Não implantar automaticamente, pois o código atual ainda precisa de endurecimento de segurança (SEC-06).
+
+### SEC-06 — Endpoint de telemetria com superfície de abuso se implantado
+**Severidade:** Média (função não implantada no projeto atual; risco latente).  
+O código `supabase/functions/ingest-telemetry/index.ts` usa credencial `service_role` para gravar telemetria, aceita lotes de até 50 eventos e mantém rate limit em memória por instância. Não há limite explícito de bytes do corpo e o objeto `details` não tem limite de tamanho/estrutura. O rate limit por instância não é global nem durável; múltiplas instâncias podem multiplicar a capacidade de ingestão. O comentário pressupõe `verify_jwt=false`, mas `supabase/config.toml` não declara configuração explícita para essa função.
+**Impacto potencial:** ingestão abusiva, crescimento de tabelas, consumo de recursos e custo de banco; não foi identificada capacidade de leitura de dados privados nessa função.
+**Correção proposta antes de deploy:** limite de corpo (por exemplo, 32 KB), allowlist de campos em `details`, limite serializado por evento, limite de lote, rate limit durável/compartilhado, validação de origem e IP confiável, e configuração explícita de autenticação. Testar payload gigante, lote máximo, flood distribuído e rejeição de campos não permitidos.
+
 ## Autenticação — evidência limitada
 
 A amostra de `auth_logs` e `auth_audit_logs` retornou eventos de `token_refreshed` e `token_revoked`, incluindo sessões em Chrome desktop e Chrome Android, com status HTTP 200 no endpoint de token. A amostra não retornou tentativas de login com erro, mas contém poucos eventos e não permite concluir que não houve falhas. Não houve teste manual em Safari/iPhone nesta execução.
@@ -121,13 +137,20 @@ O repositório contém 29 arquivos em `supabase/migrations`; o histórico do pro
 Nenhuma migration de produção, alteração de RLS, revogação de privilégios ou remoção de índices deve ser aplicada sem ambiente isolado, testes de autorização e aprovação do diff. O merge no `main` pode disparar deploy automático pelo Vercel; somente alterações aprovadas e verificadas devem ser integradas.
 
 
-### REPO-03 — Vulnerabilidades no lockfile (npm audit)
-**Severidade:** Alta / bloqueador de merge.  
-O novo workflow executou `npm ci` e `npm audit --audit-level=high`; a primeira execução falhou com **30 vulnerabilidades reportadas: 2 high, 26 moderate e 2 low**. O relatório identifica `zod <4.6.6` (GHSA-mrhx-c7xc-m3w5), vulnerável a consumo descontrolado de memória na validação de arrays sem limite; a versão corrigida indicada pelo advisory é 4.6.6 ou superior. Também identifica `deepmerge 4.2.0–4.3.1` (GHSA-gcqx-w48m-w2h4), com prototype poisoning e sem versão corrigida publicada no advisory consultado. Outros pacotes transitivos reportados incluem `esbuild`, `glob`, `minimatch`, `postcss-selector-parser` e `react-router`.
-**Impacto:** risco de indisponibilidade por validação de payloads excessivos em Zod; risco de integridade em contextos que mesclem objetos controlados pelo atacante com deepmerge; demais alertas exigem avaliar se o código vulnerável é alcançável em produção ou apenas em tooling.
-**Correção proposta:** atualizar Zod para versão corrigida e verificar compatibilidade da API; mapear todas as cópias transitivas; atualizar a cadeia Vite/Workbox e React Router em etapas; documentar deepmerge enquanto não houver correção upstream e verificar se permanece somente em dependências de build. Não executar `npm audit fix --force`: o log propõe mudanças major (Vite 8, React Router 7, Zod 4 e versões incompatíveis de plugins) sem prova de compatibilidade.
-**Teste:** repetir `npm ci`, `npm audit --audit-level=high`, lint, typecheck, invariantes, build e E2E; comparar bundle e fluxos de autenticação.
-**Evidência:** execução GitHub Actions Security no commit `a14567780537b58674cd64faee0f6f93085d8228`, job Dependency vulnerability audit, falha por exit code 1. O segundo run para o head atualizado ainda estava em execução no momento do registro.
+### REPO-03 — Vulnerabilidades no lockfile (remediação parcial concluída)
+**Severidade inicial:** Alta. **Status atual:** sem vulnerabilidades altas detectadas pelo gate; alertas moderados/baixos permanecem.
+
+O primeiro `npm audit` reportou **30 vulnerabilidades: 2 high, 26 moderate e 2 low**. As duas vulnerabilidades altas identificadas foram:
+- **Vite 5.4.21:** GHSA-587h-7wmj-h5pm, falha no `launch-editor` em Windows que permitia contornar a verificação de existência de arquivo; versão corrigida a partir de Vite 6.4.4.
+- **Zod 3.25.76:** GHSA-mrhx-c7xc-m3w5, consumo excessivo de memória em validação de arrays sem limite; versão corrigida indicada a partir de Zod 4.6.6. O projeto não tinha importações diretas de Zod no código-fonte, então a dependência direta foi removida em vez de migrar a API.
+
+**Correções aplicadas nesta branch:**
+- Atualizado Vite para `^6.4.4`; o lockfile resolveu Vite 6.4.5.
+- Removido Zod não utilizado.
+- Removido `lovable-tagger`, que era usado somente como plugin de desenvolvimento do Vite; a configuração agora não depende desse plugin legado.
+- Regenerado `package-lock.json` e aplicadas correções transitivas sem `npm audit fix --force`.
+
+**Verificação:** o workflow isolado executou com sucesso `npm audit --audit-level=high`, lint, TypeScript, testes de invariantes da Jornada, Study e progresso do Livro-Curso, além do build de produção. Após a remediação, o relatório mostrou **25 vulnerabilidades: 23 moderate e 2 low; zero high**. Permanecem alertas moderados, entre eles deepmerge (prototype poisoning), glob, PostCSS e React Router. Não foram forçadas atualizações major para eliminar esses alertas. Uma tentativa isolada de migrar React Router para v7 provocou falha de build e foi revertida; a versão 6 permanece pendente de mitigação/upgrade compatível.
 
 ### PERF-05 — Bundle principal acima de 500 kB
 **Severidade:** Média.  
