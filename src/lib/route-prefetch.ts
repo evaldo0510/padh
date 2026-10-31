@@ -21,7 +21,7 @@ const routeImports: Record<string, () => Promise<unknown>> = {
   "/venda/poemadiagnostico": () => import("@/pages/venda/VendaPoemadiagnostico"),
   "/venda/caderno-voz-interna": () => import("@/pages/venda/VendaCadernoVozInterna"),
   "/venda/encenacao-poetica": () => import("@/pages/venda/VendaEncenacaoPoetica"),
-  "/venda/reescrita-poetica": () => import("@/pages/venda/ReescritaPoetica"),
+  "/venda/reescrita-poetica": () => import("@/pages/venda/VendaReescritaPoetica"),
   "/venda/ritual-silencio": () => import("@/pages/venda/VendaRitualSilencio"),
   "/venda/poesia-hipnotica": () => import("@/pages/venda/VendaPoesiaHipnotica"),
   "/jornada": () => import("@/pages/JornadaHome"),
