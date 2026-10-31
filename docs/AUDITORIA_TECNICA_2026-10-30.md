@@ -6,7 +6,7 @@ Esta é a primeira linha de base técnica produzida com acesso direto ao GitHub 
 
 **Limite de escopo:** não foi possível fazer leitura semântica linha a linha de todos os 260 arquivos de código nesta execução. Portanto, este documento não declara auditoria integral concluída. Os módulos não inspecionados individualmente permanecem pendentes. Não foram executados testes de browser em dispositivos reais nem testes de isolamento com duas contas.
 
-Nenhuma alteração foi aplicada ao banco de produção. Nenhuma migration foi executada. Nenhum deploy foi iniciado por esta auditoria.
+Nenhuma alteração foi aplicada ao banco de produção. Nenhuma migration foi executada. A abertura do PR iniciou automaticamente uma implantação de preview do Vercel; não houve promoção para produção.
 
 ## Resumo executivo
 
@@ -39,10 +39,10 @@ As funções `admin_funnel_matrix`, `admin_weekly_cohort`, `get_tables_security`
 A função `log_security_violation()` existe como SECURITY DEFINER, mas a consulta de triggers do schema público não encontrou trigger associado. A função, portanto, não está registrando violações por trigger no estado observado.
 **Ação:** confirmar se a auditoria de violações é requisito. Se for, desenhar trigger específico e testar em branch isolada; se não for, documentar a função como legado e removê-la somente após análise de dependências.
 
-### SEC-04 — Arquivo .env versionado
-**Severidade:** Média de higiene de repositório.  
-O arquivo contém somente variáveis `VITE_` de URL, project ID e publishable key na versão atual; não foi encontrado `service_role` no arquivo atual. A publishable key é destinada ao cliente e não equivale a segredo de servidor. O arquivo já é coberto pelo `.gitignore`, mas permanece rastreado no Git.
-**Ação:** remover o arquivo do controle de versão e manter apenas `.env.example`. A remoção do último commit não apaga versões anteriores do histórico; não foi feito scan completo do histórico Git nesta execução.
+### SEC-04 — Arquivo .env versionado e configuração local obsoleta
+**Severidade:** Média de higiene/configuração; sem evidência de exposição de segredo de servidor.  
+O `.env` rastreado continha somente variáveis `VITE_` (URL, project ID e publishable/anon key), sem `service_role` na versão atual. Porém, o projeto Supabase indicado nele era `zaijcanyfgwsvgkbaybm`, diferente do projeto de produção auditado (`njbgkrgynskcbwomipua`). Isso poderia direcionar ambientes locais para um backend antigo. A inspeção das variáveis Vercel, sem descriptografar segredos, confirmou `VITE_SUPABASE_URL` apontando para `https://njbgkrgynskcbwomipua.supabase.co` e a publishable key criptografada nos alvos production, preview e development, sem sinalização de segurança. Portanto, não há evidência de que a configuração atual da Vercel esteja apontando para o projeto antigo.
+**Ação:** remover o `.env` do controle de versão (feito nesta branch), manter apenas `.env.example` e criar `.env.local` localmente com a configuração correta. A remoção do último commit não apaga versões anteriores do histórico; não foi feito scan completo do histórico Git nesta execução.
 
 ### SEC-05 — Proteção da branch main ausente
 **Severidade:** Alta.  
