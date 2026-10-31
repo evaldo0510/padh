@@ -1,13 +1,12 @@
 import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react-swc";
 import path from "path";
-import { componentTagger } from "lovable-tagger";
 import { VitePWA } from "vite-plugin-pwa";
 
 // https://vitejs.dev/config/
 const BUILD_ID = `${Date.now()}`;
 
-export default defineConfig(({ mode }) => ({
+export default defineConfig(() => ({
   define: {
     __BUILD_ID__: JSON.stringify(BUILD_ID),
   },
@@ -17,7 +16,6 @@ export default defineConfig(({ mode }) => ({
   },
   plugins: [
     react(),
-    mode === "development" && componentTagger(),
     VitePWA({
       strategies: 'injectManifest',
       srcDir: 'src',
