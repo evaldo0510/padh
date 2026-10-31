@@ -2,15 +2,14 @@ name: Dependency remediation (temporary)
 
 on:
   push:
-    branches:
-      - audit/padh-integral-2026-10-30
+    branches: [audit/padh-integral-2026-10-30]
 
 permissions:
   contents: write
 
 jobs:
-  remediate:
-    if: github.event.head_commit.message != 'fix: remove unused vulnerable dependencies and update Vite'
+  regenerate-lock-and-verify:
+    if: github.actor != 'github-actions[bot]'
     runs-on: ubuntu-latest
     steps:
       - name: Checkout audit branch
@@ -23,11 +22,8 @@ jobs:
         with:
           node-version: 20
           cache: npm
-      - name: Remove unused dependency and update patched Vite
+      - name: Regenerate lockfile using compatible dependency ranges
         run: |
-          npm pkg delete dependencies.zod devDependencies.lovable-tagger
-          npm pkg set devDependencies.vite='^6.4.4'
-          sed -i '/import { componentTagger } from "lovable-tagger";/d; s/defineConfig(({ mode }) => (/defineConfig(() => (/; /mode === "development" && componentTagger(),/d' vite.config.ts
           npm install
           npm audit fix || true
       - name: Enforce high-severity dependency gate
@@ -43,10 +39,10 @@ jobs:
           npm run test:livro-curso-progress
       - name: Production build
         run: npm run build
-      - name: Commit validated dependency remediation
+      - name: Commit verified lockfile
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add package.json package-lock.json vite.config.ts
-          git diff --cached --quiet || git commit -m "fix: remove unused vulnerable dependencies and update Vite"
+          git add package-lock.json
+          git diff --cached --quiet || git commit -m "security: regenerate lockfile with patched high-severity dependencies"
           git push origin "HEAD:refs/heads/${{ github.ref_name }}"
