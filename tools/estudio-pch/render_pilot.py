@@ -8,7 +8,7 @@ CLIPS = [
 ("01_leitura_e_redes","A poesia não mora\\nem um único lugar","A leitura poética envolve redes e processos distribuídos.",
  "A poesia não mora em um único lugar do cérebro. Ler um poema pode envolver linguagem, atenção, memória, emoção e autorreferência. Esses processos trabalham em redes distribuídas, e sua participação varia conforme a pessoa, a tarefa e o contexto.",
  ["LINGUAGEM","ATENÇÃO","MEMÓRIA","EMOÇÃO"],"Não existe um único centro cerebral da poesia."),
-("02_metafora_e_sentido","Uma metáfora abre\\ uma possibilidade","Ela convida à interpretação — não entrega um diagnóstico.",
+("02_metafora_e_sentido","Uma metáfora abre\\numa possibilidade","Ela convida à interpretação — não entrega um diagnóstico.",
  "Quando uma imagem poética toca o leitor, ela pode despertar associações pessoais. Mas uma associação não é uma prova sobre a história, a personalidade ou o inconsciente de alguém. A pergunta responsável é: o que essa imagem significa para você?",
  ["IMAGEM","ASSOCIAÇÃO","PERGUNTA"],"A pessoa constrói o sentido. O facilitador não o impõe."),
 ("03_experiencia_e_evidencia","Sentir é real.\\nInferir exige cuidado.","A experiência subjetiva não revela, sozinha, a atividade cerebral.",
