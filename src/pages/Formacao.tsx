@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   GraduationCap,
   BookOpenCheck,
@@ -30,7 +30,7 @@ import { useCourseProgress } from "@/hooks/useCourseProgress";
 import { Link, useNavigate } from "react-router-dom";
 import { useScrollAnimation } from "@/hooks/useScrollAnimation";
 import { FormacaoStudySignup } from "@/components/sales/FormacaoStudySignup";
-import { generateCurriculumPDF } from "@/lib/pdf-utils";
+import { prefetchRoute } from "@/lib/route-prefetch";
 import {
   Accordion,
   AccordionContent,
@@ -40,6 +40,16 @@ import {
 
 const Formacao = () => {
   const navigate = useNavigate();
+
+  // Warm the shared module-detail chunk while the student reviews the curriculum.
+  useEffect(() => {
+    prefetchRoute("/formacao/modulo/modulo-1", "low");
+  }, []);
+
+  const handleDownloadCurriculum = async () => {
+    const { generateCurriculumPDF } = await import("@/lib/pdf-utils");
+    generateCurriculumPDF();
+  };
   const heroSection = useScrollAnimation(0.1);
   const pillarsSection = useScrollAnimation(0.15);
   const curriculumSection = useScrollAnimation(0.1);
@@ -120,7 +130,7 @@ const Formacao = () => {
             <Button size="lg" onClick={() => navigate("/planos?product=formacao")} className="px-8 bg-primary hover:bg-primary/90 text-white rounded-full group shadow-lg shadow-primary/20">
               Quero ser um Terapeuta PCH <ArrowRight className="ml-2 w-4 h-4 group-hover:translate-x-1 transition-transform" />
             </Button>
-            <Button size="lg" variant="outline" onClick={generateCurriculumPDF} className="px-8 rounded-full border-primary/20 hover:bg-primary/5">
+            <Button size="lg" variant="outline" onClick={handleDownloadCurriculum} className="px-8 rounded-full border-primary/20 hover:bg-primary/5">
               <Download className="w-4 h-4 mr-2" /> Baixar Grade Curricular
             </Button>
             <Button size="lg" variant="ghost" asChild className="px-8 rounded-full">
@@ -233,7 +243,14 @@ const Formacao = () => {
                       const isCompleted = progress.completedModules.includes(modulo.id);
 
                       return (
-                        <Link key={modulo.id} to={`/formacao/modulo/${modulo.id}`} className="block h-full focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary rounded-2xl">
+                        <Link
+                          key={modulo.id}
+                          to={`/formacao/modulo/${modulo.id}`}
+                          onMouseEnter={() => prefetchRoute(`/formacao/modulo/${modulo.id}`)}
+                          onFocus={() => prefetchRoute(`/formacao/modulo/${modulo.id}`)}
+                          onTouchStart={() => prefetchRoute(`/formacao/modulo/${modulo.id}`)}
+                          className="block h-full focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary rounded-2xl"
+                        >
                           <Card className="border-border/50 hover:border-primary/30 transition-all duration-300 group overflow-hidden bg-card/70 backdrop-blur-sm h-full">
                             <CardHeader className="pb-4 relative">
                               <div className="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity">

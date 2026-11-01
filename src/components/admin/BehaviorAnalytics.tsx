@@ -79,7 +79,7 @@ export default function BehaviorAnalytics() {
   const [range, setRange] = useState<AdminRangePreset>(ADMIN_RANGE_DEFAULT);
   const [stage, setStage] = useState<StageFilter>("all");
   const [loading, setLoading] = useState(true);
-  const [profiles, setProfiles] = useState<{ id: string; created_at: string }[]>([]);
+  const [profiles, setProfiles] = useState<{ user_id: string; created_at: string }[]>([]);
   const [events, setEvents] = useState<UserEventRow[]>([]);
   const [checkins, setCheckins] = useState<{ user_id: string; checkin_date: string }[]>([]);
   const [cohort, setCohort] = useState<CohortRow[]>([]);
@@ -97,7 +97,7 @@ export default function BehaviorAnalytics() {
       const since = new Date(Date.now() - days * DAY_MS).toISOString();
 
       const [profRes, evRes, ciRes] = await Promise.all([
-        supabase.from("profiles").select("id, created_at").gte("created_at", since),
+        supabase.from("profiles").select("user_id, created_at").gte("created_at", since),
         supabase.from("user_events").select("id, user_id, event_name, stage, payload, created_at").gte("created_at", since),
         supabase.from("daily_checkins").select("user_id, checkin_date").gte("checkin_date", since.slice(0, 10)),
       ]);
@@ -165,10 +165,10 @@ export default function BehaviorAnalytics() {
     if (stage === "all") return profiles;
     const stageUsers = new Set(
       stage === "cadastro"
-        ? profiles.map((p) => p.id)
+        ? profiles.map((p) => p.user_id)
         : events.filter((e) => e.stage === stage).map((e) => e.user_id),
     );
-    return profiles.filter((p) => stageUsers.has(p.id));
+    return profiles.filter((p) => stageUsers.has(p.user_id));
   }, [profiles, events, stage]);
 
 

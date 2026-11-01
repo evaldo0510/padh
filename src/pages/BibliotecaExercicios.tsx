@@ -2,15 +2,14 @@ import React, { useMemo, useState } from "react";
 import PageLayout from "@/components/layout/PageLayout";
 import { JORNADA_DATA } from "@/lib/jornada-data";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Library, PenTool, Search, BookOpen, CheckCircle2 } from "lucide-react";
+import { Library, PenTool, Search, BookOpen, CheckCircle2, FlaskConical, GraduationCap } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Link } from "react-router-dom";
+import { Button } from "@/components/ui/button";
 
 const BibliotecaExercicios = () => {
   const [search, setSearch] = useState("");
 
-  // Include every authored practical block, not only blocks explicitly typed
-  // "exercise". Reflection and action blocks are also usable practices.
   const allExercises = useMemo(() =>
     JORNADA_DATA.flatMap((fase) =>
       fase.sessoes.flatMap((sessao) =>
@@ -37,8 +36,8 @@ const BibliotecaExercicios = () => {
   return (
     <PageLayout
       seo={{
-        title: "Biblioteca de Exercícios — P.A.D.H.",
-        description: "Explore exercícios, reflexões e práticas da jornada PCH.",
+        title: "Biblioteca de Práticas — Curso PCH",
+        description: "Acervo pesquisável de exercícios, reflexões e práticas da jornada PCH, com acesso à etapa original de cada atividade.",
         path: "/biblioteca-exercicios",
       }}
       currentPage="Biblioteca"
@@ -48,24 +47,22 @@ const BibliotecaExercicios = () => {
           <div className="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-primary/10 mb-4">
             <Library className="h-8 w-8 text-primary" aria-hidden="true" />
           </div>
-          <h1 className="text-3xl md:text-4xl font-heading font-bold">Biblioteca de Exercícios</h1>
-          <p className="text-muted-foreground mt-2 max-w-xl mx-auto">
-            Encontre exercícios, reflexões e práticas para retomar qualquer etapa da sua jornada.
+          <h1 className="text-3xl md:text-4xl font-heading font-bold">Biblioteca de Práticas PCH</h1>
+          <p className="text-muted-foreground mt-2 max-w-2xl mx-auto">
+            Um acervo para encontrar e retomar exercícios, reflexões e práticas. A Biblioteca organiza atividades por tema e etapa; a aula ensina o conteúdo e o Laboratório oferece experiências guiadas.
           </p>
-          <p className="text-sm text-muted-foreground mt-3" aria-live="polite">
+          <div className="flex flex-wrap justify-center gap-3 mt-5">
+            <Button asChild variant="outline"><Link to="/aula-exclusiva"><GraduationCap className="h-4 w-4 mr-2" />Aula Exclusiva</Link></Button>
+            <Button asChild variant="outline"><Link to="/mapa-cerebral"><FlaskConical className="h-4 w-4 mr-2" />Laboratório Cerebral</Link></Button>
+          </div>
+          <p className="text-sm text-muted-foreground mt-4" aria-live="polite">
             {filteredExercises.length} {filteredExercises.length === 1 ? "atividade encontrada" : "atividades encontradas"}
           </p>
         </header>
 
         <div className="relative max-w-xl mx-auto mb-8">
           <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" aria-hidden="true" />
-          <Input
-            value={search}
-            onChange={(event) => setSearch(event.target.value)}
-            placeholder="Buscar por atividade, tema, fase ou sessão..."
-            aria-label="Buscar atividades na biblioteca"
-            className="pl-9"
-          />
+          <Input value={search} onChange={(event) => setSearch(event.target.value)} placeholder="Buscar por atividade, tema, fase ou sessão..." aria-label="Buscar atividades na biblioteca" className="pl-9" />
         </div>
 
         {filteredExercises.length > 0 ? (

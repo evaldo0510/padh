@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import ReactMarkdown from "react-markdown";
-import chapter5Markdown from "@/content/capitulo-5-mapa-cerebral.md?raw";
 import { BookOpen, Brain, Feather, Heart, Lightbulb, CheckCircle2, ChevronDown, ChevronLeft, ChevronRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -8,7 +7,8 @@ import { Separator } from "@/components/ui/separator";
 import PageLayout from "@/components/layout/PageLayout";
 import { pagesSEO } from "@/lib/seo-config";
 import TextReader from "@/components/ui/text-reader";
-import { useAuth } from "@/hooks/useAuth";
+import chapter5Markdown from "@/content/capitulo-5-mapa-cerebral.md?raw";
+import { supabase } from "@/integrations/supabase/client";
 
 type Chapter = { id: string; title: string; subtitle: string; icon: React.ElementType; sections: { title: string; paragraphs?: string[]; bullets?: string[] }[]; practice: string[]; reflection: string[]; markdown?: string };
 const chapters: Chapter[] = [
@@ -241,75 +241,222 @@ const chapters: Chapter[] = [
   },
   {
     id: "capitulo-5", title: "Capítulo 5 — O Mapa Cerebral do Leitor Poético", subtitle: "Atenção, emoção, memória, imaginação e construção de sentido sem neuromitos", icon: Brain,
-    sections: [],
-    practice: [],
-    reflection: [],
     markdown: chapter5Markdown,
+    sections: [
+      { title: "5.1. O cérebro não lê poesia em uma única região", paragraphs: [
+        "Ler um poema é uma atividade distribuída: o leitor reconhece palavras, acompanha relações sintáticas, integra sentidos, antecipa possibilidades, percebe ritmo e associa o texto a conhecimentos e experiências. Esses processos dependem de redes que cooperam dinamicamente. Não existe um único “centro da poesia” nem um mapa cerebral universal que permita decifrar a personalidade de quem lê.",
+        "O que cada pessoa percebe depende também de fluência de leitura, língua, cultura, familiaridade com o gênero, estado de atenção, contexto e história individual. Por isso, duas pessoas podem ler o mesmo verso e construir sentidos diferentes, sem que uma delas esteja necessariamente lendo de forma errada.",
+        "Neste capítulo, “mapa cerebral” é uma metáfora didática para organizar processos envolvidos na leitura poética. Não é um exame neurológico, um instrumento diagnóstico nem uma descrição literal de regiões cerebrais ativadas em cada leitor."
+      ]},
+      { title: "5.2. Cinco processos para observar durante a leitura", bullets: [
+        "LINGUAGEM — reconhecer palavras, relações e ambiguidades. Pergunta: “Que palavras sustentam minha interpretação?”.",
+        "ATENÇÃO — selecionar aspectos do texto, como uma imagem, uma pausa, uma repetição ou um contraste. Pergunta: “O que chamou minha atenção primeiro?”.",
+        "EMOÇÃO E CORPO — perceber a resposta subjetiva, que pode ser intensa, discreta, neutra ou ausente. Pergunta: “O que noto em mim, se noto algo?”.",
+        "MEMÓRIA E ASSOCIAÇÃO — relacionar o verso a experiências, histórias, músicas, lugares ou outras leituras. Pergunta: “Que associação apareceu e ela é lembrança, imaginação ou comparação?”.",
+        "INTERPRETAÇÃO E ESCOLHA — construir uma leitura provisória e decidir se ela merece ser explorada. Pergunta: “Que outras leituras cabem no texto e nos fatos que conheço?”."
+      ]},
+      { title: "5.3. O poema como encontro entre texto e leitor", paragraphs: [
+        "Um poema oferece pistas — palavras, imagens, ritmo, estrutura e silêncios —, mas não determina sozinho a experiência de quem lê. O sentido emerge do encontro entre essas pistas e o repertório do leitor. Uma interpretação pode ser pessoal sem ser arbitrária: ela pode ser examinada à luz do texto, do contexto e de outras leituras possíveis.",
+        "Separe três camadas: o que o poema literalmente apresenta; o que você associa a ele; e o que conclui sobre sua própria vida. Por exemplo, ler “uma janela fechada” é diferente de associá-la à solidão e diferente ainda de concluir “ninguém me quer”. A última conclusão precisa ser examinada como pensamento, não tratada como prova fornecida pelo verso.",
+        "O leitor também pode não se identificar com o poema. Não sentir emoção, não gostar ou interromper a leitura são respostas legítimas. Não há obrigação de encontrar uma mensagem escondida nem de transformar toda leitura em exercício terapêutico."
+      ]},
+      { title: "5.4. Emoção não é diagnóstico", paragraphs: [
+        "Um verso pode despertar alegria, tristeza, irritação, saudade, curiosidade, desconforto ou nenhuma reação evidente. A resposta pode mudar conforme o dia e o contexto. Uma emoção momentânea não define a personalidade, não confirma um trauma e não permite concluir que determinada região cerebral foi ativada de maneira específica.",
+        "Se uma imagem provocar sofrimento, o leitor pode parar, escolher outro texto, olhar ao redor e retomar uma atividade cotidiana. Não é necessário insistir para “atravessar a resistência”. Se o desconforto for persistente, intenso ou afetar a vida diária, considere procurar apoio profissional qualificado.",
+        "Ao conduzir uma leitura com outra pessoa, pergunte antes de explorar conteúdos pessoais. Não interprete símbolos como fatos sobre a infância, a memória ou o inconsciente. A própria pessoa tem o direito de dizer “não sei”, discordar ou não compartilhar."
+      ]},
+      { title: "5.5. Ritmo, pausa e atenção: experiência não é prova", paragraphs: [
+        "Rima, repetição, aliteração, métrica e pausas podem orientar a atenção e influenciar a experiência estética. Ler em voz alta pode tornar audíveis sons e cadências que passam despercebidos na leitura silenciosa. Esses efeitos variam: um ritmo pode ser acolhedor para alguém e irritante ou cansativo para outra pessoa.",
+        "Experimente comparar uma leitura silenciosa com uma leitura em voz alta, sem presumir que uma seja superior. Observe compreensão, interesse e conforto. Se ler em voz alta não for adequado, leia mentalmente, acompanhe o texto com os olhos ou escolha apenas um verso.",
+        "Uma mudança subjetiva depois da leitura é um dado da experiência pessoal, não uma demonstração automática de alteração neural, eficácia clínica ou causalidade. Para fazer afirmações científicas mais fortes, seriam necessários estudos apropriados, medidas claras, comparação adequada e replicação."
+      ]},
+      { title: "5.6. Exercício guiado: cartografia de um poema", paragraphs: [
+        "Escolha um poema curto que pareça seguro para você. Antes de começar, decida se quer escrever, pensar em silêncio ou apenas ler. Não use este exercício para forçar recordações difíceis. Você pode pular qualquer etapa.",
+        "Na primeira passagem, registre uma palavra ou imagem que chamou sua atenção. Na segunda, descreva o que o texto efetivamente diz, sem explicar sua vida. Na terceira, anote uma associação pessoal, identificando-a como associação. Na quarta, proponha uma leitura alternativa. Na quinta, decida se deseja levar consigo uma pergunta, uma frase ou nenhuma conclusão.",
+        "Finalize com três perguntas: “O que o poema diz?”, “O que eu acrescentei a partir da minha experiência?” e “O que ainda não sei?”. Se perceber que está tratando uma interpretação como fato, volte ao texto e diferencie observação de inferência."
+      ]},
+      { title: "5.7. Exemplo prático: um verso, leituras diferentes", paragraphs: [
+        "Verso ilustrativo: “A casa guardava o silêncio da tarde”. Leitura textual: há uma casa e o silêncio é descrito como se pudesse ser guardado. Associação de uma leitora: a casa lembra o período em que estudava com a avó. Associação de outro leitor: o verso sugere uma sala vazia depois de uma mudança. Um terceiro leitor pode perceber apenas a sonoridade da frase.",
+        "Nenhuma dessas associações, isoladamente, prova um fato biográfico ou uma condição psicológica. Para explorar a leitura, pergunte: “Que detalhe do verso sustenta essa interpretação?”, “Que outra possibilidade existe?” e “Você prefere continuar ou deixar o poema como está?”.",
+        "A finalidade é aumentar a consciência sobre o processo de leitura, não descobrir uma resposta secreta. O poema não precisa ser convertido em conselho, diagnóstico ou plano de ação."
+      ]},
+      { title: "5.8. O que a pesquisa permite afirmar", paragraphs: [
+        "A investigação científica sobre leitura literária, compreensão de metáforas, cognição e emoção estuda tarefas específicas e utiliza métodos diferentes. Resultados sobre um tipo de leitura, uma amostra ou uma intervenção não devem ser generalizados para toda poesia nem para a PCH como metodologia integrada.",
+        "Ao comunicar resultados, identifique exatamente o que foi estudado, quem participou, qual medida foi utilizada e quais limitações foram reconhecidas. Evite afirmações como “este poema ativa o cérebro emocional”, “a leitura reorganiza os neurônios em minutos” ou “a reação revela o inconsciente” quando não houver evidência direta adequada.",
+        "Referências introdutórias: Zeman, A.; Milton, F.; Smith, A.; Rylance, R. (2013). By heart: an fMRI study of the brain network that recites poems. Journal of Consciousness Studies, 20(9–10), 132–158. A pesquisa examina recitação de poemas conhecidos, não valida uma terapia poética. DOI e acesso devem ser conferidos na fonte editorial antes de citação formal. Também é útil consultar Thibodeau, P. H.; Boroditsky, L. (2011), Metaphors we think with: the role of metaphor in reasoning. PLOS ONE, 6(2), e16782. DOI: 10.1371/journal.pone.0016782. Esses trabalhos não demonstram eficácia clínica da PCH."
+      ], bullets: [
+        "Distinguir atividade cerebral observada em uma tarefa de explicação causal sobre a experiência.",
+        "Distinguir resultado sobre leitura ou metáfora de evidência direta sobre uma intervenção clínica.",
+        "Verificar a referência original, a metodologia, a amostra, as limitações e a replicação antes de publicar uma afirmação.",
+        "Quando a evidência não for suficiente, declarar a incerteza em vez de preencher a lacuna com linguagem neurocientífica."
+      ]},
+      { title: "5.9. Síntese e perguntas de revisão", paragraphs: [
+        "O leitor poético não é um cérebro que precisa ser decifrado, mas uma pessoa que lê a partir de linguagem, atenção, corpo, contexto e experiência. O mapa proposto neste capítulo ajuda a formular perguntas sobre o processo de leitura; não localiza emoções em pontos fixos nem transforma metáforas em exames.",
+        "A leitura pode ser significativa mesmo quando não produz mudança perceptível. A qualidade da experiência está em poder observar, interpretar, discordar e escolher livremente — com curiosidade e sem promessas que ultrapassem a evidência."
+      ], bullets: [
+        "Por que “mapa cerebral” é uma metáfora didática neste capítulo, e não um mapa anatômico individual?",
+        "Como diferenciar o que o poema apresenta da associação que o leitor acrescenta?",
+        "Por que uma emoção durante a leitura não constitui diagnóstico?",
+        "Que evidência seria necessária para sustentar uma afirmação de eficácia clínica da PCH?",
+        "Como adaptar ou interromper o exercício respeitando a autonomia do leitor?"
+      ]},
+      { title: "5.10. O mapa é um ciclo, não uma sequência obrigatória", paragraphs: [
+        "Os cinco processos apresentados neste capítulo são categorias didáticas para observar a leitura, não etapas rígidas nem compartimentos independentes. A atenção pode mudar quando uma palavra ganha outro sentido; uma associação pode levar o leitor de volta ao texto; o ritmo pode alterar o que ele percebe; e o contexto pode modificar a interpretação. O leitor pode avançar, voltar, pausar ou encerrar sem completar todas as etapas.",
+        "Uma forma prática de representar o percurso é: orientar-se no texto → notar um detalhe → descrever o que está presente → reconhecer associações próprias → testar outra interpretação → escolher se deseja continuar. As setas indicam possibilidades de circulação, não uma lei sobre o cérebro. Não se deve atribuir cada movimento a uma região cerebral específica sem evidência adequada.",
+        "A utilidade do mapa está nas perguntas que ele permite fazer. Se a leitura ficar confusa, volte ao texto; se a associação parecer uma certeza, marque-a como hipótese; se o exercício deixar de ser útil, pare. A autonomia do leitor é parte do método, não uma etapa opcional."
+      ]},
+      { title: "5.11. Ficha de cartografia: do texto à interpretação", paragraphs: [
+        "Use esta ficha com um poema curto, de preferência escolhido pelo próprio leitor. A atividade pode ser feita mentalmente, por escrito, com desenho, por áudio ou em conversa. Não é necessário revelar experiências pessoais nem responder a todos os campos.",
+        "1. TEXTO — copie uma palavra ou descreva um detalhe que realmente aparece no poema. 2. ATENÇÃO — registre o que chamou sua atenção primeiro, sem concluir por que isso aconteceu. 3. ASSOCIAÇÃO — anote uma lembrança, imagem ou ideia que surgiu e identifique-a como associação pessoal, não como informação contida no poema. 4. INTERPRETAÇÃO — escreva uma leitura possível e aponte qual detalhe do texto a sustenta. 5. ALTERNATIVA — formule outra leitura plausível. 6. ESCOLHA — decida se quer continuar, mudar de poema, fazer uma pausa ou encerrar sem conclusão.",
+        "Exemplo com verso original criado para esta atividade: “A chuva desenhou caminhos no vidro”. Observação textual: há chuva e marcas no vidro descritas como caminhos. Associação possível: alguém pode lembrar uma viagem; outra pessoa pode imaginar apenas linhas se formando. Interpretação possível: o verso sugere movimento ou passagem. Limite: nenhuma dessas respostas comprova um fato da biografia do leitor nem revela um significado universal.",
+        "Ao revisar a ficha, diferencie observação, associação e conclusão. Pergunte: “Que palavra do poema sustenta essa leitura?”, “Que outra leitura também cabe?” e “Estou afirmando algo sobre mim que o texto não pode provar?”. A ficha organiza a reflexão; não mede saúde mental, profundidade emocional ou atividade cerebral."
+      ]},
+      { title: "5.12. Diferenças individuais, contexto e acessibilidade", paragraphs: [
+        "A leitura é influenciada por familiaridade com o gênero, idioma, repertório cultural, escolarização, contexto social, atenção disponível, cansaço, visão, audição e preferências pessoais. Essas diferenças não devem ser tratadas automaticamente como falhas ou déficits. Duas pessoas podem compreender o mesmo poema de maneiras distintas e ambas podem apresentar razões coerentes para suas leituras.",
+        "Adapte o formato sem mudar a finalidade: ofereça texto ampliado ou com espaçamento, leitura silenciosa ou em voz alta, pausas, linguagem mais simples, apoio de áudio ou a possibilidade de escolher apenas um verso. Não presuma que toda pessoa queira ouvir, falar, fechar os olhos, respirar de determinada maneira ou compartilhar algo íntimo.",
+        "Se a compreensão estiver difícil, retorne a uma palavra concreta, explique o vocabulário ou ofereça mais contexto antes de interpretar. Se a pessoa não gostar do poema, não sentir emoção ou preferir não participar, aceite a resposta sem tentar convencê-la de que existe uma mensagem escondida."
+      ]},
+      { title: "5.13. Como facilitar uma leitura compartilhada com responsabilidade", bullets: [
+        "Explique o objetivo e combine que cada participante pode passar a vez, discordar ou sair da atividade sem se justificar.",
+        "Pergunte o que a pessoa percebeu antes de oferecer qualquer hipótese; se oferecer uma hipótese, identifique-a claramente como possibilidade e aceite a correção.",
+        "Não peça relatos traumáticos, não faça interpretações sobre infância ou inconsciente e não transforme silêncio, choro ou ausência de emoção em prova de um resultado.",
+        "Separe comentário sobre o texto de afirmações sobre a pessoa. Prefira “que leitura você faz desta imagem?” a “essa imagem mostra que você tem medo de…”.",
+        "Não avalie a qualidade da leitura pela intensidade emocional, pelo grau de exposição pessoal ou pela concordância com o facilitador.",
+        "Encerre com uma escolha livre: compartilhar uma observação sobre o poema, guardar uma pergunta, mudar de atividade ou não tirar nenhuma conclusão."
+      ]},
+      { title: "5.14. Roteiro de aula — Mapa Cerebral do Leitor Poético (65 minutos)", paragraphs: [
+        "OBJETIVO — usar um mapa didático para observar linguagem, atenção, associações, emoção e interpretação durante a leitura poética. Este roteiro é educativo; não é exame cerebral, protocolo clínico validado ou método de diagnóstico.",
+        "1. ANATOMIA POÉTICA DO CÉREBRO — 15 minutos. Apresente as áreas de Broca e Wernicke no contexto da linguagem, redes distribuídas envolvidas no processamento emocional, funções do córtex pré-frontal e a Rede de Modo Padrão (Default Mode Network), investigada em processos como pensamento interno e autorreferência. Explique que não existe um único centro cerebral da poesia e que funções complexas dependem de redes, tarefa e contexto.",
+        "2. O QUE A CIÊNCIA JÁ INVESTIGA — 10 minutos. Introduza neuroestética, psicolinguística, estudos de neuroimagem sobre leitura e recitação poética e pesquisas sobre metáforas. Contextualize George Lakoff e Oliver Sacks em seus campos relevantes. Diferencie estudos sobre leitura, metáfora ou recitação de evidência direta sobre eficácia clínica da PCH.",
+        "3. LEITURA COMO EXPERIÊNCIA MULTISSENSORIAL — 15 minutos. Leia ou recite um poema curto com o texto acessível. Convide cada pessoa, sem obrigação de compartilhar, a notar imagens mentais, palavras que chamaram atenção, emoções ou sensações e associações pessoais. Explique que essas observações descrevem a experiência subjetiva e não identificam, por si só, quais áreas cerebrais foram ativadas.",
+        "4. APLICAÇÕES DO MAPA À CRIAÇÃO POÉTICA — 15 minutos. Explore imagem concreta, metáfora, ritmo, repetição e contraste como recursos que podem influenciar a experiência de leitura. Trate essas relações como possibilidades, não como a fórmula “zona cerebral → verso → efeito garantido”. Proponha criação individual e, se houver consentimento, construção colaborativa de versos.",
+        "5. VIVÊNCIA GUIADA — 10 minutos. Ofereça respiração confortável sem exigir fechar os olhos ou seguir um padrão específico. Faça uma leitura pausada de poema autoral, convide ao registro opcional de imagens, emoções ou perguntas e proponha transformar uma observação em minipoema. Cada pessoa pode pular etapas, escolher outro texto ou interromper a atividade.",
+        "ENCERRAMENTO — diferencie o que o poema efetivamente diz, o que o leitor associa e o que conclui sobre a própria vida. Não trate associações como diagnóstico, lembranças comprovadas ou revelações do inconsciente. A utilidade do mapa está em apoiar perguntas e escolhas, não em determinar o significado da experiência."
+      ], bullets: [
+        "Abertura: “Ler poesia não é apenas ler palavras. É encontrar a si mesmo em um espelho feito de símbolos.”",
+        "Reflexão: “Que palavras você usa para esconder de si mesmo aquilo que ainda não conseguiu nomear?”",
+        "Aprofundamento: “E se o verso fosse uma ferramenta delicada para se aproximar de sentimentos que você ainda não conseguiu expressar?”",
+        "Chamada para a prática: “Agora que você começou a compreender o mapa, que tal escrever o seu próprio caminho?”",
+        "Materiais: poema curto em formato acessível, papel ou bloco de notas e opção de participação silenciosa.",
+        "Critérios de condução: consentimento, nenhuma interpretação imposta, direito de interromper e afirmações científicas proporcionais às evidências."
+      ]},
+    ],
+    practice: [
+      "Escolha um poema curto e marque uma palavra ou imagem que chamou sua atenção, sem tentar explicar imediatamente o motivo.",
+      "Escreva três linhas separadas: “O texto diz…”, “Eu associei…” e “Ainda não sei…”.",
+      "Crie uma segunda interpretação possível e identifique qual detalhe do poema a sustenta.",
+      "Se for confortável, compare leitura silenciosa e leitura em voz alta. Observe compreensão, atenção e conforto, sem exigir uma mudança emocional.",
+      "Finalize escolhendo uma pergunta que deseja guardar — ou registre que não precisa tirar nenhuma conclusão."
+    ],
+    reflection: [
+      "Estou descrevendo o poema ou transformando minha associação em fato?",
+      "Que outras interpretações são possíveis sem negar o que o texto diz?",
+      "Estou usando termos sobre o cérebro com evidência suficiente?",
+      "A leitura me ajuda, é neutra ou aumenta meu desconforto?",
+      "Como posso preservar a liberdade do leitor para discordar, parar ou não compartilhar?"
+    ]
   },
-];
-
-const chapter5SpeechText = chapter5Markdown
-  .replace(/^#{1,6}\s*/gm, "")
-  .replace(/^\s*[-*+]\s+/gm, "")
-  .replace(/^\s*\d+\.\s+/gm, "")
-  .replace(/^\s*>\s?/gm, "")
-  .replace(/\[([^\]]+)\]\([^)]+\)/g, "$1")
-  .replace(/\*\*(.*?)\*\*/g, "$1")
-  .replace(/\*(.*?)\*/g, "$1")
-  .replace(/[*_`]/g, "")
-  .replace(/---+/g, " ")
-  .replace(/\s+/g, " ")
-  .trim();
+]; 
 
 const LivroCurso = () => {
-  const { user, loading: authLoading } = useAuth();
-  const [expanded, setExpanded] = useState<string[]>(["capitulo-1"]);
+  const [expanded, setExpanded] = useState<string[]>(["capitulo-1", "capitulo-5"]);
   const [completed, setCompleted] = useState<string[]>([]);
-  const [progressUserId, setProgressUserId] = useState<string | null>(null);
+  const [progressLoaded, setProgressLoaded] = useState(false);
+  const [progressError, setProgressError] = useState<string | null>(null);
+  const [savingChapter, setSavingChapter] = useState<string | null>(null);
+  const [reloadProgressKey, setReloadProgressKey] = useState(0);
   const toggle = (id: string) => setExpanded(current => current.includes(id) ? current.filter(item => item !== id) : [...current, id]);
-  const toggleComplete = (id: string) => setCompleted(current => current.includes(id) ? current.filter(item => item !== id) : [...current, id]);
+
+  useEffect(() => {
+    let cancelled = false;
+
+    const loadProgress = async () => {
+      setProgressLoaded(false);
+      setProgressError(null);
+
+      try {
+        const { data: authData, error: authError } = await supabase.auth.getUser();
+        if (authError || !authData.user) {
+          if (!cancelled) {
+            setProgressError("Não foi possível confirmar sua sessão. Entre novamente e tente recarregar o progresso.");
+            setProgressLoaded(true);
+          }
+          return;
+        }
+
+        const { data, error } = await supabase
+          .from("padh_livro_curso_progress")
+          .select("chapter_id")
+          .eq("user_id", authData.user.id)
+          .eq("completed", true);
+
+        if (cancelled) return;
+        if (error) {
+          setProgressError("Não foi possível carregar seu progresso salvo. Nenhum capítulo será marcado como concluído até a leitura funcionar.");
+          setProgressLoaded(true);
+          return;
+        }
+
+        setCompleted(Array.isArray(data) ? data.map(row => row.chapter_id) : []);
+        setProgressLoaded(true);
+      } catch {
+        if (!cancelled) {
+          setProgressError("Ocorreu uma falha inesperada ao carregar o progresso. Verifique sua conexão e tente novamente.");
+          setProgressLoaded(true);
+        }
+      }
+    };
+
+    void loadProgress();
+    return () => { cancelled = true; };
+  }, [reloadProgressKey]);
+
+  const toggleComplete = async (id: string) => {
+    if (!progressLoaded || progressError || savingChapter) return;
+    const wasCompleted = completed.includes(id);
+    setSavingChapter(id);
+    setProgressError(null);
+
+    try {
+      const { data: authData, error: authError } = await supabase.auth.getUser();
+      if (authError || !authData.user) throw new Error("Sua sessão expirou. Entre novamente e tente outra vez.");
+
+      if (wasCompleted) {
+        const { error } = await supabase
+          .from("padh_livro_curso_progress")
+          .delete()
+          .eq("user_id", authData.user.id)
+          .eq("chapter_id", id);
+        if (error) throw error;
+        setCompleted(current => current.filter(chapterId => chapterId !== id));
+      } else {
+        const { error } = await supabase
+          .from("padh_livro_curso_progress")
+          .upsert({
+            user_id: authData.user.id,
+            chapter_id: id,
+            completed: true,
+            completed_at: new Date().toISOString(),
+            updated_at: new Date().toISOString(),
+          }, { onConflict: "user_id,chapter_id" });
+        if (error) throw error;
+        setCompleted(current => current.includes(id) ? current : [...current, id]);
+      }
+    } catch {
+      setProgressError("Não foi possível salvar essa alteração. O estado exibido foi mantido como estava; verifique sua conexão e tente recarregar.");
+    } finally {
+      setSavingChapter(null);
+    }
+  };
   const safeChapters = Array.isArray(chapters) ? chapters : [];
-  const allText = safeChapters.filter(ch => !ch.markdown).map(ch => `${ch.title || ""}. ${(Array.isArray(ch.sections) ? ch.sections : []).map(s => `${s.title || ""}. ${(Array.isArray(s.paragraphs) ? s.paragraphs : []).join(" ")} ${(Array.isArray(s.bullets) ? s.bullets : []).join(" ")}`).join(" ")} Prática guiada. ${(Array.isArray(ch.practice) ? ch.practice : []).map((item, i) => `Etapa ${i + 1}. ${item}`).join(" ")} Perguntas de reflexão. ${(Array.isArray(ch.reflection) ? ch.reflection : []).map((item, i) => `Pergunta ${i + 1}. ${item}`).join(" ")}`).join(" ");
-
-  useEffect(() => {
-    if (authLoading) return;
-    if (!user) {
-      setCompleted([]);
-      setProgressUserId(null);
-      return;
-    }
-
-    const storageKey = `padh-livro-curso-progress:${user.id}`;
-    const knownChapterIds = new Set(chapters.map((chapter) => chapter.id));
-    setProgressUserId(null);
-    try {
-      const saved = JSON.parse(localStorage.getItem(storageKey) ?? "[]") as unknown;
-      setCompleted(
-        Array.isArray(saved)
-          ? saved.filter((id): id is string => typeof id === "string" && knownChapterIds.has(id))
-          : [],
-      );
-    } catch {
-      setCompleted([]);
-    }
-    setProgressUserId(user.id);
-  }, [authLoading, user]);
-
-  useEffect(() => {
-    if (authLoading || !user || progressUserId !== user.id) return;
-    try {
-      localStorage.setItem(`padh-livro-curso-progress:${user.id}`, JSON.stringify(completed));
-    } catch {
-      // The course remains usable if browser storage is unavailable.
-    }
-  }, [authLoading, completed, progressUserId, user]);
-
   const navigateToChapter = (index: number) => {
     const target = safeChapters[index];
     if (!target) return;
     setExpanded([target.id]);
     document.getElementById(`chapter-${target.id}`)?.scrollIntoView({ behavior: "smooth", block: "start" });
   };
+  const plainMarkdown = (text: string) => text.replace(/^#{1,6}\s+/gm, "").replace(/\[([^\]]+)\]\([^)]+\)/g, "$1").replace(/[*_`>#]/g, "").replace(/\s+/g, " ").trim();
+  const allText = safeChapters.map(ch => `${ch.title || ""}. ${(Array.isArray(ch.sections) ? ch.sections : []).map(s => `${s.title || ""}. ${(Array.isArray(s.paragraphs) ? s.paragraphs : []).join(" ")} ${(Array.isArray(s.bullets) ? s.bullets : []).join(" ")}`).join(" ")} ${ch.markdown ? plainMarkdown(ch.markdown) : ""} Prática guiada. ${(Array.isArray(ch.practice) ? ch.practice : []).map((item, i) => `Etapa ${i + 1}. ${item}`).join(" ")} Perguntas de reflexão. ${(Array.isArray(ch.reflection) ? ch.reflection : []).map((item, i) => `Pergunta ${i + 1}. ${item}`).join(" ")}`).join(" ");
   return (
     <PageLayout seo={pagesSEO.livroCurso} currentPage="Livro-Curso">
       <section className="relative overflow-hidden">
@@ -322,7 +469,7 @@ const LivroCurso = () => {
             <div className="poem-block max-w-md mx-auto my-8"><p className="poem-text text-sm text-muted-foreground">Quando se olha no espelho, o que é que você vê?\nEu vi grades onde havia janelas.\nAté que um verso abriu a porta\nque eu mesmo havia trancado por dentro.</p><cite className="text-xs text-primary/70 mt-2 block not-italic">— Prisão Interior</cite></div>
             <div className="flex flex-wrap justify-center gap-3">
               <Button size="lg" onClick={() => { setExpanded(safeChapters.map(c => c.id)); document.getElementById("trilha-aprendizado")?.scrollIntoView({ behavior: "smooth" }); }} className="bg-primary text-primary-foreground hover:bg-primary-dark"><BookOpen className="mr-2 h-5 w-5" /> Estudar os capítulos</Button>
-              <TextReader text={allText} label="Ouvir capítulos 1–4" />
+              <TextReader text={allText} label="Ouvir narração" />
             </div>
             <p className="text-xs text-muted-foreground mt-4">Conteúdo educativo. Não substitui avaliação, diagnóstico ou tratamento profissional.</p>
           </div>
@@ -335,8 +482,8 @@ const LivroCurso = () => {
             <CardContent className="space-y-3 text-muted-foreground leading-relaxed">
               <p>Estude um capítulo por vez. Leia a teoria, faça a prática apenas se for confortável e responda às perguntas de reflexão. Não é necessário compartilhar textos pessoais. A trilha é uma estrutura educativa e não uma certificação de competência clínica.</p>
               <p><strong className="text-foreground">Objetivos de aprendizagem:</strong> explicar os três pilares da PCH; observar linguagem sem transformar metáforas em diagnósticos; distinguir evidência científica de hipótese; e montar uma rotina de autocuidado flexível e segura.</p>
-              <div className="flex items-center gap-3"><div className="h-2 rounded-full bg-muted flex-1 overflow-hidden"><div className="h-full bg-primary transition-all" style={{ width: ((completed.length / Math.max(safeChapters.length, 1)) * 100) + "%" }} /></div><span className="text-xs whitespace-nowrap">{completed.length} de {safeChapters.length} capítulos concluídos</span></div>
-              <p className="text-xs">O progresso fica salvo neste navegador, separado por conta; não sincroniza entre dispositivos.</p>
+              {progressError && <div role="alert" className="rounded-lg border border-destructive/30 bg-destructive/5 p-3 text-sm text-destructive space-y-2"><p>{progressError}</p><Button type="button" size="sm" variant="outline" onClick={() => setReloadProgressKey(key => key + 1)}>Tentar carregar novamente</Button></div>}
+              <div className="flex items-center gap-3"><div className="h-2 rounded-full bg-muted flex-1 overflow-hidden"><div className="h-full bg-primary transition-all" style={{ width: (progressLoaded && !progressError ? (completed.length / Math.max(safeChapters.length, 1)) * 100 : 0) + "%" }} /></div><span className="text-xs whitespace-nowrap">{!progressLoaded ? "Carregando progresso…" : progressError ? "Progresso indisponível" : `${completed.length} de ${safeChapters.length} capítulos concluídos`}</span></div>
             </CardContent>
           </Card>
           <div className="space-y-4">
@@ -351,44 +498,38 @@ const LivroCurso = () => {
                   {isDone && <CheckCircle2 className="h-5 w-5 text-primary shrink-0" />}<ChevronDown className={"h-5 w-5 text-muted-foreground shrink-0 transition-transform " + (isOpen ? "rotate-180" : "")} />
                 </button>
                 {isOpen && <CardContent id={`chapter-content-${chapter.id}`} role="region" aria-labelledby={`chapter-trigger-${chapter.id}`} className="pt-0 pb-7 px-5 md:px-8 space-y-7">
-                  {chapter.markdown ? (
-                    <article className="space-y-5 text-sm md:text-base text-muted-foreground leading-7">
-                      <div className="flex justify-end border-b border-border/50 pb-3">
-                        <TextReader text={chapter5SpeechText} label="Ouvir capítulo 5" />
-                      </div>
+                  {(Array.isArray(chapter.sections) ? chapter.sections : []).map((section, sectionIndex, safeSections) => <section key={section.title} className="space-y-3">
+                    <h3 className="text-lg font-heading font-semibold text-foreground">{section.title}</h3>
+                    {(Array.isArray(section.paragraphs) ? section.paragraphs : []).map((paragraph, i) => <p key={i} className="text-sm md:text-base text-muted-foreground leading-7">{paragraph}</p>)}
+                    {Array.isArray(section.bullets) && section.bullets.length > 0 && <ul className="list-disc pl-6 space-y-2 text-sm md:text-base text-muted-foreground leading-7">{(Array.isArray(section.bullets) ? section.bullets : []).map((bullet, i) => <li key={i}>{bullet}</li>)}</ul>}
+                    {sectionIndex < safeSections.length - 1 && <Separator className="mt-5 opacity-50" />}
+                  </section>)}
+                  {chapter.markdown && <details className="rounded-xl border border-primary/20 bg-primary/[0.025] p-5 md:p-6">
+                    <summary className="cursor-pointer text-lg font-heading font-semibold text-foreground">Leitura integral enviada pelo autor — aprofundamento do Capítulo 5</summary>
+                    <div className="mt-5 space-y-4 text-sm md:text-base text-muted-foreground leading-7" id="capitulo5-texto-integral">
+                      <p className="text-sm">O texto completo abaixo é apresentado como leitura complementar. O conteúdo curricular e o roteiro de aula de 65 minutos já existentes foram mantidos.</p>
                       <ReactMarkdown components={{
-                        h1: ({ children }) => <h3 className="text-xl font-heading font-bold text-foreground">{children}</h3>,
-                        h2: ({ children }) => <h3 className="text-lg md:text-xl font-heading font-semibold text-foreground pt-2">{children}</h3>,
-                        h3: ({ children }) => <h4 className="text-base font-heading font-semibold text-foreground">{children}</h4>,
-                        p: ({ children }) => <p className="text-sm md:text-base text-muted-foreground leading-7">{children}</p>,
-                        ul: ({ children }) => <ul className="list-disc pl-6 space-y-2 text-sm md:text-base text-muted-foreground leading-7">{children}</ul>,
-                        ol: ({ children }) => <ol className="list-decimal pl-6 space-y-2 text-sm md:text-base text-muted-foreground leading-7">{children}</ol>,
-                        li: ({ children }) => <li className="pl-1">{children}</li>,
-                        blockquote: ({ children }) => <blockquote className="border-l-2 border-primary/50 pl-4 italic text-foreground/80">{children}</blockquote>,
-                        a: ({ href, children }) => <a href={href} target="_blank" rel="noreferrer" className="text-primary underline underline-offset-4">{children}</a>,
-                        hr: () => <Separator className="my-5 opacity-50" />,
+                        h2: ({ children }) => <h3 className="pt-4 text-xl md:text-2xl font-heading font-semibold text-foreground">{children}</h3>,
+                        h3: ({ children }) => <h4 className="pt-3 text-lg font-heading font-semibold text-foreground">{children}</h4>,
+                        p: ({ children }) => <p className="leading-7">{children}</p>,
+                        ul: ({ children }) => <ul className="list-disc pl-6 space-y-2">{children}</ul>,
+                        ol: ({ children }) => <ol className="list-decimal pl-6 space-y-2">{children}</ol>,
+                        li: ({ children }) => <li>{children}</li>,
+                        blockquote: ({ children }) => <blockquote className="border-l-2 border-primary/40 pl-4 italic">{children}</blockquote>,
+                        a: ({ href, children }) => <a className="text-primary underline underline-offset-2" href={href} target={href?.startsWith("http") ? "_blank" : undefined} rel={href?.startsWith("http") ? "noreferrer" : undefined}>{children}</a>,
                       }}>{chapter.markdown}</ReactMarkdown>
-                    </article>
-                  ) : (
-                    <>
-                      {(Array.isArray(chapter.sections) ? chapter.sections : []).map((section, sectionIndex, safeSections) => <section key={section.title} className="space-y-3">
-                        <h3 className="text-lg font-heading font-semibold text-foreground">{section.title}</h3>
-                        {(Array.isArray(section.paragraphs) ? section.paragraphs : []).map((paragraph, i) => <p key={i} className="text-sm md:text-base text-muted-foreground leading-7">{paragraph}</p>)}
-                        {Array.isArray(section.bullets) && section.bullets.length > 0 && <ul className="list-disc pl-6 space-y-2 text-sm md:text-base text-muted-foreground leading-7">{(Array.isArray(section.bullets) ? section.bullets : []).map((bullet, i) => <li key={i}>{bullet}</li>)}</ul>}
-                        {sectionIndex < safeSections.length - 1 && <Separator className="mt-5 opacity-50" />}
-                      </section>)}
-                      {(chapter.practice.length > 0 || chapter.reflection.length > 0) && <div className="rounded-xl border border-primary/20 bg-primary/[0.04] p-5 space-y-4">
-                        <h3 className="font-heading font-semibold text-foreground flex items-center gap-2"><Lightbulb className="h-5 w-5 text-primary" /> Prática guiada</h3>
-                        <ol className="list-decimal pl-5 space-y-2 text-sm text-muted-foreground leading-6">{(Array.isArray(chapter.practice) ? chapter.practice : []).map((item, i) => <li key={i}>{item}</li>)}</ol>
-                        <h4 className="font-semibold text-foreground pt-2">Perguntas de reflexão</h4>
-                        <ul className="list-disc pl-5 space-y-2 text-sm text-muted-foreground leading-6">{(Array.isArray(chapter.reflection) ? chapter.reflection : []).map((item, i) => <li key={i}>{item}</li>)}</ul>
-                      </div>}
-                    </>
-                  )}
+                    </div>
+                  </details>}
+                  <div className="rounded-xl border border-primary/20 bg-primary/[0.04] p-5 space-y-4">
+                    <h3 className="font-heading font-semibold text-foreground flex items-center gap-2"><Lightbulb className="h-5 w-5 text-primary" /> Prática guiada</h3>
+                    <ol className="list-decimal pl-5 space-y-2 text-sm text-muted-foreground leading-6">{(Array.isArray(chapter.practice) ? chapter.practice : []).map((item, i) => <li key={i}>{item}</li>)}</ol>
+                    <h4 className="font-semibold text-foreground pt-2">Perguntas de reflexão</h4>
+                    <ul className="list-disc pl-5 space-y-2 text-sm text-muted-foreground leading-6">{(Array.isArray(chapter.reflection) ? chapter.reflection : []).map((item, i) => <li key={i}>{item}</li>)}</ul>
+                    <Button type="button" variant={isDone ? "outline" : "default"} disabled={!progressLoaded || Boolean(progressError) || savingChapter !== null} onClick={() => void toggleComplete(chapter.id)} className="gap-2">{savingChapter === chapter.id ? "Salvando…" : isDone ? "Marcar como não concluído" : "Marcar capítulo como concluído"}</Button>
+                  </div>
                   <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 border-t border-border/50 pt-5">
-                    <Button variant="outline" onClick={() => navigateToChapter(index - 1)} disabled={index === 0} className="gap-2"><ChevronLeft className="h-4 w-4" /> Capítulo anterior</Button>
-                    <Button variant={isDone ? "outline" : "default"} onClick={() => toggleComplete(chapter.id)} className="gap-2">{isDone ? "Marcar como não concluído" : "Marcar capítulo como concluído"}</Button>
-                    <Button variant="outline" onClick={() => navigateToChapter(index + 1)} disabled={index === safeChapters.length - 1} className="gap-2">Próximo capítulo <ChevronRight className="h-4 w-4" /></Button>
+                    <Button type="button" variant="outline" onClick={() => navigateToChapter(index - 1)} disabled={index === 0} className="gap-2"><ChevronLeft className="h-4 w-4" /> Capítulo anterior</Button>
+                    <Button type="button" variant="outline" onClick={() => navigateToChapter(index + 1)} disabled={index === safeChapters.length - 1} className="gap-2">Próximo capítulo <ChevronRight className="h-4 w-4" /></Button>
                   </div>
                 </CardContent>}
               </Card>;
