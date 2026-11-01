@@ -12,6 +12,7 @@
     "preview": "vite preview",
     "test:pwa": "playwright test",
     "test:browser-public": "playwright test --config=playwright.public.config.ts",
+    "test:browser-public": "playwright test --config=playwright.public.config.ts",
     "test:smoke": "node scripts/pwa-smoke-test.mjs",
     "test:jornada": "node scripts/test-jornada-data.mjs",
     "test:study": "node scripts/test-study-curriculum.mjs",
