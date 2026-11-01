@@ -126,17 +126,26 @@ const Admin = () => {
             </Card>
 
             <div className="grid sm:grid-cols-3 gap-6">
-              <div className="p-6 rounded-xl border border-border/50 bg-card group">
-                <h3 className="font-heading font-semibold text-foreground mb-2">Conteúdo</h3>
-                <p className="text-sm text-muted-foreground">Gerenciar jornadas e episódios</p>
+              <div className="p-6 rounded-xl border border-border/50 bg-card">
+                <div className="flex items-center justify-between gap-2 mb-2">
+                  <h3 className="font-heading font-semibold text-foreground">Conteúdo</h3>
+                  <Badge variant="outline">Em desenvolvimento</Badge>
+                </div>
+                <p className="text-sm text-muted-foreground">A gestão de jornadas e episódios ainda não está disponível neste painel.</p>
               </div>
-              <div className="p-6 rounded-xl border border-border/50 bg-card group">
-                <h3 className="font-heading font-semibold text-foreground mb-2">Usuários</h3>
-                <p className="text-sm text-muted-foreground">Visualizar progresso e alunos</p>
+              <div className="p-6 rounded-xl border border-border/50 bg-card">
+                <div className="flex items-center justify-between gap-2 mb-2">
+                  <h3 className="font-heading font-semibold text-foreground">Usuários</h3>
+                  <Badge variant="outline">Em desenvolvimento</Badge>
+                </div>
+                <p className="text-sm text-muted-foreground">A consulta administrativa de alunos e progresso ainda não está disponível neste painel.</p>
               </div>
-              <div className="p-6 rounded-xl border border-border/50 bg-card group">
-                <h3 className="font-heading font-semibold text-foreground mb-2">Vendas</h3>
-                <p className="text-sm text-muted-foreground">Métricas financeiras e planos</p>
+              <div className="p-6 rounded-xl border border-border/50 bg-card">
+                <div className="flex items-center justify-between gap-2 mb-2">
+                  <h3 className="font-heading font-semibold text-foreground">Vendas</h3>
+                  <Badge variant="outline">Em desenvolvimento</Badge>
+                </div>
+                <p className="text-sm text-muted-foreground">As métricas financeiras e a gestão de planos ainda não estão disponíveis neste painel.</p>
               </div>
             </div>
           </div>
