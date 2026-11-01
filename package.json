@@ -11,12 +11,15 @@
     "lint": "eslint .",
     "preview": "vite preview",
     "test:pwa": "playwright test",
+    "test:browser-public": "playwright test --config=playwright.public.config.ts",
     "test:smoke": "node scripts/pwa-smoke-test.mjs",
     "test:jornada": "node scripts/test-jornada-data.mjs",
     "test:study": "node scripts/test-study-curriculum.mjs",
     "test:livro-curso-progress": "node scripts/test-livro-curso-progress.mjs",
     "lighthouse:mobile": "node scripts/lighthouse.mjs mobile",
-    "lighthouse:desktop": "node scripts/lighthouse.mjs desktop"
+    "lighthouse:desktop": "node scripts/lighthouse.mjs desktop",
+    "test:admin-analytics": "node scripts/test-admin-analytics-user-id.mjs",
+    "test:profile-provisioning": "node scripts/test-profile-provisioning.mjs"
   },
   "dependencies": {
     "@hookform/resolvers": "^3.10.0",

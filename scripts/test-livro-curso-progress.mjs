@@ -4,7 +4,7 @@ import { readFile } from "node:fs/promises";
 const root = new URL("../", import.meta.url);
 const [page, migration, types] = await Promise.all([
   readFile(new URL("src/pages/LivroCurso.tsx", root), "utf8"),
-  readFile(new URL("supabase/migrations/20261028160000_padh_livro_curso_progress.sql", root), "utf8"),
+  readFile(new URL("supabase/migrations/20261029182131_padh_livro_curso_progress.sql", root), "utf8"),
   readFile(new URL("src/integrations/supabase/types.ts", root), "utf8"),
 ]);
 

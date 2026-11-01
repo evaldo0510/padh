@@ -32,6 +32,8 @@ const getSafeReturnPath = (value: unknown): string | null => {
   }
 };
 
+const AUTH_CANONICAL_ORIGIN = 'https://padhpoesia.vercel.app';
+
 const LoginPage = () => {
   const navigate = useNavigate();
   const location = useLocation();
@@ -74,7 +76,7 @@ const LoginPage = () => {
           email,
           password,
           options: {
-            emailRedirectTo: window.location.origin + from,
+            emailRedirectTo: AUTH_CANONICAL_ORIGIN + from,
             data: { name },
           },
         });
@@ -107,7 +109,7 @@ const LoginPage = () => {
       const { error } = await supabase.auth.signInWithOAuth({
         provider: 'google',
         options: {
-          redirectTo: `${window.location.origin}/login?next=${encodeURIComponent(from)}`,
+          redirectTo: `${AUTH_CANONICAL_ORIGIN}/login?next=${encodeURIComponent(from)}`,
         },
       });
       if (error) throw error;

@@ -55,6 +55,7 @@ export const ProfileProvider: React.FC<{ children: React.ReactNode }> = ({ child
   const [history, setHistory] = useState<SyncLog[]>([]);
   
   const updateQueue = useRef<Promise<any>>(Promise.resolve());
+  const fetchRequestId = useRef(0);
 
   const addLog = useCallback((log: Omit<SyncLog, "timestamp">) => {
     const newLog = { ...log, timestamp: new Date() };
@@ -66,12 +67,16 @@ export const ProfileProvider: React.FC<{ children: React.ReactNode }> = ({ child
   }, []);
 
   const fetchProfile = async (isManual = false) => {
+    const requestId = ++fetchRequestId.current;
+
     if (!user) {
+      setProfile(null);
       setLoading(false);
       setSource("local");
       return;
     }
 
+    setLoading(true);
     if (isManual) setSource("syncing");
 
     try {
@@ -82,6 +87,7 @@ export const ProfileProvider: React.FC<{ children: React.ReactNode }> = ({ child
         .maybeSingle();
 
       if (error) throw error;
+      if (requestId !== fetchRequestId.current) return;
 
       const localRaw = localStorage.getItem(STORAGE_KEY);
       let validatedLocal: PCHObjectiveId[] = [];
@@ -113,6 +119,7 @@ export const ProfileProvider: React.FC<{ children: React.ReactNode }> = ({ child
               .from("profiles")
               .update({ objectives: merged })
               .eq("user_id", user.id);
+            if (requestId !== fetchRequestId.current) return;
             toast.success("Dados mesclados", { description: "Objetivos locais e da nuvem unidos." });
           } else if (dbString === localString) {
             finalSource = "database";
@@ -140,17 +147,44 @@ export const ProfileProvider: React.FC<{ children: React.ReactNode }> = ({ child
           .select()
           .single();
 
-        if (insertError) throw insertError;
-        setProfile(newProfile as Profile);
-        setSource("database");
-        setLastSync(new Date());
-        addLog({ action: "Perfil criado", source: "local", objectives: validatedLocal });
+        if (insertError?.code === "23505") {
+          // Outra aba/dispositivo pode ter criado o perfil após nossa consulta inicial.
+          // Reconsultar evita tratar essa corrida legítima como falha de provisionamento.
+          const { data: existingProfile, error: retryError } = await supabase
+            .from("profiles")
+            .select("*")
+            .eq("user_id", user.id)
+            .maybeSingle();
+
+          if (retryError) throw retryError;
+          if (requestId !== fetchRequestId.current) return;
+          if (!existingProfile) throw insertError;
+
+          const recoveredProfile = existingProfile as Profile;
+          setProfile(recoveredProfile);
+          localStorage.setItem(STORAGE_KEY, JSON.stringify(recoveredProfile.objectives || []));
+          setSource("database");
+          setLastSync(new Date());
+          addLog({ action: "Perfil recuperado após criação concorrente", source: "database", objectives: recoveredProfile.objectives || [] });
+        } else {
+          if (insertError) throw insertError;
+          if (requestId !== fetchRequestId.current) return;
+          setProfile(newProfile as Profile);
+          setSource("database");
+          setLastSync(new Date());
+          addLog({ action: "Perfil criado", source: "local", objectives: validatedLocal });
+        }
       }
     } catch (err) {
+      if (requestId !== fetchRequestId.current) return;
       console.error("fetchProfile error", err);
-      if (isManual) toast.error("Erro na sincronização");
+      if (isManual) {
+        toast.error("Não foi possível sincronizar seu perfil.");
+      } else {
+        toast.error("Não foi possível carregar seu perfil. Verifique sua conexão e tente novamente.");
+      }
     } finally {
-      setLoading(false);
+      if (requestId === fetchRequestId.current) setLoading(false);
     }
   };
 
