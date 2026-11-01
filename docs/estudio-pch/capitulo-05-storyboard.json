@@ -1,0 +1,52 @@
+{
+  "title": "O Mapa Cerebral do Leitor Poético",
+  "chapter": 5,
+  "lessonDurationMinutes": 65,
+  "pilotFormat": "3 microvídeos introdutórios",
+  "language": "pt-BR",
+  "aspectRatio": "16:9",
+  "scenes": [
+    {
+      "id": "01",
+      "title": "A poesia não mora em um único lugar",
+      "durationSeconds": 20,
+      "voiceover": "A poesia não mora em um único lugar do cérebro. Ler um poema pode envolver linguagem, atenção, memória, emoção e autorreferência. Esses processos trabalham em redes distribuídas, e sua participação varia conforme a pessoa, a tarefa e o contexto.",
+      "visual": [
+        "fundo escuro com identidade PCH",
+        "quatro nós: linguagem, atenção, memória e emoção",
+        "linhas conectando os nós"
+      ],
+      "keyMessage": "Não existe um único centro cerebral da poesia."
+    },
+    {
+      "id": "02",
+      "title": "Uma metáfora abre uma possibilidade",
+      "durationSeconds": 20,
+      "voiceover": "Quando uma imagem poética toca o leitor, ela pode despertar associações pessoais. Mas uma associação não é uma prova sobre a história, a personalidade ou o inconsciente de alguém. A pergunta responsável é: o que essa imagem significa para você?",
+      "visual": [
+        "imagem simbólica central",
+        "associações surgem em ramificações",
+        "pergunta final em destaque"
+      ],
+      "keyMessage": "A pessoa constrói o sentido. O facilitador não o impõe."
+    },
+    {
+      "id": "03",
+      "title": "Sentir é real. Inferir exige cuidado.",
+      "durationSeconds": 25,
+      "voiceover": "Ao ler um poema, você pode notar imagens mentais, emoções, sensações ou lembranças. Essas observações descrevem sua experiência subjetiva. Elas não identificam, por si só, quais áreas do cérebro foram ativadas. Para estudar atividade cerebral, são necessários métodos próprios de pesquisa.",
+      "visual": [
+        "leitura do poema",
+        "camada de experiência subjetiva",
+        "camada separada de métodos de pesquisa"
+      ],
+      "keyMessage": "Distinguir vivência, interpretação e evidência."
+    }
+  ],
+  "editorialGuardrails": [
+    "Não existe um único centro cerebral da poesia.",
+    "Relato subjetivo não identifica atividade de regiões cerebrais.",
+    "Metáfora não é diagnóstico nem prova biográfica.",
+    "Não apresentar a PCH como clinicamente validada."
+  ]
+}
