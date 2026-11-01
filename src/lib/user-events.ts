@@ -108,13 +108,13 @@ function mondayOf(d: Date): Date {
  * - Se `filterStage` for informado, restringe a base a usuários que atingiram aquela etapa.
  */
 export function buildFunnel(input: {
-  profiles: { id: string; created_at: string }[];
+  profiles: { user_id: string; created_at: string }[];
   events: UserEventRow[];
   filterStage?: FunnelStage | "all";
 }): FunnelBucket[] {
   const { profiles, events } = input;
 
-  const cadastroUsers = new Set(profiles.map((p) => p.id));
+  const cadastroUsers = new Set(profiles.map((p) => p.user_id));
 
   const byStage: Record<FunnelStage, Set<string>> = {
     cadastro: new Set(cadastroUsers),
@@ -161,7 +161,7 @@ export function buildFunnel(input: {
  * Um usuário é "retido em Dn" se teve atividade num dia com offset n em relação ao cadastro.
  */
 export function computeRetention(input: {
-  profiles: { id: string; created_at: string }[];
+  profiles: { user_id: string; created_at: string }[];
   activityDaysByUser: Map<string, Set<string>>;
 }): RetentionKPIs {
   const { profiles, activityDaysByUser } = input;
@@ -169,7 +169,7 @@ export function computeRetention(input: {
   const cohortSize = profiles.length;
 
   for (const p of profiles) {
-    const days = activityDaysByUser.get(p.id);
+    const days = activityDaysByUser.get(p.user_id);
     if (!days) continue;
     const start = new Date(p.created_at);
     const startKey = toDayKey(p.created_at);
@@ -197,7 +197,7 @@ export function computeRetention(input: {
  * coluna = dia D0..Dmax, valor = % de retidos.
  */
 export function buildCohort(input: {
-  profiles: { id: string; created_at: string }[];
+  profiles: { user_id: string; created_at: string }[];
   activityDaysByUser: Map<string, Set<string>>;
   maxDay: number; // ex.: 30
 }): CohortRow[] {
@@ -208,8 +208,8 @@ export function buildCohort(input: {
     const start = new Date(p.created_at);
     const week = toDayKey(mondayOf(start).toISOString());
     const entry = byWeek.get(week) ?? { users: [], starts: new Map() };
-    entry.users.push(p.id);
-    entry.starts.set(p.id, p.created_at);
+    entry.users.push(p.user_id);
+    entry.starts.set(p.user_id, p.created_at);
     byWeek.set(week, entry);
   }
 
