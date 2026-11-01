@@ -55,6 +55,7 @@ export const ProfileProvider: React.FC<{ children: React.ReactNode }> = ({ child
   const [history, setHistory] = useState<SyncLog[]>([]);
   
   const updateQueue = useRef<Promise<any>>(Promise.resolve());
+  const fetchRequestId = useRef(0);
 
   const addLog = useCallback((log: Omit<SyncLog, "timestamp">) => {
     const newLog = { ...log, timestamp: new Date() };
@@ -66,12 +67,16 @@ export const ProfileProvider: React.FC<{ children: React.ReactNode }> = ({ child
   }, []);
 
   const fetchProfile = async (isManual = false) => {
+    const requestId = ++fetchRequestId.current;
+
     if (!user) {
+      setProfile(null);
       setLoading(false);
       setSource("local");
       return;
     }
 
+    setLoading(true);
     if (isManual) setSource("syncing");
 
     try {
@@ -82,6 +87,7 @@ export const ProfileProvider: React.FC<{ children: React.ReactNode }> = ({ child
         .maybeSingle();
 
       if (error) throw error;
+      if (requestId !== fetchRequestId.current) return;
 
       const localRaw = localStorage.getItem(STORAGE_KEY);
       let validatedLocal: PCHObjectiveId[] = [];
@@ -150,6 +156,7 @@ export const ProfileProvider: React.FC<{ children: React.ReactNode }> = ({ child
             .maybeSingle();
 
           if (retryError) throw retryError;
+          if (requestId !== fetchRequestId.current) return;
           if (!existingProfile) throw insertError;
 
           const recoveredProfile = existingProfile as Profile;
@@ -160,6 +167,7 @@ export const ProfileProvider: React.FC<{ children: React.ReactNode }> = ({ child
           addLog({ action: "Perfil recuperado após criação concorrente", source: "database", objectives: recoveredProfile.objectives || [] });
         } else {
           if (insertError) throw insertError;
+          if (requestId !== fetchRequestId.current) return;
           setProfile(newProfile as Profile);
           setSource("database");
           setLastSync(new Date());
@@ -167,6 +175,7 @@ export const ProfileProvider: React.FC<{ children: React.ReactNode }> = ({ child
         }
       }
     } catch (err) {
+      if (requestId !== fetchRequestId.current) return;
       console.error("fetchProfile error", err);
       if (isManual) {
         toast.error("Não foi possível sincronizar seu perfil.");
@@ -174,7 +183,7 @@ export const ProfileProvider: React.FC<{ children: React.ReactNode }> = ({ child
         toast.error("Não foi possível carregar seu perfil. Verifique sua conexão e tente novamente.");
       }
     } finally {
-      setLoading(false);
+      if (requestId === fetchRequestId.current) setLoading(false);
     }
   };
 
