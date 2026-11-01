@@ -20,5 +20,11 @@ export default defineConfig({
     url: 'http://127.0.0.1:8080',
     reuseExistingServer: !process.env.CI,
     timeout: 30_000,
+    env: {
+      ...process.env,
+      // Isolated dummy credentials: these tests never authenticate or contact production Supabase.
+      VITE_SUPABASE_URL: 'http://127.0.0.1:54321',
+      VITE_SUPABASE_PUBLISHABLE_KEY: 'playwright-public-smoke-key',
+    },
   },
 });
