@@ -119,6 +119,7 @@ export const ProfileProvider: React.FC<{ children: React.ReactNode }> = ({ child
               .from("profiles")
               .update({ objectives: merged })
               .eq("user_id", user.id);
+            if (requestId !== fetchRequestId.current) return;
             toast.success("Dados mesclados", { description: "Objetivos locais e da nuvem unidos." });
           } else if (dbString === localString) {
             finalSource = "database";
