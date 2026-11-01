@@ -46,5 +46,8 @@ jobs:
       - name: Livro-Curso progress invariants
         run: npm run test:livro-curso-progress
 
+      - name: Admin analytics identity regression
+        run: npm run test:admin-analytics
+
       - name: Build
         run: npm run build
