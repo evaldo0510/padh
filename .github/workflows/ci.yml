@@ -49,5 +49,8 @@ jobs:
       - name: Admin analytics identity regression
         run: npm run test:admin-analytics
 
+      - name: Profile provisioning race regression
+        run: npm run test:profile-provisioning
+
       - name: Build
         run: npm run build
