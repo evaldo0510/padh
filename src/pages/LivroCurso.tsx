@@ -1,14 +1,16 @@
 import React, { useEffect, useState } from "react";
-import { BookOpen, Brain, Feather, Heart, Lightbulb, CheckCircle2, ChevronDown } from "lucide-react";
+import ReactMarkdown from "react-markdown";
+import { BookOpen, Brain, Feather, Heart, Lightbulb, CheckCircle2, ChevronDown, ChevronLeft, ChevronRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 import PageLayout from "@/components/layout/PageLayout";
 import { pagesSEO } from "@/lib/seo-config";
 import TextReader from "@/components/ui/text-reader";
+import chapter5Markdown from "@/content/capitulo-5-mapa-cerebral.md?raw";
 import { supabase } from "@/integrations/supabase/client";
 
-type Chapter = { id: string; title: string; subtitle: string; icon: React.ElementType; sections: { title: string; paragraphs?: string[]; bullets?: string[] }[]; practice: string[]; reflection: string[] };
+type Chapter = { id: string; title: string; subtitle: string; icon: React.ElementType; sections: { title: string; paragraphs?: string[]; bullets?: string[] }[]; practice: string[]; reflection: string[]; markdown?: string };
 const chapters: Chapter[] = [
   {
     id: "capitulo-1", title: "Capítulo 1 — O que é a Poesia Cognitivo-Hipnótica?", subtitle: "Conceitos, pilares, limites e postura de trabalho", icon: BookOpen,
@@ -239,6 +241,7 @@ const chapters: Chapter[] = [
   },
   {
     id: "capitulo-5", title: "Capítulo 5 — O Mapa Cerebral do Leitor Poético", subtitle: "Atenção, emoção, memória, imaginação e construção de sentido sem neuromitos", icon: Brain,
+    markdown: chapter5Markdown,
     sections: [
       { title: "5.1. O cérebro não lê poesia em uma única região", paragraphs: [
         "Ler um poema é uma atividade distribuída: o leitor reconhece palavras, acompanha relações sintáticas, integra sentidos, antecipa possibilidades, percebe ritmo e associa o texto a conhecimentos e experiências. Esses processos dependem de redes que cooperam dinamicamente. Não existe um único “centro da poesia” nem um mapa cerebral universal que permita decifrar a personalidade de quem lê.",
@@ -446,7 +449,14 @@ const LivroCurso = () => {
     }
   };
   const safeChapters = Array.isArray(chapters) ? chapters : [];
-  const allText = safeChapters.map(ch => `${ch.title || ""}. ${(Array.isArray(ch.sections) ? ch.sections : []).map(s => `${s.title || ""}. ${(Array.isArray(s.paragraphs) ? s.paragraphs : []).join(" ")} ${(Array.isArray(s.bullets) ? s.bullets : []).join(" ")}`).join(" ")} Prática guiada. ${(Array.isArray(ch.practice) ? ch.practice : []).map((item, i) => `Etapa ${i + 1}. ${item}`).join(" ")} Perguntas de reflexão. ${(Array.isArray(ch.reflection) ? ch.reflection : []).map((item, i) => `Pergunta ${i + 1}. ${item}`).join(" ")}`).join(" ");
+  const navigateToChapter = (index: number) => {
+    const target = safeChapters[index];
+    if (!target) return;
+    setExpanded([target.id]);
+    document.getElementById(`chapter-${target.id}`)?.scrollIntoView({ behavior: "smooth", block: "start" });
+  };
+  const plainMarkdown = (text: string) => text.replace(/^#{1,6}\s+/gm, "").replace(/\[([^\]]+)\]\([^)]+\)/g, "$1").replace(/[*_`>#]/g, "").replace(/\s+/g, " ").trim();
+  const allText = safeChapters.map(ch => `${ch.title || ""}. ${(Array.isArray(ch.sections) ? ch.sections : []).map(s => `${s.title || ""}. ${(Array.isArray(s.paragraphs) ? s.paragraphs : []).join(" ")} ${(Array.isArray(s.bullets) ? s.bullets : []).join(" ")}`).join(" ")} ${ch.markdown ? plainMarkdown(ch.markdown) : ""} Prática guiada. ${(Array.isArray(ch.practice) ? ch.practice : []).map((item, i) => `Etapa ${i + 1}. ${item}`).join(" ")} Perguntas de reflexão. ${(Array.isArray(ch.reflection) ? ch.reflection : []).map((item, i) => `Pergunta ${i + 1}. ${item}`).join(" ")}`).join(" ");
   return (
     <PageLayout seo={pagesSEO.livroCurso} currentPage="Livro-Curso">
       <section className="relative overflow-hidden">
@@ -481,25 +491,45 @@ const LivroCurso = () => {
               const Icon = chapter.icon;
               const isOpen = expanded.includes(chapter.id);
               const isDone = completed.includes(chapter.id);
-              return <Card key={chapter.id} className="border-border/60 overflow-hidden">
-                <button type="button" onClick={() => toggle(chapter.id)} aria-expanded={isOpen} className="w-full text-left p-5 md:p-6 flex items-start gap-4 hover:bg-muted/30 transition-colors">
+              return <Card key={chapter.id} id={`chapter-${chapter.id}`} className="border-border/60 overflow-hidden scroll-mt-24">
+                <button type="button" id={`chapter-trigger-${chapter.id}`} onClick={() => toggle(chapter.id)} aria-expanded={isOpen} aria-controls={`chapter-content-${chapter.id}`} className="w-full text-left p-5 md:p-6 flex items-start gap-4 hover:bg-muted/30 transition-colors">
                   <div className="w-11 h-11 rounded-xl bg-primary/10 text-primary flex items-center justify-center shrink-0"><Icon className="h-5 w-5" /></div>
                   <div className="flex-1"><p className="text-xs uppercase tracking-widest text-primary mb-1">Capítulo {index + 1}</p><h2 className="font-heading font-semibold text-lg md:text-xl text-foreground">{chapter.title}</h2><p className="text-sm text-muted-foreground mt-1">{chapter.subtitle}</p></div>
                   {isDone && <CheckCircle2 className="h-5 w-5 text-primary shrink-0" />}<ChevronDown className={"h-5 w-5 text-muted-foreground shrink-0 transition-transform " + (isOpen ? "rotate-180" : "")} />
                 </button>
-                {isOpen && <CardContent className="pt-0 pb-7 px-5 md:px-8 space-y-7">
+                {isOpen && <CardContent id={`chapter-content-${chapter.id}`} role="region" aria-labelledby={`chapter-trigger-${chapter.id}`} className="pt-0 pb-7 px-5 md:px-8 space-y-7">
                   {(Array.isArray(chapter.sections) ? chapter.sections : []).map((section, sectionIndex, safeSections) => <section key={section.title} className="space-y-3">
                     <h3 className="text-lg font-heading font-semibold text-foreground">{section.title}</h3>
                     {(Array.isArray(section.paragraphs) ? section.paragraphs : []).map((paragraph, i) => <p key={i} className="text-sm md:text-base text-muted-foreground leading-7">{paragraph}</p>)}
                     {Array.isArray(section.bullets) && section.bullets.length > 0 && <ul className="list-disc pl-6 space-y-2 text-sm md:text-base text-muted-foreground leading-7">{(Array.isArray(section.bullets) ? section.bullets : []).map((bullet, i) => <li key={i}>{bullet}</li>)}</ul>}
                     {sectionIndex < safeSections.length - 1 && <Separator className="mt-5 opacity-50" />}
                   </section>)}
+                  {chapter.markdown && <details className="rounded-xl border border-primary/20 bg-primary/[0.025] p-5 md:p-6">
+                    <summary className="cursor-pointer text-lg font-heading font-semibold text-foreground">Leitura integral enviada pelo autor — aprofundamento do Capítulo 5</summary>
+                    <div className="mt-5 space-y-4 text-sm md:text-base text-muted-foreground leading-7" id="capitulo5-texto-integral">
+                      <p className="text-sm">O texto completo abaixo é apresentado como leitura complementar. O conteúdo curricular e o roteiro de aula de 65 minutos já existentes foram mantidos.</p>
+                      <ReactMarkdown components={{
+                        h2: ({ children }) => <h3 className="pt-4 text-xl md:text-2xl font-heading font-semibold text-foreground">{children}</h3>,
+                        h3: ({ children }) => <h4 className="pt-3 text-lg font-heading font-semibold text-foreground">{children}</h4>,
+                        p: ({ children }) => <p className="leading-7">{children}</p>,
+                        ul: ({ children }) => <ul className="list-disc pl-6 space-y-2">{children}</ul>,
+                        ol: ({ children }) => <ol className="list-decimal pl-6 space-y-2">{children}</ol>,
+                        li: ({ children }) => <li>{children}</li>,
+                        blockquote: ({ children }) => <blockquote className="border-l-2 border-primary/40 pl-4 italic">{children}</blockquote>,
+                        a: ({ href, children }) => <a className="text-primary underline underline-offset-2" href={href} target={href?.startsWith("http") ? "_blank" : undefined} rel={href?.startsWith("http") ? "noreferrer" : undefined}>{children}</a>,
+                      }}>{chapter.markdown}</ReactMarkdown>
+                    </div>
+                  </details>}
                   <div className="rounded-xl border border-primary/20 bg-primary/[0.04] p-5 space-y-4">
                     <h3 className="font-heading font-semibold text-foreground flex items-center gap-2"><Lightbulb className="h-5 w-5 text-primary" /> Prática guiada</h3>
                     <ol className="list-decimal pl-5 space-y-2 text-sm text-muted-foreground leading-6">{(Array.isArray(chapter.practice) ? chapter.practice : []).map((item, i) => <li key={i}>{item}</li>)}</ol>
                     <h4 className="font-semibold text-foreground pt-2">Perguntas de reflexão</h4>
                     <ul className="list-disc pl-5 space-y-2 text-sm text-muted-foreground leading-6">{(Array.isArray(chapter.reflection) ? chapter.reflection : []).map((item, i) => <li key={i}>{item}</li>)}</ul>
                     <Button type="button" variant={isDone ? "outline" : "default"} disabled={!progressLoaded || Boolean(progressError) || savingChapter !== null} onClick={() => void toggleComplete(chapter.id)} className="gap-2">{savingChapter === chapter.id ? "Salvando…" : isDone ? "Marcar como não concluído" : "Marcar capítulo como concluído"}</Button>
+                  </div>
+                  <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 border-t border-border/50 pt-5">
+                    <Button type="button" variant="outline" onClick={() => navigateToChapter(index - 1)} disabled={index === 0} className="gap-2"><ChevronLeft className="h-4 w-4" /> Capítulo anterior</Button>
+                    <Button type="button" variant="outline" onClick={() => navigateToChapter(index + 1)} disabled={index === safeChapters.length - 1} className="gap-2">Próximo capítulo <ChevronRight className="h-4 w-4" /></Button>
                   </div>
                 </CardContent>}
               </Card>;
