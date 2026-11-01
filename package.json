@@ -16,7 +16,8 @@
     "test:study": "node scripts/test-study-curriculum.mjs",
     "test:livro-curso-progress": "node scripts/test-livro-curso-progress.mjs",
     "lighthouse:mobile": "node scripts/lighthouse.mjs mobile",
-    "lighthouse:desktop": "node scripts/lighthouse.mjs desktop"
+    "lighthouse:desktop": "node scripts/lighthouse.mjs desktop",
+    "test:admin-analytics": "node scripts/test-admin-analytics-user-id.mjs"
   },
   "dependencies": {
     "@hookform/resolvers": "^3.10.0",
