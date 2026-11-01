@@ -140,15 +140,39 @@ export const ProfileProvider: React.FC<{ children: React.ReactNode }> = ({ child
           .select()
           .single();
 
-        if (insertError) throw insertError;
-        setProfile(newProfile as Profile);
-        setSource("database");
-        setLastSync(new Date());
-        addLog({ action: "Perfil criado", source: "local", objectives: validatedLocal });
+        if (insertError?.code === "23505") {
+          // Outra aba/dispositivo pode ter criado o perfil após nossa consulta inicial.
+          // Reconsultar evita tratar essa corrida legítima como falha de provisionamento.
+          const { data: existingProfile, error: retryError } = await supabase
+            .from("profiles")
+            .select("*")
+            .eq("user_id", user.id)
+            .maybeSingle();
+
+          if (retryError) throw retryError;
+          if (!existingProfile) throw insertError;
+
+          const recoveredProfile = existingProfile as Profile;
+          setProfile(recoveredProfile);
+          localStorage.setItem(STORAGE_KEY, JSON.stringify(recoveredProfile.objectives || []));
+          setSource("database");
+          setLastSync(new Date());
+          addLog({ action: "Perfil recuperado após criação concorrente", source: "database", objectives: recoveredProfile.objectives || [] });
+        } else {
+          if (insertError) throw insertError;
+          setProfile(newProfile as Profile);
+          setSource("database");
+          setLastSync(new Date());
+          addLog({ action: "Perfil criado", source: "local", objectives: validatedLocal });
+        }
       }
     } catch (err) {
       console.error("fetchProfile error", err);
-      if (isManual) toast.error("Erro na sincronização");
+      if (isManual) {
+        toast.error("Não foi possível sincronizar seu perfil.");
+      } else {
+        toast.error("Não foi possível carregar seu perfil. Verifique sua conexão e tente novamente.");
+      }
     } finally {
       setLoading(false);
     }
