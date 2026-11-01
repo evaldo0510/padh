@@ -1,0 +1,56 @@
+{
+  "project": "Estúdio PCH",
+  "lesson": "Aula 05 — O Mapa Cerebral do Leitor Poético",
+  "unit": 1,
+  "title": "Anatomia poética do cérebro: uma rede em diálogo",
+  "duration_target_seconds": 90,
+  "scenes": [
+    {
+      "id": "opening",
+      "seconds": 8,
+      "visual": "Título entra em fundo azul-marinho; uma linha de verso aparece como objeto tipográfico.",
+      "on_screen": "Como a leitura poética acontece?",
+      "narration_intent": "Apresentar a pergunta sem prometer localizar a poesia no cérebro."
+    },
+    {
+      "id": "verse",
+      "seconds": 12,
+      "visual": "A frase “Deixei a janela aberta para o dia entrar” aparece; a palavra janela recebe destaque.",
+      "on_screen": "Texto, contexto e repertório do leitor.",
+      "narration_intent": "Explicar que compreender poesia envolve mais do que reconhecer palavras."
+    },
+    {
+      "id": "distributed_processes",
+      "seconds": 28,
+      "visual": "Cinco nós vetoriais entram em momentos diferentes e se conectam: linguagem, memória, atenção, imaginação e emoção.",
+      "on_screen": "Processos diferentes podem interagir durante a leitura.",
+      "narration_intent": "Apresentar processos distribuídos, evitando sugerir um centro cerebral único."
+    },
+    {
+      "id": "personal_variation",
+      "seconds": 20,
+      "visual": "A mesma palavra gera cartões de associação distintos, sem hierarquia: casa, viagem, luz, silêncio ou nenhuma associação.",
+      "on_screen": "A resposta varia de leitor para leitor.",
+      "narration_intent": "Distinguir associação pessoal de prova ou diagnóstico."
+    },
+    {
+      "id": "scientific_boundary",
+      "seconds": 14,
+      "visual": "Dois cartões: “metáfora didática” e “evidência de pesquisa”; uma linha visual separa as categorias.",
+      "on_screen": "Metáfora não é anatomia. Associação não é causalidade.",
+      "narration_intent": "Explicitar limites científicos."
+    },
+    {
+      "id": "closing",
+      "seconds": 8,
+      "visual": "Frase final centralizada com assinatura Estúdio PCH.",
+      "on_screen": "Um mapa de processos e perguntas — não um mapa anatômico.",
+      "narration_intent": "Consolidar a aprendizagem."
+    }
+  ],
+  "audio": {
+    "status": "pending_user_approval",
+    "rejected_voice": "eSpeak pt-br prototype",
+    "production_rule": "Não sincronizar narração sintética antes de teste de inteligibilidade em português brasileiro aprovado."
+  }
+}
