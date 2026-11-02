@@ -110,6 +110,8 @@ test('Livro-Curso preserva o currículo, exibe o Capítulo 5 integral e sincroni
   await page.goto('/livro-curso');
   await expect(page).not.toHaveURL(/\/login/);
   await expect(page.getByRole('heading', { name: 'Poesia Cognitivo-Hipnótica', exact: true })).toBeVisible();
+  const openingPoem = page.locator('.poem-text');
+  await expect(openingPoem.locator('br')).toHaveCount(3);
 
   const chapters = [
     { title: '1.1. Uma definição de trabalho', bulletOnly: '1.5. Princípios éticos essenciais' },
@@ -205,6 +207,9 @@ test('Livro-Curso preserva o currículo, exibe o Capítulo 5 integral e sincroni
   await expect(page.getByLabel('Sua reflexão final (opcional)')).toBeVisible();
   await expect(page.getByText('Áreas Cerebrais Ativadas', { exact: true })).toHaveCount(0);
   await expect(page.getByText(/Desbloqueio afetivo|ressignificação simbólica|estado semelhante à leve hipnose/i)).toHaveCount(0);
+  await page.setViewportSize({ width: 320, height: 800 });
+  await expect(page.getByText('Seguir', { exact: true })).toBeVisible();
+  await expect(page.locator('nav a[aria-label="Continuar"]')).toHaveAttribute('aria-label', 'Continuar');
   expect(await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth)).toBe(true);
   await expect(page.getByText('Ocorreu um erro inesperado ao carregar esta página.')).toHaveCount(0);
   expect(pageErrors).toEqual([]);
