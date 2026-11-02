@@ -466,7 +466,15 @@ const LivroCurso = () => {
             <p className="text-sm uppercase tracking-[0.2em] text-primary mb-4 font-medium">Livro-Curso PCH · Trilha de aprendizado</p>
             <h1 className="text-4xl md:text-6xl font-heading font-bold mb-6 text-foreground">Poesia Cognitivo-<span className="text-primary italic">Hipnótica</span></h1>
             <p className="text-lg text-muted-foreground mb-6 leading-relaxed">Cinco capítulos para estudar a linguagem poética, observar padrões de pensamento, compreender metáforas com rigor científico, mapear processos da leitura poética e praticar autocuidado com autonomia e segurança.</p>
-            <div className="poem-block max-w-md mx-auto my-8"><p className="poem-text text-sm text-muted-foreground">Quando se olha no espelho, o que é que você vê?\nEu vi grades onde havia janelas.\nAté que um verso abriu a porta\nque eu mesmo havia trancado por dentro.</p><cite className="text-xs text-primary/70 mt-2 block not-italic">— Prisão Interior</cite></div>
+            <div className="poem-block max-w-md mx-auto my-8">
+              <p className="poem-text text-sm text-muted-foreground">
+                Quando se olha no espelho, o que é que você vê?<br />
+                Eu vi grades onde havia janelas.<br />
+                Até que um verso abriu a porta<br />
+                que eu mesmo havia trancado por dentro.
+              </p>
+              <cite className="text-xs text-primary/70 mt-2 block not-italic">— Prisão Interior</cite>
+            </div>
             <div className="flex flex-wrap justify-center gap-3">
               <Button size="lg" onClick={() => { setExpanded(safeChapters.map(c => c.id)); document.getElementById("trilha-aprendizado")?.scrollIntoView({ behavior: "smooth" }); }} className="bg-primary text-primary-foreground hover:bg-primary-dark"><BookOpen className="mr-2 h-5 w-5" /> Estudar os capítulos</Button>
               <TextReader text={allText} label="Ouvir narração" />

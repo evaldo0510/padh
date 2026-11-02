@@ -78,6 +78,7 @@ const MobileNav = () => {
                 <PrefetchLink
                   to={item.path}
                   aria-current={active ? "page" : undefined}
+                  aria-label={item.name}
                   className={`relative flex flex-col items-center justify-center gap-1.5 h-full transition-all duration-500 py-2 ${
                     active ? 'text-primary' : 'text-muted-foreground'
                   }`}
@@ -86,7 +87,12 @@ const MobileNav = () => {
                     {active ? item.activeIcon : item.icon}
                   </div>
                   <span className={`text-[9px] font-black uppercase tracking-[0.15em] transition-all duration-500 ${active ? 'opacity-100' : 'opacity-100'}`}>
-                    {item.name}
+                    {item.name === 'Continuar' ? (
+                      <>
+                        <span className="min-[380px]:hidden">Seguir</span>
+                        <span className="hidden min-[380px]:inline">Continuar</span>
+                      </>
+                    ) : item.name}
                   </span>
                   {active && (
                     <motion.div
