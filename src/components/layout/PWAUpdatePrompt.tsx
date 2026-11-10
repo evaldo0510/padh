@@ -2,11 +2,16 @@ import { useEffect, useState, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { RefreshCw, X, FileText } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { toast } from "sonner";
 import { Link } from "react-router-dom";
 import { APP_VERSION } from "@/lib/changelog";
 import { reportPWAEvent, PWAUpdateTrace } from "@/lib/pwa-metrics";
 import { pwaDebugLog, verifyNetworkFirstAtRuntime } from "@/lib/pwa-debug";
+
+declare global {
+  interface Window {
+    __TRIGGER_PWA_UPDATE__?: () => void;
+  }
+}
 
 // Module-level reload lock — prevents duplicate reloads when several
 // update notifications fire in quick succession (multiple tabs, retries, etc.)
@@ -61,7 +66,7 @@ const PWAUpdatePrompt = () => {
     }
 
     // Test mode
-    (window as any).__TRIGGER_PWA_UPDATE__ = () => {
+    window.__TRIGGER_PWA_UPDATE__ = () => {
       traceRef.current.download_start = Date.now();
       setNeedRefresh(true);
     };
@@ -82,84 +87,45 @@ const PWAUpdatePrompt = () => {
 
     if (isEditorPreview) return;
 
+    let isUnmounted = false;
+    let verifyInterval: number | undefined;
+    let verifyTimeout: number | undefined;
     const onControllerChange = () => {
-      pwaDebugLog("controllerchange", "New SW took control");
-      if (!acquireReloadLock("controllerchange")) {
-        // Another reload already in flight — skip
-        return;
-      }
-      traceRef.current.reload_triggered = Date.now();
-      sessionStorage.setItem("pwa_pending_trace", JSON.stringify(traceRef.current));
-      pwaDebugLog("reload_triggered", "controllerchange → window.location.reload()");
-      console.log("PWA: New Service Worker activated. Reloading...");
-
-      // Notify user before reload
-      toast.success("Sistema atualizado! Recarregando para aplicar mudanças...", {
-        duration: 2000,
-      });
-
-      setTimeout(() => {
-        window.location.reload();
-      }, 1000);
+      // vite-plugin-pwa is the single owner of autoUpdate and performs the
+      // reload after activation. This listener is diagnostic only; reloading
+      // here as well caused a second reload (and also reloaded on first install).
+      pwaDebugLog("controllerchange", "New SW took control; autoUpdate owns reload");
     };
     navigator.serviceWorker.addEventListener("controllerchange", onControllerChange);
 
     navigator.serviceWorker.getRegistration().then((reg) => {
-      if (!reg) return;
+      if (!reg || isUnmounted) return;
       setRegistration(reg);
-
-      if (reg.waiting) {
-        traceRef.current.install_completed = Date.now();
-        pwaDebugLog("skipWaiting_sent", "Found waiting worker on load");
-        console.log("PWA: Found waiting worker. Auto-activating...");
-        reg.waiting.postMessage({ type: "SKIP_WAITING" });
-      }
-
-      reg.addEventListener("updatefound", () => {
-        traceRef.current.download_start = Date.now();
-        pwaDebugLog("updatefound", "Registration reported new worker");
-        const newWorker = reg.installing;
-        if (!newWorker) return;
-        pwaDebugLog("installing", `state=${newWorker.state}`);
-        newWorker.addEventListener("statechange", () => {
-          pwaDebugLog("installing", `state=${newWorker.state}`);
-          if (newWorker.state === "installed" && navigator.serviceWorker.controller) {
-            traceRef.current.install_completed = Date.now();
-            pwaDebugLog("installed", "New worker installed; sending SKIP_WAITING");
-            console.log("PWA: New version installed. Auto-activating...");
-            // Auto skip waiting → triggers controllerchange → auto reload
-            newWorker.postMessage({ type: "SKIP_WAITING" });
-            pwaDebugLog("skipWaiting_sent", "auto after install");
-            reportPWAEvent("update_found");
-          }
-        });
-      });
-
-      // Poll for updates more aggressively (every 15s)
-      const interval = setInterval(() => reg.update().catch(() => {}), 15_000);
 
       // Periodic runtime verification: confirm critical assets are not stale.
       // Runs every 2 minutes; logs to debug history if a stale response is detected.
-      const verifyInterval = setInterval(() => {
+      verifyInterval = window.setInterval(() => {
         const urls = [window.location.origin + "/", window.location.origin + "/sw.js"];
         verifyNetworkFirstAtRuntime(urls).catch(() => {});
       }, 120_000);
       // Run once shortly after mount as well
-      setTimeout(() => {
+      verifyTimeout = window.setTimeout(() => {
         verifyNetworkFirstAtRuntime([
           window.location.origin + "/",
           window.location.origin + "/sw.js",
         ]).catch(() => {});
       }, 5_000);
-
-      return () => {
-        clearInterval(interval);
-        clearInterval(verifyInterval);
-      };
+    }).catch((error) => {
+      pwaDebugLog("error", "Unable to read service worker registration", {
+        message: error instanceof Error ? error.message : String(error),
+      });
     });
 
     return () => {
+      isUnmounted = true;
       navigator.serviceWorker.removeEventListener("controllerchange", onControllerChange);
+      if (verifyInterval !== undefined) window.clearInterval(verifyInterval);
+      if (verifyTimeout !== undefined) window.clearTimeout(verifyTimeout);
     };
   }, []);
 

@@ -39,6 +39,7 @@ try {
     `cache-control="${cc || "(vazio)"}"`,
   );
   log(root.text.includes("<div id=\"root\""), "HTML contém #root", "");
+  log(/<link[^>]+rel=["']manifest["'][^>]+href=["']\/manifest\.webmanifest["']/i.test(root.text), "HTML referencia o manifesto PWA");
 
   // 2. Service worker
   const sw = await head("/sw.js");
@@ -59,6 +60,23 @@ try {
     const json = JSON.parse(mf.text);
     log(json.display === "standalone", "manifest.display = standalone", `display=${json.display}`);
     log(Array.isArray(json.icons) && json.icons.length >= 2, "manifest tem ≥2 ícones");
+
+    const has192 = json.icons?.some((icon) => icon.sizes === "192x192" && icon.type === "image/png");
+    const hasMaskable512 = json.icons?.some((icon) => icon.sizes === "512x512" && icon.purpose?.includes("maskable"));
+    log(has192, "manifest inclui ícone PNG 192×192");
+    log(hasMaskable512, "manifest inclui ícone maskable 512×512");
+
+    if (Array.isArray(json.icons)) {
+      for (const icon of json.icons) {
+        try {
+          const asset = await head(icon.src);
+          const contentType = asset.headers["content-type"] || "";
+          log(asset.status === 200 && contentType.includes(icon.type), `Ícone ${icon.sizes} acessível`, `status=${asset.status}; type=${contentType}`);
+        } catch (error) {
+          log(false, `Ícone ${icon.sizes} acessível`, error instanceof Error ? error.message : String(error));
+        }
+      }
+    }
   } catch {
     log(false, "manifest é JSON válido", "parse falhou");
   }
