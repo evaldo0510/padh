@@ -1,16 +1,17 @@
-# Estúdio PCH — fase 2: animação de cenas
+# Estúdio PCH — fase 2: animação didática
 
-Esta etapa substitui o protótipo de slides com zoom por cenas vetoriais animadas, compostas quadro a quadro com [Manim Community](https://github.com/ManimCommunity/manim).
+Esta entrega amplia a cena inicial para uma sequência de seis momentos da Aula 05, Unidade 1. O vídeo de prévia foi renderizado em 1280×720, 10 fps, 90 segundos, H.264, **sem narração**. O arquivo de prévia está separado do código-fonte.
 
-## Escopo desta entrega
+## Conteúdo visual
 
-- Primeira cena animada da Aula 05, Unidade 1.
-- Texto, nós, conexões e transições entram em sequência.
-- O mapa representa **processos cognitivos distribuídos**, não áreas anatômicas.
-- Não contém alegações de ativação cerebral individual ou efeito terapêutico.
-- Narração não é embutida nesta etapa: a voz anterior foi reprovada pelo usuário e não deve ser reutilizada como padrão.
+1. Abertura: como a leitura poética acontece.
+2. Verso-exemplo: texto, contexto e repertório.
+3. Cinco processos em diálogo: linguagem, memória, atenção, imaginação e emoção.
+4. Variação individual: associações diferentes, inclusive nenhuma associação.
+5. Limites científicos: metáfora didática não é evidência; associação não é causalidade.
+6. Fechamento: mapa de processos, não mapa anatômico.
 
-## Renderizar localmente
+## Renderização vetorial com Manim Community
 
 Requer Python 3.10+ e dependências de sistema do Manim (Cairo, Pango e FFmpeg).
 
@@ -23,30 +24,18 @@ manim -pqh manim/lesson05_scene.py MapaProcessosPoeticos
 
 No Windows, ative o ambiente com `.venv\\Scripts\\activate`.
 
-## Pipeline de áudio — decisão de qualidade
+## Áudio — controle de qualidade
 
-Não usar eSpeak como voz final. A narração deve ser uma faixa independente e aprovada antes da montagem:
+A voz eSpeak do protótipo anterior foi reprovada e **não é usada** nesta entrega. O vídeo de prévia não contém narração nem trilha. O roteiro em `roteiros/aula05-unidade01-narracao.md` serve de base para gravação humana ou para avaliação futura de uma voz pt-BR. Nenhuma voz sintética deve ser sincronizada antes de uma amostra de 20–30 segundos ser ouvida e aprovada quanto à pronúncia, ritmo, naturalidade e inteligibilidade.
 
-1. Roteiro em português brasileiro revisado por pessoa.
-2. Piper TTS com modelo explicitamente pt_BR, quando a licença e a qualidade do modelo forem verificadas.
-3. Exportar WAV separado.
-4. Ouvir amostra de 20–30 segundos e avaliar pronúncia, ritmo, naturalidade e inteligibilidade.
-5. Só sincronizar com a animação após aprovação.
+## Critérios e limites
 
-Se o modelo pt_BR não passar no teste, interromper a etapa de voz sintética e oferecer narração humana gravada. Não mascarar voz ruim com equalização.
+- A cena deve comunicar a ideia sem depender da narração.
+- Não representa regiões anatômicas nem dados de neuroimagem.
+- Não promete cura, reprogramação cerebral ou efeito terapêutico.
+- Associações individuais não são tratadas como diagnóstico.
+- Renderização e áudio permanecem separados até a aprovação da voz.
 
-## Próximas cenas
+## Reproduzir a prévia
 
-- Memória autobiográfica e semântica: associação pessoal sem inferência diagnóstica.
-- Atenção, imaginação e emoção: respostas possíveis, não universais.
-- DMN: rede distribuída, não “centro da poesia”.
-- Limites da neuroimagem: associação não é causalidade.
-
-## Critérios de aceite
-
-- A cena comunica a ideia sem depender da narração.
-- Tipografia legível em 1080p e em tela de celular.
-- Movimento com propósito didático, sem excesso de efeitos.
-- Nenhum desenho é apresentado como imagem real do cérebro.
-- A faixa de áudio passa por aprovação de inteligibilidade em português brasileiro.
-- Renderização final e arquivo de áudio permanecem separados até a aprovação.
+A prévia entregue é um MP4 H.264 sem áudio. A cena Manim acima é o projeto vetorial editável; o MP4 de prévia não deve ser confundido com uma renderização Manim executada neste ambiente.
