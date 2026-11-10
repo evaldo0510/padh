@@ -82,14 +82,14 @@ const PrisaoInteriorVenda: React.FC = () => {
             </p>
 
             <div className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-4">
-              <Button onClick={handleBuy} size="lg" className="h-14 px-10 text-lg rounded-full shadow-2xl group">
+              <Button onClick={handleBuy} size="lg" className="h-auto min-h-14 w-full max-w-full whitespace-normal px-4 py-3 text-base leading-tight rounded-full shadow-2xl group sm:w-auto sm:px-10 sm:text-lg">
                 {hasAccess ? (
                   <>Continuar minha jornada<ArrowRight className="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform" /></>
                 ) : (
                   <><Unlock className="w-5 h-5 mr-2" />Liberar meu acesso agora</>
                 )}
               </Button>
-              <Button variant="outline" size="lg" onClick={() => navigate("/planos")} className="rounded-full">
+              <Button variant="outline" size="lg" onClick={() => navigate("/planos")} className="w-full max-w-full rounded-full sm:w-auto">
                 Ver planos
               </Button>
             </div>
@@ -157,13 +157,13 @@ const PrisaoInteriorVenda: React.FC = () => {
       </section>
 
       <section className="container mx-auto px-6 py-20">
-        <div className="max-w-3xl mx-auto text-center bg-gradient-to-br from-primary/10 via-card to-secondary/10 rounded-3xl p-10 md:p-16 border border-primary/20 shadow-2xl">
+        <div className="max-w-3xl mx-auto min-w-0 text-center bg-gradient-to-br from-primary/10 via-card to-secondary/10 rounded-3xl p-5 sm:p-10 md:p-16 border border-primary/20 shadow-2xl">
           <Sparkles className="w-12 h-12 text-primary mx-auto mb-6" />
           <h2 className="text-3xl md:text-5xl font-heading font-bold mb-4">Você passou tempo demais lá dentro.</h2>
           <p className="text-muted-foreground text-lg mb-8 max-w-xl mx-auto">
             Comece hoje. A jornada espera por você — e ninguém pode atravessá-la em seu lugar.
           </p>
-          <Button onClick={handleBuy} size="lg" className="h-14 px-10 text-lg rounded-full shadow-xl">
+          <Button onClick={handleBuy} size="lg" className="h-auto min-h-14 w-full max-w-full whitespace-normal px-4 py-3 text-base leading-tight rounded-full shadow-xl sm:w-auto sm:px-10 sm:text-lg">
             {hasAccess ? "Acessar a jornada" : "Liberar meu acesso agora"}
             <ArrowRight className="w-5 h-5 ml-2" />
           </Button>
