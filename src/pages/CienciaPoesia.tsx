@@ -183,17 +183,17 @@ estudos publicados em revistas como Science, WHO e NeuroImage validam o uso tera
             {" "}
             <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
               {" "}
-              <TabsList className="bg-card border border-border/50">
+              <TabsList className="grid h-auto w-full grid-cols-3 bg-card border border-border/50 p-1 sm:inline-flex sm:w-auto">
                 {" "}
-                <TabsTrigger value="category" className="gap-1.5 text-xs">
+                <TabsTrigger value="category" className="min-h-11 min-w-0 whitespace-normal px-1.5 text-[10px] leading-tight gap-1 sm:px-3 sm:text-xs">
                   {" "}
                   <Tag className="h-3 w-3" /> Por Categoria{" "}
                 </TabsTrigger>{" "}
-                <TabsTrigger value="year" className="gap-1.5 text-xs">
+                <TabsTrigger value="year" className="min-h-11 min-w-0 whitespace-normal px-1.5 text-[10px] leading-tight gap-1 sm:px-3 sm:text-xs">
                   {" "}
                   <Calendar className="h-3 w-3" /> Por Ano{" "}
                 </TabsTrigger>{" "}
-                <TabsTrigger value="tool" className="gap-1.5 text-xs">
+                <TabsTrigger value="tool" className="min-h-11 min-w-0 whitespace-normal px-1.5 text-[10px] leading-tight gap-1 sm:px-3 sm:text-xs">
                   {" "}
                   <Wrench className="h-3 w-3" /> Por Ferramenta{" "}
                 </TabsTrigger>{" "}

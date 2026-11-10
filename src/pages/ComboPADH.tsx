@@ -252,12 +252,12 @@ const ComboPADH = () => {
               economiza e garante a jornada completa.{" "}
             </p>{" "}
           </div>{" "}
-          <div className="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+          <div className="grid min-w-0 md:grid-cols-2 gap-6 sm:gap-8 max-w-4xl mx-auto">
             {" "}
             {/* Separado */}
-            <Card className="border border-border/50 bg-card/40">
+            <Card className="w-full min-w-0 border border-border/50 bg-card/40">
               {" "}
-              <CardContent className="p-8 text-center">
+              <CardContent className="min-w-0 p-4 sm:p-8 text-center">
                 {" "}
                 <h3 className="text-lg font-heading font-semibold text-muted-foreground mb-6">
                   Comprando Separado
@@ -280,7 +280,7 @@ const ComboPADH = () => {
                   ].map((item, i) => (
                     <div
                       key={i}
-                      className="flex justify-between items-center py-2 border-b border-border/30 text-sm"
+                      className="flex min-w-0 justify-between items-center gap-2 py-2 border-b border-border/30 text-sm"
                     >
                       {" "}
                       <span className="text-foreground/70">
@@ -301,13 +301,13 @@ const ComboPADH = () => {
               </CardContent>{" "}
             </Card>{" "}
             {/* Combo */}
-            <Card className="relative border-2 border-primary/40 bg-card shadow-xl shadow-primary/5">
+            <Card className="relative w-full min-w-0 border-2 border-primary/40 bg-card shadow-xl shadow-primary/5">
               {" "}
               <div className="absolute -top-4 left-1/2 -translate-x-1/2 bg-primary text-primary-foreground text-[10px] uppercase tracking-widest font-bold py-1.5 px-4 rounded-full flex items-center gap-1.5">
                 {" "}
                 <Sparkles className="h-3 w-3" /> Melhor Oferta{" "}
               </div>{" "}
-              <CardContent className="p-8 text-center">
+              <CardContent className="min-w-0 p-4 sm:p-8 text-center">
                 {" "}
                 <h3 className="text-lg font-heading font-semibold text-foreground mb-2">
                   Combo P.A.D.H.
@@ -317,7 +317,7 @@ const ComboPADH = () => {
                 </p>{" "}
                 <div className="mb-2">
                   {" "}
-                  <span className="text-5xl font-heading font-bold text-primary">
+                  <span className="text-4xl sm:text-5xl font-heading font-bold text-primary">
                     R$ 1.497
                   </span>{" "}
                 </div>{" "}

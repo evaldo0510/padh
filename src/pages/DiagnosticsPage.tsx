@@ -26,16 +26,47 @@ import { supabaseConfig } from "@/integrations/supabase/config";
 import { toast } from "sonner";
 import { useOfflineMode } from "@/hooks/useOfflineMode";
 import { useNavigate, Link } from "react-router-dom";
+
+interface SimulatedUser {
+  email: string;
+}
+
+const isSimulatedUser = (value: unknown): value is SimulatedUser =>
+  typeof value === "object" &&
+  value !== null &&
+  "email" in value &&
+  typeof value.email === "string";
+
+const getErrorMessage = (error: unknown): string => {
+  if (error instanceof Error) return error.message;
+  if (
+    typeof error === "object" &&
+    error !== null &&
+    "message" in error &&
+    typeof error.message === "string"
+  ) {
+    return error.message;
+  }
+  return "Erro desconhecido ao tentar conectar ao Supabase.";
+};
+
 const DiagnosticsPage = () => {
   const { isOffline, toggleOffline, canConnect } = useOfflineMode();
   const [checking, setChecking] = useState(false);
   const [status, setStatus] = useState<"idle" | "success" | "error">("idle");
   const [errorDetails, setErrorDetails] = useState<string | null>(null);
-  const [simulatedUser, setSimulatedUser] = useState<any>(null);
+  const [simulatedUser, setSimulatedUser] =
+    useState<SimulatedUser | null>(null);
   const navigate = useNavigate();
   useEffect(() => {
     const saved = localStorage.getItem("padh_simulated_user");
-    if (saved) setSimulatedUser(JSON.parse(saved));
+    if (!saved) return;
+    try {
+      const parsed: unknown = JSON.parse(saved);
+      if (isSimulatedUser(parsed)) setSimulatedUser(parsed);
+    } catch {
+      setSimulatedUser(null);
+    }
   }, []);
   const clearSimulatedSession = () => {
     localStorage.removeItem("padh_simulated_user");
@@ -52,16 +83,14 @@ const DiagnosticsPage = () => {
           "Variáveis de ambiente VITE_SUPABASE_URL ou VITE_SUPABASE_ANON_KEY não encontradas.",
         );
       }
-      const { data, error } = await supabase.auth.getUser();
+      const { error } = await supabase.auth.getUser();
       if (error) throw error;
       setStatus("success");
       toast.success("Conectividade validada com sucesso!");
-    } catch (err: any) {
+    } catch (err: unknown) {
       console.error("Erro no diagnóstico:", err);
       setStatus("error");
-      setErrorDetails(
-        err.message || "Erro desconhecido ao tentar conectar ao Supabase.",
-      );
+      setErrorDetails(getErrorMessage(err));
       toast.error("Falha na conectividade");
     } finally {
       setChecking(false);
@@ -122,7 +151,7 @@ const DiagnosticsPage = () => {
               {" "}
               <div className="space-y-3">
                 {" "}
-                <div className="flex justify-between items-center text-sm p-2 bg-muted/30 rounded border border-border/50">
+                <div className="flex min-w-0 flex-col items-start gap-1 text-sm p-2 bg-muted/30 rounded border border-border/50 sm:flex-row sm:items-center sm:justify-between">
                   {" "}
                   <span className="text-muted-foreground font-medium">
                     VITE_SUPABASE_URL:
@@ -130,8 +159,8 @@ const DiagnosticsPage = () => {
                   <span
                     className={
                       supabaseConfig.url
-                        ? "text-primary font-mono text-[10px]"
-                        : "text-red-500 font-bold"
+                        ? "w-full break-all text-primary font-mono text-[10px] sm:w-auto sm:text-right"
+                        : "w-full break-all text-red-500 font-bold sm:w-auto sm:text-right"
                     }
                   >
                     {" "}
@@ -140,7 +169,7 @@ const DiagnosticsPage = () => {
                       : "Ausente"}
                   </span>{" "}
                 </div>{" "}
-                <div className="flex justify-between items-center text-sm p-2 bg-muted/30 rounded border border-border/50">
+                <div className="flex min-w-0 flex-col items-start gap-1 text-sm p-2 bg-muted/30 rounded border border-border/50 sm:flex-row sm:items-center sm:justify-between">
                   {" "}
                   <span className="text-muted-foreground font-medium">
                     VITE_SUPABASE_ANON_KEY:
@@ -148,8 +177,8 @@ const DiagnosticsPage = () => {
                   <span
                     className={
                       supabaseConfig.anonKey
-                        ? "text-primary font-mono text-[10px]"
-                        : "text-red-500 font-bold"
+                        ? "w-full break-all text-primary font-mono text-[10px] sm:w-auto sm:text-right"
+                        : "w-full break-all text-red-500 font-bold sm:w-auto sm:text-right"
                     }
                   >
                     {" "}
@@ -256,9 +285,9 @@ const DiagnosticsPage = () => {
           {" "}
           <CardHeader>
             {" "}
-            <div className="flex justify-between items-center">
+            <div className="flex flex-col items-stretch gap-3 sm:flex-row sm:items-center sm:justify-between">
               {" "}
-              <CardTitle className="flex items-center gap-2">
+              <CardTitle className="flex min-w-0 items-center gap-2 text-base sm:text-xl">
                 {" "}
                 <WifiOff className="spiritual-icon spiritual-icon-lg text-primary" />{" "}
                 Sincronização e Modo Offline{" "}
@@ -268,6 +297,7 @@ const DiagnosticsPage = () => {
                 size="sm"
                 onClick={toggleOffline}
                 disabled={!canConnect}
+                className="h-auto min-h-10 w-full whitespace-normal px-3 py-2 text-center leading-tight sm:w-auto"
               >
                 {" "}
                 {isOffline ? "Desativar Modo Offline" : "Ativar Modo Offline"}
