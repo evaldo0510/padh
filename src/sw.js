@@ -1,7 +1,9 @@
-import { precacheAndRoute, cleanupOutdatedCaches } from 'workbox-precaching';
+import { precacheAndRoute, cleanupOutdatedCaches, PrecacheFallbackPlugin } from 'workbox-precaching';
 import { registerRoute } from 'workbox-routing';
 import { NetworkFirst, CacheFirst, StaleWhileRevalidate } from 'workbox-strategies';
 import { clientsClaim } from 'workbox-core';
+import { ExpirationPlugin } from 'workbox-expiration';
+import { CacheableResponsePlugin } from 'workbox-cacheable-response';
 
 // SW build identity (unique per build)
 const SW_VERSION = `padh-sw-${__BUILD_ID__ || Date.now()}`;
@@ -16,12 +18,34 @@ const __MANIFEST__ = self.__WB_MANIFEST || [];
 precacheAndRoute(__MANIFEST__);
 cleanupOutdatedCaches();
 
-// Standard PWA routes
+// Specific informational routes must be registered before the generic
+// navigation handler, otherwise the latter would always capture them first.
 registerRoute(
-  ({ request }) => request.mode === 'navigate' || request.destination === 'document',
+  ({ url }) => url.pathname === '/changelog' || url.pathname === '/sobre',
+  new StaleWhileRevalidate({
+    cacheName: 'informational-swr',
+    plugins: [
+      new CacheableResponsePlugin({ statuses: [0, 200] }),
+      new ExpirationPlugin({ maxEntries: 10, maxAgeSeconds: 60 * 60 * 24 }),
+      new PrecacheFallbackPlugin({ fallbackURL: '/index.html' }),
+    ],
+  })
+);
+
+const navigationFallback = new PrecacheFallbackPlugin({ fallbackURL: '/index.html' });
+const navigationDenylist = [/^\/~oauth/, /^\/api/];
+registerRoute(
+  ({ request, url }) =>
+    (request.mode === 'navigate' || request.destination === 'document') &&
+    !navigationDenylist.some((pattern) => pattern.test(url.pathname)),
   new NetworkFirst({
     cacheName: 'html-freshness',
     networkTimeoutSeconds: 3,
+    plugins: [
+      new CacheableResponsePlugin({ statuses: [0, 200] }),
+      new ExpirationPlugin({ maxEntries: 5, maxAgeSeconds: 60 * 60 }),
+      navigationFallback,
+    ],
   })
 );
 
@@ -30,16 +54,12 @@ registerRoute(
     request.destination === 'script' ||
     request.destination === 'style' ||
     request.destination === 'worker',
-  new NetworkFirst({
-    cacheName: 'bundles-freshness',
-    networkTimeoutSeconds: 3,
-  })
-);
-
-registerRoute(
-  ({ url }) => url.pathname === '/changelog' || url.pathname === '/sobre',
   new StaleWhileRevalidate({
-    cacheName: 'informational-swr',
+    cacheName: 'bundles-swr',
+    plugins: [
+      new CacheableResponsePlugin({ statuses: [0, 200] }),
+      new ExpirationPlugin({ maxEntries: 60, maxAgeSeconds: 60 * 60 * 24 * 7 }),
+    ],
   })
 );
 
@@ -47,6 +67,10 @@ registerRoute(
   /\.(?:png|jpg|jpeg|svg|gif|webp|woff2?|ttf|otf)$/i,
   new CacheFirst({
     cacheName: 'static-assets-v1',
+    plugins: [
+      new CacheableResponsePlugin({ statuses: [0, 200] }),
+      new ExpirationPlugin({ maxEntries: 100, maxAgeSeconds: 60 * 60 * 24 * 30 }),
+    ],
   })
 );
 

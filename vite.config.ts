@@ -24,6 +24,7 @@ export default defineConfig(() => ({
       devOptions: { enabled: false },
       injectManifest: {
         injectionPoint: 'self.__WB_MANIFEST',
+        globPatterns: ['**/*.{js,css,html,ico,png,svg,woff,woff2}'],
       },
       includeAssets: ['favicon.png', 'robots.txt', 'apple-touch-icon.png', 'logo-pwa.svg', 'pwa-192x192.png', 'pwa-512x512.png', 'maskable-icon-512x512.png', 'og-image.png', 'og-image.svg', 'pch-logo-180.png', 'pch-logo-192.png', 'pch-logo-32.png', 'pch-logo-48.png', 'pch-logo-512.png', 'pch-logo-96.png', 'pch-logo.svg', 'placeholder.svg'],
       manifest: {
@@ -57,62 +58,6 @@ export default defineConfig(() => ({
             purpose: 'maskable'
           }
         ]
-      },
-      workbox: {
-        cacheId: `padh-v${Date.now()}`, // Versioned cache name on every build
-        globPatterns: ['**/*.{js,css,html,ico,png,svg,woff,woff2}'],
-        navigateFallback: 'index.html',
-        navigateFallbackDenylist: [/^\/~oauth/, /^\/api/],
-        cleanupOutdatedCaches: true,
-        skipWaiting: true,
-        clientsClaim: true,
-        runtimeCaching: [
-          {
-            // Aggressive Freshness for HTML: Network-First with minimal timeout.
-            urlPattern: ({ request }) => request.mode === 'navigate' || request.destination === 'document',
-            handler: 'NetworkFirst',
-            options: {
-              cacheName: 'html-freshness',
-              networkTimeoutSeconds: 2, // Fail fast to cache if network is slow, but prefer network.
-              expiration: { maxEntries: 5, maxAgeSeconds: 60 * 60 },
-              cacheableResponse: { statuses: [0, 200] },
-            },
-          },
-          {
-            // JS, CSS and Workers: hashed by Vite so they're immutable — SWR
-            // returns cache instantly (fast TTFB) and revalidates in background.
-            urlPattern: ({ request }) =>
-              request.destination === 'script' ||
-              request.destination === 'style' ||
-              request.destination === 'worker',
-            handler: 'StaleWhileRevalidate',
-            options: {
-              cacheName: 'bundles-swr',
-              expiration: { maxEntries: 60, maxAgeSeconds: 60 * 60 * 24 * 7 },
-              cacheableResponse: { statuses: [0, 200] },
-            },
-          },
-          {
-            // Stale-While-Revalidate for non-critical informational pages
-            urlPattern: ({ url }) => url.pathname === '/changelog' || url.pathname === '/sobre',
-            handler: 'StaleWhileRevalidate',
-            options: {
-              cacheName: 'informational-swr',
-              expiration: { maxEntries: 10, maxAgeSeconds: 60 * 60 * 24 },
-              cacheableResponse: { statuses: [0, 200] },
-            },
-          },
-          {
-            // Static assets (images/fonts): Cache-First for performance.
-            urlPattern: /\.(?:png|jpg|jpeg|svg|gif|webp|woff2?|ttf|otf)$/i,
-            handler: 'CacheFirst',
-            options: {
-              cacheName: 'static-assets-v1',
-              expiration: { maxEntries: 100, maxAgeSeconds: 60 * 60 * 24 * 30 },
-              cacheableResponse: { statuses: [0, 200] },
-            },
-          },
-        ],
       },
     })
   ].filter(Boolean),
