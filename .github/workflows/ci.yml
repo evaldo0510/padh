@@ -56,7 +56,7 @@ jobs:
         run: npm run build
 
       - name: Install Chromium
-        run: npx playwright install --with-deps chromium
+        run: npx playwright install chromium
 
       - name: Unauthenticated browser smoke tests
         run: npm run test:browser-public

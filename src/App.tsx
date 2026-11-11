@@ -83,6 +83,7 @@ const BibliotecaExercicios = lazy(() => import("./pages/BibliotecaExercicios"));
 const SessaoView = lazy(() => import("./pages/SessaoView"));
 const LoginPage = lazy(() => import("./pages/LoginPage"));
 const Videos = lazy(() => import("./pages/Videos"));
+const EstudioPCH = lazy(() => import("./pages/EstudioPCH"));
 const DiagnosticsPage = lazy(() => import("./pages/DiagnosticsPage"));
 const ConfigGuidePage = lazy(() => import("./pages/ConfigGuidePage"));
 const UiGuide = lazy(() => import("./pages/UiGuide"));
@@ -527,6 +528,16 @@ const AnimatedRoutes = () => {
               <PageTransition>
                 <ProtectedRoute redirectTo="/login?mode=signup" authMessage="Entre ou crie uma conta para acessar as aulas e vídeos.">
                   <Videos />
+                </ProtectedRoute>
+              </PageTransition>
+            }
+          />
+          <Route
+            path="/estudio-pch"
+            element={
+              <PageTransition>
+                <ProtectedRoute redirectTo="/login?mode=signup" authMessage="Entre ou crie uma conta para acessar o Estúdio PCH.">
+                  <EstudioPCH />
                 </ProtectedRoute>
               </PageTransition>
             }
