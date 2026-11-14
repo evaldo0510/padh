@@ -1,47 +1,35 @@
-import React, { useEffect, useState } from "react";
-import PageLayout from "@/components/layout/PageLayout";
-import {
-  scientificStudies,
-  getAllCategories,
-  getAllYears,
-} from "@/lib/scientific-studies";
+import { lazy, Suspense, useEffect, useState } from "react";
 import {
   ArrowRight,
   BookOpen,
-  Brain,
-  Sparkles,
-  Star,
-  Heart,
-  Users,
   GraduationCap,
   Feather,
-  Quote,
-  FlaskConical,
-  Target,
 } from "lucide-react";
-import PoemadiagnosticoInterativo from "@/components/sections/PoemadiagnosticoInterativo";
-import { Link, useNavigate } from "react-router-dom";
-const heroImage = "/hero-padh.webp";
-import { Card, CardContent } from "@/components/ui/card";
+import { Link } from "react-router-dom";
+import type { Session } from "@supabase/supabase-js";
 import { Button } from "@/components/ui/button";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 import MobileNav from "@/components/layout/MobileNav";
-import { FloatingParticles } from "@/components/effects/FloatingParticles";
-import { useScrollAnimation } from "@/hooks/useScrollAnimation";
 import { usePageLoading } from "@/hooks/usePageLoading";
 import { PageSkeleton } from "@/components/ui/page-skeleton";
 import SEOHead from "@/components/seo/SEOHead";
 import { pagesSEO } from "@/lib/seo-config";
 import TextReader from "@/components/ui/text-reader";
-import UserWorkspace from "@/components/dashboard/UserWorkspace";
 import { supabase } from "@/integrations/supabase/client";
 import Logo from "@/components/ui/Logo";
+
+const DeferredPageLayout = lazy(() => import("@/components/layout/PageLayout"));
+const DeferredUserWorkspace = lazy(() => import("@/components/dashboard/UserWorkspace"));
+const DeferredFloatingParticles = lazy(() =>
+  import("@/components/effects/FloatingParticles").then(({ FloatingParticles }) => ({
+    default: FloatingParticles,
+  })),
+);
 
 const DEBUG_FLICKER = import.meta.env.DEV;
 const flickerLog = (label: string, extra?: Record<string, unknown>) => {
   if (!DEBUG_FLICKER) return;
-  // eslint-disable-next-line no-console
   console.log(
     `[flicker] +${Math.round(performance.now())}ms · ${label}`,
     extra ?? "",
@@ -49,8 +37,9 @@ const flickerLog = (label: string, extra?: Record<string, unknown>) => {
 };
 
 const Index = () => {
-  const [session, setSession] = useState<any>(null);
+  const [session, setSession] = useState<Session | null>(null);
   const [checkingSession, setCheckingSession] = useState(true);
+  const [showParticles, setShowParticles] = useState(false);
 
   useEffect(() => {
     flickerLog("Index mount · checkingSession=true → render PageSkeleton");
@@ -92,59 +81,43 @@ const Index = () => {
     };
   }, []);
 
+  useEffect(() => {
+    if (checkingSession || session) return;
 
-  const aboutSection = useScrollAnimation(0.15);
-  const toolsSection = useScrollAnimation(0.15);
-  const pchSection = useScrollAnimation(0.15);
-  const scienceSection = useScrollAnimation(0.15);
-  const journeySection = useScrollAnimation(0.15);
-  const testimonialsSection = useScrollAnimation(0.15);
-  
-  const ferramentas = [
-    {
-      icon: <BookOpen className="spiritual-icon spiritual-icon-lg" />,
-      title: "Livro-Curso",
-      desc: "Mergulhe na teoria e prática da PCH com exercícios guiados que transformam a leitura em experiência terapêutica.",
-      link: "/livro-curso",
-    },
-    {
-      icon: <GraduationCap className="spiritual-icon spiritual-icon-lg" />,
-      title: "Formação PCH",
-      desc: "Capacitação completa para terapeutas e educadores que desejam usar a Poesia Cognitiva Hipnótica.",
-      link: "/formacao",
-    },
-    {
-      icon: <Target className="spiritual-icon spiritual-icon-lg" />,
-      title: "Curso PCH",
-      desc: "O manual técnico completo da metodologia: base teórica, neurociência e os pilares estruturais.",
-      link: "/curso-padh",
-    },
-    {
-      icon: <Feather className="spiritual-icon spiritual-icon-lg" />,
-      title: "8 Ferramentas PCH",
-      desc: "Do Poema-Funil à Poesia Hipnótica — 8 instrumentos vivos para transformação interior através da poesia.",
-      link: "/ferramentas",
-    },
-    {
-      icon: <Brain className="spiritual-icon spiritual-icon-lg" />,
-      title: "Mapa Cerebral",
-      desc: "Descubra como cada verso ativa áreas específicas do cérebro — da amígdala ao córtex pré-frontal.",
-      link: "/mapa-cerebral",
-    },
-    {
-      icon: <Star className="spiritual-icon spiritual-icon-lg" />,
-      title: "Aula Exclusiva",
-      desc: "Uma aula teórico-vivencial sobre a neurociência da leitura terapêutica e a abordagem PCH.",
-      link: "/aula-exclusiva",
-    },
-  ];
+    const canUseDecorativeMotion =
+      window.matchMedia("(min-width: 768px)").matches &&
+      !window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    if (!canUseDecorativeMotion) return;
+
+    const idleWindow = window as Window & {
+      requestIdleCallback?: (callback: () => void, options?: { timeout: number }) => number;
+      cancelIdleCallback?: (handle: number) => void;
+    };
+    const revealOnDesktop = () => {
+      if (
+        window.matchMedia("(min-width: 768px)").matches &&
+        !window.matchMedia("(prefers-reduced-motion: reduce)").matches
+      ) {
+        setShowParticles(true);
+      }
+    };
+
+    if (idleWindow.requestIdleCallback) {
+      const handle = idleWindow.requestIdleCallback(revealOnDesktop, { timeout: 2500 });
+      return () => idleWindow.cancelIdleCallback?.(handle);
+    }
+
+    const handle = window.setTimeout(revealOnDesktop, 1800);
+    return () => window.clearTimeout(handle);
+  }, [checkingSession, session]);
+
 
   const isLoading = usePageLoading(150);
   if (checkingSession) return <PageSkeleton />;
 
   if (session) {
     return (
-      <PageLayout
+      <DeferredPageLayout
         seo={{
           title: "Home — Jornada PADH",
           description: "Sua jornada contínua de transformação.",
@@ -155,9 +128,9 @@ const Index = () => {
         hideHeader={false}
       >
         <div className="min-h-screen bg-[#050505]">
-          <UserWorkspace />
+          <DeferredUserWorkspace />
         </div>
-      </PageLayout>
+      </DeferredPageLayout>
     );
   }
 
@@ -175,7 +148,11 @@ const Index = () => {
       
       {/* Hero Section */}
       <section className="relative overflow-hidden min-h-[90vh] flex items-center">
-        <FloatingParticles />
+        {showParticles && (
+          <Suspense fallback={null}>
+            <DeferredFloatingParticles />
+          </Suspense>
+        )}
         <div className="absolute inset-0 gradient-hero" />
         <div className="absolute inset-0 gradient-glow" />
         <div className="absolute top-1/4 left-[10%] w-64 h-64 bg-primary/5 rounded-full blur-3xl animate-float" />
