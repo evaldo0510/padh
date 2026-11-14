@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from "react";
+import { useEffect, useRef } from "react";
 
 interface Particle {
   x: number;
@@ -17,10 +17,8 @@ export const FloatingParticles = () => {
 
   useEffect(() => {
     const canvas = canvasRef.current;
-    if (!canvas) return;
-
-    const ctx = canvas.getContext("2d");
-    if (!ctx) return;
+    const ctx = canvas?.getContext("2d");
+    if (!canvas || !ctx) return;
 
     const resizeCanvas = () => {
       canvas.width = window.innerWidth;
@@ -28,11 +26,10 @@ export const FloatingParticles = () => {
     };
 
     resizeCanvas();
-    window.addEventListener("resize", resizeCanvas);
+    window.addEventListener("resize", resizeCanvas, { passive: true });
 
-    // Inicializar partículas - menos no mobile para performance
-    const isMobile = window.innerWidth < 768;
-    const particleCount = isMobile ? 20 : 50;
+    // This decorative canvas is loaded only on desktop and outside the first paint.
+    const particleCount = 28;
     particlesRef.current = Array.from({ length: particleCount }, () => ({
       x: Math.random() * canvas.width,
       y: Math.random() * canvas.height,
@@ -42,88 +39,98 @@ export const FloatingParticles = () => {
       opacity: Math.random() * 0.5 + 0.3,
     }));
 
-    const handleMouseMove = (e: MouseEvent) => {
-      mouseRef.current = { x: e.clientX, y: e.clientY };
+    const handleMouseMove = (event: MouseEvent) => {
+      mouseRef.current = { x: event.clientX, y: event.clientY };
     };
+    window.addEventListener("mousemove", handleMouseMove, { passive: true });
 
-    window.addEventListener("mousemove", handleMouseMove);
-
-    const animate = () => {
-      if (!ctx || !canvas) return;
+    const frameDuration = 1000 / 30;
+    let lastFrameAt = 0;
+    const animate = (timestamp: number) => {
+      animationFrameRef.current = requestAnimationFrame(animate);
+      if (timestamp - lastFrameAt < frameDuration) return;
+      lastFrameAt = timestamp;
 
       ctx.clearRect(0, 0, canvas.width, canvas.height);
+      const particles = particlesRef.current;
+      const mouse = mouseRef.current;
+      const mouseRadiusSquared = 150 * 150;
+      ctx.fillStyle = "rgba(200, 160, 60, 0.3)";
 
-      particlesRef.current.forEach((particle) => {
-        // Atração/repulsão do mouse
-        const dx = mouseRef.current.x - particle.x;
-        const dy = mouseRef.current.y - particle.y;
-        const distance = Math.sqrt(dx * dx + dy * dy);
-        const maxDistance = 150;
+      for (const particle of particles) {
+        const dx = mouse.x - particle.x;
+        const dy = mouse.y - particle.y;
+        const distanceSquared = dx * dx + dy * dy;
 
-        if (distance < maxDistance) {
-          const force = (maxDistance - distance) / maxDistance;
+        if (distanceSquared > 0 && distanceSquared < mouseRadiusSquared) {
+          const distance = Math.sqrt(distanceSquared);
+          const force = (150 - distance) / 150;
           particle.vx -= (dx / distance) * force * 0.1;
           particle.vy -= (dy / distance) * force * 0.1;
         }
 
-        // Atualizar posição
         particle.x += particle.vx;
         particle.y += particle.vy;
-
-        // Fricção
         particle.vx *= 0.98;
         particle.vy *= 0.98;
-
-        // Movimento suave aleatório
         particle.vx += (Math.random() - 0.5) * 0.1;
         particle.vy += (Math.random() - 0.5) * 0.1;
 
-        // Limitar velocidade
-        const maxSpeed = 2;
-        const speed = Math.sqrt(particle.vx ** 2 + particle.vy ** 2);
-        if (speed > maxSpeed) {
-          particle.vx = (particle.vx / speed) * maxSpeed;
-          particle.vy = (particle.vy / speed) * maxSpeed;
+        const speed = Math.hypot(particle.vx, particle.vy);
+        if (speed > 2) {
+          particle.vx = (particle.vx / speed) * 2;
+          particle.vy = (particle.vy / speed) * 2;
         }
 
-        // Bordas
         if (particle.x < 0) particle.x = canvas.width;
-        if (particle.x > canvas.width) particle.x = 0;
+        else if (particle.x > canvas.width) particle.x = 0;
         if (particle.y < 0) particle.y = canvas.height;
-        if (particle.y > canvas.height) particle.y = 0;
+        else if (particle.y > canvas.height) particle.y = 0;
 
-        // Desenhar partícula
+        ctx.globalAlpha = particle.opacity * 0.6;
         ctx.beginPath();
         ctx.arc(particle.x, particle.y, particle.size, 0, Math.PI * 2);
-        ctx.fillStyle = `rgba(200, 160, 60, ${particle.opacity * 0.6})`;
         ctx.fill();
+      }
 
-        // Conectar partículas próximas
-        particlesRef.current.forEach((otherParticle) => {
-          const dx = particle.x - otherParticle.x;
-          const dy = particle.y - otherParticle.y;
-          const distance = Math.sqrt(dx * dx + dy * dy);
-
-          if (distance < 100) {
-            ctx.beginPath();
+      // Draw each connection once and batch all lines into one canvas stroke.
+      ctx.globalAlpha = 1;
+      ctx.beginPath();
+      for (let index = 0; index < particles.length; index += 1) {
+        const particle = particles[index];
+        for (let otherIndex = index + 1; otherIndex < particles.length; otherIndex += 1) {
+          const other = particles[otherIndex];
+          const dx = particle.x - other.x;
+          const dy = particle.y - other.y;
+          if (dx * dx + dy * dy < 10000) {
             ctx.moveTo(particle.x, particle.y);
-            ctx.lineTo(otherParticle.x, otherParticle.y);
-            ctx.strokeStyle = `rgba(200, 160, 60, ${0.06 * (1 - distance / 100)})`;
-            ctx.lineWidth = 0.5;
-            ctx.stroke();
+            ctx.lineTo(other.x, other.y);
           }
-        });
-      });
-
-      animationFrameRef.current = requestAnimationFrame(animate);
+        }
+      }
+      ctx.strokeStyle = "rgba(200, 160, 60, 0.06)";
+      ctx.lineWidth = 0.5;
+      ctx.stroke();
     };
 
-    animate();
+    const handleVisibilityChange = () => {
+      if (document.hidden) {
+        if (animationFrameRef.current !== undefined) {
+          cancelAnimationFrame(animationFrameRef.current);
+          animationFrameRef.current = undefined;
+        }
+      } else if (animationFrameRef.current === undefined) {
+        animationFrameRef.current = requestAnimationFrame(animate);
+      }
+    };
+    document.addEventListener("visibilitychange", handleVisibilityChange);
+    if (!document.hidden) animationFrameRef.current = requestAnimationFrame(animate);
 
     return () => {
       window.removeEventListener("resize", resizeCanvas);
       window.removeEventListener("mousemove", handleMouseMove);
-      if (animationFrameRef.current) {
+      document.removeEventListener("visibilitychange", handleVisibilityChange);
+      if (animationFrameRef.current !== undefined) {
         cancelAnimationFrame(animationFrameRef.current);
       }
     };
@@ -132,6 +139,7 @@ export const FloatingParticles = () => {
   return (
     <canvas
       ref={canvasRef}
+      aria-hidden="true"
       className="absolute inset-0 pointer-events-none"
       style={{ opacity: 0.6 }}
     />
