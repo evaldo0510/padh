@@ -29,6 +29,7 @@ const AulaExclusiva = lazy(() => import("./pages/AulaExclusiva"));
 const Contato = lazy(() => import("./pages/Contato"));
 const Sobre = lazy(() => import("./pages/Sobre"));
 const CursoPCH = lazy(() => import("./pages/CursoPCH"));
+const DrPoesia = lazy(() => import("./pages/DrPoesia"));
 const FerramentasIndex = lazy(
   () => import("./pages/ferramentas/FerramentasIndex"),
 );
@@ -191,6 +192,19 @@ const AnimatedRoutes = () => {
                   authMessage="Crie uma conta ou entre para acessar o conteúdo de estudo PCH."
                 >
                   <CursoPCH />
+                </ProtectedRoute>
+              </PageTransition>
+            }
+          />
+          <Route
+            path="/dr-poesia"
+            element={
+              <PageTransition>
+                <ProtectedRoute
+                  redirectTo="/login?mode=signup"
+                  authMessage="Entre na sua conta para conversar com o Dr. Poesia."
+                >
+                  <DrPoesia />
                 </ProtectedRoute>
               </PageTransition>
             }
