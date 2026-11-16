@@ -1,5 +1,5 @@
 import { createClient } from "@supabase/supabase-js";
-import knowledge from "./knowledge/capitulo-5.json";
+import knowledge from "./knowledge/capitulo-5.json" with { type: "json" };
 
 const DEFAULT_NVIDIA_MODEL = "nvidia/nemotron-3.5-super-vl-120b-a12b";
 const DEFAULT_NVIDIA_URL = "https://integrate.api.nvidia.com/v1/chat/completions";
