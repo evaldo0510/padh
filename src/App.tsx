@@ -17,6 +17,7 @@ import { ProfileProvider } from "./providers/ProfileProvider";
 import { cancelAllPrefetches } from "./lib/route-prefetch";
 import { useEffect, useState } from "react";
 import SplashScreen from "./components/layout/SplashScreen";
+import DrPoesiaFloating from "./components/layout/DrPoesiaFloating";
 import { useAuth } from "./hooks/useAuth";
 
 const Index = lazy(() => import("./pages/Index"));
@@ -632,6 +633,7 @@ const App = () => {
               <SupabaseErrorBoundary>
                 <AnimatedRoutes />
               </SupabaseErrorBoundary>
+              <DrPoesiaFloating />
             </ProfileProvider>
           </BrowserRouter>
         </TooltipProvider>
