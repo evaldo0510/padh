@@ -1,6 +1,6 @@
 import { precacheAndRoute, cleanupOutdatedCaches, PrecacheFallbackPlugin } from 'workbox-precaching';
 import { registerRoute } from 'workbox-routing';
-import { NetworkFirst, CacheFirst, StaleWhileRevalidate } from 'workbox-strategies';
+import { NetworkFirst, NetworkOnly, CacheFirst, StaleWhileRevalidate } from 'workbox-strategies';
 import { clientsClaim } from 'workbox-core';
 import { ExpirationPlugin } from 'workbox-expiration';
 import { CacheableResponsePlugin } from 'workbox-cacheable-response';
@@ -30,6 +30,13 @@ registerRoute(
       new PrecacheFallbackPlugin({ fallbackURL: '/index.html' }),
     ],
   })
+);
+
+// The AI tutor page must always load the current app shell from the network.
+// Do not let an older cached HTML document turn this route into the React 404 page.
+registerRoute(
+  ({ request, url }) => request.mode === 'navigate' && url.pathname === '/dr-poesia',
+  new NetworkOnly()
 );
 
 const navigationFallback = new PrecacheFallbackPlugin({ fallbackURL: '/index.html' });
