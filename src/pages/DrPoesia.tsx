@@ -6,7 +6,11 @@ import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { supabase } from "@/integrations/supabase/client";
 
-type ChatMessage = {\n  role: "user" | "assistant";\n  content: string;\n  sources?: { title: string; section: string }[];\n};
+type ChatMessage = {
+  role: "user" | "assistant";
+  content: string;
+  sources?: { title: string; section: string }[];
+};
 
 const welcomeMessage: ChatMessage = {
   role: "assistant",
@@ -64,7 +68,7 @@ const DrPoesia = () => {
 
       setMessages((current) => [
         ...current,
-        { role: "assistant", content: payload.answer },
+        { role: "assistant", content: payload.answer, sources: payload.sources || [] },
       ]);
     } catch (err) {
       setError(
@@ -134,6 +138,14 @@ const DrPoesia = () => {
                     </div>
                   ) : (
                     <p className="whitespace-pre-wrap">{message.content}</p>
+                  )}
+                  {message.role === "assistant" && message.sources && message.sources.length > 0 && (
+                    <div className="mt-3 border-t border-border/60 pt-2 text-xs text-muted-foreground">
+                      <p className="mb-1 font-medium">Material do Curso PCH consultado:</p>
+                      {message.sources.map((source, sourceIndex) => (
+                        <p key={sourceIndex}>Capítulo 5 · {source.section}</p>
+                      ))}
+                    </div>
                   )}
                 </div>
               </div>
