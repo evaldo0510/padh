@@ -64,7 +64,7 @@ export default function DrPoesiaFloating() {
       {open && (
         <section
           aria-label="Conversa com o Dr. Poesia"
-          className="fixed bottom-24 right-4 z-[90] flex h-[min( min(680px, calc(100dvh-8rem)), 680px)] w-[min( calc(100vw-2rem), 390px)] flex-col overflow-hidden rounded-2xl border border-primary/20 bg-background shadow-2xl sm:bottom-24 sm:right-6"
+          className="fixed bottom-24 right-4 z-[90] flex h-[min(680px,calc(100dvh-8rem))] w-[min(390px,calc(100vw-2rem))] flex-col overflow-hidden rounded-2xl border border-primary/20 bg-background shadow-2xl sm:bottom-24 sm:right-6"
         >
           <header className="flex items-center justify-between gap-3 border-b border-border bg-card px-4 py-3">
             <div className="flex min-w-0 items-center gap-3">
