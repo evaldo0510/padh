@@ -193,7 +193,15 @@ const ExerciseStep = ({
               {" "}
               Um guia completo com base teórica, exercícios práticos, técnicas
               avançadas e um modelo de sessão terapêutica em 4 fases.{" "}
-            </p>{" "}
+            </p>
+            <div className="mt-7">
+              <Link to="/dr-poesia">
+                <Button className="gap-2">
+                  <Sparkles className="h-4 w-4" />
+                  Conversar com o Dr. Poesia
+                </Button>
+              </Link>
+            </div>{" "}
           </div>{" "}
         </section>{" "}
         {/* Protocolo Geral de Intervenção Clínica */}

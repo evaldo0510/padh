@@ -1,158 +1,104 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import PageLayout from "@/components/layout/PageLayout";
 import { supabase } from "@/integrations/supabase/client";
-import { ShieldCheck, ShieldEllipsis, ShieldAlert, CircleCheckBig, DatabaseZap } from "lucide-react";
+import { ShieldCheck, ShieldEllipsis, ShieldAlert, CircleCheckBig, DatabaseZap, LayoutDashboard, Activity, Gauge, ArrowLeft, Users, BookOpen } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import WebVitalsOverview from "@/components/admin/WebVitalsOverview";
 import BehaviorAnalytics from "@/components/admin/BehaviorAnalytics";
 
-interface TableSecurity {
-  tablename: string;
-  rowsecurity: boolean;
-  policies: string[];
-}
+interface TableSecurity { tablename: string; rowsecurity: boolean; policies: string[]; }
 
-const Admin = () => {
+const adminLinks = [
+  { to: "/admin", label: "Visão geral", icon: LayoutDashboard },
+  { to: "/admin/web-vitals", label: "Desempenho", icon: Gauge },
+  { to: "/admin/pwa-health", label: "Saúde do PWA", icon: Activity },
+  { to: "/admin/pwa-diagnostics", label: "Diagnóstico PWA", icon: ShieldCheck },
+];
+
+export default function Admin() {
   const [securityStatus, setSecurityStatus] = useState<TableSecurity[]>([]);
   const [securityError, setSecurityError] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     let mounted = true;
-
     const checkSecurity = async () => {
       try {
-        const { data: tables, error: tableError } = await supabase.rpc('get_tables_security' as any);
-
-        if (tableError) throw tableError;
-        if (!mounted) return;
-
-        setSecurityStatus((tables as TableSecurity[] | null) ?? []);
-        setSecurityError(null);
+        const { data, error } = await supabase.rpc("get_tables_security" as any);
+        if (error) throw error;
+        if (mounted) { setSecurityStatus((data as TableSecurity[] | null) ?? []); setSecurityError(null); }
       } catch (error) {
-        console.error("Error fetching security status", error);
+        console.error("Erro ao consultar segurança", error);
         if (mounted) {
           setSecurityStatus([]);
-          setSecurityError("Não foi possível consultar o estado real das políticas RLS. Nenhum status de segurança será presumido.");
+          setSecurityError("Não foi possível consultar as políticas RLS. O painel não presumirá que a segurança está ativa.");
         }
       } finally {
         if (mounted) setLoading(false);
       }
     };
-
     void checkSecurity();
-    return () => {
-      mounted = false;
-    };
+    return () => { mounted = false; };
   }, []);
 
   return (
     <PageLayout
-      seo={{
-        title: "Admin — P.A.D.H.",
-        description: "Painel administrativo e auditoria de segurança.",
-        path: "/admin",
-      }}
-      currentPage="Admin"
-      loadingDelay={0}
+      seo={{ title: "Administração — Curso PCH", description: "Área administrativa independente do site e da área do aluno.", path: "/admin" }}
+      hideHeader hideMobileNav hideFooter loadingDelay={0}
     >
-      <section className="py-12 md:py-20">
-        <div className="container mx-auto px-6 max-w-5xl">
-          <div className="flex items-center justify-between gap-4 mb-8 flex-wrap">
-            <h1 className="text-3xl md:text-4xl font-heading font-bold text-foreground">
-              Painel Administrativo
-            </h1>
-            <Badge variant="outline" className="bg-primary/5 text-primary border-primary/20 gap-2 px-3 py-1">
-              <ShieldCheck className="w-3 h-3" /> Área administrativa
-            </Badge>
-          </div>
-
-          <div className="grid gap-8">
-            <WebVitalsOverview />
-            <BehaviorAnalytics />
-
-            <Card className="border-primary/20 bg-card/50 backdrop-blur-sm overflow-hidden">
-              <CardHeader className="bg-primary/5 border-b border-primary/10">
-                <CardTitle className="flex items-center gap-2 text-xl">
-                  <ShieldEllipsis className="w-5 h-5 text-primary" /> Auditoria de Segurança (RLS)
-                </CardTitle>
-              </CardHeader>
-              <CardContent className="p-6">
-                <div className="space-y-6">
-                  <p className="text-sm text-muted-foreground">
-                    Verificação automática de Row Level Security (RLS) e isolamento de dados por usuário.
-                  </p>
-
-                  {loading ? (
-                    <p>Carregando status de segurança...</p>
-                  ) : securityError ? (
-                    <div role="status" className="flex items-start gap-2 rounded-lg border border-amber-500/30 bg-amber-500/5 p-4 text-sm text-amber-700 dark:text-amber-300">
-                      <ShieldAlert className="mt-0.5 h-4 w-4 shrink-0" />
-                      <span>{securityError}</span>
-                    </div>
-                  ) : securityStatus.length === 0 ? (
-                    <p role="status" className="text-sm text-muted-foreground">
-                      A consulta não retornou tabelas para exibição. Isso não representa uma confirmação de segurança.
-                    </p>
-                  ) : (
-                    <div className="grid sm:grid-cols-2 gap-4">
-                      {securityStatus.map((table) => (
-                        <div key={table.tablename} className="p-4 rounded-xl border border-border bg-background flex items-center justify-between">
-                          <div className="flex items-center gap-3">
-                            <DatabaseZap className="w-4 h-4 text-muted-foreground" />
-                            <div>
-                              <div className="font-bold text-sm">{table.tablename}</div>
-                              <div className="text-[10px] text-muted-foreground uppercase tracking-wider">
-                                {table.policies.length} políticas retornadas
-                              </div>
-                            </div>
-                          </div>
-                          {table.rowsecurity ? (
-                            <div className="flex items-center gap-1 text-emerald-500 font-bold text-[10px] uppercase">
-                              <CircleCheckBig className="w-3 h-3" /> RLS ativo
-                            </div>
-                          ) : (
-                            <div className="flex items-center gap-1 text-red-500 font-bold text-[10px] uppercase">
-                              <ShieldAlert className="w-3 h-3" /> RLS inativo
-                            </div>
-                          )}
-                        </div>
-                      ))}
-                    </div>
-                  )}
-                </div>
-              </CardContent>
-            </Card>
-
-            <div className="grid sm:grid-cols-3 gap-6">
-              <div className="p-6 rounded-xl border border-border/50 bg-card">
-                <div className="flex items-center justify-between gap-2 mb-2">
-                  <h3 className="font-heading font-semibold text-foreground">Conteúdo</h3>
-                  <Badge variant="outline">Em desenvolvimento</Badge>
-                </div>
-                <p className="text-sm text-muted-foreground">A gestão de jornadas e episódios ainda não está disponível neste painel.</p>
-              </div>
-              <div className="p-6 rounded-xl border border-border/50 bg-card">
-                <div className="flex items-center justify-between gap-2 mb-2">
-                  <h3 className="font-heading font-semibold text-foreground">Usuários</h3>
-                  <Badge variant="outline">Em desenvolvimento</Badge>
-                </div>
-                <p className="text-sm text-muted-foreground">A consulta administrativa de alunos e progresso ainda não está disponível neste painel.</p>
-              </div>
-              <div className="p-6 rounded-xl border border-border/50 bg-card">
-                <div className="flex items-center justify-between gap-2 mb-2">
-                  <h3 className="font-heading font-semibold text-foreground">Vendas</h3>
-                  <Badge variant="outline">Em desenvolvimento</Badge>
-                </div>
-                <p className="text-sm text-muted-foreground">As métricas financeiras e a gestão de planos ainda não estão disponíveis neste painel.</p>
-              </div>
+      <div className="min-h-dvh bg-background">
+        <header className="border-b border-border bg-card">
+          <div className="container mx-auto flex max-w-7xl flex-wrap items-center justify-between gap-4 px-4 py-4 md:px-6">
+            <div className="flex items-center gap-3">
+              <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-primary/10 text-primary"><ShieldCheck className="h-5 w-5" /></div>
+              <div><p className="font-bold">PCH · Administração</p><p className="text-xs text-muted-foreground">Ambiente restrito de gestão</p></div>
+            </div>
+            <div className="flex flex-wrap gap-2">
+              <Link to="/dashboard" className="inline-flex items-center gap-2 rounded-lg border border-border px-3 py-2 text-xs font-medium hover:bg-accent"><BookOpen className="h-4 w-4" /> Área do aluno</Link>
+              <Link to="/" className="inline-flex items-center gap-2 rounded-lg border border-border px-3 py-2 text-xs font-medium hover:bg-accent"><ArrowLeft className="h-4 w-4" /> Site público</Link>
             </div>
           </div>
-        </div>
-      </section>
+          <nav className="container mx-auto flex max-w-7xl gap-2 overflow-x-auto px-4 pb-4 md:px-6" aria-label="Navegação administrativa">
+            {adminLinks.map(({ to, label, icon: Icon }) => <Link key={to} to={to} aria-current={to === "/admin" ? "page" : undefined} className={`inline-flex shrink-0 items-center gap-2 rounded-lg px-3 py-2 text-xs font-semibold ${to === "/admin" ? "bg-primary text-primary-foreground" : "bg-muted text-muted-foreground hover:text-foreground"}`}><Icon className="h-4 w-4" />{label}</Link>)}
+          </nav>
+        </header>
+
+        <main className="container mx-auto max-w-7xl space-y-8 px-4 py-8 md:px-6 md:py-12">
+          <div className="flex flex-wrap items-center justify-between gap-4">
+            <div><p className="text-xs font-semibold uppercase tracking-[0.2em] text-primary">Painel de controle</p><h1 className="mt-1 text-3xl font-bold">Visão geral administrativa</h1><p className="mt-2 text-sm text-muted-foreground">Monitoramento técnico e segurança do ambiente PCH.</p></div>
+            <Badge variant="outline" className="gap-2 border-primary/30 px-3 py-2 text-primary"><ShieldCheck className="h-4 w-4" /> Acesso administrativo</Badge>
+          </div>
+
+          <div className="grid gap-6 xl:grid-cols-2">
+            <WebVitalsOverview />
+            <BehaviorAnalytics />
+          </div>
+
+          <Card>
+            <CardHeader className="border-b border-border bg-muted/30"><CardTitle className="flex items-center gap-2"><ShieldEllipsis className="h-5 w-5 text-primary" /> Auditoria de segurança (RLS)</CardTitle></CardHeader>
+            <CardContent className="p-6">
+              <p className="mb-5 text-sm text-muted-foreground">Verificação das políticas de Row Level Security e isolamento de dados por usuário.</p>
+              {loading ? <p className="text-sm text-muted-foreground">Consultando o banco de dados…</p> : securityError ? (
+                <div role="status" className="flex items-start gap-2 rounded-lg border border-amber-500/30 bg-amber-500/5 p-4 text-sm text-amber-700"><ShieldAlert className="mt-0.5 h-4 w-4 shrink-0" />{securityError}</div>
+              ) : securityStatus.length === 0 ? (
+                <p role="status" className="text-sm text-muted-foreground">A consulta não retornou tabelas. Isso não confirma nem invalida a segurança.</p>
+              ) : (
+                <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+                  {securityStatus.map((table) => <div key={table.tablename} className="flex items-center justify-between gap-3 rounded-xl border border-border p-4"><div className="flex items-center gap-3"><DatabaseZap className="h-4 w-4 text-muted-foreground" /><div><p className="text-sm font-semibold">{table.tablename}</p><p className="text-xs text-muted-foreground">{table.policies?.length ?? 0} políticas retornadas</p></div></div>{table.rowsecurity ? <span className="inline-flex items-center gap-1 text-xs font-semibold text-emerald-600"><CircleCheckBig className="h-3.5 w-3.5" /> RLS ativo</span> : <span className="inline-flex items-center gap-1 text-xs font-semibold text-destructive"><ShieldAlert className="h-3.5 w-3.5" /> RLS inativo</span>}</div>)}
+                </div>
+              )}
+            </CardContent>
+          </Card>
+
+          <div className="grid gap-4 md:grid-cols-3">
+            <Card><CardContent className="p-5"><div className="mb-2 flex items-center gap-2 font-semibold"><BookOpen className="h-4 w-4 text-primary" /> Conteúdo</div><p className="text-sm text-muted-foreground">A gestão editorial e de aulas será habilitada nesta área quando os módulos administrativos estiverem implementados.</p><Badge className="mt-3" variant="outline">Em evolução</Badge></CardContent></Card>
+            <Card><CardContent className="p-5"><div className="mb-2 flex items-center gap-2 font-semibold"><Users className="h-4 w-4 text-primary" /> Usuários</div><p className="text-sm text-muted-foreground">A gestão de contas e acompanhamento de alunos permanece separada dos dados pessoais exibidos na área do aluno.</p><Badge className="mt-3" variant="outline">Em evolução</Badge></CardContent></Card>
+            <Card><CardContent className="p-5"><div className="mb-2 flex items-center gap-2 font-semibold"><Activity className="h-4 w-4 text-primary" /> Operação</div><p className="text-sm text-muted-foreground">Acompanhe desempenho, saúde do PWA e diagnósticos pelos atalhos administrativos acima.</p><Badge className="mt-3" variant="outline">Disponível parcialmente</Badge></CardContent></Card>
+          </div>
+        </main>
+      </div>
     </PageLayout>
   );
-};
-
-export default Admin;
+}
