@@ -23,10 +23,16 @@ const isEditorPreview = (() => {
       return true;
     }
   })();
+  // Vercel Preview deployments use unique hostnames and must not share
+  // persistent PWA caches with Production or with one another.
+  const isVercelPreview =
+    host.endsWith(".vercel.app") && host !== "padhpoesia.vercel.app";
+
   return (
     host.includes("id-preview--") ||
     host.includes("lovableproject.com") ||
-    isInIframe
+    isInIframe ||
+    isVercelPreview
   );
 })();
 
