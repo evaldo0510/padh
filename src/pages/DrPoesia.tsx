@@ -6,7 +6,7 @@ import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { supabase } from "@/integrations/supabase/client";
 
-type ChatMessage = { role: "user" | "assistant"; content: string };
+type ChatMessage = {\n  role: "user" | "assistant";\n  content: string;\n  sources?: { title: string; section: string }[];\n};
 
 const welcomeMessage: ChatMessage = {
   role: "assistant",
@@ -197,7 +197,7 @@ const DrPoesia = () => {
             <p className="mt-3 flex items-start gap-2 text-xs leading-relaxed text-muted-foreground">
               <BookOpen size={14} className="mt-0.5 shrink-0" />
               Tutor educacional, não substitui avaliação ou acompanhamento profissional.
-              Esta versão inicial ainda não pesquisa automaticamente o acervo completo do Curso PCH.
+              Consulta o Capítulo 5 do Curso PCH; os demais módulos ainda serão conectados gradualmente.
             </p>
           </div>
         </div>
