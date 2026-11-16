@@ -114,7 +114,7 @@ const DrPoesia = () => {
             </div>
             <div>
               <h2 className="font-semibold text-foreground">Conversa com o Dr. Poesia</h2>
-              <p className="text-xs text-muted-foreground">Modelo Nemotron · NVIDIA</p>
+              <p className="text-xs text-muted-foreground">Motor de IA configurável · conhecimento PCH</p>
             </div>
           </div>
 
